@@ -1,73 +1,98 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## License
 
-Currently, two official plugins are available:
+This project is licensed under the Creative Commons BY-NC-SA 4.0 License.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The code may be used and modified for educational purposes,
+but commercial use is not permitted.
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Quant Sandbox
 
-## Expanding the ESLint configuration
+Interactive mathematics and quantitative finance demos.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This repository contains small interactive visual tools intended primarily as study aids for students of the **Insurance and Financial Mathematics program at ELTE and Corvinus University of Budapest**.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The goal of the project is to provide intuitive visualizations for concepts that often appear abstract in lectures or textbooks.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Maintenance of this project follows a rather informal  
+*"I work on it when I feel like it"* model.  
+If you would like to see additional topics implemented, feel free to reach out.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Current demos
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Black–Scholes option pricing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Interactive visualization of the Black–Scholes model.
+
+The tool allows you to explore how option price and the main Greeks depend on:
+
+- underlying price
+- volatility
+- interest rate
+- maturity
+
+Multiple maturities are shown simultaneously to illustrate the shape of the pricing surface.
+
+---
+
+### Binomial option pricing tree
+
+A recombining binomial model visualization for option pricing.
+
+Adjustable parameters:
+
+- initial price \(S_0\)
+- strike \(K\)
+- up factor \(u\)
+- down factor \(d\)
+- interest rate \(r\)
+- number of steps \(N\)
+
+The tool shows:
+
+- the stock price tree
+- option values at each node
+- risk-neutral probabilities
+- the root **replicating portfolio**.
+
+---
+
+### Diffusion equation demo
+
+A simple visualization of the diffusion equation solution
+
+\[
+u(t,x) = e^{-k n^2 t}\sin(nx)
+\]
+
+The sliders allow exploration of:
+
+- diffusion coefficient \(k\)
+- spatial frequency \(n\)
+- time interval
+- number of curves displayed
+
+The visualization illustrates how diffusion damps higher-frequency components over time.
+
+---
+
+# Tech stack
+
+- React
+- TypeScript
+- Recharts
+- Custom SVG visualizations
+
+The project focuses on **clarity and educational value** rather than production-level architecture.
+
+---
+
+# Running the project
+
+```bash
+npm install
+npm run dev
