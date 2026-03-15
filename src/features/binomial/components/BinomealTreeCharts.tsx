@@ -1,0 +1,122 @@
+import { useMemo } from "react";
+import SectionCard from "../../../components/SectionCard";
+import type { BinomialTreeResult } from "../binomial.types";
+
+type BinomialTreeChartProps = {
+  tree: BinomialTreeResult;
+  showStockPrices: boolean;
+  showOptionValues: boolean;
+};
+
+export default function BinomialTreeChart({
+  tree,
+  showStockPrices,
+  showOptionValues,
+}: BinomialTreeChartProps) {
+  const nodeMap = useMemo(() => {
+    const map = new Map(tree.nodes.map((node) => [node.id, node]));
+    return map;
+  }, [tree.nodes]);
+
+  return (
+    <SectionCard
+      className="chart-card"
+      title="Binomiális opcióárazási fa"
+      subtitle="CRR modell, visszafelé diszkontálással"
+    >
+      <div className="binomial-svg-wrap">
+        <svg
+          viewBox={`0 0 ${tree.width} ${tree.height}`}
+          width="100%"
+          height="100%"
+          role="img"
+        >
+          {tree.edges.map((edge) => {
+            const from = nodeMap.get(edge.fromId);
+            const to = nodeMap.get(edge.toId);
+
+            if (!from || !to) return null;
+
+            const x1 = from.x + 84;
+            const y1 = from.y + 21;
+            const x2 = to.x;
+            const y2 = to.y + 21;
+            const midX = (x1 + x2) / 2;
+            const midY = (y1 + y2) / 2;
+
+            return (
+              <g key={edge.id}>
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="#7c8aa0"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x={midX}
+                  y={edge.kind === "up" ? midY - 8 : midY + 16}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill="#94a3b8"
+                >
+                  {edge.probabilityLabel}
+                </text>
+              </g>
+            );
+          })}
+
+          {tree.nodes.map((node) => (
+            <g key={node.id}>
+              <rect
+                x={node.x}
+                y={node.y}
+                rx="10"
+                ry="10"
+                width="84"
+                height="42"
+                fill="#162235"
+                stroke="#415269"
+                strokeWidth="1.2"
+              />
+              <text
+                x={node.x + 42}
+                y={node.y + 16}
+                textAnchor="middle"
+                fontSize="11"
+                fill="#e2e8f0"
+              >
+                t={node.step}
+              </text>
+
+              {showStockPrices && (
+                <text
+                  x={node.x + 42}
+                  y={node.y + (showOptionValues ? 28 : 30)}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill="#60a5fa"
+                >
+                  S={node.stockPrice.toFixed(2)}
+                </text>
+              )}
+
+              {showOptionValues && (
+                <text
+                  x={node.x + 42}
+                  y={node.y + (showStockPrices ? 38 : 30)}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill="#fbbf24"
+                >
+                  V={node.optionValue.toFixed(2)}
+                </text>
+              )}
+            </g>
+          ))}
+        </svg>
+      </div>
+    </SectionCard>
+  );
+}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
+import Navbar, { type PageKey } from "./components/Navbar";
 import BlackScholesView from "./features/black-scholes/BlackScholesView";
 import DiffusionView from "./features/diffusion/DiffusionView";
 import SectionCard from "./components/SectionCard";
-type PageKey = "home" | "diffusion" | "black-scholes";
+import BinomialView from "./features/binomial/BinomialView";
 
 export default function App() {
   const [page, setPage] = useState<PageKey>("black-scholes");
@@ -76,6 +76,8 @@ export default function App() {
         {page === "diffusion" && <DiffusionView />}
 
         {page === "black-scholes" && <BlackScholesView />}
+
+        {page === "binomial" && <BinomialView />}
       </main>
     </div>
   );

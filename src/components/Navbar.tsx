@@ -1,4 +1,4 @@
-type PageKey = "home" | "diffusion" | "black-scholes";
+export type PageKey = "home" | "diffusion" | "black-scholes" | "binomial";
 
 type NavbarProps = {
   current: PageKey;
@@ -10,6 +10,7 @@ const items: { key: PageKey; label: string }[] = [
   { key: "home", label: "Home" },
   { key: "diffusion", label: "Diffusion" },
   { key: "black-scholes", label: "Black-Scholes" },
+  { key: "binomial", label: "Binomial" },
 ];
 
 export default function Navbar({
