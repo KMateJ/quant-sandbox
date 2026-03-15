@@ -56,7 +56,7 @@ export default function App() {
 
       <main className="page-container">
         {page === "home" && (
-            <SectionCard title="Mi ez az oldal?" subtitle="Rövid leírás">
+            <SectionCard title="Mi ez az oldal?" >
               <div className="text-block">
                 <p>
                   Ez az oldal segédanyag az <b>ELTE + Corvinus Biztosítási és pénzügyi matematika</b>
@@ -66,8 +66,8 @@ export default function App() {
                 <p>
                   A projekt karbantartása erősen
                   <i> „van hozzá kedvem / nincs hozzá kedvem”</i> alapon működik.
-                  Ha szeretnéd, hogy több tartalom kerüljön bele, akkor
-                  keress meg vele.
+                  Ha szeretnéd, hogy több tartalom kerüljön bele, vagy esetleg hibát találsz, akkor
+                  keress meg vele nyugodtan.
                 </p>
               </div>
             </SectionCard>
