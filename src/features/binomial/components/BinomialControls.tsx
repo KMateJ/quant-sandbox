@@ -129,14 +129,11 @@ export default function BinomialControls({
           </div>
 
           <div className="stats-row">
-            <div className="stat-card">
-              <div className="stat-title">Opció típusa</div>
-              <div className="stat-value">{optionKind === "call" ? "Európai call" : "Európai put"}</div>
-            </div>
+            
 
             <div className="stat-card">
               <div className="stat-title">Periódushossz</div>
-              <div className="stat-value">Minden lépés 1 év</div>
+              <div className="stat-value">Δt = 1 év</div>
             </div>
           </div>
         </>

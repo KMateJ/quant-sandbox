@@ -26,10 +26,14 @@ export default function BinomialSummary({ tree }: BinomialSummaryProps) {
           <div className="stat-value">{tree.q.toFixed(4)}</div>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-title">1 − q</div>
-          <div className="stat-value">{(1 - tree.q).toFixed(4)}</div>
-        </div>
+        {tree.replicatingPortfolio ? (
+          <div className="stat-card">
+            <div className="stat-title">Gyökérbeli replikáló portfólió</div>
+            <div className="stat-value">
+              V₀ = {tree.replicatingPortfolio.delta.toFixed(4)} · S₀ + {tree.replicatingPortfolio.bond.toFixed(4)}
+            </div>
+          </div>
+        ) : null}
 
         <div className="stat-card">
           <div className="stat-title">u</div>
@@ -45,7 +49,12 @@ export default function BinomialSummary({ tree }: BinomialSummaryProps) {
           <div className="stat-title">Diszkont faktor</div>
           <div className="stat-value">{tree.discount.toFixed(4)}</div>
         </div>
+
+
+        
       </div>
+
+
     </SectionCard>
   );
 }

@@ -8,9 +8,9 @@ type NavbarProps = {
 
 const items: { key: PageKey; label: string }[] = [
   { key: "home", label: "Home" },
+  { key: "binomial", label: "Binomial" },
   { key: "diffusion", label: "Diffusion" },
   { key: "black-scholes", label: "Black-Scholes" },
-  { key: "binomial", label: "Binomial" },
 ];
 
 export default function Navbar({

@@ -42,4 +42,10 @@ export type BinomialTreeResult = {
   edges: BinomialEdge[];
   width: number;
   height: number;
+  replicatingPortfolio: {
+    delta: number;
+    bond: number;
+  } | null;
+  deltaT: number;
 };
+

@@ -24,6 +24,12 @@ export default function BinomialExplanation() {
           Klasszikus arbitrázsmentes helyzetben teljesül, hogy <b>d &lt; 1 + r &lt; u</b>,
           ekkor a <b>q</b> valóban 0 és 1 közé esik.
         </p>
+
+        <p>
+          A gyökércsomópontban az opció értéke egy replikáló portfólióval is előállítható:
+          egy megfelelő számú részvény és egy kötvénypozíció együtt ugyanazt a kifizetést adja,
+          mint az opció a következő lépés két lehetséges állapotában.
+        </p>
       </div>
     </SectionCard>
   );

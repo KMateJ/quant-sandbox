@@ -17,8 +17,11 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
   const { S0, K, u, d, r, steps, optionKind } = params;
 
   const safeSteps = Math.max(1, Math.floor(steps));
+  const deltaT = 1;
   const discount = 1 / (1 + r);
-  const q = (1 + r - d) / (u - d);
+
+  const qDenominator = u - d;
+  const q = qDenominator !== 0 ? (1 + r - d) / qDenominator : Number.NaN;
 
   const isFiniteModel =
     Number.isFinite(S0) &&
@@ -33,7 +36,7 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
 
   let validationMessage: string | null = null;
 
-  if (!isFiniteModel) {
+  if (!Number.isFinite(S0) || !Number.isFinite(K) || !Number.isFinite(u) || !Number.isFinite(d) || !Number.isFinite(r)) {
     validationMessage = "A modell paraméterei nem adnak értelmes numerikus eredményt.";
   } else if (!(u > d)) {
     validationMessage = "A modellhez szükséges, hogy u > d legyen.";
@@ -41,6 +44,8 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
     validationMessage = "A lefelé szorzóhoz szükséges, hogy d > 0 legyen.";
   } else if (!(r > -1)) {
     validationMessage = "A kamatlábhoz szükséges, hogy 1 + r pozitív maradjon.";
+  } else if (!Number.isFinite(q)) {
+    validationMessage = "A q nem számolható ki, mert u és d nem különböznek.";
   } else if (q < 0 || q > 1) {
     validationMessage =
       "A kockázatsemleges valószínűség nem esik 0 és 1 közé. Klasszikus arbitrázsmentes esetben d < 1 + r < u.";
@@ -85,6 +90,9 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
   const nodes: BinomialNode[] = [];
   const edges: BinomialEdge[] = [];
 
+  const qLabel = Number.isFinite(q) ? `q=${q.toFixed(3)}` : "q=–";
+  const oneMinusQLabel = Number.isFinite(q) ? `1-q=${(1 - q).toFixed(3)}` : "1-q=–";
+
   for (let i = 0; i <= safeSteps; i++) {
     for (let j = 0; j <= i; j++) {
       const x = leftPad + i * hGap;
@@ -107,7 +115,7 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
           fromId: `${i}-${j}`,
           toId: `${i + 1}-${j}`,
           kind: "up",
-          probabilityLabel: `q=${q.toFixed(3)}`,
+          probabilityLabel: qLabel,
         });
 
         edges.push({
@@ -115,9 +123,27 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
           fromId: `${i}-${j}`,
           toId: `${i + 1}-${j + 1}`,
           kind: "down",
-          probabilityLabel: `1-q=${(1 - q).toFixed(3)}`,
+          probabilityLabel: oneMinusQLabel,
         });
       }
+    }
+  }
+
+  let replicatingPortfolio: { delta: number; bond: number } | null = null;
+
+  if (isValid && safeSteps >= 1) {
+    const Vup = optionTree[1][0];
+    const Vdown = optionTree[1][1];
+    const Sup = stockTree[1][0];
+    const Sdown = stockTree[1][1];
+
+    const stockDenominator = Sup - Sdown;
+
+    if (stockDenominator !== 0) {
+      const delta = (Vup - Vdown) / stockDenominator;
+      const bond = (u * Vdown - d * Vup) / ((u - d) * (1 + r));
+
+      replicatingPortfolio = { delta, bond };
     }
   }
 
@@ -126,10 +152,12 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
     d,
     q,
     r,
+    deltaT,
     discount,
     price: isValid ? optionTree[0][0] : 0,
     isValid,
     validationMessage,
+    replicatingPortfolio,
     nodes,
     edges,
     width: leftPad * 2 + safeSteps * hGap + nodeWidth + 40,

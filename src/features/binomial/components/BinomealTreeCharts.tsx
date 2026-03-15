@@ -6,12 +6,16 @@ type BinomialTreeChartProps = {
   tree: BinomialTreeResult;
   showStockPrices: boolean;
   showOptionValues: boolean;
+  treeOpen: boolean;
+  onToggleTree: () => void;
 };
 
 export default function BinomialTreeChart({
   tree,
   showStockPrices,
   showOptionValues,
+  treeOpen,
+  onToggleTree,
 }: BinomialTreeChartProps) {
   const nodeMap = useMemo(() => {
     return new Map(tree.nodes.map((node) => [node.id, node]));
@@ -19,10 +23,23 @@ export default function BinomialTreeChart({
 
   return (
     <SectionCard
-      className="chart-card"
+      className="chart-card "
       title="Binomiális árazási fa"
       subtitle="A részvényárak és az opcióértékek diszkrét modellje"
+      headerLeft={
+      <button
+        type="button"
+        className="toggle-button"
+        onClick={onToggleTree}
+      >
+        {treeOpen ? "Összecsukás" : "Megjelenítés"}
+      </button>
+    }
+
     >
+        {treeOpen && (
+
+       
       <div className="binomial-svg-wrap">
         <svg
           viewBox={`0 0 ${tree.width} ${tree.height}`}
@@ -117,6 +134,14 @@ export default function BinomialTreeChart({
           ))}
         </svg>
       </div>
+       )}
+       {!treeOpen && (
+          <div className="param-summary">
+            <div>q = {tree.q.toFixed(3)}</div>
+            <div>V₀ = {tree.price.toFixed(3)}</div>
+          </div>
+        )}
     </SectionCard>
+    
   );
 }

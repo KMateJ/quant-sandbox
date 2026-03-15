@@ -17,6 +17,7 @@ export default function BinomialView() {
   const [controlsOpen, setControlsOpen] = useState(true);
   const [showStockPrices, setShowStockPrices] = useState(true);
   const [showOptionValues, setShowOptionValues] = useState(true);
+  const [treeOpen, setTreeOpen] = useState(true);
 
   const tree = useMemo(
     () =>
@@ -80,6 +81,8 @@ export default function BinomialView() {
           tree={tree}
           showStockPrices={showStockPrices}
           showOptionValues={showOptionValues}
+          treeOpen={treeOpen}
+          onToggleTree={() => setTreeOpen((prev) => !prev)}
         />
         <BinomialExplanation />
       </div>
