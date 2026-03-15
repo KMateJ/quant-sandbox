@@ -1,15 +1,13 @@
 export type OptionKind = "call" | "put";
-export type ExerciseStyle = "european" | "american";
 
 export type BinomialParams = {
   S0: number;
   K: number;
+  u: number;
+  d: number;
   r: number;
-  sigma: number;
-  T: number;
   steps: number;
   optionKind: OptionKind;
-  exerciseStyle: ExerciseStyle;
 };
 
 export type BinomialNode = {
@@ -34,10 +32,12 @@ export type BinomialEdge = {
 export type BinomialTreeResult = {
   u: number;
   d: number;
-  p: number;
-  dt: number;
+  q: number;
+  r: number;
   discount: number;
   price: number;
+  isValid: boolean;
+  validationMessage: string | null;
   nodes: BinomialNode[];
   edges: BinomialEdge[];
   width: number;

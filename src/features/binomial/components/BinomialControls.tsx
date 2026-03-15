@@ -1,48 +1,44 @@
-import NumberStepper from "../../../components/NumberStepper";
 import SectionCard from "../../../components/SectionCard";
 import SliderField from "../../../components/SliederField";
-import type { ExerciseStyle, OptionKind } from "../binomial.types";
+import NumberStepper from "../../../components/NumberStepper";
+import type { OptionKind } from "../binomial.types";
 
 type BinomialControlsProps = {
   S0: number;
   K: number;
+  u: number;
+  d: number;
   r: number;
-  sigma: number;
-  T: number;
   steps: number;
   optionKind: OptionKind;
-  exerciseStyle: ExerciseStyle;
   controlsOpen: boolean;
   onToggleControls: () => void;
   onS0Change: (value: number) => void;
   onKChange: (value: number) => void;
+  onUChange: (value: number) => void;
+  onDChange: (value: number) => void;
   onRChange: (value: number) => void;
-  onSigmaChange: (value: number) => void;
-  onTChange: (value: number) => void;
   onStepsChange: (value: number) => void;
   onOptionKindChange: (value: OptionKind) => void;
-  onExerciseStyleChange: (value: ExerciseStyle) => void;
 };
 
 export default function BinomialControls({
   S0,
   K,
+  u,
+  d,
   r,
-  sigma,
-  T,
   steps,
   optionKind,
-  exerciseStyle,
   controlsOpen,
   onToggleControls,
   onS0Change,
   onKChange,
+  onUChange,
+  onDChange,
   onRChange,
-  onSigmaChange,
-  onTChange,
   onStepsChange,
   onOptionKindChange,
-  onExerciseStyleChange,
 }: BinomialControlsProps) {
   return (
     <SectionCard
@@ -70,27 +66,6 @@ export default function BinomialControls({
         </button>
       </div>
 
-      <div className="metric-switch">
-        <button
-          type="button"
-          className={
-            exerciseStyle === "european" ? "metric-button active" : "metric-button"
-          }
-          onClick={() => onExerciseStyleChange("european")}
-        >
-          Európai
-        </button>
-        <button
-          type="button"
-          className={
-            exerciseStyle === "american" ? "metric-button active" : "metric-button"
-          }
-          onClick={() => onExerciseStyleChange("american")}
-        >
-          Amerikai
-        </button>
-      </div>
-
       {controlsOpen ? (
         <>
           <div className="controls-grid">
@@ -113,33 +88,33 @@ export default function BinomialControls({
             />
 
             <SliderField
-              label="r (kamat)"
-              min={0}
-              max={0.2}
-              step={0.005}
-              value={r}
-              onChange={onRChange}
-              formatValue={(v) => v.toFixed(3)}
-            />
-
-            <SliderField
-              label="σ (volatilitás)"
-              min={0.01}
-              max={1}
+              label="u (up factor)"
+              min={1.01}
+              max={2}
               step={0.01}
-              value={sigma}
-              onChange={onSigmaChange}
+              value={u}
+              onChange={onUChange}
               formatValue={(v) => v.toFixed(2)}
             />
 
             <SliderField
-              label="T (év)"
-              min={0.25}
-              max={5}
-              step={0.25}
-              value={T}
-              onChange={onTChange}
-              formatValue={(v) => `${v.toFixed(2)} év`}
+              label="d (down factor)"
+              min={0.1}
+              max={0.99}
+              step={0.01}
+              value={d}
+              onChange={onDChange}
+              formatValue={(v) => v.toFixed(2)}
+            />
+
+            <SliderField
+              label="r (éves kamat)"
+              min={0}
+              max={0.3}
+              step={0.01}
+              value={r}
+              onChange={onRChange}
+              formatValue={(v) => v.toFixed(2)}
             />
 
             <NumberStepper
@@ -156,10 +131,12 @@ export default function BinomialControls({
           <div className="stats-row">
             <div className="stat-card">
               <div className="stat-title">Opció típusa</div>
-              <div className="stat-value">
-                {optionKind === "call" ? "Call" : "Put"} /{" "}
-                {exerciseStyle === "european" ? "Európai" : "Amerikai"}
-              </div>
+              <div className="stat-value">{optionKind === "call" ? "Európai call" : "Európai put"}</div>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-title">Periódushossz</div>
+              <div className="stat-value">Minden lépés 1 év</div>
             </div>
           </div>
         </>
@@ -167,12 +144,11 @@ export default function BinomialControls({
         <div className="param-summary">
           <div>S₀ = {S0}</div>
           <div>K = {K}</div>
-          <div>r = {r.toFixed(3)}</div>
-          <div>σ = {sigma.toFixed(2)}</div>
-          <div>T = {T.toFixed(2)}</div>
-          <div>lépések = {steps}</div>
+          <div>u = {u.toFixed(2)}</div>
+          <div>d = {d.toFixed(2)}</div>
+          <div>r = {r.toFixed(2)}</div>
+          <div>N = {steps}</div>
           <div>{optionKind}</div>
-          <div>{exerciseStyle}</div>
         </div>
       )}
     </SectionCard>

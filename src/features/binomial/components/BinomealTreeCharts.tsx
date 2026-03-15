@@ -14,15 +14,14 @@ export default function BinomialTreeChart({
   showOptionValues,
 }: BinomialTreeChartProps) {
   const nodeMap = useMemo(() => {
-    const map = new Map(tree.nodes.map((node) => [node.id, node]));
-    return map;
+    return new Map(tree.nodes.map((node) => [node.id, node]));
   }, [tree.nodes]);
 
   return (
     <SectionCard
       className="chart-card"
-      title="Binomiális opcióárazási fa"
-      subtitle="CRR modell, visszafelé diszkontálással"
+      title="Binomiális árazási fa"
+      subtitle="A részvényárak és az opcióértékek diszkrét modellje"
     >
       <div className="binomial-svg-wrap">
         <svg
@@ -37,10 +36,10 @@ export default function BinomialTreeChart({
 
             if (!from || !to) return null;
 
-            const x1 = from.x + 84;
-            const y1 = from.y + 21;
+            const x1 = from.x + 92;
+            const y1 = from.y + 24;
             const x2 = to.x;
-            const y2 = to.y + 21;
+            const y2 = to.y + 24;
             const midX = (x1 + x2) / 2;
             const midY = (y1 + y2) / 2;
 
@@ -74,15 +73,16 @@ export default function BinomialTreeChart({
                 y={node.y}
                 rx="10"
                 ry="10"
-                width="84"
-                height="42"
+                width="92"
+                height="48"
                 fill="#162235"
                 stroke="#415269"
                 strokeWidth="1.2"
               />
+
               <text
-                x={node.x + 42}
-                y={node.y + 16}
+                x={node.x + 46}
+                y={node.y + 14}
                 textAnchor="middle"
                 fontSize="11"
                 fill="#e2e8f0"
@@ -92,8 +92,8 @@ export default function BinomialTreeChart({
 
               {showStockPrices && (
                 <text
-                  x={node.x + 42}
-                  y={node.y + (showOptionValues ? 28 : 30)}
+                  x={node.x + 46}
+                  y={node.y + (showOptionValues ? 27 : 31)}
                   textAnchor="middle"
                   fontSize="11"
                   fill="#60a5fa"
@@ -104,8 +104,8 @@ export default function BinomialTreeChart({
 
               {showOptionValues && (
                 <text
-                  x={node.x + 42}
-                  y={node.y + (showStockPrices ? 38 : 30)}
+                  x={node.x + 46}
+                  y={node.y + (showStockPrices ? 40 : 31)}
                   textAnchor="middle"
                   fontSize="11"
                   fill="#fbbf24"

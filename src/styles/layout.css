@@ -526,7 +526,6 @@
   margin: 0 auto;
   text-align: center;
 }
-
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -564,6 +563,26 @@
   min-width: 760px;
   height: 520px;
   display: block;
+}
+
+.warning-card {
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.warning-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 6px;
+}
+
+.warning-text {
+  color: #fcd34d;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
