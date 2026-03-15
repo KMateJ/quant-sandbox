@@ -495,3 +495,34 @@
     line-height: 1.2 !important;
   }
 }
+
+.section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.section-header-left {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.section-header-center {
+  grid-column: 2;
+  text-align: center;
+}
+
+.section-header-right {
+  grid-column: 3;
+  justify-self: end;
+  width: auto;
+}
+
+.text-block {
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}

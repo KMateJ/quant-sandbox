@@ -51,7 +51,7 @@ export default function BlackScholesView() {
   );
 
   const yDomain = useMemo<[number, number]>(() => {
-    if (metric === "price") return [0, 200];
+    if (metric === "price") return [0, 175];
     if (metric === "delta") return [0, 1];
     if (metric === "gamma") return [0, 0.12];
     if (metric === "vega") return [0, 100];
