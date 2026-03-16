@@ -62,6 +62,7 @@ export default function BlackScholesView() {
   const [controlsOpen, setControlsOpen] = useState(true);
   const [metric, setMetric] = useState<MetricKey>("price");
   const [optionType, setOptionType] = useState<OptionType>("call");
+  const [chartOpen, setChartOpen] = useState(true);
 
   const maturities = useMemo(
     () => makeMaturities(maxMaturity, curveCount),
@@ -306,8 +307,18 @@ export default function BlackScholesView() {
         <SectionCard
           className="chart-card"
           title={getMetricTitle(metric, optionType)}
-          subtitle={`A kiválasztott mennyiség a részvényár függvényében több lejáratra (${optionType} opció)`}
+          subtitle={`A kiválasztott mennyiség a részvényár függvényében több lejáratra`}
+          headerLeft={
+            <button
+              type="button"
+              className="toggle-button"
+              onClick={() => setChartOpen((prev) => !prev)}
+            >
+              {chartOpen ? "Összecsukás" : "Megjelenítés"}
+            </button>
+          }
         >
+          {chartOpen && (
           <div className="chart-wrap">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -360,7 +371,13 @@ export default function BlackScholesView() {
                 ))}
               </LineChart>
             </ResponsiveContainer>
-          </div>
+            </div>
+            )}
+            {!chartOpen && (
+              <div className="param-summary">
+                Grafikon elrejtve
+              </div>
+            )}
         </SectionCard>
 
         <SectionCard title="Intuíció" subtitle="Mit mutat a grafikon?">
@@ -373,7 +390,7 @@ export default function BlackScholesView() {
               hogy ugyanazon paraméterek mellett hogyan alakul az opció ára vagy valamely
               görög mutatója eltérő lejáratok esetén.
             </p>
-                        
+
             <p>
               A <strong>Price</strong> nézet az opció elméleti értékét mutatja. Call
               esetén az opció annál értékesebb, minél magasabb a részvényár a strike-hoz
@@ -384,7 +401,7 @@ export default function BlackScholesView() {
               hogy az ár kedvező irányba mozduljon el. Ez az úgynevezett{" "}
               <strong>időérték</strong>.
             </p>
-                        
+
             <p>
               A szaggatott függőleges vonal a <strong>strike árfolyamot</strong> jelöli.
               Ennek környéke különösen fontos, mert itt szokott a legtöbb érzékenységi
@@ -392,7 +409,7 @@ export default function BlackScholesView() {
               állapothoz, egy kis árfolyamváltozás is jelentősen módosíthatja a várható
               lejáratkori kimenetet, ezért az opció ára és görögjei itt a legérdekesebbek.
             </p>
-                        
+
             <p>
               A <strong>Delta</strong> azt mutatja meg, hogy az opció ára körülbelül
               mennyivel változik, ha a részvényár 1 egységgel elmozdul. Call esetén a
@@ -403,7 +420,7 @@ export default function BlackScholesView() {
               esetén a delta jellemzően -1 és 0 közötti: minél inkább in-the-money a put,
               annál közelebb kerül -1-hez.
             </p>
-                        
+
             <p>
               A <strong>Gamma</strong> a delta változási sebességét méri, vagyis azt
               mutatja meg, mennyire gyorsan változik a delta a részvényár függvényében.
@@ -414,7 +431,7 @@ export default function BlackScholesView() {
               in-the-money vagy out-of-the-money tartományban a gamma általában kicsi,
               mert ott a delta már közel állandó.
             </p>
-                        
+
             <p>
               A <strong>Vega</strong> azt méri, hogy az opció ára mennyire érzékeny az
               implikált vagy feltételezett volatilitás változására. A magasabb
@@ -425,7 +442,7 @@ export default function BlackScholesView() {
               lehet, mert több idő alatt a bizonytalanság jobban be tud árazódni az
               opció értékébe.
             </p>
-                        
+
             <p>
               A <strong>Theta</strong> az idő múlásának hatását mutatja: azt fejezi ki,
               hogyan változik az opció ára, ha minden más paraméter változatlan marad,
@@ -435,7 +452,7 @@ export default function BlackScholesView() {
               rendelkezik. Rövid lejárat közelében ez az időveszteség felgyorsulhat, ezért
               a theta görbék gyakran itt mutatnak meredekebb viselkedést.
             </p>
-                        
+
             <p>
               A <strong>Rho</strong> a kamatlábra való érzékenységet mutatja. Call
               opcióknál a kamatláb emelkedése általában növeli az opció értékét, míg put
@@ -444,7 +461,7 @@ export default function BlackScholesView() {
               jövőbeni strike jelenértéke alacsonyabb. A rho jellemzően hosszabb
               lejáratoknál fontosabb, mert a kamathatásnak ott több ideje van felhalmozódni.
             </p>
-                        
+
             <p>
               A különböző lejáratú görbék összehasonlítása segít megérteni, hogy az opció
               értéke nemcsak az aktuális részvényártól függ, hanem attól is, mennyi idő
@@ -452,7 +469,7 @@ export default function BlackScholesView() {
               kevesebb idő marad a bizonytalanság „kidolgozására”. Hosszabb lejáratnál a
               görbék simábbak és az időérték dominánsabb szerepet kaphat.
             </p>
-                        
+
             <p>
               Összességében a grafikon azt segít intuitívan megérteni, hogy az opció árát
               nem egyetlen tényező mozgatja. A részvényár, a hátralévő idő, a
