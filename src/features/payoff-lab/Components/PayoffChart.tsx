@@ -57,7 +57,7 @@ export default function PayoffChart({
       subtitle="A stratégia lejáratkori alakja"
       headerLeft={
         <button type="button" className="toggle-button" onClick={onToggleChart}>
-          {chartOpen ? "+" : "-"}
+          {chartOpen ? "-" : "+"}
         </button>
       }
     >

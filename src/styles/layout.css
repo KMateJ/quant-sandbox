@@ -797,3 +797,19 @@
   color: #86efac;
   line-height: 1.5;
 }
+
+.payoff-preset-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.text-block code {
+  background: var(--surface-soft);
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-family: monospace;
+  color: #e2e8f0;   /* világos szöveg */
+}

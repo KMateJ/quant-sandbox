@@ -45,7 +45,7 @@ export default function BinomialControls({
       title=""
       headerLeft={
         <button type="button" className="toggle-button" onClick={onToggleControls}>
-          {controlsOpen ? "+" : "-"}
+          {controlsOpen ? "-" : "+"}
         </button>
       }
     >

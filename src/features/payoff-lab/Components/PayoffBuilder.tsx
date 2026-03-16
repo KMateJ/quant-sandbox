@@ -1,5 +1,6 @@
 import SectionCard from "../../../components/SectionCard";
 import NumberStepper from "../../../components/NumberStepper";
+import { useState } from "react";
 import type {
   Direction,
   InstrumentType,
@@ -35,18 +36,6 @@ function createEmptyLeg(index: number): StrategyLeg {
   };
 }
 
-const presets: { key: PresetKey; label: string }[] = [
-  { key: "long-call", label: "Long Call" },
-  { key: "long-put", label: "Long Put" },
-  { key: "long-stock", label: "Long Stock" },
-  { key: "cash", label: "Cash" },
-  { key: "covered-call", label: "Covered Call" },
-  { key: "protective-put", label: "Protective Put" },
-  { key: "synthetic-long-forward", label: "Synthetic Long Forward" },
-  { key: "synthetic-short-forward", label: "Synthetic Short Forward" },
-  { key: "long-call-butterfly", label: "Call Butterfly" },
-];
-
 export default function PayoffBuilder({
   legs,
   mode,
@@ -57,6 +46,9 @@ export default function PayoffBuilder({
   onShowComponentsChange,
   onChange,
 }: PayoffBuilderProps) {
+  const [selectedPreset, setSelectedPreset] =
+    useState<PresetKey>("long-call");
+
   function addLeg() {
     onChange([...legs, createEmptyLeg(legs.length + 1)]);
   }
@@ -121,7 +113,7 @@ export default function PayoffBuilder({
           className="toggle-button"
           onClick={onToggleControls}
         >
-          {controlsOpen ? "+" : "-"}
+          {controlsOpen ? "-" : "+"}
         </button>
       }
     >
@@ -135,6 +127,7 @@ export default function PayoffBuilder({
         >
           Payoff
         </button>
+
         <button
           type="button"
           className={
@@ -144,6 +137,7 @@ export default function PayoffBuilder({
         >
           Profit
         </button>
+
         <button
           type="button"
           className={showComponents ? "metric-button active" : "metric-button"}
@@ -153,17 +147,41 @@ export default function PayoffBuilder({
         </button>
       </div>
 
-      <div className="metric-switch" style={{ marginBottom: 18 }}>
-        {presets.map((preset) => (
-          <button
-            key={preset.key}
-            type="button"
-            className="metric-button"
-            onClick={() => applyPreset(preset.key)}
+      <div className="payoff-preset-bar">
+        <label className="payoff-field">
+          <span className="payoff-label">Példastratégia</span>
+          <select
+            className="payoff-select"
+            value={selectedPreset}
+            onChange={(e) => {
+              const value = e.target.value as PresetKey;
+              setSelectedPreset(value);
+              applyPreset(value);
+            }}
           >
-            {preset.label}
-          </button>
-        ))}
+            <optgroup label="Alapok">
+              <option value="long-call">Long Call</option>
+              <option value="long-put">Long Put</option>
+              <option value="long-stock">Long Stock</option>
+              <option value="cash">Cash</option>
+            </optgroup>
+
+            <optgroup label="Stratégiák">
+              <option value="covered-call">Covered Call</option>
+              <option value="protective-put">Protective Put</option>
+              <option value="long-call-butterfly">Call Butterfly</option>
+            </optgroup>
+
+            <optgroup label="Szintetikus">
+              <option value="synthetic-long-forward">
+                Synthetic Long Forward
+              </option>
+              <option value="synthetic-short-forward">
+                Synthetic Short Forward
+              </option>
+            </optgroup>
+          </select>
+        </label>
       </div>
 
       {controlsOpen ? (
