@@ -36,8 +36,21 @@ export function blackScholesCall(
   if (S <= 0 || K <= 0 || sigma <= 0) return 0;
 
   const { d1, d2 } = getD1D2(S, K, T, r, sigma);
-
   return S * normalCdf(d1) - K * Math.exp(-r * T) * normalCdf(d2);
+}
+
+export function blackScholesPut(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0) return Math.max(K - S, 0);
+  if (S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d1, d2 } = getD1D2(S, K, T, r, sigma);
+  return K * Math.exp(-r * T) * normalCdf(-d2) - S * normalCdf(-d1);
 }
 
 export function blackScholesDelta(
@@ -52,6 +65,20 @@ export function blackScholesDelta(
 
   const { d1 } = getD1D2(S, K, T, r, sigma);
   return normalCdf(d1);
+}
+
+export function blackScholesPutDelta(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0) return S < K ? -1 : 0;
+  if (S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d1 } = getD1D2(S, K, T, r, sigma);
+  return normalCdf(d1) - 1;
 }
 
 export function blackScholesGamma(
@@ -78,6 +105,66 @@ export function blackScholesVega(
 
   const { d1, sqrtT } = getD1D2(S, K, T, r, sigma);
   return S * normalPdf(d1) * sqrtT;
+}
+
+export function blackScholesTheta(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0 || S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d1, d2, sqrtT } = getD1D2(S, K, T, r, sigma);
+
+  return (
+    (-S * normalPdf(d1) * sigma) / (2 * sqrtT) -
+    r * K * Math.exp(-r * T) * normalCdf(d2)
+  );
+}
+
+export function blackScholesPutTheta(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0 || S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d1, d2, sqrtT } = getD1D2(S, K, T, r, sigma);
+
+  return (
+    (-S * normalPdf(d1) * sigma) / (2 * sqrtT) +
+    r * K * Math.exp(-r * T) * normalCdf(-d2)
+  );
+}
+
+export function blackScholesRho(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0 || S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d2 } = getD1D2(S, K, T, r, sigma);
+  return K * T * Math.exp(-r * T) * normalCdf(d2);
+}
+
+export function blackScholesPutRho(
+  S: number,
+  K: number,
+  T: number,
+  r: number,
+  sigma: number
+): number {
+  if (T <= 0 || S <= 0 || K <= 0 || sigma <= 0) return 0;
+
+  const { d2 } = getD1D2(S, K, T, r, sigma);
+  return -K * T * Math.exp(-r * T) * normalCdf(-d2);
 }
 
 export function makeMaturities(

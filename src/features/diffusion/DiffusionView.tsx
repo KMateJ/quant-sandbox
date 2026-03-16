@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import SectionCard from "../../components/SectionCard";
 import { diffusionSolution, makeTimes } from "./diffusion.math";
-import SliderField from "../../components/SliederField";
+import SliderField from "../../components/SliderField";
 
 type ChartRow = {
   x: number;

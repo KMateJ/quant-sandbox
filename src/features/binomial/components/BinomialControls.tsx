@@ -1,5 +1,5 @@
 import SectionCard from "../../../components/SectionCard";
-import SliderField from "../../../components/SliederField";
+import SliderField from "../../../components/SliderField";
 import NumberStepper from "../../../components/NumberStepper";
 import type { OptionKind } from "../binomial.types";
 
