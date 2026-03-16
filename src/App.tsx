@@ -4,6 +4,7 @@ import BlackScholesView from "./features/black-scholes/BlackScholesView";
 import DiffusionView from "./features/diffusion/DiffusionView";
 import SectionCard from "./components/SectionCard";
 import BinomialView from "./features/binomial/BinomialView";
+import PayoffView from "./features/payoff-lab/PayofView";
 
 export default function App() {
   const [page, setPage] = useState<PageKey>("black-scholes");
@@ -72,6 +73,8 @@ export default function App() {
               </div>
             </SectionCard>
         )}
+
+        {page === "payoff" && <PayoffView />}
 
         {page === "diffusion" && <DiffusionView />}
 

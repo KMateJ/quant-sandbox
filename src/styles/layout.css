@@ -604,3 +604,59 @@
     height: 420px;
   }
 }
+
+.payoff-leg-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  background: var(--surface-soft);
+  display: grid;
+  gap: 14px;
+}
+
+.payoff-leg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.payoff-leg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.payoff-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.payoff-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.payoff-input,
+.payoff-select {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+}
+
+.payoff-input::placeholder {
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .payoff-leg-grid {
+    grid-template-columns: 1fr;
+  }
+}
