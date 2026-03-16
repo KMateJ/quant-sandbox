@@ -80,7 +80,7 @@ return (
             className="toggle-button"
             onClick={() => setControlsOpen((prev) => !prev)}
           >
-            {controlsOpen ? "Összecsukás" : "Megjelenítés"}
+            {controlsOpen ? "+" : "-"}
           </button>
         }
       >

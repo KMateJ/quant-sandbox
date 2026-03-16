@@ -660,3 +660,140 @@
     grid-template-columns: 1fr;
   }
 }
+.payoff-builder-card .section-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "left center"
+    ". center";
+  align-items: start;
+  column-gap: 16px;
+  row-gap: 4px;
+}
+
+.payoff-builder-card .section-header-left {
+  grid-area: left;
+  justify-self: start;
+  align-self: start;
+}
+
+.payoff-builder-card .section-header-center {
+  grid-area: center;
+  text-align: left;
+}
+
+.payoff-builder-card .section-title,
+.payoff-builder-card .page-title {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.payoff-builder-card .section-subtitle,
+.payoff-builder-card .page-text {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.45;
+  max-width: 520px;
+}
+
+.payoff-builder-card .metric-switch {
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.payoff-builder-card .metric-button {
+  padding: 7px 12px;
+  font-size: 0.88rem;
+}
+
+.payoff-leg-card {
+  padding: 12px;
+  gap: 12px;
+  border-radius: 18px;
+}
+
+.payoff-leg-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.payoff-input,
+.payoff-select {
+  padding: 9px 11px;
+  font-size: 0.92rem;
+  min-height: 42px;
+}
+
+.payoff-label {
+  font-size: 0.8rem;
+}
+.payoff-field-full {
+  grid-column: 1 / -1;
+}
+
+.payoff-input,
+.payoff-select {
+  width: 100%;
+  height: 42px;
+
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+
+  border-radius: 12px;
+
+  padding: 0 12px;
+  font-size: 0.92rem;
+}
+.payoff-leg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stepper-button {
+  height: 42px;
+}
+
+.value-badge {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payoff-input[type="number"] {
+  text-align: center;
+  font-weight: 600;
+}
+.payoff-field {
+  display: grid;
+  gap: 6px;
+}
+
+.payoff-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.success-card {
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.success-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 6px;
+}
+
+.success-text {
+  color: #86efac;
+  line-height: 1.5;
+}

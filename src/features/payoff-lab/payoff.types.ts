@@ -14,6 +14,9 @@ export type StrategyLeg = {
   // későbbi bővítéshez
   premium?: number;
   entryPrice?: number;
+
+  cashAmount?: number;
+  rate?: number;
 };
 
 export type PayoffChartPoint = {
@@ -29,4 +32,7 @@ export type PresetKey =
   | "covered-call"
   | "protective-put"
   | "synthetic-long-forward"
-  | "synthetic-short-forward";
+  | "synthetic-short-forward"
+  | "long-stock"
+  | "cash"
+  | "long-call-butterfly";

@@ -153,7 +153,7 @@ export default function BlackScholesView() {
               className="toggle-button"
               onClick={() => setControlsOpen((prev) => !prev)}
             >
-              {controlsOpen ? "Összecsukás" : "Megjelenítés"}
+              {controlsOpen ? "+" : "-"}
             </button>
           }
         >
@@ -314,7 +314,7 @@ export default function BlackScholesView() {
               className="toggle-button"
               onClick={() => setChartOpen((prev) => !prev)}
             >
-              {chartOpen ? "Összecsukás" : "Megjelenítés"}
+              {chartOpen ? "+" : "-"}
             </button>
           }
         >

@@ -32,7 +32,7 @@ export default function BinomialTreeChart({
         className="toggle-button"
         onClick={onToggleTree}
       >
-        {treeOpen ? "Összecsukás" : "Megjelenítés"}
+        {treeOpen ? "+" : "-"}
       </button>
     }
 

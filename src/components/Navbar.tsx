@@ -12,8 +12,8 @@ type NavbarProps = {
 };
 
 const items: { key: PageKey; label: string }[] = [
-  { key: "payoff", label: "Payoff Lab" },
   { key: "home", label: "Home" },
+  { key: "payoff", label: "Payoff Lab" },
   { key: "binomial", label: "Binomial" },
   { key: "diffusion", label: "Diffusion" },
   { key: "black-scholes", label: "Black-Scholes" },

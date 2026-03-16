@@ -40,9 +40,9 @@ export default function PayoffSummary({ legs, mode }: PayoffSummaryProps) {
       </div>
 
       {(longForward.detected || shortForward.detected) && (
-        <div className="warning-card" style={{ marginTop: 16 }}>
-          <div className="warning-title">Opció algebra</div>
-          <div className="warning-text">
+        <div className="success-card" style={{ marginTop: 16 }}>
+          <div className="success-title">Opció algebra</div>
+          <div className="success-text">
             {longForward.detected
               ? "A megadott stratégia ugyanazt a lejáratkori payoff alakot adja, mint egy long forward azonos strike mellett."
               : "A megadott stratégia ugyanazt a lejáratkori payoff alakot adja, mint egy short forward azonos strike mellett."}
