@@ -66,6 +66,7 @@
   font-size: 0.92rem;
   border-radius: 999px;
   transition: 0.2s ease;
+  text-decoration: none;
 }
 
 .nav-tab:hover {
@@ -426,11 +427,6 @@
     justify-self: auto;
   }
 
-  .section-header-left {
-    display: flex;
-    justify-content: center;
-  }
-
   .section-title,
   .page-title {
     font-size: 1.05rem;
@@ -444,10 +440,17 @@
     line-height: 1.45;
   }
 
+  .section-header-left {
+    display: block;
+    width: 100%;
+  }
+
   .toggle-button {
     width: 100%;
-    max-width: 180px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
+    display: block;
+    text-align: center;
   }
 
   .metric-switch {
@@ -659,27 +662,11 @@
   .payoff-leg-grid {
     grid-template-columns: 1fr;
   }
-}
-.payoff-builder-card .section-header {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "left center"
-    ". center";
-  align-items: start;
-  column-gap: 16px;
-  row-gap: 4px;
-}
 
-.payoff-builder-card .section-header-left {
-  grid-area: left;
-  justify-self: start;
-  align-self: start;
-}
-
-.payoff-builder-card .section-header-center {
-  grid-area: center;
-  text-align: left;
+  .toggle-button {
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
 }
 
 .payoff-builder-card .section-title,
@@ -812,4 +799,26 @@
   border-radius: 6px;
   font-family: monospace;
   color: #e2e8f0;   /* világos szöveg */
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.replication-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.replication-positive {
+  color: #22c55e;
+}
+
+.replication-negative {
+  color: #ef4444;
+}
+
+.section-header {
+  grid-template-columns: auto 1fr;
 }

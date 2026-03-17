@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   CartesianGrid,
   Legend,
@@ -43,6 +44,49 @@ const lineColors = [
 type MetricKey = "price" | "delta" | "gamma" | "vega" | "theta" | "rho";
 type OptionType = "call" | "put";
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function parseNumber(
+  value: string | null,
+  fallback: number,
+  min: number,
+  max: number,
+  decimals?: number
+) {
+  if (value == null || value.trim() === "") return fallback;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  const clamped = clamp(parsed, min, max);
+  if (decimals == null) return clamped;
+  return Number(clamped.toFixed(decimals));
+}
+
+function parseMetric(value: string | null): MetricKey {
+  if (
+    value === "price" ||
+    value === "delta" ||
+    value === "gamma" ||
+    value === "vega" ||
+    value === "theta" ||
+    value === "rho"
+  ) {
+    return value;
+  }
+
+  return "price";
+}
+
+function parseOptionType(value: string | null): OptionType {
+  return value === "put" ? "put" : "call";
+}
+
+function formatNumber(value: number, decimals?: number) {
+  if (decimals == null) return String(value);
+  return String(Number(value.toFixed(decimals)));
+}
+
 function getMetricTitle(metric: MetricKey, optionType: OptionType): string {
   if (metric === "price") {
     return `Black–Scholes ${optionType} árak`;
@@ -54,15 +98,50 @@ function getMetricTitle(metric: MetricKey, optionType: OptionType): string {
 }
 
 export default function BlackScholesView() {
-  const [strike, setStrike] = useState(100);
-  const [rate, setRate] = useState(0.05);
-  const [volatility, setVolatility] = useState(0.2);
-  const [maxMaturity, setMaxMaturity] = useState(5);
-  const [curveCount, setCurveCount] = useState(5);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryString = searchParams.toString();
+
+  const [strike, setStrike] = useState(() => parseNumber(searchParams.get("k"), 100, 20, 200));
+  const [rate, setRate] = useState(() => parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
+  const [volatility, setVolatility] = useState(() => parseNumber(searchParams.get("sigma"), 0.2, 0.01, 1, 2));
+  const [maxMaturity, setMaxMaturity] = useState(() =>
+    parseNumber(searchParams.get("tmax"), 5, 0.25, 20, 2)
+  );
+  const [curveCount, setCurveCount] = useState(() =>
+    parseNumber(searchParams.get("curves"), 5, 2, 6)
+  );
   const [controlsOpen, setControlsOpen] = useState(true);
-  const [metric, setMetric] = useState<MetricKey>("price");
-  const [optionType, setOptionType] = useState<OptionType>("call");
+  const [metric, setMetric] = useState<MetricKey>(() => parseMetric(searchParams.get("metric")));
+  const [optionType, setOptionType] = useState<OptionType>(() =>
+    parseOptionType(searchParams.get("type"))
+  );
   const [chartOpen, setChartOpen] = useState(true);
+
+  useEffect(() => {
+    setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
+    setRate(parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
+    setVolatility(parseNumber(searchParams.get("sigma"), 0.2, 0.01, 1, 2));
+    setMaxMaturity(parseNumber(searchParams.get("tmax"), 5, 0.25, 20, 2));
+    setCurveCount(parseNumber(searchParams.get("curves"), 5, 2, 6));
+    setMetric(parseMetric(searchParams.get("metric")));
+    setOptionType(parseOptionType(searchParams.get("type")));
+  }, [queryString, searchParams]);
+
+  useEffect(() => {
+    const next = new URLSearchParams();
+    next.set("k", formatNumber(strike));
+    next.set("r", formatNumber(rate, 3));
+    next.set("sigma", formatNumber(volatility, 2));
+    next.set("tmax", formatNumber(maxMaturity, 2));
+    next.set("curves", formatNumber(curveCount));
+    next.set("metric", metric);
+    next.set("type", optionType);
+
+    const nextString = next.toString();
+    if (nextString !== queryString) {
+      setSearchParams(next, { replace: true });
+    }
+  }, [strike, rate, volatility, maxMaturity, curveCount, metric, optionType, queryString, setSearchParams]);
 
   const maturities = useMemo(
     () => makeMaturities(maxMaturity, curveCount),
@@ -319,65 +398,61 @@ export default function BlackScholesView() {
           }
         >
           {chartOpen && (
-          <div className="chart-wrap">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={chartData}
-                margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                <XAxis
-                  dataKey="S"
-                  type="number"
-                  domain={[10, 200]}
-                  tickCount={8}
-                  stroke="#94a3b8"
-                />
-                <YAxis domain={yDomain} tickCount={7} stroke="#94a3b8" />
-                <ReferenceLine
-                  x={strike}
-                  stroke="#94a3b8"
-                  strokeDasharray="4 4"
-                />
-                <Tooltip
-                  contentStyle={{
-                    background: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                  labelStyle={{ color: "#e2e8f0" }}
-                  formatter={(value, name) => {
-                    const numericValue =
-                      typeof value === "number" ? value : Number(value ?? 0);
-
-                    const digits =
-                      metric === "gamma" ? 5 : metric === "delta" ? 4 : 3;
-
-                    return [numericValue.toFixed(digits), String(name)];
-                  }}
-                  labelFormatter={(label) => `S = ${label}`}
-                />
-                <Legend />
-                {maturities.map((T, index) => (
-                  <Line
-                    key={T}
-                    type="monotone"
-                    dataKey={`T=${T}`}
-                    dot={false}
-                    stroke={lineColors[index % lineColors.length]}
-                    strokeWidth={2.5}
-                    isAnimationActive={false}
+            <div className="chart-wrap">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={chartData}
+                  margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
+                  <XAxis
+                    dataKey="S"
+                    type="number"
+                    domain={[10, 200]}
+                    tickCount={8}
+                    stroke="#94a3b8"
                   />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
+                  <YAxis domain={yDomain} tickCount={7} stroke="#94a3b8" />
+                  <ReferenceLine
+                    x={strike}
+                    stroke="#94a3b8"
+                    strokeDasharray="4 4"
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                    labelStyle={{ color: "#e2e8f0" }}
+                    formatter={(value, name) => {
+                      const numericValue =
+                        typeof value === "number" ? value : Number(value ?? 0);
+
+                      const digits =
+                        metric === "gamma" ? 5 : metric === "delta" ? 4 : 3;
+
+                      return [numericValue.toFixed(digits), String(name)];
+                    }}
+                    labelFormatter={(label) => `S = ${label}`}
+                  />
+                  <Legend />
+                  {maturities.map((T, index) => (
+                    <Line
+                      key={T}
+                      type="monotone"
+                      dataKey={`T=${T}`}
+                      dot={false}
+                      stroke={lineColors[index % lineColors.length]}
+                      strokeWidth={2.5}
+                      isAnimationActive={false}
+                    />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
             </div>
-            )}
-            {!chartOpen && (
-              <div className="param-summary">
-                Grafikon elrejtve
-              </div>
-            )}
+          )}
+          {!chartOpen && <div className="param-summary">Grafikon elrejtve</div>}
         </SectionCard>
 
         <SectionCard title="Intuíció" subtitle="Mit mutat a grafikon?">

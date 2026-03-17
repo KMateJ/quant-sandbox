@@ -168,14 +168,15 @@ function parseLeg(segment: string, index: number): StrategyLeg | null {
 }
 
 function parseLegs(value: string | null): StrategyLeg[] | null {
-  if (!value) return null;
+  if (value === null) return null;
+  if (value === "") return [];
 
   const segments = value
     .split(";")
     .map((segment) => segment.trim())
     .filter(Boolean);
 
-  if (!segments.length) return null;
+  if (!segments.length) return [];
 
   const parsed = segments.map((segment, index) => parseLeg(segment, index));
 
@@ -201,7 +202,7 @@ function readUrlState(searchParams: URLSearchParams): UrlState {
   const showComponents = searchParams.get("components") === "1";
   const parsedLegs = parseLegs(searchParams.get("legs"));
 
-  if (parsedLegs) {
+  if (parsedLegs !== null) {
     return {
       mode,
       showComponents,

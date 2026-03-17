@@ -29,8 +29,23 @@ export default function BinomialSummary({ tree }: BinomialSummaryProps) {
         {tree.replicatingPortfolio ? (
           <div className="stat-card">
             <div className="stat-title">Gyökérbeli replikáló portfólió</div>
+                  
             <div className="stat-value">
-              V₀ = {tree.replicatingPortfolio.delta.toFixed(4)} · S₀ + {tree.replicatingPortfolio.bond.toFixed(4)}
+              <div className="replication-row">
+                <span>Stock position</span>
+                <span className={tree.replicatingPortfolio.delta >= 0 ? "replication-positive" : "replication-negative"}>
+                  {tree.replicatingPortfolio.delta >= 0 ? "+" : ""}
+                  {tree.replicatingPortfolio.delta.toFixed(4)} · S₀
+                </span>
+              </div>
+                      
+              <div className="replication-row">
+                <span>Cash position</span>
+                <span className={tree.replicatingPortfolio.bond >= 0 ? "replication-positive" : "replication-negative"}>
+                  {tree.replicatingPortfolio.bond >= 0 ? "+" : ""}
+                  {tree.replicatingPortfolio.bond.toFixed(4)}
+                </span>
+              </div>
             </div>
           </div>
         ) : null}
