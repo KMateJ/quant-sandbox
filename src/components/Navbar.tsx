@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export type PageKey =
   | "home"
   | "diffusion"
@@ -6,24 +8,18 @@ export type PageKey =
   | "payoff";
 
 type NavbarProps = {
-  current: PageKey;
-  onNavigate: (page: PageKey) => void;
   hidden?: boolean;
 };
 
-const items: { key: PageKey; label: string }[] = [
-  { key: "home", label: "Home" },
-  { key: "payoff", label: "Payoff Lab" },
-  { key: "binomial", label: "Binomial" },
-  { key: "diffusion", label: "Diffusion" },
-  { key: "black-scholes", label: "Black-Scholes" },
+const items: { key: PageKey; label: string; to: string; end?: boolean }[] = [
+  { key: "home", label: "Home", to: "/", end: true },
+  { key: "payoff", label: "Payoff Lab", to: "/payoff" },
+  { key: "binomial", label: "Binomial", to: "/binomial" },
+  { key: "diffusion", label: "Diffusion", to: "/diffusion" },
+  { key: "black-scholes", label: "Black-Scholes", to: "/black-scholes" },
 ];
 
-export default function Navbar({
-  current,
-  onNavigate,
-  hidden = false,
-}: NavbarProps) {
+export default function Navbar({ hidden = false }: NavbarProps) {
   return (
     <header className={`topbar ${hidden ? "topbar-hidden" : ""}`}>
       <div className="topbar-inner">
@@ -34,14 +30,14 @@ export default function Navbar({
 
         <nav className="nav-tabs" aria-label="Main navigation">
           {items.map((item) => (
-            <button
+            <NavLink
               key={item.key}
-              type="button"
-              className={current === item.key ? "nav-tab active" : "nav-tab"}
-              onClick={() => onNavigate(item.key)}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) => (isActive ? "nav-tab active" : "nav-tab")}
             >
               {item.label}
-            </button>
+            </NavLink>
           ))}
         </nav>
       </div>

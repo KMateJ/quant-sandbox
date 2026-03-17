@@ -1,6 +1,5 @@
 import SectionCard from "../../../components/SectionCard";
 import NumberStepper from "../../../components/NumberStepper";
-import { useState } from "react";
 import type {
   Direction,
   InstrumentType,
@@ -14,9 +13,11 @@ type PayoffBuilderProps = {
   legs: StrategyLeg[];
   mode: ViewMode;
   controlsOpen: boolean;
+  selectedPreset: PresetKey | null;
   showComponents: boolean;
   onToggleControls: () => void;
   onModeChange: (mode: ViewMode) => void;
+  onPresetChange: (preset: PresetKey | null) => void;
   onShowComponentsChange: (value: boolean) => void;
   onChange: (legs: StrategyLeg[]) => void;
 };
@@ -40,28 +41,31 @@ export default function PayoffBuilder({
   legs,
   mode,
   controlsOpen,
+  selectedPreset,
   showComponents,
   onToggleControls,
   onModeChange,
+  onPresetChange,
   onShowComponentsChange,
   onChange,
 }: PayoffBuilderProps) {
-  const [selectedPreset, setSelectedPreset] =
-    useState<PresetKey>("long-call");
-
   function addLeg() {
+    onPresetChange(null);
     onChange([...legs, createEmptyLeg(legs.length + 1)]);
   }
 
   function removeLeg(id: string) {
+    onPresetChange(null);
     onChange(legs.filter((leg) => leg.id !== id));
   }
 
   function updateLeg(id: string, patch: Partial<StrategyLeg>) {
+    onPresetChange(null);
     onChange(legs.map((leg) => (leg.id === id ? { ...leg, ...patch } : leg)));
   }
 
   function applyPreset(key: PresetKey) {
+    onPresetChange(key);
     onChange(getPresetStrategy(key));
   }
 
@@ -152,13 +156,18 @@ export default function PayoffBuilder({
           <span className="payoff-label">Példastratégia</span>
           <select
             className="payoff-select"
-            value={selectedPreset}
+            value={selectedPreset ?? "custom"}
             onChange={(e) => {
-              const value = e.target.value as PresetKey;
-              setSelectedPreset(value);
-              applyPreset(value);
+              if (e.target.value === "custom") {
+                onPresetChange(null);
+                return;
+              }
+
+              applyPreset(e.target.value as PresetKey);
             }}
           >
+            <option value="custom">Egyedi stratégia</option>
+
             <optgroup label="Alapok">
               <option value="long-call">Long Call</option>
               <option value="long-put">Long Put</option>
