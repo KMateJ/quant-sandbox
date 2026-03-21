@@ -93,13 +93,13 @@ export function HomeView() {
             <ul className="dev-list">
               <li>{t("devItemUrlParams")}</li>
               <li>{t("devItemLanguage")}</li>
+              <li>{t("devItemHeston")}</li>
             </ul>
           </div>
 
           <div className="dev-card dev-card-info">
             <div className="dev-title">{t("devUpcoming")}</div>
             <ul className="dev-list">
-              <li>{t("devItemHeston")}</li>
               <li>{t("devItemMonteCarlo")}</li>
               <li>{t("devItemPDE")}</li>
             </ul>
