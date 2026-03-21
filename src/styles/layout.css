@@ -470,6 +470,112 @@
 }
 
 /* =========================================================
+   Development / roadmap
+========================================================= */
+
+.dev-stack {
+  display: grid;
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.dev-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-card-soft);
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  display: grid;
+  gap: 8px;
+}
+
+.dev-title {
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dev-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dev-list li {
+  margin-bottom: 6px;
+}
+
+.dev-card-neutral {
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dev-title {
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dev-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dev-list li {
+  margin-bottom: 6px;
+}
+
+.dev-card-success {
+  border: 1px solid var(--success-border);
+  background: var(--success-bg);
+}
+
+.dev-card-success .dev-title {
+  color: var(--success-title);
+}
+
+.dev-card-info {
+  border: 1px solid var(--info-border);
+  background: var(--info-bg);
+}
+
+.dev-card-info .dev-title {
+  color: var(--info-title);
+}
+
+
+.dev-card-neutral {
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dev-card-neutral .dev-title {
+  color: var(--text);
+}
+
+.dev-card-neutral .dev-list {
+  color: var(--muted);
+}
+
+.dev-card-neutral {
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+
+.dev-card-neutral .dev-title {
+  color: var(--text);
+}
+
+.dev-card-neutral .dev-list {
+  color: var(--muted);
+}
+
+/* =========================================================
    Responsive
 ========================================================= */
 
@@ -673,4 +779,3 @@
     line-height: 1.2 !important;
   }
 }
-

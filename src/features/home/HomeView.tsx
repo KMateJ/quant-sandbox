@@ -17,7 +17,7 @@ export function HomeView() {
 
       <SectionCard
         title={t("settingsTitle")}
-        subtitle={t("settingsSubtitle")}
+        subtitle={""}
       >
         <div className="settings-stack">
           <div className="settings-row">
@@ -80,6 +80,40 @@ export function HomeView() {
                 {t("themeSystem")}
               </button>
             </div>
+          </div>
+        </div>
+      </SectionCard>
+      <SectionCard
+        title={t("devTitle")}
+        subtitle={""}
+      >
+        <div className="dev-stack">
+          <div className="dev-card dev-card-success">
+            <div className="dev-title">{t("devRecent")}</div>
+            <ul className="dev-list">
+              <li>{t("devItemUrlParams")}</li>
+              <li>{t("devItemLanguage")}</li>
+            </ul>
+          </div>
+
+          <div className="dev-card dev-card-info">
+            <div className="dev-title">{t("devUpcoming")}</div>
+            <ul className="dev-list">
+              <li>{t("devItemHeston")}</li>
+              <li>{t("devItemMonteCarlo")}</li>
+              <li>{t("devItemPDE")}</li>
+            </ul>
+          </div>
+
+          <div className="dev-card dev-card-neutral">
+            <div className="dev-title">{t("devFuture")}</div>
+            <ul className="dev-list">
+              <li>{t("devItemMacro")}</li>
+              <li>{t("devItemMicro")}</li>
+              <li>{t("devItemAnalysis")}</li>
+              <li>{t("devItemLinearAlgebra")}</li>
+              <li>{t("devItemProbability")}</li>
+            </ul>
           </div>
         </div>
       </SectionCard>

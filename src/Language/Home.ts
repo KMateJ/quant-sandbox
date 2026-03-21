@@ -11,15 +11,39 @@ export const homeHu = {
 
     homeTitle: "Mi ez az oldal?",
     homeIntro:
-      "Ez az oldal segédanyag az ELTE + Corvinus Biztosítási és pénzügyi matematika szak hallgatóinak.",
+      "Ez az oldal az ELTE + Corvinus Biztosítás- és Pénzügyi Matematika szak hallgatóinak készült tanulást segítő eszköz.",
+    
     homeBody:
-      "A projekt karbantartása erősen „van hozzá kedvem / nincs hozzá kedvem” alapon működik. Ha szeretnéd, hogy több tartalom kerüljön bele, vagy esetleg hibát találsz, akkor keress meg vele nyugodtan.",
-
-    settingsTitle: "Beállítások",
+      "Ez egy személyes projekt, így a fejlesztés nem folyamatos. Előfordulhat, hogy nem reagálok gyorsan a kérésekre, de minden visszajelzést és ötletet szívesen fogadok.",    settingsTitle: "Beállítások",
     settingsSubtitle: "Később ide kerülhetnek a további app beállítások is.",
     languageLabel: "Nyelv",
     languageHu: "Magyar",
     languageEn: "Angol",
+
+
+
+    devTitle: "Fejlesztések",
+    devSubtitle: "Frissítések és tervezett funkciók",
+    
+    devRecent: "Nemrég elkészült",
+    devUpcoming: "Következő lépések",
+    devFuture: "Későbbi modulok",
+    
+    devItemUrlParams:
+      "URL paraméterezés — a beállítások linkben megoszthatók",
+    
+    devItemLanguage:
+      "Nyelvválasztás — már elérhető magyar és angol verzió",
+    
+    devItemHeston: "Heston modell",
+    devItemMonteCarlo: "Monte Carlo szimulációk és vizualizációk",
+    devItemPDE: "Numerikus módszerek PDE-k megoldására",
+    
+    devItemMacro: "Makroökonómia",
+    devItemMicro: "Mikroökonómia",
+    devItemAnalysis: "Analízis",
+    devItemLinearAlgebra: "Lineáris algebra",
+    devItemProbability: "Valószínűségszámítás",
 };
 
 export const homeEn = {
@@ -34,13 +58,37 @@ export const homeEn = {
 
     homeTitle: "What is this site?",
     homeIntro:
-      "This site is a study aid for students of the ELTE + Corvinus Insurance and Financial Mathematics program.",
-    homeBody:
-      "The maintenance of this project works very much on a “I feel like it / I don’t feel like it” basis. If you would like to see more content here, or you find a bug, feel free to reach out.",
+      "This site is a study aid for students of the ELTE & Corvinus Insurance and Financial Mathematics program.",
 
+    homeBody:
+      "This is a personal project, so development happens when I have time and motivation. I may not always respond quickly to requests, but feedback and suggestions are always welcome.",
     settingsTitle: "Settings",
     settingsSubtitle: "You can place the rest of the app settings here later.",
     languageLabel: "Language",
     languageHu: "Hungarian",
     languageEn: "English",
+
+
+    devTitle: "Development",
+    devSubtitle: "Recent updates and upcoming features",
+
+    devRecent: "Recently added",
+    devUpcoming: "Coming next",
+    devFuture: "Planned modules",
+
+    devItemUrlParams:
+      "URL parameterization — share links with your current inputs",
+
+    devItemLanguage:
+      "Language selection — English and Hungarian versions are now available",
+
+    devItemHeston: "Heston model",
+    devItemMonteCarlo: "Monte Carlo simulations and visualizations",
+    devItemPDE: "Numerical methods for solving PDEs",
+
+    devItemMacro: "Macroeconomics",
+    devItemMicro: "Microeconomics",
+    devItemAnalysis: "Analysis",
+    devItemLinearAlgebra: "Linear algebra",
+    devItemProbability: "Probability theory",
 }

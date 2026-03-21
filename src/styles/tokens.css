@@ -33,6 +33,10 @@
   --control-height-sm: 38px;
 
   --topbar-blur: 10px;
+  --info-border: rgba(59, 130, 246, 0.35);
+  --info-bg: rgba(59, 130, 246, 0.12);
+  --info-title: #60a5fa;
+  --info-text: #93c5fd;
 }
 
 :root,
