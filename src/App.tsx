@@ -6,24 +6,49 @@ import DiffusionView from "./features/diffusion/DiffusionView";
 import SectionCard from "./components/SectionCard";
 import BinomialView from "./features/binomial/BinomialView";
 import PayoffView from "./features/payoff-lab/PayofView";
+import { useI18n } from "./i18n";
 
 function HomeView() {
-  return (
-    <SectionCard title="Mi ez az oldal?">
-      <div className="text-block">
-        <p>
-          Ez az oldal segédanyag az <b>ELTE + Corvinus Biztosítási és pénzügyi matematika</b>
-          szak hallgatóinak.
-        </p>
+  const { language, setLanguage, t } = useI18n();
 
-        <p>
-          A projekt karbantartása erősen
-          <i> „van hozzá kedvem / nincs hozzá kedvem”</i> alapon működik.
-          Ha szeretnéd, hogy több tartalom kerüljön bele, vagy esetleg hibát találsz, akkor
-          keress meg vele nyugodtan.
-        </p>
-      </div>
-    </SectionCard>
+  return (
+    <div className="view-main">
+      <SectionCard title={t("homeTitle")}>
+        <div className="text-block">
+          <p>{t("homeIntro")}</p>
+          <p>{t("homeBody")}</p>
+        </div>
+      </SectionCard>
+
+      <SectionCard
+        title={t("settingsTitle")}
+        subtitle={t("settingsSubtitle")}
+      >
+        <div className="text-block">
+          <div className="metric-switch" style={{ marginTop: 8 }}>
+            <span style={{ alignSelf: "center", marginRight: 12 }}>
+              {t("languageLabel")}
+            </span>
+
+            <button
+              type="button"
+              className={language === "hu" ? "metric-button active" : "metric-button"}
+              onClick={() => setLanguage("hu")}
+            >
+              {t("languageHu")}
+            </button>
+
+            <button
+              type="button"
+              className={language === "en" ? "metric-button active" : "metric-button"}
+              onClick={() => setLanguage("en")}
+            >
+              {t("languageEn")}
+            </button>
+          </div>
+        </div>
+      </SectionCard>
+    </div>
   );
 }
 

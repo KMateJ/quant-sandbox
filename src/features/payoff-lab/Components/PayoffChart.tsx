@@ -13,6 +13,7 @@ import {
 import SectionCard from "../../../components/SectionCard";
 import type { PayoffChartPoint } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
+import { useI18n } from "../../../i18n";
 
 type PayoffChartProps = {
   chartData: PayoffChartPoint[];
@@ -41,20 +42,20 @@ export default function PayoffChart({
   chartOpen,
   onToggleChart,
 }: PayoffChartProps) {
+  const { t } = useI18n();
+
   const yDomain = useMemo(() => getYAxisDomain(chartData), [chartData]);
 
   const componentKeys = useMemo(() => {
     if (!chartData.length) return [];
-    return Object.keys(chartData[0]).filter(
-      (key) => key.startsWith("leg-")
-    );
+    return Object.keys(chartData[0]).filter((key) => key.startsWith("leg-"));
   }, [chartData]);
 
   return (
     <SectionCard
       className="chart-card"
-      title="Kifizetési diagram"
-      subtitle="A stratégia lejáratkori alakja"
+      title={t("payoffChartTitle")}
+      subtitle={t("payoffChartSubtitle")}
       headerLeft={
         <button type="button" className="toggle-button" onClick={onToggleChart}>
           {chartOpen ? "-" : "+"}
@@ -103,7 +104,7 @@ export default function PayoffChart({
                     typeof value === "number" ? value : Number(value ?? 0);
                   return [numericValue.toFixed(3), String(name)];
                 }}
-                labelFormatter={(label) => `S = ${label}`}
+                labelFormatter={(label) => `${t("payoffChartTooltipLabel")}${label}`}
               />
 
               <Legend />
@@ -111,7 +112,7 @@ export default function PayoffChart({
               <Line
                 type="monotone"
                 dataKey="total"
-                name="Összesített"
+                name={t("payoffChartTotal")}
                 dot={false}
                 stroke="#60a5fa"
                 strokeWidth={3}
@@ -124,7 +125,7 @@ export default function PayoffChart({
                     key={key}
                     type="monotone"
                     dataKey={key}
-                    name={key.replace("leg-", "Láb ")}
+                    name={key.replace("leg-", t("payoffChartLegPrefix"))}
                     dot={false}
                     stroke={lineColors[(index + 1) % lineColors.length]}
                     strokeWidth={2}
@@ -137,7 +138,7 @@ export default function PayoffChart({
                 <Line
                   type="monotone"
                   dataKey="syntheticForward"
-                  name="Synthetic Forward"
+                  name={t("payoffChartSyntheticForward")}
                   dot={false}
                   stroke="#fbbf24"
                   strokeWidth={2.5}
@@ -150,9 +151,17 @@ export default function PayoffChart({
         </div>
       ) : (
         <div className="param-summary">
-          <div>{chartData.length} pont</div>
-          <div>{strikes.length} strike marker</div>
-          <div>{syntheticDetected ? "synthetic overlay aktív" : "nincs overlay"}</div>
+          <div>
+            {chartData.length} {t("payoffChartPoints")}
+          </div>
+          <div>
+            {strikes.length} {t("payoffChartStrikeMarkers")}
+          </div>
+          <div>
+            {syntheticDetected
+              ? t("payoffChartOverlayActive")
+              : t("payoffChartOverlayInactive")}
+          </div>
         </div>
       )}
     </SectionCard>

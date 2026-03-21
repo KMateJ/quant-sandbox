@@ -8,6 +8,7 @@ import type {
   ViewMode,
 } from "../payoff.types";
 import { getPresetStrategy } from "../payoff.presets";
+import { useI18n } from "../../../i18n";
 
 type PayoffBuilderProps = {
   legs: StrategyLeg[];
@@ -49,6 +50,8 @@ export default function PayoffBuilder({
   onShowComponentsChange,
   onChange,
 }: PayoffBuilderProps) {
+  const { t } = useI18n();
+
   function addLeg() {
     onPresetChange(null);
     onChange([...legs, createEmptyLeg(legs.length + 1)]);
@@ -129,7 +132,7 @@ export default function PayoffBuilder({
           }
           onClick={() => onModeChange("payoff")}
         >
-          Payoff
+          {t("payoffBuilderShowPayoff")}
         </button>
 
         <button
@@ -139,7 +142,7 @@ export default function PayoffBuilder({
           }
           onClick={() => onModeChange("profit")}
         >
-          Profit
+          {t("payoffBuilderShowProfit")}
         </button>
 
         <button
@@ -147,13 +150,13 @@ export default function PayoffBuilder({
           className={showComponents ? "metric-button active" : "metric-button"}
           onClick={() => onShowComponentsChange(!showComponents)}
         >
-          Lábak külön
+          {t("payoffBuilderShowComponents")}
         </button>
       </div>
 
       <div className="payoff-preset-bar">
         <label className="payoff-field">
-          <span className="payoff-label">Példastratégia</span>
+          <span className="payoff-label">{t("payoffPresetLabel")}</span>
           <select
             className="payoff-select"
             value={selectedPreset ?? "custom"}
@@ -166,22 +169,22 @@ export default function PayoffBuilder({
               applyPreset(e.target.value as PresetKey);
             }}
           >
-            <option value="custom">Egyedi stratégia</option>
+            <option value="custom">{t("payoffPresetCustom")}</option>
 
-            <optgroup label="Alapok">
+            <optgroup label={t("payoffPresetGroupBasics")}>
               <option value="long-call">Long Call</option>
               <option value="long-put">Long Put</option>
               <option value="long-stock">Long Stock</option>
               <option value="cash">Cash</option>
             </optgroup>
 
-            <optgroup label="Stratégiák">
+            <optgroup label={t("payoffPresetGroupStrategies")}>
               <option value="covered-call">Covered Call</option>
               <option value="protective-put">Protective Put</option>
               <option value="long-call-butterfly">Call Butterfly</option>
             </optgroup>
 
-            <optgroup label="Szintetikus">
+            <optgroup label={t("payoffPresetGroupSynthetic")}>
               <option value="synthetic-long-forward">
                 Synthetic Long Forward
               </option>
@@ -198,19 +201,23 @@ export default function PayoffBuilder({
           {legs.map((leg, index) => (
             <div key={leg.id} className="payoff-leg-card">
               <div className="payoff-leg-header">
-                <div className="stat-title">Láb {index + 1}</div>
+                <div className="stat-title">
+                  {t("payoffLegTitle")} {index + 1}
+                </div>
                 <button
                   type="button"
                   className="toggle-button"
                   onClick={() => removeLeg(leg.id)}
                 >
-                  Törlés
+                  {t("payoffDelete")}
                 </button>
               </div>
 
               <div className="payoff-leg-grid">
                 <label className="payoff-field">
-                  <span className="payoff-label">Instrumentum</span>
+                  <span className="payoff-label">
+                    {t("payoffFieldInstrument")}
+                  </span>
                   <select
                     className="payoff-select"
                     value={leg.type}
@@ -221,16 +228,18 @@ export default function PayoffBuilder({
                       )
                     }
                   >
-                    <option value="call">Call</option>
-                    <option value="put">Put</option>
-                    <option value="stock">Stock</option>
-                    <option value="forward">Forward</option>
-                    <option value="cash">Cash</option>
+                    <option value="call">{t("payoffTypeCall")}</option>
+                    <option value="put">{t("payoffTypePut")}</option>
+                    <option value="stock">{t("payoffTypeStock")}</option>
+                    <option value="forward">{t("payoffTypeForward")}</option>
+                    <option value="cash">{t("payoffTypeCash")}</option>
                   </select>
                 </label>
 
                 <label className="payoff-field">
-                  <span className="payoff-label">Irány</span>
+                  <span className="payoff-label">
+                    {t("payoffFieldDirection")}
+                  </span>
                   <select
                     className="payoff-select"
                     value={leg.direction}
@@ -240,13 +249,15 @@ export default function PayoffBuilder({
                       })
                     }
                   >
-                    <option value="long">Long</option>
-                    <option value="short">Short</option>
+                    <option value="long">{t("payoffDirectionLong")}</option>
+                    <option value="short">{t("payoffDirectionShort")}</option>
                   </select>
                 </label>
 
                 <div className="payoff-field payoff-field-full">
-                  <span className="payoff-label">Mennyiség</span>
+                  <span className="payoff-label">
+                    {t("payoffFieldQuantity")}
+                  </span>
                   <NumberStepper
                     label=""
                     min={1}
@@ -254,14 +265,18 @@ export default function PayoffBuilder({
                     step={1}
                     value={leg.quantity}
                     onChange={(value) => updateLeg(leg.id, { quantity: value })}
-                    formatValue={(value) => `${value} db`}
+                    formatValue={(value) =>
+                      `${value} ${t("payoffQuantityUnit")}`
+                    }
                   />
                 </div>
 
                 {(leg.type === "call" || leg.type === "put") && (
                   <>
                     <label className="payoff-field">
-                      <span className="payoff-label">Strike</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldStrike")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -278,7 +293,9 @@ export default function PayoffBuilder({
                     </label>
 
                     <label className="payoff-field">
-                      <span className="payoff-label">Prémium</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldPremium")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -299,7 +316,9 @@ export default function PayoffBuilder({
                 {leg.type === "forward" && (
                   <>
                     <label className="payoff-field">
-                      <span className="payoff-label">Forward ár</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldForwardPrice")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -316,7 +335,9 @@ export default function PayoffBuilder({
                     </label>
 
                     <label className="payoff-field">
-                      <span className="payoff-label">Strike marker</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldStrikeMarker")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -336,7 +357,9 @@ export default function PayoffBuilder({
 
                 {leg.type === "stock" && (
                   <label className="payoff-field">
-                    <span className="payoff-label">Belépési ár</span>
+                    <span className="payoff-label">
+                      {t("payoffFieldEntryPrice")}
+                    </span>
                     <input
                       className="payoff-input"
                       type="number"
@@ -356,7 +379,9 @@ export default function PayoffBuilder({
                 {leg.type === "cash" && (
                   <>
                     <label className="payoff-field">
-                      <span className="payoff-label">Cash összeg</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldCashAmount")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -373,7 +398,9 @@ export default function PayoffBuilder({
                     </label>
 
                     <label className="payoff-field">
-                      <span className="payoff-label">Rate</span>
+                      <span className="payoff-label">
+                        {t("payoffFieldRate")}
+                      </span>
                       <input
                         className="payoff-input"
                         type="number"
@@ -396,17 +423,19 @@ export default function PayoffBuilder({
           ))}
 
           <button type="button" className="metric-button" onClick={addLeg}>
-            + Láb hozzáadása
+            {t("payoffAddLeg")}
           </button>
         </div>
       ) : (
         <div className="param-summary">
-          <div>{legs.length} láb</div>
-          <div>{mode}</div>
+          <div>
+            {legs.length} {t("payoffCollapsedLegCount")}
+          </div>
+          <div>{mode === "payoff" ? t("payoffBuilderShowPayoff") : t("payoffBuilderShowProfit")}</div>
           <div>
             {showComponents
-              ? "egyedi görbék látszanak"
-              : "csak összesített görbe"}
+              ? t("payoffCollapsedComponentsVisible")
+              : t("payoffCollapsedComponentsHidden")}
           </div>
         </div>
       )}

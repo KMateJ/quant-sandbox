@@ -6,6 +6,7 @@ import { buildBinomialTree } from "./binomial.math";
 import type { OptionKind } from "./binomial.types";
 import BinomialTreeChart from "./components/BinomealTreeCharts";
 import BinomialExplanation from "./components/BinomealExplanation";
+import { useI18n } from "../../i18n";
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -43,6 +44,7 @@ function formatNumber(value: number, decimals?: number) {
 export default function BinomialView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
+  const { t } = useI18n();
 
   const [S0, setS0] = useState(() => parseNumber(searchParams.get("s0"), 100, 20, 200));
   const [K, setK] = useState(() => parseNumber(searchParams.get("k"), 100, 20, 200));
@@ -135,14 +137,14 @@ export default function BinomialView() {
               className={showStockPrices ? "metric-button active" : "metric-button"}
               onClick={() => setShowStockPrices((prev) => !prev)}
             >
-              Részvényárak
+              {t("binomialToggleStocks")}
             </button>
             <button
               type="button"
               className={showOptionValues ? "metric-button active" : "metric-button"}
               onClick={() => setShowOptionValues((prev) => !prev)}
             >
-              Opcióértékek
+              {t("binomialToggleValues")}
             </button>
           </div>
         </div>

@@ -1,0 +1,31 @@
+export const diffusionHu = {
+  diffusionKappaLabel: "κ (diffúzió)",
+  diffusionNLabel: "n (hullámszám)",
+  diffusionTMinLabel: "t_min",
+  diffusionTMaxLabel: "t_max",
+  diffusionCurveCountLabel: "Görbék száma",
+  diffusionCurveCountUnit: "db",
+  diffusionTimeRange: "Időtartomány",
+  diffusionMaxAmplitude: "Max amplitúdó skála",
+  diffusionCurvesShort: "görbék",
+  diffusionChartTitle: "Diffúziós egyenlet",
+  diffusionTooltipX: "x",
+  diffusionExplanationTitle: "Intuíció",
+  diffusionExplanationSubtitle: "Mit látunk a diffúziós egyenletnél?",
+};
+
+export const diffusionEn = {
+  diffusionKappaLabel: "κ (diffusion)",
+  diffusionNLabel: "n (wave number)",
+  diffusionTMinLabel: "t_min",
+  diffusionTMaxLabel: "t_max",
+  diffusionCurveCountLabel: "Number of curves",
+  diffusionCurveCountUnit: "curves",
+  diffusionTimeRange: "Time range",
+  diffusionMaxAmplitude: "Max amplitude scale",
+  diffusionCurvesShort: "curves",
+  diffusionChartTitle: "Diffusion equation",
+  diffusionTooltipX: "x",
+  diffusionExplanationTitle: "Intuition",
+  diffusionExplanationSubtitle: "What do we see in the diffusion equation?",
+};

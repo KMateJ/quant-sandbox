@@ -2,6 +2,7 @@ import SectionCard from "../../../components/SectionCard";
 import SliderField from "../../../components/SliderField";
 import NumberStepper from "../../../components/NumberStepper";
 import type { OptionKind } from "../binomial.types";
+import { useI18n } from "../../../i18n";
 
 type BinomialControlsProps = {
   S0: number;
@@ -40,6 +41,8 @@ export default function BinomialControls({
   onStepsChange,
   onOptionKindChange,
 }: BinomialControlsProps) {
+  const { t } = useI18n();
+
   return (
     <SectionCard
       title=""
@@ -55,14 +58,14 @@ export default function BinomialControls({
           className={optionKind === "call" ? "metric-button active" : "metric-button"}
           onClick={() => onOptionKindChange("call")}
         >
-          Call
+          {t("binomialOptionCall")}
         </button>
         <button
           type="button"
           className={optionKind === "put" ? "metric-button active" : "metric-button"}
           onClick={() => onOptionKindChange("put")}
         >
-          Put
+          {t("binomialOptionPut")}
         </button>
       </div>
 
@@ -70,7 +73,7 @@ export default function BinomialControls({
         <>
           <div className="controls-grid">
             <SliderField
-              label="S₀ (kezdeti ár)"
+              label={t("binomialS0Label")}
               min={20}
               max={200}
               step={1}
@@ -79,7 +82,7 @@ export default function BinomialControls({
             />
 
             <SliderField
-              label="K (strike)"
+              label={t("binomialKLabel")}
               min={20}
               max={200}
               step={1}
@@ -88,7 +91,7 @@ export default function BinomialControls({
             />
 
             <SliderField
-              label="u (up factor)"
+              label={t("binomialULabel")}
               min={1.01}
               max={2}
               step={0.01}
@@ -98,7 +101,7 @@ export default function BinomialControls({
             />
 
             <SliderField
-              label="d (down factor)"
+              label={t("binomialDLabel")}
               min={0.1}
               max={0.99}
               step={0.01}
@@ -108,7 +111,7 @@ export default function BinomialControls({
             />
 
             <SliderField
-              label="r (éves kamat)"
+              label={t("binomialRLabel")}
               min={0}
               max={0.3}
               step={0.01}
@@ -118,13 +121,13 @@ export default function BinomialControls({
             />
 
             <NumberStepper
-              label="Lépések száma"
+              label={t("binomialStepsLabel")}
               min={1}
               max={8}
               step={1}
               value={steps}
               onChange={onStepsChange}
-              formatValue={(v) => `${v} db`}
+              formatValue={(v) => `${v} ${t("binomialStepsUnit")}`}
             />
           </div>
 
@@ -132,8 +135,8 @@ export default function BinomialControls({
             
 
             <div className="stat-card">
-              <div className="stat-title">Periódushossz</div>
-              <div className="stat-value">Δt = 1 év</div>
+              <div className="stat-title">{t("binomialPeriodLength")}</div>
+              <div className="stat-value">{t("binomialPeriodValue")}</div>
             </div>
           </div>
         </>

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import SectionCard from "../../../components/SectionCard";
 import type { BinomialTreeResult } from "../binomial.types";
+import { useI18n } from "../../../i18n";
 
 type BinomialTreeChartProps = {
   tree: BinomialTreeResult;
@@ -20,12 +21,13 @@ export default function BinomialTreeChart({
   const nodeMap = useMemo(() => {
     return new Map(tree.nodes.map((node) => [node.id, node]));
   }, [tree.nodes]);
+  const { t } = useI18n();
 
   return (
     <SectionCard
       className="chart-card "
-      title="Binomiális árazási fa"
-      subtitle="A részvényárak és az opcióértékek diszkrét modellje"
+      title={t("binomialTreeTitle")}
+      subtitle={t("binomialTreeSubtitle")}
       headerLeft={
       <button
         type="button"
