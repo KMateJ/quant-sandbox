@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
 import type { HestonPathPoint } from "../heston.types";
+import { useI18n } from "../../../i18n";
 
 const lineColors = [
   "#1d4ed8",
@@ -36,11 +37,12 @@ export default function HestonVarianceChart({
   isOpen,
   setIsOpen,
 }: Props) {
+const { t } = useI18n();
   return (
     <SectionCard
       className="chart-card"
-      title="Heston variance paths"
-      subtitle="The volatility state evolves randomly and mean-reverts"
+      title={t("hestonVariancePathsTitle")}
+      subtitle={t("hestonVariancePathsSubtitle")}
       headerLeft={
         <button
           type="button"

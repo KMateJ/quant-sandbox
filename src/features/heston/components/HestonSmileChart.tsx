@@ -11,13 +11,16 @@ import {
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
 import type { SmilePoint } from "../heston.types";
+import { useI18n } from "../../../i18n";
 
 type Props = {
   data: SmilePoint[];
   strikeRatio: number;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function HestonSmileChart({ data, strikeRatio }: Props) {
+export default function HestonSmileChart({ data, strikeRatio, isOpen, setIsOpen }: Props) {
   const minIv =
     data.length > 0
       ? Math.min(...data.map((d) => Math.min(d.bsIv, d.hestonIv)))
@@ -30,13 +33,26 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
 
   const yMin = Number(Math.max(0, minIv - 0.03).toFixed(4));
   const yMax = Number((maxIv + 0.03).toFixed(4));
+  const { t } = useI18n();
 
   return (
     <SectionCard
       className="chart-card"
-      title="Implied volatility smile"
-      subtitle="Black–Scholes vs Heston implied vol across moneyness"
+      title={t("hestonSmileTitle")}
+      subtitle={t("hestonSmileSubtitle")}
+      headerLeft={
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button
+            type="button"
+            className="toggle-button"
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            {isOpen ? "-" : "+"}
+          </button>
+        </div>
+      }
     >
+    {isOpen && (
       <div className="chart-wrap">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
@@ -67,6 +83,7 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
           </LineChart>
         </ResponsiveContainer>
       </div>
+    )}
     </SectionCard>
   );
 }

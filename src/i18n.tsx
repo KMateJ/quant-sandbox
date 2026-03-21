@@ -12,6 +12,7 @@ import { payoffEn, payoffHu } from "./Language/Payoff";
 import { diffusionEn, diffusionHu } from "./Language/Diffusion";
 import { blackScholesEn, blackScholesHu } from "./Language/BlackScholes";
 import { themeEn, themeHu } from "./Language/Theme";
+import { hestonEn, hestonHu } from "./Language/Heston";
 
 export type Language = "hu" | "en";
 
@@ -27,21 +28,21 @@ const STORAGE_KEY = "qs-language";
 
 const translations = {
   hu: {
-    navHeston : "Heston",
     ...homeHu,
     ...binomialHu,
     ...payoffHu,
     ...diffusionHu,
     ...blackScholesHu,
+    ...hestonHu,
     ...themeHu,
   },
   en: {
-    navHeston : "Heston",
     ...homeEn,
     ...binomialEn,
     ...payoffEn,
     ...diffusionEn,
     ...blackScholesEn,
+    ...hestonEn,
     ...themeEn,
   },
 } satisfies Record<Language, TranslationTree>;

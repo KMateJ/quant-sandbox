@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
 import type { HestonPathPoint } from "../heston.types";
+import { useI18n } from "../../../i18n";
 
 const lineColors = [
   "#1d4ed8",
@@ -39,11 +40,13 @@ export default function HestonPathsChart({
   setIsOpen,
   onUpdate,
 }: Props) {
+  const { t } = useI18n();
+  
   return (
     <SectionCard
       className="chart-card"
-      title="Heston stock paths"
-      subtitle="Sample simulated stock paths under stochastic variance"
+      title={t("hestonStockPathsTitle")}
+      subtitle={t("hestonStockPathsSubtitle")}
       headerLeft={
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <button
@@ -59,7 +62,7 @@ export default function HestonPathsChart({
             className="nav-tab"
             onClick={onUpdate}
           >
-            Update paths
+            {t("hestonUpdatePaths")}
           </button>
         </div>
       }
