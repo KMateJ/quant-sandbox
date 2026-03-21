@@ -41,4 +41,19 @@
   --negative: #ef4444;
 
   --code-text: #e2e8f0;
+
+  --text-inverse: #ffffff;
+
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.25s ease;
+
+  --radius-pill: 999px;
+  --radius-code: 6px;
+  --radius-card-soft: 14px;
+  --radius-card-strong: 18px;
+  --radius-control: 12px;
+  --radius-control-sm: 10px;
+
+  --control-height: 42px;
+  --control-height-sm: 38px;
 }
