@@ -1,11 +1,87 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+
 import BlackScholesView from "./features/black-scholes/BlackScholesView";
 import DiffusionView from "./features/diffusion/DiffusionView";
 import BinomialView from "./features/binomial/BinomialView";
 import PayoffView from "./features/payoff-lab/PayofView";
 import { HomeView } from "./features/home/HomeView";
+
+import { Seo } from "./seo";
+
+/* =======================
+   SEO WRAPPED PAGES
+======================= */
+
+function HomePage() {
+  return (
+    <>
+      <Seo
+        title="Home"
+        description="Interactive study aid for ELTE and Corvinus Insurance and Financial Mathematics students."
+        path="/"
+      />
+      <HomeView />
+    </>
+  );
+}
+
+function PayoffPage() {
+  return (
+    <>
+      <Seo
+        title="Payoff Lab"
+        description="Interactive payoff and profit diagrams for options, forwards, stock and synthetic strategies."
+        path="/payoff"
+      />
+      <PayoffView />
+    </>
+  );
+}
+
+function BinomialPage() {
+  return (
+    <>
+      <Seo
+        title="Binomial Tree Model"
+        description="Interactive binomial pricing tree for option pricing, risk-neutral probability and replicating portfolios."
+        path="/binomial"
+      />
+      <BinomialView />
+    </>
+  );
+}
+
+function DiffusionPage() {
+  return (
+    <>
+      <Seo
+        title="Diffusion Equation"
+        description="Interactive visualization of the diffusion equation with parameter controls and time evolution."
+        path="/diffusion"
+      />
+      <DiffusionView />
+    </>
+  );
+}
+
+function BlackScholesPage() {
+  return (
+    <>
+      <Seo
+        title="Black–Scholes Model"
+        description="Interactive Black–Scholes option pricing and Greeks visualization across stock prices and maturities."
+        path="/black-scholes"
+      />
+      <BlackScholesView />
+    </>
+  );
+}
+
+/* =======================
+   APP
+======================= */
 
 export default function App() {
   const [hideNav, setHideNav] = useState(false);
@@ -57,11 +133,11 @@ export default function App() {
 
       <main className="page-container">
         <Routes>
-          <Route path="/" element={<HomeView />} />
-          <Route path="/payoff" element={<PayoffView />} />
-          <Route path="/binomial" element={<BinomialView />} />
-          <Route path="/diffusion" element={<DiffusionView />} />
-          <Route path="/black-scholes" element={<BlackScholesView />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/payoff" element={<PayoffPage />} />
+          <Route path="/binomial" element={<BinomialPage />} />
+          <Route path="/diffusion" element={<DiffusionPage />} />
+          <Route path="/black-scholes" element={<BlackScholesPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
