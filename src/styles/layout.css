@@ -72,7 +72,7 @@
 }
 
 .nav-tab:hover {
-  border-color: #b8c5d9;
+  border-color: var(--border-hover);
 }
 
 .nav-tab.active {
@@ -334,7 +334,7 @@
   padding: 3px 6px;
   border-radius: 6px;
   font-family: monospace;
-  color: #e2e8f0;
+  color:  var(--code-text);
 }
 
 /* Stepper */
@@ -367,7 +367,6 @@
   height: 520px;
   display: block;
 }
-
 .warning-card {
   margin-bottom: 16px;
   padding: 14px;
@@ -395,13 +394,12 @@
 }
 
 .replication-positive {
-  color: #22c55e;
+  color: var(--positive);
 }
 
 .replication-negative {
-  color: #ef4444;
+  color: var(--negative);
 }
-
 /* Payoff */
 .payoff-builder-card .section-title,
 .payoff-builder-card .page-title {
@@ -501,22 +499,21 @@
   margin-bottom: 16px;
   padding: 14px;
   border-radius: 14px;
-  border: 1px solid rgba(34, 197, 94, 0.35);
-  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid var(--success-border);
+  background: var(--success-bg);
 }
 
 .success-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #22c55e;
+  color: var(--success-title);
   margin-bottom: 6px;
 }
 
 .success-text {
-  color: #86efac;
+  color: var(--success-text);
   line-height: 1.5;
 }
-
 /* Medium screens / laptop */
 @media (max-width: 1100px) {
   .topbar-inner,
