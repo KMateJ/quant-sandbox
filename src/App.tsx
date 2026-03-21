@@ -9,6 +9,7 @@ import PayoffView from "./features/payoff-lab/PayofView";
 import { HomeView } from "./features/home/HomeView";
 
 import { Seo } from "./seo";
+import HestonView from "./features/heston/HestonView";
 
 /* =======================
    SEO WRAPPED PAGES
@@ -79,6 +80,19 @@ function BlackScholesPage() {
   );
 }
 
+function HestonPage() {
+  return (
+    <>
+      <Seo
+        title="Heston Model"
+        description="Interactive Heston stochastic volatility model with simulated paths and parameter intuition."
+        path="/heston"
+      />
+      <HestonView />
+    </>
+  );
+}
+
 /* =======================
    APP
 ======================= */
@@ -138,6 +152,7 @@ export default function App() {
           <Route path="/binomial" element={<BinomialPage />} />
           <Route path="/diffusion" element={<DiffusionPage />} />
           <Route path="/black-scholes" element={<BlackScholesPage />} />
+          <Route path="/heston" element={<HestonPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

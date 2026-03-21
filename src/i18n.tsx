@@ -27,6 +27,7 @@ const STORAGE_KEY = "qs-language";
 
 const translations = {
   hu: {
+    navHeston : "Heston",
     ...homeHu,
     ...binomialHu,
     ...payoffHu,
@@ -35,6 +36,7 @@ const translations = {
     ...themeHu,
   },
   en: {
+    navHeston : "Heston",
     ...homeEn,
     ...binomialEn,
     ...payoffEn,

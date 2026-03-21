@@ -6,7 +6,8 @@ export type PageKey =
   | "diffusion"
   | "black-scholes"
   | "binomial"
-  | "payoff";
+  | "payoff"
+  | "heston";
 
 type NavbarProps = {
   hidden?: boolean;
@@ -18,6 +19,7 @@ const items: { key: PageKey; to: string; end?: boolean }[] = [
   { key: "binomial", to: "/binomial" },
   { key: "diffusion", to: "/diffusion" },
   { key: "black-scholes", to: "/black-scholes" },
+  { key: "heston", to: "/heston" },
 ];
 
 export default function Navbar({ hidden = false }: NavbarProps) {
@@ -31,6 +33,7 @@ export default function Navbar({ hidden = false }: NavbarProps) {
     binomial: t("navBinomial"),
     diffusion: t("navDiffusion"),
     "black-scholes": t("navBlackScholes"),
+    heston: t("navHeston"),
   };
 
   const currentPath =
