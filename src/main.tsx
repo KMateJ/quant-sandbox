@@ -10,14 +10,17 @@ import "./styles/layout.css";
 import "./styles/binomial.css";
 import "./styles/payoff.css";
 import { LanguageProvider } from "./i18n";
+import { ThemeProvider } from "./theme";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <LanguageProvider>
-        <App />
-        <Analytics />
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <App />
+          <Analytics />
+        </LanguageProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>
 );

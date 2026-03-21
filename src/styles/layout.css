@@ -423,6 +423,8 @@
   line-height: 1.5;
 }
 
+
+
 .success-card {
   margin-bottom: 16px;
   padding: 14px;
@@ -441,6 +443,30 @@
 .success-text {
   color: var(--success-text);
   line-height: 1.5;
+}
+
+/* =========================================================
+  Settings layout
+========================================================= */
+
+.settings-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.settings-row {
+  display: grid;
+  gap: 10px;
+}
+
+.settings-label {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.settings-actions {
+  margin-bottom: 0;
 }
 
 /* =========================================================
@@ -497,6 +523,15 @@
     height: 300px;
   }
 }
+
+
+@media (min-width: 641px) {
+  .settings-row {
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+  }
+}
+
 
 @media (max-width: 640px) {
   .page-container {
@@ -638,3 +673,4 @@
     line-height: 1.2 !important;
   }
 }
+

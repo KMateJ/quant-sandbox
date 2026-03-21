@@ -33,9 +33,12 @@ export default function Navbar({ hidden = false }: NavbarProps) {
     "black-scholes": t("navBlackScholes"),
   };
 
-  const currentPath = items.find((item) =>
-    item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
-  )?.to ?? "/";
+  const currentPath =
+    items.find((item) =>
+      item.end
+        ? location.pathname === item.to
+        : location.pathname.startsWith(item.to)
+    )?.to ?? "/";
 
   return (
     <header className={`topbar ${hidden ? "topbar-hidden" : ""}`}>
@@ -45,13 +48,18 @@ export default function Navbar({ hidden = false }: NavbarProps) {
           <div className="brand-subtitle">{t("brandSubtitle")}</div>
         </div>
 
-        <nav className="nav-tabs nav-tabs-desktop" aria-label="Main navigation">
+        <nav
+          className="nav-tabs nav-tabs-desktop"
+          aria-label="Main navigation"
+        >
           {items.map((item) => (
             <NavLink
               key={item.key}
               to={item.to}
               end={item.end}
-              className={({ isActive }) => (isActive ? "nav-tab active" : "nav-tab")}
+              className={({ isActive }) =>
+                isActive ? "nav-tab active" : "nav-tab"
+              }
             >
               {labels[item.key]}
             </NavLink>
@@ -63,7 +71,7 @@ export default function Navbar({ hidden = false }: NavbarProps) {
             className="nav-select"
             value={currentPath}
             onChange={(e) => navigate(e.target.value)}
-            aria-label={t("navHome")}
+            aria-label={t("navSelectLabel")}
           >
             {items.map((item) => (
               <option key={item.key} value={item.to}>

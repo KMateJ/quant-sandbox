@@ -11,6 +11,7 @@ import { binomialEn, binomialHu } from "./Language/Binomial";
 import { payoffEn, payoffHu } from "./Language/Payoff";
 import { diffusionEn, diffusionHu } from "./Language/Diffusion";
 import { blackScholesEn, blackScholesHu } from "./Language/BlackScholes";
+import { themeEn, themeHu } from "./Language/Theme";
 
 export type Language = "hu" | "en";
 
@@ -31,6 +32,7 @@ const translations = {
     ...payoffHu,
     ...diffusionHu,
     ...blackScholesHu,
+    ...themeHu,
   },
   en: {
     ...homeEn,
@@ -38,6 +40,7 @@ const translations = {
     ...payoffEn,
     ...diffusionEn,
     ...blackScholesEn,
+    ...themeEn,
   },
 } satisfies Record<Language, TranslationTree>;
 
