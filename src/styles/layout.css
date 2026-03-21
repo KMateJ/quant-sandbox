@@ -7,8 +7,8 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(10px);
+  background: var(--topbar-bg);
+  backdrop-filter: blur(var(--topbar-blur));
   border-bottom: 1px solid var(--border);
   transition: transform var(--transition-base), opacity var(--transition-base);
 }
@@ -45,7 +45,7 @@
 }
 
 .brand-title {
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
   font-weight: 700;
 }
 
@@ -65,7 +65,7 @@
   background: var(--surface);
   color: var(--text);
   padding: 7px 12px;
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   border-radius: var(--radius-pill);
   transition: var(--transition-fast);
   text-decoration: none;
@@ -123,7 +123,7 @@
 .section-title,
 .page-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--text);
 }
@@ -157,7 +157,7 @@
 .view-main {
   min-width: 0;
   display: grid;
-  gap: 20px;
+  gap: var(--space-7);
 }
 
 .chart-card {
@@ -172,7 +172,7 @@
 .controls-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: var(--space-6);
 }
 
 .slider-field {
@@ -208,7 +208,7 @@
   background: var(--surface-soft);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
 }
 
 .slider-input {
@@ -263,7 +263,7 @@
   background: var(--surface-soft);
   color: var(--text);
   padding: 8px 12px;
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   border-radius: var(--radius-pill);
   transition: var(--transition-fast);
 }
@@ -276,9 +276,9 @@
 
 .metric-switch {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-6);
 }
 
 .metric-button.active {
@@ -288,20 +288,20 @@
 }
 
 /* Summaries */
+.param-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+  color: var(--muted);
+}
+
 .param-summary div {
   padding: 5px 10px;
   border-radius: var(--radius-pill);
   background: var(--surface-soft);
   border: 1px solid var(--border);
-  font-size: 0.82rem;
-}
-
-.param-summary div {
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
 }
 
 /* Chart */
@@ -333,7 +333,7 @@
   background: var(--surface-soft);
   padding: 3px 6px;
   border-radius: var(--radius-code);
-  font-family: monospace;
+  font-family: var(--font-mono);
   color: var(--code-text);
 }
 
@@ -483,7 +483,7 @@
   color: var(--text);
   border-radius: var(--radius-control);
   padding: 0 12px;
-  font-size: 0.92rem;
+  font-size: var(--text-md);
 }
 
 .payoff-input::placeholder {
@@ -719,5 +719,57 @@
   .recharts-legend-wrapper {
     font-size: 11px !important;
     line-height: 1.2 !important;
+  }
+}
+
+.nav-tabs-desktop {
+  display: flex;
+}
+
+.nav-mobile {
+  display: none;
+}
+
+.nav-select {
+  width: 100%;
+  height: var(--control-height);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-control);
+  padding: 0 12px;
+  font-size: var(--text-md);
+}
+
+@media (max-width: 640px) {
+  .topbar-inner {
+    width: calc(100% - 16px);
+    padding: 10px 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .brand-block {
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .nav-tabs-desktop {
+    display: none;
+  }
+
+  .nav-mobile {
+    display: block;
+    width: 100%;
   }
 }

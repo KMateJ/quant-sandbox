@@ -56,4 +56,23 @@
 
   --control-height: 42px;
   --control-height-sm: 38px;
+
+  --topbar-bg: rgba(15, 23, 42, 0.85);
+  --topbar-blur: 10px;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --text-xs: 0.78rem;
+  --text-sm: 0.82rem;
+  --text-md: 0.92rem;
+  --text-lg: 1.05rem;
+  --text-xl: 1.2rem;
+
+  --space-1: 6px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 12px;
+  --space-5: 14px;
+  --space-6: 16px;
+  --space-7: 20px;
 }
