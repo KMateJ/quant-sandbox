@@ -1,0 +1,39 @@
+/* =========================================================
+   Binomial
+========================================================= */
+
+.binomial-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.binomial-svg-wrap svg {
+  min-width: 760px;
+  height: 520px;
+  display: block;
+}
+
+.replication-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.replication-positive {
+  color: var(--positive);
+}
+
+.replication-negative {
+  color: var(--negative);
+}
+
+/* =========================================================
+   Binomial responsive
+========================================================= */
+
+@media (max-width: 640px) {
+  .binomial-svg-wrap svg {
+    height: 420px;
+  }
+}

@@ -7,6 +7,8 @@ import App from "./App.tsx";
 import "./styles/tokens.css";
 import "./styles/global.css";
 import "./styles/layout.css";
+import "./styles/binomial.css";
+import "./styles/payoff.css";
 import { LanguageProvider } from "./i18n";
 
 createRoot(document.getElementById("root")!).render(
