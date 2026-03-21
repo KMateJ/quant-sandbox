@@ -44,7 +44,7 @@ const translations = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("hu");
+  const [language, setLanguage] = useState<Language>("en");
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
