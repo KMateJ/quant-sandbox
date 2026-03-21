@@ -37,7 +37,7 @@ export type BinomialTreeResult = {
   discount: number;
   price: number;
   isValid: boolean;
-  validationMessage: string | null;
+  validationKey: string | null;
   nodes: BinomialNode[];
   edges: BinomialEdge[];
   width: number;

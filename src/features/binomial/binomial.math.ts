@@ -34,21 +34,27 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
   const isValid =
     isFiniteModel && u > d && d > 0 && u > 0 && r > -1 && q >= 0 && q <= 1;
 
-  let validationMessage: string | null = null;
+  let validationKey: string | null = null;
 
-  if (!Number.isFinite(S0) || !Number.isFinite(K) || !Number.isFinite(u) || !Number.isFinite(d) || !Number.isFinite(r)) {
-    validationMessage = "A modell paraméterei nem adnak értelmes numerikus eredményt.";
+  
+  if (
+    !Number.isFinite(S0) ||
+    !Number.isFinite(K) ||
+    !Number.isFinite(u) ||
+    !Number.isFinite(d) ||
+    !Number.isFinite(r)
+  ) {
+    validationKey = "binomialValidationInvalidParameters";
   } else if (!(u > d)) {
-    validationMessage = "A modellhez szükséges, hogy u > d legyen.";
+    validationKey = "binomialValidationUGreaterThanD";
   } else if (!(d > 0)) {
-    validationMessage = "A lefelé szorzóhoz szükséges, hogy d > 0 legyen.";
+    validationKey = "binomialValidationDPositive";
   } else if (!(r > -1)) {
-    validationMessage = "A kamatlábhoz szükséges, hogy 1 + r pozitív maradjon.";
+    validationKey = "binomialValidationRatePositiveOnePlusR";
   } else if (!Number.isFinite(q)) {
-    validationMessage = "A q nem számolható ki, mert u és d nem különböznek.";
+    validationKey = "binomialValidationQNotComputable";
   } else if (q < 0 || q > 1) {
-    validationMessage =
-      "A kockázatsemleges valószínűség nem esik 0 és 1 közé. Klasszikus arbitrázsmentes esetben d < 1 + r < u.";
+    validationKey = "binomialValidationQOutOfRange";
   }
 
   const hGap = 150;
@@ -156,7 +162,7 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
     discount,
     price: isValid ? optionTree[0][0] : 0,
     isValid,
-    validationMessage,
+    validationKey,
     replicatingPortfolio,
     nodes,
     edges,

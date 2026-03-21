@@ -14,10 +14,10 @@ export default function BinomialSummary({ tree }: BinomialSummaryProps) {
       title={t("binomialSummaryTitle")}
       subtitle={t("binomialSummarySubtitle")}
     >
-      {!tree.isValid && tree.validationMessage ? (
+      {!tree.isValid && tree.validationKey? (
         <div className="warning-card">
           <div className="warning-title">{t("binomialWarningTitle")}</div>
-          <div className="warning-text">{tree.validationMessage}</div>
+          <div className="warning-text">{t(tree.validationKey as any)}</div>
         </div>
       ) : null}
 

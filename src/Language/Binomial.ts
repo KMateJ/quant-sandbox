@@ -38,6 +38,19 @@ export const binomialHu = {
     binomialStockPosition: "Részvény",
     binomialCashPosition: "Cash",
     binomialDiscountFactor: "Diszkont faktor",
+
+    binomialValidationInvalidParameters:
+      "A modell paraméterei nem adnak értelmes numerikus eredményt.",
+    binomialValidationUGreaterThanD:
+      "A modellhez szükséges, hogy u > d legyen.",
+    binomialValidationDPositive:
+      "A lefelé szorzóhoz szükséges, hogy d > 0 legyen.",
+    binomialValidationRatePositiveOnePlusR:
+      "A kamatlábhoz szükséges, hogy 1 + r pozitív maradjon.",
+    binomialValidationQNotComputable:
+      "A q nem számolható ki, mert u és d nem különböznek.",
+    binomialValidationQOutOfRange:
+      "A kockázatsemleges valószínűség nem esik 0 és 1 közé. Klasszikus arbitrázsmentes esetben d < 1 + r < u.",
 }
 
 export const binomialEn = {
@@ -80,4 +93,17 @@ export const binomialEn = {
     binomialStockPosition: "Stock",
     binomialCashPosition: "Cash",
     binomialDiscountFactor: "Discount factor",
+
+    binomialValidationInvalidParameters:
+      "The model parameters do not produce meaningful numerical results.",
+    binomialValidationUGreaterThanD:
+      "The model requires u > d.",
+    binomialValidationDPositive:
+      "The down factor must satisfy d > 0.",
+    binomialValidationRatePositiveOnePlusR:
+      "The interest rate must satisfy 1 + r > 0.",
+    binomialValidationQNotComputable:
+      "q cannot be computed because u and d are not different.",
+    binomialValidationQOutOfRange:
+      "The risk-neutral probability is not between 0 and 1. In the classical no-arbitrage case, d < 1 + r < u.",
 }
