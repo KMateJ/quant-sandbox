@@ -59,7 +59,20 @@ export default function HestonPriceComparisonChart({
             <XAxis dataKey="S" stroke="#94a3b8" />
             <YAxis stroke="#94a3b8" domain={[0, yMax]} />
             <ReferenceLine x={strike} stroke="#94a3b8" strokeDasharray="4 4" />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                background: "#1e293b",
+                border: "1px solid #475569",
+                borderRadius: "8px",
+              }}
+              labelStyle={{ color: "#e2e8f0" }}
+              formatter={(value, name) => {
+                const numericValue =
+                  typeof value === "number" ? value : Number(value ?? 0);
+                return [numericValue.toFixed(3), String(name)];
+              }}
+              labelFormatter={(label) => `S = ${label}`}
+            />
             <Legend />
             <Line
               type="monotone"
