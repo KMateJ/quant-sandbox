@@ -1,8 +1,15 @@
+/* =========================================================
+   App shell
+========================================================= */
+
 .app-shell {
   min-height: 100vh;
 }
 
-/* Topbar */
+/* =========================================================
+   Topbar + page container
+========================================================= */
+
 .topbar {
   position: sticky;
   top: 0;
@@ -37,7 +44,10 @@
   padding: 20px 0 32px;
 }
 
-/* Brand + nav */
+/* =========================================================
+   Brand + navigation
+========================================================= */
+
 .brand-block {
   display: flex;
   flex-direction: column;
@@ -54,7 +64,12 @@
   color: var(--muted);
 }
 
-.nav-tabs {
+.navbar a {
+  text-decoration: none;
+}
+
+.nav-tabs,
+.nav-tabs-desktop {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
@@ -81,11 +96,25 @@
   border-color: var(--primary);
 }
 
-.navbar a {
-  text-decoration: none;
+.nav-mobile {
+  display: none;
 }
 
-/* Cards */
+.nav-select {
+  width: 100%;
+  height: var(--control-height);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-control);
+  padding: 0 12px;
+  font-size: var(--text-md);
+}
+
+/* =========================================================
+   Shared cards + section headers
+========================================================= */
+
 .card {
   width: 100%;
   background: var(--surface);
@@ -135,13 +164,15 @@
   line-height: 1.55;
 }
 
-/* Generic stacks */
+/* =========================================================
+   Shared layout
+========================================================= */
+
 .stack-lg {
   display: grid;
   gap: 20px;
 }
 
-/* View layout */
 .view-layout {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
@@ -168,7 +199,10 @@
   z-index: 5;
 }
 
-/* Controls */
+/* =========================================================
+   Shared controls
+========================================================= */
+
 .controls-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -224,7 +258,56 @@
   font-size: 0.78rem;
 }
 
-/* Stats */
+.toggle-button,
+.metric-button {
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: var(--text-md);
+  border-radius: var(--radius-pill);
+  transition: var(--transition-fast);
+}
+
+.toggle-button:hover,
+.metric-button:hover,
+.stepper-button:hover {
+  filter: brightness(1.08);
+}
+
+.metric-switch {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.metric-button.active {
+  background: var(--primary);
+  color: var(--text-inverse);
+  border-color: var(--primary);
+}
+
+/* =========================================================
+   Shared summaries + stats
+========================================================= */
+
+.param-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.param-summary div {
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+
 .stats-row {
   margin-top: 20px;
   display: grid;
@@ -256,55 +339,10 @@
   font-weight: 600;
 }
 
-/* Buttons */
-.toggle-button,
-.metric-button {
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  color: var(--text);
-  padding: 8px 12px;
-  font-size: var(--text-md);
-  border-radius: var(--radius-pill);
-  transition: var(--transition-fast);
-}
+/* =========================================================
+   Shared chart helpers
+========================================================= */
 
-.toggle-button:hover,
-.metric-button:hover,
-.stepper-button:hover {
-  filter: brightness(1.08);
-}
-
-.metric-switch {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-6);
-}
-
-.metric-button.active {
-  background: var(--primary);
-  color: var(--text-inverse);
-  border-color: var(--primary);
-}
-
-/* Summaries */
-.param-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 8px;
-  color: var(--muted);
-}
-
-.param-summary div {
-  padding: 5px 10px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  font-size: var(--text-sm);
-}
-
-/* Chart */
 .chart-wrap {
   width: 100%;
   max-width: 100%;
@@ -316,7 +354,10 @@
   font-size: 0.85rem;
 }
 
-/* Text blocks */
+/* =========================================================
+   Shared typography / content
+========================================================= */
+
 .text-block {
   line-height: 1.7;
   color: var(--muted);
@@ -337,7 +378,10 @@
   color: var(--code-text);
 }
 
-/* Stepper */
+/* =========================================================
+   Shared stepper
+========================================================= */
+
 .stepper-row {
   display: grid;
   grid-template-columns: 42px 1fr 42px;
@@ -355,18 +399,9 @@
   transition: var(--transition-fast);
 }
 
-/* Binomial */
-.binomial-svg-wrap {
-  width: 100%;
-  overflow-x: auto;
-  padding-bottom: 8px;
-}
-
-.binomial-svg-wrap svg {
-  min-width: 760px;
-  height: 520px;
-  display: block;
-}
+/* =========================================================
+   Shared feedback cards
+========================================================= */
 
 .warning-card {
   margin-bottom: 16px;
@@ -379,13 +414,49 @@
 .warning-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: var(--warning-title);
   margin-bottom: 6px;
 }
 
 .warning-text {
-  color: #fcd34d;
+  color: var(--warning-text);
   line-height: 1.5;
+}
+
+.success-card {
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: var(--radius-card-soft);
+  border: 1px solid var(--success-border);
+  background: var(--success-bg);
+}
+
+.success-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--success-title);
+  margin-bottom: 6px;
+}
+
+.success-text {
+  color: var(--success-text);
+  line-height: 1.5;
+}
+
+/* =========================================================
+   Binomial
+========================================================= */
+
+.binomial-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.binomial-svg-wrap svg {
+  min-width: 760px;
+  height: 520px;
+  display: block;
 }
 
 .replication-row {
@@ -401,7 +472,11 @@
 .replication-negative {
   color: var(--negative);
 }
-/* Payoff */
+
+/* =========================================================
+   Payoff
+========================================================= */
+
 .payoff-builder-card .section-title,
 .payoff-builder-card .page-title {
   font-size: 2rem;
@@ -495,27 +570,10 @@
   font-weight: 600;
 }
 
-/* Success */
-.success-card {
-  margin-bottom: 16px;
-  padding: 14px;
-  border-radius: var(--radius-card-soft);
-  border: 1px solid var(--success-border);
-  background: var(--success-bg);
-}
+/* =========================================================
+   Responsive
+========================================================= */
 
-.success-title {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--success-title);
-  margin-bottom: 6px;
-}
-
-.success-text {
-  color: var(--success-text);
-  line-height: 1.5;
-}
-/* Medium screens / laptop */
 @media (max-width: 1100px) {
   .topbar-inner,
   .page-container {
@@ -540,7 +598,6 @@
   }
 }
 
-/* Tablet / narrow laptop */
 @media (max-width: 900px) {
   .view-layout {
     grid-template-columns: 1fr;
@@ -568,7 +625,6 @@
   }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
   .page-container {
     width: calc(100% - 16px);
@@ -577,10 +633,10 @@
 
   .topbar-inner {
     width: calc(100% - 16px);
-    padding: 12px 0;
+    padding: 10px 0;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 8px;
   }
 
   .brand-block {
@@ -597,18 +653,14 @@
     font-size: 0.8rem;
   }
 
-  .nav-tabs {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .nav-tabs,
+  .nav-tabs-desktop {
+    display: none;
   }
 
-  .nav-tab {
+  .nav-mobile {
+    display: block;
     width: 100%;
-    text-align: center;
-    padding: 10px 12px;
-    font-size: 0.95rem;
   }
 
   .card {
@@ -632,6 +684,11 @@
     justify-self: auto;
   }
 
+  .section-header-left {
+    display: block;
+    width: 100%;
+  }
+
   .section-title,
   .page-title {
     font-size: 1.05rem;
@@ -643,11 +700,6 @@
     margin-top: 6px;
     font-size: 0.9rem;
     line-height: 1.45;
-  }
-
-  .section-header-left {
-    display: block;
-    width: 100%;
   }
 
   .toggle-button {
@@ -719,57 +771,5 @@
   .recharts-legend-wrapper {
     font-size: 11px !important;
     line-height: 1.2 !important;
-  }
-}
-
-.nav-tabs-desktop {
-  display: flex;
-}
-
-.nav-mobile {
-  display: none;
-}
-
-.nav-select {
-  width: 100%;
-  height: var(--control-height);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  border-radius: var(--radius-control);
-  padding: 0 12px;
-  font-size: var(--text-md);
-}
-
-@media (max-width: 640px) {
-  .topbar-inner {
-    width: calc(100% - 16px);
-    padding: 10px 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .brand-block {
-    align-items: center;
-    text-align: center;
-    gap: 2px;
-  }
-
-  .brand-title {
-    font-size: 1.05rem;
-  }
-
-  .brand-subtitle {
-    font-size: 0.8rem;
-  }
-
-  .nav-tabs-desktop {
-    display: none;
-  }
-
-  .nav-mobile {
-    display: block;
-    width: 100%;
   }
 }
