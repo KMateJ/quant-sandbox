@@ -20,6 +20,8 @@ export const homeHu = {
     languageHu: "Magyar",
     languageEn: "Angol",
 
+    devItemGuides: "Útmutatók — oktató jellegű írások a fontosabb témákban",  
+
 
 
     devTitle: "Fejlesztések",
@@ -67,6 +69,8 @@ export const homeEn = {
     languageLabel: "Language",
     languageHu: "Hungarian",
     languageEn: "English",
+
+    devItemGuides: "Guides — narrative write-ups on important topics",
 
 
     devTitle: "Development",

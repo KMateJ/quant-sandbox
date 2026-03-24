@@ -100,6 +100,7 @@ export function HomeView() {
           <div className="dev-card dev-card-info">
             <div className="dev-title">{t("devUpcoming")}</div>
             <ul className="dev-list">
+              <li>{t("devItemGuides")}</li>
               <li>{t("devItemMonteCarlo")}</li>
               <li>{t("devItemPDE")}</li>
             </ul>
