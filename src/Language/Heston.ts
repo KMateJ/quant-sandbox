@@ -18,7 +18,7 @@ export const hestonHu = {
     "Black–Scholes vs Heston implied vol különböző strike-ok mellett",
 
   // labels
-  hestonUpdatePaths: "Új szimuláció",
+  hestonUpdatePaths: "Új szim.",
   hestonUpdating: "Frissítés...",
 
   // stats
@@ -47,7 +47,7 @@ export const hestonEn = {
     "Black–Scholes vs Heston implied vol across strikes",
 
   // labels
-  hestonUpdatePaths: "Update paths",
+  hestonUpdatePaths: "new sim",
   hestonUpdating: "Updating...",
 
   // stats
