@@ -9,6 +9,7 @@ import "./styles/global.css";
 import "./styles/layout.css";
 import "./styles/binomial.css";
 import "./styles/payoff.css";
+import "katex/dist/katex.min.css";
 import { LanguageProvider } from "./i18n";
 import { ThemeProvider } from "./theme";
 
