@@ -1,4 +1,5 @@
 import type React from "react";
+import { useEffect, useState } from "react";
 import {
   CartesianGrid,
   Legend,
@@ -30,6 +31,7 @@ type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onUpdate: () => void;
+  isUpdating?: boolean;
 };
 
 export default function HestonPathsChart({
@@ -39,16 +41,37 @@ export default function HestonPathsChart({
   isOpen,
   setIsOpen,
   onUpdate,
+  isUpdating = false,
 }: Props) {
   const { t } = useI18n();
-  
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 640 : false
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const onResize = () => setIsMobile(window.innerWidth <= 640);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <SectionCard
       className="chart-card"
       title={t("hestonStockPathsTitle")}
       subtitle={t("hestonStockPathsSubtitle")}
       headerLeft={
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            alignItems: "center",
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
           <button
             type="button"
             className="toggle-button"
@@ -56,11 +79,11 @@ export default function HestonPathsChart({
           >
             {isOpen ? "-" : "+"}
           </button>
-
           <button
             type="button"
             className="nav-tab"
             onClick={onUpdate}
+            disabled={isUpdating}
           >
             {t("hestonUpdatePaths")}
           </button>
@@ -70,10 +93,27 @@ export default function HestonPathsChart({
       {isOpen && (
         <div className="chart-wrap">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <LineChart
+              data={data}
+              margin={{
+                top: 8,
+                right: isMobile ? 4 : 12,
+                left: isMobile ? -24 : -8,
+                bottom: isMobile ? 28 : 8,
+              }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-              <XAxis dataKey="t" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" />
+              <XAxis
+                dataKey="t"
+                stroke="#94a3b8"
+                tick={{ fontSize: isMobile ? 11 : 12 }}
+                minTickGap={isMobile ? 24 : 12}
+              />
+              <YAxis
+                stroke="#94a3b8"
+                tick={{ fontSize: isMobile ? 11 : 12 }}
+                width={isMobile ? 36 : 48}
+              />
               <ReferenceLine y={strike} stroke="#94a3b8" strokeDasharray="4 4" />
               <Tooltip
                 contentStyle={{
@@ -89,7 +129,12 @@ export default function HestonPathsChart({
                 }}
                 labelFormatter={(label) => `t = ${label}`}
               />
-              <Legend />
+              <Legend
+                wrapperStyle={{
+                  fontSize: isMobile ? "11px" : "12px",
+                  paddingTop: isMobile ? "8px" : "4px",
+                }}
+              />
               {pathKeys.map((key, index) => (
                 <Line
                   key={key}

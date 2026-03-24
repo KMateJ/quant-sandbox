@@ -148,7 +148,7 @@ export default function HestonControls({
             <SliderField
               label="Visual paths"
               min={1}
-              max={6}
+              max={30}
               step={1}
               value={pathCount}
               onChange={setPathCount}

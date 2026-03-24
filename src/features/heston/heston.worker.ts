@@ -5,17 +5,47 @@ import {
   discountedCallPriceFromTerminalStock,
   hestonCallPriceMC,
   impliedVolFromCallPrice,
+  simulateHestonPaths,
   simulateHestonTerminalStock,
 } from "./heston.math";
 import type {
-  HestonPricingWorkerRequest,
   HestonPricingWorkerResponse,
+  HestonWorkerRequest,
+  HestonWorkerResponse,
   PriceComparisonPoint,
   SmilePoint,
 } from "./heston.types";
 import { smooth } from "./heston.utils";
 
-self.onmessage = (event: MessageEvent<HestonPricingWorkerRequest>) => {
+self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
+  const data = event.data;
+
+  if (data.kind === "paths") {
+    const simulation = simulateHestonPaths({
+      S0: data.S0,
+      K: data.strike,
+      r: data.rate,
+      v0: data.v0,
+      theta: data.theta,
+      kappa: data.kappa,
+      xi: data.xi,
+      rho: data.rho,
+      T: data.maturity,
+      steps: data.steps,
+      paths: data.pathCount,
+    });
+
+    const response: HestonWorkerResponse = {
+      kind: "paths",
+      requestId: data.requestId,
+      stockData: simulation.stockData,
+      varianceData: simulation.varianceData,
+    };
+
+    self.postMessage(response);
+    return;
+  }
+
   const {
     requestId,
     S0,
@@ -29,7 +59,7 @@ self.onmessage = (event: MessageEvent<HestonPricingWorkerRequest>) => {
     maturity,
     pricingSteps,
     pricingPaths,
-  } = event.data;
+  } = data;
 
   const pricePointCount = 15;
   const sMin = S0 * 0.6;
@@ -114,6 +144,7 @@ self.onmessage = (event: MessageEvent<HestonPricingWorkerRequest>) => {
   }));
 
   const response: HestonPricingWorkerResponse = {
+    kind: "pricing",
     requestId,
     priceComparisonData,
     smileData,

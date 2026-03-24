@@ -7,11 +7,12 @@ import HestonPathsChart from "./components/HestonPathsChart";
 import HestonPriceComparisonChart from "./components/HestonPriceComparisonChart";
 import HestonSmileChart from "./components/HestonSmileChart";
 import HestonVarianceChart from "./components/HestonVarianceChart";
-import { fellerMargin, simulateHestonPaths } from "./heston.math";
+import { fellerMargin } from "./heston.math";
 import type {
   HestonControlsSetters,
   HestonControlsState,
-  HestonPricingWorkerResponse,
+  HestonPathPoint,
+  HestonWorkerResponse,
   PriceComparisonPoint,
   SmilePoint,
 } from "./heston.types";
@@ -69,16 +70,25 @@ export default function HestonView() {
   const [comparisonChartOpen, setComparisonChartOpen] = useState(true);
   const [smileChartOpen, setSmileChartOpen] = useState(true);
 
-  const [appliedPaths, setAppliedPaths] =
-    useState<HestonControlsState | null>(null);
-
   const [priceComparisonData, setPriceComparisonData] = useState<
     PriceComparisonPoint[]
   >([]);
   const [smileData, setSmileData] = useState<SmilePoint[]>([]);
+  const [stockPathData, setStockPathData] = useState<HestonPathPoint[]>([]);
+  const [variancePathData, setVariancePathData] = useState<HestonPathPoint[]>(
+    []
+  );
+  const [appliedPaths, setAppliedPaths] = useState<HestonControlsState | null>(
+    null
+  );
+  const [isUpdatingPaths, setIsUpdatingPaths] = useState(false);
+  const [pathsRerunNonce, setPathsRerunNonce] = useState(0);
 
-  const workerRef = useRef<Worker | null>(null);
-  const latestRequestIdRef = useRef(0);
+  const pricingWorkerRef = useRef<Worker | null>(null);
+  const latestPricingRequestIdRef = useRef(0);
+  const pathsWorkerRef = useRef<Worker | null>(null);
+  const latestPathsRequestIdRef = useRef(0);
+  const pendingPathsConfigRef = useRef<HestonControlsState | null>(null);
 
   useEffect(() => {
     setS0(parseNumber(searchParams.get("s0"), 100, 20, 200));
@@ -91,7 +101,7 @@ export default function HestonView() {
     setRho(parseNumber(searchParams.get("rho"), -0.7, -0.99, 0.99, 2));
     setMaturity(parseNumber(searchParams.get("t"), 1, 0.25, 10, 2));
     setSteps(parseNumber(searchParams.get("steps"), 150, 25, 500));
-    setPathCount(parseNumber(searchParams.get("paths"), 5, 1, 6));
+    setPathCount(parseNumber(searchParams.get("paths"), 5, 1, 30));
     setPricingSteps(
       parseNumber(searchParams.get("pricingSteps"), 80, 25, 400)
     );
@@ -162,11 +172,41 @@ export default function HestonView() {
     ]
   );
 
-  const debouncedPricingControls = useDebouncedValue(pricingInput, 300);
+  const pathsInput = useMemo(
+    () => ({
+      S0,
+      strike,
+      rate,
+      v0,
+      theta,
+      kappa,
+      xi,
+      rho,
+      maturity,
+      steps,
+      pathCount,
+      pricingSteps,
+      pricingPaths,
+    }),
+    [
+      S0,
+      strike,
+      rate,
+      v0,
+      theta,
+      kappa,
+      xi,
+      rho,
+      maturity,
+      steps,
+      pathCount,
+      pricingSteps,
+      pricingPaths,
+    ]
+  );
 
-  useEffect(() => {
-    setAppliedPaths((prev) => prev ?? currentControls);
-  }, [currentControls]);
+  const debouncedPricingControls = useDebouncedValue(pricingInput, 300);
+  const debouncedPathsControls = useDebouncedValue(pathsInput, 300);
 
   useEffect(() => {
     const next = new URLSearchParams();
@@ -211,54 +251,90 @@ export default function HestonView() {
       type: "module",
     });
 
-    workerRef.current = worker;
+    pricingWorkerRef.current = worker;
 
-    worker.onmessage = (event: MessageEvent<HestonPricingWorkerResponse>) => {
-      const { requestId, priceComparisonData, smileData } = event.data;
-      if (requestId !== latestRequestIdRef.current) return;
+    worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
+      const response = event.data;
+      if (response.kind !== "pricing") return;
+      if (response.requestId !== latestPricingRequestIdRef.current) return;
 
-      setPriceComparisonData(priceComparisonData);
-      setSmileData(smileData);
+      setPriceComparisonData(response.priceComparisonData);
+      setSmileData(response.smileData);
     };
 
     return () => {
       worker.terminate();
-      workerRef.current = null;
+      pricingWorkerRef.current = null;
     };
   }, []);
 
   useEffect(() => {
-    if (!workerRef.current) return;
+    const worker = new Worker(new URL("./heston.worker.ts", import.meta.url), {
+      type: "module",
+    });
 
-    const requestId = latestRequestIdRef.current + 1;
-    latestRequestIdRef.current = requestId;
+    pathsWorkerRef.current = worker;
 
+    worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
+      const response = event.data;
+      if (response.kind !== "paths") return;
+      if (response.requestId !== latestPathsRequestIdRef.current) return;
 
-    workerRef.current.postMessage({
+      setStockPathData(response.stockData);
+      setVariancePathData(response.varianceData);
+      setAppliedPaths(pendingPathsConfigRef.current);
+      setIsUpdatingPaths(false);
+    };
+
+    return () => {
+      worker.terminate();
+      pathsWorkerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!pricingWorkerRef.current) return;
+
+    const requestId = latestPricingRequestIdRef.current + 1;
+    latestPricingRequestIdRef.current = requestId;
+
+    pricingWorkerRef.current.postMessage({
+      kind: "pricing",
       requestId,
       ...debouncedPricingControls,
     });
   }, [debouncedPricingControls]);
 
-  const pathsParams = appliedPaths ?? currentControls;
+  useEffect(() => {
+    if (!pathsWorkerRef.current) return;
 
-  const simulation = useMemo(
-    () =>
-      simulateHestonPaths({
-        S0: pathsParams.S0,
-        K: pathsParams.strike,
-        r: pathsParams.rate,
-        v0: pathsParams.v0,
-        theta: pathsParams.theta,
-        kappa: pathsParams.kappa,
-        xi: pathsParams.xi,
-        rho: pathsParams.rho,
-        T: pathsParams.maturity,
-        steps: pathsParams.steps,
-        paths: pathsParams.pathCount,
-      }),
-    [pathsParams]
-  );
+    const requestId = latestPathsRequestIdRef.current + 1;
+    latestPathsRequestIdRef.current = requestId;
+    pendingPathsConfigRef.current = debouncedPathsControls;
+    setIsUpdatingPaths(true);
+
+    pathsWorkerRef.current.postMessage({
+      kind: "paths",
+      requestId,
+      S0: debouncedPathsControls.S0,
+      strike: debouncedPathsControls.strike,
+      rate: debouncedPathsControls.rate,
+      v0: debouncedPathsControls.v0,
+      theta: debouncedPathsControls.theta,
+      kappa: debouncedPathsControls.kappa,
+      xi: debouncedPathsControls.xi,
+      rho: debouncedPathsControls.rho,
+      maturity: debouncedPathsControls.maturity,
+      steps: debouncedPathsControls.steps,
+      pathCount: debouncedPathsControls.pathCount,
+    });
+  }, [debouncedPathsControls, pathsRerunNonce]);
+
+  const handleUpdatePaths = () => {
+    setPathsRerunNonce((prev) => prev + 1);
+  };
+
+  const pathsParams = appliedPaths ?? debouncedPathsControls;
 
   const feller = useMemo(
     () => fellerMargin(kappa, theta, xi),
@@ -300,22 +376,24 @@ export default function HestonView() {
       </div>
 
       <div className="view-main">
-
         <HestonPathsChart
-          data={simulation.stockData}
+          data={stockPathData}
           pathKeys={pathKeys}
           strike={pathsParams.strike}
           isOpen={stockChartOpen}
           setIsOpen={setStockChartOpen}
-          onUpdate={() => setAppliedPaths({ ...currentControls })}
+          onUpdate={handleUpdatePaths}
+          isUpdating={isUpdatingPaths}
         />
 
         <HestonVarianceChart
-          data={simulation.varianceData}
+          data={variancePathData}
           pathKeys={pathKeys}
           theta={pathsParams.theta}
           isOpen={varChartOpen}
           setIsOpen={setVarChartOpen}
+          onUpdate={handleUpdatePaths}
+          isUpdating={isUpdatingPaths}
         />
 
         <HestonPriceComparisonChart

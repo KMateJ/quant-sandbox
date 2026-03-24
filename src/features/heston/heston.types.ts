@@ -64,6 +64,7 @@ export type SmilePoint = {
 };
 
 export type HestonPricingWorkerRequest = {
+  kind: "pricing";
   requestId: number;
   S0: number;
   strike: number;
@@ -78,8 +79,40 @@ export type HestonPricingWorkerRequest = {
   pricingPaths: number;
 };
 
+export type HestonPathsWorkerRequest = {
+  kind: "paths";
+  requestId: number;
+  S0: number;
+  strike: number;
+  rate: number;
+  v0: number;
+  theta: number;
+  kappa: number;
+  xi: number;
+  rho: number;
+  maturity: number;
+  steps: number;
+  pathCount: number;
+};
+
 export type HestonPricingWorkerResponse = {
+  kind: "pricing";
   requestId: number;
   priceComparisonData: PriceComparisonPoint[];
   smileData: SmilePoint[];
 };
+
+export type HestonPathsWorkerResponse = {
+  kind: "paths";
+  requestId: number;
+  stockData: HestonPathPoint[];
+  varianceData: HestonPathPoint[];
+};
+
+export type HestonWorkerRequest =
+  | HestonPricingWorkerRequest
+  | HestonPathsWorkerRequest;
+
+export type HestonWorkerResponse =
+  | HestonPricingWorkerResponse
+  | HestonPathsWorkerResponse;
