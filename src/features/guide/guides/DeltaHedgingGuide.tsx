@@ -47,7 +47,7 @@ function DeltaHedgingGuideHU() {
         részvény ára egy kicsit megváltozik.
       </p>
 
-      <BlockMath math="\Delta = \frac{\partial V}{\partial S}" />
+      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
 
       <p>
         Ezt úgy lehet olvasni, hogy a delta a derivatíva árának{" "}
@@ -69,15 +69,13 @@ function DeltaHedgingGuideHU() {
         <InlineMath math="uS_0" /> és <InlineMath math="dS_0" />.
       </p>
 
-      <p>
-        A replikáló portfólió részvénykitettsége:
-      </p>
+      <p>A replikáló portfólió részvénykitettsége:</p>
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
 
       <p>
-        Ez pontosan ugyanaz a <InlineMath math="\Delta" />, amit az előző
-        guide-ban már láttunk a replikációból.
+        Ez pontosan ugyanaz a <InlineMath math={String.raw`\Delta`} />, amit az
+        előző guide-ban már láttunk a replikációból.
       </p>
 
       <p className="guide-highlight">
@@ -89,17 +87,15 @@ function DeltaHedgingGuideHU() {
         <br />a derivatíva árérzékenysége.
       </p>
 
-      <p>
-        Ez az egyik legfontosabb kapcsolat az egész opcióelméletben.
-      </p>
+      <p>Ez az egyik legfontosabb kapcsolat az egész opcióelméletben.</p>
 
       <h3>4. Mit jelent a hedge konkrétan?</h3>
 
       <p>
         Tegyük fel, hogy van egy opciós pozíciód, amelynek deltája{" "}
-        <InlineMath math="\Delta" />. Ha ehhez felveszel egy megfelelő
-        részvénypozíciót az ellenkező irányban, akkor a teljes portfólió első
-        rendű részvénykitettsége lenullázható.
+        <InlineMath math={String.raw`\Delta`} />. Ha ehhez felveszel egy
+        megfelelő részvénypozíciót az ellenkező irányban, akkor a teljes
+        portfólió első rendű részvénykitettsége lenullázható.
       </p>
 
       <p>
@@ -107,18 +103,17 @@ function DeltaHedgingGuideHU() {
         természetes alakja:
       </p>
 
-      <BlockMath math="\Pi = V - \Delta S" />
+      <BlockMath math={String.raw`\Pi = V - \Delta S`} />
+
+      <p>Ennek kis elmozdulásokra a változása közel:</p>
+
+      <BlockMath math={String.raw`d\Pi \approx dV - \Delta\, dS`} />
 
       <p>
-        Ennek kis elmozdulásokra a változása közel:
-      </p>
-
-      <BlockMath math="d\Pi \approx dV - \Delta\, dS" />
-
-      <p>
-        Ha <InlineMath math="\Delta = \frac{\partial V}{\partial S}" />, akkor az
-        első rendű rész kiesik, és a portfólió rövid távon sokkal kevésbé lesz
-        érzékeny a részvény mozgására.
+        Ha{" "}
+        <InlineMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />,
+        akkor az első rendű rész kiesik, és a portfólió rövid távon sokkal
+        kevésbé lesz érzékeny a részvény mozgására.
       </p>
 
       <h3>5. Miért csak “kis” mozgásokra működik így?</h3>
@@ -145,21 +140,17 @@ function DeltaHedgingGuideHU() {
 
       <h3>6. Mi történik egy call opciónál?</h3>
 
-      <p>
-        Egy európai call deltája tipikusan 0 és 1 között van.
-      </p>
+      <p>Egy európai call deltája tipikusan 0 és 1 között van.</p>
 
       <ul>
         <li>
           mélyen out-of-the-money helyzetben a delta kicsi, mert az opció értéke
           alig reagál a részvény kis mozgásaira,
         </li>
+        <li>at-the-money környékén a delta gyorsabban változik,</li>
         <li>
-          at-the-money környékén a delta gyorsabban változik,
-        </li>
-        <li>
-          mélyen in-the-money helyzetben a delta közel 1, mert az opció már majdnem
-          úgy viselkedik, mint maga a részvény.
+          mélyen in-the-money helyzetben a delta közel 1, mert az opció már
+          majdnem úgy viselkedik, mint maga a részvény.
         </li>
       </ul>
 
@@ -175,11 +166,9 @@ function DeltaHedgingGuideHU() {
         változik.
       </p>
 
-      <p>
-        Ezt méri a gamma:
-      </p>
+      <p>Ezt méri a gamma:</p>
 
-      <BlockMath math="\Gamma = \frac{\partial^2 V}{\partial S^2}" />
+      <BlockMath math={String.raw`\Gamma = \frac{\partial^2 V}{\partial S^2}`} />
 
       <p>
         A gamma azt mondja meg, mennyire instabil a delta. Minél nagyobb a
@@ -187,8 +176,9 @@ function DeltaHedgingGuideHU() {
       </p>
 
       <p>
-        Delta hedgelésről tehát nem érdemes úgy beszélni, hogy közben elfelejtjük:
-        a hedge minőségét nagyban befolyásolja az is, hogyan mozog a delta.
+        Delta hedgelésről tehát nem érdemes úgy beszélni, hogy közben
+        elfelejtjük: a hedge minőségét nagyban befolyásolja az is, hogyan mozog
+        a delta.
       </p>
 
       <h3>8. A binomiális modellből a folytonos modell felé</h3>
@@ -198,27 +188,19 @@ function DeltaHedgingGuideHU() {
         A folytonos idejű modellben ugyanez a gondolat deriváltként jelenik meg.
       </p>
 
-      <p>
-        Vagyis a képlet
-      </p>
+      <p>Vagyis a képlet</p>
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
 
-      <p>
-        fokozatosan átmegy abba az intuícióba, hogy
-      </p>
+      <p>fokozatosan átmegy abba az intuícióba, hogy</p>
 
-      <BlockMath math="\Delta = \frac{\partial V}{\partial S}" />
+      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
 
-      <p>
-        A diszkrét különbségi hányadosból helyi meredekség lesz.
-      </p>
+      <p>A diszkrét különbségi hányadosból helyi meredekség lesz.</p>
 
       <h3>9. Miért központi fogalom ez az opcióárazásban?</h3>
 
-      <p>
-        Azért, mert a delta hedgelés összeköti:
-      </p>
+      <p>Azért, mert a delta hedgelés összeköti:</p>
 
       <ul>
         <li>a replikáció gondolatát,</li>
@@ -252,9 +234,7 @@ function DeltaHedgingGuideHU() {
         </li>
       </ul>
 
-      <p>
-        Külön figyeld meg:
-      </p>
+      <p>Külön figyeld meg:</p>
 
       <ul>
         <li>hogyan változik a hedge aránya különböző állapotokban,</li>
@@ -316,7 +296,7 @@ function DeltaHedgingGuideEN() {
         price changes by a small amount.
       </p>
 
-      <BlockMath math="\Delta = \frac{\partial V}{\partial S}" />
+      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
 
       <p>
         You can read this as the <strong>local slope</strong> of the derivative
@@ -338,15 +318,13 @@ function DeltaHedgingGuideEN() {
         <InlineMath math="dS_0" />.
       </p>
 
-      <p>
-        The stock position in the replicating portfolio is
-      </p>
+      <p>The stock position in the replicating portfolio is</p>
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
 
       <p>
-        This is exactly the same <InlineMath math="\Delta" /> that already
-        appeared in the replication argument.
+        This is exactly the same <InlineMath math={String.raw`\Delta`} /> that
+        already appeared in the replication argument.
       </p>
 
       <p className="guide-highlight">
@@ -359,33 +337,29 @@ function DeltaHedgingGuideEN() {
         the price sensitivity of the derivative.
       </p>
 
-      <p>
-        This is one of the most important links in option theory.
-      </p>
+      <p>This is one of the most important links in option theory.</p>
 
       <h3>4. What does the hedge look like in practice?</h3>
 
       <p>
-        Suppose you hold an option with delta <InlineMath math="\Delta" />. If
-        you take an opposite stock position of the right size, the first-order
-        stock exposure of the total portfolio can be neutralized.
+        Suppose you hold an option with delta{" "}
+        <InlineMath math={String.raw`\Delta`} />. If you take an opposite stock
+        position of the right size, the first-order stock exposure of the total
+        portfolio can be neutralized.
       </p>
 
-      <p>
-        For example, if you are long the option, a natural hedged portfolio is
-      </p>
+      <p>For example, if you are long the option, a natural hedged portfolio is</p>
 
-      <BlockMath math="\Pi = V - \Delta S" />
+      <BlockMath math={String.raw`\Pi = V - \Delta S`} />
 
-      <p>
-        For small moves, its change is approximately
-      </p>
+      <p>For small moves, its change is approximately</p>
 
-      <BlockMath math="d\Pi \approx dV - \Delta\, dS" />
+      <BlockMath math={String.raw`d\Pi \approx dV - \Delta\, dS`} />
 
       <p>
-        If <InlineMath math="\Delta = \frac{\partial V}{\partial S}" />, then
-        the first-order term cancels, and the portfolio becomes much less
+        If{" "}
+        <InlineMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />,
+        then the first-order term cancels, and the portfolio becomes much less
         sensitive to the stock over short horizons.
       </p>
 
@@ -396,13 +370,11 @@ function DeltaHedgingGuideEN() {
         slope at one point.
       </p>
 
-      <p>
-        If the stock price moves a lot, delta itself will usually change.
-      </p>
+      <p>If the stock price moves a lot, delta itself will usually change.</p>
 
       <p className="guide-highlight">
-        So delta hedging is not a one-time action. It is a repeated
-        rebalancing problem.
+        So delta hedging is not a one-time action. It is a repeated rebalancing
+        problem.
       </p>
 
       <p>
@@ -412,18 +384,14 @@ function DeltaHedgingGuideEN() {
 
       <h3>6. What happens for a call option?</h3>
 
-      <p>
-        The delta of a European call is typically between 0 and 1.
-      </p>
+      <p>The delta of a European call is typically between 0 and 1.</p>
 
       <ul>
         <li>
           deep out-of-the-money, delta is small because the option barely reacts
           to small stock moves,
         </li>
-        <li>
-          near the money, delta changes more rapidly,
-        </li>
+        <li>near the money, delta changes more rapidly,</li>
         <li>
           deep in-the-money, delta gets close to 1 because the option starts to
           behave almost like the stock itself.
@@ -442,11 +410,9 @@ function DeltaHedgingGuideEN() {
         changes.
       </p>
 
-      <p>
-        That is measured by gamma:
-      </p>
+      <p>That is measured by gamma:</p>
 
-      <BlockMath math="\Gamma = \frac{\partial^2 V}{\partial S^2}" />
+      <BlockMath math={String.raw`\Gamma = \frac{\partial^2 V}{\partial S^2}`} />
 
       <p>
         Gamma tells us how unstable delta is. The larger the gamma, the more
@@ -465,27 +431,19 @@ function DeltaHedgingGuideEN() {
         In continuous time, the same idea appears as a derivative.
       </p>
 
-      <p>
-        In other words,
-      </p>
+      <p>In other words,</p>
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
 
-      <p>
-        gradually becomes the intuition that
-      </p>
+      <p>gradually becomes the intuition that</p>
 
-      <BlockMath math="\Delta = \frac{\partial V}{\partial S}" />
+      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
 
-      <p>
-        The discrete slope becomes a local slope.
-      </p>
+      <p>The discrete slope becomes a local slope.</p>
 
       <h3>9. Why is this central in option pricing?</h3>
 
-      <p>
-        Because delta hedging connects
-      </p>
+      <p>Because delta hedging connects</p>
 
       <ul>
         <li>replication,</li>
@@ -519,9 +477,7 @@ function DeltaHedgingGuideEN() {
         </li>
       </ul>
 
-      <p>
-        Pay special attention to
-      </p>
+      <p>Pay special attention to</p>
 
       <ul>
         <li>how the hedge ratio changes across states,</li>

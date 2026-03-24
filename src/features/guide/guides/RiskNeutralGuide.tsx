@@ -2,7 +2,6 @@ import { BlockMath, InlineMath } from "react-katex";
 import { useI18n } from "../../../i18n";
 import GuideLink from "../components/GuideLink";
 
-
 function RiskNeutralGuideHU() {
   return (
     <div className="guide-content">
@@ -28,20 +27,18 @@ function RiskNeutralGuideHU() {
         valamilyen jövőbeli átlagból jön.
       </p>
 
-      <p>
-        Vegyünk egy egyszerű játékot. Dobsz egy szabályos kockával:
-      </p>
+      <p>Vegyünk egy egyszerű játékot. Dobsz egy szabályos kockával:</p>
 
       <ul>
         <li>ha páros jön ki, kapsz 100-at,</li>
         <li>ha páratlan jön ki, kapsz 50-et.</li>
       </ul>
 
-      <p>
-        A szokásos várható érték:
-      </p>
+      <p>A szokásos várható érték:</p>
 
-      <BlockMath math="\mathbb{E}^{P}[X] = \frac12 \cdot 100 + \frac12 \cdot 50 = 75" />
+      <BlockMath
+        math={String.raw`\mathbb{E}^{P}[X] = \frac12 \cdot 100 + \frac12 \cdot 50 = 75`}
+      />
 
       <p>
         Ez a <InlineMath math="P" /> alatti várható érték, vagyis a valódi
@@ -101,7 +98,7 @@ function RiskNeutralGuideHU() {
         felírni:
       </p>
 
-      <BlockMath math="V_0 = qX_u + (1-q)X_d" />
+      <BlockMath math={String.raw`V_0 = qX_u + (1-q)X_d`} />
 
       <p>
         Ez formailag várható értéknek néz ki. A különbség az, hogy a{" "}
@@ -122,9 +119,7 @@ function RiskNeutralGuideHU() {
         <li>és valamelyik állapotban szigorúan nyer.</li>
       </ul>
 
-      <p>
-        Ha ilyen lehetőség lenne, akkor az árak nincsenek összhangban.
-      </p>
+      <p>Ha ilyen lehetőség lenne, akkor az árak nincsenek összhangban.</p>
 
       <h3>5. A legegyszerűbb részvénymodell</h3>
 
@@ -133,7 +128,7 @@ function RiskNeutralGuideHU() {
         két dolog történhet:
       </p>
 
-      <BlockMath math="S_1 \in \{uS_0,\ dS_0\}" />
+      <BlockMath math={String.raw`S_1 \in \{uS_0,\ dS_0\}`} />
 
       <p>
         Itt <InlineMath math="u" /> a fel-szorzó, <InlineMath math="d" /> pedig a
@@ -145,7 +140,10 @@ function RiskNeutralGuideHU() {
         akkor a részvény vagy 20%-kal felmegy, vagy 10%-kal lemegy.
       </p>
 
-      <h3>6. A kulcsgondolat: ne találgassuk az árat, hanem másoljuk le a kifizetést</h3>
+      <h3>
+        6. A kulcsgondolat: ne találgassuk az árat, hanem másoljuk le a
+        kifizetést
+      </h3>
 
       <p className="guide-highlight">
         A derivatíva árát nem kitaláljuk, hanem replikáljuk.
@@ -163,38 +161,35 @@ function RiskNeutralGuideHU() {
       </p>
 
       <p>
-        Kamat nélkül egy <InlineMath math="\Delta" /> darab részvényből és{" "}
-        <InlineMath math="B" /> készpénzből álló portfólió a két állapotban ezt
-        adja:
+        Kamat nélkül egy <InlineMath math={String.raw`\Delta`} /> darab
+        részvényből és <InlineMath math="B" /> készpénzből álló portfólió a két
+        állapotban ezt adja:
       </p>
 
-      <BlockMath math="\Delta uS_0 + B = X_u" />
-      <BlockMath math="\Delta dS_0 + B = X_d" />
+      <BlockMath math={String.raw`\Delta uS_0 + B = X_u`} />
+      <BlockMath math={String.raw`\Delta dS_0 + B = X_d`} />
 
       <p>
         Két állapot van, ezért két egyenletből meg tudjuk határozni a két
-        ismeretlent: <InlineMath math="\Delta" />-t és <InlineMath math="B" />-t.
+        ismeretlent: <InlineMath math={String.raw`\Delta`} />-t és{" "}
+        <InlineMath math="B" />-t.
       </p>
 
-      <p>
-        A különbségből:
-      </p>
+      <p>A különbségből:</p>
 
-      <BlockMath math="\Delta (u-d)S_0 = X_u - X_d" />
+      <BlockMath math={String.raw`\Delta (u-d)S_0 = X_u - X_d`} />
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath
+        math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`}
+      />
 
-      <p>
-        Ezután például az első egyenletből:
-      </p>
+      <p>Ezután például az első egyenletből:</p>
 
-      <BlockMath math="B = X_u - \Delta uS_0" />
+      <BlockMath math={String.raw`B = X_u - \Delta uS_0`} />
 
-      <p>
-        Így a derivatíva mai ára:
-      </p>
+      <p>Így a derivatíva mai ára:</p>
 
-      <BlockMath math="V_0 = \Delta S_0 + B" />
+      <BlockMath math={String.raw`V_0 = \Delta S_0 + B`} />
 
       <h3>7. Innen bukkan elő a q</h3>
 
@@ -203,13 +198,11 @@ function RiskNeutralGuideHU() {
         alakba.
       </p>
 
-      <BlockMath math="V_0 = qX_u + (1-q)X_d" />
+      <BlockMath math={String.raw`V_0 = qX_u + (1-q)X_d`} />
 
-      <p>
-        ahol
-      </p>
+      <p>ahol</p>
 
-      <BlockMath math="q = \frac{1-d}{u-d}" />
+      <BlockMath math={String.raw`q = \frac{1-d}{u-d}`} />
 
       <p>
         Ezt a <InlineMath math="q" />-t nem mi találtuk ki. A replikációból
@@ -221,15 +214,11 @@ function RiskNeutralGuideHU() {
         arbitrázsmentességből következő szám.
       </p>
 
-      <p>
-        Ebből az is következik, hogy
-      </p>
+      <p>Ebből az is következik, hogy</p>
 
-      <BlockMath math="q\,u + (1-q)\,d = 1" />
+      <BlockMath math={String.raw`q\,u + (1-q)\,d = 1`} />
 
-      <p>
-        Tehát ebben a súlyozásban a részvény várható szorzója éppen 1.
-      </p>
+      <p>Tehát ebben a súlyozásban a részvény várható szorzója éppen 1.</p>
 
       <h3>8. Miért kockázatsemleges ez a világ?</h3>
 
@@ -238,11 +227,11 @@ function RiskNeutralGuideHU() {
         Kamat nélkül:
       </p>
 
-      <BlockMath math="\mathbb{E}^{Q}[S_1] = S_0" />
+      <BlockMath math={String.raw`\mathbb{E}^{Q}[S_1] = S_0`} />
 
       <p className="guide-highlight">
-        A <InlineMath math="Q" /> nem a valóság leírása, hanem az arbitrázsmentes
-        árazás nyelve.
+        A <InlineMath math="Q" /> nem a valóság leírása, hanem az
+        arbitrázsmentes árazás nyelve.
       </p>
 
       <h3>9. Most tegyük vissza a kamatot</h3>
@@ -252,42 +241,34 @@ function RiskNeutralGuideHU() {
         <InlineMath math="1+r" />, akkor a replikációs egyenletek:
       </p>
 
-      <BlockMath math="\Delta uS_0 + B(1+r) = X_u" />
-      <BlockMath math="\Delta dS_0 + B(1+r) = X_d" />
+      <BlockMath math={String.raw`\Delta uS_0 + B(1+r) = X_u`} />
+      <BlockMath math={String.raw`\Delta dS_0 + B(1+r) = X_d`} />
 
-      <p>
-        Ekkor a kockázatsemleges súly:
-      </p>
+      <p>Ekkor a kockázatsemleges súly:</p>
 
-      <BlockMath math="q = \frac{(1+r)-d}{u-d}" />
+      <BlockMath math={String.raw`q = \frac{(1+r)-d}{u-d}`} />
 
-      <p>
-        és a mai ár:
-      </p>
+      <p>és a mai ár:</p>
 
-      <BlockMath math="V_0 = \frac{1}{1+r}\big(qX_u + (1-q)X_d\big)" />
+      <BlockMath
+        math={String.raw`V_0 = \frac{1}{1+r}\big(qX_u + (1-q)X_d\big)`}
+      />
 
-      <p>
-        Most a kulcsazonosság:
-      </p>
+      <p>Most a kulcsazonosság:</p>
 
-      <BlockMath math="q\,u + (1-q)\,d = 1+r" />
+      <BlockMath math={String.raw`q\,u + (1-q)\,d = 1+r`} />
 
-      <p>
-        vagyis
-      </p>
+      <p>vagyis</p>
 
-      <BlockMath math="\mathbb{E}^{Q}[S_1] = (1+r)S_0" />
+      <BlockMath math={String.raw`\mathbb{E}^{Q}[S_1] = (1+r)S_0`} />
 
-      <p>
-        diszkontálva pedig
-      </p>
+      <p>diszkontálva pedig</p>
 
-      <BlockMath math="\mathbb{E}^{Q}\!\left[\frac{S_1}{1+r}\right] = S_0" />
+      <BlockMath
+        math={String.raw`\mathbb{E}^{Q}\!\left[\frac{S_1}{1+r}\right] = S_0`}
+      />
 
-      <p>
-        Ez a binomiális modell legegyszerűbb martingálgondolata.
-      </p>
+      <p>Ez a binomiális modell legegyszerűbb martingálgondolata.</p>
 
       <h3>10. P és Q szerepe</h3>
 
@@ -315,11 +296,13 @@ function RiskNeutralGuideHU() {
     </div>
   );
 }
+
 function RiskNeutralGuideEN() {
   return (
     <div className="guide-content">
       <p className="guide-highlight">
-        How can we assign a price today to something that will only pay in the future?
+        How can we assign a price today to something that will only pay in the
+        future?
       </p>
 
       <p>
@@ -339,20 +322,18 @@ function RiskNeutralGuideEN() {
         today should come from some average of future outcomes.
       </p>
 
-      <p>
-        Consider a simple game. You roll a fair die:
-      </p>
+      <p>Consider a simple game. You roll a fair die:</p>
 
       <ul>
         <li>if the result is even, you receive 100,</li>
         <li>if the result is odd, you receive 50.</li>
       </ul>
 
-      <p>
-        The usual expected value is
-      </p>
+      <p>The usual expected value is</p>
 
-      <BlockMath math="\mathbb{E}^{P}[X] = \frac12 \cdot 100 + \frac12 \cdot 50 = 75" />
+      <BlockMath
+        math={String.raw`\mathbb{E}^{P}[X] = \frac12 \cdot 100 + \frac12 \cdot 50 = 75`}
+      />
 
       <p>
         This is the expectation under <InlineMath math="P" />, that is, under
@@ -384,9 +365,9 @@ function RiskNeutralGuideEN() {
       <h3>2. Why would we want to “load the die”?</h3>
 
       <p>
-        In finance the point is not to guess the most likely future. The point is
-        to find a weighting of possible outcomes that is consistent with market
-        prices.
+        In finance the point is not to guess the most likely future. The point
+        is to find a weighting of possible outcomes that is consistent with
+        market prices.
       </p>
 
       <p className="guide-highlight">
@@ -414,7 +395,7 @@ function RiskNeutralGuideEN() {
         current value in the form
       </p>
 
-      <BlockMath math="V_0 = qX_u + (1-q)X_d" />
+      <BlockMath math={String.raw`V_0 = qX_u + (1-q)X_d`} />
 
       <p>
         Formally this looks like an expectation. But <InlineMath math="q" /> is
@@ -435,18 +416,16 @@ function RiskNeutralGuideEN() {
         <li>and make a strict profit in at least one state.</li>
       </ul>
 
-      <p>
-        If that were possible, prices would be inconsistent.
-      </p>
+      <p>If that were possible, prices would be inconsistent.</p>
 
       <h3>5. The simplest stock model</h3>
 
       <p>
-        Let the stock price today be <InlineMath math="S_0" />. One period later,
-        it becomes either
+        Let the stock price today be <InlineMath math="S_0" />. One period
+        later, it becomes either
       </p>
 
-      <BlockMath math="S_1 \in \{uS_0,\ dS_0\}" />
+      <BlockMath math={String.raw`S_1 \in \{uS_0,\ dS_0\}`} />
 
       <p>
         Here <InlineMath math="u" /> is the up factor and{" "}
@@ -477,37 +456,35 @@ function RiskNeutralGuideEN() {
       </p>
 
       <p>
-        Without interest, a portfolio consisting of <InlineMath math="\Delta" />{" "}
-        shares and <InlineMath math="B" /> units of cash gives
+        Without interest, a portfolio consisting of{" "}
+        <InlineMath math={String.raw`\Delta`} /> shares and{" "}
+        <InlineMath math="B" /> units of cash gives
       </p>
 
-      <BlockMath math="\Delta uS_0 + B = X_u" />
-      <BlockMath math="\Delta dS_0 + B = X_d" />
+      <BlockMath math={String.raw`\Delta uS_0 + B = X_u`} />
+      <BlockMath math={String.raw`\Delta dS_0 + B = X_d`} />
 
       <p>
-        There are two states, so these two equations determine the two unknowns:
-        <InlineMath math="\Delta" /> and <InlineMath math="B" />.
+        There are two states, so these two equations determine the two
+        unknowns: <InlineMath math={String.raw`\Delta`} /> and{" "}
+        <InlineMath math="B" />.
       </p>
 
-      <p>
-        Taking the difference gives
-      </p>
+      <p>Taking the difference gives</p>
 
-      <BlockMath math="\Delta (u-d)S_0 = X_u - X_d" />
+      <BlockMath math={String.raw`\Delta (u-d)S_0 = X_u - X_d`} />
 
-      <BlockMath math="\Delta = \frac{X_u - X_d}{(u-d)S_0}" />
+      <BlockMath
+        math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`}
+      />
 
-      <p>
-        Then, for example from the first equation,
-      </p>
+      <p>Then, for example from the first equation,</p>
 
-      <BlockMath math="B = X_u - \Delta uS_0" />
+      <BlockMath math={String.raw`B = X_u - \Delta uS_0`} />
 
-      <p>
-        So the derivative price today is
-      </p>
+      <p>So the derivative price today is</p>
 
-      <BlockMath math="V_0 = \Delta S_0 + B" />
+      <BlockMath math={String.raw`V_0 = \Delta S_0 + B`} />
 
       <h3>7. This is where q appears</h3>
 
@@ -516,13 +493,11 @@ function RiskNeutralGuideEN() {
         expectation form.
       </p>
 
-      <BlockMath math="V_0 = qX_u + (1-q)X_d" />
+      <BlockMath math={String.raw`V_0 = qX_u + (1-q)X_d`} />
 
-      <p>
-        where
-      </p>
+      <p>where</p>
 
-      <BlockMath math="q = \frac{1-d}{u-d}" />
+      <BlockMath math={String.raw`q = \frac{1-d}{u-d}`} />
 
       <p>
         We did not choose <InlineMath math="q" /> by hand. It comes out of
@@ -530,19 +505,15 @@ function RiskNeutralGuideEN() {
       </p>
 
       <p>
-        So the “loaded die” is not a subjective opinion. It is the number forced
-        on us by arbitrage-free pricing.
+        So the “loaded die” is not a subjective opinion. It is the number
+        forced on us by arbitrage-free pricing.
       </p>
 
-      <p>
-        This also implies
-      </p>
+      <p>This also implies</p>
 
-      <BlockMath math="q\,u + (1-q)\,d = 1" />
+      <BlockMath math={String.raw`q\,u + (1-q)\,d = 1`} />
 
-      <p>
-        So under this weighting the expected stock multiplier is exactly 1.
-      </p>
+      <p>So under this weighting the expected stock multiplier is exactly 1.</p>
 
       <h3>8. Why is this called risk-neutral?</h3>
 
@@ -551,7 +522,7 @@ function RiskNeutralGuideEN() {
         Without interest:
       </p>
 
-      <BlockMath math="\mathbb{E}^{Q}[S_1] = S_0" />
+      <BlockMath math={String.raw`\mathbb{E}^{Q}[S_1] = S_0`} />
 
       <p className="guide-highlight">
         <InlineMath math="Q" /> is not meant to describe reality. It is the
@@ -561,52 +532,47 @@ function RiskNeutralGuideEN() {
       <h3>9. Now put interest back in</h3>
 
       <p>
-        If the one-period risk-free growth factor is <InlineMath math="1+r" />,
-        then the replication equations become
+        If the one-period risk-free growth factor is{" "}
+        <InlineMath math="1+r" />, then the replication equations become
       </p>
 
-      <BlockMath math="\Delta uS_0 + B(1+r) = X_u" />
-      <BlockMath math="\Delta dS_0 + B(1+r) = X_d" />
+      <BlockMath math={String.raw`\Delta uS_0 + B(1+r) = X_u`} />
+      <BlockMath math={String.raw`\Delta dS_0 + B(1+r) = X_d`} />
 
-      <p>
-        Then the risk-neutral weight is
-      </p>
+      <p>Then the risk-neutral weight is</p>
 
-      <BlockMath math="q = \frac{(1+r)-d}{u-d}" />
+      <BlockMath math={String.raw`q = \frac{(1+r)-d}{u-d}`} />
 
-      <p>
-        and the current price is
-      </p>
+      <p>and the current price is</p>
 
-      <BlockMath math="V_0 = \frac{1}{1+r}\big(qX_u + (1-q)X_d\big)" />
+      <BlockMath
+        math={String.raw`V_0 = \frac{1}{1+r}\big(qX_u + (1-q)X_d\big)`}
+      />
 
-      <p>
-        The key identity is now
-      </p>
+      <p>The key identity is now</p>
 
-      <BlockMath math="q\,u + (1-q)\,d = 1+r" />
+      <BlockMath math={String.raw`q\,u + (1-q)\,d = 1+r`} />
 
-      <p>
-        which means
-      </p>
+      <p>which means</p>
 
-      <BlockMath math="\mathbb{E}^{Q}[S_1] = (1+r)S_0" />
+      <BlockMath math={String.raw`\mathbb{E}^{Q}[S_1] = (1+r)S_0`} />
 
-      <p>
-        and in discounted form
-      </p>
+      <p>and in discounted form</p>
 
-      <BlockMath math="\mathbb{E}^{Q}\!\left[\frac{S_1}{1+r}\right] = S_0" />
+      <BlockMath
+        math={String.raw`\mathbb{E}^{Q}\!\left[\frac{S_1}{1+r}\right] = S_0`}
+      />
 
-      <p>
-        This is the simplest martingale statement in the binomial model.
-      </p>
+      <p>This is the simplest martingale statement in the binomial model.</p>
 
       <h3>10. The roles of P and Q</h3>
 
       <ul>
         <li><InlineMath math="P" />: what actually happens,</li>
-        <li><InlineMath math="Q" />: how prices must be weighted to be arbitrage-free.</li>
+        <li>
+          <InlineMath math="Q" />: how prices must be weighted to be
+          arbitrage-free.
+        </li>
       </ul>
 
       <p>
@@ -617,8 +583,8 @@ function RiskNeutralGuideEN() {
       <h3>11. The essence in one sentence</h3>
 
       <p className="guide-highlight">
-        The risk-neutral measure does not tell us which future is more likely. It
-        gives the weighting under which today’s price is arbitrage-free.
+        The risk-neutral measure does not tell us which future is more likely.
+        It gives the weighting under which today’s price is arbitrage-free.
       </p>
 
       <p>
@@ -628,7 +594,6 @@ function RiskNeutralGuideEN() {
     </div>
   );
 }
-
 
 export default function RiskNeutralGuide() {
   const { language } = useI18n();

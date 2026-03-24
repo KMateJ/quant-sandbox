@@ -24,7 +24,7 @@ function InstrumentsGuideHU() {
         derivatíva kifizetése egy függvény:
       </p>
 
-      <BlockMath math="X = f(S_T)" />
+      <BlockMath math={String.raw`X = f(S_T)`} />
 
       <p>A legfontosabb példák, amikkel indulunk:</p>
 
@@ -35,17 +35,16 @@ function InstrumentsGuideHU() {
         <InlineMath math="K" /> jelöl.
       </p>
 
-      <BlockMath math="X_{\mathrm{call}} = (S_T - K)^+" />
+      <BlockMath math={String.raw`X_{\mathrm{call}} = (S_T - K)^+`} />
 
       <p>
-        Itt a <InlineMath math="x^+ = \max(x,0)" /> jelölést használjuk. Ez azt
-        jelenti, hogy ha a részvényár nagyobb, mint a strike, akkor a call
-        értékes, ha nem, akkor a kifizetés nulla.
+        Itt a <InlineMath math={String.raw`x^+ = \max(x,0)`} /> jelölést
+        használjuk. Ez azt jelenti, hogy ha a részvényár nagyobb, mint a
+        strike, akkor a call értékes, ha nem, akkor a kifizetés nulla.
       </p>
 
       <p>
-        Nézd meg rögtön a saját oldaladon egy előre beállított példán:
-        {" "}
+        Nézd meg rögtön a saját oldaladon egy előre beállított példán:{" "}
         <GuideLink to="/payoff?preset=long-call">
           long call preset megnyitása
         </GuideLink>
@@ -57,13 +56,12 @@ function InstrumentsGuideHU() {
         A put ennek a tükörképe: jogod van eladni a részvényt a strike áron.
       </p>
 
-      <BlockMath math="X_{\mathrm{put}} = (K - S_T)^+" />
+      <BlockMath math={String.raw`X_{\mathrm{put}} = (K - S_T)^+`} />
 
       <p>Ez akkor ér sokat, ha a részvény árfolyama leesik.</p>
 
       <p>
-        Ehhez:
-        {" "}
+        Ehhez:{" "}
         <GuideLink to="/payoff?preset=long-put">
           long put preset megnyitása
         </GuideLink>
@@ -72,10 +70,11 @@ function InstrumentsGuideHU() {
 
       <h3>3. Forward</h3>
       <p>
-        A forward nem opció, hanem kötelezettség. Lejáratkor a kifizetés lineáris:
+        A forward nem opció, hanem kötelezettség. Lejáratkor a kifizetés
+        lineáris:
       </p>
 
-      <BlockMath math="X_{\mathrm{forward}} = S_T - K" />
+      <BlockMath math={String.raw`X_{\mathrm{forward}} = S_T - K`} />
 
       <p>
         Ez azért fontos, mert sok összetettebb stratégia végül ugyanilyen
@@ -84,13 +83,12 @@ function InstrumentsGuideHU() {
       </p>
 
       <p>
-        A te oldaladon ehhez a legjobb kiindulópont most a
-        {" "}
+        A te oldaladon ehhez a legjobb kiindulópont most a{" "}
         <GuideLink to="/payoff?preset=synthetic-long-forward">
           synthetic long forward
         </GuideLink>
         , mert rögtön látszik, hogy egy call és egy put együtt hogyan ad ki egy
-        forward-szerű profilt. Ezt a rendszered automatikusan felismeri is. 
+        forward-szerű profilt. Ezt a rendszered automatikusan felismeri is.
       </p>
 
       <h3>Mit jelent az, hogy európai?</h3>
@@ -164,7 +162,8 @@ function InstrumentsGuideEN() {
         The natural starting point is the <strong>Payoff Lab</strong>. There we
         think in terms of a terminal date. We do not care yet about the full
         path of the stock before maturity. We care about the{" "}
-        <strong>stock price at maturity</strong>, and how the payoff depends on it.
+        <strong>stock price at maturity</strong>, and how the payoff depends on
+        it.
       </p>
 
       <p>
@@ -172,7 +171,7 @@ function InstrumentsGuideEN() {
         derivative payoff is a function
       </p>
 
-      <BlockMath math="X = f(S_T)" />
+      <BlockMath math={String.raw`X = f(S_T)`} />
 
       <p>The main examples are the following:</p>
 
@@ -183,16 +182,15 @@ function InstrumentsGuideEN() {
         <InlineMath math="K" />.
       </p>
 
-      <BlockMath math="X_{\mathrm{call}} = (S_T - K)^+" />
+      <BlockMath math={String.raw`X_{\mathrm{call}} = (S_T - K)^+`} />
 
       <p>
-        Here <InlineMath math="x^+ = \max(x,0)" /> means that the payoff is
-        positive only when the stock ends above the strike.
+        Here <InlineMath math={String.raw`x^+ = \max(x,0)`} /> means that the
+        payoff is positive only when the stock ends above the strike.
       </p>
 
       <p>
-        Try it directly on your site:
-        {" "}
+        Try it directly on your site:{" "}
         <GuideLink to="/payoff?preset=long-call">
           open the long call preset
         </GuideLink>
@@ -204,13 +202,12 @@ function InstrumentsGuideEN() {
         A put is the mirror image: it gives you the right to sell at the strike.
       </p>
 
-      <BlockMath math="X_{\mathrm{put}} = (K - S_T)^+" />
+      <BlockMath math={String.raw`X_{\mathrm{put}} = (K - S_T)^+`} />
 
       <p>So the put becomes valuable when the stock price falls.</p>
 
       <p>
-        See:
-        {" "}
+        See:{" "}
         <GuideLink to="/payoff?preset=long-put">
           open the long put preset
         </GuideLink>
@@ -219,30 +216,31 @@ function InstrumentsGuideEN() {
 
       <h3>3. Forward</h3>
       <p>
-        A forward is not an option but an obligation. Its terminal payoff is linear:
+        A forward is not an option but an obligation. Its terminal payoff is
+        linear:
       </p>
 
-      <BlockMath math="X_{\mathrm{forward}} = S_T - K" />
+      <BlockMath math={String.raw`X_{\mathrm{forward}} = S_T - K`} />
 
       <p>
-        This matters because many more complicated strategies eventually collapse
-        into this same linear shape.
+        This matters because many more complicated strategies eventually
+        collapse into this same linear shape.
       </p>
 
       <p>
-        On your site, the best shortcut is
-        {" "}
+        On your site, the best shortcut is{" "}
         <GuideLink to="/payoff?preset=synthetic-long-forward">
           synthetic long forward
         </GuideLink>
         , where you can already see how a call and a put combine into a
-        forward-like profile. Your current logic also detects this automatically. 
+        forward-like profile. Your current logic also detects this automatically.
       </p>
 
       <h3>What does “European” mean here?</h3>
       <p>
         It means that we only focus on the <strong>maturity date</strong>. We
-        are not yet discussing early exercise. We only care about the final payoff.
+        are not yet discussing early exercise. We only care about the final
+        payoff.
       </p>
 
       <h3>Why start with payoff?</h3>
