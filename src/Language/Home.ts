@@ -14,7 +14,7 @@ export const homeHu = {
       "Ez az oldal az ELTE + Corvinus Biztosítás- és Pénzügyi Matematika szak hallgatóinak készült tanulást segítő eszköz.",
     
     homeBody:
-      "Ez egy személyes projekt, így a fejlesztés nem folyamatos. Előfordulhat, hogy nem reagálok gyorsan a kérésekre, de minden visszajelzést és ötletet szívesen fogadok.",    settingsTitle: "Beállítások",
+      "Ez egy személyes projekt, így a fejlesztés nem folyamatos.",    settingsTitle: "Beállítások",
     settingsSubtitle: "Később ide kerülhetnek a további app beállítások is.",
     languageLabel: "Nyelv",
     languageHu: "Magyar",
@@ -63,7 +63,7 @@ export const homeEn = {
       "This site is a study aid for students of the ELTE & Corvinus Insurance and Financial Mathematics program.",
 
     homeBody:
-      "This is a personal project, so development happens when I have time and motivation. I may not always respond quickly to requests, but feedback and suggestions are always welcome.",
+      "This is a personal project, so development happens when I have time and motivation.",
     settingsTitle: "Settings",
     settingsSubtitle: "You can place the rest of the app settings here later.",
     languageLabel: "Language",
