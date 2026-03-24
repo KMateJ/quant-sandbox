@@ -35,6 +35,7 @@ const translations = {
     ...blackScholesHu,
     ...hestonHu,
     ...themeHu,
+    navGuide: "Útmutató", 
   },
   en: {
     ...homeEn,
@@ -44,6 +45,7 @@ const translations = {
     ...blackScholesEn,
     ...hestonEn,
     ...themeEn,
+    navGuide: "Guide",
   },
 } satisfies Record<Language, TranslationTree>;
 

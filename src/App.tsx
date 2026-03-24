@@ -10,6 +10,7 @@ import { HomeView } from "./features/home/HomeView";
 
 import { Seo } from "./seo";
 import HestonView from "./features/heston/HestonView";
+import GuideView from "./features/guide/GuideView";
 
 /* =======================
    SEO WRAPPED PAGES
@@ -93,6 +94,19 @@ function HestonPage() {
   );
 }
 
+function GuidePage() {
+  return (
+    <>
+      <Seo
+        title="Guide"
+        description="Narrative guides to understand financial instruments, pricing and hedging concepts."
+        path="/guide"
+      />
+      <GuideView />
+    </>
+  );
+}
+
 /* =======================
    APP
 ======================= */
@@ -148,6 +162,7 @@ export default function App() {
       <main className="page-container">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/guide" element={<GuidePage />} />
           <Route path="/payoff" element={<PayoffPage />} />
           <Route path="/binomial" element={<BinomialPage />} />
           <Route path="/diffusion" element={<DiffusionPage />} />

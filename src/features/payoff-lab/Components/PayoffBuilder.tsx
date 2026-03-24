@@ -206,7 +206,7 @@ export default function PayoffBuilder({
                 </div>
                 <button
                   type="button"
-                  className="toggle-button"
+                  className="delete-leg-button"
                   onClick={() => removeLeg(leg.id)}
                 >
                   {t("payoffDelete")}

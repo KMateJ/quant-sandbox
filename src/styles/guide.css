@@ -1,0 +1,197 @@
+.guide-page {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.guide-item {
+  border: 1px solid var(--border, #35507a);
+  border-radius: 24px;
+  background: rgba(20, 31, 56, 0.88);
+  overflow: hidden;
+}
+
+.guide-header {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.guide-header:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.guide-header-text {
+  min-width: 0;
+  text-align: left;
+}
+
+.guide-header-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 6px;
+}
+
+.guide-header-description {
+  color: #a9bbd6;
+  line-height: 1.55;
+}
+
+.guide-header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid #47658f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #dbeafe;
+  font-size: 1.4rem;
+  flex: 0 0 auto;
+}
+
+.guide-body {
+  border-top: 1px solid rgba(71, 101, 143, 0.45);
+  padding: 28px 24px 30px;
+}
+
+.guide-content {
+  color: #d9e7fb;
+  line-height: 1.8;
+  font-size: 1.04rem;
+  text-align: left;
+}
+
+.guide-content h3 {
+  color: #f8fafc;
+  font-size: 1.2rem;
+  margin: 28px 0 10px;
+  text-align: left;
+}
+
+.guide-content p {
+  margin: 0 0 16px;
+  text-align: left;
+}
+
+.guide-content ul {
+  margin: 0 0 18px 22px;
+  padding: 0;
+}
+
+.guide-content li {
+  margin-bottom: 8px;
+}
+
+.guide-content a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.guide-content a:hover {
+  text-decoration: underline;
+}
+
+.guide-highlight {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.guide-content .katex-display {
+  margin: 18px 0 22px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.guide-content .katex {
+  color: #f8fafc;
+}
+
+@media (max-width: 900px) {
+  .guide-header {
+    padding: 18px 18px;
+  }
+
+  .guide-body {
+    padding: 22px 18px 24px;
+  }
+
+  .guide-header-title {
+    font-size: 1.05rem;
+  }
+
+  .guide-header-description {
+    font-size: 0.95rem;
+  }
+
+  .guide-content {
+    font-size: 0.98rem;
+  }
+}
+
+.guide-body {
+  border-top: 1px solid rgba(71, 101, 143, 0.45);
+  padding: 32px 28px 36px;
+}
+
+.guide-content {
+  color: #d9e7fb;
+  line-height: 1.85;
+  font-size: 1.04rem;
+  text-align: left;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.guide-content h3 {
+  color: #f8fafc;
+  font-size: 1.2rem;
+  margin: 30px 0 12px;
+  text-align: left;
+}
+
+.guide-content p {
+  margin: 0 0 18px;
+  text-align: left;
+}
+
+.guide-content ul {
+  margin: 0 0 20px 24px;
+  padding: 0;
+}
+
+.guide-content li {
+  margin-bottom: 10px;
+}
+
+.guide-content .katex-display {
+  margin: 20px 0 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media (max-width: 900px) {
+  .guide-body {
+    padding: 24px 18px 28px;
+  }
+
+  .guide-content {
+    max-width: 100%;
+    font-size: 0.98rem;
+  }
+}

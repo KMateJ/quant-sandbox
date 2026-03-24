@@ -300,6 +300,7 @@
   display: none;
 }
 
+.delete-leg-button,
 .toggle-button,
 .metric-button {
   border: 1px solid var(--border);
@@ -311,6 +312,7 @@
   transition: var(--transition-fast);
 }
 
+.delete-leg-button:hover,
 .toggle-button:hover,
 .metric-button:hover,
 .stepper-button:hover {
@@ -770,6 +772,7 @@
     line-height: 1.45;
   }
 
+  .delete-leg-button,
   .toggle-button {
     width: 100%;
     max-width: none;
