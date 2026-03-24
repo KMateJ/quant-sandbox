@@ -10,7 +10,7 @@ export default function GuideView() {
   const { language } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const guides = useMemo(() => getGuideRegistry(language), [language]);
+  const guides = useMemo(() => getGuideRegistry(), [language]);
   const activeGuide = isGuideId(searchParams.get("topic"))
     ? (searchParams.get("topic") as GuideId)
     : null;

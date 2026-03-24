@@ -8,28 +8,7 @@ type RegistryEntry = GuideMeta & {
   render: () => ReactNode;
 };
 
-function Placeholder({
-  huTitle,
-  huText,
-  enTitle,
-  enText,
-  language,
-}: {
-  huTitle: string;
-  huText: string;
-  enTitle: string;
-  enText: string;
-  language: string;
-}) {
-  return (
-    <div className="guide-content">
-      <h3>{language === "hu" ? huTitle : enTitle}</h3>
-      <p>{language === "hu" ? huText : enText}</p>
-    </div>
-  );
-}
-
-export function getGuideRegistry(language: string): RegistryEntry[] {
+export function getGuideRegistry(): RegistryEntry[] {
   return [
     {
       id: "instruments",
