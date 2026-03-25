@@ -24,7 +24,7 @@ function InstrumentsGuideHU() {
         derivatíva kifizetése egy függvény:
       </p>
 
-      <BlockMath math={String.raw`X = f(S_T)`} />
+      <BlockMath math={"X = f(S_T)"} />
 
       <p>A legfontosabb példák, amikkel indulunk:</p>
 
@@ -35,10 +35,10 @@ function InstrumentsGuideHU() {
         <InlineMath math="K" /> jelöl.
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{call}} = (S_T - K)^+`} />
+      <BlockMath math={"X_{\\mathrm{call}} = (S_T - K)^+"} />
 
       <p>
-        Itt a <InlineMath math={String.raw`x^+ = \max(x,0)`} /> jelölést
+        Itt a <InlineMath math={"x^+ = \\max(x,0)"} /> jelölést
         használjuk. Ez azt jelenti, hogy ha a részvényár nagyobb, mint a
         strike, akkor a call értékes, ha nem, akkor a kifizetés nulla.
       </p>
@@ -56,7 +56,7 @@ function InstrumentsGuideHU() {
         A put ennek a tükörképe: jogod van eladni a részvényt a strike áron.
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{put}} = (K - S_T)^+`} />
+      <BlockMath math={"X_{\\mathrm{put}} = (K - S_T)^+"} />
 
       <p>Ez akkor ér sokat, ha a részvény árfolyama leesik.</p>
 
@@ -74,7 +74,7 @@ function InstrumentsGuideHU() {
         lineáris:
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{forward}} = S_T - K`} />
+      <BlockMath math={"X_{\\mathrm{forward}} = S_T - K"} />
 
       <p>
         Ez azért fontos, mert sok összetettebb stratégia végül ugyanilyen
@@ -171,7 +171,7 @@ function InstrumentsGuideEN() {
         derivative payoff is a function
       </p>
 
-      <BlockMath math={String.raw`X = f(S_T)`} />
+      <BlockMath math={"X = f(S_T)"} />
 
       <p>The main examples are the following:</p>
 
@@ -182,10 +182,10 @@ function InstrumentsGuideEN() {
         <InlineMath math="K" />.
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{call}} = (S_T - K)^+`} />
+      <BlockMath math={"X_{\\mathrm{call}} = (S_T - K)^+"} />
 
       <p>
-        Here <InlineMath math={String.raw`x^+ = \max(x,0)`} /> means that the
+        Here <InlineMath math={"x^+ = \\max(x,0)"} /> means that the
         payoff is positive only when the stock ends above the strike.
       </p>
 
@@ -202,7 +202,7 @@ function InstrumentsGuideEN() {
         A put is the mirror image: it gives you the right to sell at the strike.
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{put}} = (K - S_T)^+`} />
+      <BlockMath math={"X_{\\mathrm{put}} = (K - S_T)^+"} />
 
       <p>So the put becomes valuable when the stock price falls.</p>
 
@@ -220,7 +220,7 @@ function InstrumentsGuideEN() {
         linear:
       </p>
 
-      <BlockMath math={String.raw`X_{\mathrm{forward}} = S_T - K`} />
+      <BlockMath math={"X_{\\mathrm{forward}} = S_T - K"} />
 
       <p>
         This matters because many more complicated strategies eventually

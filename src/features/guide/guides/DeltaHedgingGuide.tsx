@@ -47,7 +47,7 @@ function DeltaHedgingGuideHU() {
         részvény ára egy kicsit megváltozik.
       </p>
 
-      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
+      <BlockMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />
 
       <p>
         Ezt úgy lehet olvasni, hogy a delta a derivatíva árának{" "}
@@ -71,10 +71,10 @@ function DeltaHedgingGuideHU() {
 
       <p>A replikáló portfólió részvénykitettsége:</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
+      <BlockMath math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"} />
 
       <p>
-        Ez pontosan ugyanaz a <InlineMath math={String.raw`\Delta`} />, amit az
+        Ez pontosan ugyanaz a <InlineMath math={"\\Delta"} />, amit az
         előző guide-ban már láttunk a replikációból.
       </p>
 
@@ -93,7 +93,7 @@ function DeltaHedgingGuideHU() {
 
       <p>
         Tegyük fel, hogy van egy opciós pozíciód, amelynek deltája{" "}
-        <InlineMath math={String.raw`\Delta`} />. Ha ehhez felveszel egy
+        <InlineMath math={"\\Delta"} />. Ha ehhez felveszel egy
         megfelelő részvénypozíciót az ellenkező irányban, akkor a teljes
         portfólió első rendű részvénykitettsége lenullázható.
       </p>
@@ -103,15 +103,15 @@ function DeltaHedgingGuideHU() {
         természetes alakja:
       </p>
 
-      <BlockMath math={String.raw`\Pi = V - \Delta S`} />
+      <BlockMath math={"\\Pi = V - \\Delta S"} />
 
       <p>Ennek kis elmozdulásokra a változása közel:</p>
 
-      <BlockMath math={String.raw`d\Pi \approx dV - \Delta\, dS`} />
+      <BlockMath math={"d\\Pi \\approx dV - \\Delta\\, dS"} />
 
       <p>
         Ha{" "}
-        <InlineMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />,
+        <InlineMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />,
         akkor az első rendű rész kiesik, és a portfólió rövid távon sokkal
         kevésbé lesz érzékeny a részvény mozgására.
       </p>
@@ -168,7 +168,7 @@ function DeltaHedgingGuideHU() {
 
       <p>Ezt méri a gamma:</p>
 
-      <BlockMath math={String.raw`\Gamma = \frac{\partial^2 V}{\partial S^2}`} />
+      <BlockMath math={"\\Gamma = \\frac{\\partial^2 V}{\\partial S^2}"} />
 
       <p>
         A gamma azt mondja meg, mennyire instabil a delta. Minél nagyobb a
@@ -190,11 +190,11 @@ function DeltaHedgingGuideHU() {
 
       <p>Vagyis a képlet</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
+      <BlockMath math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"} />
 
       <p>fokozatosan átmegy abba az intuícióba, hogy</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
+      <BlockMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />
 
       <p>A diszkrét különbségi hányadosból helyi meredekség lesz.</p>
 
@@ -296,7 +296,7 @@ function DeltaHedgingGuideEN() {
         price changes by a small amount.
       </p>
 
-      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
+      <BlockMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />
 
       <p>
         You can read this as the <strong>local slope</strong> of the derivative
@@ -320,10 +320,10 @@ function DeltaHedgingGuideEN() {
 
       <p>The stock position in the replicating portfolio is</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
+      <BlockMath math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"} />
 
       <p>
-        This is exactly the same <InlineMath math={String.raw`\Delta`} /> that
+        This is exactly the same <InlineMath math={"\\Delta"} /> that
         already appeared in the replication argument.
       </p>
 
@@ -343,22 +343,22 @@ function DeltaHedgingGuideEN() {
 
       <p>
         Suppose you hold an option with delta{" "}
-        <InlineMath math={String.raw`\Delta`} />. If you take an opposite stock
+        <InlineMath math={"\\Delta"} />. If you take an opposite stock
         position of the right size, the first-order stock exposure of the total
         portfolio can be neutralized.
       </p>
 
       <p>For example, if you are long the option, a natural hedged portfolio is</p>
 
-      <BlockMath math={String.raw`\Pi = V - \Delta S`} />
+      <BlockMath math={"\\Pi = V - \\Delta S"} />
 
       <p>For small moves, its change is approximately</p>
 
-      <BlockMath math={String.raw`d\Pi \approx dV - \Delta\, dS`} />
+      <BlockMath math={"d\\Pi \\approx dV - \\Delta\\, dS"} />
 
       <p>
         If{" "}
-        <InlineMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />,
+        <InlineMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />,
         then the first-order term cancels, and the portfolio becomes much less
         sensitive to the stock over short horizons.
       </p>
@@ -412,7 +412,7 @@ function DeltaHedgingGuideEN() {
 
       <p>That is measured by gamma:</p>
 
-      <BlockMath math={String.raw`\Gamma = \frac{\partial^2 V}{\partial S^2}`} />
+      <BlockMath math={"\\Gamma = \\frac{\\partial^2 V}{\\partial S^2}"} />
 
       <p>
         Gamma tells us how unstable delta is. The larger the gamma, the more
@@ -433,11 +433,11 @@ function DeltaHedgingGuideEN() {
 
       <p>In other words,</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{X_u - X_d}{(u-d)S_0}`} />
+      <BlockMath math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"} />
 
       <p>gradually becomes the intuition that</p>
 
-      <BlockMath math={String.raw`\Delta = \frac{\partial V}{\partial S}`} />
+      <BlockMath math={"\\Delta = \\frac{\\partial V}{\\partial S}"} />
 
       <p>The discrete slope becomes a local slope.</p>
 
