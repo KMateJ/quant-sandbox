@@ -36,9 +36,7 @@ function RiskNeutralGuideHU() {
 
       <p>A szokásos várható érték:</p>
 
-      <BlockMath
-        math={"\\mathbb{E}^{P}[X] = \\frac12 \\cdot 100 + \\frac12 \\cdot 50 = 75"}
-      />
+      <BlockMath math={"E^P[X] = (1/2) · 100 + (1/2) · 50 = 75"} />
 
       <p>
         Ez a <InlineMath math="P" /> alatti várható érték, vagyis a valódi
@@ -128,7 +126,7 @@ function RiskNeutralGuideHU() {
         két dolog történhet:
       </p>
 
-      <BlockMath math={"S_1 \\in \\{uS_0,\\ dS_0\\}"} />
+      <BlockMath math={"S_1 in {uS_0, dS_0}"} />
 
       <p>
         Itt <InlineMath math="u" /> a fel-szorzó, <InlineMath math="d" /> pedig a
@@ -161,35 +159,32 @@ function RiskNeutralGuideHU() {
       </p>
 
       <p>
-        Kamat nélkül egy <InlineMath math={"\\Delta"} /> darab
-        részvényből és <InlineMath math="B" /> készpénzből álló portfólió a két
-        állapotban ezt adja:
+        Kamat nélkül egy <InlineMath math="Delta" /> darab részvényből és{" "}
+        <InlineMath math="B" /> készpénzből álló portfólió a két állapotban ezt
+        adja:
       </p>
 
-      <BlockMath math={"\\Delta uS_0 + B = X_u"} />
-      <BlockMath math={"\\Delta dS_0 + B = X_d"} />
+      <BlockMath math={"Delta uS_0 + B = X_u"} />
+      <BlockMath math={"Delta dS_0 + B = X_d"} />
 
       <p>
         Két állapot van, ezért két egyenletből meg tudjuk határozni a két
-        ismeretlent: <InlineMath math={"\\Delta"} />-t és{" "}
-        <InlineMath math="B" />-t.
+        ismeretlent: <InlineMath math="Delta" />-t és <InlineMath math="B" />-t.
       </p>
 
       <p>A különbségből:</p>
 
-      <BlockMath math={"\\Delta (u-d)S_0 = X_u - X_d"} />
+      <BlockMath math={"Delta (u-d)S_0 = X_u - X_d"} />
 
-      <BlockMath
-        math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"}
-      />
+      <BlockMath math={"Delta = (X_u - X_d)/((u-d)S_0)"} />
 
       <p>Ezután például az első egyenletből:</p>
 
-      <BlockMath math={"B = X_u - \\Delta uS_0"} />
+      <BlockMath math={"B = X_u - Delta uS_0"} />
 
       <p>Így a derivatíva mai ára:</p>
 
-      <BlockMath math={"V_0 = \\Delta S_0 + B"} />
+      <BlockMath math={"V_0 = Delta S_0 + B"} />
 
       <h3>7. Innen bukkan elő a q</h3>
 
@@ -202,7 +197,7 @@ function RiskNeutralGuideHU() {
 
       <p>ahol</p>
 
-      <BlockMath math={"q = \\frac{1-d}{u-d}"} />
+      <BlockMath math={"q = (1-d)/(u-d)"} />
 
       <p>
         Ezt a <InlineMath math="q" />-t nem mi találtuk ki. A replikációból
@@ -216,7 +211,7 @@ function RiskNeutralGuideHU() {
 
       <p>Ebből az is következik, hogy</p>
 
-      <BlockMath math={"q\\,u + (1-q)\\,d = 1"} />
+      <BlockMath math={"qu + (1-q)d = 1"} />
 
       <p>Tehát ebben a súlyozásban a részvény várható szorzója éppen 1.</p>
 
@@ -227,7 +222,7 @@ function RiskNeutralGuideHU() {
         Kamat nélkül:
       </p>
 
-      <BlockMath math={"\\mathbb{E}^{Q}[S_1] = S_0"} />
+      <BlockMath math={"E^Q[S_1] = S_0"} />
 
       <p className="guide-highlight">
         A <InlineMath math="Q" /> nem a valóság leírása, hanem az
@@ -241,32 +236,28 @@ function RiskNeutralGuideHU() {
         <InlineMath math="1+r" />, akkor a replikációs egyenletek:
       </p>
 
-      <BlockMath math={"\\Delta uS_0 + B(1+r) = X_u"} />
-      <BlockMath math={"\\Delta dS_0 + B(1+r) = X_d"} />
+      <BlockMath math={"Delta uS_0 + B(1+r) = X_u"} />
+      <BlockMath math={"Delta dS_0 + B(1+r) = X_d"} />
 
       <p>Ekkor a kockázatsemleges súly:</p>
 
-      <BlockMath math={"q = \\frac{(1+r)-d}{u-d}"} />
+      <BlockMath math={"q = ((1+r)-d)/(u-d)"} />
 
       <p>és a mai ár:</p>
 
-      <BlockMath
-        math={"V_0 = \\frac{1}{1+r}\\big(qX_u + (1-q)X_d\\big)"}
-      />
+      <BlockMath math={"V_0 = (1/(1+r))(qX_u + (1-q)X_d)"} />
 
       <p>Most a kulcsazonosság:</p>
 
-      <BlockMath math={"q\\,u + (1-q)\\,d = 1+r"} />
+      <BlockMath math={"qu + (1-q)d = 1+r"} />
 
       <p>vagyis</p>
 
-      <BlockMath math={"\\mathbb{E}^{Q}[S_1] = (1+r)S_0"} />
+      <BlockMath math={"E^Q[S_1] = (1+r)S_0"} />
 
       <p>diszkontálva pedig</p>
 
-      <BlockMath
-        math={"\\mathbb{E}^{Q}\\!\\left[\\frac{S_1}{1+r}\\right] = S_0"}
-      />
+      <BlockMath math={"E^Q[(S_1/(1+r))] = S_0"} />
 
       <p>Ez a binomiális modell legegyszerűbb martingálgondolata.</p>
 
@@ -331,9 +322,7 @@ function RiskNeutralGuideEN() {
 
       <p>The usual expected value is</p>
 
-      <BlockMath
-        math={"\\mathbb{E}^{P}[X] = \\frac12 \\cdot 100 + \\frac12 \\cdot 50 = 75"}
-      />
+      <BlockMath math={"E^P[X] = (1/2) · 100 + (1/2) · 50 = 75"} />
 
       <p>
         This is the expectation under <InlineMath math="P" />, that is, under
@@ -425,7 +414,7 @@ function RiskNeutralGuideEN() {
         later, it becomes either
       </p>
 
-      <BlockMath math={"S_1 \\in \\{uS_0,\\ dS_0\\}"} />
+      <BlockMath math={"S_1 in {uS_0, dS_0}"} />
 
       <p>
         Here <InlineMath math="u" /> is the up factor and{" "}
@@ -456,35 +445,31 @@ function RiskNeutralGuideEN() {
       </p>
 
       <p>
-        Without interest, a portfolio consisting of{" "}
-        <InlineMath math={"\\Delta"} /> shares and{" "}
-        <InlineMath math="B" /> units of cash gives
+        Without interest, a portfolio consisting of <InlineMath math="Delta" />{" "}
+        shares and <InlineMath math="B" /> units of cash gives
       </p>
 
-      <BlockMath math={"\\Delta uS_0 + B = X_u"} />
-      <BlockMath math={"\\Delta dS_0 + B = X_d"} />
+      <BlockMath math={"Delta uS_0 + B = X_u"} />
+      <BlockMath math={"Delta dS_0 + B = X_d"} />
 
       <p>
         There are two states, so these two equations determine the two
-        unknowns: <InlineMath math={"\\Delta"} /> and{" "}
-        <InlineMath math="B" />.
+        unknowns: <InlineMath math="Delta" /> and <InlineMath math="B" />.
       </p>
 
       <p>Taking the difference gives</p>
 
-      <BlockMath math={"\\Delta (u-d)S_0 = X_u - X_d"} />
+      <BlockMath math={"Delta (u-d)S_0 = X_u - X_d"} />
 
-      <BlockMath
-        math={"\\Delta = \\frac{X_u - X_d}{(u-d)S_0}"}
-      />
+      <BlockMath math={"Delta = (X_u - X_d)/((u-d)S_0)"} />
 
       <p>Then, for example from the first equation,</p>
 
-      <BlockMath math={"B = X_u - \\Delta uS_0"} />
+      <BlockMath math={"B = X_u - Delta uS_0"} />
 
       <p>So the derivative price today is</p>
 
-      <BlockMath math={"V_0 = \\Delta S_0 + B"} />
+      <BlockMath math={"V_0 = Delta S_0 + B"} />
 
       <h3>7. This is where q appears</h3>
 
@@ -497,7 +482,7 @@ function RiskNeutralGuideEN() {
 
       <p>where</p>
 
-      <BlockMath math={"q = \\frac{1-d}{u-d}"} />
+      <BlockMath math={"q = (1-d)/(u-d)"} />
 
       <p>
         We did not choose <InlineMath math="q" /> by hand. It comes out of
@@ -511,7 +496,7 @@ function RiskNeutralGuideEN() {
 
       <p>This also implies</p>
 
-      <BlockMath math={"q\\,u + (1-q)\\,d = 1"} />
+      <BlockMath math={"qu + (1-q)d = 1"} />
 
       <p>So under this weighting the expected stock multiplier is exactly 1.</p>
 
@@ -522,7 +507,7 @@ function RiskNeutralGuideEN() {
         Without interest:
       </p>
 
-      <BlockMath math={"\\mathbb{E}^{Q}[S_1] = S_0"} />
+      <BlockMath math={"E^Q[S_1] = S_0"} />
 
       <p className="guide-highlight">
         <InlineMath math="Q" /> is not meant to describe reality. It is the
@@ -532,36 +517,32 @@ function RiskNeutralGuideEN() {
       <h3>9. Now put interest back in</h3>
 
       <p>
-        If the one-period risk-free growth factor is{" "}
-        <InlineMath math="1+r" />, then the replication equations become
+        If the one-period risk-free growth factor is <InlineMath math="1+r" />,
+        then the replication equations become
       </p>
 
-      <BlockMath math={"\\Delta uS_0 + B(1+r) = X_u"} />
-      <BlockMath math={"\\Delta dS_0 + B(1+r) = X_d"} />
+      <BlockMath math={"Delta uS_0 + B(1+r) = X_u"} />
+      <BlockMath math={"Delta dS_0 + B(1+r) = X_d"} />
 
       <p>Then the risk-neutral weight is</p>
 
-      <BlockMath math={"q = \\frac{(1+r)-d}{u-d}"} />
+      <BlockMath math={"q = ((1+r)-d)/(u-d)"} />
 
       <p>and the current price is</p>
 
-      <BlockMath
-        math={"V_0 = \\frac{1}{1+r}\\big(qX_u + (1-q)X_d\\big)"}
-      />
+      <BlockMath math={"V_0 = (1/(1+r))(qX_u + (1-q)X_d)"} />
 
       <p>The key identity is now</p>
 
-      <BlockMath math={"q\\,u + (1-q)\\,d = 1+r"} />
+      <BlockMath math={"qu + (1-q)d = 1+r"} />
 
       <p>which means</p>
 
-      <BlockMath math={"\\mathbb{E}^{Q}[S_1] = (1+r)S_0"} />
+      <BlockMath math={"E^Q[S_1] = (1+r)S_0"} />
 
       <p>and in discounted form</p>
 
-      <BlockMath
-        math={"\\mathbb{E}^{Q}\\!\\left[\\frac{S_1}{1+r}\\right] = S_0"}
-      />
+      <BlockMath math={"E^Q[(S_1/(1+r))] = S_0"} />
 
       <p>This is the simplest martingale statement in the binomial model.</p>
 
