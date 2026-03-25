@@ -490,7 +490,7 @@ function DeltaHedgingGuideEN() {
       </p>
     </div>
   );
-}
+} 
 
 export default function DeltaHedgingGuide() {
   const { language } = useI18n();
