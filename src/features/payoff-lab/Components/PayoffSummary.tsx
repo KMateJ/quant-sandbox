@@ -1,9 +1,6 @@
 import SectionCard from "../../../components/SectionCard";
 import type { StrategyLeg, ViewMode } from "../payoff.types";
-import {
-  detectSyntheticLongForward,
-  detectSyntheticShortForward,
-} from "../payoff.math";
+import { detectSyntheticMatches } from "../payoff.math";
 import { useI18n } from "../../../i18n";
 
 type PayoffSummaryProps = {
@@ -12,10 +9,17 @@ type PayoffSummaryProps = {
 };
 
 export default function PayoffSummary({ legs, mode }: PayoffSummaryProps) {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
+  const syntheticMatches = detectSyntheticMatches(legs);
+  const primaryMatch = syntheticMatches[0] ?? null;
 
-  const longForward = detectSyntheticLongForward(legs);
-  const shortForward = detectSyntheticShortForward(legs);
+  const payoffNote =
+    language === "hu"
+      ? "A felismerés payoff-egyenértékűség alapján történik. Overlay görbe csak payoff módban jelenik meg, hogy profit nézetben ne legyen félrevezető."
+      : "Detection is based on payoff equivalence. The overlay is shown only in payoff mode so profit mode stays honest.";
+
+  const listTitle = language === "hu" ? "Felismerhető ekvivalensek" : "Detected equivalents";
+  const countTitle = language === "hu" ? "Ekvivalens alakok" : "Equivalent forms";
 
   return (
     <SectionCard
@@ -40,22 +44,46 @@ export default function PayoffSummary({ legs, mode }: PayoffSummaryProps) {
         <div className="stat-card">
           <div className="stat-title">{t("payoffSummarySyntheticDetection")}</div>
           <div className="stat-value">
-            {longForward.detected
-              ? "Synthetic Long Forward"
-              : shortForward.detected
-              ? "Synthetic Short Forward"
-              : t("payoffSummaryNone")}
+            {primaryMatch ? primaryMatch.label : t("payoffSummaryNone")}
           </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-title">{countTitle}</div>
+          <div className="stat-value">{syntheticMatches.length}</div>
         </div>
       </div>
 
-      {(longForward.detected || shortForward.detected) && (
+      {syntheticMatches.length > 0 && (
         <div className="success-card" style={{ marginTop: 16 }}>
-          <div className="success-title">{t("payoffSummaryAlgebraTitle")}</div>
-          <div className="success-text">
-            {longForward.detected
-              ? t("payoffSummaryLongForwardText")
-              : t("payoffSummaryShortForwardText")}
+          <div className="success-title">{listTitle}</div>
+          <div className="success-text" style={{ marginBottom: 12 }}>
+            {payoffNote}
+          </div>
+
+          <div style={{ display: "grid", gap: 10 }}>
+            {syntheticMatches.map((match) => (
+              <div
+                key={`${match.key}-${match.formula}`}
+                style={{
+                  border: "1px solid var(--border)",
+                  borderRadius: 12,
+                  padding: "10px 12px",
+                  background: "var(--surface)",
+                }}
+              >
+                <div style={{ fontWeight: 700, marginBottom: 4 }}>{match.label}</div>
+                <code
+                  style={{
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                    color: "var(--code-text)",
+                  }}
+                >
+                  {match.formula}
+                </code>
+              </div>
+            ))}
           </div>
         </div>
       )}

@@ -35,8 +35,30 @@ function createEmptyLeg(index: number): StrategyLeg {
     forwardPrice: 100,
     cashAmount: 100,
     rate: 0.05,
+    payout: 10,
+    lowerStrike: 90,
+    upperStrike: 110,
+    triggerStrike: 100,
+    settlementStrike: 110,
   };
 }
+
+function isVanillaOption(type: InstrumentType) {
+  return type === "call" || type === "put";
+}
+
+function isDigitalOption(type: InstrumentType) {
+  return type === "digital-call" || type === "digital-put";
+}
+
+function isAssetOption(type: InstrumentType) {
+  return type === "asset-call" || type === "asset-put";
+}
+
+function isGapOption(type: InstrumentType) {
+  return type === "gap-call" || type === "gap-put";
+}
+
 
 export default function PayoffBuilder({
   legs,
@@ -50,7 +72,15 @@ export default function PayoffBuilder({
   onShowComponentsChange,
   onChange,
 }: PayoffBuilderProps) {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
+
+  const label = {
+    payout: language === "hu" ? "Fix kifizetés" : "Cash payout",
+    lowerStrike: language === "hu" ? "Alsó strike" : "Lower strike",
+    upperStrike: language === "hu" ? "Felső strike" : "Upper strike",
+    triggerStrike: language === "hu" ? "Trigger strike" : "Trigger strike",
+    settlementStrike: language === "hu" ? "Elszámolási strike" : "Settlement strike",
+  };
 
   function addLeg() {
     onPresetChange(null);
@@ -76,13 +106,59 @@ export default function PayoffBuilder({
     type: InstrumentType,
     leg: StrategyLeg
   ): Partial<StrategyLeg> {
-    if (type === "call" || type === "put") {
+    if (isVanillaOption(type)) {
       return {
         type,
         strike: leg.strike ?? 100,
         premium: leg.premium ?? 0,
       };
     }
+
+    if (isDigitalOption(type)) {
+      return {
+        type,
+        strike: leg.strike ?? 100,
+        premium: leg.premium ?? 0,
+        payout: leg.payout ?? 10,
+      };
+    }
+
+    if (isAssetOption(type)) {
+      return {
+        type,
+        strike: leg.strike ?? 100,
+        premium: leg.premium ?? 0,
+      };
+    }
+
+    if (isGapOption(type)) {
+      return {
+        type,
+        triggerStrike: leg.triggerStrike ?? leg.strike ?? 100,
+        settlementStrike: leg.settlementStrike ?? 110,
+        premium: leg.premium ?? 0,
+      };
+    }
+
+    if (type === "double-digital") {
+      return {
+        type,
+        lowerStrike: leg.lowerStrike ?? 90,
+        upperStrike: leg.upperStrike ?? 110,
+        premium: leg.premium ?? 0,
+        payout: leg.payout ?? 10,
+      };
+    }
+
+    if (type === "supershare") {
+      return {
+        type,
+        lowerStrike: leg.lowerStrike ?? 90,
+        upperStrike: leg.upperStrike ?? 110,
+        premium: leg.premium ?? 0,
+      };
+    }
+
 
     if (type === "forward") {
       return {
@@ -181,7 +257,16 @@ export default function PayoffBuilder({
             <optgroup label={t("payoffPresetGroupStrategies")}>
               <option value="covered-call">Covered Call</option>
               <option value="protective-put">Protective Put</option>
+              <option value="collar">Collar</option>
+              <option value="bull-call-spread">Bull Call Spread</option>
+              <option value="bear-put-spread">Bear Put Spread</option>
+              <option value="long-straddle">Long Straddle</option>
+              <option value="short-straddle">Short Straddle</option>
+              <option value="long-strangle">Long Strangle</option>
+              <option value="short-strangle">Short Strangle</option>
+              <option value="risk-reversal">Risk Reversal</option>
               <option value="long-call-butterfly">Call Butterfly</option>
+              <option value="box-spread">Box Spread</option>
             </optgroup>
 
             <optgroup label={t("payoffPresetGroupSynthetic")}>
@@ -191,6 +276,15 @@ export default function PayoffBuilder({
               <option value="synthetic-short-forward">
                 Synthetic Short Forward
               </option>
+            </optgroup>
+
+            <optgroup label={language === "hu" ? "Exotikusak" : "Exotics"}>
+              <option value="digital-call">Digital Call</option>
+              <option value="digital-put">Digital Put</option>
+              <option value="asset-call">Asset-or-Nothing Call</option>
+              <option value="gap-call">Gap Call</option>
+              <option value="double-digital">Double Digital</option>
+              <option value="supershare">Supershare</option>
             </optgroup>
           </select>
         </label>
@@ -228,11 +322,23 @@ export default function PayoffBuilder({
                       )
                     }
                   >
-                    <option value="call">{t("payoffTypeCall")}</option>
-                    <option value="put">{t("payoffTypePut")}</option>
-                    <option value="stock">{t("payoffTypeStock")}</option>
-                    <option value="forward">{t("payoffTypeForward")}</option>
-                    <option value="cash">{t("payoffTypeCash")}</option>
+                    <optgroup label={language === "hu" ? "Vanilla" : "Vanilla"}>
+                      <option value="call">{t("payoffTypeCall")}</option>
+                      <option value="put">{t("payoffTypePut")}</option>
+                      <option value="stock">{t("payoffTypeStock")}</option>
+                      <option value="forward">{t("payoffTypeForward")}</option>
+                      <option value="cash">{t("payoffTypeCash")}</option>
+                    </optgroup>
+                    <optgroup label={language === "hu" ? "Exotikusak" : "Exotics"}>
+                      <option value="digital-call">Digital Call</option>
+                      <option value="digital-put">Digital Put</option>
+                      <option value="asset-call">Asset-or-Nothing Call</option>
+                      <option value="asset-put">Asset-or-Nothing Put</option>
+                      <option value="gap-call">Gap Call</option>
+                      <option value="gap-put">Gap Put</option>
+                      <option value="double-digital">Double Digital</option>
+                      <option value="supershare">Supershare</option>
+                    </optgroup>
                   </select>
                 </label>
 
@@ -271,7 +377,7 @@ export default function PayoffBuilder({
                   />
                 </div>
 
-                {(leg.type === "call" || leg.type === "put") && (
+                {(isVanillaOption(leg.type) || isAssetOption(leg.type)) && (
                   <>
                     <label className="payoff-field">
                       <span className="payoff-label">
@@ -312,6 +418,211 @@ export default function PayoffBuilder({
                     </label>
                   </>
                 )}
+
+                {isDigitalOption(leg.type) && (
+                  <>
+                    <label className="payoff-field">
+                      <span className="payoff-label">{t("payoffFieldStrike")}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.strike ?? 100}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            strike: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{t("payoffFieldPremium")}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.premium ?? 0}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            premium: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field payoff-field-full">
+                      <span className="payoff-label">{label.payout}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.payout ?? 10}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            payout: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
+                {isGapOption(leg.type) && (
+                  <>
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.triggerStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.triggerStrike ?? 100}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            triggerStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.settlementStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.settlementStrike ?? 110}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            settlementStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field payoff-field-full">
+                      <span className="payoff-label">{t("payoffFieldPremium")}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.premium ?? 0}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            premium: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
+                {leg.type === "double-digital" && (
+                  <>
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.lowerStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.lowerStrike ?? 90}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            lowerStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.upperStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.upperStrike ?? 110}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            upperStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{t("payoffFieldPremium")}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.premium ?? 0}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            premium: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.payout}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.payout ?? 10}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            payout: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
+                {leg.type === "supershare" && (
+                  <>
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.lowerStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.lowerStrike ?? 90}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            lowerStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field">
+                      <span className="payoff-label">{label.upperStrike}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.upperStrike ?? 110}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            upperStrike:
+                              e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="payoff-field payoff-field-full">
+                      <span className="payoff-label">{t("payoffFieldPremium")}</span>
+                      <input
+                        className="payoff-input"
+                        type="number"
+                        value={leg.premium ?? 0}
+                        onChange={(e) =>
+                          updateLeg(leg.id, {
+                            premium: e.target.value === "" ? undefined : Number(e.target.value),
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
 
                 {leg.type === "forward" && (
                   <>

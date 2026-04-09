@@ -70,6 +70,33 @@ export default function PayoffExplanation() {
             </p>
 
             <p>
+              <b>Digital call / put:</b> fix összeget fizet, ha a lejáratkori ár
+              egy küszöb fölött vagy alatt van. Jó arra, hogy lásd a diszkontinuitást
+              és az ugrásszerű payoffot.
+            </p>
+
+            <p>
+              <b>Asset-or-nothing:</b> nem fix cash-t fizet, hanem az alaptermék
+              értékét, ha a feltétel teljesül. Emiatt a görbe ugrik és utána a
+              spot szintjével együtt nő.
+            </p>
+
+            <p>
+              <b>Gap opció:</b> két strike-ja van. Az egyik dönti el, hogy életbe lép-e,
+              a másik pedig a tényleges elszámolást befolyásolja.
+            </p>
+
+            <p>
+              <b>Double digital:</b> csak egy árfolyamsávon belül fizet fix összeget.
+              A grafikonon ez egy jól látható „doboz” alakot ad.
+            </p>
+
+            <p>
+              <b>Supershare:</b> két határ között fizet, és a kifizetés az alaptermék
+              árának az alsó határhoz viszonyított arányát követi.
+            </p>
+
+            <p>
               <b>Forward:</b> kötelezettség az eszköz megvásárlására vagy eladására
               egy rögzített áron a jövőben. A payoff lineáris, és a
               kötési ár körül metszi a nullát.
@@ -99,8 +126,7 @@ export default function PayoffExplanation() {
 
             <p>
               A preset stratégiák segítségével kipróbálhatod a klasszikus
-              opciós konstrukciókat, például a covered call-t vagy a
-              call butterfly stratégiát.
+              opciós konstrukciókat, valamint néhány egyszerű egzotikus példát is.
             </p>
           </>
         ) : (
@@ -163,6 +189,31 @@ export default function PayoffExplanation() {
             </p>
 
             <p>
+              <b>Digital call / put:</b> pays a fixed cash amount if the terminal
+              price ends above or below a threshold.
+            </p>
+
+            <p>
+              <b>Asset-or-nothing:</b> pays the asset value itself if the option
+              finishes in the money, so the line jumps and then follows spot.
+            </p>
+
+            <p>
+              <b>Gap option:</b> uses one strike to decide whether the option is
+              triggered and another strike to determine the effective settlement.
+            </p>
+
+            <p>
+              <b>Double digital:</b> pays a fixed amount only when the terminal
+              price lands inside a corridor.
+            </p>
+
+            <p>
+              <b>Supershare:</b> pays only inside a band, and the payoff scales with
+              the underlying relative to the lower boundary.
+            </p>
+
+            <p>
               <b>Forward:</b> an obligation to buy or sell the asset
               at a fixed future price. The payoff is linear and crosses zero
               around the contract price.
@@ -192,7 +243,7 @@ export default function PayoffExplanation() {
 
             <p>
               With the preset strategies, you can try classic option structures
-              such as the covered call or the call butterfly.
+              as well as a few simple exotic examples.
             </p>
           </>
         )}

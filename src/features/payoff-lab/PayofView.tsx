@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import type { PresetKey, StrategyLeg, ViewMode } from "./payoff.types";
+import type { InstrumentType, PresetKey, StrategyLeg, ViewMode } from "./payoff.types";
 import {
   addSyntheticOverlay,
   buildChartData,
   collectRelevantStrikes,
-  detectSyntheticLongForward,
-  detectSyntheticShortForward,
+  detectSyntheticMatches,
+  getPrimarySyntheticMatch,
+  getXAxisDomain,
 } from "./payoff.math";
 import { getPresetStrategy } from "./payoff.presets";
 import PayoffBuilder from "./Components/PayoffBuilder";
@@ -43,6 +44,37 @@ const PRESET_KEYS: PresetKey[] = [
   "long-stock",
   "cash",
   "long-call-butterfly",
+  "bull-call-spread",
+  "bear-put-spread",
+  "long-straddle",
+  "short-straddle",
+  "long-strangle",
+  "short-strangle",
+  "collar",
+  "risk-reversal",
+  "box-spread",
+  "digital-call",
+  "digital-put",
+  "asset-call",
+  "gap-call",
+  "double-digital",
+  "supershare",
+];
+
+const INSTRUMENT_TYPES: InstrumentType[] = [
+  "call",
+  "put",
+  "forward",
+  "stock",
+  "cash",
+  "digital-call",
+  "digital-put",
+  "asset-call",
+  "asset-put",
+  "gap-call",
+  "gap-put",
+  "double-digital",
+  "supershare",
 ];
 
 function isValidMode(value: string | null): value is ViewMode {
@@ -51,6 +83,10 @@ function isValidMode(value: string | null): value is ViewMode {
 
 function isValidPreset(value: string | null): value is PresetKey {
   return value !== null && PRESET_KEYS.includes(value as PresetKey);
+}
+
+function isValidInstrumentType(value: string): value is InstrumentType {
+  return INSTRUMENT_TYPES.includes(value as InstrumentType);
 }
 
 function toFiniteNumber(value: string | undefined): number | null {
@@ -73,7 +109,44 @@ function serializeLeg(leg: StrategyLeg): string {
   switch (leg.type) {
     case "call":
     case "put":
-      return [...base, serializeNumber(leg.strike), serializeNumber(leg.premium)].join(",") ;
+    case "asset-call":
+    case "asset-put":
+      return [...base, serializeNumber(leg.strike), serializeNumber(leg.premium)].join(",");
+
+    case "digital-call":
+    case "digital-put":
+      return [
+        ...base,
+        serializeNumber(leg.strike),
+        serializeNumber(leg.premium),
+        serializeNumber(leg.payout),
+      ].join(",");
+
+    case "gap-call":
+    case "gap-put":
+      return [
+        ...base,
+        serializeNumber(leg.triggerStrike),
+        serializeNumber(leg.settlementStrike),
+        serializeNumber(leg.premium),
+      ].join(",");
+
+    case "double-digital":
+      return [
+        ...base,
+        serializeNumber(leg.lowerStrike),
+        serializeNumber(leg.upperStrike),
+        serializeNumber(leg.premium),
+        serializeNumber(leg.payout),
+      ].join(",");
+
+    case "supershare":
+      return [
+        ...base,
+        serializeNumber(leg.lowerStrike),
+        serializeNumber(leg.upperStrike),
+        serializeNumber(leg.premium),
+      ].join(",");
 
     case "forward":
       return [
@@ -105,7 +178,7 @@ function parseLeg(segment: string, index: number): StrategyLeg | null {
     !type ||
     !direction ||
     !quantityRaw ||
-    !["call", "put", "forward", "stock", "cash"].includes(type) ||
+    !isValidInstrumentType(type) ||
     !["long", "short"].includes(direction)
   ) {
     return null;
@@ -116,12 +189,12 @@ function parseLeg(segment: string, index: number): StrategyLeg | null {
 
   const common = {
     id: createLegId(index),
-    type: type as StrategyLeg["type"],
+    type,
     direction: direction as StrategyLeg["direction"],
     quantity,
   } satisfies Pick<StrategyLeg, "id" | "type" | "direction" | "quantity">;
 
-  if (type === "call" || type === "put") {
+  if (["call", "put", "asset-call", "asset-put"].includes(type)) {
     const strike = toFiniteNumber(parts[3]);
     if (strike === null) return null;
 
@@ -130,6 +203,62 @@ function parseLeg(segment: string, index: number): StrategyLeg | null {
       type,
       strike,
       premium: toFiniteNumber(parts[4]) ?? 0,
+    };
+  }
+
+  if (type === "digital-call" || type === "digital-put") {
+    const strike = toFiniteNumber(parts[3]);
+    if (strike === null) return null;
+
+    return {
+      ...common,
+      type,
+      strike,
+      premium: toFiniteNumber(parts[4]) ?? 0,
+      payout: toFiniteNumber(parts[5]) ?? 1,
+    };
+  }
+
+  if (type === "gap-call" || type === "gap-put") {
+    const triggerStrike = toFiniteNumber(parts[3]);
+    const settlementStrike = toFiniteNumber(parts[4]);
+    if (triggerStrike === null || settlementStrike === null) return null;
+
+    return {
+      ...common,
+      type,
+      triggerStrike,
+      settlementStrike,
+      premium: toFiniteNumber(parts[5]) ?? 0,
+    };
+  }
+
+  if (type === "double-digital") {
+    const lowerStrike = toFiniteNumber(parts[3]);
+    const upperStrike = toFiniteNumber(parts[4]);
+    if (lowerStrike === null || upperStrike === null) return null;
+
+    return {
+      ...common,
+      type,
+      lowerStrike,
+      upperStrike,
+      premium: toFiniteNumber(parts[5]) ?? 0,
+      payout: toFiniteNumber(parts[6]) ?? 1,
+    };
+  }
+
+  if (type === "supershare") {
+    const lowerStrike = toFiniteNumber(parts[3]);
+    const upperStrike = toFiniteNumber(parts[4]);
+    if (lowerStrike === null || upperStrike === null) return null;
+
+    return {
+      ...common,
+      type,
+      lowerStrike,
+      upperStrike,
+      premium: toFiniteNumber(parts[5]) ?? 0,
     };
   }
 
@@ -288,20 +417,19 @@ export default function PayoffView() {
     }
   }, [legs, mode, paramsString, selectedPreset, setSearchParams, showComponents]);
 
+  const xDomain = useMemo(() => getXAxisDomain(legs), [legs]);
+
   const baseChartData = useMemo(
-    () => buildChartData(legs, mode, 10, 200, 140, showComponents),
-    [legs, mode, showComponents]
+    () => buildChartData(legs, mode, xDomain[0], xDomain[1], 140, showComponents),
+    [legs, mode, showComponents, xDomain]
   );
 
-  const syntheticDetected = useMemo(() => {
-    const longForward = detectSyntheticLongForward(legs);
-    const shortForward = detectSyntheticShortForward(legs);
-    return longForward.detected || shortForward.detected;
-  }, [legs]);
+  const syntheticMatches = useMemo(() => detectSyntheticMatches(legs), [legs]);
+  const primarySyntheticMatch = useMemo(() => getPrimarySyntheticMatch(legs), [legs]);
 
   const chartData = useMemo(
-    () => addSyntheticOverlay(baseChartData, legs, mode),
-    [baseChartData, legs, mode]
+    () => addSyntheticOverlay(baseChartData, primarySyntheticMatch, mode),
+    [baseChartData, primarySyntheticMatch, mode]
   );
 
   const strikes = useMemo(() => collectRelevantStrikes(legs), [legs]);
@@ -328,8 +456,11 @@ export default function PayoffView() {
         <PayoffChart
           chartData={chartData}
           strikes={strikes}
+          xDomain={xDomain}
+          mode={mode}
           showComponents={showComponents}
-          syntheticDetected={syntheticDetected}
+          syntheticOverlayActive={mode === "payoff" && syntheticMatches.length > 0}
+          syntheticOverlayLabel={primarySyntheticMatch?.label ?? null}
           chartOpen={chartOpen}
           onToggleChart={() => setChartOpen((prev) => !prev)}
         />

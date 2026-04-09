@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import {
+  Area,
   CartesianGrid,
   Legend,
   Line,
@@ -11,15 +12,18 @@ import {
   YAxis,
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
-import type { PayoffChartPoint } from "../payoff.types";
+import type { PayoffChartPoint, ViewMode } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
 import { useI18n } from "../../../i18n";
 
 type PayoffChartProps = {
   chartData: PayoffChartPoint[];
   strikes: number[];
+  xDomain: [number, number];
+  mode: ViewMode;
   showComponents: boolean;
-  syntheticDetected: boolean;
+  syntheticOverlayActive: boolean;
+  syntheticOverlayLabel: string | null;
   chartOpen: boolean;
   onToggleChart: () => void;
 };
@@ -37,12 +41,15 @@ const lineColors = [
 export default function PayoffChart({
   chartData,
   strikes,
+  xDomain,
+  mode,
   showComponents,
-  syntheticDetected,
+  syntheticOverlayActive,
+  syntheticOverlayLabel,
   chartOpen,
   onToggleChart,
 }: PayoffChartProps) {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
 
   const yDomain = useMemo(() => getYAxisDomain(chartData), [chartData]);
 
@@ -50,6 +57,12 @@ export default function PayoffChart({
     if (!chartData.length) return [];
     return Object.keys(chartData[0]).filter((key) => key.startsWith("leg-"));
   }, [chartData]);
+
+  const overlayStatusText = syntheticOverlayActive
+    ? language === "hu"
+      ? `overlay: ${syntheticOverlayLabel ?? "synthetic"}`
+      : `overlay: ${syntheticOverlayLabel ?? "synthetic"}`
+    : t("payoffChartOverlayInactive");
 
   return (
     <SectionCard
@@ -63,18 +76,25 @@ export default function PayoffChart({
       }
     >
       {chartOpen ? (
-        <div className="chart-wrap">
+        <div className="chart-wrap" style={{ width: "100%", height: 380 }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
               margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
             >
+              <defs>
+                <linearGradient id="profitZeroGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#ef4444" stopOpacity={0.22} />
+                  <stop offset="100%" stopColor="#ef4444" stopOpacity={0.02} />
+                </linearGradient>
+              </defs>
+
               <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
 
               <XAxis
                 dataKey="S"
                 type="number"
-                domain={[10, 200]}
+                domain={xDomain}
                 tickCount={8}
                 stroke="#94a3b8"
               />
@@ -90,7 +110,12 @@ export default function PayoffChart({
                 />
               ))}
 
-              <ReferenceLine y={0} stroke="#64748b" strokeDasharray="4 4" />
+              <ReferenceLine
+                y={0}
+                stroke={mode === "profit" ? "#ef4444" : "#64748b"}
+                strokeWidth={mode === "profit" ? 2.5 : 1.5}
+                strokeDasharray={mode === "profit" ? "" : "4 4"}
+              />
 
               <Tooltip
                 contentStyle={{
@@ -108,6 +133,20 @@ export default function PayoffChart({
               />
 
               <Legend />
+
+              {mode === "profit" && (
+                <Area
+                  type="monotone"
+                  dataKey="total"
+                  name=""
+                  stroke="none"
+                  fill="url(#profitZeroGradient)"
+                  fillOpacity={1}
+                  baseLine={0}
+                  isAnimationActive={false}
+                  legendType="none"
+                />
+              )}
 
               <Line
                 type="monotone"
@@ -134,11 +173,11 @@ export default function PayoffChart({
                   />
                 ))}
 
-              {syntheticDetected && (
+              {syntheticOverlayActive && (
                 <Line
                   type="monotone"
-                  dataKey="syntheticForward"
-                  name={t("payoffChartSyntheticForward")}
+                  dataKey="syntheticOverlay"
+                  name={syntheticOverlayLabel ?? "Synthetic Overlay"}
                   dot={false}
                   stroke="#fbbf24"
                   strokeWidth={2.5}
@@ -157,11 +196,7 @@ export default function PayoffChart({
           <div>
             {strikes.length} {t("payoffChartStrikeMarkers")}
           </div>
-          <div>
-            {syntheticDetected
-              ? t("payoffChartOverlayActive")
-              : t("payoffChartOverlayInactive")}
-          </div>
+          <div>{overlayStatusText}</div>
         </div>
       )}
     </SectionCard>
