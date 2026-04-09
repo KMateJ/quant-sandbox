@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import SectionCard from "../../../components/SectionCard";
 import NumberStepper from "../../../components/NumberStepper";
 import type {
@@ -57,6 +58,116 @@ function isAssetOption(type: InstrumentType) {
 
 function isGapOption(type: InstrumentType) {
   return type === "gap-call" || type === "gap-put";
+}
+
+function formatNumericValue(value: number | undefined, fallbackValue: number) {
+  const resolved = typeof value === "number" && Number.isFinite(value)
+    ? value
+    : fallbackValue;
+  return String(resolved);
+}
+
+function parseNumericDraft(raw: string): number | null {
+  const normalized = raw.trim().replace(",", ".");
+  if (!normalized) return null;
+
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+type NumericInputProps = {
+  value: number | undefined;
+  fallbackValue: number;
+  onCommit: (value: number) => void;
+  className?: string;
+  selectOnFocus?: boolean;
+  inputMode?: "numeric" | "decimal";
+};
+
+function NumericInput({
+  value,
+  fallbackValue,
+  onCommit,
+  className = "payoff-input",
+  selectOnFocus = true,
+  inputMode = "numeric",
+}: NumericInputProps) {
+  const [draft, setDraft] = useState(() =>
+    formatNumericValue(value, fallbackValue)
+  );
+  const [isEditing, setIsEditing] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const shouldSelectOnPointerUpRef = useRef(false);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setDraft(formatNumericValue(value, fallbackValue));
+    }
+  }, [fallbackValue, isEditing, value]);
+
+  function commitDraft() {
+    const parsed = parseNumericDraft(draft);
+
+    if (parsed === null) {
+      setDraft(formatNumericValue(value, fallbackValue));
+      return;
+    }
+
+    onCommit(parsed);
+    setDraft(String(parsed));
+  }
+
+  return (
+    <input
+      ref={inputRef}
+      className={className}
+      type="text"
+      inputMode={inputMode}
+      enterKeyHint="done"
+      autoComplete="off"
+      spellCheck={false}
+      value={draft}
+      onFocus={() => {
+        setIsEditing(true);
+
+        if (!selectOnFocus) return;
+
+        shouldSelectOnPointerUpRef.current = true;
+        requestAnimationFrame(() => {
+          inputRef.current?.select();
+        });
+      }}
+      onPointerUp={(event) => {
+        if (!shouldSelectOnPointerUpRef.current) return;
+
+        event.preventDefault();
+        shouldSelectOnPointerUpRef.current = false;
+        inputRef.current?.select();
+      }}
+      onChange={(event) => {
+        shouldSelectOnPointerUpRef.current = false;
+        setDraft(event.target.value);
+      }}
+      onBlur={() => {
+        shouldSelectOnPointerUpRef.current = false;
+        setIsEditing(false);
+        commitDraft();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          event.currentTarget.blur();
+          return;
+        }
+
+        if (event.key === "Escape") {
+          shouldSelectOnPointerUpRef.current = false;
+          setIsEditing(false);
+          setDraft(formatNumericValue(value, fallbackValue));
+          event.currentTarget.blur();
+        }
+      }}
+    />
+  );
 }
 
 
@@ -367,7 +478,7 @@ export default function PayoffBuilder({
                   <NumberStepper
                     label=""
                     min={1}
-                    max={20}
+                    max={1000}
                     step={1}
                     value={leg.quantity}
                     onChange={(value) => updateLeg(leg.id, { quantity: value })}
@@ -383,16 +494,12 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldStrike")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.strike ?? 100}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.strike}
+                        fallbackValue={100}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            strike:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            strike: value,
                           })
                         }
                       />
@@ -402,18 +509,15 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldPremium")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.premium ?? 0}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.premium}
+                        fallbackValue={0}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            premium:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            premium: value,
                           })
                         }
+                        inputMode="decimal"
                       />
                     </label>
                   </>
@@ -451,15 +555,15 @@ export default function PayoffBuilder({
 
                     <label className="payoff-field payoff-field-full">
                       <span className="payoff-label">{label.payout}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.payout ?? 10}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.payout}
+                        fallbackValue={10}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            payout: e.target.value === "" ? undefined : Number(e.target.value),
+                            payout: value,
                           })
                         }
+                        inputMode="decimal"
                       />
                     </label>
                   </>
@@ -469,14 +573,12 @@ export default function PayoffBuilder({
                   <>
                     <label className="payoff-field">
                       <span className="payoff-label">{label.triggerStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.triggerStrike ?? 100}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.triggerStrike}
+                        fallbackValue={100}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            triggerStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            triggerStrike: value,
                           })
                         }
                       />
@@ -484,14 +586,12 @@ export default function PayoffBuilder({
 
                     <label className="payoff-field">
                       <span className="payoff-label">{label.settlementStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.settlementStrike ?? 110}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.settlementStrike}
+                        fallbackValue={110}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            settlementStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            settlementStrike: value,
                           })
                         }
                       />
@@ -517,14 +617,12 @@ export default function PayoffBuilder({
                   <>
                     <label className="payoff-field">
                       <span className="payoff-label">{label.lowerStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.lowerStrike ?? 90}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.lowerStrike}
+                        fallbackValue={90}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            lowerStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            lowerStrike: value,
                           })
                         }
                       />
@@ -532,14 +630,12 @@ export default function PayoffBuilder({
 
                     <label className="payoff-field">
                       <span className="payoff-label">{label.upperStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.upperStrike ?? 110}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.upperStrike}
+                        fallbackValue={110}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            upperStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            upperStrike: value,
                           })
                         }
                       />
@@ -561,15 +657,15 @@ export default function PayoffBuilder({
 
                     <label className="payoff-field">
                       <span className="payoff-label">{label.payout}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.payout ?? 10}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.payout}
+                        fallbackValue={10}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            payout: e.target.value === "" ? undefined : Number(e.target.value),
+                            payout: value,
                           })
                         }
+                        inputMode="decimal"
                       />
                     </label>
                   </>
@@ -579,14 +675,12 @@ export default function PayoffBuilder({
                   <>
                     <label className="payoff-field">
                       <span className="payoff-label">{label.lowerStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.lowerStrike ?? 90}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.lowerStrike}
+                        fallbackValue={90}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            lowerStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            lowerStrike: value,
                           })
                         }
                       />
@@ -594,14 +688,12 @@ export default function PayoffBuilder({
 
                     <label className="payoff-field">
                       <span className="payoff-label">{label.upperStrike}</span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.upperStrike ?? 110}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.upperStrike}
+                        fallbackValue={110}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            upperStrike:
-                              e.target.value === "" ? undefined : Number(e.target.value),
+                            upperStrike: value,
                           })
                         }
                       />
@@ -630,16 +722,12 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldForwardPrice")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.forwardPrice ?? 100}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.forwardPrice}
+                        fallbackValue={100}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            forwardPrice:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            forwardPrice: value,
                           })
                         }
                       />
@@ -649,16 +737,12 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldStrikeMarker")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.strike ?? leg.forwardPrice ?? 100}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.strike ?? leg.forwardPrice}
+                        fallbackValue={100}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            strike:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            strike: value,
                           })
                         }
                       />
@@ -671,16 +755,12 @@ export default function PayoffBuilder({
                     <span className="payoff-label">
                       {t("payoffFieldEntryPrice")}
                     </span>
-                    <input
-                      className="payoff-input"
-                      type="number"
-                      value={leg.entryPrice ?? 100}
-                      onChange={(e) =>
+                    <NumericInput
+                      value={leg.entryPrice}
+                      fallbackValue={100}
+                      onCommit={(value) =>
                         updateLeg(leg.id, {
-                          entryPrice:
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
+                          entryPrice: value,
                         })
                       }
                     />
@@ -693,18 +773,15 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldCashAmount")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        value={leg.cashAmount ?? 100}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.cashAmount}
+                        fallbackValue={100}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            cashAmount:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            cashAmount: value,
                           })
                         }
+                        inputMode="decimal"
                       />
                     </label>
 
@@ -712,19 +789,15 @@ export default function PayoffBuilder({
                       <span className="payoff-label">
                         {t("payoffFieldRate")}
                       </span>
-                      <input
-                        className="payoff-input"
-                        type="number"
-                        step="0.01"
-                        value={leg.rate ?? 0.05}
-                        onChange={(e) =>
+                      <NumericInput
+                        value={leg.rate}
+                        fallbackValue={0.05}
+                        onCommit={(value) =>
                           updateLeg(leg.id, {
-                            rate:
-                              e.target.value === ""
-                                ? undefined
-                                : Number(e.target.value),
+                            rate: value,
                           })
                         }
+                        inputMode="decimal"
                       />
                     </label>
                   </>
