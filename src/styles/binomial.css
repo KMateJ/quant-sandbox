@@ -14,9 +14,15 @@
   display: block;
 }
 
-.binomial-summary-grid {
-  grid-template-columns: repeat(3, minmax(230, 1fr));
+.stats-grid.binomial-summary-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-auto-rows: minmax(128px, auto);
   align-items: stretch;
+}
+
+.binomial-summary-grid > * {
+  min-width: 0;
 }
 
 .binomial-summary-card {
@@ -25,47 +31,54 @@
 
 .binomial-summary-card--replication {
   text-align: left;
+  grid-row: span 2;
 }
 
-.binomial-summary-card--replication .stat-title,
-.binomial-summary-card--replication .stat-value {
+.binomial-summary-card--replication .stat-title {
   text-align: left;
+  margin-bottom: 14px;
 }
 
 .replication-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.replication-item {
   display: flex;
-}
-
-.replication-row {
-  justify-items: start;
-}
-
-.replication-label,
-.replication-value {
-  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .replication-label {
-  color: var(--text);
+  min-width: 0;
+  color: var(--text-muted, rgba(255, 255, 255, 0.72));
+  font-size: 0.9rem;
+  line-height: 1.15;
 }
 
 .replication-value {
-  justify-self: start;
-  text-align: right;
+  min-width: 0;
+  text-align: left;
   overflow-wrap: anywhere;
   word-break: break-word;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .replication-positive {
   color: var(--positive);
-  text-align: right;
-  margin-left: 10px;
 }
 
 .replication-negative {
   color: var(--negative);
-  text-align: right;
-  margin-left: 10px;
 }
 
 /* =========================================================
@@ -73,8 +86,12 @@
 ========================================================= */
 
 @media (max-width: 900px) {
-  .binomial-summary-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .stats-grid.binomial-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .binomial-summary-card--replication {
+    grid-row: span 1;
   }
 }
 
@@ -83,7 +100,7 @@
     height: 420px;
   }
 
-  .binomial-summary-grid {
-    grid-template-columns: 1fr;
+  .stats-grid.binomial-summary-grid {
+    grid-template-columns: 1fr !important;
   }
 }

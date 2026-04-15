@@ -29,6 +29,7 @@ export const binomialHu = {
     binomialStepsUnit: "db",
     binomialPeriodLength: "Periódushossz",
     binomialPeriodValue: "Δt = 1 év",
+    binomialSteps: "Lépésszám",
 
     binomialSummaryTitle: "Összefoglaló",
     binomialSummarySubtitle: "A modell fő mennyiségei",
@@ -72,6 +73,7 @@ export const binomialEn = {
 
     binomialTreeTitle: "Binomial pricing tree",
     binomialTreeSubtitle: "A discrete model of stock prices and option values",
+    binomialSteps: "Number of steps",
 
     binomialOptionCall: "Call",
     binomialOptionPut: "Put",

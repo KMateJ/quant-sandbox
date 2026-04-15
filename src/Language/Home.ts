@@ -60,7 +60,7 @@ export const homeEn = {
 
     homeTitle: "What is this site?",
     homeIntro:
-      "This site is a study aid for students of the ELTE & Corvinus Insurance and Financial Mathematics program.",
+      "This site is a study aid for students of the ELTE & Corvinus Actuarial and Financial Mathematics program.",
 
     homeBody:
       "This is a personal project, so development happens when I have time and motivation.",
