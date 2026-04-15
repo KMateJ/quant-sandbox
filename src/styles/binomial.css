@@ -14,26 +14,76 @@
   display: block;
 }
 
-.replication-row {
+.binomial-summary-grid {
+  grid-template-columns: repeat(3, minmax(230, 1fr));
+  align-items: stretch;
+}
+
+.binomial-summary-card {
+  min-width: 0;
+}
+
+.binomial-summary-card--replication {
+  text-align: left;
+}
+
+.binomial-summary-card--replication .stat-title,
+.binomial-summary-card--replication .stat-value {
+  text-align: left;
+}
+
+.replication-stack {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+}
+
+.replication-row {
+  justify-items: start;
+}
+
+.replication-label,
+.replication-value {
+  min-width: 0;
+}
+
+.replication-label {
+  color: var(--text);
+}
+
+.replication-value {
+  justify-self: start;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .replication-positive {
   color: var(--positive);
+  text-align: right;
+  margin-left: 10px;
 }
 
 .replication-negative {
   color: var(--negative);
+  text-align: right;
+  margin-left: 10px;
 }
 
 /* =========================================================
    Binomial responsive
 ========================================================= */
 
+@media (max-width: 900px) {
+  .binomial-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
   .binomial-svg-wrap svg {
     height: 420px;
+  }
+
+  .binomial-summary-grid {
+    grid-template-columns: 1fr;
   }
 }
