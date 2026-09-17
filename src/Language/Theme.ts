@@ -5,6 +5,7 @@ export const themeHu = {
     themeLight: "Világos",
     themeSystem: "Rendszer",
     navSelectLabel: "Oldal kiválasztása",
+    navMenuLabel: "Menü",
 };
 
 export const themeEn = {
@@ -13,4 +14,5 @@ export const themeEn = {
     themeLight: "Light",
     themeSystem: "System",
     navSelectLabel: "Select page",
+    navMenuLabel: "Menu",
 }

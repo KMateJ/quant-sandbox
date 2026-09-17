@@ -59,11 +59,6 @@
   font-weight: 700;
 }
 
-.brand-subtitle {
-  font-size: 0.88rem;
-  color: var(--muted);
-}
-
 .navbar a {
   text-decoration: none;
 }
@@ -100,15 +95,71 @@
   display: none;
 }
 
-.nav-select {
-  width: 100%;
-  height: var(--control-height);
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border);
   background: var(--surface);
-  color: var(--text);
   border-radius: var(--radius-control);
-  padding: 0 12px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-toggle:hover {
+  border-color: var(--border-hover);
+}
+
+.nav-toggle-bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+}
+
+.nav-toggle-bars span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+.nav-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.nav-menu-item {
+  padding: 9px 12px;
+  border-radius: var(--radius-control);
+  color: var(--text);
   font-size: var(--text-md);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.nav-menu-item:hover {
+  background: var(--surface-hover, var(--border));
+}
+
+.nav-menu-item.active {
+  background: var(--primary);
+  color: var(--text-inverse);
 }
 
 /* =========================================================
@@ -707,24 +758,21 @@
 
   .topbar-inner {
     width: calc(100% - 16px);
-    padding: 10px 0;
-    flex-direction: column;
-    align-items: stretch;
+    padding: 6px 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
   }
 
   .brand-block {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     gap: 2px;
   }
 
   .brand-title {
-    font-size: 1.05rem;
-  }
-
-  .brand-subtitle {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
   }
 
   .nav-tabs,
@@ -734,7 +782,14 @@
 
   .nav-mobile {
     display: block;
-    width: 100%;
+    position: relative;
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .nav-toggle {
+    width: 32px;
+    height: 32px;
   }
 
   .card {
