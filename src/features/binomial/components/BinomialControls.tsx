@@ -65,6 +65,7 @@ export default function BinomialControls({
   return (
     <SectionCard
       title=""
+      className="binomial-controls"
       headerLeft={
         <button type="button" className="toggle-button" onClick={onToggleControls}>
           {controlsOpen ? "-" : "+"}

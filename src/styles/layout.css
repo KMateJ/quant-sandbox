@@ -229,6 +229,10 @@
   gap: var(--space-7);
 }
 
+.view-main > * {
+  min-width: 0;
+}
+
 .chart-card {
   width: 100%;
   /*min-width: 0;*/

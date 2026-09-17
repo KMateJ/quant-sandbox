@@ -26,6 +26,9 @@ import {
   makeMaturities,
 } from "./blackScholes.math";
 import SliderField from "../../components/SliderField";
+import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
+import SwitchRow from "../../components/SwitchRow";
+import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -118,6 +121,7 @@ function getMetricTitle(
 
 export default function BlackScholesView() {
   const { t, language } = useI18n();
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -259,10 +263,78 @@ export default function BlackScholesView() {
     return value.toFixed(3);
   }, [strike, rate, volatility, optionType]);
 
+  const sliders: SliderDescriptor[] = [
+    {
+      key: "k",
+      symbol: "K",
+      name: t("blackScholesStrikeLabel"),
+      value: strike,
+      min: 20,
+      max: 200,
+      step: 1,
+      format: (v) => String(v),
+      onChange: setStrike,
+    },
+    {
+      key: "r",
+      symbol: "r",
+      name: t("blackScholesRateLabel"),
+      value: rate,
+      min: 0,
+      max: 0.2,
+      step: 0.005,
+      format: (v) => v.toFixed(3),
+      onChange: setRate,
+    },
+    {
+      key: "sigma",
+      symbol: "σ",
+      name: t("blackScholesVolatilityLabel"),
+      value: volatility,
+      min: 0.01,
+      max: 1,
+      step: 0.01,
+      format: (v) => v.toFixed(2),
+      onChange: setVolatility,
+    },
+    {
+      key: "tmax",
+      symbol: "T",
+      name: t("blackScholesMaxMaturityLabel"),
+      value: maxMaturity,
+      min: 0.25,
+      max: 20,
+      step: 0.25,
+      format: (v) => v.toFixed(2),
+      onChange: setMaxMaturity,
+    },
+    {
+      key: "curves",
+      symbol: "N",
+      name: t("blackScholesCurveCountLabel"),
+      value: curveCount,
+      min: 2,
+      max: 6,
+      step: 1,
+      format: (v) => String(v),
+      onChange: setCurveCount,
+    },
+  ];
+
+  const metricOptions: { key: MetricKey; label: string }[] = [
+    { key: "price", label: t("blackScholesMetricPrice") },
+    { key: "delta", label: "Delta" },
+    { key: "gamma", label: "Gamma" },
+    { key: "vega", label: "Vega" },
+    { key: "theta", label: "Theta" },
+    { key: "rho", label: "Rho" },
+  ];
+
   return (
     <div className="view-layout">
-      <div className="view-controls">
-        <SectionCard
+      {!isMobile ? (
+        <div className="view-controls">
+          <SectionCard
           title=""
           headerLeft={
             <button
@@ -434,22 +506,54 @@ export default function BlackScholesView() {
           )}
         </SectionCard>
       </div>
+      ) : null}
 
-      <div className="view-main">
+      <div className="view-main view-main--docked">
         <SectionCard
           className="chart-card"
           title={getMetricTitle(metric, optionType, t)}
           subtitle={t("blackScholesChartSubtitle")}
           headerLeft={
-            <button
-              type="button"
-              className="toggle-button"
-              onClick={() => setChartOpen((prev) => !prev)}
-            >
-              {chartOpen ? "-" : "+"}
-            </button>
+            isMobile ? null : (
+              <button
+                type="button"
+                className="toggle-button"
+                onClick={() => setChartOpen((prev) => !prev)}
+              >
+                {chartOpen ? "-" : "+"}
+              </button>
+            )
           }
         >
+          {isMobile && (
+            <SwitchRow
+              groups={[
+                {
+                  key: "type",
+                  options: [
+                    {
+                      label: t("blackScholesOptionCall"),
+                      active: optionType === "call",
+                      onSelect: () => setOptionType("call"),
+                    },
+                    {
+                      label: t("blackScholesOptionPut"),
+                      active: optionType === "put",
+                      onSelect: () => setOptionType("put"),
+                    },
+                  ],
+                },
+                {
+                  key: "metric",
+                  options: metricOptions.map((option) => ({
+                    label: option.label,
+                    active: metric === option.key,
+                    onSelect: () => setMetric(option.key),
+                  })),
+                },
+              ]}
+            />
+          )}
           {chartOpen && (
             <div className="chart-wrap">
               <ResponsiveContainer width="100%" height="100%">
@@ -714,6 +818,8 @@ export default function BlackScholesView() {
           </div>
         </SectionCard>
       </div>
+
+      {isMobile ? <SliderDock sliders={sliders} /> : null}
     </div>
   );
 }

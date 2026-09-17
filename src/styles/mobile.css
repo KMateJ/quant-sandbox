@@ -1,0 +1,187 @@
+/* =========================================================
+   Shared mobile UI: bottom slider dock + compact switch row
+   Used by binomial, black-scholes, diffusion and heston views.
+========================================================= */
+
+.slider-dock {
+  display: none;
+}
+
+.switch-row {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* Clearance so the fixed dock never covers the last card. */
+  .view-main--docked {
+    padding-bottom: 172px;
+  }
+
+  /* Put the chart/tree ahead of the summary on phones. */
+  .view-main--chart-first {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .view-main--chart-first > .chart-card {
+    order: -1;
+  }
+
+  /* --- Compact switch row (mode / option type / metric …) --- */
+
+  .switch-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+    scrollbar-width: none;
+  }
+
+  .switch-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .switch-row .switch-group {
+    flex: 0 0 auto;
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    margin-bottom: 0;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+  }
+
+  .switch-row .metric-button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 0;
+    padding: 5px 12px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .switch-row .metric-button.active {
+    background: var(--primary);
+    color: var(--text-inverse);
+  }
+
+  /* --- Fixed bottom slider dock --- */
+
+  .slider-dock {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: var(--topbar-bg);
+    backdrop-filter: blur(var(--topbar-blur));
+    border-top: 1px solid var(--border);
+    padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
+    transition: transform var(--transition-base);
+  }
+
+  .slider-dock--hidden {
+    transform: translateY(140%);
+  }
+
+  .slider-dock-handle {
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 10px;
+    border-radius: 999px;
+    background: var(--border);
+  }
+
+  .slider-dock-chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+  }
+
+  .slider-dock-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-chip {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 58px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    border-radius: 12px;
+    transition: var(--transition-fast);
+  }
+
+  .dock-chip.active {
+    background: var(--primary);
+    color: var(--text-inverse);
+    border-color: var(--primary);
+  }
+
+  .dock-chip-symbol {
+    font-weight: 700;
+    font-size: 0.92rem;
+    line-height: 1;
+  }
+
+  .dock-chip-value {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    line-height: 1;
+  }
+
+  .slider-dock-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dock-current-name {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .slider-dock-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .slider-dock-row .slider-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dock-current-value {
+    flex: 0 0 auto;
+    min-width: 56px;
+    height: var(--control-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}

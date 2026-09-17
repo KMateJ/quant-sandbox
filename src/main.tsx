@@ -7,6 +7,7 @@ import App from "./App.tsx";
 import "./styles/tokens.css";
 import "./styles/global.css";
 import "./styles/layout.css";
+import "./styles/mobile.css";
 import "./styles/binomial.css";
 import "./styles/payoff.css";
 import "./styles/guide.css";

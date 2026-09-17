@@ -6,6 +6,8 @@ import { buildBinomialTree, buildRateTree } from "./binomial.math";
 import type { OptionKind, TreeMode } from "./binomial.types";
 import BinomialTreeChart from "./components/BinomealTreeCharts";
 import BinomialExplanation from "./components/BinomealExplanation";
+import BinomialSliderDock from "./components/BinomialSliderDock";
+import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 
 function clamp(value: number, min: number, max: number) {
@@ -49,6 +51,7 @@ export default function BinomialView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
   const { language, t } = useI18n();
+  const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [mode, setMode] = useState<TreeMode>(() => parseTreeMode(searchParams.get("mode")));
   const [S0, setS0] = useState(() => parseNumber(searchParams.get("s0"), 100, 20, 200));
@@ -156,9 +159,76 @@ export default function BinomialView() {
       : t("binomialToggleValues");
 
   return (
-    <div className="view-layout">
-      <div className="view-controls">
-        <BinomialControls
+    <div className="view-layout binomial-view">
+      {!isMobile ? (
+        <div className="view-controls">
+          <BinomialControls
+            mode={mode}
+            S0={S0}
+            K={K}
+            u={u}
+            d={d}
+            r={r}
+            q={q}
+            h={h}
+            steps={steps}
+            optionKind={optionKind}
+            controlsOpen={controlsOpen}
+            onToggleControls={() => setControlsOpen((prev) => !prev)}
+            onModeChange={setMode}
+            onS0Change={setS0}
+            onKChange={setK}
+            onUChange={setU}
+            onDChange={setD}
+            onRChange={setR}
+            onQChange={setQ}
+            onHChange={setH}
+            onStepsChange={setSteps}
+            onOptionKindChange={setOptionKind}
+          />
+
+          <div className="card" style={{ marginTop: 20 }}>
+            <div className="metric-switch">
+              <button
+                type="button"
+                className={showPrimaryMetric ? "metric-button active" : "metric-button"}
+                onClick={() => setShowPrimaryMetric((prev) => !prev)}
+              >
+                {primaryToggleLabel}
+              </button>
+              <button
+                type="button"
+                className={showSecondaryMetric ? "metric-button active" : "metric-button"}
+                onClick={() => setShowSecondaryMetric((prev) => !prev)}
+              >
+                {secondaryToggleLabel}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="view-main view-main--docked view-main--chart-first">
+        <BinomialSummary tree={tree} />
+        <BinomialTreeChart
+          tree={tree}
+          optionKind={optionKind}
+          showPrimaryMetric={showPrimaryMetric}
+          showSecondaryMetric={showSecondaryMetric}
+          primaryToggleLabel={primaryToggleLabel}
+          secondaryToggleLabel={secondaryToggleLabel}
+          onModeChange={setMode}
+          onOptionKindChange={setOptionKind}
+          onTogglePrimaryMetric={() => setShowPrimaryMetric((prev) => !prev)}
+          onToggleSecondaryMetric={() => setShowSecondaryMetric((prev) => !prev)}
+          treeOpen={treeOpen}
+          onToggleTree={() => setTreeOpen((prev) => !prev)}
+        />
+        <BinomialExplanation mode={mode} />
+      </div>
+
+      {isMobile ? (
+        <BinomialSliderDock
           mode={mode}
           S0={S0}
           K={K}
@@ -168,10 +238,6 @@ export default function BinomialView() {
           q={q}
           h={h}
           steps={steps}
-          optionKind={optionKind}
-          controlsOpen={controlsOpen}
-          onToggleControls={() => setControlsOpen((prev) => !prev)}
-          onModeChange={setMode}
           onS0Change={setS0}
           onKChange={setK}
           onUChange={setU}
@@ -180,40 +246,8 @@ export default function BinomialView() {
           onQChange={setQ}
           onHChange={setH}
           onStepsChange={setSteps}
-          onOptionKindChange={setOptionKind}
         />
-
-        <div className="card" style={{ marginTop: 20 }}>
-          <div className="metric-switch">
-            <button
-              type="button"
-              className={showPrimaryMetric ? "metric-button active" : "metric-button"}
-              onClick={() => setShowPrimaryMetric((prev) => !prev)}
-            >
-              {primaryToggleLabel}
-            </button>
-            <button
-              type="button"
-              className={showSecondaryMetric ? "metric-button active" : "metric-button"}
-              onClick={() => setShowSecondaryMetric((prev) => !prev)}
-            >
-              {secondaryToggleLabel}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="view-main">
-        <BinomialSummary tree={tree} />
-        <BinomialTreeChart
-          tree={tree}
-          showPrimaryMetric={showPrimaryMetric}
-          showSecondaryMetric={showSecondaryMetric}
-          treeOpen={treeOpen}
-          onToggleTree={() => setTreeOpen((prev) => !prev)}
-        />
-        <BinomialExplanation mode={mode} />
-      </div>
+      ) : null}
     </div>
   );
 }

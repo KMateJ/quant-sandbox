@@ -13,6 +13,8 @@ import {
 import SectionCard from "../../components/SectionCard";
 import { diffusionSolution, makeTimes } from "./diffusion.math";
 import SliderField from "../../components/SliderField";
+import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
+import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -67,6 +69,7 @@ function formatTimeLabel(t: number, language: "hu" | "en"): string {
 
 export default function DiffusionView() {
   const { t, language } = useI18n();
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -142,7 +145,8 @@ export default function DiffusionView() {
 
   return (
     <div className="view-layout">
-      <div className="view-controls">
+      {!isMobile ? (
+        <div className="view-controls">
         <SectionCard
           title=""
           headerLeft={
@@ -236,8 +240,9 @@ export default function DiffusionView() {
           )}
         </SectionCard>
       </div>
+      ) : null}
 
-      <div className="view-main">
+      <div className="view-main view-main--docked">
         <SectionCard
           className="chart-card"
           title={t("diffusionChartTitle")}
@@ -354,6 +359,8 @@ export default function DiffusionView() {
           </div>
         </SectionCard>
       </div>
+
+      {isMobile ? <SliderDock sliders={sliders} /> : null}
     </div>
   );
 }
