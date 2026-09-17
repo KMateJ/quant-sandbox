@@ -10,6 +10,13 @@ import {
   YAxis,
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
+import { useMediaQuery } from "../../../components/useMediaQuery";
+import {
+  axisTickStyle,
+  chartMargin,
+  useChartTouchDismiss,
+  yAxisWidth,
+} from "../../../components/chartConfig";
 import type { PriceComparisonPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
 
@@ -29,19 +36,25 @@ export default function HestonPriceComparisonChart({
 
   const yMax = Number((maxPrice * 1.1).toFixed(4));
   const { t } = useI18n();
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
 
   return (
     <SectionCard
       className="chart-card"
       title={t("hestonPriceComparisonTitle")}
-      subtitle={t("hestonPriceComparisonSubtitle")}
     >
-      <div className="chart-wrap">
+      <div className="chart-wrap" ref={dismissRef}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <LineChart data={data} margin={chartMargin(isMobile)}>
             <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-            <XAxis dataKey="S" stroke="#94a3b8" />
-            <YAxis stroke="#94a3b8" domain={[0, yMax]} />
+            <XAxis dataKey="S" stroke="#94a3b8" tick={axisTickStyle(isMobile)} />
+            <YAxis
+              stroke="#94a3b8"
+              domain={[0, yMax]}
+              width={yAxisWidth(isMobile)}
+              tick={axisTickStyle(isMobile)}
+            />
             <ReferenceLine x={strike} stroke="#94a3b8" strokeDasharray="4 4" />
             <Tooltip
               contentStyle={{

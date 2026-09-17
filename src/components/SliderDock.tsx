@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useChartInViewport } from "./chartConfig";
 
 export type SliderDescriptor = {
   key: string;
@@ -17,31 +18,17 @@ type SliderDockProps = {
 };
 
 // Fixed bottom control bar for phones: pick a parameter via chips, drag one
-// slider. Auto-hides while scrolling down and reappears when scrolling up.
+// slider. Only visible while a chart is on screen.
 export default function SliderDock({ sliders }: SliderDockProps) {
   const [activeKey, setActiveKey] = useState(sliders[0]?.key);
-  const [hidden, setHidden] = useState(false);
+  const chartInView = useChartInViewport();
   const active = sliders.find((slider) => slider.key === activeKey) ?? sliders[0];
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - lastY) < 6) return;
-      if (y <= 10) setHidden(false);
-      else if (y > lastY) setHidden(true);
-      else setHidden(false);
-      lastY = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   if (!active) return null;
 
   return (
     <div
-      className={`slider-dock ${hidden ? "slider-dock--hidden" : ""}`}
+      className={`slider-dock ${chartInView ? "" : "slider-dock--hidden"}`}
       role="group"
       aria-label={active.name}
     >

@@ -29,6 +29,12 @@ import SliderField from "../../components/SliderField";
 import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
 import SwitchRow from "../../components/SwitchRow";
 import { useMediaQuery } from "../../components/useMediaQuery";
+import {
+  axisTickStyle,
+  chartMargin,
+  useChartTouchDismiss,
+  yAxisWidth,
+} from "../../components/chartConfig";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -122,6 +128,7 @@ function getMetricTitle(
 export default function BlackScholesView() {
   const { t, language } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -510,7 +517,6 @@ export default function BlackScholesView() {
         <SectionCard
           className="chart-card"
           title={getMetricTitle(metric, optionType, t)}
-          subtitle={t("blackScholesChartSubtitle")}
         >
           {isMobile && (
             <SwitchRow
@@ -541,21 +547,28 @@ export default function BlackScholesView() {
               ]}
             />
           )}
-          <div className="chart-wrap">
+          <div className="chart-wrap" ref={dismissRef}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={chartData}
-                  margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
+                  margin={chartMargin(isMobile)}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
                   <XAxis
                     dataKey="S"
                     type="number"
                     domain={[10, 200]}
-                    tickCount={8}
+                    tickCount={isMobile ? 5 : 8}
                     stroke="#94a3b8"
+                    tick={axisTickStyle(isMobile)}
                   />
-                  <YAxis domain={yDomain} tickCount={7} stroke="#94a3b8" />
+                  <YAxis
+                    domain={yDomain}
+                    tickCount={7}
+                    stroke="#94a3b8"
+                    width={yAxisWidth(isMobile)}
+                    tick={axisTickStyle(isMobile)}
+                  />
                   <ReferenceLine
                     x={strike}
                     stroke="#94a3b8"

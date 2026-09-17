@@ -88,17 +88,10 @@ export default function BinomialTreeChart({
       : "Binomial rate tree"
     : t("binomialTreeTitle");
 
-  const subtitle = isRates
-    ? language === "hu"
-      ? "Rövid kamatok és kötvényértékek a diszkrét rácson"
-      : "Short rates and bond values on the discrete lattice"
-    : t("binomialTreeSubtitle");
-
   return (
     <SectionCard
       className="chart-card "
       title={title}
-      subtitle={subtitle}
     >
       {isMobile && (
         <SwitchRow

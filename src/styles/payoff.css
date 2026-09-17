@@ -326,7 +326,7 @@
   }
 
   .chart-wrap {
-    height: 280px;
+    height: clamp(260px, 50vh, 440px);
   }
 
   .payoff-leg-card,

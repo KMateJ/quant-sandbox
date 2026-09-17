@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
+import { useChartTouchDismiss } from "../../../components/chartConfig";
 import type { HestonPathPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
 
@@ -39,6 +40,7 @@ export default function HestonPathsChart({
   isUpdating = false,
 }: Props) {
   const { t } = useI18n();
+  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth <= 640 : false
   );
@@ -56,7 +58,6 @@ export default function HestonPathsChart({
     <SectionCard
       className="chart-card"
       title={t("hestonStockPathsTitle")}
-      subtitle={t("hestonStockPathsSubtitle")}
       headerLeft={
         <div
           style={{
@@ -78,7 +79,7 @@ export default function HestonPathsChart({
         </div>
       }
     >
-      <div className="chart-wrap">
+      <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={data}

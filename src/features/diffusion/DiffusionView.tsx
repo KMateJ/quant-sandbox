@@ -15,6 +15,12 @@ import { diffusionSolution, makeTimes } from "./diffusion.math";
 import SliderField from "../../components/SliderField";
 import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
 import { useMediaQuery } from "../../components/useMediaQuery";
+import {
+  axisTickStyle,
+  chartMargin,
+  useChartTouchDismiss,
+  yAxisWidth,
+} from "../../components/chartConfig";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -70,6 +76,7 @@ function formatTimeLabel(t: number, language: "hu" | "en"): string {
 export default function DiffusionView() {
   const { t, language } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -254,26 +261,28 @@ export default function DiffusionView() {
         <SectionCard
           className="chart-card"
           title={t("diffusionChartTitle")}
-          subtitle="u(t, x) = exp(-κ n² t) sin(nx)"
         >
-          <div className="chart-wrap">
+          <div className="chart-wrap" ref={dismissRef}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={chartData}
-                margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
+                margin={chartMargin(isMobile)}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
                 <XAxis
                   dataKey="x"
                   type="number"
                   domain={[0, 2 * Math.PI]}
-                  tickCount={7}
+                  tickCount={isMobile ? 5 : 7}
                   stroke="#94a3b8"
+                  tick={axisTickStyle(isMobile)}
                 />
                 <YAxis
                   domain={[-amplitudeBound, amplitudeBound]}
                   tickCount={7}
                   stroke="#94a3b8"
+                  width={yAxisWidth(isMobile)}
+                  tick={axisTickStyle(isMobile)}
                 />
                 <Tooltip
                   contentStyle={{

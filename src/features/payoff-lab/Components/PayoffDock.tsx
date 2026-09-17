@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useI18n } from "../../../i18n";
+import { useChartInViewport } from "../../../components/chartConfig";
 import type {
   Direction,
   InstrumentType,
@@ -119,21 +120,7 @@ export default function PayoffDock({
     legs[0]?.id ?? null
   );
   const [activeFieldKey, setActiveFieldKey] = useState<string>("type");
-  const [hidden, setHidden] = useState(false);
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - lastY) < 6) return;
-      if (y <= 10) setHidden(false);
-      else if (y > lastY) setHidden(true);
-      else setHidden(false);
-      lastY = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const chartInView = useChartInViewport();
 
   const activeLeg =
     legs.find((leg) => leg.id === activeLegId) ?? legs[0] ?? null;
@@ -334,7 +321,7 @@ export default function PayoffDock({
 
   return (
     <div
-      className={`slider-dock payoff-dock ${hidden ? "slider-dock--hidden" : ""}`}
+      className={`slider-dock payoff-dock ${chartInView ? "" : "slider-dock--hidden"}`}
       role="group"
       aria-label={t("payoffLegTitle")}
     >

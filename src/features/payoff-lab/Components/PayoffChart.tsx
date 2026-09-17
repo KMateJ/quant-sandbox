@@ -12,6 +12,13 @@ import {
   YAxis,
 } from "recharts";
 import SectionCard from "../../../components/SectionCard";
+import { useMediaQuery } from "../../../components/useMediaQuery";
+import {
+  axisTickStyle,
+  chartMargin,
+  useChartTouchDismiss,
+  yAxisWidth,
+} from "../../../components/chartConfig";
 import type { PayoffChartPoint, ViewMode } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
 import { useI18n } from "../../../i18n";
@@ -46,6 +53,8 @@ export default function PayoffChart({
   syntheticOverlayLabel,
 }: PayoffChartProps) {
   const { t } = useI18n();
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
 
   const yDomain = useMemo(() => getYAxisDomain(chartData), [chartData]);
 
@@ -58,13 +67,12 @@ export default function PayoffChart({
     <SectionCard
       className="chart-card"
       title={t("payoffChartTitle")}
-      subtitle={t("payoffChartSubtitle")}
     >
-      <div className="chart-wrap" style={{ width: "100%", height: 380 }}>
+      <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
-              margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
+              margin={chartMargin(isMobile)}
             >
               <defs>
                 <linearGradient id="profitZeroGradient" x1="0" y1="0" x2="0" y2="1">
@@ -79,11 +87,18 @@ export default function PayoffChart({
                 dataKey="S"
                 type="number"
                 domain={xDomain}
-                tickCount={8}
+                tickCount={isMobile ? 5 : 8}
                 stroke="#94a3b8"
+                tick={axisTickStyle(isMobile)}
               />
 
-              <YAxis domain={yDomain} tickCount={7} stroke="#94a3b8" />
+              <YAxis
+                domain={yDomain}
+                tickCount={7}
+                stroke="#94a3b8"
+                width={yAxisWidth(isMobile)}
+                tick={axisTickStyle(isMobile)}
+              />
 
               {strikes.map((strike) => (
                 <ReferenceLine

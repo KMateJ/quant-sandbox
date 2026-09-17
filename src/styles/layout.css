@@ -445,7 +445,7 @@
 .chart-wrap {
   width: 100%;
   max-width: 100%;
-  height: clamp(240px, 36vh, 420px);
+  height: clamp(280px, 42vh, 460px);
   margin: 0 auto;
 }
 
@@ -703,7 +703,7 @@
   }
 
   .chart-wrap {
-    height: clamp(220px, 34vh, 360px);
+    height: clamp(260px, 40vh, 400px);
   }
 }
 
@@ -737,7 +737,7 @@
   }
 
   .chart-wrap {
-    height: 300px;
+    height: clamp(320px, 52vh, 440px);
   }
 }
 
@@ -795,6 +795,17 @@
   .card {
     padding: 12px;
     border-radius: 16px;
+  }
+
+  /* Let the plot use the full card width; only the header keeps side padding. */
+  .chart-card {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .chart-card .section-header {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .section-header {
@@ -857,7 +868,7 @@
   .chart-wrap {
     width: 100%;
     max-width: none;
-    height: 220px;
+    height: clamp(260px, 50vh, 440px);
   }
 
   .param-summary {

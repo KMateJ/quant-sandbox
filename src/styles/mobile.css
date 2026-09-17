@@ -27,6 +27,17 @@
     order: -1;
   }
 
+  /* Gently snap the chart into place when scrolling near it. */
+  html {
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+  }
+
+  .chart-card {
+    scroll-snap-align: start;
+    scroll-margin-top: 64px;
+  }
+
   /* --- Compact switch row (mode / option type / metric …) --- */
 
   .switch-row {
@@ -271,5 +282,63 @@
   /* Leg editing moves into the fixed dock; keep preset + mode in the card. */
   .payoff-builder-card .controls-grid {
     display: none;
+  }
+}
+
+/* =========================================================
+   Narrow / small phones (≤360px wide or very short)
+========================================================= */
+
+@media (max-width: 360px) {
+  .card {
+    padding: 10px;
+  }
+
+  .chart-card {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .chart-card .section-header {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .section-title,
+  .page-title {
+    font-size: 1rem;
+  }
+
+  .slider-dock {
+    padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .dock-chip {
+    min-width: 52px;
+    padding: 5px 10px;
+  }
+
+  .dock-chip-symbol {
+    font-size: 0.85rem;
+  }
+
+  .dock-chip-value {
+    font-size: 0.7rem;
+  }
+
+  .dock-current-value,
+  .dock-current-name {
+    font-size: 0.78rem;
+  }
+}
+
+/* Short viewports: shrink the chart so it clears the dock when snapped. */
+@media (max-width: 640px) and (max-height: 720px) {
+  .chart-wrap {
+    height: clamp(240px, 42vh, 360px);
+  }
+
+  .view-main--docked {
+    padding-bottom: 156px;
   }
 }
