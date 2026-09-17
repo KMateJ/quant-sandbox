@@ -16,15 +16,11 @@ import { useI18n } from "../../../i18n";
 type Props = {
   data: PriceComparisonPoint[];
   strike: number;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function HestonPriceComparisonChart({
   data,
   strike,
-  isOpen,
-  setIsOpen
 }: Props) {
   const maxPrice =
     data.length > 0
@@ -39,19 +35,7 @@ export default function HestonPriceComparisonChart({
       className="chart-card"
       title={t("hestonPriceComparisonTitle")}
       subtitle={t("hestonPriceComparisonSubtitle")}
-      headerLeft={
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button
-            type="button"
-            className="toggle-button"
-            onClick={() => setIsOpen((prev) => !prev)}
-          >
-            {isOpen ? "-" : "+"}
-          </button>
-        </div>
-      }
     >
-    {isOpen && (
       <div className="chart-wrap">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
@@ -95,7 +79,6 @@ export default function HestonPriceComparisonChart({
           </LineChart>
         </ResponsiveContainer>
       </div>
-    )}
     </SectionCard>
   );
 }

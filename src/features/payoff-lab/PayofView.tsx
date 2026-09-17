@@ -387,7 +387,6 @@ export default function PayoffView() {
   const [legs, setLegs] = useState<StrategyLeg[]>(initialState.legs);
   const [mode, setMode] = useState<ViewMode>(initialState.mode);
   const [controlsOpen, setControlsOpen] = useState(true);
-  const [chartOpen, setChartOpen] = useState(true);
   const [showComponents, setShowComponents] = useState(initialState.showComponents);
   const [selectedPreset, setSelectedPreset] = useState<PresetKey | null>(
     initialState.selectedPreset
@@ -464,8 +463,6 @@ export default function PayoffView() {
           showComponents={showComponents}
           syntheticOverlayActive={mode === "payoff" && syntheticMatches.length > 0}
           syntheticOverlayLabel={primarySyntheticMatch?.label ?? null}
-          chartOpen={chartOpen}
-          onToggleChart={() => setChartOpen((prev) => !prev)}
         />
         <PayoffExplanation />
       </div>

@@ -147,8 +147,6 @@ export default function BlackScholesView() {
   const [optionType, setOptionType] = useState<OptionType>(() =>
     parseOptionType(searchParams.get("type"))
   );
-  const [chartOpen, setChartOpen] = useState(true);
-
   useEffect(() => {
     setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
     setRate(parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
@@ -513,17 +511,6 @@ export default function BlackScholesView() {
           className="chart-card"
           title={getMetricTitle(metric, optionType, t)}
           subtitle={t("blackScholesChartSubtitle")}
-          headerLeft={
-            isMobile ? null : (
-              <button
-                type="button"
-                className="toggle-button"
-                onClick={() => setChartOpen((prev) => !prev)}
-              >
-                {chartOpen ? "-" : "+"}
-              </button>
-            )
-          }
         >
           {isMobile && (
             <SwitchRow
@@ -554,8 +541,7 @@ export default function BlackScholesView() {
               ]}
             />
           )}
-          {chartOpen && (
-            <div className="chart-wrap">
+          <div className="chart-wrap">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={chartData}
@@ -608,10 +594,6 @@ export default function BlackScholesView() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          )}
-          {!chartOpen && (
-            <div className="param-summary">{t("blackScholesChartHidden")}</div>
-          )}
         </SectionCard>
 
         <SectionCard

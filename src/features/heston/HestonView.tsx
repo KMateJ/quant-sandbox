@@ -68,10 +68,6 @@ export default function HestonView() {
   );
 
   const [controlsOpen, setControlsOpen] = useState(true);
-  const [stockChartOpen, setStockChartOpen] = useState(true);
-  const [varChartOpen, setVarChartOpen] = useState(true);
-  const [comparisonChartOpen, setComparisonChartOpen] = useState(true);
-  const [smileChartOpen, setSmileChartOpen] = useState(true);
 
   const [priceComparisonData, setPriceComparisonData] = useState<
     PriceComparisonPoint[]
@@ -401,8 +397,6 @@ export default function HestonView() {
           data={stockPathData}
           pathKeys={pathKeys}
           strike={pathsParams.strike}
-          isOpen={stockChartOpen}
-          setIsOpen={setStockChartOpen}
           onUpdate={handleUpdatePaths}
           isUpdating={isUpdatingPaths}
         />
@@ -411,8 +405,6 @@ export default function HestonView() {
           data={variancePathData}
           pathKeys={pathKeys}
           theta={pathsParams.theta}
-          isOpen={varChartOpen}
-          setIsOpen={setVarChartOpen}
           onUpdate={handleUpdatePaths}
           isUpdating={isUpdatingPaths}
         />
@@ -420,15 +412,11 @@ export default function HestonView() {
         <HestonPriceComparisonChart
           data={priceComparisonData}
           strike={strike}
-          isOpen={comparisonChartOpen}
-          setIsOpen={setComparisonChartOpen}
         />
 
         <HestonSmileChart
           data={smileData}
           strikeRatio={Number((strike / S0).toFixed(3))}
-          isOpen={smileChartOpen}
-          setIsOpen={setSmileChartOpen}
         />
 
         <HestonExplanation />

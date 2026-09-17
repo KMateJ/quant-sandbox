@@ -16,8 +16,6 @@ type BinomialTreeChartProps = {
   onOptionKindChange: (value: OptionKind) => void;
   onTogglePrimaryMetric: () => void;
   onToggleSecondaryMetric: () => void;
-  treeOpen: boolean;
-  onToggleTree: () => void;
 };
 
 // Vertical layout used on phones: time flows top -> bottom and the whole
@@ -74,8 +72,6 @@ export default function BinomialTreeChart({
   onOptionKindChange,
   onTogglePrimaryMetric,
   onToggleSecondaryMetric,
-  treeOpen,
-  onToggleTree,
 }: BinomialTreeChartProps) {
   const nodeMap = useMemo(() => new Map(tree.nodes.map((node) => [node.id, node])), [tree.nodes]);
   const isMobile = useMediaQuery("(max-width: 640px)");
@@ -103,13 +99,6 @@ export default function BinomialTreeChart({
       className="chart-card "
       title={title}
       subtitle={subtitle}
-      headerLeft={
-        isMobile ? null : (
-          <button type="button" className="toggle-button" onClick={onToggleTree}>
-            {treeOpen ? "-" : "+"}
-          </button>
-        )
-      }
     >
       {isMobile && (
         <SwitchRow
@@ -151,9 +140,8 @@ export default function BinomialTreeChart({
         />
       )}
 
-      {treeOpen && isMobile && (
-        <div className="binomial-svg-wrap binomial-svg-wrap--vertical">
-          <svg viewBox={`0 0 ${vertical.width} ${vertical.height}`} width="100%" role="img">
+      {isMobile && (
+        <div className="binomial-svg-wrap binomial-svg-wrap--vertical">          <svg viewBox={`0 0 ${vertical.width} ${vertical.height}`} width="100%" role="img">
             {vertical.edges.map((edge) => (
               <line
                 key={edge.id}
@@ -221,7 +209,7 @@ export default function BinomialTreeChart({
         </div>
       )}
 
-      {treeOpen && !isMobile && (
+      {!isMobile && (
         <div className="binomial-svg-wrap">
           <svg viewBox={`0 0 ${tree.width} ${tree.height}`} width="100%" height="100%" role="img">
             {tree.edges.map((edge) => {
@@ -301,13 +289,6 @@ export default function BinomialTreeChart({
               </g>
             ))}
           </svg>
-        </div>
-      )}
-
-      {!treeOpen && (
-        <div className="param-summary">
-          <div>q = {tree.q.toFixed(3)}</div>
-          <div>{isRates ? `P₀ = ${tree.price.toFixed(3)}` : `V₀ = ${tree.price.toFixed(3)}`}</div>
         </div>
       )}
     </SectionCard>

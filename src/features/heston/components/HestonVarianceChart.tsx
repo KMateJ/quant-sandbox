@@ -1,4 +1,3 @@
-import type React from "react";
 import {
   CartesianGrid,
   Legend,
@@ -27,8 +26,6 @@ type Props = {
   data: HestonPathPoint[];
   pathKeys: string[];
   theta: number;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onUpdate: () => void;
   isUpdating?: boolean;
 };
@@ -37,8 +34,6 @@ export default function HestonVarianceChart({
   data,
   pathKeys,
   theta,
-  isOpen,
-  setIsOpen,
   onUpdate,
   isUpdating = false,
 }: Props) {
@@ -61,14 +56,6 @@ export default function HestonVarianceChart({
         >
           <button
             type="button"
-            className="toggle-button"
-            onClick={() => setIsOpen((prev) => !prev)}
-          >
-            {isOpen ? "-" : "+"}
-          </button>
-
-          <button
-            type="button"
             className="nav-tab"
             onClick={onUpdate}
             disabled={isUpdating}
@@ -78,8 +65,7 @@ export default function HestonVarianceChart({
         </div>
       }
     >
-      {isOpen && (
-        <div className="chart-wrap">
+      <div className="chart-wrap">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -115,7 +101,6 @@ export default function HestonVarianceChart({
             </LineChart>
           </ResponsiveContainer>
         </div>
-      )}
     </SectionCard>
   );
 }

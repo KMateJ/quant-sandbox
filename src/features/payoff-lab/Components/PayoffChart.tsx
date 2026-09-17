@@ -24,8 +24,6 @@ type PayoffChartProps = {
   showComponents: boolean;
   syntheticOverlayActive: boolean;
   syntheticOverlayLabel: string | null;
-  chartOpen: boolean;
-  onToggleChart: () => void;
 };
 
 const lineColors = [
@@ -46,10 +44,8 @@ export default function PayoffChart({
   showComponents,
   syntheticOverlayActive,
   syntheticOverlayLabel,
-  chartOpen,
-  onToggleChart,
 }: PayoffChartProps) {
-  const { language, t } = useI18n();
+  const { t } = useI18n();
 
   const yDomain = useMemo(() => getYAxisDomain(chartData), [chartData]);
 
@@ -58,25 +54,13 @@ export default function PayoffChart({
     return Object.keys(chartData[0]).filter((key) => key.startsWith("leg-"));
   }, [chartData]);
 
-  const overlayStatusText = syntheticOverlayActive
-    ? language === "hu"
-      ? `overlay: ${syntheticOverlayLabel ?? "synthetic"}`
-      : `overlay: ${syntheticOverlayLabel ?? "synthetic"}`
-    : t("payoffChartOverlayInactive");
-
   return (
     <SectionCard
       className="chart-card"
       title={t("payoffChartTitle")}
       subtitle={t("payoffChartSubtitle")}
-      headerLeft={
-        <button type="button" className="toggle-button" onClick={onToggleChart}>
-          {chartOpen ? "-" : "+"}
-        </button>
-      }
     >
-      {chartOpen ? (
-        <div className="chart-wrap" style={{ width: "100%", height: 380 }}>
+      <div className="chart-wrap" style={{ width: "100%", height: 380 }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={chartData}
@@ -188,17 +172,6 @@ export default function PayoffChart({
             </LineChart>
           </ResponsiveContainer>
         </div>
-      ) : (
-        <div className="param-summary">
-          <div>
-            {chartData.length} {t("payoffChartPoints")}
-          </div>
-          <div>
-            {strikes.length} {t("payoffChartStrikeMarkers")}
-          </div>
-          <div>{overlayStatusText}</div>
-        </div>
-      )}
     </SectionCard>
   );
 }

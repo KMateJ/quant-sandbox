@@ -70,7 +70,6 @@ export default function BinomialView() {
   const [showSecondaryMetric, setShowSecondaryMetric] = useState(() =>
     parseBooleanFlag(searchParams.get("secondary"), true)
   );
-  const [treeOpen, setTreeOpen] = useState(true);
 
   useEffect(() => {
     setMode(parseTreeMode(searchParams.get("mode")));
@@ -221,8 +220,6 @@ export default function BinomialView() {
           onOptionKindChange={setOptionKind}
           onTogglePrimaryMetric={() => setShowPrimaryMetric((prev) => !prev)}
           onToggleSecondaryMetric={() => setShowSecondaryMetric((prev) => !prev)}
-          treeOpen={treeOpen}
-          onToggleTree={() => setTreeOpen((prev) => !prev)}
         />
         <BinomialExplanation mode={mode} />
       </div>

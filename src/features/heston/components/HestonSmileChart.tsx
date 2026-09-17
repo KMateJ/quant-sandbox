@@ -16,11 +16,9 @@ import { useI18n } from "../../../i18n";
 type Props = {
   data: SmilePoint[];
   strikeRatio: number;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function HestonSmileChart({ data, strikeRatio, isOpen, setIsOpen }: Props) {
+export default function HestonSmileChart({ data, strikeRatio }: Props) {
   const minIv =
     data.length > 0
       ? Math.min(...data.map((d) => Math.min(d.bsIv, d.hestonIv)))
@@ -40,19 +38,7 @@ export default function HestonSmileChart({ data, strikeRatio, isOpen, setIsOpen 
       className="chart-card"
       title={t("hestonSmileTitle")}
       subtitle={t("hestonSmileSubtitle")}
-      headerLeft={
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button
-            type="button"
-            className="toggle-button"
-            onClick={() => setIsOpen((prev) => !prev)}
-          >
-            {isOpen ? "-" : "+"}
-          </button>
-        </div>
-      }
     >
-    {isOpen && (
       <div className="chart-wrap">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
@@ -96,7 +82,6 @@ export default function HestonSmileChart({ data, strikeRatio, isOpen, setIsOpen 
           </LineChart>
         </ResponsiveContainer>
       </div>
-    )}
     </SectionCard>
   );
 }
