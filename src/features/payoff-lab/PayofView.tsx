@@ -11,9 +11,11 @@ import {
 } from "./payoff.math";
 import { getPresetStrategy } from "./payoff.presets";
 import PayoffBuilder from "./Components/PayoffBuilder";
+import PayoffDock from "./Components/PayoffDock";
 import PayoffChart from "./Components/PayoffChart";
 import PayoffSummary from "./Components/PayoffSummary";
 import PayoffExplanation from "./Components/PayoffExplanation";
+import { useMediaQuery } from "../../components/useMediaQuery";
 
 const DEFAULT_LEGS: StrategyLeg[] = [
   {
@@ -378,6 +380,7 @@ function buildSearchParams(
 }
 
 export default function PayoffView() {
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchParams, setSearchParams] = useSearchParams();
   const initialState = useMemo(() => readUrlState(searchParams), [searchParams]);
 
@@ -451,7 +454,7 @@ export default function PayoffView() {
         />
       </div>
 
-      <div className="view-main">
+      <div className="view-main view-main--dock-tall">
         <PayoffSummary legs={legs} mode={mode} />
         <PayoffChart
           chartData={chartData}
@@ -466,6 +469,14 @@ export default function PayoffView() {
         />
         <PayoffExplanation />
       </div>
+
+      {isMobile ? (
+        <PayoffDock
+          legs={legs}
+          onChange={setLegs}
+          onClearPreset={() => setSelectedPreset(null)}
+        />
+      ) : null}
     </div>
   );
 }

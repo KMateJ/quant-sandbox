@@ -184,4 +184,92 @@
     font-size: 0.9rem;
     font-weight: 600;
   }
+
+  /* --- Payoff leg dock (3 rows: legs / fields / control) --- */
+
+  .payoff-dock-legs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+  }
+
+  .payoff-dock-legs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-leg-chip {
+    flex: 0 0 auto;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .dock-leg-chip.active {
+    background: var(--primary);
+    color: var(--text-inverse);
+    border-color: var(--primary);
+  }
+
+  .dock-chip--add,
+  .dock-chip--del {
+    flex: 0 0 auto;
+    min-width: 40px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 6px 12px;
+  }
+
+  .dock-chip--del {
+    color: var(--danger, #d9534f);
+  }
+
+  .payoff-dock-options {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .payoff-dock-options::-webkit-scrollbar {
+    display: none;
+  }
+
+  .payoff-dock-option {
+    flex: 0 0 auto;
+    height: var(--control-height);
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .payoff-dock-option.active {
+    background: var(--primary);
+    color: var(--text-inverse);
+    border-color: var(--primary);
+  }
+
+  /* Extra clearance for the taller 3-row payoff dock. */
+  .view-main--dock-tall {
+    padding-bottom: 244px;
+  }
+
+  /* Leg editing moves into the fixed dock; keep preset + mode in the card. */
+  .payoff-builder-card .controls-grid {
+    display: none;
+  }
 }

@@ -143,6 +143,14 @@ export default function DiffusionView() {
     return Number(Math.min(Math.max(padded, 1.2), 10).toFixed(2));
   }, [times, kappa, n]);
 
+  const sliders: SliderDescriptor[] = [
+    { key: "kappa", symbol: "κ", name: t("diffusionKappaLabel"), value: kappa, min: 0.0001, max: 0.05, step: 0.0005, format: (v) => v.toFixed(4), onChange: setKappa },
+    { key: "n", symbol: "n", name: t("diffusionNLabel"), value: n, min: 1, max: 12, step: 1, format: (v) => v.toFixed(0), onChange: setN },
+    { key: "tMin", symbol: "t₋", name: t("diffusionTMinLabel"), value: tMin, min: -5, max: 0, step: 0.1, format: (v) => v.toFixed(1), onChange: setTMin },
+    { key: "tMax", symbol: "t₊", name: t("diffusionTMaxLabel"), value: tMax, min: 0, max: 5, step: 0.1, format: (v) => v.toFixed(1), onChange: setTMax },
+    { key: "curveCount", symbol: "N", name: t("diffusionCurveCountLabel"), value: curveCount, min: 2, max: 6, step: 1, format: (v) => v.toFixed(0), onChange: setCurveCount },
+  ];
+
   return (
     <div className="view-layout">
       {!isMobile ? (
