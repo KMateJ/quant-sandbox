@@ -101,6 +101,15 @@ export type HestonGreekProfilePoint = {
   rho_heston: number;
 };
 
+export type HestonPricingCore = {
+  greeks: HestonGreeks;
+  profile: HestonGreekProfilePoint[];
+  // Terminal stock at the base parameters (common random numbers). Reused to
+  // reprice the price-comparison curve and volatility smile without extra sims.
+  baseTerminal: Float64Array;
+  baseDisc: number;
+};
+
 export type HestonPricingWorkerRequest = {
   kind: "pricing";
   requestId: number;

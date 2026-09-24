@@ -42,7 +42,6 @@ export default function HestonPriceComparisonChart({
     <SectionCard
       className="chart-card"
       title={t("hestonPriceComparisonTitle")}
-      subtitle={t("hestonPriceComparisonSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
         <ResponsiveContainer width="100%" height="100%">

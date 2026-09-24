@@ -45,7 +45,6 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
     <SectionCard
       className="chart-card"
       title={t("hestonSmileTitle")}
-      subtitle={t("hestonSmileSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
         <ResponsiveContainer width="100%" height="100%">

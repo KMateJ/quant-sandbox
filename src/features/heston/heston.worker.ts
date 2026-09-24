@@ -10,12 +10,10 @@ import {
 } from "../black-scholes/blackScholes.math";
 import {
   discountedCallPriceFromTerminalStock,
-  hestonCallPriceMC,
-  hestonGreeks,
-  hestonGreeksProfile,
+  hestonGreeksAndProfile,
   impliedVolFromCallPrice,
+  scaledCallCurveFromTerminalStock,
   simulateHestonPaths,
-  simulateHestonTerminalStock,
 } from "./heston.math";
 import type {
   GreeksComparison,
@@ -71,41 +69,7 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     pricingPaths,
   } = data;
 
-  const pricePointCount = 15;
-  const sMin = S0 * 0.6;
-  const sMax = S0 * 1.5;
-
-  const rawPrice = Array.from({ length: pricePointCount }, (_, i) => {
-    const S = sMin + (i / (pricePointCount - 1)) * (sMax - sMin);
-
-    const bs = blackScholesCall(S, strike, maturity, rate, Math.sqrt(v0));
-
-    const heston = hestonCallPriceMC({
-      S0: S,
-      K: strike,
-      r: rate,
-      v0,
-      theta,
-      kappa,
-      xi,
-      rho,
-      T: maturity,
-      steps: pricingSteps,
-      paths: pricingPaths,
-    });
-
-    return { S, bs, heston };
-  });
-
-  const smoothedPrice = smooth(rawPrice.map((p) => p.heston), 1);
-
-  const priceComparisonData: PriceComparisonPoint[] = rawPrice.map((p, i) => ({
-    S: Number(p.S.toFixed(2)),
-    bs: Number(p.bs.toFixed(6)),
-    heston: Number(smoothedPrice[i].toFixed(6)),
-  }));
-
-  const terminalStock = simulateHestonTerminalStock({
+  const hestonParams = {
     S0,
     K: strike,
     r: rate,
@@ -117,14 +81,54 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     T: maturity,
     steps: pricingSteps,
     paths: pricingPaths,
+  };
+
+  // Grid of spots shared by the price-comparison curve and the Greek profile.
+  // A single simulation bundle (base + one bump per Greek) powers every chart.
+  const profilePointCount = 25;
+  const profileSpots = Array.from({ length: profilePointCount }, (_, i) => {
+    const min = S0 * 0.6;
+    const max = S0 * 1.5;
+    return min + (i / (profilePointCount - 1)) * (max - min);
   });
+
+  const core = hestonGreeksAndProfile(hestonParams, profileSpots);
+  const { baseTerminal, baseDisc } = core;
+
+  const pricePointCount = 15;
+  const sMin = S0 * 0.6;
+  const sMax = S0 * 1.5;
+  const priceSpots = Array.from(
+    { length: pricePointCount },
+    (_, i) => sMin + (i / (pricePointCount - 1)) * (sMax - sMin)
+  );
+
+  // Reprice the base terminal draws across the spot grid instead of running a
+  // fresh Monte Carlo simulation per point.
+  const hestonCurve = scaledCallCurveFromTerminalStock(
+    baseTerminal,
+    S0,
+    priceSpots,
+    strike,
+    baseDisc
+  );
+
+  const priceComparisonData: PriceComparisonPoint[] = priceSpots.map(
+    (S, i) => ({
+      S: Number(S.toFixed(2)),
+      bs: Number(
+        blackScholesCall(S, strike, maturity, rate, Math.sqrt(v0)).toFixed(6)
+      ),
+      heston: Number(hestonCurve[i].toFixed(6)),
+    })
+  );
 
   const strikeCount = 11;
   const rawSmile = Array.from({ length: strikeCount }, (_, i) => {
     const K = S0 * (0.75 + (i / (strikeCount - 1)) * 0.5);
 
     const hestonPrice = discountedCallPriceFromTerminalStock(
-      terminalStock,
+      baseTerminal,
       K,
       rate,
       maturity
@@ -154,19 +158,7 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
   }));
 
   const sigma = Math.sqrt(v0);
-  const hg = hestonGreeks({
-    S0,
-    K: strike,
-    r: rate,
-    v0,
-    theta,
-    kappa,
-    xi,
-    rho,
-    T: maturity,
-    steps: pricingSteps,
-    paths: pricingPaths,
-  });
+  const hg = core.greeks;
   const greeks: GreeksComparison = {
     bsPrice: blackScholesCall(S0, strike, maturity, rate, sigma),
     hestonPrice: hg.price,
@@ -200,37 +192,13 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     ],
   };
 
-  const profilePointCount = 25;
-  const profileSpots = Array.from({ length: profilePointCount }, (_, i) => {
-    const min = S0 * 0.6;
-    const max = S0 * 1.5;
-    return min + (i / (profilePointCount - 1)) * (max - min);
-  });
-
-  const greeksProfile = hestonGreeksProfile(
-    {
-      S0,
-      K: strike,
-      r: rate,
-      v0,
-      theta,
-      kappa,
-      xi,
-      rho,
-      T: maturity,
-      steps: pricingSteps,
-      paths: pricingPaths,
-    },
-    profileSpots
-  );
-
   const response: HestonPricingWorkerResponse = {
     kind: "pricing",
     requestId,
     priceComparisonData,
     smileData,
     greeks,
-    greeksProfile,
+    greeksProfile: core.profile,
   };
 
   self.postMessage(response);

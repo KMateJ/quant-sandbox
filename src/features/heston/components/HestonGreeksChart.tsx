@@ -50,11 +50,6 @@ export default function HestonGreeksChart({ data, strike }: Props) {
     <SectionCard
       className="chart-card"
       title={isHu ? "Görögök az árfolyam mentén" : "Greeks across spot"}
-      subtitle={
-        isHu
-          ? "Válaszd ki a görögöt, és kapcsold be/ki a modelleket"
-          : "Pick a Greek and toggle each model on or off"
-      }
     >
       <div className="greeks-toolbar">
         <div className="greeks-metric-seg" role="tablist">

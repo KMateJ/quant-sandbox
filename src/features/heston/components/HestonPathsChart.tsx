@@ -53,7 +53,6 @@ export default function HestonPathsChart({
     <SectionCard
       className="chart-card"
       title={t("hestonStockPathsTitle")}
-      subtitle={t("hestonStockPathsSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">

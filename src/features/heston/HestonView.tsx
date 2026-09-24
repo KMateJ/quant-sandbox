@@ -210,8 +210,8 @@ export default function HestonView() {
     ]
   );
 
-  const debouncedPricingControls = useDebouncedValue(pricingInput, 300);
-  const debouncedPathsControls = useDebouncedValue(pathsInput, 300);
+  const debouncedPricingControls = useDebouncedValue(pricingInput, 180);
+  const debouncedPathsControls = useDebouncedValue(pathsInput, 180);
 
   useEffect(() => {
     const next = new URLSearchParams();

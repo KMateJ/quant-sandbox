@@ -47,7 +47,6 @@ export default function HestonVarianceChart({
     <SectionCard
       className="chart-card"
       title={t("hestonVariancePathsTitle")}
-      subtitle={t("hestonVariancePathsSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">

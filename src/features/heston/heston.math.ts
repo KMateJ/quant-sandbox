@@ -1,5 +1,5 @@
 import { blackScholesCall, blackScholesDelta, blackScholesGamma, blackScholesRho, blackScholesTheta, blackScholesVega } from "../black-scholes/blackScholes.math";
-import type { HestonGreekProfilePoint, HestonGreeks, HestonParams, HestonPathPoint } from "./heston.types";
+import type { HestonGreekProfilePoint, HestonGreeks, HestonParams, HestonPathPoint, HestonPricingCore } from "./heston.types";
 
 function clampPositive(x: number) {
   return Math.max(x, 0);
@@ -141,7 +141,7 @@ export function simulateHestonTerminalStock(params: HestonParams): number[] {
 }
 
 export function discountedCallPriceFromTerminalStock(
-  terminalStock: number[],
+  terminalStock: ArrayLike<number>,
   K: number,
   r: number,
   T: number
@@ -149,8 +149,8 @@ export function discountedCallPriceFromTerminalStock(
   if (terminalStock.length === 0) return 0;
 
   let sum = 0;
-  for (const ST of terminalStock) {
-    sum += Math.max(ST - K, 0);
+  for (let i = 0; i < terminalStock.length; i++) {
+    sum += Math.max(terminalStock[i] - K, 0);
   }
 
   return Math.exp(-r * T) * (sum / terminalStock.length);
@@ -160,6 +160,28 @@ export function hestonCallPriceMC(params: HestonParams): number {
   const { K, r, T } = params;
   const terminalStock = simulateHestonTerminalStock(params);
   return discountedCallPriceFromTerminalStock(terminalStock, K, r, T);
+}
+
+// Reprice a call at many spot prices from a single set of terminal draws.
+// Terminal stock scales linearly with the initial spot, so one simulation can
+// be repriced across the whole grid instead of one simulation per point.
+export function scaledCallCurveFromTerminalStock(
+  terminalStock: ArrayLike<number>,
+  S0: number,
+  spots: number[],
+  K: number,
+  disc: number
+): number[] {
+  const n = terminalStock.length;
+  return spots.map((S) => {
+    if (n === 0) return 0;
+    const scale = S / S0;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+      sum += Math.max(scale * terminalStock[i] - K, 0);
+    }
+    return disc * (sum / n);
+  });
 }
 
 export function impliedVolFromCallPrice(
@@ -296,88 +318,16 @@ function hestonPriceCRN(
   return { price: Math.exp(-r * T) * (sum / paths), terminal };
 }
 
-// Monte Carlo Greeks via central finite differences with common random numbers.
-// Spot Greeks exploit the fact that terminal stock scales linearly with S0, so
-// Delta/Gamma reuse the base terminal draws exactly; the rest re-simulate with
-// the same shocks under bumped parameters.
-export function hestonGreeks(
-  params: HestonParams,
-  seed = 0x9e3779b9
-): HestonGreeks {
-  const { S0, K, r, v0, theta, kappa, xi, rho, T, steps, paths } = params;
-
-  const safeSteps = Math.max(2, Math.round(steps));
-  const safePaths = Math.max(2, Math.round(paths));
-  const rng = mulberry32(seed);
-  const { z1, z2 } = generateNormals(safePaths, safeSteps, rng);
-
-  const base = hestonPriceCRN(
-    z1,
-    z2,
-    S0,
-    K,
-    r,
-    v0,
-    theta,
-    kappa,
-    xi,
-    rho,
-    T
-  );
-
-  const disc = Math.exp(-r * T);
-  const priceForSpot = (S: number) => {
-    let acc = 0;
-    for (let p = 0; p < base.terminal.length; p++) {
-      acc += Math.max((S / S0) * base.terminal[p] - K, 0);
-    }
-    return disc * (acc / base.terminal.length);
-  };
-
-  const hS = S0 * 0.01;
-  const cS0 = priceForSpot(S0);
-  const cSup = priceForSpot(S0 + hS);
-  const cSdown = priceForSpot(S0 - hS);
-  const delta = (cSup - cSdown) / (2 * hS);
-  const gamma = (cSup - 2 * cS0 + cSdown) / (hS * hS);
-
-  const sigma0 = Math.sqrt(v0);
-  const hSig = 0.01;
-  const vUp = (sigma0 + hSig) ** 2;
-  const vDown = Math.max((sigma0 - hSig) ** 2, 1e-8);
-  const cVup = hestonPriceCRN(z1, z2, S0, K, r, vUp, theta, kappa, xi, rho, T).price;
-  const cVdown = hestonPriceCRN(z1, z2, S0, K, r, vDown, theta, kappa, xi, rho, T).price;
-  const vega = (cVup - cVdown) / (2 * hSig);
-
-  const hT = Math.min(0.02, T * 0.05);
-  const cTup = hestonPriceCRN(z1, z2, S0, K, r, v0, theta, kappa, xi, rho, T + hT).price;
-  const cTdown = hestonPriceCRN(z1, z2, S0, K, r, v0, theta, kappa, xi, rho, T - hT).price;
-  const thetaGreek = -(cTup - cTdown) / (2 * hT);
-
-  const hR = 0.005;
-  const cRup = hestonPriceCRN(z1, z2, S0, K, r + hR, v0, theta, kappa, xi, rho, T).price;
-  const cRdown = hestonPriceCRN(z1, z2, S0, K, r - hR, v0, theta, kappa, xi, rho, T).price;
-  const rhoGreek = (cRup - cRdown) / (2 * hR);
-
-  return {
-    price: base.price,
-    delta,
-    gamma,
-    vega,
-    theta: thetaGreek,
-    rho: rhoGreek,
-  };
-}
-
-// Full Greek curves across a grid of spot prices for both Heston (MC, common
-// random numbers) and Black–Scholes. Terminal stock scales linearly with the
-// initial spot, so a single set of simulations (base plus one bump per Greek)
-// is repriced analytically at every spot on the grid.
-export function hestonGreeksProfile(
+// Single set of common-random-number simulations that powers the price-
+// comparison curve, the volatility smile, the point Greeks and the full Greek
+// profile. Terminal stock scales linearly with the initial spot, so one base
+// simulation (plus one bump per parameter Greek) is repriced analytically at
+// every spot instead of re-simulating for each point.
+export function hestonGreeksAndProfile(
   params: HestonParams,
   spots: number[],
   seed = 0x9e3779b9
-): HestonGreekProfilePoint[] {
+): HestonPricingCore {
   const { S0, K, r, v0, theta, kappa, xi, rho, T, steps, paths } = params;
 
   const safeSteps = Math.max(2, Math.round(steps));
@@ -396,9 +346,9 @@ export function hestonGreeksProfile(
     rr: number,
     vv: number,
     tt: number
-  ): { terminal: Float64Array; disc: number } => {
+  ): { terminal: Float64Array; disc: number; price: number } => {
     const res = hestonPriceCRN(z1, z2, S0, K, rr, vv, theta, kappa, xi, rho, tt);
-    return { terminal: res.terminal, disc: Math.exp(-rr * tt) };
+    return { terminal: res.terminal, disc: Math.exp(-rr * tt), price: res.price };
   };
 
   const base = sim(r, v0, T);
@@ -422,7 +372,7 @@ export function hestonGreeksProfile(
     return set.disc * (acc / n);
   };
 
-  return spots.map((S) => {
+  const profile = spots.map((S) => {
     const hS = S * 0.01;
     const cUp = priceAt(base, S + hS);
     const cMid = priceAt(base, S);
@@ -448,4 +398,37 @@ export function hestonGreeksProfile(
       rho_heston: Number(hRho.toFixed(6)),
     };
   });
+
+  // Point Greeks at the current spot, derived from the same simulations.
+  const hS0 = S0 * 0.01;
+  const cUp0 = priceAt(base, S0 + hS0);
+  const cMid0 = priceAt(base, S0);
+  const cDown0 = priceAt(base, S0 - hS0);
+
+  const greeks: HestonGreeks = {
+    price: base.price,
+    delta: (cUp0 - cDown0) / (2 * hS0),
+    gamma: (cUp0 - 2 * cMid0 + cDown0) / (hS0 * hS0),
+    vega: (priceAt(vUpSim, S0) - priceAt(vDownSim, S0)) / (2 * hSig),
+    theta: -(priceAt(tUpSim, S0) - priceAt(tDownSim, S0)) / (2 * hT),
+    rho: (priceAt(rUpSim, S0) - priceAt(rDownSim, S0)) / (2 * hR),
+  };
+
+  return { greeks, profile, baseTerminal: base.terminal, baseDisc: base.disc };
+}
+
+// Backwards-compatible thin wrappers over hestonGreeksAndProfile.
+export function hestonGreeks(
+  params: HestonParams,
+  seed = 0x9e3779b9
+): HestonGreeks {
+  return hestonGreeksAndProfile(params, [params.S0], seed).greeks;
+}
+
+export function hestonGreeksProfile(
+  params: HestonParams,
+  spots: number[],
+  seed = 0x9e3779b9
+): HestonGreekProfilePoint[] {
+  return hestonGreeksAndProfile(params, spots, seed).profile;
 }
