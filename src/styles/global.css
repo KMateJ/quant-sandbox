@@ -11,6 +11,15 @@ body,
   color: var(--text);
 }
 
+/* Shrink the whole UI by 10%; charts are counter-scaled back to 100% below. */
+#root {
+  zoom: 0.9;
+}
+
+.chart-wrap {
+  zoom: 1.1111;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
@@ -91,4 +100,132 @@ button {
 .greeks-chart-switch {
   margin-bottom: 12px;
   flex-wrap: wrap;
+}
+
+/* Greeks chart toolbar: segmented metric picker + legend-style series toggles */
+.greeks-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 20px;
+  margin-bottom: 16px;
+}
+
+.greeks-metric-seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+}
+
+.greeks-seg-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-fast);
+}
+
+.greeks-seg-btn:hover {
+  color: var(--text);
+}
+
+.greeks-seg-btn.active {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+.greeks-series-toggles {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.greeks-series {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--muted);
+  padding: 6px 13px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  opacity: 0.55;
+  transition: var(--transition-fast);
+}
+
+.greeks-series:hover {
+  color: var(--text);
+}
+
+.greeks-series.active {
+  opacity: 1;
+  color: var(--text);
+  border-color: var(--border-hover);
+}
+
+.greeks-series-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.4;
+  transition: var(--transition-fast);
+}
+
+.greeks-series.active .greeks-series-dot {
+  opacity: 1;
+}
+
+/* =========================================================
+   Heston chart grid — pack more charts above the fold
+========================================================= */
+
+.heston-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.heston-chart-grid > *,
+.heston-chart-grid .heston-grid-span,
+.heston-chart-grid .heston-grid-span > * {
+  min-width: 0;
+}
+
+.heston-chart-grid .heston-grid-span {
+  grid-column: 1 / -1;
+}
+
+/* Reserve two subtitle lines so a wrapped subtitle doesn't make one card in a
+   row taller than its neighbour. */
+.heston-chart-grid .chart-card .section-subtitle {
+  min-height: 3.1em;
+}
+
+/* Shorter panes so a 2x2 block of charts fits with far less scrolling. */
+.heston-chart-grid .chart-wrap {
+  height: clamp(220px, 30vh, 320px);
+}
+
+/* The full-width Greeks chart can breathe a little more. */
+.heston-chart-grid .heston-grid-span .chart-wrap {
+  height: clamp(280px, 38vh, 400px);
+}
+
+@media (max-width: 900px) {
+  .heston-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heston-chart-grid .chart-wrap {
+    height: clamp(240px, 42vh, 420px);
+  }
 }

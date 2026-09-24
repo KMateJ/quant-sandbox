@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import type { ReactNode } from "react";
 import SectionCard from "../../components/SectionCard";
 import { useI18n } from "../../i18n";
-import { useTheme } from "../../theme";
 
 type Teaser = {
   to: string;
@@ -137,8 +136,7 @@ const teasers: Teaser[] = [
 ];
 
 export function HomeView() {
-  const { language, setLanguage, t } = useI18n();
-  const { theme, setTheme } = useTheme();
+  const { t } = useI18n();
 
   return (
     <div className="view-main">
@@ -196,74 +194,6 @@ export function HomeView() {
         </div>
       </SectionCard>
 
-      <SectionCard
-        title={t("settingsTitle")}
-        subtitle={""}
-      >
-        <div className="settings-stack">
-          <div className="settings-row">
-            <div className="settings-label">{t("languageLabel")}</div>
-
-            <div className="metric-switch settings-actions">
-              <button
-                type="button"
-                className={
-                  language === "hu" ? "metric-button active" : "metric-button"
-                }
-                onClick={() => setLanguage("hu")}
-              >
-                {t("languageHu")}
-              </button>
-
-              <button
-                type="button"
-                className={
-                  language === "en" ? "metric-button active" : "metric-button"
-                }
-                onClick={() => setLanguage("en")}
-              >
-                {t("languageEn")}
-              </button>
-            </div>
-          </div>
-
-          <div className="settings-row">
-            <div className="settings-label">{t("themeLabel")}</div>
-
-            <div className="metric-switch settings-actions">
-              <button
-                type="button"
-                className={
-                  theme === "dark" ? "metric-button active" : "metric-button"
-                }
-                onClick={() => setTheme("dark")}
-              >
-                {t("themeDark")}
-              </button>
-
-              <button
-                type="button"
-                className={
-                  theme === "light" ? "metric-button active" : "metric-button"
-                }
-                onClick={() => setTheme("light")}
-              >
-                {t("themeLight")}
-              </button>
-
-              <button
-                type="button"
-                className={
-                  theme === "system" ? "metric-button active" : "metric-button"
-                }
-                onClick={() => setTheme("system")}
-              >
-                {t("themeSystem")}
-              </button>
-            </div>
-          </div>
-        </div>
-      </SectionCard>
       <SectionCard
         title={t("devTitle")}
         subtitle={""}

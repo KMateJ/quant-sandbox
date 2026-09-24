@@ -20,7 +20,9 @@ function createLayout(safeSteps: number) {
   const nodeWidth = 92;
   const nodeHeight = 48;
   const leftPad = 44;
-  const topPad = 54 + safeSteps * 30;
+  // Center the lattice: top node sits at `vMargin`, so the spread never clips.
+  const vMargin = 28;
+  const topPad = safeSteps * vGap + vMargin;
 
   return {
     hGap,
@@ -30,7 +32,7 @@ function createLayout(safeSteps: number) {
     leftPad,
     topPad,
     width: leftPad * 2 + safeSteps * hGap + nodeWidth + 40,
-    height: topPad * 2 + nodeHeight + 20,
+    height: topPad + safeSteps * vGap + nodeHeight + vMargin,
   };
 }
 

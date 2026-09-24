@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -28,16 +27,12 @@ type Props = {
   data: HestonPathPoint[];
   pathKeys: string[];
   strike: number;
-  onUpdate: () => void;
-  isUpdating?: boolean;
 };
 
 export default function HestonPathsChart({
   data,
   pathKeys,
   strike,
-  onUpdate,
-  isUpdating = false,
 }: Props) {
   const { t } = useI18n();
   const dismissRef = useChartTouchDismiss<HTMLDivElement>();
@@ -58,26 +53,7 @@ export default function HestonPathsChart({
     <SectionCard
       className="chart-card"
       title={t("hestonStockPathsTitle")}
-      headerLeft={
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            alignItems: "center",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          <button
-            type="button"
-            className="nav-tab"
-            onClick={onUpdate}
-            disabled={isUpdating}
-          >
-            {t("hestonUpdatePaths")}
-          </button>
-        </div>
-      }
+      subtitle={t("hestonStockPathsSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">
@@ -116,12 +92,6 @@ export default function HestonPathsChart({
                   return [numericValue.toFixed(3), String(name)];
                 }}
                 labelFormatter={(label) => `t = ${label}`}
-              />
-              <Legend
-                wrapperStyle={{
-                  fontSize: isMobile ? "11px" : "12px",
-                  paddingTop: isMobile ? "8px" : "4px",
-                }}
               />
               {pathKeys.map((key, index) => (
                 <Line

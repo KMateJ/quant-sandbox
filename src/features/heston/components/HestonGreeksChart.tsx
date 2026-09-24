@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -57,36 +56,44 @@ export default function HestonGreeksChart({ data, strike }: Props) {
           : "Pick a Greek and toggle each model on or off"
       }
     >
-      <div className="metric-switch greeks-chart-switch">
-        {METRICS.map((m) => (
-          <button
-            key={m.key}
-            type="button"
-            className={metric === m.key ? "metric-button active" : "metric-button"}
-            onClick={() => setMetric(m.key)}
-          >
-            {m.label}
-          </button>
-        ))}
-      </div>
+      <div className="greeks-toolbar">
+        <div className="greeks-metric-seg" role="tablist">
+          {METRICS.map((m) => (
+            <button
+              key={m.key}
+              type="button"
+              role="tab"
+              aria-selected={metric === m.key}
+              className={
+                metric === m.key ? "greeks-seg-btn active" : "greeks-seg-btn"
+              }
+              onClick={() => setMetric(m.key)}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
 
-      <div className="metric-switch greeks-chart-switch">
-        <button
-          type="button"
-          className={showBs ? "metric-button active" : "metric-button"}
-          aria-pressed={showBs}
-          onClick={() => setShowBs((v) => !v)}
-        >
-          Black–Scholes
-        </button>
-        <button
-          type="button"
-          className={showHeston ? "metric-button active" : "metric-button"}
-          aria-pressed={showHeston}
-          onClick={() => setShowHeston((v) => !v)}
-        >
-          Heston
-        </button>
+        <div className="greeks-series-toggles">
+          <button
+            type="button"
+            className={showBs ? "greeks-series active" : "greeks-series"}
+            aria-pressed={showBs}
+            onClick={() => setShowBs((v) => !v)}
+          >
+            <span className="greeks-series-dot" style={{ background: "#3b82f6" }} />
+            Black–Scholes
+          </button>
+          <button
+            type="button"
+            className={showHeston ? "greeks-series active" : "greeks-series"}
+            aria-pressed={showHeston}
+            onClick={() => setShowHeston((v) => !v)}
+          >
+            <span className="greeks-series-dot" style={{ background: "#f59e0b" }} />
+            Heston
+          </button>
+        </div>
       </div>
 
       <div className="chart-wrap" ref={dismissRef}>
@@ -114,7 +121,6 @@ export default function HestonGreeksChart({ data, strike }: Props) {
               }}
               labelFormatter={(label) => `S = ${label}`}
             />
-            <Legend />
             {showBs ? (
               <Line
                 type="monotone"

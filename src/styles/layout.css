@@ -27,7 +27,7 @@
 
 .topbar-inner,
 .page-container {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1440px, calc(100% - 24px));
   margin: 0 auto;
 }
 
@@ -163,6 +163,117 @@
 }
 
 /* =========================================================
+   Topbar right cluster + theme / language controls
+========================================================= */
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Icon + pill controls match the height of the nav-tab pills */
+.nav-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-icon-button svg {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--transition-base);
+}
+
+.nav-icon-button:hover {
+  border-color: var(--border-hover);
+}
+
+.nav-icon-button:hover svg {
+  transform: rotate(12deg);
+}
+
+.nav-lang {
+  position: relative;
+  display: inline-flex;
+}
+
+.nav-lang-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 36px;
+  padding: 0 10px 0 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-md);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-lang-button:hover {
+  border-color: var(--border-hover);
+}
+
+.nav-lang-chevron {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--transition-fast);
+}
+
+.nav-lang-button.active .nav-lang-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.nav-lang-item {
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-md);
+  text-align: left;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-lang-item:hover {
+  background: var(--surface-soft);
+}
+
+.nav-lang-item.active {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+/* =========================================================
    Shared cards + section headers
 ========================================================= */
 
@@ -240,7 +351,7 @@
   .view-controls {
     position: sticky;
     top: 72px;
-    max-height: calc(100vh - 88px);
+    max-height: calc(100vh / 0.9 - 88px);
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
@@ -969,7 +1080,7 @@
 
   .view-controls {
     top: 64px;
-    max-height: calc(100vh - 80px);
+    max-height: calc(100vh / 0.9 - 80px);
   }
 
   .chart-wrap {
@@ -1051,7 +1162,8 @@
   }
 
   .nav-mobile {
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
     width: auto;
     flex: 0 0 auto;
@@ -1060,6 +1172,22 @@
   .nav-toggle {
     width: 32px;
     height: 32px;
+  }
+
+  .nav-icon-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-icon-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav-lang-button {
+    height: 32px;
+    padding: 0 8px 0 10px;
+    font-size: var(--text-sm);
   }
 
   .card {

@@ -1,6 +1,5 @@
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -43,6 +42,7 @@ export default function HestonPriceComparisonChart({
     <SectionCard
       className="chart-card"
       title={t("hestonPriceComparisonTitle")}
+      subtitle={t("hestonPriceComparisonSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
         <ResponsiveContainer width="100%" height="100%">
@@ -70,7 +70,6 @@ export default function HestonPriceComparisonChart({
               }}
               labelFormatter={(label) => `S = ${label}`}
             />
-            <Legend />
             <Line
               type="monotone"
               dataKey="bs"

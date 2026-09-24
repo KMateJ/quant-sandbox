@@ -1,6 +1,5 @@
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -46,6 +45,7 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
     <SectionCard
       className="chart-card"
       title={t("hestonSmileTitle")}
+      subtitle={t("hestonSmileSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
         <ResponsiveContainer width="100%" height="100%">
@@ -77,7 +77,6 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
               }}
               labelFormatter={(label) => `K / S₀ = ${label}`}
             />
-            <Legend />
             <Line
               dataKey="bsIv"
               name="BS implied vol"

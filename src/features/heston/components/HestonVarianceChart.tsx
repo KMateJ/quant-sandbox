@@ -1,6 +1,5 @@
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -33,16 +32,12 @@ type Props = {
   data: HestonPathPoint[];
   pathKeys: string[];
   theta: number;
-  onUpdate: () => void;
-  isUpdating?: boolean;
 };
 
 export default function HestonVarianceChart({
   data,
   pathKeys,
   theta,
-  onUpdate,
-  isUpdating = false,
 }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
@@ -52,26 +47,7 @@ export default function HestonVarianceChart({
     <SectionCard
       className="chart-card"
       title={t("hestonVariancePathsTitle")}
-      headerLeft={
-        <div
-          style={{
-            display: "flex",
-            gap: 8,
-            alignItems: "center",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          <button
-            type="button"
-            className="nav-tab"
-            onClick={onUpdate}
-            disabled={isUpdating}
-          >
-            {t("hestonUpdatePaths")}
-          </button>
-        </div>
-      }
+      subtitle={t("hestonVariancePathsSubtitle")}
     >
       <div className="chart-wrap" ref={dismissRef}>
           <ResponsiveContainer width="100%" height="100%">
@@ -98,7 +74,6 @@ export default function HestonVarianceChart({
                 }}
                 labelFormatter={(label) => `t = ${label}`}
               />
-              <Legend />
               {pathKeys.map((key, index) => (
                 <Line
                   key={key}

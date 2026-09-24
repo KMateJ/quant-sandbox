@@ -88,8 +88,6 @@ export default function HestonView() {
   const [appliedPaths, setAppliedPaths] = useState<HestonControlsState | null>(
     null
   );
-  const [isUpdatingPaths, setIsUpdatingPaths] = useState(false);
-  const [pathsRerunNonce, setPathsRerunNonce] = useState(0);
 
   const pricingWorkerRef = useRef<Worker | null>(null);
   const latestPricingRequestIdRef = useRef(0);
@@ -292,7 +290,6 @@ export default function HestonView() {
       setStockPathData(response.stockData);
       setVariancePathData(response.varianceData);
       setAppliedPaths(pendingPathsConfigRef.current);
-      setIsUpdatingPaths(false);
     };
 
     return () => {
@@ -320,7 +317,6 @@ export default function HestonView() {
     const requestId = latestPathsRequestIdRef.current + 1;
     latestPathsRequestIdRef.current = requestId;
     pendingPathsConfigRef.current = debouncedPathsControls;
-    setIsUpdatingPaths(true);
 
     pathsWorkerRef.current.postMessage({
       kind: "paths",
@@ -337,11 +333,7 @@ export default function HestonView() {
       steps: debouncedPathsControls.steps,
       pathCount: debouncedPathsControls.pathCount,
     });
-  }, [debouncedPathsControls, pathsRerunNonce]);
-
-  const handleUpdatePaths = () => {
-    setPathsRerunNonce((prev) => prev + 1);
-  };
+  }, [debouncedPathsControls]);
 
   const pathsParams = appliedPaths ?? debouncedPathsControls;
 
@@ -402,34 +394,34 @@ export default function HestonView() {
         </div>
       ) : null}
 
-      <div className="view-main view-main--docked">
-        <HestonPathsChart
-          data={stockPathData}
-          pathKeys={pathKeys}
-          strike={pathsParams.strike}
-          onUpdate={handleUpdatePaths}
-          isUpdating={isUpdatingPaths}
-        />
+      <div className="view-main view-main--docked heston-main">
+        <div className="heston-chart-grid">
+          <HestonPathsChart
+            data={stockPathData}
+            pathKeys={pathKeys}
+            strike={pathsParams.strike}
+          />
 
-        <HestonVarianceChart
-          data={variancePathData}
-          pathKeys={pathKeys}
-          theta={pathsParams.theta}
-          onUpdate={handleUpdatePaths}
-          isUpdating={isUpdatingPaths}
-        />
+          <HestonVarianceChart
+            data={variancePathData}
+            pathKeys={pathKeys}
+            theta={pathsParams.theta}
+          />
 
-        <HestonPriceComparisonChart
-          data={priceComparisonData}
-          strike={strike}
-        />
+          <HestonPriceComparisonChart
+            data={priceComparisonData}
+            strike={strike}
+          />
 
-        <HestonSmileChart
-          data={smileData}
-          strikeRatio={Number((strike / S0).toFixed(3))}
-        />
+          <HestonSmileChart
+            data={smileData}
+            strikeRatio={Number((strike / S0).toFixed(3))}
+          />
 
-        <HestonGreeksChart data={greeksProfileData} strike={strike} />
+          <div className="heston-grid-span">
+            <HestonGreeksChart data={greeksProfileData} strike={strike} />
+          </div>
+        </div>
 
         <HestonGreeksSummary data={greeksData} />
 
