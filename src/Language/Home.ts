@@ -14,7 +14,37 @@ export const homeHu = {
       "Ez az oldal az ELTE + Corvinus Biztosítás- és Pénzügyi Matematika szak hallgatóinak készült tanulást segítő eszköz.",
     
     homeBody:
-      "Ez egy személyes projekt, így a fejlesztés nem folyamatos.",    settingsTitle: "Beállítások",
+      "Ez egy személyes projekt, így a fejlesztés nem folyamatos.",
+
+    exploreTitle: "Fedezd fel a modulokat",
+    exploreSubtitle: "Interaktív eszközök — kattints bármelyikre és játssz a paraméterekkel.",
+    exploreCta: "Megnyitás",
+
+    teaserGuideTitle: "Útmutatók",
+    teaserGuideDesc:
+      "Oktató jellegű írások a származtatott termékek és a delta-fedezés fő gondolatairól.",
+
+    teaserPayoffTitle: "Payoff Lab",
+    teaserPayoffDesc:
+      "Építs opciós stratégiákat, és nézd meg valós időben a kifizetési és profitgörbét.",
+
+    teaserBinomialTitle: "Binomiális fa",
+    teaserBinomialDesc:
+      "Kockázatsemleges árazás lépésről lépésre, replikáló portfólióval együtt.",
+
+    teaserDiffusionTitle: "Diffúzió",
+    teaserDiffusionDesc:
+      "A diffúziós egyenlet időbeli fejlődése interaktív paramétervezérléssel.",
+
+    teaserBlackScholesTitle: "Black–Scholes",
+    teaserBlackScholesDesc:
+      "Zárt képletű opcióárazás és a görögök vizualizációja árfolyam és lejárat mentén.",
+
+    teaserHestonTitle: "Heston modell",
+    teaserHestonDesc:
+      "Sztochasztikus volatilitás, szimulált pályák és a volatilitási mosoly.",
+
+    settingsTitle: "Beállítások",
     settingsSubtitle: "Később ide kerülhetnek a további app beállítások is.",
     languageLabel: "Nyelv",
     languageHu: "Magyar",
@@ -64,6 +94,35 @@ export const homeEn = {
 
     homeBody:
       "This is a personal project, so development happens when I have time and motivation.",
+
+    exploreTitle: "Explore the modules",
+    exploreSubtitle: "Interactive tools — pick any of them and start playing with the parameters.",
+    exploreCta: "Open",
+
+    teaserGuideTitle: "Guides",
+    teaserGuideDesc:
+      "Narrative write-ups on the core ideas behind derivatives and delta hedging.",
+
+    teaserPayoffTitle: "Payoff Lab",
+    teaserPayoffDesc:
+      "Build option strategies and watch the payoff and profit curves update in real time.",
+
+    teaserBinomialTitle: "Binomial tree",
+    teaserBinomialDesc:
+      "Risk-neutral pricing step by step, together with the replicating portfolio.",
+
+    teaserDiffusionTitle: "Diffusion",
+    teaserDiffusionDesc:
+      "Time evolution of the diffusion equation with interactive parameter controls.",
+
+    teaserBlackScholesTitle: "Black–Scholes",
+    teaserBlackScholesDesc:
+      "Closed-form option pricing and the Greeks across spot prices and maturities.",
+
+    teaserHestonTitle: "Heston model",
+    teaserHestonDesc:
+      "Stochastic volatility, simulated paths and the implied volatility smile.",
+
     settingsTitle: "Settings",
     settingsSubtitle: "You can place the rest of the app settings here later.",
     languageLabel: "Language",

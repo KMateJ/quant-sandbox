@@ -63,6 +63,44 @@ export type SmilePoint = {
   hestonIv: number;
 };
 
+export type HestonGreeks = {
+  price: number;
+  delta: number;
+  gamma: number;
+  vega: number;
+  theta: number;
+  rho: number;
+};
+
+export type GreekKey = "delta" | "gamma" | "vega" | "theta" | "rho";
+
+export type GreekRow = {
+  key: GreekKey;
+  bs: number;
+  heston: number;
+};
+
+export type GreeksComparison = {
+  bsPrice: number;
+  hestonPrice: number;
+  sigma: number;
+  rows: GreekRow[];
+};
+
+export type HestonGreekProfilePoint = {
+  S: number;
+  delta_bs: number;
+  delta_heston: number;
+  gamma_bs: number;
+  gamma_heston: number;
+  vega_bs: number;
+  vega_heston: number;
+  theta_bs: number;
+  theta_heston: number;
+  rho_bs: number;
+  rho_heston: number;
+};
+
 export type HestonPricingWorkerRequest = {
   kind: "pricing";
   requestId: number;
@@ -100,6 +138,8 @@ export type HestonPricingWorkerResponse = {
   requestId: number;
   priceComparisonData: PriceComparisonPoint[];
   smileData: SmilePoint[];
+  greeks: GreeksComparison;
+  greeksProfile: HestonGreekProfilePoint[];
 };
 
 export type HestonPathsWorkerResponse = {

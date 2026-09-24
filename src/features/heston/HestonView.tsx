@@ -5,14 +5,18 @@ import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import HestonControls from "./components/HestonControls";
 import HestonExplanation from "./components/HestonExplanation";
+import HestonGreeksChart from "./components/HestonGreeksChart";
+import HestonGreeksSummary from "./components/HestonGreeksSummary";
 import HestonPathsChart from "./components/HestonPathsChart";
 import HestonPriceComparisonChart from "./components/HestonPriceComparisonChart";
 import HestonSmileChart from "./components/HestonSmileChart";
 import HestonVarianceChart from "./components/HestonVarianceChart";
 import { fellerMargin } from "./heston.math";
 import type {
+  GreeksComparison,
   HestonControlsSetters,
   HestonControlsState,
+  HestonGreekProfilePoint,
   HestonPathPoint,
   HestonWorkerResponse,
   PriceComparisonPoint,
@@ -73,6 +77,10 @@ export default function HestonView() {
     PriceComparisonPoint[]
   >([]);
   const [smileData, setSmileData] = useState<SmilePoint[]>([]);
+  const [greeksData, setGreeksData] = useState<GreeksComparison | null>(null);
+  const [greeksProfileData, setGreeksProfileData] = useState<
+    HestonGreekProfilePoint[]
+  >([]);
   const [stockPathData, setStockPathData] = useState<HestonPathPoint[]>([]);
   const [variancePathData, setVariancePathData] = useState<HestonPathPoint[]>(
     []
@@ -259,6 +267,8 @@ export default function HestonView() {
 
       setPriceComparisonData(response.priceComparisonData);
       setSmileData(response.smileData);
+      setGreeksData(response.greeks);
+      setGreeksProfileData(response.greeksProfile);
     };
 
     return () => {
@@ -418,6 +428,10 @@ export default function HestonView() {
           data={smileData}
           strikeRatio={Number((strike / S0).toFixed(3))}
         />
+
+        <HestonGreeksChart data={greeksProfileData} strike={strike} />
+
+        <HestonGreeksSummary data={greeksData} />
 
         <HestonExplanation />
       </div>

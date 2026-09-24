@@ -1,14 +1,24 @@
 /// <reference lib="webworker" />
 
-import { blackScholesCall } from "../black-scholes/blackScholes.math";
+import {
+  blackScholesCall,
+  blackScholesDelta,
+  blackScholesGamma,
+  blackScholesRho,
+  blackScholesTheta,
+  blackScholesVega,
+} from "../black-scholes/blackScholes.math";
 import {
   discountedCallPriceFromTerminalStock,
   hestonCallPriceMC,
+  hestonGreeks,
+  hestonGreeksProfile,
   impliedVolFromCallPrice,
   simulateHestonPaths,
   simulateHestonTerminalStock,
 } from "./heston.math";
 import type {
+  GreeksComparison,
   HestonPricingWorkerResponse,
   HestonWorkerRequest,
   HestonWorkerResponse,
@@ -143,11 +153,84 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     hestonIv: Number(smoothedSmile[i].toFixed(6)),
   }));
 
+  const sigma = Math.sqrt(v0);
+  const hg = hestonGreeks({
+    S0,
+    K: strike,
+    r: rate,
+    v0,
+    theta,
+    kappa,
+    xi,
+    rho,
+    T: maturity,
+    steps: pricingSteps,
+    paths: pricingPaths,
+  });
+  const greeks: GreeksComparison = {
+    bsPrice: blackScholesCall(S0, strike, maturity, rate, sigma),
+    hestonPrice: hg.price,
+    sigma,
+    rows: [
+      {
+        key: "delta",
+        bs: blackScholesDelta(S0, strike, maturity, rate, sigma),
+        heston: hg.delta,
+      },
+      {
+        key: "gamma",
+        bs: blackScholesGamma(S0, strike, maturity, rate, sigma),
+        heston: hg.gamma,
+      },
+      {
+        key: "vega",
+        bs: blackScholesVega(S0, strike, maturity, rate, sigma),
+        heston: hg.vega,
+      },
+      {
+        key: "theta",
+        bs: blackScholesTheta(S0, strike, maturity, rate, sigma),
+        heston: hg.theta,
+      },
+      {
+        key: "rho",
+        bs: blackScholesRho(S0, strike, maturity, rate, sigma),
+        heston: hg.rho,
+      },
+    ],
+  };
+
+  const profilePointCount = 25;
+  const profileSpots = Array.from({ length: profilePointCount }, (_, i) => {
+    const min = S0 * 0.6;
+    const max = S0 * 1.5;
+    return min + (i / (profilePointCount - 1)) * (max - min);
+  });
+
+  const greeksProfile = hestonGreeksProfile(
+    {
+      S0,
+      K: strike,
+      r: rate,
+      v0,
+      theta,
+      kappa,
+      xi,
+      rho,
+      T: maturity,
+      steps: pricingSteps,
+      paths: pricingPaths,
+    },
+    profileSpots
+  );
+
   const response: HestonPricingWorkerResponse = {
     kind: "pricing",
     requestId,
     priceComparisonData,
     smileData,
+    greeks,
+    greeksProfile,
   };
 
   self.postMessage(response);
