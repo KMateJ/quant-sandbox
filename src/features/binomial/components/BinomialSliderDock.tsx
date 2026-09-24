@@ -142,5 +142,5 @@ export default function BinomialSliderDock(props: BinomialSliderDockProps) {
         },
       ];
 
-  return <SliderDock sliders={sliders} />;
+  return <SliderDock sliders={sliders} chartSelector=".chart-wrap, .binomial-svg-wrap" />;
 }

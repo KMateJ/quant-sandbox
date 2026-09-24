@@ -15,13 +15,14 @@ export type SliderDescriptor = {
 
 type SliderDockProps = {
   sliders: SliderDescriptor[];
+  chartSelector?: string;
 };
 
 // Fixed bottom control bar for phones: pick a parameter via chips, drag one
 // slider. Only visible while a chart is on screen.
-export default function SliderDock({ sliders }: SliderDockProps) {
+export default function SliderDock({ sliders, chartSelector }: SliderDockProps) {
   const [activeKey, setActiveKey] = useState(sliders[0]?.key);
-  const chartInView = useChartInViewport();
+  const chartInView = useChartInViewport(chartSelector);
   const active = sliders.find((slider) => slider.key === activeKey) ?? sliders[0];
 
   if (!active) return null;
