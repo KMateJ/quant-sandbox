@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
@@ -23,7 +23,38 @@ import type {
   SmilePoint,
 } from "./heston.types";
 import { formatNumber, parseNumber } from "./heston.utils";
-import { useDebouncedValue } from "./useDebouncedValue";
+import { useAdaptiveDebouncedValue } from "./useDebouncedValue";
+
+// Fields that force a fresh Monte Carlo simulation. Everything else (S0, K, r)
+// only reprices the cached draws, so those sliders get a near-instant delay.
+const PRICING_EXPENSIVE_KEYS = [
+  "v0",
+  "theta",
+  "kappa",
+  "xi",
+  "rho",
+  "maturity",
+  "pricingSteps",
+  "pricingPaths",
+] as const;
+
+const PATHS_EXPENSIVE_KEYS = [
+  "v0",
+  "theta",
+  "kappa",
+  "xi",
+  "rho",
+  "maturity",
+  "steps",
+  "pathCount",
+] as const;
+
+const FAST_DELAY = 24;
+const SLOW_DELAY = 180;
+
+type PricingInput = Omit<HestonControlsState, "steps" | "pathCount">;
+type PathsInput = HestonControlsState;
+
 
 export default function HestonView() {
   const { language } = useI18n();
@@ -91,8 +122,12 @@ export default function HestonView() {
 
   const pricingWorkerRef = useRef<Worker | null>(null);
   const latestPricingRequestIdRef = useRef(0);
+  const pricingBusyRef = useRef(false);
+  const pricingPendingRef = useRef<PricingInput | null>(null);
   const pathsWorkerRef = useRef<Worker | null>(null);
   const latestPathsRequestIdRef = useRef(0);
+  const pathsBusyRef = useRef(false);
+  const pathsPendingRef = useRef<PathsInput | null>(null);
   const pendingPathsConfigRef = useRef<HestonControlsState | null>(null);
 
   useEffect(() => {
@@ -210,8 +245,56 @@ export default function HestonView() {
     ]
   );
 
-  const debouncedPricingControls = useDebouncedValue(pricingInput, 180);
-  const debouncedPathsControls = useDebouncedValue(pathsInput, 180);
+  const debouncedPricingControls = useAdaptiveDebouncedValue(
+    pricingInput,
+    PRICING_EXPENSIVE_KEYS,
+    FAST_DELAY,
+    SLOW_DELAY
+  );
+  const debouncedPathsControls = useAdaptiveDebouncedValue(
+    pathsInput,
+    PATHS_EXPENSIVE_KEYS,
+    FAST_DELAY,
+    SLOW_DELAY
+  );
+
+  // Only ever keep one request in flight per worker. New inputs that arrive
+  // while the worker is busy are coalesced into a "pending" slot and sent once
+  // the previous result comes back, so a fast drag can never backlog the queue.
+  const sendPricing = useCallback((input: PricingInput) => {
+    const worker = pricingWorkerRef.current;
+    if (!worker) return;
+    latestPricingRequestIdRef.current += 1;
+    pricingBusyRef.current = true;
+    worker.postMessage({
+      kind: "pricing",
+      requestId: latestPricingRequestIdRef.current,
+      ...input,
+    });
+  }, []);
+
+  const sendPaths = useCallback((input: PathsInput) => {
+    const worker = pathsWorkerRef.current;
+    if (!worker) return;
+    latestPathsRequestIdRef.current += 1;
+    pathsBusyRef.current = true;
+    pendingPathsConfigRef.current = input;
+    worker.postMessage({
+      kind: "paths",
+      requestId: latestPathsRequestIdRef.current,
+      S0: input.S0,
+      strike: input.strike,
+      rate: input.rate,
+      v0: input.v0,
+      theta: input.theta,
+      kappa: input.kappa,
+      xi: input.xi,
+      rho: input.rho,
+      maturity: input.maturity,
+      steps: input.steps,
+      pathCount: input.pathCount,
+    });
+  }, []);
 
   useEffect(() => {
     const next = new URLSearchParams();
@@ -261,19 +344,28 @@ export default function HestonView() {
     worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
       const response = event.data;
       if (response.kind !== "pricing") return;
-      if (response.requestId !== latestPricingRequestIdRef.current) return;
 
-      setPriceComparisonData(response.priceComparisonData);
-      setSmileData(response.smileData);
-      setGreeksData(response.greeks);
-      setGreeksProfileData(response.greeksProfile);
+      pricingBusyRef.current = false;
+
+      if (response.requestId === latestPricingRequestIdRef.current) {
+        setPriceComparisonData(response.priceComparisonData);
+        setSmileData(response.smileData);
+        setGreeksData(response.greeks);
+        setGreeksProfileData(response.greeksProfile);
+      }
+
+      const pending = pricingPendingRef.current;
+      if (pending) {
+        pricingPendingRef.current = null;
+        sendPricing(pending);
+      }
     };
 
     return () => {
       worker.terminate();
       pricingWorkerRef.current = null;
     };
-  }, []);
+  }, [sendPricing]);
 
   useEffect(() => {
     const worker = new Worker(new URL("./heston.worker.ts", import.meta.url), {
@@ -285,55 +377,47 @@ export default function HestonView() {
     worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
       const response = event.data;
       if (response.kind !== "paths") return;
-      if (response.requestId !== latestPathsRequestIdRef.current) return;
 
-      setStockPathData(response.stockData);
-      setVariancePathData(response.varianceData);
-      setAppliedPaths(pendingPathsConfigRef.current);
+      pathsBusyRef.current = false;
+
+      if (response.requestId === latestPathsRequestIdRef.current) {
+        setStockPathData(response.stockData);
+        setVariancePathData(response.varianceData);
+        setAppliedPaths(pendingPathsConfigRef.current);
+      }
+
+      const pending = pathsPendingRef.current;
+      if (pending) {
+        pathsPendingRef.current = null;
+        sendPaths(pending);
+      }
     };
 
     return () => {
       worker.terminate();
       pathsWorkerRef.current = null;
     };
-  }, []);
+  }, [sendPaths]);
 
   useEffect(() => {
     if (!pricingWorkerRef.current) return;
 
-    const requestId = latestPricingRequestIdRef.current + 1;
-    latestPricingRequestIdRef.current = requestId;
-
-    pricingWorkerRef.current.postMessage({
-      kind: "pricing",
-      requestId,
-      ...debouncedPricingControls,
-    });
-  }, [debouncedPricingControls]);
+    if (pricingBusyRef.current) {
+      pricingPendingRef.current = debouncedPricingControls;
+    } else {
+      sendPricing(debouncedPricingControls);
+    }
+  }, [debouncedPricingControls, sendPricing]);
 
   useEffect(() => {
     if (!pathsWorkerRef.current) return;
 
-    const requestId = latestPathsRequestIdRef.current + 1;
-    latestPathsRequestIdRef.current = requestId;
-    pendingPathsConfigRef.current = debouncedPathsControls;
-
-    pathsWorkerRef.current.postMessage({
-      kind: "paths",
-      requestId,
-      S0: debouncedPathsControls.S0,
-      strike: debouncedPathsControls.strike,
-      rate: debouncedPathsControls.rate,
-      v0: debouncedPathsControls.v0,
-      theta: debouncedPathsControls.theta,
-      kappa: debouncedPathsControls.kappa,
-      xi: debouncedPathsControls.xi,
-      rho: debouncedPathsControls.rho,
-      maturity: debouncedPathsControls.maturity,
-      steps: debouncedPathsControls.steps,
-      pathCount: debouncedPathsControls.pathCount,
-    });
-  }, [debouncedPathsControls]);
+    if (pathsBusyRef.current) {
+      pathsPendingRef.current = debouncedPathsControls;
+    } else {
+      sendPaths(debouncedPathsControls);
+    }
+  }, [debouncedPathsControls, sendPaths]);
 
   const pathsParams = appliedPaths ?? debouncedPathsControls;
 
