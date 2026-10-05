@@ -1,16 +1,15 @@
-import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import SectionCard from "../../components/SectionCard";
 import { useI18n } from "../../i18n";
-import GuideAccordionHeader from "./components/GuideAccordionHeader";
-import { getGuideRegistry, isGuideId } from "./GuideRegistry";
+import GuideTrackSection from "./components/GuideTrackSection";
+import { guideTracks } from "./guide.meta";
+import { isGuideId } from "./GuideRegistry";
 import type { GuideId } from "./guide.types";
 
 export default function GuideView() {
   const { language } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const guides = useMemo(() => getGuideRegistry(), [language]);
   const activeGuide = isGuideId(searchParams.get("topic"))
     ? (searchParams.get("topic") as GuideId)
     : null;
@@ -34,31 +33,19 @@ export default function GuideView() {
           title={language === "hu" ? "Útmutatók" : "Guides"}
           subtitle={
             language === "hu"
-              ? "Narratív, intuitív bevezetők a meglévő modellekhez és eszközökhöz."
-              : "Narrative, intuitive introductions to the models and tools already available on the site."
+              ? "Az alapoktól építkező, sorban haladó leckék. Olvasd őket fentről lefelé."
+              : "Ground-up lessons meant to be read in order, from top to bottom."
           }
         >
-          <div className="guide-list">
-            {guides.map((guide) => {
-              const isOpen = activeGuide === guide.id;
-
-              return (
-                <div key={guide.id} className="guide-item">
-                  <GuideAccordionHeader
-                    title={language === "hu" ? guide.title.hu : guide.title.en}
-                    description={
-                      language === "hu"
-                        ? guide.description.hu
-                        : guide.description.en
-                    }
-                    isOpen={isOpen}
-                    onClick={() => toggleGuide(guide.id)}
-                  />
-
-                  {isOpen && <div className="guide-body">{guide.render()}</div>}
-                </div>
-              );
-            })}
+          <div className="guide-tracks">
+            {guideTracks.map((track) => (
+              <GuideTrackSection
+                key={track.id}
+                track={track}
+                activeGuide={activeGuide}
+                onToggle={toggleGuide}
+              />
+            ))}
           </div>
         </SectionCard>
       </div>

@@ -1,6 +1,6 @@
 import { BlockMath, InlineMath } from "react-katex";
 import { useI18n } from "../../../i18n";
-import GuideLink from "../components/GuideLink";
+import GuideTryIt from "../components/GuideTryIt";
 
 function DeltaHedgingGuideHU() {
   return (
@@ -213,40 +213,21 @@ function DeltaHedgingGuideHU() {
         szerkezetéből következik.
       </p>
 
-      <h3>10. Mit érdemes most kipróbálni?</h3>
-
-      <ul>
-        <li>
-          <GuideLink to="/binomial?s0=100&k=100&u=1.2&d=0.9&r=0.05&steps=1&type=call">
-            Egyperiódusos call a binomiális modellen
-          </GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/binomial?s0=100&k=100&u=1.2&d=0.85&r=0.05&steps=4&type=call">
-            Többlépéses call a binomiális modellen
-          </GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-call">
-            Call payoff a Payoff Labben
-          </GuideLink>
-        </li>
-      </ul>
-
-      <p>Külön figyeld meg:</p>
-
-      <ul>
-        <li>hogyan változik a hedge aránya különböző állapotokban,</li>
-        <li>miért nem marad állandó a delta,</li>
-        <li>és hogyan kapcsolódik a replikáció a hedge-hez.</li>
-      </ul>
-
-      <h3>11. A lényeg egy mondatban</h3>
+      <h3>10. A lényeg egy mondatban</h3>
 
       <p className="guide-highlight">
         A delta hedgelés lényege, hogy a derivatíva részvényár-érzékenységét egy
         megfelelő ellenirányú részvénypozícióval helyben kioltsuk.
       </p>
+
+      <p>
+        A következő lecke megmutatja, hogyan válik ebből a sok apró lépésből a
+        folytonos idejű Black–Scholes-modell.
+      </p>
+
+      <GuideTryIt to="/delta-hedging" label="Próbáld ki">
+        kövesd végig egy diszkrét delta hedge pályáját a Delta Hedging eszközben
+      </GuideTryIt>
     </div>
   );
 }
@@ -454,40 +435,21 @@ function DeltaHedgingGuideEN() {
         pinned down by the market structure.
       </p>
 
-      <h3>10. What should you try now?</h3>
-
-      <ul>
-        <li>
-          <GuideLink to="/binomial?s0=100&k=100&u=1.2&d=0.9&r=0.05&steps=1&type=call">
-            One-period call in the binomial model
-          </GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/binomial?s0=100&k=100&u=1.2&d=0.85&r=0.05&steps=4&type=call">
-            Multi-step call in the binomial model
-          </GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-call">
-            Call payoff in the Payoff Lab
-          </GuideLink>
-        </li>
-      </ul>
-
-      <p>Pay special attention to</p>
-
-      <ul>
-        <li>how the hedge ratio changes across states,</li>
-        <li>why delta is not constant,</li>
-        <li>and how replication turns into hedging.</li>
-      </ul>
-
-      <h3>11. The essence in one sentence</h3>
+      <h3>10. The essence in one sentence</h3>
 
       <p className="guide-highlight">
         Delta hedging means locally offsetting a derivative’s stock-price
         sensitivity with an opposite stock position of the right size.
       </p>
+
+      <p>
+        The next lesson shows how these many small steps become the
+        continuous-time Black–Scholes model.
+      </p>
+
+      <GuideTryIt to="/delta-hedging" label="Try it">
+        follow a discrete delta-hedge path through in the Delta Hedging tool
+      </GuideTryIt>
     </div>
   );
 } 

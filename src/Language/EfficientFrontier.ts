@@ -21,6 +21,8 @@ export const efficientFrontierHu = {
   optMaxGross: "Max. bruttó kitettség",
   optOn: "Be",
   optOff: "Ki",
+  optAllocLong: "Long",
+  optAllocShort: "Short",
   optViewFrontier: "Határgörbe",
   optViewComposition: "Összetétel",
   optChartTitle: "Optimalizálási geometria",
@@ -108,6 +110,8 @@ export const efficientFrontierEn = {
   optCostReturn: "return",
   optCostSharpe: "Sharpe",
   optAllocationTitle: "Portfolio composition",
+  optAllocLong: "Long",
+  optAllocShort: "Short",
   optColAsset: "Asset",
   optColWeight: "Weight",
   optInfeasible:

@@ -17,7 +17,7 @@ export const homeHu = {
     navTvm: "Pénz időértéke",
     navWacc: "Tőkeköltség (WACC)",
     navCapitalStructure: "Tőkeszerkezet",
-    navBondPricing: "Kötvényárazás",
+    navBondPricing: "Kötvénylabor",
     navYieldCurve: "Hozamgörbe",
     navDurationConvexity: "Duration és konvexitás",
     navBrownianMotion: "Brown-mozgás",
@@ -41,6 +41,32 @@ export const homeHu = {
     
     homeBody:
       "Ez egy személyes projekt, így a fejlesztés nem folyamatos.",
+
+    heroTitle: "Tanuld a kvantitatív pénzügyet úgy, hogy látod mozogni",
+    heroLede:
+      "Minden téma egy interaktív, vizuális eszköz. A származtatott termékektől a portfóliókon, a fix hozamú és vállalati pénzügyeken át a sztochasztikus modellekig — vizualizációval, intuícióval és interakcióval tanítunk, nem szövegfalakkal.",
+
+    pillarVisualizeTitle: "Vizualizáció",
+    pillarVisualizeDesc:
+      "Ábrák és diagramok teszik kézzelfoghatóvá és egy pillantásra olvashatóvá az elvont képleteket.",
+    pillarIntuitionTitle: "Intuíció",
+    pillarIntuitionDesc:
+      "Látod, hogyan mozgatja az eredményt minden paraméter — így a miért is megragad, nemcsak a képlet.",
+    pillarInteractTitle: "Interakció",
+    pillarInteractDesc:
+      "Húzd a csúszkákat, változtasd a bemeneteket, és nézd, ahogy minden élőben frissül. Játszva tanulás.",
+
+    categoriesTitle: "Mit fedezhetsz fel",
+    categoriesSubtitle: "Területek szerint csoportosított modulok, folyamatosan bővülve.",
+    moduleCountOne: "modul",
+    moduleCountMany: "modul",
+
+    catDerivativesDesc: "Opciók, kifizetések és árazási modellek.",
+    catPortfolioDesc: "Kockázat, hozam, CAPM és portfólió-optimalizálás.",
+    catFixedIncomeDesc: "Kötvények, hozamgörbék, duration és konvexitás.",
+    catCorporateDesc: "NPV, DCF-értékelés, WACC és tőkeszerkezet.",
+    catStochasticDesc: "Brown-mozgás, Itô és Monte Carlo.",
+    catGuidesDesc: "Oktató jellegű írások az eszközök mögött.",
 
     exploreTitle: "Fedezd fel a modulokat",
     exploreSubtitle: "Interaktív eszközök — kattints bármelyikre és játssz a paraméterekkel.",
@@ -122,7 +148,7 @@ export const homeEn = {
     navTvm: "Time Value of Money",
     navWacc: "Cost of Capital (WACC)",
     navCapitalStructure: "Capital Structure",
-    navBondPricing: "Bond Pricing",
+    navBondPricing: "Bond Lab",
     navYieldCurve: "Yield Curve",
     navDurationConvexity: "Duration & Convexity",
     navBrownianMotion: "Brownian Motion",
@@ -146,6 +172,32 @@ export const homeEn = {
 
     homeBody:
       "This is a personal project, so development happens when I have time and motivation.",
+
+    heroTitle: "Learn quant finance by seeing it move",
+    heroLede:
+      "Every topic is a hands-on visual tool. From derivatives to portfolios, fixed income, corporate finance and stochastic models — we teach the ideas through visualization, intuition and interaction, not walls of text.",
+
+    pillarVisualizeTitle: "Visualize",
+    pillarVisualizeDesc:
+      "Charts and diagrams make abstract formulas concrete and easy to read at a glance.",
+    pillarIntuitionTitle: "Build intuition",
+    pillarIntuitionDesc:
+      "See how each parameter moves the result, so the why sticks — not just the formula.",
+    pillarInteractTitle: "Interact",
+    pillarInteractDesc:
+      "Drag sliders, change inputs and watch everything update live. Learning by playing.",
+
+    categoriesTitle: "What you can explore",
+    categoriesSubtitle: "Modules grouped by area, growing over time.",
+    moduleCountOne: "module",
+    moduleCountMany: "modules",
+
+    catDerivativesDesc: "Options, payoffs and pricing models.",
+    catPortfolioDesc: "Risk, return, CAPM and portfolio optimization.",
+    catFixedIncomeDesc: "Bonds, yield curves, duration and convexity.",
+    catCorporateDesc: "NPV, DCF valuation, WACC and capital structure.",
+    catStochasticDesc: "Brownian motion, Itô and Monte Carlo.",
+    catGuidesDesc: "Narrative write-ups behind the tools.",
 
     exploreTitle: "Explore the modules",
     exploreSubtitle: "Interactive tools — pick any of them and start playing with the parameters.",

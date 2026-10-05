@@ -1,6 +1,6 @@
 import { BlockMath, InlineMath } from "react-katex";
 import { useI18n } from "../../../i18n";
-import GuideLink from "../components/GuideLink";
+import GuideTryIt from "../components/GuideTryIt";
 
 function RiskNeutralGuideHU() {
   return (
@@ -10,10 +10,10 @@ function RiskNeutralGuideHU() {
       </p>
 
       <p>
-        A <GuideLink to="/payoff?preset=long-call">Payoff Lab</GuideLink> oldalon
-        már láttuk, hogy egy derivatíva lejáratkori kifizetése tipikusan a
-        részvény jövőbeli árától függ. Ha a lejáratkori payoffot már értjük,
-        akkor a következő kérdés az:
+        Az előző leckékből már tudjuk, hogy egy derivatíva lejáratkori
+        kifizetése a részvény jövőbeli árától függ, és hogy a mai árat a nincs
+        arbitrázs elve köti meg. Most ezt egy konkrét modellben visszük végig.
+        A kérdés:
       </p>
 
       <p className="guide-highlight">
@@ -284,6 +284,10 @@ function RiskNeutralGuideHU() {
         Innen a következő természetes lépés az, hogy ez a replikációs gondolat
         hogyan vezet el a delta hedgeléshez.
       </p>
+
+      <GuideTryIt to="/binomial" label="Próbáld ki">
+        számold végig ugyanezt az egylépéses fát a Binomiális modellben
+      </GuideTryIt>
     </div>
   );
 }
@@ -297,9 +301,10 @@ function RiskNeutralGuideEN() {
       </p>
 
       <p>
-        On the <GuideLink to="/payoff?preset=long-call">Payoff Lab</GuideLink>,
-        we already saw that a derivative is typically defined through its payoff
-        at maturity. Once that terminal payoff is clear, the next question is:
+        From the earlier lessons we already know that a derivative payoff
+        depends on the stock's future price, and that no arbitrage pins down
+        today's price. Now we carry that through in a concrete model. The
+        question is:
       </p>
 
       <p className="guide-highlight">
@@ -572,6 +577,10 @@ function RiskNeutralGuideEN() {
         From here, the next natural step is to see how this replication idea
         leads to delta hedging.
       </p>
+
+      <GuideTryIt to="/binomial" label="Try it">
+        work the same one-step tree through in the Binomial model
+      </GuideTryIt>
     </div>
   );
 }

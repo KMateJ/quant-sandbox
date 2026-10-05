@@ -84,6 +84,47 @@ const ICONS: Record<string, ReactNode> = {
       <path d="M3 18l3-2 3 1 3-4 3 1 3-6 3-3" />
     </>
   ),
+  "ito-process": (
+    <>
+      <path d="M3 16 21 8" opacity=".35" />
+      <path d="M3 15l2-3 2 2 2-4 2 3 2-5 2 2 2-3 2 1" />
+    </>
+  ),
+  "monte-carlo": (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="3" />
+      <path d="M9 9h.01M15 9h.01M12 12h.01M9 15h.01M15 15h.01" />
+    </>
+  ),
+  "delta-hedging": (
+    <>
+      <path d="M3 17c4 0 6-11 10-11s4 8 8 8" />
+      <path d="M3 19h3v-3h3v-4h3v-3h3" opacity=".5" />
+    </>
+  ),
+  tvm: (
+    <>
+      <path d="M4 19V5" opacity=".4" />
+      <path d="M4 19h15" opacity=".4" />
+      <path d="M6 17c5 0 8-9 13-11" />
+      <path d="M15 6h4v4" />
+    </>
+  ),
+  wacc: (
+    <>
+      <path d="M12 4v16" />
+      <path d="M6 20h12" />
+      <path d="M4 8h16" />
+      <path d="M2 12l2-4 2 4a2 2 0 0 1-4 0z" />
+      <path d="M18 12l2-4 2 4a2 2 0 0 1-4 0z" />
+    </>
+  ),
+  "capital-structure": (
+    <>
+      <rect x="5" y="4" width="14" height="7" rx="1.5" />
+      <rect x="5" y="13" width="14" height="7" rx="1.5" />
+    </>
+  ),
   guide: (
     <>
       <path d="M12 6c-1.6-1-4-1.6-6-1.6-1 0-2 .1-3 .4v12c1-.3 2-.4 3-.4 2 0 4.4.6 6 1.6" />

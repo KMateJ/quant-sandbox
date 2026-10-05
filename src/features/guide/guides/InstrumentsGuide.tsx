@@ -1,297 +1,182 @@
 import { BlockMath, InlineMath } from "react-katex";
 import { useI18n } from "../../../i18n";
-import GuideLink from "../components/GuideLink";
+import GuideTryIt from "../components/GuideTryIt";
 
 function InstrumentsGuideHU() {
   return (
     <div className="guide-content">
       <p>
-        Ez az útmutató azt a kérdést válaszolja meg, hogy pontosan{" "}
-        <strong>milyen pénzügyi objektumokat</strong> nézünk az oldalon, és mit
-        jelent az, hogy egy eszköz kifizetése a részvényár lejáratkori értékétől
-        függ.
+        Mielőtt bármit is áraznánk, tisztázni kell, hogy pontosan{" "}
+        <strong>mit is árazunk</strong>. A derivatíva egy szerződés, amelynek a
+        kifizetése egy másik dolog – itt egy részvény – árától függ. A legelső
+        kérdés nem az, hogy mennyit ér ma, hanem az, hogy{" "}
+        <strong>mennyit fizet lejáratkor</strong>.
       </p>
 
       <p>
-        A kiindulópont a <strong>Payoff Lab</strong>. Ott egy lejárati
-        időpontban gondolkodunk. Nem az érdekel minket, hogy az árfolyam addig
-        milyen utat járt be, hanem az, hogy a <strong>lejárat pillanatában</strong>{" "}
-        mennyi a részvény ára, és ebből milyen kifizetés következik.
-      </p>
-
-      <p>
-        Jelölje <InlineMath math="S_T" /> a részvény árát lejáratkor. Ekkor egy
-        derivatíva kifizetése egy függvény:
+        Egyetlen lejárati időpontban gondolkodunk. Nem számít, milyen utat járt
+        be az árfolyam odáig; csak az, hogy a lejárat pillanatában mennyi a
+        részvény ára. Jelölje ezt <InlineMath math="S_T" />. Ekkor a kifizetés
+        egy függvény:
       </p>
 
       <BlockMath math="X = f(S_T)" />
 
-      <p>A legfontosabb példák, amikkel indulunk:</p>
+      <p>
+        Az egész derivatívaelmélet célja, hogy ehhez a jövőbeli{" "}
+        <InlineMath math="X" />-hez egy mai árat rendeljen. Előbb nézzük meg a
+        három alapvető kifizetést.
+      </p>
 
       <h3>1. Európai call opció</h3>
       <p>
-        A call azt adja meg, hogy lejáratkor jogod van megvenni a részvényt egy
-        előre rögzített <strong>kötési áron</strong>, amit általában{" "}
-        <InlineMath math="K" /> jelöl.
+        A call <em>jogot</em> ad arra, hogy lejáratkor megvedd a részvényt egy
+        előre rögzített <strong>kötési áron</strong> (<InlineMath math="K" />).
+        Ha a részvény többet ér, élsz a joggal és nyersz{" "}
+        <InlineMath math="S_T - K" />-t; ha kevesebbet, nem élsz vele, és a
+        kifizetés nulla:
       </p>
 
-      <BlockMath math="X_{call} = (S_T - K)^+" />
+      <BlockMath math="X_{\text{call}} = (S_T - K)^+" />
 
       <p>
-        Itt a <InlineMath math="x^+ = max(x,0)" /> jelölést használjuk. Ez azt
-        jelenti, hogy ha a részvényár nagyobb, mint a strike, akkor a call
-        értékes, ha nem, akkor a kifizetés nulla.
-      </p>
-
-      <p>
-        Nézd meg rögtön a saját oldaladon egy előre beállított példán:{" "}
-        <GuideLink to="/payoff?preset=long-call">
-          long call preset megnyitása
-        </GuideLink>
-        .
+        A <InlineMath math="x^+ = \max(x, 0)" /> jelölés rögzíti, hogy a
+        kifizetés sosem negatív – egy jogot nem vagy köteles használni.
       </p>
 
       <h3>2. Európai put opció</h3>
       <p>
-        A put ennek a tükörképe: jogod van eladni a részvényt a strike áron.
+        A put a tükörkép: jogot ad az <em>eladásra</em> a kötési áron. Akkor ér
+        sokat, ha a részvény leesik:
       </p>
 
-      <BlockMath math="X_{put} = (K - S_T)^+" />
-
-      <p>Ez akkor ér sokat, ha a részvény árfolyama leesik.</p>
-
-      <p>
-        Ehhez:{" "}
-        <GuideLink to="/payoff?preset=long-put">
-          long put preset megnyitása
-        </GuideLink>
-        .
-      </p>
+      <BlockMath math="X_{\text{put}} = (K - S_T)^+" />
 
       <h3>3. Forward</h3>
       <p>
-        A forward nem opció, hanem kötelezettség. Lejáratkor a kifizetés
-        lineáris:
+        A forward nem jog, hanem <strong>kötelezettség</strong>: lejáratkor
+        kötelezően megveszed a részvényt <InlineMath math="K" />-ért. Nincs
+        választás, ezért a kifizetés lineáris és negatív is lehet:
       </p>
 
-      <BlockMath math="X_{forward} = S_T - K" />
+      <BlockMath math="X_{\text{forward}} = S_T - K" />
+
+      <h3>Mi a lényeg?</h3>
+      <p>
+        Figyeld meg a formák különbségét: a call és a put{" "}
+        <strong>töréspontos</strong> (van egy könyök a strike-nál), a forward
+        pedig <strong>egyenes</strong>. Ez a különbség lesz később a kulcs: a
+        töréspont teszi az opciót igazán érdekessé, és emiatt kell majd
+        dinamikusan fedezni.
+      </p>
 
       <p>
-        Ez azért fontos, mert sok összetettebb stratégia végül ugyanilyen
-        lineáris alakot ad. A Payoff Lab egyik legjobb része pont az, hogy ezt
-        vizuálisan meg tudod nézni.
+        Egy fontos építőkő, amit érdemes már most észrevenni: egy{" "}
+        <strong>vett call</strong> és egy <strong>eladott put</strong> ugyanazzal
+        a strike-kal együtt pontosan egy forward kifizetését adja –
       </p>
 
-      <p>
-        A te oldaladon ehhez a legjobb kiindulópont most a{" "}
-        <GuideLink to="/payoff?preset=synthetic-long-forward">
-          synthetic long forward
-        </GuideLink>
-        , mert rögtön látszik, hogy egy call és egy put együtt hogyan ad ki egy
-        forward-szerű profilt. Ezt a rendszered automatikusan felismeri is.
-      </p>
-
-      <h3>Mit jelent az, hogy európai?</h3>
-      <p>
-        Azt, hogy most csak a <strong>lejárati időpont</strong> érdekel. Nem
-        foglalkozunk azzal, hogy közben mikor lehet lehívni, csak a végső
-        állapottal.
-      </p>
-
-      <h3>Miért payoff-pal kezdünk?</h3>
-      <p>
-        Azért, mert a payoff a legősibb objektum az egész opcióárazásban.
-        Mielőtt árat számolnánk, deltat fedeznénk vagy kockázatsemleges
-        mértékről beszélnénk, először meg kell érteni:
-      </p>
-
-      <ul>
-        <li>mi az eszköz lejáratkori kifizetése,</li>
-        <li>mikor keres pénzt,</li>
-        <li>mikor veszít pénzt,</li>
-        <li>hogyan változik a részvényár függvényében.</li>
-      </ul>
-
-      <h3>Mit érdemes most kipróbálni?</h3>
-      <ul>
-        <li>
-          <GuideLink to="/payoff?preset=long-call">Long call</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-put">Long put</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-stock">Long stock</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=synthetic-long-forward">
-            Synthetic long forward
-          </GuideLink>
-        </li>
-      </ul>
-
-      <p>
-        Külön figyeld meg, hogy a call és a put <strong>töréspontos</strong>,
-        míg a forward <strong>lineáris</strong>. Ez később kulcsfontosságú lesz,
-        amikor replikáló portfóliókról és hedge-ről beszélünk.
-      </p>
+      <BlockMath math="(S_T - K)^+ - (K - S_T)^+ = S_T - K." />
 
       <p className="guide-highlight">
-        Ha már tudod, hogy egy eszköz mit fizet lejáratkor, a következő nagy
-        kérdés az lesz: mennyit ér ez ma?
+        Ha tudjuk, mit fizet egy eszköz lejáratkor, jön a következő nagy kérdés:
+        mennyit ér ez ma? Erre a „nincs arbitrázs” elve ad választ.
       </p>
 
-      <p>
-        Erre vezet majd rá a következő útmutató a kockázatsemleges mértékről.
-      </p>
+      <GuideTryIt to="/payoff" label="Próbáld ki">
+        rajzold meg ezeket a kifizetéseket a Payoff Lab-ban
+      </GuideTryIt>
     </div>
   );
 }
+
 
 function InstrumentsGuideEN() {
   return (
     <div className="guide-content">
       <p>
-        This guide answers a basic question:{" "}
-        <strong>what financial objects</strong> are we actually studying on the
-        site, and what does it mean to say that a derivative payoff depends on
-        the stock price at maturity?
+        Before we can price anything, we need to be precise about{" "}
+        <strong>what we are pricing</strong>. A derivative is a contract whose
+        payoff depends on something else — here, a stock. The very first
+        question is not what it is worth today, but{" "}
+        <strong>what it pays at maturity</strong>.
       </p>
 
       <p>
-        The natural starting point is the <strong>Payoff Lab</strong>. There we
-        think in terms of a terminal date. We do not care yet about the full
-        path of the stock before maturity. We care about the{" "}
-        <strong>stock price at maturity</strong>, and how the payoff depends on
-        it.
-      </p>
-
-      <p>
-        Let <InlineMath math="S_T" /> denote the stock price at maturity. Then a
-        derivative payoff is a function
+        We think in terms of a single maturity date. The path the stock took to
+        get there does not matter yet; only its price at maturity does. Call that{" "}
+        <InlineMath math="S_T" />. Then the payoff is a function:
       </p>
 
       <BlockMath math="X = f(S_T)" />
 
-      <p>The main examples are the following:</p>
+      <p>
+        The whole goal of derivative pricing is to attach a value <em>today</em>{" "}
+        to this future <InlineMath math="X" />. First, the three building-block
+        payoffs.
+      </p>
 
       <h3>1. European call option</h3>
       <p>
-        A call gives you the right, at maturity, to buy the stock at a fixed
-        <strong> strike price</strong>, usually denoted by{" "}
-        <InlineMath math="K" />.
+        A call gives you the <em>right</em> to buy the stock at maturity for a
+        fixed <strong>strike price</strong> (<InlineMath math="K" />). If the
+        stock is worth more, you exercise and gain <InlineMath math="S_T - K" />;
+        if it is worth less, you walk away and the payoff is zero:
       </p>
 
-      <BlockMath math="X_{call} = (S_T - K)^+" />
+      <BlockMath math="X_{\text{call}} = (S_T - K)^+" />
 
       <p>
-        Here <InlineMath math="x^+ = max(x,0)" /> means that the payoff is
-        positive only when the stock ends above the strike.
-      </p>
-
-      <p>
-        Try it directly on your site:{" "}
-        <GuideLink to="/payoff?preset=long-call">
-          open the long call preset
-        </GuideLink>
-        .
+        The notation <InlineMath math="x^+ = \max(x, 0)" /> captures that the
+        payoff is never negative — you are never forced to use a right.
       </p>
 
       <h3>2. European put option</h3>
       <p>
-        A put is the mirror image: it gives you the right to sell at the strike.
+        A put is the mirror image: the right to <em>sell</em> at the strike. It
+        becomes valuable when the stock falls:
       </p>
 
-      <BlockMath math="X_{put} = (K - S_T)^+" />
-
-      <p>So the put becomes valuable when the stock price falls.</p>
-
-      <p>
-        See:{" "}
-        <GuideLink to="/payoff?preset=long-put">
-          open the long put preset
-        </GuideLink>
-        .
-      </p>
+      <BlockMath math="X_{\text{put}} = (K - S_T)^+" />
 
       <h3>3. Forward</h3>
       <p>
-        A forward is not an option but an obligation. Its terminal payoff is
-        linear:
+        A forward is not a right but an <strong>obligation</strong>: at maturity
+        you must buy the stock for <InlineMath math="K" />. There is no choice,
+        so the payoff is linear and can be negative:
       </p>
 
-      <BlockMath math="X_{forward} = S_T - K" />
+      <BlockMath math="X_{\text{forward}} = S_T - K" />
+
+      <h3>Why this matters</h3>
+      <p>
+        Notice the difference in shape: the call and put are{" "}
+        <strong>kinked</strong> (there is an elbow at the strike), while the
+        forward is a <strong>straight line</strong>. That difference is the key
+        to everything later: the kink is what makes an option interesting, and
+        what will force us to hedge it dynamically.
+      </p>
 
       <p>
-        This matters because many more complicated strategies eventually
-        collapse into this same linear shape.
+        One building block worth noticing already: a <strong>long call</strong>{" "}
+        and a <strong>short put</strong> at the same strike together reproduce a
+        forward payoff —
       </p>
 
-      <p>
-        On your site, the best shortcut is{" "}
-        <GuideLink to="/payoff?preset=synthetic-long-forward">
-          synthetic long forward
-        </GuideLink>
-        , where you can already see how a call and a put combine into a
-        forward-like profile. Your current logic also detects this automatically.
-      </p>
-
-      <h3>What does “European” mean here?</h3>
-      <p>
-        It means that we only focus on the <strong>maturity date</strong>. We
-        are not yet discussing early exercise. We only care about the final
-        payoff.
-      </p>
-
-      <h3>Why start with payoff?</h3>
-      <p>
-        Because payoff is the most primitive object in option pricing. Before we
-        compute prices, talk about delta hedging, or introduce the risk-neutral
-        measure, we first need to understand:
-      </p>
-
-      <ul>
-        <li>what the instrument pays at maturity,</li>
-        <li>when it makes money,</li>
-        <li>when it loses money,</li>
-        <li>how it depends on the stock price.</li>
-      </ul>
-
-      <h3>What should you try now?</h3>
-      <ul>
-        <li>
-          <GuideLink to="/payoff?preset=long-call">Long call</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-put">Long put</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=long-stock">Long stock</GuideLink>
-        </li>
-        <li>
-          <GuideLink to="/payoff?preset=synthetic-long-forward">
-            Synthetic long forward
-          </GuideLink>
-        </li>
-      </ul>
-
-      <p>
-        Notice that calls and puts are <strong>kinked</strong>, while the
-        forward is <strong>linear</strong>. This will matter later when we talk
-        about replication and hedging.
-      </p>
+      <BlockMath math="(S_T - K)^+ - (K - S_T)^+ = S_T - K." />
 
       <p className="guide-highlight">
-        Once you know what something pays at maturity, the next big question is:
-        what is that payoff worth today?
+        Once we know what an instrument pays at maturity, the next big question
+        is: what is that worth today? The principle of no arbitrage answers it.
       </p>
 
-      <p>
-        That leads naturally to the next tutorial on the risk-neutral measure.
-      </p>
+      <GuideTryIt to="/payoff" label="Try it">
+        draw these payoffs yourself in the Payoff Lab
+      </GuideTryIt>
     </div>
   );
 }
+
 
 export default function InstrumentsGuide() {
   const { language } = useI18n();

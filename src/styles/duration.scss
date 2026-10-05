@@ -1,0 +1,294 @@
+// Duration & Convexity — interest-rate sensitivity experiment.
+// Scoped to this module; relies on shared tokens and layout primitives.
+
+.dc-param-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+// #region Risk measures list (aligned rows, no cards)
+.measure-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.measure-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 650;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+}
+// #endregion
+
+// #region Yield-shock control (primary interaction)
+.dc-shock-panel .panel-body {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+.dc-shock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dc-shock-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.dc-shock-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dc-shock-caption {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dc-shock-value {
+  font-family: var(--font-mono);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+
+  &.pos {
+    color: var(--negative); // yields up → price falls
+  }
+  &.neg {
+    color: var(--positive); // yields down → price rises
+  }
+}
+
+.dc-shock-entry {
+  width: 120px;
+}
+
+.dc-shock-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dc-shock .slider-input {
+  height: 8px;
+}
+
+.dc-shock-marks {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.dc-shock-hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+// #endregion
+
+// #region Chart row (main chart + selected-shock comparison)
+.dc-main-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(240px, 0.95fr);
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+// The global `.chart-wrap` zoom hack overflows its grid column and overlaps the
+// neighbouring result panel; keep charts in this module at the root zoom scale.
+.dc-main-row .chart-wrap,
+.dc-error-wrap {
+  zoom: 1;
+}
+
+.dc-result-panel .panel-body {
+  padding-top: var(--space-3);
+}
+
+.dc-error-wrap {
+  height: clamp(200px, 26vh, 300px);
+}
+
+.dc-formula-trigger {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+  }
+}
+
+.dc-formula-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 220px;
+}
+
+.dc-formula-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+// #endregion
+
+// #region Selected-shock comparison panel
+.dc-compare {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dc-compare-shock {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.dc-compare-shock-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dc-compare-shock-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.dc-compare-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dc-compare-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 2px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+
+  &::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--muted);
+  }
+  &[data-tone="exact"]::before {
+    background: #22c55e;
+  }
+  &[data-tone="duration"]::before {
+    background: #38bdf8;
+  }
+  &[data-tone="durconvex"]::before {
+    background: #f59e0b;
+  }
+}
+
+.dc-compare-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  &.muted {
+    opacity: 0.75;
+  }
+}
+
+.dc-compare-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.dc-compare-insight {
+  margin: 0;
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--info-text);
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-sm);
+}
+// #endregion
+
+@media (max-width: 900px) {
+  .dc-main-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .dc-param-grid {
+    grid-template-columns: 1fr;
+  }
+  .dc-shock-value {
+    font-size: 1.6rem;
+  }
+}

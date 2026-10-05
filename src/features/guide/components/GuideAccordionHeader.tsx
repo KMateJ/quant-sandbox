@@ -1,4 +1,5 @@
 type GuideAccordionHeaderProps = {
+  index: number;
   title: string;
   description: string;
   isOpen: boolean;
@@ -6,6 +7,7 @@ type GuideAccordionHeaderProps = {
 };
 
 export default function GuideAccordionHeader({
+  index,
   title,
   description,
   isOpen,
@@ -18,6 +20,9 @@ export default function GuideAccordionHeader({
       className="guide-header"
       aria-expanded={isOpen}
     >
+      <span className="guide-header-index" aria-hidden="true">
+        {String(index).padStart(2, "0")}
+      </span>
       <div className="guide-header-text">
         <div className="guide-header-title">{title}</div>
         <div className="guide-header-description">{description}</div>

@@ -43,6 +43,25 @@ export const CATEGORY_LABEL_KEYS: Record<ModuleCategory, TranslationKey> = {
   guides: "navGuide",
 };
 
+export const CATEGORY_DESC_KEYS: Record<ModuleCategory, TranslationKey> = {
+  derivatives: "catDerivativesDesc",
+  portfolio: "catPortfolioDesc",
+  "fixed-income": "catFixedIncomeDesc",
+  corporate: "catCorporateDesc",
+  stochastic: "catStochasticDesc",
+  guides: "catGuidesDesc",
+};
+
+/// Accent colour per category, used by home cards for visual variety.
+export const CATEGORY_ACCENT: Record<ModuleCategory, string> = {
+  derivatives: "#22c55e",
+  portfolio: "#3b82f6",
+  "fixed-income": "#f59e0b",
+  corporate: "#ec4899",
+  stochastic: "#a855f7",
+  guides: "#06b6d4",
+};
+
 export const modules: ModuleDef[] = [
   {
     id: "home",
@@ -68,7 +87,7 @@ export const modules: ModuleDef[] = [
       description:
         "Interactive payoff and profit diagrams for options, forwards, stock and synthetic strategies.",
     },
-    relatedGuides: ["instruments"],
+    relatedGuides: ["instruments", "no-arbitrage"],
     Component: lazy(() => import("../features/payoff-lab/PayofView")),
   },
   {
@@ -82,7 +101,7 @@ export const modules: ModuleDef[] = [
       description:
         "Interactive binomial pricing tree for option pricing, risk-neutral probability and replicating portfolios.",
     },
-    relatedGuides: ["risk-neutral", "delta-hedging"],
+    relatedGuides: ["no-arbitrage", "risk-neutral", "delta-hedging"],
     Component: lazy(() => import("../features/binomial/BinomialView")),
   },
   {
@@ -96,7 +115,7 @@ export const modules: ModuleDef[] = [
       description:
         "Interactive Black–Scholes option pricing and Greeks visualization across stock prices and maturities.",
     },
-    relatedGuides: ["delta-hedging"],
+    relatedGuides: ["toward-black-scholes", "delta-hedging"],
     Component: lazy(() => import("../features/black-scholes/BlackScholesView")),
   },
   {
@@ -128,28 +147,15 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/delta-hedging/DeltaHedgingView")),
   },
   {
-    id: "diffusion",
-    path: "/diffusion",
-    navKey: "navDiffusion",
-    category: "fixed-income",
-    status: "live",
-    seo: {
-      title: "Diffusion Equation",
-      description:
-        "Interactive visualization of the diffusion equation with parameter controls and time evolution.",
-    },
-    Component: lazy(() => import("../features/diffusion/DiffusionView")),
-  },
-  {
     id: "bond-pricing",
     path: "/bond-pricing",
     navKey: "navBondPricing",
     category: "fixed-income",
     status: "beta",
     seo: {
-      title: "Bond Pricing",
+      title: "Bond Lab",
       description:
-        "Interactive fixed-coupon bond pricing: price–yield curve, Macaulay and modified duration, and convexity.",
+        "Interactive bond valuation workbench: cash-flow timeline, discounting to present values, bond price, duration, convexity and a draggable price–yield curve.",
     },
     Component: lazy(() => import("../features/bond-pricing/BondPricingView")),
   },

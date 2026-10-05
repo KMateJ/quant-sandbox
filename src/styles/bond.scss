@@ -1,0 +1,160 @@
+// Bond Lab — cash-flow timeline, PV breakdown and price–yield explorer.
+
+.bond-params {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.bond-select {
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+  }
+}
+
+.bond-metrics {
+  margin: 0;
+}
+
+// #region Cash-flow timeline
+.bond-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.bond-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  .bond-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    i {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background: var(--muted);
+
+      &.faint {
+        background: #f59e0b;
+        opacity: 0.26;
+      }
+      &.solid {
+        background: #f59e0b;
+      }
+    }
+  }
+}
+
+.bond-timeline {
+  position: relative;
+  width: 100%;
+
+  svg text {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.bond-timeline-tip {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, calc(-100% - 10px));
+  min-width: 150px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  pointer-events: none;
+
+  .tip-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+
+    span {
+      color: var(--muted);
+    }
+    b {
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+.bond-timeline-axis {
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+// #endregion
+
+// #region PV breakdown
+.bond-pv {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bond-pv-sum {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-sm);
+
+  .bond-pv-sum-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--success-text);
+  }
+  .bond-pv-sum-value {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--success-title);
+    font-variant-numeric: tabular-nums;
+  }
+}
+// #endregion
+
+// #region Price–yield explorer
+.bond-py {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+}
+
+.bond-py-hint {
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+// #endregion
