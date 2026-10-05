@@ -1,16 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import SectionCard from "../../components/SectionCard";
 import {
   blackScholesCall,
@@ -29,12 +18,7 @@ import SliderField from "../../components/SliderField";
 import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
 import SwitchRow from "../../components/SwitchRow";
 import { useMediaQuery } from "../../components/useMediaQuery";
-import {
-  axisTickStyle,
-  chartMargin,
-  useChartTouchDismiss,
-  yAxisWidth,
-} from "../../components/chartConfig";
+import { LineChart, type ChartSeries } from "../../components/charts";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -128,7 +112,6 @@ function getMetricTitle(
 export default function BlackScholesView() {
   const { t, language } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -267,6 +250,19 @@ export default function BlackScholesView() {
 
     return value.toFixed(3);
   }, [strike, rate, volatility, optionType]);
+
+  const chartSeries = useMemo<ChartSeries[]>(
+    () =>
+      maturities.map((T, index) => ({
+        key: `T=${T}`,
+        label: `T=${T}`,
+        color: lineColors[index % lineColors.length],
+        strokeWidth: 2.5,
+      })),
+    [maturities]
+  );
+
+  const tooltipDigits = metric === "gamma" ? 5 : metric === "delta" ? 4 : 3;
 
   const sliders: SliderDescriptor[] = [
     {
@@ -547,66 +543,21 @@ export default function BlackScholesView() {
               ]}
             />
           )}
-          <div className="chart-wrap" ref={dismissRef}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={chartData}
-                  margin={chartMargin(isMobile)}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                  <XAxis
-                    dataKey="S"
-                    type="number"
-                    domain={[10, 200]}
-                    tickCount={isMobile ? 5 : 8}
-                    stroke="#94a3b8"
-                    tick={axisTickStyle(isMobile)}
-                  />
-                  <YAxis
-                    domain={yDomain}
-                    tickCount={7}
-                    stroke="#94a3b8"
-                    width={yAxisWidth(isMobile)}
-                    tick={axisTickStyle(isMobile)}
-                  />
-                  <ReferenceLine
-                    x={strike}
-                    stroke="#94a3b8"
-                    strokeDasharray="4 4"
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                    }}
-                    labelStyle={{ color: "#e2e8f0" }}
-                    formatter={(value, name) => {
-                      const numericValue =
-                        typeof value === "number" ? value : Number(value ?? 0);
-
-                      const digits =
-                        metric === "gamma" ? 5 : metric === "delta" ? 4 : 3;
-
-                      return [numericValue.toFixed(digits), String(name)];
-                    }}
-                    labelFormatter={(label) => `${t("blackScholesTooltipStock")} = ${label}`}
-                  />
-                  <Legend />
-                  {maturities.map((T, index) => (
-                    <Line
-                      key={T}
-                      type="monotone"
-                      dataKey={`T=${T}`}
-                      dot={false}
-                      stroke={lineColors[index % lineColors.length]}
-                      strokeWidth={2.5}
-                      isAnimationActive={false}
-                    />
-                  ))}
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+          <div className="chart-wrap">
+            <LineChart
+              data={chartData}
+              xKey="S"
+              series={chartSeries}
+              xDomain={[10, 200]}
+              yDomain={yDomain}
+              referenceLines={[
+                { axis: "x", value: strike, color: "#94a3b8", dash: "4 4" },
+              ]}
+              isMobile={isMobile}
+              tooltipLabel={(x) => `${t("blackScholesTooltipStock")} = ${x}`}
+              valueFormat={(v) => v.toFixed(tooltipDigits)}
+            />
+          </div>
         </SectionCard>
 
         <SectionCard

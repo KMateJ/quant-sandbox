@@ -1,0 +1,33 @@
+export const tvmHu = {
+  tvmTitle: "Pénz időértéke",
+  tvmDesc: "Kezdőtőke és rendszeres befizetések kamatos kamattal növekvő egyenlege.",
+  tvmMetricsLabel: "Eredmények",
+  tvmControlsTitle: "Paraméterek",
+  tvmPrincipalLabel: "Kezdőtőke",
+  tvmPaymentLabel: "Éves befizetés",
+  tvmRateLabel: "Éves kamat",
+  tvmYearsLabel: "Évek száma",
+  tvmFinalBalance: "Záró egyenleg",
+  tvmContributions: "Összes befizetés",
+  tvmInterest: "Kamat hozam",
+  tvmChartTitle: "Egyenleg az idő függvényében",
+  tvmBalanceLabel: "Egyenleg",
+  tvmContributionsLabel: "Befizetések",
+};
+
+export const tvmEn = {
+  tvmTitle: "Time Value of Money",
+  tvmDesc: "Growth of an initial principal with regular contributions under compound interest.",
+  tvmMetricsLabel: "Results",
+  tvmControlsTitle: "Parameters",
+  tvmPrincipalLabel: "Initial principal",
+  tvmPaymentLabel: "Annual contribution",
+  tvmRateLabel: "Annual rate",
+  tvmYearsLabel: "Number of years",
+  tvmFinalBalance: "Final balance",
+  tvmContributions: "Total contributions",
+  tvmInterest: "Interest earned",
+  tvmChartTitle: "Balance over time",
+  tvmBalanceLabel: "Balance",
+  tvmContributionsLabel: "Contributions",
+};

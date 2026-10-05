@@ -130,6 +130,11 @@ export default function HestonView() {
   const pathsPendingRef = useRef<PathsInput | null>(null);
   const pendingPathsConfigRef = useRef<HestonControlsState | null>(null);
 
+  // Toggled when a worker is (re)created so the send effects re-run and
+  // re-dispatch to the fresh worker — notably after React StrictMode remounts.
+  const [pricingReady, setPricingReady] = useState(false);
+  const [pathsReady, setPathsReady] = useState(false);
+
   useEffect(() => {
     setS0(parseNumber(searchParams.get("s0"), 100, 20, 200));
     setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
@@ -340,6 +345,7 @@ export default function HestonView() {
     });
 
     pricingWorkerRef.current = worker;
+    pricingBusyRef.current = false;
 
     worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
       const response = event.data;
@@ -361,9 +367,12 @@ export default function HestonView() {
       }
     };
 
+    setPricingReady(true);
+
     return () => {
       worker.terminate();
       pricingWorkerRef.current = null;
+      setPricingReady(false);
     };
   }, [sendPricing]);
 
@@ -373,6 +382,7 @@ export default function HestonView() {
     });
 
     pathsWorkerRef.current = worker;
+    pathsBusyRef.current = false;
 
     worker.onmessage = (event: MessageEvent<HestonWorkerResponse>) => {
       const response = event.data;
@@ -393,9 +403,12 @@ export default function HestonView() {
       }
     };
 
+    setPathsReady(true);
+
     return () => {
       worker.terminate();
       pathsWorkerRef.current = null;
+      setPathsReady(false);
     };
   }, [sendPaths]);
 
@@ -407,7 +420,7 @@ export default function HestonView() {
     } else {
       sendPricing(debouncedPricingControls);
     }
-  }, [debouncedPricingControls, sendPricing]);
+  }, [debouncedPricingControls, sendPricing, pricingReady]);
 
   useEffect(() => {
     if (!pathsWorkerRef.current) return;
@@ -417,7 +430,7 @@ export default function HestonView() {
     } else {
       sendPaths(debouncedPathsControls);
     }
-  }, [debouncedPathsControls, sendPaths]);
+  }, [debouncedPathsControls, sendPaths, pathsReady]);
 
   const pathsParams = appliedPaths ?? debouncedPathsControls;
 

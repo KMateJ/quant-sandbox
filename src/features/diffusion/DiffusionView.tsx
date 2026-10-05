@@ -1,26 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import SectionCard from "../../components/SectionCard";
 import { diffusionSolution, makeTimes } from "./diffusion.math";
 import SliderField from "../../components/SliderField";
 import SliderDock, { type SliderDescriptor } from "../../components/SliderDock";
 import { useMediaQuery } from "../../components/useMediaQuery";
-import {
-  axisTickStyle,
-  chartMargin,
-  useChartTouchDismiss,
-  yAxisWidth,
-} from "../../components/chartConfig";
+import { LineChart, type ChartSeries } from "../../components/charts";
 import { useI18n } from "../../i18n";
 
 type ChartRow = {
@@ -76,7 +61,6 @@ function formatTimeLabel(t: number, language: "hu" | "en"): string {
 export default function DiffusionView() {
   const { t, language } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
 
@@ -149,6 +133,17 @@ export default function DiffusionView() {
     const padded = maxAmp * 1.15;
     return Number(Math.min(Math.max(padded, 1.2), 10).toFixed(2));
   }, [times, kappa, n]);
+
+  const chartSeries = useMemo<ChartSeries[]>(
+    () =>
+      times.map((time, index) => ({
+        key: formatTimeLabel(time, language),
+        label: formatTimeLabel(time, language),
+        color: lineColors[index % lineColors.length],
+        strokeWidth: 2.5,
+      })),
+    [times, language]
+  );
 
   const sliders: SliderDescriptor[] = [
     { key: "kappa", symbol: "κ", name: t("diffusionKappaLabel"), value: kappa, min: 0.0001, max: 0.05, step: 0.0005, format: (v) => v.toFixed(4), onChange: setKappa },
@@ -262,58 +257,17 @@ export default function DiffusionView() {
           className="chart-card"
           title={t("diffusionChartTitle")}
         >
-          <div className="chart-wrap" ref={dismissRef}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={chartData}
-                margin={chartMargin(isMobile)}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                <XAxis
-                  dataKey="x"
-                  type="number"
-                  domain={[0, 2 * Math.PI]}
-                  tickCount={isMobile ? 5 : 7}
-                  stroke="#94a3b8"
-                  tick={axisTickStyle(isMobile)}
-                />
-                <YAxis
-                  domain={[-amplitudeBound, amplitudeBound]}
-                  tickCount={7}
-                  stroke="#94a3b8"
-                  width={yAxisWidth(isMobile)}
-                  tick={axisTickStyle(isMobile)}
-                />
-                <Tooltip
-                  contentStyle={{
-                    background: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                  labelStyle={{ color: "#e2e8f0" }}
-                  formatter={(value, name) => {
-                    const numericValue =
-                      typeof value === "number" ? value : Number(value ?? 0);
-                    return [numericValue.toFixed(4), String(name)];
-                  }}
-                  labelFormatter={(label) =>
-                    `${t("diffusionTooltipX")} = ${Number(label).toFixed(3)}`
-                  }
-                />
-                <Legend />
-                {times.map((t, index) => (
-                  <Line
-                    key={t}
-                    type="monotone"
-                    dataKey={formatTimeLabel(t, language)}
-                    dot={false}
-                    stroke={lineColors[index % lineColors.length]}
-                    strokeWidth={2.5}
-                    isAnimationActive={false}
-                  />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="chart-wrap">
+            <LineChart
+              data={chartData}
+              xKey="x"
+              series={chartSeries}
+              xDomain={[0, 2 * Math.PI]}
+              yDomain={[-amplitudeBound, amplitudeBound]}
+              isMobile={isMobile}
+              tooltipLabel={(x) => `${t("diffusionTooltipX")} = ${x.toFixed(3)}`}
+              valueFormat={(v) => v.toFixed(4)}
+            />
           </div>
         </SectionCard>
 

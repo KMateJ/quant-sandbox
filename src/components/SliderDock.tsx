@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useChartInViewport } from "./chartConfig";
+import { sliderFill } from "./sliderFill";
 
 export type SliderDescriptor = {
   key: string;
@@ -59,6 +60,7 @@ export default function SliderDock({ sliders, chartSelector }: SliderDockProps) 
             max={active.max}
             step={active.step}
             value={active.value}
+            style={sliderFill(active.value, active.min, active.max)}
             onChange={(event) => active.onChange(Number(event.target.value))}
           />
           <span className="dock-current-value">{active.format(active.value)}</span>

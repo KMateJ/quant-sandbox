@@ -124,12 +124,11 @@ lightweight store so these modules read/write one dataset.
 - **Recommendation:** `zustand` (tiny, no boilerplate, fits current Context style).
 
 ### 3.5 i18n restructure
-Two options — pick one before building Portfolio & Risk:
-- **Option A (low churn):** keep the custom provider but switch to **namespaced** objects
-  (`t("portfolio.risk.title")`) and lazy-merge per category. Minimal new deps.
-- **Option B (robust):** migrate to `react-i18next` with per-feature JSON namespaces and lazy loading.
-  More upfront work, better long-term for 25 modules × 2 languages.
-- **Leaning:** Option A now, keep Option B as a later migration if the string count explodes.
+**Chosen & implemented: Option B — migrated to `i18next` + `react-i18next`.**
+- The existing `useI18n()` API (`language` / `setLanguage` / `t`) and the `src/Language/*.ts` tables are
+  preserved and fed to i18next as `resources`, so no call sites changed.
+- Namespaced per-feature resources and lazy loading can be layered on later as the string count grows.
+- Rejected Option A (custom provider) — i18next gives interpolation, plurals and a standard ecosystem.
 
 ### 3.6 Compute in workers
 Generalize the Heston worker pattern. Monte Carlo, Efficient Frontier optimisation, and path
@@ -311,6 +310,7 @@ states · chart colors · breakpoints · transitions · z-index layers. Extends 
 | Package | Purpose | Modules served |
 | --- | --- | --- |
 | `zustand` | shared market-data store | Portfolio & Risk, CAPM |
+| `i18next` + `react-i18next` | i18n runtime (installed) | all modules |
 | `visx` (`@visx/*`) | primary charting (replaces Recharts) | all charted modules |
 | `uplot` | fast dense path rendering | Brownian, GBM, Monte Carlo |
 | `comlink` | ergonomic web-worker RPC | Monte Carlo, Frontier, GBM |
@@ -396,7 +396,7 @@ Building these first prevents re-implementing the same math per module.
 ## 9. Open questions (decide before Phase 0)
 
 1. **Charts:** `visx` as primary (+ `uPlot` for paths), or go batteries-included with `ECharts`?
-2. **i18n:** stay custom-namespaced (Option A) or migrate to `react-i18next` (Option B)?
+2. ~~**i18n:** custom vs. `react-i18next`.~~ **Resolved:** migrated to `i18next` (Option B).
 3. **State:** adopt `zustand` globally, or only for the shared market-data store?
 4. **Data input UX:** how do users enter asset returns — manual table, presets, or
    uploaded/synthetic series? Affects Portfolio & Risk design.
@@ -410,10 +410,11 @@ Building these first prevents re-implementing the same math per module.
 
 ## 10. Immediate next actions (Phase 0, concrete)
 
-- [ ] Build `AppShell` + `TopNavigation` + registry-driven `Sidebar` (+ mobile drawer), replacing the
+- [x] Build `AppShell` + `TopNavigation` + registry-driven `Sidebar` (+ mobile drawer), replacing the
       centered `.page-container`.
-- [ ] Add the core primitives (`PageHeader`, `Workspace`, `Panel`, `ControlGroup`, `Tabs`,
-      `InfoTooltip`, `Popover`, `ChartContainer`).
+- [x] Add the core primitives (`PageHeader`, `Workspace`, `Panel`, `ControlGroup`, `Tabs`,
+      `InfoTooltip`, `Popover`, `ChartContainer`). Added `HelpDrawer` too; barrels in
+      `components/layout/index.ts` + `components/ui/index.ts`; styled in `styles/_primitives.scss`.
 - [ ] Expand `tokens` (dial radii down, add z-index layers, breakpoints, chart colors, control heights).
 - [ ] Chart spike: add `visx`, build `src/components/charts/` wrappers, migrate **one** existing module
       (e.g. Payoff Lab) off Recharts to validate the API.

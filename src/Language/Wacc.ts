@@ -1,0 +1,31 @@
+export const waccHu = {
+  waccTitle: "Súlyozott tőkeköltség (WACC)",
+  waccDesc: "Hogyan változik a WACC a tőkeáttétel függvényében, az adópajzs figyelembevételével.",
+  waccMetricsLabel: "Eredmények",
+  waccControlsTitle: "Paraméterek",
+  waccCostEquityLabel: "ke (saját tőke költség)",
+  waccCostDebtLabel: "kd (idegen tőke költség)",
+  waccTaxLabel: "Társasági adó",
+  waccDebtRatioLabel: "Idegen arány (D/V)",
+  waccValue: "WACC",
+  waccAfterTaxDebt: "Adózott hitelköltség",
+  waccEquityWeight: "Saját tőke súly",
+  waccChartTitle: "WACC a tőkeáttétel függvényében",
+  waccLabel: "WACC",
+};
+
+export const waccEn = {
+  waccTitle: "Weighted Average Cost of Capital",
+  waccDesc: "How the WACC changes with leverage, accounting for the debt tax shield.",
+  waccMetricsLabel: "Results",
+  waccControlsTitle: "Parameters",
+  waccCostEquityLabel: "ke (cost of equity)",
+  waccCostDebtLabel: "kd (cost of debt)",
+  waccTaxLabel: "Corporate tax",
+  waccDebtRatioLabel: "Debt ratio (D/V)",
+  waccValue: "WACC",
+  waccAfterTaxDebt: "After-tax cost of debt",
+  waccEquityWeight: "Equity weight",
+  waccChartTitle: "WACC versus leverage",
+  waccLabel: "WACC",
+};

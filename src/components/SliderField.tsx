@@ -1,3 +1,5 @@
+import { sliderFill } from "./sliderFill";
+
 type SliderFieldProps = {
   label: string;
   min: number;
@@ -33,6 +35,7 @@ export default function SliderField({
         max={max}
         step={step}
         value={value}
+        style={sliderFill(value, min, max)}
         onChange={(e) => onChange(Number(e.target.value))}
       />
 

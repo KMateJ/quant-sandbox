@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { GuideId, GuideMeta } from "./guide.types";
+import { guideMeta } from "./guide.meta";
 import InstrumentsGuide from "./guides/InstrumentsGuide";
 import RiskNeutralGuide from "./guides/RiskNeutralGuide";
 import DeltaHedgingGuide from "./guides/DeltaHedgingGuide";
@@ -8,45 +9,14 @@ type RegistryEntry = GuideMeta & {
   render: () => ReactNode;
 };
 
+const renderers: Record<GuideId, () => ReactNode> = {
+  instruments: () => <InstrumentsGuide />,
+  "risk-neutral": () => <RiskNeutralGuide />,
+  "delta-hedging": () => <DeltaHedgingGuide />,
+};
+
 export function getGuideRegistry(): RegistryEntry[] {
-  return [
-    {
-      id: "instruments",
-      title: {
-        hu: "Milyen pénzügyi eszközökkel foglalkozunk?",
-        en: "What financial instruments are we working with?",
-      },
-      description: {
-        hu: "Call, put, forward és a lejáratkori kifizetés intuitív bevezetése a Payoff Lab alapján.",
-        en: "An intuitive introduction to calls, puts, forwards and terminal payoff using the Payoff Lab.",
-      },
-      render: () => <InstrumentsGuide />,
-    },
-    {
-      id: "risk-neutral",
-      title: {
-        hu: "Mi az a kockázatsemleges mérték?",
-        en: "What is the risk-neutral measure?",
-      },
-      description: {
-        hu: "Arbitrázs, fair ár, binomiális modell és az átmenet a valós mértéktől a kockázatsemlegeshez.",
-        en: "Arbitrage, fair pricing, the binomial model, and the transition from the real-world measure to the risk-neutral one.",
-      },
-      render: () => <RiskNeutralGuide />,
-    },
-    {
-      id: "delta-hedging",
-      title: {
-        hu: "Mi az a delta hedgelés?",
-        en: "What is delta hedging?",
-      },
-      description: {
-        hu: "Replikáló portfólió, binomiális delta és az út a folytonos modell felé.",
-        en: "Replicating portfolios, binomial delta, and the road toward the continuous-time model.",
-      },
-      render: () => <DeltaHedgingGuide />,
-    },
-  ];
+  return guideMeta.map((meta) => ({ ...meta, render: renderers[meta.id] }));
 }
 
 export function isGuideId(value: string | null): value is GuideId {

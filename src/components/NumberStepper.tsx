@@ -1,3 +1,5 @@
+import { sliderFill } from "./sliderFill";
+
 type NumberStepperProps = {
   label: string;
   value: number;
@@ -46,6 +48,7 @@ export default function NumberStepper({
           max={max}
           step={step}
           value={value}
+          style={sliderFill(value, min, max)}
           onChange={(e) => onChange(Number(e.target.value))}
         />
 

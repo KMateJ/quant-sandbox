@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useI18n } from "../../../i18n";
 import { useChartInViewport } from "../../../components/chartConfig";
+import { sliderFill } from "../../../components/sliderFill";
 import type {
   Direction,
   InstrumentType,
@@ -392,6 +393,7 @@ export default function PayoffDock({
               max={activeField.max}
               step={activeField.step}
               value={activeField.value}
+              style={sliderFill(activeField.value, activeField.min, activeField.max)}
               onChange={(event) =>
                 commitLeg(activeField.patch(Number(event.target.value)))
               }

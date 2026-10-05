@@ -43,6 +43,7 @@ before large changes.
 ## Tech stack
 
 - React 19 + TypeScript (strict) · Vite · React Router 7
+- i18n: `i18next` + `react-i18next` (resources from `src/Language/*.ts`, accessed via `useI18n()`)
 - Charts: migrating off Recharts → `visx` (+ `uPlot` for dense paths) behind `src/components/charts/`
 - Styling: SCSS + CSS custom properties for themeable tokens (`src/styles/tokens`)
 - Math rendering: KaTeX

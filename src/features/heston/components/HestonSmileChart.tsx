@@ -1,21 +1,6 @@
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import SectionCard from "../../../components/SectionCard";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import {
-  axisTickStyle,
-  chartMargin,
-  useChartTouchDismiss,
-  yAxisWidth,
-} from "../../../components/chartConfig";
+import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { SmilePoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
 
@@ -23,6 +8,11 @@ type Props = {
   data: SmilePoint[];
   strikeRatio: number;
 };
+
+const series: ChartSeries[] = [
+  { key: "bsIv", label: "BS implied vol", color: "#3b82f6" },
+  { key: "hestonIv", label: "Heston implied vol", color: "#f59e0b" },
+];
 
 export default function HestonSmileChart({ data, strikeRatio }: Props) {
   const minIv =
@@ -39,59 +29,26 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
   const yMax = Number((maxIv + 0.03).toFixed(4));
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
 
   return (
     <SectionCard
       className="chart-card"
       title={t("hestonSmileTitle")}
     >
-      <div className="chart-wrap" ref={dismissRef}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={chartMargin(isMobile)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-            <XAxis dataKey="moneyness" stroke="#94a3b8" tick={axisTickStyle(isMobile)} />
-            <YAxis
-              stroke="#94a3b8"
-              domain={[yMin, yMax]}
-              width={yAxisWidth(isMobile)}
-              tick={axisTickStyle(isMobile)}
-            />
-            <ReferenceLine
-              x={strikeRatio}
-              stroke="#94a3b8"
-              strokeDasharray="4 4"
-            />
-            <Tooltip
-              contentStyle={{
-                background: "#1e293b",
-                border: "1px solid #475569",
-                borderRadius: "8px",
-              }}
-              labelStyle={{ color: "#e2e8f0" }}
-              formatter={(value, name) => {
-                const numericValue =
-                  typeof value === "number" ? value : Number(value ?? 0);
-                return [numericValue.toFixed(4), String(name)];
-              }}
-              labelFormatter={(label) => `K / S₀ = ${label}`}
-            />
-            <Line
-              dataKey="bsIv"
-              name="BS implied vol"
-              stroke="#3b82f6"
-              dot={false}
-              isAnimationActive={false}
-            />
-            <Line
-              dataKey="hestonIv"
-              name="Heston implied vol"
-              stroke="#f59e0b"
-              dot={false}
-              isAnimationActive={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+      <div className="chart-wrap">
+        <LineChart
+          data={data}
+          xKey="moneyness"
+          series={series}
+          yDomain={[yMin, yMax]}
+          referenceLines={[
+            { axis: "x", value: strikeRatio, color: "#94a3b8", dash: "4 4" },
+          ]}
+          isMobile={isMobile}
+          legend={false}
+          tooltipLabel={(x) => `K / S₀ = ${x}`}
+          valueFormat={(v) => v.toFixed(4)}
+        />
       </div>
     </SectionCard>
   );

@@ -1,16 +1,6 @@
-import { useEffect, useState } from "react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useEffect, useMemo, useState } from "react";
 import SectionCard from "../../../components/SectionCard";
-import { useChartTouchDismiss } from "../../../components/chartConfig";
+import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { HestonPathPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
 
@@ -35,7 +25,6 @@ export default function HestonPathsChart({
   strike,
 }: Props) {
   const { t } = useI18n();
-  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth <= 640 : false
   );
@@ -49,63 +38,36 @@ export default function HestonPathsChart({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  const series = useMemo<ChartSeries[]>(
+    () =>
+      pathKeys.map((key, index) => ({
+        key,
+        label: key,
+        color: lineColors[index % lineColors.length],
+        strokeWidth: 2,
+      })),
+    [pathKeys]
+  );
+
   return (
     <SectionCard
       className="chart-card"
       title={t("hestonStockPathsTitle")}
     >
-      <div className="chart-wrap" ref={dismissRef}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{
-                top: 8,
-                right: isMobile ? 4 : 12,
-                left: isMobile ? -24 : -8,
-                bottom: isMobile ? 28 : 8,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-              <XAxis
-                dataKey="t"
-                stroke="#94a3b8"
-                tick={{ fontSize: isMobile ? 11 : 12 }}
-                minTickGap={isMobile ? 24 : 12}
-              />
-              <YAxis
-                stroke="#94a3b8"
-                tick={{ fontSize: isMobile ? 11 : 12 }}
-                width={isMobile ? 36 : 48}
-              />
-              <ReferenceLine y={strike} stroke="#94a3b8" strokeDasharray="4 4" />
-              <Tooltip
-                contentStyle={{
-                  background: "#1e293b",
-                  border: "1px solid #475569",
-                  borderRadius: "8px",
-                }}
-                labelStyle={{ color: "#e2e8f0" }}
-                formatter={(value, name) => {
-                  const numericValue =
-                    typeof value === "number" ? value : Number(value ?? 0);
-                  return [numericValue.toFixed(3), String(name)];
-                }}
-                labelFormatter={(label) => `t = ${label}`}
-              />
-              {pathKeys.map((key, index) => (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  dot={false}
-                  stroke={lineColors[index % lineColors.length]}
-                  strokeWidth={2}
-                  isAnimationActive={false}
-                />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+      <div className="chart-wrap">
+        <LineChart
+          data={data}
+          xKey="t"
+          series={series}
+          referenceLines={[
+            { axis: "y", value: strike, color: "#94a3b8", dash: "4 4" },
+          ]}
+          isMobile={isMobile}
+          legend={false}
+          tooltipLabel={(x) => `t = ${x}`}
+          valueFormat={(v) => v.toFixed(3)}
+        />
+      </div>
     </SectionCard>
   );
 }

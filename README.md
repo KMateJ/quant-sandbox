@@ -84,7 +84,7 @@ The visualization illustrates how diffusion damps higher-frequency components ov
 
 - React
 - TypeScript
-- Recharts
+- visx (SVG charting)
 - Custom SVG visualizations
 
 The project focuses on **clarity and educational value** rather than production-level architecture.

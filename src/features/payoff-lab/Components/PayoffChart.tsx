@@ -1,24 +1,7 @@
 import { useMemo } from "react";
-import {
-  Area,
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import SectionCard from "../../../components/SectionCard";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import {
-  axisTickStyle,
-  chartMargin,
-  useChartTouchDismiss,
-  yAxisWidth,
-} from "../../../components/chartConfig";
+import { LineChart, type ChartReferenceLine, type ChartSeries } from "../../../components/charts";
 import type { PayoffChartPoint, ViewMode } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
 import { useI18n } from "../../../i18n";
@@ -54,7 +37,6 @@ export default function PayoffChart({
 }: PayoffChartProps) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const dismissRef = useChartTouchDismiss<HTMLDivElement>();
 
   const yDomain = useMemo(() => getYAxisDomain(chartData), [chartData]);
 
@@ -63,130 +45,82 @@ export default function PayoffChart({
     return Object.keys(chartData[0]).filter((key) => key.startsWith("leg-"));
   }, [chartData]);
 
+  const series = useMemo<ChartSeries[]>(() => {
+    const list: ChartSeries[] = [
+      {
+        key: "total",
+        label: t("payoffChartTotal"),
+        color: "#60a5fa",
+        strokeWidth: 3,
+        area: mode === "profit",
+        areaColor: "#ef4444",
+      },
+    ];
+
+    if (showComponents) {
+      componentKeys.forEach((key, index) => {
+        list.push({
+          key,
+          label: key.replace("leg-", t("payoffChartLegPrefix")),
+          color: lineColors[(index + 1) % lineColors.length],
+          strokeWidth: 2,
+          dash: "6 4",
+        });
+      });
+    }
+
+    if (syntheticOverlayActive) {
+      list.push({
+        key: "syntheticOverlay",
+        label: syntheticOverlayLabel ?? "Synthetic Overlay",
+        color: "#fbbf24",
+        strokeWidth: 2.5,
+        dash: "3 3",
+      });
+    }
+
+    return list;
+  }, [
+    t,
+    mode,
+    showComponents,
+    componentKeys,
+    syntheticOverlayActive,
+    syntheticOverlayLabel,
+  ]);
+
+  const referenceLines = useMemo<ChartReferenceLine[]>(() => {
+    const lines: ChartReferenceLine[] = strikes.map((strike) => ({
+      axis: "x",
+      value: strike,
+      color: "#94a3b8",
+      dash: "4 4",
+    }));
+    lines.push({
+      axis: "y",
+      value: 0,
+      color: mode === "profit" ? "#ef4444" : "#64748b",
+      width: mode === "profit" ? 2.5 : 1.5,
+      dash: mode === "profit" ? undefined : "4 4",
+    });
+    return lines;
+  }, [strikes, mode]);
+
   return (
-    <SectionCard
-      className="chart-card"
-      title={t("payoffChartTitle")}
-    >
-      <div className="chart-wrap" ref={dismissRef}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={chartData}
-              margin={chartMargin(isMobile)}
-            >
-              <defs>
-                <linearGradient id="profitZeroGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#ef4444" stopOpacity={0.22} />
-                  <stop offset="100%" stopColor="#ef4444" stopOpacity={0.02} />
-                </linearGradient>
-              </defs>
-
-              <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-
-              <XAxis
-                dataKey="S"
-                type="number"
-                domain={xDomain}
-                tickCount={isMobile ? 5 : 8}
-                stroke="#94a3b8"
-                tick={axisTickStyle(isMobile)}
-              />
-
-              <YAxis
-                domain={yDomain}
-                tickCount={7}
-                stroke="#94a3b8"
-                width={yAxisWidth(isMobile)}
-                tick={axisTickStyle(isMobile)}
-              />
-
-              {strikes.map((strike) => (
-                <ReferenceLine
-                  key={strike}
-                  x={strike}
-                  stroke="#94a3b8"
-                  strokeDasharray="4 4"
-                />
-              ))}
-
-              <ReferenceLine
-                y={0}
-                stroke={mode === "profit" ? "#ef4444" : "#64748b"}
-                strokeWidth={mode === "profit" ? 2.5 : 1.5}
-                strokeDasharray={mode === "profit" ? "" : "4 4"}
-              />
-
-              <Tooltip
-                contentStyle={{
-                  background: "#1e293b",
-                  border: "1px solid #475569",
-                  borderRadius: "8px",
-                }}
-                labelStyle={{ color: "#e2e8f0" }}
-                formatter={(value, name) => {
-                  const numericValue =
-                    typeof value === "number" ? value : Number(value ?? 0);
-                  return [numericValue.toFixed(3), String(name)];
-                }}
-                labelFormatter={(label) => `${t("payoffChartTooltipLabel")}${label}`}
-              />
-
-              <Legend />
-
-              {mode === "profit" && (
-                <Area
-                  type="monotone"
-                  dataKey="total"
-                  name=""
-                  stroke="none"
-                  fill="url(#profitZeroGradient)"
-                  fillOpacity={1}
-                  baseLine={0}
-                  isAnimationActive={false}
-                  legendType="none"
-                />
-              )}
-
-              <Line
-                type="monotone"
-                dataKey="total"
-                name={t("payoffChartTotal")}
-                dot={false}
-                stroke="#60a5fa"
-                strokeWidth={3}
-                isAnimationActive={false}
-              />
-
-              {showComponents &&
-                componentKeys.map((key, index) => (
-                  <Line
-                    key={key}
-                    type="monotone"
-                    dataKey={key}
-                    name={key.replace("leg-", t("payoffChartLegPrefix"))}
-                    dot={false}
-                    stroke={lineColors[(index + 1) % lineColors.length]}
-                    strokeWidth={2}
-                    strokeDasharray="6 4"
-                    isAnimationActive={false}
-                  />
-                ))}
-
-              {syntheticOverlayActive && (
-                <Line
-                  type="monotone"
-                  dataKey="syntheticOverlay"
-                  name={syntheticOverlayLabel ?? "Synthetic Overlay"}
-                  dot={false}
-                  stroke="#fbbf24"
-                  strokeWidth={2.5}
-                  strokeDasharray="3 3"
-                  isAnimationActive={false}
-                />
-              )}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+    <SectionCard className="chart-card" title={t("payoffChartTitle")}>
+      <div className="chart-wrap">
+        <LineChart
+          data={chartData}
+          xKey="S"
+          series={series}
+          xDomain={xDomain}
+          yDomain={yDomain}
+          referenceLines={referenceLines}
+          isMobile={isMobile}
+          tooltipLabel={(x) => `${t("payoffChartTooltipLabel")}${x}`}
+          valueFormat={(v) => v.toFixed(3)}
+        />
+      </div>
     </SectionCard>
   );
 }
