@@ -1,15 +1,30 @@
 import { useMemo, useState } from "react";
-import SliderField from "../../components/SliderField";
 import { useMediaQuery } from "../../components/useMediaQuery";
-import { LineChart } from "../../components/charts";
-import type { ChartReferenceLine, ChartSeries } from "../../components/charts";
 import { PageHeader, Workspace, Panel, ChartContainer } from "../../components/layout";
-import { ControlGroup, InfoTooltip } from "../../components/ui";
+import { Tabs, type TabItem } from "../../components/ui";
 import { useI18n } from "../../i18n";
-import { alpha, expectedReturn, marketRiskPremium, securityMarketLine } from "./capm.math";
+import {
+  alpha,
+  assetRows,
+  betaObservations,
+  expectedReturn,
+  marketRiskPremium,
+  observationCorrelation,
+  regressBeta,
+  PRESET_ASSETS,
+} from "./capm.math";
+import type { CapmTab } from "./capm.types";
+import CapmControls from "./components/CapmControls";
+import CapmResults from "./components/CapmResults";
+import SmlChart from "./components/SmlChart";
+import AssetsChart from "./components/AssetsChart";
+import AssetsTable from "./components/AssetsTable";
+import BetaChart from "./components/BetaChart";
+import BetaStats from "./components/BetaStats";
 
 const MAX_BETA = 2;
-const STEPS = 60;
+
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 export default function CapmView() {
   const { t } = useI18n();
@@ -19,29 +34,34 @@ export default function CapmView() {
   const [marketReturn, setMarketReturn] = useState(0.09);
   const [beta, setBeta] = useState(1.1);
   const [actualReturn, setActualReturn] = useState(0.1);
+  const [dispersion, setDispersion] = useState(0.03);
+  const [tab, setTab] = useState<CapmTab>("sml");
 
   const required = expectedReturn(riskFree, beta, marketReturn);
   const premium = marketRiskPremium(riskFree, marketReturn);
   const jensenAlpha = alpha(actualReturn, riskFree, beta, marketReturn);
 
-  const data = useMemo(
-    () => securityMarketLine(riskFree, marketReturn, MAX_BETA, STEPS),
-    [riskFree, marketReturn]
+  const rows = useMemo(() => {
+    const selected = { name: t("capmSelectedPoint"), beta, expectedReturn: actualReturn };
+    return assetRows([...PRESET_ASSETS, selected], riskFree, marketReturn);
+  }, [beta, actualReturn, riskFree, marketReturn, t]);
+
+  const observations = useMemo(
+    () => betaObservations(beta, marketReturn, riskFree, dispersion),
+    [beta, marketReturn, riskFree, dispersion]
   );
+  const regression = useMemo(() => regressBeta(observations), [observations]);
+  const corr = useMemo(() => observationCorrelation(observations), [observations]);
 
-  const yTop = expectedReturn(riskFree, MAX_BETA, marketReturn);
-  const xDomain: [number, number] = [0, MAX_BETA];
-  const yDomain: [number, number] = [Math.min(riskFree, 0), Math.max(yTop, actualReturn) * 1.05];
+  const handleDrag = (x: number, y: number) => {
+    setBeta(clamp(x, 0, MAX_BETA));
+    setActualReturn(clamp(y, 0, 0.3));
+  };
 
-  const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
-
-  const series: ChartSeries[] = [
-    { key: "ret", label: t("capmSmlLabel"), color: "#22c55e", strokeWidth: 2.5 },
-  ];
-  const referenceLines: ChartReferenceLine[] = [
-    { axis: "x", value: beta, color: "#38bdf8", dash: "4 4" },
-    { axis: "y", value: required, color: "#38bdf8", dash: "4 4" },
-    { axis: "y", value: actualReturn, color: "#f97316", dash: "2 4" },
+  const tabs: TabItem<CapmTab>[] = [
+    { id: "sml", label: t("capmTabSml") },
+    { id: "assets", label: t("capmTabAssets") },
+    { id: "beta", label: t("capmTabBeta") },
   ];
 
   return (
@@ -50,50 +70,69 @@ export default function CapmView() {
 
       <Workspace columns="sidebar">
         <Panel title={t("capmControlsTitle")}>
-          <div className="controls-grid">
-            <SliderField label={t("capmRiskFreeLabel")} min={0} max={0.1} step={0.0025} value={riskFree} onChange={setRiskFree} formatValue={pct} />
-            <SliderField label={t("capmMarketLabel")} min={0} max={0.2} step={0.005} value={marketReturn} onChange={setMarketReturn} formatValue={pct} />
-            <SliderField label={t("capmBetaLabel")} min={0} max={MAX_BETA} step={0.05} value={beta} onChange={setBeta} formatValue={(v) => v.toFixed(2)} />
-            <SliderField label={t("capmActualLabel")} min={0} max={0.25} step={0.005} value={actualReturn} onChange={setActualReturn} formatValue={pct} />
-          </div>
-
-          <ControlGroup label={t("capmMetricsLabel")}>
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-title">{t("capmExpectedReturn")}</div>
-                <div className="stat-value">{pct(required)}</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-title">{t("capmPremium")}</div>
-                <div className="stat-value">{pct(premium)}</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-title">
-                  {t("capmAlpha")}
-                  <InfoTooltip content={t("capmAlphaHelp")} />
-                </div>
-                <div className="stat-value">{pct(jensenAlpha)}</div>
-              </div>
-            </div>
-          </ControlGroup>
+          <CapmControls
+            riskFree={riskFree}
+            marketReturn={marketReturn}
+            beta={beta}
+            actualReturn={actualReturn}
+            required={required}
+            premium={premium}
+            jensenAlpha={jensenAlpha}
+            maxBeta={MAX_BETA}
+            onRiskFree={setRiskFree}
+            onMarketReturn={setMarketReturn}
+            onBeta={setBeta}
+            onActualReturn={setActualReturn}
+          />
+          {tab === "sml" && <p className="control-hint">{t("capmDragHint")}</p>}
         </Panel>
 
-        <ChartContainer title={t("capmChartTitle")}>
-          <div className="chart-wrap">
-            <LineChart
-              data={data}
-              xKey="beta"
-              series={series}
-              xDomain={xDomain}
-              yDomain={yDomain}
-              referenceLines={referenceLines}
-              isMobile={isMobile}
-              tooltipLabel={(x) => `${t("capmBetaLabel")} = ${x.toFixed(2)}`}
-              valueFormat={pct}
+        <div className="module-main">
+          <ChartContainer
+            title={t("capmChartTitle")}
+            actions={<Tabs<CapmTab> segmented items={tabs} value={tab} onChange={setTab} ariaLabel={t("capmChartTitle")} />}
+          >
+            <div className="chart-wrap">
+              {tab === "sml" && (
+                <SmlChart
+                  riskFree={riskFree}
+                  marketReturn={marketReturn}
+                  beta={beta}
+                  actualReturn={actualReturn}
+                  required={required}
+                  premium={premium}
+                  jensenAlpha={jensenAlpha}
+                  maxBeta={MAX_BETA}
+                  isMobile={isMobile}
+                  onDrag={handleDrag}
+                />
+              )}
+              {tab === "assets" && (
+                <AssetsChart riskFree={riskFree} marketReturn={marketReturn} rows={rows} maxBeta={MAX_BETA} isMobile={isMobile} />
+              )}
+              {tab === "beta" && (
+                <BetaChart observations={observations} regression={regression} isMobile={isMobile} />
+              )}
+            </div>
+          </ChartContainer>
+
+          {tab === "assets" && <AssetsTable rows={rows} />}
+          {tab === "beta" && (
+            <BetaStats regression={regression} correlation={corr} dispersion={dispersion} onDispersion={setDispersion} />
+          )}
+          {tab === "sml" && (
+            <CapmResults
+              rows={[
+                { label: t("capmExpectedReturn"), value: `${(required * 100).toFixed(1)}%` },
+                { label: t("capmActualReturnFull"), value: `${(actualReturn * 100).toFixed(1)}%` },
+                { label: t("capmAlpha"), value: `${jensenAlpha >= 0 ? "+" : ""}${(jensenAlpha * 100).toFixed(1)}%` },
+                { label: t("capmPremium"), value: `${(premium * 100).toFixed(1)}%` },
+              ]}
             />
-          </div>
-        </ChartContainer>
+          )}
+        </div>
       </Workspace>
     </>
   );
 }
+

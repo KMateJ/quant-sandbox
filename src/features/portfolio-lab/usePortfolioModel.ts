@@ -1,8 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  ASSET_PALETTE,
-  DEFAULT_ASSETS,
-  buildCov,
   capitalMarketLine,
   diversificationBenefit,
   frontierCurve,
@@ -15,24 +12,32 @@ import {
   riskContributions,
   withCash,
 } from "./portfolioLab.math";
-import type { Asset } from "./portfolioLab.types";
+import { usePortfolioUniverse } from "./PortfolioUniverseContext";
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
 /// State, handlers and derived risk/return model powering the Portfolio Lab view.
+/// Asset assumptions come from the shared portfolio universe; weights/cash/cloud are local.
 export function usePortfolioModel() {
-  const [assets, setAssets] = useState<Asset[]>(DEFAULT_ASSETS);
-  const [rawWeights, setRawWeights] = useState<number[]>(DEFAULT_ASSETS.map(() => 1 / DEFAULT_ASSETS.length));
-  const [rho, setRho] = useState(0.3);
-  const [riskFree, setRiskFree] = useState(0.03);
+  const universe = usePortfolioUniverse();
+  const { assets, mus, sigmas, cov, corr, corrValid, riskFree } = universe;
+
+  const [rawWeights, setRawWeights] = useState<number[]>(assets.map(() => 1 / assets.length));
   const [cashWeight, setCashWeight] = useState(0);
   const [cloudCount, setCloudCount] = useState(320);
   const [cloudSeed, setCloudSeed] = useState(1);
   const [showCloud, setShowCloud] = useState(true);
 
-  const mus = useMemo(() => assets.map((a) => a.mu), [assets]);
-  const sigmas = useMemo(() => assets.map((a) => a.sigma), [assets]);
-  const cov = useMemo(() => buildCov(sigmas, rho), [sigmas, rho]);
+  // Keep the local weight vector aligned with the shared asset list.
+  useEffect(() => {
+    setRawWeights((prev) => {
+      if (prev.length === assets.length) return prev;
+      if (prev.length < assets.length) {
+        return [...prev, ...assets.slice(prev.length).map(() => 1 / assets.length)];
+      }
+      return prev.slice(0, assets.length);
+    });
+  }, [assets.length]);
 
   const weights = useMemo(() => normalize(rawWeights), [rawWeights]);
   const riskyCurrent = portfolioMetrics(weights, mus, cov, riskFree);
@@ -42,16 +47,31 @@ export function usePortfolioModel() {
   const contributions = riskContributions(weights, cov);
   const diversification = diversificationBenefit(weights, sigmas, riskyCurrent.vol);
 
-  const frontier = useMemo(() => frontierCurve(mus, cov, 90), [mus, cov]);
+  const frontier = useMemo(() => {
+    try {
+      return frontierCurve(mus, cov, 90);
+    } catch {
+      return [];
+    }
+  }, [mus, cov]);
   const cloud = useMemo(
     () => (showCloud ? randomPortfolios(mus, cov, cloudCount, cloudSeed) : []),
     [mus, cov, cloudCount, cloudSeed, showCloud]
   );
-  const gmv = useMemo(() => portfolioPoint(gmvWeights(cov), mus, cov), [cov, mus]);
-  const tangency = useMemo(
-    () => portfolioPoint(maxSharpeWeights(mus, cov, riskFree), mus, cov),
-    [mus, cov, riskFree]
-  );
+  const gmv = useMemo(() => {
+    try {
+      return portfolioPoint(gmvWeights(cov), mus, cov);
+    } catch {
+      return { vol: 0, ret: 0 };
+    }
+  }, [cov, mus]);
+  const tangency = useMemo(() => {
+    try {
+      return portfolioPoint(maxSharpeWeights(mus, cov, riskFree), mus, cov);
+    } catch {
+      return { vol: 0, ret: 0 };
+    }
+  }, [mus, cov, riskFree]);
 
   const volMax = Math.max(...sigmas, tangency.vol, ...cloud.map((p) => p.vol)) * 1.08;
   const retMin = Math.min(0, riskFree, ...mus) * 0.5;
@@ -61,29 +81,30 @@ export function usePortfolioModel() {
   const setWeight = (i: number, v: number) =>
     setRawWeights((prev) => prev.map((w, j) => (j === i ? v : w)));
   const applyPreset = (target: number[]) => setRawWeights(target.map(clamp01));
-
-  const setAssetParam = (i: number, key: "mu" | "sigma", v: number) =>
-    setAssets((prev) => prev.map((a, j) => (j === i ? { ...a, [key]: v } : a)));
-  const setAssetName = (i: number, name: string) =>
-    setAssets((prev) => prev.map((a, j) => (j === i ? { ...a, name } : a)));
+  const applyEqual = () => applyPreset(assets.map(() => 1 / assets.length));
+  const applyMinVar = () => {
+    try {
+      applyPreset(gmvWeights(cov));
+    } catch {
+      /* invalid matrix — keep current weights */
+    }
+  };
+  const applyMaxSharpe = () => {
+    try {
+      applyPreset(maxSharpeWeights(mus, cov, riskFree));
+    } catch {
+      /* invalid matrix — keep current weights */
+    }
+  };
 
   const addAsset = () => {
-    setAssets((prev) => [
-      ...prev,
-      {
-        id: `asset-${Date.now()}`,
-        name: `Asset ${prev.length + 1}`,
-        color: ASSET_PALETTE[prev.length % ASSET_PALETTE.length],
-        mu: 0.1,
-        sigma: 0.2,
-      },
-    ]);
+    universe.addAsset();
     setRawWeights((prev) => [...prev, 1 / (prev.length + 1)]);
   };
 
   const removeAsset = (i: number) => {
-    if (assets.length <= 2) return;
-    setAssets((prev) => prev.filter((_, j) => j !== i));
+    if (!universe.canRemove) return;
+    universe.removeAsset(i);
     setRawWeights((prev) => prev.filter((_, j) => j !== i));
   };
 
@@ -93,7 +114,8 @@ export function usePortfolioModel() {
     weights,
     finalWeights,
     cashWeight,
-    rho,
+    corr,
+    corrValid,
     riskFree,
     mus,
     cov,
@@ -108,16 +130,22 @@ export function usePortfolioModel() {
     volMax,
     retMin,
     retMax,
-    canRemove: assets.length > 2,
+    canRemove: universe.canRemove,
     cloudCount,
     showCloud,
-    setRho,
-    setRiskFree,
+    setCorrelation: universe.setCorrelation,
+    resetCorr: universe.resetCorr,
+    applyCorrPreset: universe.applyCorrPreset,
+    repairCorr: universe.repairCorr,
+    setRiskFree: universe.setRiskFree,
     setCashWeight,
     setWeight,
     applyPreset,
-    setAssetParam,
-    setAssetName,
+    applyEqual,
+    applyMinVar,
+    applyMaxSharpe,
+    setAssetParam: universe.setAssetParam,
+    setAssetName: universe.setAssetName,
     addAsset,
     removeAsset,
     setCloudCount,

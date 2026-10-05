@@ -454,7 +454,6 @@ export default function PayoffView() {
       </div>
 
       <div className="view-main view-main--dock-tall">
-        <PayoffSummary legs={legs} mode={mode} />
         <PayoffChart
           chartData={chartData}
           strikes={strikes}
@@ -464,6 +463,7 @@ export default function PayoffView() {
           syntheticOverlayActive={mode === "payoff" && syntheticMatches.length > 0}
           syntheticOverlayLabel={primarySyntheticMatch?.label ?? null}
         />
+        <PayoffSummary legs={legs} mode={mode} />
         <PayoffExplanation />
       </div>
 

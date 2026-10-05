@@ -7,5 +7,7 @@ export type {
   LineChartProps,
   ScatterPoint,
   ScatterSeries,
+  ScatterBand,
+  ScatterAnnotation,
   ScatterChartProps,
 } from "./chart.types";

@@ -97,3 +97,45 @@ export function inverse(m: Matrix): Matrix {
 export function quadraticForm(w: Vector, m: Matrix): number {
   return dot(w, matVec(m, w));
 }
+
+/// Eigenvalues and eigenvectors of a symmetric matrix via the cyclic Jacobi method.
+/// `vectors` holds the eigenvectors as columns; `values[k]` matches column `k`.
+export function symmetricEig(m: Matrix, maxSweeps = 100): { values: Vector; vectors: Matrix } {
+  const n = m.length;
+  const a = m.map((row) => row.slice());
+  const v = identity(n);
+  for (let sweep = 0; sweep < maxSweeps; sweep++) {
+    let off = 0;
+    for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) off += a[p][q] * a[p][q];
+    if (off < 1e-24) break;
+    for (let p = 0; p < n; p++) {
+      for (let q = p + 1; q < n; q++) {
+        if (Math.abs(a[p][q]) < 1e-18) continue;
+        const theta = (a[q][q] - a[p][p]) / (2 * a[p][q]);
+        const sign = theta >= 0 ? 1 : -1;
+        const t = sign / (Math.abs(theta) + Math.sqrt(theta * theta + 1));
+        const c = 1 / Math.sqrt(t * t + 1);
+        const s = t * c;
+        for (let i = 0; i < n; i++) {
+          const aip = a[i][p];
+          const aiq = a[i][q];
+          a[i][p] = c * aip - s * aiq;
+          a[i][q] = s * aip + c * aiq;
+        }
+        for (let i = 0; i < n; i++) {
+          const api = a[p][i];
+          const aqi = a[q][i];
+          a[p][i] = c * api - s * aqi;
+          a[q][i] = s * api + c * aqi;
+        }
+        for (let i = 0; i < n; i++) {
+          const vip = v[i][p];
+          const viq = v[i][q];
+          v[i][p] = c * vip - s * viq;
+          v[i][q] = s * vip + c * viq;
+        }
+      }
+    }
+  }
+  return { values: a.map((row, i) => row[i]), vectors: v };
+}

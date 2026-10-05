@@ -515,6 +515,50 @@
   font-size: 0.78rem;
 }
 
+/* Labelled slider marks (e.g. Risk-free / Risky asset / Leveraged) */
+.slider-track-wrap {
+  position: relative;
+}
+
+.slider-ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.slider-tick {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  background: var(--border-hover);
+  border-radius: 1px;
+}
+
+.slider-marks {
+  position: relative;
+  margin-top: 8px;
+  height: 1.1em;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.slider-mark {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+
+  &:first-child {
+    transform: translateX(0);
+  }
+
+  &:last-child {
+    transform: translateX(-100%);
+  }
+}
+
 .toggle-button{
   display: none;
 }

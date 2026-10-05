@@ -2,7 +2,8 @@
 .app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  // Counter the global `#root { zoom: 0.9 }` so the shell fills the real viewport.
+  min-height: calc(100vh / 0.9);
 }
 
 // #region Top navigation

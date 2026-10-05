@@ -59,6 +59,38 @@ export type ScatterSeries = {
   /// Marker radius in pixels (ignored for line series).
   radius?: number;
   legend?: boolean;
+  /// Marker opacity (used to de-emphasise context series such as the cloud).
+  opacity?: number;
+  /// Markers can be grabbed and dragged; drag deltas are reported via onDrag.
+  draggable?: boolean;
+  /// Draw markers as a hollow ring (transparent fill) so overlapping points stay distinct.
+  hollow?: boolean;
+};
+
+/// Shaded vertical region between two x-values (e.g. lending vs borrowing).
+export type ScatterBand = {
+  from: number;
+  to: number;
+  color?: string;
+  label?: string;
+  labelColor?: string;
+  /// Fill opacity for the tint (defaults to 0.12).
+  opacity?: number;
+};
+
+/// Text label placed directly at a data coordinate on the plot.
+export type ScatterAnnotation = {
+  x: number;
+  y: number;
+  text: string;
+  /// Rotate the label (degrees) around its anchor, e.g. to sit along a sloped line.
+  rotate?: number;
+  fontSize?: number;
+  fontWeight?: number;
+  color?: string;
+  anchor?: "start" | "middle" | "end";
+  dx?: number;
+  dy?: number;
 };
 
 export type ScatterChartProps = {
@@ -66,10 +98,14 @@ export type ScatterChartProps = {
   xDomain?: [number, number];
   yDomain?: [number, number];
   referenceLines?: ChartReferenceLine[];
+  bands?: ScatterBand[];
+  annotations?: ScatterAnnotation[];
   isMobile?: boolean;
   legend?: boolean;
   xFormat?: (value: number) => string;
   yFormat?: (value: number) => string;
   xLabel?: string;
   yLabel?: string;
+  /// Fires with data coordinates while a draggable marker is being dragged.
+  onDrag?: (x: number, y: number) => void;
 };

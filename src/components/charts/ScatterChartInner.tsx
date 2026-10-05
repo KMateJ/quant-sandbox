@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Line as SvgLine } from "@visx/shape";
@@ -28,12 +28,15 @@ export default function ScatterChartInner({
   xDomain,
   yDomain,
   referenceLines = [],
+  bands = [],
+  annotations = [],
   isMobile = false,
   legend = true,
   xFormat,
   yFormat,
   xLabel,
   yLabel,
+  onDrag,
 }: Props) {
   const base = chartMargin(isMobile);
   const margin = {
@@ -68,10 +71,72 @@ export default function ScatterChartInner({
   const fmtX = xFormat ?? ((v: number) => v.toFixed(2));
   const fmtY = yFormat ?? ((v: number) => v.toFixed(2));
 
+  const svgRef = useRef<SVGSVGElement>(null);
+  const draggingRef = useRef(false);
+
+  useEffect(() => {
+    if (!onDrag) return;
+    const toData = (clientX: number, clientY: number) => {
+      const svg = svgRef.current;
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      const scaleX = rect.width ? width / rect.width : 1;
+      const scaleY = rect.height ? svgHeight / rect.height : 1;
+      const sx = (clientX - rect.left) * scaleX - margin.left;
+      const sy = (clientY - rect.top) * scaleY - margin.top;
+      onDrag(xScale.invert(sx), yScale.invert(sy));
+    };
+    const move = (e: MouseEvent) => {
+      if (!draggingRef.current) return;
+      e.preventDefault();
+      toData(e.clientX, e.clientY);
+    };
+    const up = () => {
+      draggingRef.current = false;
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+    };
+  }, [onDrag, xScale, yScale, margin.left, margin.top, width, svgHeight]);
+
   return (
     <>
-      <svg width={width} height={svgHeight}>
+      <svg ref={svgRef} width={width} height={svgHeight}>
         <Group left={margin.left} top={margin.top}>
+          {bands.map((b, i) => {
+            const x0 = xScale(b.from);
+            const x1 = xScale(b.to);
+            return (
+              <rect
+                key={`band-${i}`}
+                x={Math.min(x0, x1)}
+                y={0}
+                width={Math.abs(x1 - x0)}
+                height={innerH}
+                fill={b.color ?? CHART_COLORS.grid}
+                opacity={b.opacity ?? 0.12}
+              />
+            );
+          })}
+          {bands.map((b, i) =>
+            b.label ? (
+              <text
+                key={`band-label-${i}`}
+                x={(xScale(b.from) + xScale(b.to)) / 2}
+                y={12}
+                textAnchor="middle"
+                fill={b.labelColor ?? CHART_COLORS.axis}
+                fontSize={isMobile ? 10 : 11}
+                fontWeight={600}
+              >
+                {b.label}
+              </text>
+            ) : null
+          )}
+
           <GridRows scale={yScale} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
           <GridColumns scale={xScale} height={innerH} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
 
@@ -108,10 +173,12 @@ export default function ScatterChartInner({
                   cx={xScale(p.x)}
                   cy={yScale(p.y)}
                   r={s.radius ?? 5}
-                  fill={p.color ?? s.color}
-                  stroke={CHART_COLORS.tooltipBg}
-                  strokeWidth={1.5}
-                  style={{ cursor: "pointer" }}
+                  fill={s.hollow ? "transparent" : p.color ?? s.color}
+                  fillOpacity={s.opacity ?? 1}
+                  stroke={s.hollow ? p.color ?? s.color : CHART_COLORS.tooltipBg}
+                  strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : 1.5}
+                  style={{ cursor: s.draggable ? "grab" : "pointer" }}
+                  onMouseDown={s.draggable ? () => { draggingRef.current = true; } : undefined}
                   onMouseEnter={() =>
                     tip.showTooltip({
                       tooltipLeft: margin.left + xScale(p.x),
@@ -123,6 +190,26 @@ export default function ScatterChartInner({
                 />
               ))
             )}
+
+          {annotations.map((a, i) => (
+            <text
+              key={`ann-${i}`}
+              x={xScale(a.x) + (a.dx ?? 0)}
+              y={yScale(a.y) + (a.dy ?? 0)}
+              textAnchor={a.anchor ?? "start"}
+              fill={a.color ?? CHART_COLORS.tooltipText}
+              fontSize={a.fontSize ?? (isMobile ? 10 : 12)}
+              fontWeight={a.fontWeight ?? 600}
+              transform={
+                a.rotate
+                  ? `rotate(${a.rotate} ${xScale(a.x) + (a.dx ?? 0)} ${yScale(a.y) + (a.dy ?? 0)})`
+                  : undefined
+              }
+              style={{ pointerEvents: "none" }}
+            >
+              {a.text}
+            </text>
+          ))}
 
           <AxisBottom top={innerH} scale={xScale} numTicks={isMobile ? 5 : 8} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtX(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })} />
           <AxisLeft scale={yScale} numTicks={7} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtY(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />

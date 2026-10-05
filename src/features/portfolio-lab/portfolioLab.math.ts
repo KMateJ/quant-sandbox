@@ -1,4 +1,4 @@
-import { dot, inverse, matVec } from "../../lib/math/matrix";
+import { dot, inverse, matVec, symmetricEig } from "../../lib/math/matrix";
 import {
   minVarianceWeights,
   portfolioReturn,
@@ -20,11 +20,103 @@ export const DEFAULT_ASSETS: Asset[] = [
 /// Palette for newly added assets, cycled by index.
 export const ASSET_PALETTE = ["#60a5fa", "#f59e0b", "#a78bfa", "#34d399", "#f472b6", "#f87171", "#22d3ee", "#facc15"];
 
-/// N×N covariance matrix from per-asset volatilities and a single shared correlation.
-export function buildCov(sigmas: number[], rho: number): number[][] {
+/// Default pairwise correlations for the starting 5-asset universe.
+export const DEFAULT_CORR: number[][] = [
+  [1, 0.68, 0.55, 0.61, -0.22],
+  [0.68, 1, 0.63, 0.7, -0.18],
+  [0.55, 0.63, 1, 0.58, -0.12],
+  [0.61, 0.7, 0.58, 1, -0.2],
+  [-0.22, -0.18, -0.12, -0.2, 1],
+];
+
+const clampCorr = (v: number) => Math.max(-0.999, Math.min(0.999, v));
+
+/// N×N covariance matrix from per-asset volatilities and a correlation matrix: Σij = ρij σi σj.
+export function covFromCorr(sigmas: number[], corr: number[][]): number[][] {
   return sigmas.map((si, i) =>
-    sigmas.map((sj, j) => (i === j ? si * si : rho * si * sj))
+    sigmas.map((sj, j) => (i === j ? si * si : corr[i][j] * si * sj))
   );
+}
+
+/// N×N identity correlation matrix (all off-diagonal entries zero).
+export function identityCorr(n: number): number[][] {
+  return Array.from({ length: n }, (_, i) =>
+    Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))
+  );
+}
+
+/// N×N correlation matrix with a single shared off-diagonal value.
+export function uniformCorr(n: number, rho: number): number[][] {
+  return Array.from({ length: n }, (_, i) =>
+    Array.from({ length: n }, (_, j) => (i === j ? 1 : rho))
+  );
+}
+
+/// Correlation matrix sized to `n`, reusing DEFAULT_CORR where the indices overlap.
+export function defaultCorr(n: number): number[][] {
+  const out = identityCorr(n);
+  const d = DEFAULT_CORR.length;
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < n; j++)
+      if (i !== j && i < d && j < d) out[i][j] = DEFAULT_CORR[i][j];
+  return out;
+}
+
+/// Copy of `corr` with entry (i,j) set to `v` and mirrored to (j,i); diagonal stays 1.
+export function setCorrEntry(corr: number[][], i: number, j: number, v: number): number[][] {
+  if (i === j) return corr;
+  const c = clampCorr(v);
+  const next = corr.map((row) => row.slice());
+  next[i][j] = c;
+  next[j][i] = c;
+  return next;
+}
+
+/// Grow a correlation matrix by one asset: new row/column, diagonal 1, off-diagonal `fill`.
+export function appendCorr(corr: number[][], fill = 0.2): number[][] {
+  const n = corr.length;
+  const next = corr.map((row) => [...row, fill]);
+  next.push([...new Array<number>(n).fill(fill), 1]);
+  return next;
+}
+
+/// Remove asset `idx` from a correlation matrix, preserving the remaining pairwise values.
+export function removeCorr(corr: number[][], idx: number): number[][] {
+  return corr.filter((_, i) => i !== idx).map((row) => row.filter((_, j) => j !== idx));
+}
+
+/// Smallest eigenvalue of a symmetric matrix (negative ⇒ not positive semidefinite).
+export function minEigenvalue(m: number[][]): number {
+  return Math.min(...symmetricEig(m).values);
+}
+
+/// A correlation matrix is valid when it is positive semidefinite (no negative eigenvalues).
+export function isValidCorrelation(corr: number[][]): boolean {
+  return minEigenvalue(corr) > -1e-8;
+}
+
+/// Project an invalid correlation matrix to a nearby valid one (eigenvalue clipping plus
+/// unit-diagonal renormalisation), preserving the user's inputs as closely as practical.
+export function nearestCorrelation(corr: number[][], iterations = 12): number[][] {
+  const n = corr.length;
+  const eps = 1e-8;
+  let a = corr.map((row) => row.slice());
+  for (let it = 0; it < iterations; it++) {
+    const { values, vectors } = symmetricEig(a);
+    const next = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let k = 0; k < n; k++) {
+      const lam = Math.max(values[k], eps);
+      for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++) next[i][j] += lam * vectors[i][k] * vectors[j][k];
+    }
+    const d = next.map((row, i) => Math.sqrt(row[i] > 0 ? row[i] : eps));
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++)
+        next[i][j] = i === j ? 1 : clampCorr(next[i][j] / (d[i] * d[j]));
+    a = next;
+    if (isValidCorrelation(a)) break;
+  }
+  return a;
 }
 
 /// Rescale weights so they sum to 1 (falls back to equal weights if the sum is ~0).

@@ -10,7 +10,6 @@ export const portfolioLabHu = {
   portfolioSigma1Label: "σ₁ (1. eszköz volatilitás)",
   portfolioMu2Label: "μ₂ (2. eszköz hozam)",
   portfolioSigma2Label: "σ₂ (2. eszköz volatilitás)",
-  portfolioRhoLabel: "ρ (korreláció)",
   portfolioW1Label: "1. eszköz súlya",
   portfolioReturn: "Portfólió hozam",
   portfolioVol: "Portfólió volatilitás",
@@ -26,6 +25,7 @@ export const portfolioLabHu = {
   portfolioSharpe: "Sharpe-mutató",
   portfolioDiversification: "Diverzifikációs előny",
   portfolioCloudLabel: "Véletlen portfóliók",
+  portfolioAssetPointsLabel: "Eszközök",
   portfolioCloudCountLabel: "Minta száma",
   portfolioCloudShow: "Megjelenítés",
   portfolioCloudHide: "Elrejtés",
@@ -46,6 +46,19 @@ export const portfolioLabHu = {
   portfolioColVol: "Volatilitás",
   portfolioColWeight: "Súly",
   portfolioColRiskShare: "Kockázati hányad",
+  portfolioTabRiskReturn: "Kockázat vs. hozam",
+  portfolioTabCorrelations: "Korrelációk",
+  portfolioTabRiskDecomp: "Kockázati bontás",
+  portfolioCorrMatrixTitle: "Korrelációs mátrix",
+  portfolioCorrReset: "Alaphelyzet",
+  portfolioCorrLow: "Alacsony korreláció",
+  portfolioCorrHigh: "Magas korreláció",
+  portfolioCorrIdentity: "Egységmátrix",
+  portfolioCorrRepair: "Mátrix javítása",
+  portfolioCorrInvalid:
+    "Érvénytelen korrelációs mátrix — a megadott páronkénti korrelációk együtt nem alkotnak konzisztens korrelációs mátrixot.",
+  portfolioCorrExplain:
+    "Az alacsonyabb korreláció kitágítja a lehetséges halmazt és csökkentheti az elérhető portfólió-volatilitást: a diverzifikáció nemcsak az egyedi volatilitástól függ, hanem attól is, hogyan mozognak együtt az eszközök.",
 };
 
 export const portfolioLabEn = {
@@ -60,7 +73,6 @@ export const portfolioLabEn = {
   portfolioSigma1Label: "σ₁ (asset 1 volatility)",
   portfolioMu2Label: "μ₂ (asset 2 return)",
   portfolioSigma2Label: "σ₂ (asset 2 volatility)",
-  portfolioRhoLabel: "ρ (correlation)",
   portfolioW1Label: "Asset 1 weight",
   portfolioReturn: "Portfolio return",
   portfolioVol: "Portfolio volatility",
@@ -76,6 +88,7 @@ export const portfolioLabEn = {
   portfolioSharpe: "Sharpe ratio",
   portfolioDiversification: "Diversification benefit",
   portfolioCloudLabel: "Random portfolios",
+  portfolioAssetPointsLabel: "Assets",
   portfolioCloudCountLabel: "Sample count",
   portfolioCloudShow: "Show",
   portfolioCloudHide: "Hide",
@@ -96,4 +109,17 @@ export const portfolioLabEn = {
   portfolioColVol: "Volatility",
   portfolioColWeight: "Weight",
   portfolioColRiskShare: "Risk share",
+  portfolioTabRiskReturn: "Risk vs Return",
+  portfolioTabCorrelations: "Correlations",
+  portfolioTabRiskDecomp: "Risk decomposition",
+  portfolioCorrMatrixTitle: "Correlation matrix",
+  portfolioCorrReset: "Reset",
+  portfolioCorrLow: "Low correlation",
+  portfolioCorrHigh: "High correlation",
+  portfolioCorrIdentity: "Identity",
+  portfolioCorrRepair: "Repair matrix",
+  portfolioCorrInvalid:
+    "Invalid correlation matrix — the selected pairwise correlations are not jointly consistent.",
+  portfolioCorrExplain:
+    "Lower correlations expand the feasible opportunity set and can reduce achievable portfolio volatility — diversification depends not only on each asset's volatility, but on how the assets move together.",
 };

@@ -225,11 +225,11 @@ export const modules: ModuleDef[] = [
     category: "portfolio",
     status: "beta",
     seo: {
-      title: "Efficient Frontier",
+      title: "Portfolio Optimization",
       description:
-        "Interactive three-asset efficient frontier: expected returns, volatilities, correlation and the global minimum-variance portfolio.",
+        "Interactive Markowitz portfolio optimization: objectives, constraints, the efficient frontier, global minimum variance, tangency portfolio and the cost of constraints.",
     },
-    Component: lazy(() => import("../features/efficient-frontier/EfficientFrontierView")),
+    Component: lazy(() => import("../features/efficient-frontier/PortfolioOptimizationView")),
   },
   {
     id: "npv-irr",

@@ -208,7 +208,6 @@ export default function BinomialView() {
       ) : null}
 
       <div className="view-main view-main--docked view-main--chart-first">
-        <BinomialSummary tree={tree} />
         <BinomialTreeChart
           tree={tree}
           optionKind={optionKind}
@@ -221,6 +220,7 @@ export default function BinomialView() {
           onTogglePrimaryMetric={() => setShowPrimaryMetric((prev) => !prev)}
           onToggleSecondaryMetric={() => setShowSecondaryMetric((prev) => !prev)}
         />
+        <BinomialSummary tree={tree} />
         <BinomialExplanation mode={mode} />
       </div>
 

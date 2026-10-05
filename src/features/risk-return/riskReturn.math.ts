@@ -16,6 +16,12 @@ export function riskyAssetSharpe(mu: number, sigma: number, riskFree: number): n
   return sharpeRatio(mu, riskFree, sigma);
 }
 
+/// Risky weight implied by a portfolio volatility (inverse of σp = w·σ), clamped to [0, maxWeight].
+export function weightFromVolatility(vol: number, sigma: number, maxWeight: number): number {
+  const w = vol / (sigma || 1e-6);
+  return Math.max(0, Math.min(maxWeight, w));
+}
+
 /// Points along the capital allocation line from weight 0 (all cash) to `maxWeight` (levered).
 export function capitalAllocationLine(
   mu: number,

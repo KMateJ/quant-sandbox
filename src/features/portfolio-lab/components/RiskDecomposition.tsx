@@ -1,7 +1,7 @@
 import { Panel } from "../../../components/layout";
 import { DataTable, type DataColumn } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
-import type { Asset, PortfolioMetrics } from "../portfolioLab.types";
+import type { Asset } from "../portfolioLab.types";
 
 type AssetRow = {
   id: string;
@@ -14,8 +14,6 @@ type AssetRow = {
 };
 
 type Props = {
-  current: PortfolioMetrics;
-  diversification: number;
   assets: Asset[];
   weights: number[];
   contributions: number[];
@@ -27,10 +25,8 @@ type Props = {
 const CASH_COLOR = "#94a3b8";
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
-/// Metric strip plus a per-asset weight / risk-contribution breakdown table.
-export default function PortfolioLabResults({
-  current,
-  diversification,
+/// Per-asset weight / risk-contribution breakdown table.
+export default function RiskDecomposition({
   assets,
   weights,
   contributions,
@@ -80,29 +76,8 @@ export default function PortfolioLabResults({
   ];
 
   return (
-    <>
-      <div className="metric-strip">
-        <div className="stat-card">
-          <div className="stat-title">{t("portfolioReturn")}</div>
-          <div className="stat-value">{pct(current.ret)}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-title">{t("portfolioVol")}</div>
-          <div className="stat-value">{pct(current.vol)}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-title">{t("portfolioSharpe")}</div>
-          <div className="stat-value">{current.sharpe.toFixed(2)}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-title">{t("portfolioDiversification")}</div>
-          <div className="stat-value">{pct(diversification)}</div>
-        </div>
-      </div>
-
-      <Panel title={t("portfolioBreakdownTitle")}>
-        <DataTable columns={columns} rows={rows} getRowKey={(r) => r.id} />
-      </Panel>
-    </>
+    <Panel title={t("portfolioBreakdownTitle")}>
+      <DataTable columns={columns} rows={rows} getRowKey={(r) => r.id} />
+    </Panel>
   );
 }
