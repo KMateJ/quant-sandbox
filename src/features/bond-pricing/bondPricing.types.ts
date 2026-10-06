@@ -4,6 +4,9 @@ export type PriceYieldPoint = {
   price: number;
 };
 
+/// Whether the bond trades above, at, or below its face value.
+export type BondState = "premium" | "par" | "discount";
+
 /// Full parameter set describing a fixed-coupon bond.
 export type BondInputs = {
   face: number;

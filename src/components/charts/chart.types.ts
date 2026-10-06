@@ -11,6 +11,7 @@ export type ChartSeries = {
   areaColor?: string;
   /// Show in the legend row (defaults to true).
   legend?: boolean;
+  intuitionSectionId?: string;
 };
 
 export type ChartReferenceLine = {
@@ -65,6 +66,7 @@ export type ScatterSeries = {
   opacity?: number;
   /// Markers can be grabbed and dragged; drag deltas are reported via onDrag.
   draggable?: boolean;
+  intuitionSectionId?: string;
   /// Draw markers as a hollow ring (transparent fill) so overlapping points stay distinct.
   hollow?: boolean;
 };

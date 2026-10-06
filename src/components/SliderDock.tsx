@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useChartInViewport } from "./chartConfig";
 import { sliderFill } from "./sliderFill";
+import { IntuitionTrigger } from "./intuition";
 
 export type SliderDescriptor = {
   key: string;
@@ -12,6 +13,7 @@ export type SliderDescriptor = {
   step: number;
   format: (value: number) => string;
   onChange: (value: number) => void;
+  sectionId?: string;
 };
 
 type SliderDockProps = {
@@ -51,7 +53,7 @@ export default function SliderDock({ sliders, chartSelector }: SliderDockProps) 
       </div>
 
       <div className="slider-dock-control">
-        <span className="dock-current-name">{active.name}</span>
+        <span className="dock-current-name">{active.name}{active.sectionId && <IntuitionTrigger sectionId={active.sectionId} />}</span>
         <div className="slider-dock-row">
           <input
             className="slider-input"

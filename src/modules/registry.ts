@@ -1,5 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../i18n";
+import type { IntuitionDocument } from "../components/intuition";
+import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition } from "./intuition";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -23,6 +25,7 @@ export interface ModuleDef {
   Component: LazyExoticComponent<ComponentType>;
   end?: boolean; // exact route match (home)
   relatedGuides?: string[];
+  intuition?: IntuitionDocument;
 }
 
 export const CATEGORY_ORDER: ModuleCategory[] = [
@@ -78,6 +81,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "payoff",
+    intuition: payoffIntuition,
     path: "/payoff",
     navKey: "navPayoff",
     category: "derivatives",
@@ -92,6 +96,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "binomial",
+    intuition: binomialIntuition,
     path: "/binomial",
     navKey: "navBinomial",
     category: "derivatives",
@@ -106,6 +111,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "black-scholes",
+    intuition: blackScholesIntuition,
     path: "/black-scholes",
     navKey: "navBlackScholes",
     category: "derivatives",
@@ -120,6 +126,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "heston",
+    intuition: hestonIntuition,
     path: "/heston",
     navKey: "navHeston",
     category: "derivatives",
@@ -148,6 +155,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "bond-pricing",
+    intuition: bondIntuition,
     path: "/bond-pricing",
     navKey: "navBondPricing",
     category: "fixed-income",
@@ -174,6 +182,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "duration-convexity",
+    intuition: durationIntuition,
     path: "/duration-convexity",
     navKey: "navDurationConvexity",
     category: "fixed-income",
@@ -226,6 +235,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "efficient-frontier",
+    intuition: frontierIntuition,
     path: "/efficient-frontier",
     navKey: "navEfficientFrontier",
     category: "portfolio",

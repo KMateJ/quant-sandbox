@@ -1,6 +1,6 @@
-import { useId, type ReactNode } from "react";
+import { useId, type ReactNode, type ButtonHTMLAttributes } from "react";
 
-type InfoTooltipProps = {
+type InfoTooltipProps = Pick<ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "aria-controls" | "aria-expanded" | "aria-haspopup"> & {
   /// Short hover/focus explanation. Keep concise; use Popover/HelpDrawer for long form.
   content: ReactNode;
   label?: string;
@@ -12,6 +12,7 @@ export default function InfoTooltip({
   content,
   label = "More information",
   className = "",
+  ...buttonProps
 }: InfoTooltipProps) {
   const id = useId();
   const classes = ["info-tooltip", className].filter(Boolean).join(" ");
@@ -22,6 +23,7 @@ export default function InfoTooltip({
         className="info-tooltip-trigger"
         aria-label={label}
         aria-describedby={id}
+        {...buttonProps}
       >
         <svg
           viewBox="0 0 24 24"

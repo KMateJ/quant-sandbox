@@ -25,6 +25,7 @@ export default function SensitivityChart({ model }: Props) {
   const lineSeries: ScatterSeries[] = [
     {
       key: "exact",
+      intuitionSectionId: "yield-shock",
       label: t("dcExactLabel"),
       color: EXACT,
       line: true,
@@ -33,6 +34,7 @@ export default function SensitivityChart({ model }: Props) {
     },
     {
       key: "duration",
+      intuitionSectionId: "modified-duration",
       label: t("dcDurationLabel"),
       color: DURATION,
       line: true,
@@ -42,6 +44,7 @@ export default function SensitivityChart({ model }: Props) {
     },
     {
       key: "durConvex",
+      intuitionSectionId: "convexity",
       label: t("dcDurConvexLabel"),
       color: DURCONVEX,
       line: true,

@@ -1,0 +1,84 @@
+.help-drawer {
+  pointer-events: none;
+
+  &--modal { pointer-events: auto; }
+}
+
+.help-drawer-panel {
+  pointer-events: auto;
+  width: min(420px, 100vw);
+  animation: intuition-enter 180ms ease-out;
+}
+
+.help-drawer-head { flex-shrink: 0; }
+
+.help-drawer-body {
+  min-height: 0;
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+}
+
+.intuition-context {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.intuition-button {
+  padding: var(--space-1) var(--space-3);
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+
+  &:hover { color: var(--text); border-color: var(--primary); }
+}
+
+.intuition-section {
+  --intuition-highlight: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  padding: var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+
+  &:first-child { padding-top: var(--space-2); }
+  &:last-child { border-bottom: 0; }
+  h3 { margin: 0 0 var(--space-2); font-size: var(--text-md); color: var(--text); }
+  h3:focus { outline: none; }
+  p { margin: var(--space-2) 0; }
+  .intuition-summary { color: var(--text); }
+  .intuition-example { border-left: 1px solid var(--border); padding-left: var(--space-3); }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: var(--space-1) 0; font-size: 0.9em; }
+}
+
+.intuition-chart-help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+@keyframes intuition-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 900px) {
+  .help-drawer-panel { width: 92vw; }
+}
+
+@media (max-width: 640px) {
+  .help-drawer-panel { width: 100vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .help-drawer-panel { animation: none; }
+}

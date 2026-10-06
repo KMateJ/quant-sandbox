@@ -1,3 +1,6 @@
+import { useId } from "react";
+import { IntuitionTrigger } from "./intuition";
+
 type NumberInputProps = {
   label: string;
   value: number;
@@ -8,6 +11,7 @@ type NumberInputProps = {
   /// Treat the model value as a fraction but edit it in percent (×100 with a % suffix).
   percent?: boolean;
   suffix?: string;
+  sectionId?: string;
 };
 
 /// Compact labelled numeric input for precise parameter entry (no slider).
@@ -20,7 +24,9 @@ export default function NumberInput({
   step,
   percent = false,
   suffix,
+  sectionId,
 }: NumberInputProps) {
+  const id = useId();
   const factor = percent ? 100 : 1;
   const display = Number((value * factor).toFixed(4));
   const unit = suffix ?? (percent ? "%" : "");
@@ -33,10 +39,11 @@ export default function NumberInput({
   };
 
   return (
-    <label className="num-field">
-      <span className="num-label">{label}</span>
+    <div className="num-field">
+      <span className="num-label"><label htmlFor={id}>{label}</label>{sectionId && <IntuitionTrigger sectionId={sectionId} />}</span>
       <span className="num-input-wrap">
         <input
+          id={id}
           className="num-input"
           type="number"
           value={display}
@@ -48,6 +55,6 @@ export default function NumberInput({
         />
         {unit && <span className="num-suffix">{unit}</span>}
       </span>
-    </label>
+    </div>
   );
 }

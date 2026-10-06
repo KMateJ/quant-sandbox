@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { IntuitionTrigger, useIntuition } from "../intuition";
 
 type PageHeaderProps = {
   title: ReactNode;
@@ -14,6 +15,7 @@ export default function PageHeader({
   status,
   actions,
 }: PageHeaderProps) {
+  const intuition = useIntuition();
   return (
     <header className="page-header">
       <div className="page-header-main">
@@ -25,7 +27,7 @@ export default function PageHeader({
           <p className="page-header-desc">{description}</p>
         ) : null}
       </div>
-      {actions ? <div className="page-header-actions">{actions}</div> : null}
+      {actions || intuition ? <div className="page-header-actions">{actions}{intuition && <IntuitionTrigger variant="button" />}</div> : null}
     </header>
   );
 }

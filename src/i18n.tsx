@@ -32,6 +32,8 @@ import { gbmEn, gbmHu } from "./Language/Gbm";
 import { itoProcessEn, itoProcessHu } from "./Language/ItoProcess";
 import { monteCarloEn, monteCarloHu } from "./Language/MonteCarlo";
 import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
+import { intuitionEn, intuitionHu } from "./Language/Intuition";
+import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
 
 export type Language = "hu" | "en";
 
@@ -47,6 +49,8 @@ const STORAGE_KEY = "qs-language";
 
 const translations = {
   hu: {
+    ...intuitionHu,
+    ...legacyIntuitionHu,
     ...homeHu,
     ...binomialHu,
     ...payoffHu,
@@ -74,6 +78,8 @@ const translations = {
     navGuide: "Útmutató",
   },
   en: {
+    ...intuitionEn,
+    ...legacyIntuitionEn,
     ...homeEn,
     ...binomialEn,
     ...payoffEn,

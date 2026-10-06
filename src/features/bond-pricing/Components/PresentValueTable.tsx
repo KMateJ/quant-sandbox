@@ -7,7 +7,8 @@ type PresentValueTableProps = {
   price: number;
 };
 
-/// Per-payment PV breakdown; the footer connects the PV sum to the bond price.
+/// Collapsed-by-default, compact per-payment PV breakdown so the table stays
+/// secondary to the timeline; the summary keeps the PV-sum = price link visible.
 export default function PresentValueTable({ rows, price }: PresentValueTableProps) {
   const { t } = useI18n();
   const num = (v: number) => v.toFixed(2);
@@ -21,16 +22,17 @@ export default function PresentValueTable({ rows, price }: PresentValueTableProp
   ];
 
   return (
-    <div className="bond-pv">
-      <DataTable
-        columns={columns}
-        rows={rows}
-        getRowKey={(r) => r.period}
-      />
-      <div className="bond-pv-sum">
-        <span className="bond-pv-sum-label">{t("bondTableSumLabel")}</span>
-        <span className="bond-pv-sum-value">{num(price)}</span>
+    <details className="bond-pv-collapse">
+      <summary className="bond-pv-summary">
+        <span className="bond-pv-summary-title">{t("bondTableTitle")}</span>
+        <span className="bond-pv-summary-sum">
+          {t("bondTableSumLabel")}
+          <b>{num(price)}</b>
+        </span>
+      </summary>
+      <div className="bond-pv">
+        <DataTable columns={columns} rows={rows} getRowKey={(r) => r.period} />
       </div>
-    </div>
+    </details>
   );
 }

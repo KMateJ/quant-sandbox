@@ -4,6 +4,7 @@ import AppShell from "./components/layout/AppShell";
 import { Seo } from "./seo";
 import { modules } from "./modules/registry";
 import { PortfolioUniverseProvider } from "./features/portfolio-lab/PortfolioUniverseContext";
+import { IntuitionProvider } from "./components/intuition";
 
 /* =======================
    APP
@@ -20,14 +21,14 @@ export default function App() {
                 key={m.id}
                 path={m.path}
                 element={
-                  <>
+                  <IntuitionProvider key={m.id} document={m.intuition}>
                     <Seo
                       title={m.seo.title}
                       description={m.seo.description}
                       path={m.path}
                     />
                     <m.Component />
-                  </>
+                  </IntuitionProvider>
                 }
               />
             ))}

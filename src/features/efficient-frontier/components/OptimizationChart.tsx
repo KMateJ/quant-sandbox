@@ -29,10 +29,10 @@ export default function OptimizationChart({ model }: Props) {
   const series: ScatterSeries[] = [
     { key: "feasible", label: t("optFeasible"), color: "#64748b", radius: 2, opacity: 0.22, points: cloud.map((p) => ({ x: p.vol, y: p.ret })) },
     { key: "unconstrained", label: t("optFrontierUnconstrained"), color: "#64748b", line: true, dash: "5 4", strokeWidth: 1.75, points: unconBranch.map((p) => ({ x: p.vol, y: p.ret })) },
-    { key: "constrained", label: t("optFrontierConstrained"), color: "#3b82f6", line: true, strokeWidth: 3, points: branch.map((p) => ({ x: p.vol, y: p.ret })) },
+    { key: "constrained", intuitionSectionId: "efficient-frontier", label: t("optFrontierConstrained"), color: "#3b82f6", line: true, strokeWidth: 3, points: branch.map((p) => ({ x: p.vol, y: p.ret })) },
     { key: "fpts", label: t("optFrontierConstrained"), color: "#3b82f6", radius: 3, opacity: 0.55, legend: false, points: frontierPts },
     ...(constraints.useRiskFree && cml.length
-      ? [{ key: "cml", label: t("optCml"), color: "#22c55e", line: true, dash: "6 4", strokeWidth: 2, points: cml.map((p) => ({ x: p.vol, y: p.ret })) } as ScatterSeries]
+      ? [{ key: "cml", intuitionSectionId: "capital-market-line", label: t("optCml"), color: "#22c55e", line: true, dash: "6 4", strokeWidth: 2, points: cml.map((p) => ({ x: p.vol, y: p.ret })) } as ScatterSeries]
       : []),
     { key: "assets", label: t("optAssets"), color: "#94a3b8", radius: 6, points: assets.map((a: Asset) => ({ x: a.sigma, y: a.mu, color: a.color, label: a.name })) },
     { key: "gmv", label: t("optGmv"), color: "#38bdf8", radius: 6, legend: false, points: [{ x: gmv.vol, y: gmv.ret, label: t("optGmv"), tooltipRows: rows(gmv) }] },

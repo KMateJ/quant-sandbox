@@ -1,6 +1,7 @@
 import { useI18n } from "../../../i18n";
 import NumberInput from "../../../components/NumberInput";
-import { ControlGroup, InfoTooltip, Tabs } from "../../../components/ui";
+import { ControlGroup, Tabs } from "../../../components/ui";
+import { IntuitionTrigger } from "../../../components/intuition";
 import type { DcModel } from "../useDurationConvexity";
 
 type Props = { model: DcModel };
@@ -22,9 +23,9 @@ export default function BondParamsPanel({ model }: Props) {
     <>
       <div className="num-grid dc-param-grid">
         <NumberInput label={t("dcFaceLabel")} value={model.face} onChange={model.setFace} min={1} step={10} />
-        <NumberInput label={t("dcCouponLabel")} value={model.couponRate} onChange={model.setCouponRate} percent min={0} max={0.2} step={0.25} />
+        <NumberInput sectionId="coupon-rate" label={t("dcCouponLabel")} value={model.couponRate} onChange={model.setCouponRate} percent min={0} max={0.2} step={0.25} />
         <NumberInput label={t("dcMaturityLabel")} value={model.years} onChange={model.setYears} min={1} max={30} step={1} suffix={t("dcYearsSuffix")} />
-        <NumberInput label={t("dcYtmLabel")} value={model.ytm} onChange={model.setYtm} percent min={0.001} max={0.2} step={0.25} />
+        <NumberInput sectionId="ytm" label={t("dcYtmLabel")} value={model.ytm} onChange={model.setYtm} percent min={0.001} max={0.2} step={0.25} />
       </div>
 
       <ControlGroup label={t("dcFrequencyLabel")}>
@@ -40,31 +41,31 @@ export default function BondParamsPanel({ model }: Props) {
       <ControlGroup label={t("dcMeasuresLabel")}>
         <dl className="measure-list">
           <div className="measure-row">
-            <dt>{t("dcPrice")}</dt>
+            <dt>{t("dcPrice")}<IntuitionTrigger sectionId="price" /></dt>
             <dd>{num(m.price)}</dd>
           </div>
           <div className="measure-row">
-            <dt>{t("dcMacaulay")}</dt>
+            <dt>{t("dcMacaulay")}<IntuitionTrigger sectionId="macaulay-duration" /></dt>
             <dd>{num(m.macaulay)}</dd>
           </div>
           <div className="measure-row">
             <dt>
               {t("dcModified")}
-              <InfoTooltip content={t("dcModifiedHelp")} />
+              <IntuitionTrigger sectionId="modified-duration" />
             </dt>
             <dd>{num(m.modified)}</dd>
           </div>
           <div className="measure-row">
             <dt>
               {t("dcConvexity")}
-              <InfoTooltip content={t("dcConvexityHelp")} />
+              <IntuitionTrigger sectionId="convexity" />
             </dt>
             <dd>{num(m.convexity, 1)}</dd>
           </div>
           <div className="measure-row">
             <dt>
               {t("dcDv01")}
-              <InfoTooltip content={t("dcDv01Help")} />
+              <IntuitionTrigger sectionId="dv01" />
             </dt>
             <dd>{num(m.dv01, 4)}</dd>
           </div>

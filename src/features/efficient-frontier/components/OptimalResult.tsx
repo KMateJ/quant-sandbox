@@ -1,4 +1,5 @@
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 import type { OptObjective, OptPoint } from "../portfolioOptimization.types";
 import type { ConstraintCost } from "../useOptimization";
 
@@ -30,23 +31,23 @@ export default function OptimalResult({ selected, objective, cost }: Props) {
     <div className="result-strip opt-result">
       <div className="result-strip-title">{t("optSelectedTitle")}</div>
       <div className="result-strip-item">
-        <span className="result-strip-label">{t("optExpReturn")}</span>
+        <span className="result-strip-label">{t("optExpReturn")}<IntuitionTrigger sectionId="expected-return" /></span>
         <span className="result-strip-value">{pct(selected.ret)}</span>
       </div>
       <div className="result-strip-item">
-        <span className="result-strip-label">{t("optVolatility")}</span>
+        <span className="result-strip-label">{t("optVolatility")}<IntuitionTrigger sectionId="volatility" /></span>
         <span className="result-strip-value">{pct(selected.vol)}</span>
       </div>
       <div className="result-strip-item">
-        <span className="result-strip-label">{t("optSharpe")}</span>
+        <span className="result-strip-label">{t("optSharpe")}<IntuitionTrigger sectionId="sharpe-ratio" /></span>
         <span className="result-strip-value">{selected.sharpe.toFixed(2)}</span>
       </div>
       <div className="result-strip-item">
-        <span className="result-strip-label">{t("optObjectiveField")}</span>
+        <span className="result-strip-label">{t("optObjectiveField")}<IntuitionTrigger sectionId="constraints" /></span>
         <span className="result-strip-value result-strip-value--text">{t(OBJ_KEY[objective])}</span>
       </div>
       <div className="result-strip-item result-strip-item--cost">
-        <span className="result-strip-label">{t("optUnconstrained")} → {t("optConstrained")}</span>
+        <span className="result-strip-label">{t("optUnconstrained")} → {t("optConstrained")}<IntuitionTrigger sectionId="constraints" /></span>
         <span className="result-strip-value">
           {fmt(cost.unconstrained)} → {fmt(cost.constrained)}
           <span className="opt-cost-delta">{` ${sign}${deltaStr} ${costWord}`}</span>

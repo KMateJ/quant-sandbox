@@ -1,4 +1,5 @@
 import type { ChartSeries } from "./chart.types";
+import { IntuitionTrigger } from "../intuition";
 
 /// Simple colored-marker legend rendered below the plot.
 export default function ChartLegend({ series }: { series: ChartSeries[] }) {
@@ -18,6 +19,7 @@ export default function ChartLegend({ series }: { series: ChartSeries[] }) {
             }}
           />
           {s.label}
+          {s.intuitionSectionId && <IntuitionTrigger sectionId={s.intuitionSectionId} />}
         </span>
       ))}
     </div>

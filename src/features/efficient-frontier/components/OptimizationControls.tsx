@@ -4,6 +4,7 @@ import { useI18n } from "../../../i18n";
 import type { OptObjective } from "../portfolioOptimization.types";
 import type { useOptimization } from "../useOptimization";
 import ToggleField from "./ToggleField";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type Props = { model: ReturnType<typeof useOptimization> };
 
@@ -21,7 +22,7 @@ export default function OptimizationControls({ model }: Props) {
 
   return (
     <>
-      <ControlGroup label={t("optObjectiveLabel")}>
+      <ControlGroup label={t("optObjectiveLabel")} hint={<IntuitionTrigger sectionId="constraints" />}>
         <Tabs<OptObjective>
           items={objectives}
           value={objective}
@@ -42,7 +43,7 @@ export default function OptimizationControls({ model }: Props) {
         )}
       </ControlGroup>
 
-      <ControlGroup label={t("optConstraintsLabel")}>
+      <ControlGroup label={t("optConstraintsLabel")} hint={<IntuitionTrigger sectionId="constraints" />}>
         <div className="opt-constraints">
           {!c.allowShort && <ToggleField label={t("optLongOnly")} value={c.longOnly} onChange={(v) => updateConstraint("longOnly", v)} />}
           <ToggleField label={t("optAllowShort")} value={c.allowShort} onChange={(v) => updateConstraint("allowShort", v)} />
@@ -53,7 +54,7 @@ export default function OptimizationControls({ model }: Props) {
         </div>
       </ControlGroup>
 
-      <ControlGroup label={t("optRiskFreeAsset")}>
+      <ControlGroup label={t("optRiskFreeAsset")} hint={<IntuitionTrigger sectionId="capital-market-line" />}>
         <ToggleField label={t("optRiskFreeAsset")} value={c.useRiskFree} onChange={(v) => updateConstraint("useRiskFree", v)} />
         {c.useRiskFree && (
           <>

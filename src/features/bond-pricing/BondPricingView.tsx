@@ -51,6 +51,7 @@ export default function BondPricingView() {
         <div className="module-main">
           <BondMetrics
             cleanPrice={analytics.price}
+            face={face}
             ytm={ytm}
             macaulay={analytics.macaulay}
             modified={analytics.modified}
@@ -83,6 +84,8 @@ export default function BondPricingView() {
                   freq={freq}
                   ytm={ytm}
                   price={analytics.price}
+                  modified={analytics.modified}
+                  convexity={analytics.convexity}
                   maxYtm={MAX_YTM}
                   onYtm={setYtm}
                 />
@@ -91,9 +94,7 @@ export default function BondPricingView() {
           </ChartContainer>
 
           {tab === "cashflows" && (
-            <Panel title={t("bondTableTitle")}>
-              <PresentValueTable rows={analytics.rows} price={analytics.price} />
-            </Panel>
+            <PresentValueTable rows={analytics.rows} price={analytics.price} />
           )}
         </div>
       </Workspace>

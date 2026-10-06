@@ -281,6 +281,25 @@ Keep dark/light theming (CSS custom properties), stronger system:
 `ControlGroup` · `Tabs` · `Tooltip`/`InfoTooltip` · `Popover` · `ContextualHelp`/`HelpDrawer` ·
 `ChartContainer`. Future modules compose these instead of inventing layout.
 
+**Contextual intuition (implemented):** a module may declare an `intuition` document in
+`src/modules/registry.ts`; routes scope it with `IntuitionProvider`. Documents contain
+unique stable section IDs, localized `titleKey` / `summaryKey` / `bodyKey`, optional
+`formula` (KaTeX), `exampleKey`, or React `content`. Shared bond sections are reused.
+Place `<IntuitionTrigger sectionId="modified-duration" />` next to the relevant UI;
+omit the ID (or use `variant="button"`) to open at the top. `PageHeader` adds the
+document button automatically. `NumberInput` and `SliderField` accept `sectionId`;
+chart series accept `intuitionSectionId` for legend help. Keep trigger buttons outside
+input labels and other buttons. Summary tooltips are one-line definitions; the drawer
+holds the deeper explanation, not a duplicate prose panel in the workspace.
+
+Desktop uses a non-modal 420px overlay so other triggers remain usable; tablet/mobile
+uses a modal sheet with backdrop, focus containment and background scroll protection.
+Opening does not scroll the page; subsequent triggers scroll only the document and
+briefly accent the target. Escape/close restore focus to the trigger. Reduced motion is
+respected. State is page-local (URL deep links are not currently enabled).
+Run `npm run test:intuition` to check stable IDs, localized document content,
+KaTeX equations, shared bond sections and parameter/legend trigger references.
+
 ### 4.13 Design tokens to centralise (in `tokens.scss`, still emitting CSS vars)
 spacing scale · typography · border radii · control heights · surface colors · borders · interactive
 states · chart colors · breakpoints · transitions · z-index layers. Extends the existing `tokens.css`.

@@ -32,12 +32,22 @@ export default function BondParameters({
 }: BondParametersProps) {
   const { t } = useI18n();
   const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
+  const pct0 = (v: number) => `${(v * 100).toFixed(0)}%`;
+
+  const min = 0.001;
+  const marks = [
+    { value: min, label: pct0(min) },
+    ...(coupon > min && coupon < maxYtm
+      ? [{ value: coupon, label: `${t("bondYtmParMark")} ${pct0(coupon)}` }]
+      : []),
+    { value: maxYtm, label: pct0(maxYtm) },
+  ];
 
   return (
     <div className="bond-params">
       <div className="num-grid">
         <NumberInput label={t("bondFaceLabel")} value={face} onChange={onFace} min={1} step={1} />
-        <NumberInput label={t("bondCouponLabel")} value={coupon} onChange={onCoupon} min={0} max={0.3} step={0.0025} percent />
+        <NumberInput sectionId="coupon-rate" label={t("bondCouponLabel")} value={coupon} onChange={onCoupon} min={0} max={0.3} step={0.0025} percent />
         <NumberInput label={t("bondMaturityLabel")} value={years} onChange={onYears} min={1} max={30} step={1} />
         <label className="num-field">
           <span className="num-label">{t("bondFrequencyLabel")}</span>
@@ -55,13 +65,15 @@ export default function BondParameters({
 
       <div className="bond-ytm-slider">
         <SliderField
+          sectionId="ytm"
           label={t("bondYtmLabel")}
-          min={0.001}
+          min={min}
           max={maxYtm}
           step={0.0005}
           value={ytm}
           onChange={onYtm}
           formatValue={pct}
+          marks={marks}
         />
       </div>
     </div>

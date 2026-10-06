@@ -5,6 +5,7 @@ import { LineChart, type ChartReferenceLine, type ChartSeries } from "../../../c
 import type { PayoffChartPoint, ViewMode } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type PayoffChartProps = {
   chartData: PayoffChartPoint[];
@@ -49,6 +50,7 @@ export default function PayoffChart({
     const list: ChartSeries[] = [
       {
         key: "total",
+        intuitionSectionId: "payoff-profit",
         label: t("payoffChartTotal"),
         color: "#60a5fa",
         strokeWidth: 3,
@@ -72,6 +74,7 @@ export default function PayoffChart({
     if (syntheticOverlayActive) {
       list.push({
         key: "syntheticOverlay",
+        intuitionSectionId: "synthetic-strategies",
         label: syntheticOverlayLabel ?? "Synthetic Overlay",
         color: "#fbbf24",
         strokeWidth: 2.5,
@@ -107,7 +110,7 @@ export default function PayoffChart({
   }, [strikes, mode]);
 
   return (
-    <SectionCard className="chart-card" title={t("payoffChartTitle")}>
+    <SectionCard className="chart-card" title={t("payoffChartTitle")} headerRight={<IntuitionTrigger sectionId="instruments" />}>
       <div className="chart-wrap">
         <LineChart
           data={chartData}

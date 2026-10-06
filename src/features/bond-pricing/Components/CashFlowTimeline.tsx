@@ -2,22 +2,22 @@ import { useState } from "react";
 import { ParentSize } from "@visx/responsive";
 import { useI18n } from "../../../i18n";
 import type { CashFlowRow } from "../bondPricing.types";
+import { BOND_COLORS } from "../bondColors";
 
-const COUPON = "#f59e0b";
-const PRINCIPAL = "#38bdf8";
-const H = 320;
+const COUPON = BOND_COLORS.coupon;
+const PRINCIPAL = BOND_COLORS.principal;
 const M = { top: 26, right: 16, bottom: 34, left: 44 };
 
 type Props = { rows: CashFlowRow[] };
 
 /// Cash-flow timeline: faint future cash flows with solid present-value bars overlaid,
 /// coupon vs principal distinguished by colour; hover reveals discounting detail.
-function Timeline({ rows, width }: Props & { width: number }) {
+function Timeline({ rows, width, height }: Props & { width: number; height: number }) {
   const { t } = useI18n();
   const [hover, setHover] = useState<number | null>(null);
 
   const innerW = Math.max(0, width - M.left - M.right);
-  const innerH = H - M.top - M.bottom;
+  const innerH = Math.max(0, height - M.top - M.bottom);
   const n = rows.length;
   const maxCF = Math.max(...rows.map((r) => r.cashflow), 1);
   const slotW = innerW / n;
@@ -30,8 +30,8 @@ function Timeline({ rows, width }: Props & { width: number }) {
   const active = hover != null ? rows[hover] : null;
 
   return (
-    <div className="bond-timeline" style={{ height: H }}>
-      <svg width={width} height={H} role="img">
+    <div className="bond-timeline" style={{ height }}>
+      <svg width={width} height={height} role="img">
         {/* y axis ticks */}
         {[0, 0.5, 1].map((f) => {
           const y = M.top + innerH - f * innerH;
@@ -53,18 +53,29 @@ function Timeline({ rows, width }: Props & { width: number }) {
           const prH = h(r.principal);
           const cpPvH = h(r.coupon * r.discountFactor);
           const prPvH = h(r.principal * r.discountFactor);
+          const cfTop = base - cpH - prH;
+          const pvTop = base - cpPvH - prPvH;
           const x = cx(i) - barW / 2;
           const isHover = hover === i;
+          const showShrink = pvTop - cfTop > 2;
           return (
             <g key={r.period} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}>
               {/* hover capture */}
               <rect x={cx(i) - slotW / 2} y={M.top} width={slotW} height={innerH} fill="transparent" />
               {/* faint future cash flow */}
-              <rect x={x} y={base - cpH} width={barW} height={cpH} fill={COUPON} opacity={0.26} rx={2} />
-              {prH > 0 && <rect x={x} y={base - cpH - prH} width={barW} height={prH} fill={PRINCIPAL} opacity={0.26} rx={2} />}
+              <rect x={x} y={base - cpH} width={barW} height={cpH} fill={COUPON} opacity={0.22} rx={2} />
+              {prH > 0 && <rect x={x} y={base - cpH - prH} width={barW} height={prH} fill={PRINCIPAL} opacity={0.22} rx={2} />}
+              {/* cap marking the top of the undiscounted cash flow */}
+              <line x1={x} y1={cfTop} x2={x + barW} y2={cfTop} stroke="var(--muted)" strokeWidth={1.5} opacity={isHover ? 0.9 : 0.55} />
+              {/* discount "shrink" connector from present value up to the full cash flow */}
+              {showShrink && (
+                <line x1={cx(i)} y1={pvTop} x2={cx(i)} y2={cfTop} stroke="var(--muted)" strokeWidth={1} strokeDasharray="2 3" opacity={isHover ? 0.85 : 0.45} />
+              )}
               {/* solid present value */}
-              <rect x={x} y={base - cpPvH} width={barW} height={cpPvH} fill={COUPON} opacity={isHover ? 1 : 0.9} rx={2} />
-              {prPvH > 0 && <rect x={x} y={base - cpPvH - prPvH} width={barW} height={prPvH} fill={PRINCIPAL} opacity={isHover ? 1 : 0.9} rx={2} />}
+              <rect x={x} y={base - cpPvH} width={barW} height={cpPvH} fill={COUPON} opacity={isHover ? 1 : 0.92} rx={2} />
+              {prPvH > 0 && <rect x={x} y={base - cpPvH - prPvH} width={barW} height={prPvH} fill={PRINCIPAL} opacity={isHover ? 1 : 0.92} rx={2} />}
+              {/* lollipop head on the present-value bar */}
+              <circle cx={cx(i)} cy={pvTop} r={isHover ? 4 : 3} fill={prPvH > 0 ? PRINCIPAL : COUPON} stroke="var(--surface)" strokeWidth={1} />
               {/* x label */}
               {(i % labelEvery === 0 || i === n - 1) && (
                 <text x={cx(i)} y={base + 16} textAnchor="middle" fontSize={11} fill="var(--muted)">
@@ -101,7 +112,13 @@ export default function CashFlowTimeline({ rows }: Props) {
         <span className="bond-legend-item"><i className="faint" />{t("bondTimelineCashflowLegend")}</span>
         <span className="bond-legend-item"><i className="solid" />{t("bondTimelinePvLegend")}</span>
       </div>
-      <ParentSize>{({ width }) => (width > 0 ? <Timeline rows={rows} width={width} /> : null)}</ParentSize>
+      <div className="bond-timeline-slot">
+        <ParentSize>
+          {({ width, height }) =>
+            width > 0 && height > 0 ? <Timeline rows={rows} width={width} height={height} /> : null
+          }
+        </ParentSize>
+      </div>
       <div className="bond-timeline-axis">{t("bondTimelineAxisTime")}</div>
     </div>
   );

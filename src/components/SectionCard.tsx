@@ -4,6 +4,7 @@ type SectionCardProps = {
   title: string;
   subtitle?: string;
   headerLeft?: ReactNode;
+  headerRight?: ReactNode;
   children: ReactNode;
   className?: string;
 };
@@ -12,6 +13,7 @@ export default function SectionCard({
   title,
   subtitle,
   headerLeft,
+  headerRight,
   children,
   className = "",
 }: SectionCardProps) {
@@ -23,7 +25,7 @@ export default function SectionCard({
           <h2 className="section-title">{title}</h2>
           {subtitle ? <p className="section-subtitle">{subtitle}</p> : null}
         </div>
-        <div className="section-header-right" />
+        <div className="section-header-right">{headerRight}</div>
       </div>
 
       {children}
