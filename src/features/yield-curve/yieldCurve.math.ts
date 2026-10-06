@@ -53,7 +53,9 @@ export function buildTermStructure(nodes: CurveNode[]): TermPoint[] {
       for (let k = 1; k < T; k++) sumPrev += dfAt(k);
       df = (1 - c * sumPrev) / (1 + c);
     }
-    df = Math.max(df, 1e-6);
+    if (!Number.isFinite(df) || df <= 0) {
+      throw new RangeError(`Invalid discount factor at ${n.label}`);
+    }
     const zero = Math.pow(df, -1 / T) - 1;
     solvedT.push(T);
     solvedZero.push(zero);

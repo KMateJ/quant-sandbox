@@ -1,97 +1,92 @@
 import { useState } from "react";
 import { ParentSize } from "@visx/responsive";
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 import type { CashFlowRow } from "../bondPricing.types";
+import { brokenCashflowAxis, zigzagPath } from "../bondPricing.math";
 import { BOND_COLORS } from "../bondColors";
+import TimelineBar from "./TimelineBar";
 
 const COUPON = BOND_COLORS.coupon;
 const PRINCIPAL = BOND_COLORS.principal;
-const M = { top: 26, right: 16, bottom: 34, left: 44 };
+const M = { top: 26, right: 16, bottom: 34, left: 48 };
+const CLIP_ID = "bond-cf-break-clip";
 
 type Props = { rows: CashFlowRow[] };
 
-/// Cash-flow timeline: faint future cash flows with solid present-value bars overlaid,
-/// coupon vs principal distinguished by colour; hover reveals discounting detail.
-function Timeline({ rows, width, height }: Props & { width: number; height: number }) {
+/// Cash-flow timeline on a broken axis: coupons fill the full-resolution lower band
+/// while the large principal sits in a compressed upper band, so every payment —
+/// and its discount shrink — stays visible. Hover reveals the exact discounting.
+function Timeline({ rows, width, height, split }: Props & { width: number; height: number; split: boolean }) {
   const { t } = useI18n();
   const [hover, setHover] = useState<number | null>(null);
 
   const innerW = Math.max(0, width - M.left - M.right);
   const innerH = Math.max(0, height - M.top - M.bottom);
   const n = rows.length;
-  const maxCF = Math.max(...rows.map((r) => r.cashflow), 1);
+  const couponMax = Math.max(...rows.map((r) => r.coupon), 0);
+  const totalMax = Math.max(...rows.map((r) => r.cashflow), 1);
+  const axis = brokenCashflowAxis({ couponMax: split ? couponMax : 0, totalMax, top: M.top, innerH });
+  const base = axis.base;
   const slotW = innerW / n;
   const barW = Math.min(slotW * 0.55, 26);
-  const h = (v: number) => (v / maxCF) * innerH;
   const cx = (i: number) => M.left + slotW * (i + 0.5);
   const labelEvery = Math.ceil(n / 10);
   const num = (v: number) => v.toFixed(2);
+  const tick = (v: number) => (v < 10 ? v.toFixed(1) : v.toFixed(0));
+  const x0 = M.left;
+  const x1 = width - M.right;
 
+  const yTicks = axis.hasBreak ? [0, couponMax, totalMax] : [0, totalMax / 2, totalMax];
   const active = hover != null ? rows[hover] : null;
 
   return (
     <div className="bond-timeline" style={{ height }}>
       <svg width={width} height={height} role="img">
-        {/* y axis ticks */}
-        {[0, 0.5, 1].map((f) => {
-          const y = M.top + innerH - f * innerH;
+        <defs>
+          <clipPath id={CLIP_ID}>
+            <rect x={0} y={M.top} width={width} height={axis.gapTopY - M.top} />
+            <rect x={0} y={axis.gapBottomY} width={width} height={height - axis.gapBottomY} />
+          </clipPath>
+        </defs>
+
+        {/* y gridlines + value ticks */}
+        {yTicks.map((v, k) => {
+          const y = axis.y(v);
           return (
-            <g key={f}>
-              <line x1={M.left} y1={y} x2={width - M.right} y2={y} stroke="var(--border)" strokeDasharray="3 3" opacity={0.5} />
-              <text x={M.left - 8} y={y + 4} textAnchor="end" fontSize={11} fill="var(--muted)">
-                {(maxCF * f).toFixed(0)}
-              </text>
+            <g key={k}>
+              <line x1={x0} y1={y} x2={x1} y2={y} stroke="var(--border)" strokeDasharray="3 3" opacity={0.5} />
+              <text x={x0 - 8} y={y + 4} textAnchor="end" fontSize={11} fill="var(--muted)">{tick(v)}</text>
             </g>
           );
         })}
-        {/* baseline */}
-        <line x1={M.left} y1={M.top + innerH} x2={width - M.right} y2={M.top + innerH} stroke="var(--border)" />
+        <line x1={x0} y1={base} x2={x1} y2={base} stroke="var(--border)" />
 
-        {rows.map((r, i) => {
-          const base = M.top + innerH;
-          const cpH = h(r.coupon);
-          const prH = h(r.principal);
-          const cpPvH = h(r.coupon * r.discountFactor);
-          const prPvH = h(r.principal * r.discountFactor);
-          const cfTop = base - cpH - prH;
-          const pvTop = base - cpPvH - prPvH;
-          const x = cx(i) - barW / 2;
-          const isHover = hover === i;
-          const showShrink = pvTop - cfTop > 2;
-          return (
+        <g clipPath={`url(#${CLIP_ID})`}>
+          {rows.map((r, i) => (
             <g key={r.period} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}>
-              {/* hover capture */}
               <rect x={cx(i) - slotW / 2} y={M.top} width={slotW} height={innerH} fill="transparent" />
-              {/* faint future cash flow */}
-              <rect x={x} y={base - cpH} width={barW} height={cpH} fill={COUPON} opacity={0.22} rx={2} />
-              {prH > 0 && <rect x={x} y={base - cpH - prH} width={barW} height={prH} fill={PRINCIPAL} opacity={0.22} rx={2} />}
-              {/* cap marking the top of the undiscounted cash flow */}
-              <line x1={x} y1={cfTop} x2={x + barW} y2={cfTop} stroke="var(--muted)" strokeWidth={1.5} opacity={isHover ? 0.9 : 0.55} />
-              {/* discount "shrink" connector from present value up to the full cash flow */}
-              {showShrink && (
-                <line x1={cx(i)} y1={pvTop} x2={cx(i)} y2={cfTop} stroke="var(--muted)" strokeWidth={1} strokeDasharray="2 3" opacity={isHover ? 0.85 : 0.45} />
-              )}
-              {/* solid present value */}
-              <rect x={x} y={base - cpPvH} width={barW} height={cpPvH} fill={COUPON} opacity={isHover ? 1 : 0.92} rx={2} />
-              {prPvH > 0 && <rect x={x} y={base - cpPvH - prPvH} width={barW} height={prPvH} fill={PRINCIPAL} opacity={isHover ? 1 : 0.92} rx={2} />}
-              {/* lollipop head on the present-value bar */}
-              <circle cx={cx(i)} cy={pvTop} r={isHover ? 4 : 3} fill={prPvH > 0 ? PRINCIPAL : COUPON} stroke="var(--surface)" strokeWidth={1} />
-              {/* x label */}
+              <TimelineBar row={r} x={cx(i) - barW / 2} cx={cx(i)} barW={barW} axis={axis} isHover={hover === i} />
               {(i % labelEvery === 0 || i === n - 1) && (
                 <text x={cx(i)} y={base + 16} textAnchor="middle" fontSize={11} fill="var(--muted)">
                   {r.time.toFixed(r.time < 10 ? 1 : 0)}
                 </text>
               )}
             </g>
-          );
-        })}
+          ))}
+        </g>
+
+        {/* broken-axis marker */}
+        {axis.hasBreak && (
+          <g>
+            <path d={zigzagPath(x0, x1, axis.gapBottomY)} fill="none" stroke="var(--border-hover)" strokeWidth={1} />
+            <path d={zigzagPath(x0, x1, axis.gapTopY)} fill="none" stroke="var(--border-hover)" strokeWidth={1} />
+          </g>
+        )}
       </svg>
 
       {active && (
-        <div
-          className="bond-timeline-tip"
-          style={{ left: cx(hover!), top: M.top + innerH - h(active.cashflow) }}
-        >
+        <div className="bond-timeline-tip" style={{ left: cx(hover!), top: axis.y(active.cashflow) }}>
           <div className="tip-row"><span>{t("bondHoverTime")}</span><b>{active.time.toFixed(2)} {t("bondHoverYears")}</b></div>
           <div className="tip-row"><span>{t("bondHoverCashflow")}</span><b>{num(active.cashflow)}</b></div>
           <div className="tip-row"><span>{t("bondHoverDf")}</span><b>{active.discountFactor.toFixed(4)}</b></div>
@@ -104,18 +99,30 @@ function Timeline({ rows, width, height }: Props & { width: number; height: numb
 
 export default function CashFlowTimeline({ rows }: Props) {
   const { t } = useI18n();
+  const [split, setSplit] = useState(true);
   return (
     <div className="bond-timeline-wrap">
       <div className="bond-legend">
-        <span className="bond-legend-item"><i style={{ background: COUPON }} />{t("bondTimelineCoupon")}</span>
-        <span className="bond-legend-item"><i style={{ background: PRINCIPAL }} />{t("bondTimelinePrincipal")}</span>
-        <span className="bond-legend-item"><i className="faint" />{t("bondTimelineCashflowLegend")}</span>
-        <span className="bond-legend-item"><i className="solid" />{t("bondTimelinePvLegend")}</span>
+        <span className="bond-legend-item intuition-reveal"><i style={{ background: COUPON }} />{t("bondTimelineCoupon")}<IntuitionTrigger sectionId="coupon-rate" /></span>
+        <span className="bond-legend-item intuition-reveal"><i style={{ background: PRINCIPAL }} />{t("bondTimelinePrincipal")}<IntuitionTrigger sectionId="face-value" /></span>
+        <span className="bond-legend-item intuition-reveal"><i className="faint" />{t("bondTimelineCashflowLegend")}<IntuitionTrigger sectionId="cash-flows" /></span>
+        <span className="bond-legend-item intuition-reveal"><i className="solid" />{t("bondTimelinePvLegend")}<IntuitionTrigger sectionId="price" /></span>
+        <span className="intuition-reveal intuition-control-help bond-legend-split">
+        <button
+          type="button"
+          className={`bond-toggle${split ? " active" : ""}`}
+          aria-pressed={split}
+          onClick={() => setSplit((v) => !v)}
+        >
+          {t("bondTimelineSplitLabel")}
+        </button>
+        <IntuitionTrigger sectionId="split-scale" />
+        </span>
       </div>
       <div className="bond-timeline-slot">
         <ParentSize>
           {({ width, height }) =>
-            width > 0 && height > 0 ? <Timeline rows={rows} width={width} height={height} /> : null
+            width > 0 && height > 0 ? <Timeline rows={rows} width={width} height={height} split={split} /> : null
           }
         </ParentSize>
       </div>

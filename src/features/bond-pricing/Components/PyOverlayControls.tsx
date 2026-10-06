@@ -1,5 +1,6 @@
 import { useI18n } from "../../../i18n";
 import { BOND_COLORS } from "../bondColors";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type Props = {
   showDuration: boolean;
@@ -20,11 +21,13 @@ export default function PyOverlayControls({
 
   return (
     <div className="bond-py-controls">
-      <span className="bond-py-legend-item">
+      <span className="bond-py-legend-item intuition-reveal">
         <i className="line solid" style={{ color: BOND_COLORS.curve }} />
         {t("bondPyCurve")}
+        <IntuitionTrigger sectionId="price-yield" />
       </span>
       <span className="bond-py-overlays-label">{t("bondPyOverlaysLabel")}</span>
+      <span className="intuition-reveal intuition-control-help">
       <button
         type="button"
         className={`bond-py-toggle${showDuration ? " active" : ""}`}
@@ -34,6 +37,9 @@ export default function PyOverlayControls({
         <i className="line dash" style={{ color: BOND_COLORS.durationApprox }} />
         {t("bondPyDuration")}
       </button>
+      <IntuitionTrigger sectionId="modified-duration" />
+      </span>
+      <span className="intuition-reveal intuition-control-help">
       <button
         type="button"
         className={`bond-py-toggle${showConvexity ? " active" : ""}`}
@@ -43,6 +49,8 @@ export default function PyOverlayControls({
         <i className="line dot" style={{ color: BOND_COLORS.convexityApprox }} />
         {t("bondPyConvexity")}
       </button>
+      <IntuitionTrigger sectionId="convexity" />
+      </span>
     </div>
   );
 }

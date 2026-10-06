@@ -4,6 +4,7 @@ import { buildBinomialTree, buildRateTree } from "./binomial.math";
 import type { OptionKind, TreeMode } from "./binomial.types";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
+import { createBinomialSliders } from "./binomial.controls";
 
 
 function clamp(value: number, min: number, max: number) {
@@ -50,7 +51,7 @@ function formatNumber(value: number, decimals?: number) {
 export function useBinomialView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
-  const { language, t } = useI18n();
+  const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [mode, setMode] = useState<TreeMode>(() => parseTreeMode(searchParams.get("mode")));
@@ -145,18 +146,18 @@ export function useBinomialView() {
 
   const primaryToggleLabel =
     mode === "rates"
-      ? language === "hu"
-        ? "Kamatok"
-        : "Rates"
+      ? t("binomialToggleRates")
       : t("binomialToggleStocks");
 
   const secondaryToggleLabel =
     mode === "rates"
-      ? language === "hu"
-        ? "Kötvényértékek"
-        : "Bond values"
+      ? t("binomialToggleBonds")
       : t("binomialToggleValues");
 
-  
-  return { isMobile, mode, setMode, S0, setS0, K, setK, u, setU, d, setD, r, setR, q, setQ, h, setH, steps, setSteps, optionKind, setOptionKind, controlsOpen, setControlsOpen, showPrimaryMetric, setShowPrimaryMetric, showSecondaryMetric, setShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel };
+  const sliders = createBinomialSliders(
+    { mode, S0, K, u, d, r, q, h, steps },
+    { onS0Change: setS0, onKChange: setK, onUChange: setU, onDChange: setD,
+      onRChange: setR, onQChange: setQ, onHChange: setH, onStepsChange: setSteps }, t,
+  );
+  return { isMobile, mode, setMode, sliders, optionKind, setOptionKind, controlsOpen, setControlsOpen, showPrimaryMetric, setShowPrimaryMetric, showSecondaryMetric, setShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel };
 }

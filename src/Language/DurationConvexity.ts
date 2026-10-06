@@ -54,12 +54,6 @@ export const durationConvexityHu = {
   dcResultError: "Hiba",
   dcResultErrorBp: "Hiba (ár bp-ben)",
 
-  dcInsightFall:
-    "A hozamok estek → az ár jobban emelkedett, mint amit a duration jelzett (pozitív konvexitás).",
-  dcInsightRise:
-    "A hozamok emelkedtek → az ár kevésbé esett, mint amit a duration jelzett (pozitív konvexitás).",
-  dcInsightFlat: "Δy = 0 környékén mindhárom becslés gyakorlatilag egybeesik.",
-
   dcErrorTitle: "Közelítési hiba",
   dcErrorXLabel: "Hozamsokk Δy (bp)",
   dcErrorYLabel: "Hiba (%)",
@@ -122,12 +116,6 @@ export const durationConvexityEn = {
   dcResultEstimate: "Estimated change",
   dcResultError: "Error",
   dcResultErrorBp: "Error (bp of price)",
-
-  dcInsightFall:
-    "Yields fell → price rose more than duration predicted (positive convexity).",
-  dcInsightRise:
-    "Yields rose → price fell less than duration predicted (positive convexity).",
-  dcInsightFlat: "Near Δy = 0 all three estimates nearly coincide.",
 
   dcErrorTitle: "Approximation error",
   dcErrorXLabel: "Yield shock Δy (bp)",

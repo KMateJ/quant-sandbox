@@ -4,23 +4,16 @@ import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
 import type { GreekKey, HestonGreekProfilePoint } from "../heston.types";
+import { IntuitionTrigger } from "../../../components/intuition";
+import { HESTON_GREEKS } from "../heston.greeks";
 
 type Props = {
   data: HestonGreekProfilePoint[];
   strike: number;
 };
 
-const METRICS: { key: GreekKey; label: string }[] = [
-  { key: "delta", label: "Delta" },
-  { key: "gamma", label: "Gamma" },
-  { key: "vega", label: "Vega" },
-  { key: "theta", label: "Theta" },
-  { key: "rho", label: "Rho" },
-];
-
 export default function HestonGreeksChart({ data, strike }: Props) {
-  const { language } = useI18n();
-  const isHu = language === "hu";
+  const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [metric, setMetric] = useState<GreekKey>("delta");
@@ -42,11 +35,12 @@ export default function HestonGreeksChart({ data, strike }: Props) {
   return (
     <SectionCard
       className="chart-card"
-      title={isHu ? "Görögök az árfolyam mentén" : "Greeks across spot"}
+      title={t("hestonGreeksChartTitle")}
+      headerRight={<IntuitionTrigger sectionId={metric} />}
     >
       <div className="greeks-toolbar">
         <div className="greeks-metric-seg" role="tablist">
-          {METRICS.map((m) => (
+          {HESTON_GREEKS.map((m) => (
             <button
               key={m.key}
               type="button"
@@ -57,7 +51,7 @@ export default function HestonGreeksChart({ data, strike }: Props) {
               }
               onClick={() => setMetric(m.key)}
             >
-              {m.label}
+              {t(m.labelKey)}
             </button>
           ))}
         </div>

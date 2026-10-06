@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test:intuition": "node --test scripts/intuition.test.mjs",
+    "test:yield-curve": "node --test scripts/yield-curve.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,10 +1,21 @@
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 import type { DcModel } from "../useDurationConvexity";
 
 type Props = { model: DcModel };
 
-/// Compact, aligned comparison of the exact repricing against the duration and
-/// duration+convexity estimates at the selected shock, plus a one-line insight.
+function ResultRow({ label, value, sectionId, muted = false }: {
+  label: string; value: string; sectionId: string; muted?: boolean;
+}) {
+  return (
+    <div className={`dc-compare-row${muted ? " muted" : ""}`}>
+      <span className="intuition-reveal intuition-control-help">{label}<IntuitionTrigger sectionId={sectionId} /></span>
+      <span className="dc-compare-num">{value}</span>
+    </div>
+  );
+}
+
+/// Compare exact repricing with both approximations at the selected shock.
 export default function ShockResult({ model }: Props) {
   const { t } = useI18n();
   const r = model.result;
@@ -12,13 +23,10 @@ export default function ShockResult({ model }: Props) {
   const bp = (v: number) => `${v.toFixed(0)} bp`;
   const shockSign = r.dyBp > 0 ? "+" : "";
 
-  const insight =
-    r.dyBp < 0 ? t("dcInsightFall") : r.dyBp > 0 ? t("dcInsightRise") : t("dcInsightFlat");
-
   return (
     <div className="dc-compare">
       <div className="dc-compare-shock">
-        <span className="dc-compare-shock-label">{t("dcResultShock")}</span>
+        <span className="dc-compare-shock-label intuition-reveal intuition-control-help">{t("dcResultShock")}<IntuitionTrigger sectionId="yield-shock" /></span>
         <span className="dc-compare-shock-value">
           {shockSign}
           {r.dyBp} bp
@@ -29,53 +37,28 @@ export default function ShockResult({ model }: Props) {
         <div className="dc-compare-head" data-tone="exact">
           {t("dcResultExact")}
         </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultPriceChange")}</span>
-          <span className="dc-compare-num">{signPct(r.exactPct)}</span>
-        </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultNewPrice")}</span>
-          <span className="dc-compare-num">{r.newPrice.toFixed(2)}</span>
-        </div>
+        <ResultRow label={t("dcResultPriceChange")} value={signPct(r.exactPct)} sectionId="exact-repricing" />
+        <ResultRow label={t("dcResultNewPrice")} value={r.newPrice.toFixed(2)} sectionId="exact-repricing" />
       </div>
 
       <div className="dc-compare-group">
         <div className="dc-compare-head" data-tone="duration">
           {t("dcResultDuration")}
         </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultEstimate")}</span>
-          <span className="dc-compare-num">{signPct(r.durationPct)}</span>
-        </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultError")}</span>
-          <span className="dc-compare-num">{signPct(r.durationErrPct)}</span>
-        </div>
-        <div className="dc-compare-row muted">
-          <span>{t("dcResultErrorBp")}</span>
-          <span className="dc-compare-num">{bp(r.durationErrBp)}</span>
-        </div>
+        <ResultRow label={t("dcResultEstimate")} value={signPct(r.durationPct)} sectionId="modified-duration" />
+        <ResultRow label={t("dcResultError")} value={signPct(r.durationErrPct)} sectionId="approximation-error" />
+        <ResultRow label={t("dcResultErrorBp")} value={bp(r.durationErrBp)} sectionId="approximation-error" muted />
       </div>
 
       <div className="dc-compare-group">
         <div className="dc-compare-head" data-tone="durconvex">
           {t("dcResultDurConvex")}
         </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultEstimate")}</span>
-          <span className="dc-compare-num">{signPct(r.durConvexPct)}</span>
-        </div>
-        <div className="dc-compare-row">
-          <span>{t("dcResultError")}</span>
-          <span className="dc-compare-num">{signPct(r.durConvexErrPct)}</span>
-        </div>
-        <div className="dc-compare-row muted">
-          <span>{t("dcResultErrorBp")}</span>
-          <span className="dc-compare-num">{bp(r.durConvexErrBp)}</span>
-        </div>
+        <ResultRow label={t("dcResultEstimate")} value={signPct(r.durConvexPct)} sectionId="convexity" />
+        <ResultRow label={t("dcResultError")} value={signPct(r.durConvexErrPct)} sectionId="approximation-error" />
+        <ResultRow label={t("dcResultErrorBp")} value={bp(r.durConvexErrBp)} sectionId="approximation-error" muted />
       </div>
 
-      <p className="dc-compare-insight">{insight}</p>
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { IntuitionTrigger } from "../../components/intuition";
 export default function BlackScholesView() {
   const model = useBlackScholesView();
   const { t, isMobile, strike, metric, setMetric, optionType, setOptionType, yDomain, chartData, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle } = model;
-  return (<>
+  return (<div className="intuition-on-demand">
     <PageHeader title={t("navBlackScholes")} />
     <div className="view-layout">
       {!isMobile ? (
@@ -72,5 +72,5 @@ export default function BlackScholesView() {
 
       {isMobile ? <SliderDock sliders={sliders} /> : null}
     </div>
-  </>);
+  </div>);
 }

@@ -46,6 +46,18 @@ Quant Sandbox
 └── GUIDES                    [exists, registry-based]
 ```
 
+The Yield Curve Lab's primary Curve workspace uses par quotes as its only editable market input.
+All ten maturity sliders/numeric inputs and blue chart nodes feed the same bootstrap. Term Structure
+and Discount Factor charts share an evenly spaced, labelled maturity axis. Dashed pre-edit curves,
+ranked reaction segments and the selected-maturity readout compare against the start of the latest
+drag or numeric edit (presets are one-shot changes; Reset restores Normal and clears the comparison).
+English/Hungarian takeaways use actual signed changes. Contextual help opens the existing Intuition
+drawer at the relevant section. The annual-coupon bootstrap's interpolation/extrapolation convention
+is disclosed there; quotes producing non-positive discount factors are rejected with an alert.
+The Curve workspace pairs a compact quote rail with one linked two-plot frame and places the
+four before/after metrics across the full width underneath. The rate axis fits the current and
+pre-edit curves (including negative forwards) and stays fixed during a chart drag.
+
 ---
 
 ## 2. Current architecture (as-is)
@@ -287,10 +299,20 @@ unique stable section IDs, localized `titleKey` / `summaryKey` / `bodyKey`, opti
 `formula` (KaTeX), `exampleKey`, or React `content`. Shared bond sections are reused.
 Place `<IntuitionTrigger sectionId="modified-duration" />` next to the relevant UI;
 omit the ID (or use `variant="button"`) to open at the top. `PageHeader` adds the
-document button automatically. `NumberInput` and `SliderField` accept `sectionId`;
-chart series accept `intuitionSectionId` for legend help. Keep trigger buttons outside
+document button automatically. `NumberInput`, `SliderField` and `NumberStepper` accept
+`sectionId`; `SwitchRow` groups may also declare `sectionId` for adjacent group help.
+Chart series accept `intuitionSectionId` for legend help. Keep trigger buttons outside
 input labels and other buttons. Summary tooltips are one-line definitions; the drawer
 holds the deeper explanation, not a duplicate prose panel in the workspace.
+For dense pages, opt into `intuition-on-demand` on the page wrapper: contextual icons
+reveal on hover/focus within a metric's `intuition-reveal` wrapper, slider/numeric field,
+chart header or mobile slider control. Space remains reserved to avoid layout shifts,
+and keyboard focus reveals the icon. Touch devices keep icons visible; the header
+Intuition button is always visible. Black–Scholes, Heston, Binomial, Bond Lab and
+Duration/Convexity and Efficient Frontier use this quieter disclosure mode, including contextual chart legends.
+`InfoTooltip` bubbles render through a body portal with fixed, viewport-clamped positioning,
+so scrolling/overflow containers cannot clip them. They flip below near the top edge,
+remain hoverable, and support keyboard focus and Escape dismissal.
 
 Desktop uses a non-modal 420px overlay so other triggers remain usable; tablet/mobile
 uses a modal sheet with backdrop, focus containment and background scroll protection.
@@ -299,6 +321,8 @@ briefly accent the target. Escape/close restore focus to the trigger. Reduced mo
 respected. State is page-local (URL deep links are not currently enabled).
 Run `npm run test:intuition` to check stable IDs, localized document content,
 KaTeX equations, shared bond sections and parameter/legend trigger references.
+Current page/control coverage and the staged rollout are tracked in
+[Intuition coverage](./INTUITION_COVERAGE.md); update that tracker when filling gaps.
 
 ### 4.13 Design tokens to centralise (in `tokens.scss`, still emitting CSS vars)
 spacing scale · typography · border radii · control heights · surface colors · borders · interactive

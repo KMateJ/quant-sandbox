@@ -17,6 +17,7 @@ export default function ErrorChart({ model }: Props) {
   const series: ChartSeries[] = [
     {
       key: "durationError",
+      intuitionSectionId: "approximation-error",
       label: t("dcDurationErrLabel"),
       color: "#38bdf8",
       strokeWidth: 2,
@@ -25,6 +26,7 @@ export default function ErrorChart({ model }: Props) {
     },
     {
       key: "durConvexError",
+      intuitionSectionId: "approximation-error",
       label: t("dcDurConvexErrLabel"),
       color: "#f59e0b",
       strokeWidth: 2,

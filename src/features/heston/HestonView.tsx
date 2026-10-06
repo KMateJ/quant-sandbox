@@ -9,36 +9,27 @@ import HestonSmileChart from "./components/HestonSmileChart";
 import HestonVarianceChart from "./components/HestonVarianceChart";
 import { PageHeader } from "../../components/layout";
 import { useHestonView } from "./useHestonView";
-import { IntuitionTrigger } from "../../components/intuition";
 
 export default function HestonView() {
   const model = useHestonView();
-  const { language, isMobile, S0, strike, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, controlSetters, sliders } = model;
+  const { isMobile, S0, strike, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders } = model;
   const { t: translate } = useI18n();
-  return (<>
+  return (<div className="intuition-on-demand">
     <PageHeader title={translate("navHeston")} />
     <div className="view-layout">
       {!isMobile ? (
         <div className="view-controls">
           <HestonControls
-            language={language}
             controlsOpen={controlsOpen}
             setControlsOpen={setControlsOpen}
             values={currentControls}
-            setters={controlSetters}
+            sliders={sliders}
             feller={feller}
           />
         </div>
       ) : null}
 
       <div className="view-main view-main--docked heston-main">
-        <div className="intuition-chart-help">
-          <span>κ, θ <IntuitionTrigger sectionId="mean-reversion" /></span>
-          <span>ξ <IntuitionTrigger sectionId="vol-of-vol" /></span>
-          <span>ρ <IntuitionTrigger sectionId="correlation" /></span>
-          <span>{translate("intuitionSmileTitle")} <IntuitionTrigger sectionId="smile" /></span>
-          <span>{translate("intuitionFellerTitle")} <IntuitionTrigger sectionId="feller-condition" /></span>
-        </div>
         <div className="heston-chart-grid">
           <HestonPathsChart
             data={stockPathData}
@@ -72,5 +63,5 @@ export default function HestonView() {
 
       {isMobile ? <SliderDock sliders={sliders} /> : null}
     </div>
-  </>);
+  </div>);
 }

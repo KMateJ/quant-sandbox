@@ -9,7 +9,7 @@ export default function ChartLegend({ series }: { series: ChartSeries[] }) {
   return (
     <div className="chart-legend">
       {items.map((s) => (
-        <span key={s.key} className="chart-legend-item">
+        <span key={s.key} className="chart-legend-item intuition-reveal">
           <span
             className="chart-legend-swatch"
             style={{

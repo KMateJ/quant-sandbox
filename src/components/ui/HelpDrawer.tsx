@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode, type RefObject } from "react";
+import { useCallback, useEffect, useRef, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { useMediaQuery } from "../useMediaQuery";
 
@@ -28,10 +28,11 @@ export default function HelpDrawer({
 }: HelpDrawerProps) {
   const panel = useRef<HTMLElement>(null);
   const modal = useMediaQuery("(max-width: 900px)");
+  const getReturnFocus = useCallback(() => returnFocusRef?.current, [returnFocusRef]);
   useEffect(() => {
     if (!open) return;
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const returnFocus = returnFocusRef?.current ?? opener;
+    const returnFocus = getReturnFocus() ?? opener;
     if (!panel.current?.contains(document.activeElement)) {
       panel.current?.querySelector<HTMLElement>("button")?.focus({ preventScroll: true });
     }
@@ -71,9 +72,10 @@ export default function HelpDrawer({
         document.body.style.overflow = overflow;
         document.body.style.paddingRight = padding;
       }
-      if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+      const latestReturnFocus = getReturnFocus() ?? returnFocus;
+      if (latestReturnFocus?.isConnected) latestReturnFocus.focus({ preventScroll: true });
     };
-  }, [open, onClose, modal, returnFocusRef]);
+  }, [open, onClose, modal, getReturnFocus]);
 
   if (!open) return null;
 

@@ -1,5 +1,35 @@
 export type OptionKind = "call" | "put";
 export type TreeMode = "equity" | "rates";
+export type BinomialValidationKey =
+  | "binomialValidationInvalidParameters"
+  | "binomialValidationUGreaterThanD"
+  | "binomialValidationDPositive"
+  | "binomialValidationRatePositiveOnePlusR"
+  | "binomialValidationQNotComputable"
+  | "binomialValidationQOutOfRange";
+
+export type BinomialControlValues = {
+  mode: TreeMode;
+  S0: number;
+  K: number;
+  u: number;
+  d: number;
+  r: number;
+  q: number;
+  h: number;
+  steps: number;
+};
+
+export type BinomialControlHandlers = {
+  onS0Change: (value: number) => void;
+  onKChange: (value: number) => void;
+  onUChange: (value: number) => void;
+  onDChange: (value: number) => void;
+  onRChange: (value: number) => void;
+  onQChange: (value: number) => void;
+  onHChange: (value: number) => void;
+  onStepsChange: (value: number) => void;
+};
 
 export type BinomialParams = {
   S0: number;
@@ -52,7 +82,7 @@ export type BinomialTreeResult = {
   discount: number;
   price: number;
   isValid: boolean;
-  validationKey: string | null;
+  validationKey: BinomialValidationKey | null;
   nodes: BinomialNode[];
   edges: BinomialEdge[];
   width: number;

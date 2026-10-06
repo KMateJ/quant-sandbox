@@ -3,6 +3,7 @@ import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { SmilePoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type Props = {
   data: SmilePoint[];
@@ -34,6 +35,7 @@ export default function HestonSmileChart({ data, strikeRatio }: Props) {
     <SectionCard
       className="chart-card"
       title={t("hestonSmileTitle")}
+      headerRight={<IntuitionTrigger sectionId="smile" />}
     >
       <div className="chart-wrap">
         <LineChart

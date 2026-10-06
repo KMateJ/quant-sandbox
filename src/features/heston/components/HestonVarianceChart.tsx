@@ -4,6 +4,7 @@ import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { HestonPathPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 const lineColors = [
   "#1d4ed8",
@@ -43,6 +44,7 @@ export default function HestonVarianceChart({
     <SectionCard
       className="chart-card"
       title={t("hestonVariancePathsTitle")}
+      headerRight={<IntuitionTrigger sectionId="mean-reversion" />}
     >
       <div className="chart-wrap">
         <LineChart

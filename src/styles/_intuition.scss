@@ -66,6 +66,31 @@
   font-size: var(--text-xs);
 }
 
+.intuition-control-help {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+// Opt-in disclosure keeps icons keyboard-accessible and reserves their layout space.
+@media (hover: hover) and (pointer: fine) {
+  .intuition-on-demand {
+    :is(.intuition-reveal, .slider-field, .num-field, .section-header, .slider-dock-control) {
+      .info-tooltip {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-fast);
+      }
+
+      &:hover .info-tooltip,
+      &:focus-within .info-tooltip {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
 @keyframes intuition-enter {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
@@ -81,4 +106,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .help-drawer-panel { animation: none; }
+  .intuition-on-demand :is(.intuition-reveal, .slider-field, .num-field, .section-header, .slider-dock-control) .info-tooltip {
+    transition: none;
+  }
 }

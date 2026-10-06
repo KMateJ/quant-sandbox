@@ -8,6 +8,7 @@ import OptimalResult from "./components/OptimalResult";
 import OptimizationChart from "./components/OptimizationChart";
 import OptimizationControls from "./components/OptimizationControls";
 import { useOptimization } from "./useOptimization";
+import { IntuitionTrigger } from "../../components/intuition";
 
 type View = "frontier" | "composition";
 
@@ -24,7 +25,7 @@ export default function PortfolioOptimizationView() {
   ];
 
   return (
-    <>
+    <div className="intuition-on-demand">
       <PageHeader title={t("optTitle")} description={t("optDesc")} />
 
       <Workspace columns="sidebar">
@@ -35,7 +36,7 @@ export default function PortfolioOptimizationView() {
         <div className="module-main">
           <ChartContainer
             title={view === "frontier" ? t("optChartTitle") : t("optCompositionTitle")}
-            actions={<Tabs<View> items={tabs} value={view} onChange={setView} ariaLabel={t("optChartTitle")} segmented />}
+            actions={<><IntuitionTrigger sectionId={view === "frontier" ? "portfolio-selection" : "allocation"} /><Tabs<View> items={tabs} value={view} onChange={setView} ariaLabel={t("optChartTitle")} segmented /></>}
           >
             {view === "frontier" ? (
               <OptimizationChart model={model} />
@@ -51,11 +52,11 @@ export default function PortfolioOptimizationView() {
 
           <OptimalResult selected={model.selected} objective={model.objective} cost={model.cost} />
 
-          <Panel title={t("optAllocationTitle")}>
+          <Panel title={t("optAllocationTitle")} actions={<IntuitionTrigger sectionId="allocation" />}>
             <AllocationBar assets={model.assets} weights={model.selected.weights} />
           </Panel>
         </div>
       </Workspace>
-    </>
+    </div>
   );
 }

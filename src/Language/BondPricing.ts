@@ -22,6 +22,9 @@ export const bondPricingHu = {
   bondTimelineCashflowLegend: "Jövőbeli pénzáram",
   bondTimelinePvLegend: "Jelenérték",
   bondTimelineAxisTime: "Idő (év)",
+  bondTimelineSplitLabel: "Osztott skála",
+  bondTimelineSplitHelp:
+    "A tőke jóval nagyobb a kamatoknál, ezért elnyomná őket. Az osztott skála külön sávban mutatja a kamatokat, így minden kifizetés látható marad.",
 
   bondHoverTime: "Idő",
   bondHoverCashflow: "Pénzáram",
@@ -95,6 +98,9 @@ export const bondPricingEn = {
   bondTimelineCashflowLegend: "Future cash flow",
   bondTimelinePvLegend: "Present value",
   bondTimelineAxisTime: "Time (years)",
+  bondTimelineSplitLabel: "Split scale",
+  bondTimelineSplitHelp:
+    "The principal dwarfs the coupons and would squash them. Split scale shows coupons on a separate band so every payment stays visible.",
 
   bondHoverTime: "Time",
   bondHoverCashflow: "Cash flow",

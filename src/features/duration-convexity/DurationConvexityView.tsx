@@ -33,7 +33,7 @@ export default function DurationConvexityView() {
   );
 
   return (
-    <>
+    <div className="intuition-on-demand">
       <PageHeader title={t("durationConvexityTitle")} description={t("durationConvexityDesc")} />
 
       <Workspace columns="sidebar">
@@ -42,12 +42,12 @@ export default function DurationConvexityView() {
         </Panel>
 
         <div className="module-main">
-          <Panel title={t("dcShockTitle")} actions={<IntuitionTrigger sectionId="yield-shock" />} className="dc-shock-panel">
+          <Panel title={t("dcShockTitle")} className="dc-shock-panel">
             <YieldShockControl model={model} />
           </Panel>
 
           <div className="dc-main-row">
-            <ChartContainer title={t("dcChartTitle")} actions={<>{formulas}<IntuitionTrigger sectionId="convexity" /></>}>
+            <ChartContainer title={t("dcChartTitle")} actions={<>{formulas}<IntuitionTrigger sectionId="exact-repricing" /></>}>
               <div className="chart-wrap">
                 <SensitivityChart model={model} />
               </div>
@@ -58,13 +58,13 @@ export default function DurationConvexityView() {
             </Panel>
           </div>
 
-          <ChartContainer title={t("dcErrorTitle")} actions={<IntuitionTrigger sectionId="yield-shock" />}>
+          <ChartContainer title={t("dcErrorTitle")} actions={<IntuitionTrigger sectionId="approximation-error" />}>
             <div className="chart-wrap dc-error-wrap">
               <ErrorChart model={model} />
             </div>
           </ChartContainer>
         </div>
       </Workspace>
-    </>
+    </div>
   );
 }

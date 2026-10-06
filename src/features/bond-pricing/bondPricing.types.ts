@@ -7,6 +7,19 @@ export type PriceYieldPoint = {
 /// Whether the bond trades above, at, or below its face value.
 export type BondState = "premium" | "par" | "discount";
 
+/// A broken/split vertical axis: a full-resolution lower band plus a compressed
+/// upper band separated by a pixel gap, so tiny coupons stay visible next to a
+/// large principal. When there is no large outlier it degrades to a single band.
+export type BrokenAxis = {
+  hasBreak: boolean;
+  base: number;
+  gapBottomY: number;
+  gapTopY: number;
+  lowerMax: number;
+  upperMax: number;
+  y: (v: number) => number;
+};
+
 /// Full parameter set describing a fixed-coupon bond.
 export type BondInputs = {
   face: number;

@@ -8,6 +8,7 @@ import type {
   BondAnalytics,
   BondInputs,
   BondState,
+  BrokenAxis,
   CashFlowRow,
   PriceYieldPoint,
 } from "./bondPricing.types";
@@ -140,4 +141,67 @@ export function bondState(price: number, face: number, tol = 0.005): BondState {
   const diff = (price - face) / face;
   if (Math.abs(diff) <= tol) return "par";
   return diff > 0 ? "premium" : "discount";
+}
+
+/// Build a broken vertical axis for the cash-flow timeline. The lower band resolves
+/// values up to just above `couponMax` at full scale; a pixel gap then precedes a
+/// compressed upper band reaching `totalMax`. With no large outlier (e.g. a
+/// zero-coupon bond) it falls back to a single linear band.
+export function brokenCashflowAxis(opts: {
+  couponMax: number;
+  totalMax: number;
+  top: number;
+  innerH: number;
+  lowerFrac?: number;
+  gap?: number;
+}): BrokenAxis {
+  const { couponMax, totalMax, top, innerH } = opts;
+  const base = top + innerH;
+  const lowerMax = couponMax > 0 ? couponMax * 1.3 : Math.max(totalMax, 1);
+  const needBreak = couponMax > 0 && totalMax > lowerMax * 1.8;
+
+  if (!needBreak) {
+    const span = totalMax > 0 ? totalMax : 1;
+    return {
+      hasBreak: false,
+      base,
+      gapBottomY: base,
+      gapTopY: base,
+      lowerMax: span,
+      upperMax: span,
+      y: (v) => base - (v / span) * innerH,
+    };
+  }
+
+  const gap = opts.gap ?? 16;
+  const lowerH = innerH * (opts.lowerFrac ?? 0.58);
+  const upperH = innerH - lowerH - gap;
+  const upperMax = totalMax * 1.05;
+  const gapBottomY = base - lowerH;
+  const gapTopY = base - lowerH - gap;
+
+  return {
+    hasBreak: true,
+    base,
+    gapBottomY,
+    gapTopY,
+    lowerMax,
+    upperMax,
+    y: (v: number) => {
+      if (v <= lowerMax) return base - (v / lowerMax) * lowerH;
+      const frac = Math.min(1, Math.max(0, (v - lowerMax) / (upperMax - lowerMax)));
+      return gapTopY - frac * upperH;
+    },
+  };
+}
+
+/// Zigzag SVG path across [x0, x1] at height `y`, used to mark a broken axis.
+export function zigzagPath(x0: number, x1: number, y: number, amp = 3, step = 9): string {
+  let d = `M ${x0} ${y}`;
+  let up = true;
+  for (let x = x0 + step; x < x1; x += step) {
+    d += ` L ${x} ${y + (up ? -amp : amp)}`;
+    up = !up;
+  }
+  return `${d} L ${x1} ${y}`;
 }

@@ -3,6 +3,7 @@ import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { PriceComparisonPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type Props = {
   data: PriceComparisonPoint[];
@@ -31,6 +32,7 @@ export default function HestonPriceComparisonChart({
     <SectionCard
       className="chart-card"
       title={t("hestonPriceComparisonTitle")}
+      headerRight={<IntuitionTrigger sectionId="spot-strike" />}
     >
       <div className="chart-wrap">
         <LineChart

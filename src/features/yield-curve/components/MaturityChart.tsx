@@ -3,6 +3,7 @@ import type {
   ScatterSeries,
   ChartReferenceLine,
   ScatterBand,
+  ScatterAnnotation,
 } from "../../../components/charts";
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { makeIndexFormat } from "../curveChartUtils";
@@ -19,6 +20,11 @@ type Props = {
   onDragRate?: (index: number, y: number) => void;
   extraRefs?: ChartReferenceLine[];
   bands?: ScatterBand[];
+  annotations?: ScatterAnnotation[];
+  onDragStart?: (index: number) => void;
+  onDragEnd?: () => void;
+  legend?: boolean;
+  yNumTicks?: number;
 };
 
 /// Term-structure chart on an evenly-spaced maturity axis (node index → label).
@@ -34,6 +40,11 @@ export default function MaturityChart({
   onDragRate,
   extraRefs = [],
   bands = [],
+  annotations = [],
+  onDragStart,
+  onDragEnd,
+  legend = true,
+  yNumTicks,
 }: Props) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const n = labels.length;
@@ -41,10 +52,8 @@ export default function MaturityChart({
 
   const refs: ChartReferenceLine[] = [...extraRefs];
   if (selectedIndex != null) {
-    refs.push({ axis: "x", value: selectedIndex, color: "#64748b", dash: "4 4" });
+    refs.push({ axis: "x", value: selectedIndex, color: "#38bdf8", width: 2 });
   }
-
-  const clampIndex = (x: number) => Math.max(0, Math.min(n - 1, Math.round(x)));
 
   return (
     <ScatterChart
@@ -52,16 +61,21 @@ export default function MaturityChart({
       xDomain={[-0.4, n - 0.6]}
       yDomain={yDomain}
       referenceLines={refs}
-      bands={bands}
+      bands={selectedIndex == null ? bands : [...bands, { from: selectedIndex - 0.16, to: selectedIndex + 0.16, color: "#38bdf8", opacity: 0.12 }]}
+      annotations={annotations}
       isMobile={isMobile}
-      legend
+      legend={legend}
+      xTickValues={labels.map((_, i) => i)}
       xFormat={xFormat}
       yFormat={yFormat}
       yLabel={yLabel}
+      yNumTicks={yNumTicks}
+      onSelectPoint={onSelectIndex}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
       onDrag={
         onDragRate || onSelectIndex
-          ? (x, y) => {
-              const i = clampIndex(x);
+          ? (_x, y, i) => {
               onSelectIndex?.(i);
               onDragRate?.(i, y);
             }

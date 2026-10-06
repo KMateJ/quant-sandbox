@@ -22,13 +22,13 @@ export default function BondParamsPanel({ model }: Props) {
   return (
     <>
       <div className="num-grid dc-param-grid">
-        <NumberInput label={t("dcFaceLabel")} value={model.face} onChange={model.setFace} min={1} step={10} />
+        <NumberInput sectionId="face-value" label={t("dcFaceLabel")} value={model.face} onChange={model.setFace} min={1} step={10} />
         <NumberInput sectionId="coupon-rate" label={t("dcCouponLabel")} value={model.couponRate} onChange={model.setCouponRate} percent min={0} max={0.2} step={0.25} />
-        <NumberInput label={t("dcMaturityLabel")} value={model.years} onChange={model.setYears} min={1} max={30} step={1} suffix={t("dcYearsSuffix")} />
+        <NumberInput sectionId="maturity" label={t("dcMaturityLabel")} value={model.years} onChange={model.setYears} min={1} max={30} step={1} suffix={t("dcYearsSuffix")} />
         <NumberInput sectionId="ytm" label={t("dcYtmLabel")} value={model.ytm} onChange={model.setYtm} percent min={0.001} max={0.2} step={0.25} />
       </div>
 
-      <ControlGroup label={t("dcFrequencyLabel")}>
+      <ControlGroup label={<span className="intuition-reveal">{t("dcFrequencyLabel")}<IntuitionTrigger sectionId="payment-frequency" /></span>}>
         <Tabs
           segmented
           items={freqItems}
@@ -41,29 +41,29 @@ export default function BondParamsPanel({ model }: Props) {
       <ControlGroup label={t("dcMeasuresLabel")}>
         <dl className="measure-list">
           <div className="measure-row">
-            <dt>{t("dcPrice")}<IntuitionTrigger sectionId="price" /></dt>
+            <dt className="intuition-reveal">{t("dcPrice")}<IntuitionTrigger sectionId="price" /></dt>
             <dd>{num(m.price)}</dd>
           </div>
           <div className="measure-row">
-            <dt>{t("dcMacaulay")}<IntuitionTrigger sectionId="macaulay-duration" /></dt>
+            <dt className="intuition-reveal">{t("dcMacaulay")}<IntuitionTrigger sectionId="macaulay-duration" /></dt>
             <dd>{num(m.macaulay)}</dd>
           </div>
           <div className="measure-row">
-            <dt>
+            <dt className="intuition-reveal">
               {t("dcModified")}
               <IntuitionTrigger sectionId="modified-duration" />
             </dt>
             <dd>{num(m.modified)}</dd>
           </div>
           <div className="measure-row">
-            <dt>
+            <dt className="intuition-reveal">
               {t("dcConvexity")}
               <IntuitionTrigger sectionId="convexity" />
             </dt>
             <dd>{num(m.convexity, 1)}</dd>
           </div>
           <div className="measure-row">
-            <dt>
+            <dt className="intuition-reveal">
               {t("dcDv01")}
               <IntuitionTrigger sectionId="dv01" />
             </dt>

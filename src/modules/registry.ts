@@ -1,7 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
-import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition } from "./intuition";
+import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, yieldCurveIntuition } from "./intuition";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -169,6 +169,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "yield-curve",
+    intuition: yieldCurveIntuition,
     path: "/yield-curve",
     navKey: "navYieldCurve",
     category: "fixed-income",

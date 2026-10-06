@@ -8,6 +8,7 @@ import BondMetrics from "./Components/BondMetrics";
 import CashFlowTimeline from "./Components/CashFlowTimeline";
 import PresentValueTable from "./Components/PresentValueTable";
 import PriceYieldExplorer from "./Components/PriceYieldExplorer";
+import { IntuitionTrigger } from "../../components/intuition";
 
 const MAX_YTM = 0.2;
 type TabId = "cashflows" | "price-yield";
@@ -28,7 +29,7 @@ export default function BondPricingView() {
   );
 
   return (
-    <>
+    <div className="intuition-on-demand">
       <PageHeader title={t("bondPricingTitle")} description={t("bondPricingDesc")} />
 
       <Workspace columns="sidebar">
@@ -59,7 +60,10 @@ export default function BondPricingView() {
           />
 
           <ChartContainer
-            title={tab === "cashflows" ? t("bondTimelineTitle") : t("bondPyTitle")}
+            title={<span className="intuition-reveal">
+              {tab === "cashflows" ? t("bondTimelineTitle") : t("bondPyTitle")}{" "}
+              <IntuitionTrigger sectionId={tab === "cashflows" ? "cash-flows" : "price-yield"} />
+            </span>}
             actions={
               <Tabs
                 segmented
@@ -98,6 +102,6 @@ export default function BondPricingView() {
           )}
         </div>
       </Workspace>
-    </>
+    </div>
   );
 }

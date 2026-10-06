@@ -1,4 +1,4 @@
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Line as SvgLine } from "@visx/shape";
@@ -9,6 +9,7 @@ import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
 import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
 import type { ScatterChartProps, ScatterPoint, ScatterSeries } from "./chart.types";
+import { useScatterDrag } from "./useScatterDrag";
 
 type Props = ScatterChartProps & { width: number; height: number };
 
@@ -37,6 +38,11 @@ export default function ScatterChartInner({
   xLabel,
   yLabel,
   onDrag,
+  onDragStart,
+  onDragEnd,
+  onSelectPoint,
+  xTickValues,
+  yNumTicks = 7,
 }: Props) {
   const base = chartMargin(isMobile);
   const margin = {
@@ -72,40 +78,23 @@ export default function ScatterChartInner({
   const fmtY = yFormat ?? ((v: number) => v.toFixed(2));
 
   const svgRef = useRef<SVGSVGElement>(null);
-  const draggingRef = useRef(false);
-  const dragIndexRef = useRef(0);
-
-  useEffect(() => {
-    if (!onDrag) return;
-    const toData = (clientX: number, clientY: number) => {
+  const drag = useScatterDrag({
+    svgRef, onDrag, onDragStart, onDragEnd,
+    toData: (event) => {
       const svg = svgRef.current;
-      if (!svg) return;
-      const rect = svg.getBoundingClientRect();
-      const scaleX = rect.width ? width / rect.width : 1;
-      const scaleY = rect.height ? svgHeight / rect.height : 1;
-      const sx = (clientX - rect.left) * scaleX - margin.left;
-      const sy = (clientY - rect.top) * scaleY - margin.top;
-      onDrag(xScale.invert(sx), yScale.invert(sy), dragIndexRef.current);
-    };
-    const move = (e: MouseEvent) => {
-      if (!draggingRef.current) return;
-      e.preventDefault();
-      toData(e.clientX, e.clientY);
-    };
-    const up = () => {
-      draggingRef.current = false;
-    };
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseup", up);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mouseup", up);
-    };
-  }, [onDrag, xScale, yScale, margin.left, margin.top, width, svgHeight]);
+      const matrix = svg?.getScreenCTM();
+      if (!svg || !matrix) return null;
+      const screenPoint = svg.createSVGPoint();
+      screenPoint.x = event.clientX;
+      screenPoint.y = event.clientY;
+      const point = screenPoint.matrixTransform(matrix.inverse());
+      return [xScale.invert(point.x - margin.left), yScale.invert(point.y - margin.top)];
+    },
+  });
 
   return (
     <>
-      <svg ref={svgRef} width={width} height={svgHeight}>
+      <svg ref={svgRef} width={width} height={svgHeight} {...drag.handlers}>
         <Group left={margin.left} top={margin.top}>
           {bands.map((b, i) => {
             const x0 = xScale(b.from);
@@ -138,7 +127,7 @@ export default function ScatterChartInner({
             ) : null
           )}
 
-          <GridRows scale={yScale} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
+          <GridRows scale={yScale} numTicks={yNumTicks} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
           <GridColumns scale={xScale} height={innerH} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
 
           {referenceLines.map((r, i) =>
@@ -160,6 +149,7 @@ export default function ScatterChartInner({
                 stroke={s.color}
                 strokeWidth={s.strokeWidth ?? 2}
                 strokeDasharray={s.dash}
+                opacity={s.opacity}
                 curve={curveLinear}
                 shapeRendering="geometricPrecision"
               />
@@ -178,8 +168,9 @@ export default function ScatterChartInner({
                   fillOpacity={p.opacity ?? s.opacity ?? 1}
                   stroke={s.hollow ? p.color ?? s.color : CHART_COLORS.tooltipBg}
                   strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : 1.5}
-                  style={{ cursor: s.draggable ? "grab" : "pointer" }}
-                  onMouseDown={s.draggable ? () => { draggingRef.current = true; dragIndexRef.current = i; } : undefined}
+                  style={{ cursor: s.draggable ? "grab" : "pointer", touchAction: s.draggable ? "none" : undefined }}
+                  onPointerDown={s.draggable ? (event) => drag.start(event, i) : undefined}
+                  onClick={() => onSelectPoint?.(i)}
                   onMouseEnter={() =>
                     tip.showTooltip({
                       tooltipLeft: margin.left + xScale(p.x),
@@ -212,8 +203,8 @@ export default function ScatterChartInner({
             </text>
           ))}
 
-          <AxisBottom top={innerH} scale={xScale} numTicks={isMobile ? 5 : 8} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtX(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })} />
-          <AxisLeft scale={yScale} numTicks={7} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtY(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />
+          <AxisBottom top={innerH} scale={xScale} tickValues={xTickValues} numTicks={isMobile ? 5 : 8} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtX(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })} />
+          <AxisLeft scale={yScale} numTicks={yNumTicks} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtY(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />
 
           {xLabel && (
             <text x={innerW / 2} y={innerH + margin.bottom - 2} textAnchor="middle" fill={CHART_COLORS.axis} fontSize={isMobile ? 11 : 12}>

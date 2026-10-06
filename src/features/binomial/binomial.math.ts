@@ -4,6 +4,7 @@ import type {
   BinomialParams,
   BinomialTreeResult,
   RateTreeParams,
+  BinomialValidationKey,
 } from "./binomial.types";
 
 function payoff(stockPrice: number, strike: number, optionKind: "call" | "put") {
@@ -58,7 +59,7 @@ export function buildBinomialTree(params: BinomialParams): BinomialTreeResult {
   const isValid =
     isFiniteModel && u > d && d > 0 && u > 0 && r > -1 && q >= 0 && q <= 1;
 
-  let validationKey: string | null = null;
+  let validationKey: BinomialValidationKey | null = null;
 
   if (
     !Number.isFinite(S0) ||
@@ -207,7 +208,7 @@ export function buildRateTree(params: RateTreeParams): BinomialTreeResult {
 
   const isValid = isFiniteModel && r0 > -1 && h > 0 && u > d && d > 0 && u > 0 && q >= 0 && q <= 1;
 
-  let validationKey: string | null = null;
+  let validationKey: BinomialValidationKey | null = null;
   if (!isFiniteModel) {
     validationKey = "binomialValidationInvalidParameters";
   } else if (!(u > d)) {

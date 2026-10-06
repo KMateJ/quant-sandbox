@@ -37,7 +37,7 @@ export default function BlackScholesControls({ model }: { model: ReturnType<type
 
           <div className="metric-switch">
             {metricOptions.map((option) => (
-              <span key={option.key}>
+              <span key={option.key} className="intuition-reveal">
                 <button type="button" className={metric === option.key ? "metric-button active" : "metric-button"} onClick={() => setMetric(option.key)}>
                   {option.label}
                 </button>

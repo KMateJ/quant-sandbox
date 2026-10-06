@@ -2,7 +2,7 @@ import InfoTooltip from "../ui/InfoTooltip";
 import { useI18n } from "../../i18n";
 import { useIntuition } from "./IntuitionContext";
 
-type Props = { sectionId?: string; tooltip?: string; variant?: "icon" | "button" };
+type Props = { sectionId?: string; tooltip?: string; variant?: "icon" | "button" | "question" };
 
 /// Omit sectionId to open the document at the top.
 export default function IntuitionTrigger({ sectionId, tooltip, variant = "icon" }: Props) {
@@ -24,5 +24,6 @@ export default function IntuitionTrigger({ sectionId, tooltip, variant = "icon" 
     return <button type="button" className="intuition-button" {...common}>{t("intuitionTitle")}</button>;
   }
   const summary = tooltip ?? (section?.summaryKey ? t(section.summaryKey) : title);
-  return <InfoTooltip content={`${summary} ${t("intuitionClick")}`} label={label} {...common} />;
+  return <InfoTooltip content={`${summary} ${t("intuitionClick")}`} label={label}
+    glyph={variant === "question" ? <span aria-hidden="true">?</span> : undefined} {...common} />;
 }

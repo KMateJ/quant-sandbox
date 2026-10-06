@@ -35,28 +35,28 @@ export default function BondMetrics({
   return (
     <div className="bond-metrics-grid">
       <div className="bm-group bm-group--primary">
-        <span className="bm-label">{t("bondCleanPrice")}<IntuitionTrigger sectionId="price" /></span>
+        <span className="bm-label intuition-reveal">{t("bondCleanPrice")}<IntuitionTrigger sectionId="price" /></span>
         <span className="bm-value bm-value--lg">{num(cleanPrice)}</span>
         <span className={`bm-state bm-state--${state}`}>{t(STATE_KEY[state])}</span>
       </div>
 
       <div className="bm-group">
-        <span className="bm-label">{t("bondMetricYield")}<IntuitionTrigger sectionId="ytm" /></span>
+        <span className="bm-label intuition-reveal">{t("bondMetricYield")}<IntuitionTrigger sectionId="ytm" /></span>
         <span className="bm-value">{pct(ytm)}</span>
       </div>
 
       <div className="bm-group">
         <span className="bm-label">{t("bondDuration")}</span>
         <div className="bm-sub">
-          <span className="bm-sub-k">{t("bondMacaulayShort")}<IntuitionTrigger sectionId="macaulay-duration" /></span>
+          <span className="bm-sub-k intuition-reveal">{t("bondMacaulayShort")}<IntuitionTrigger sectionId="macaulay-duration" /></span>
           <span className="bm-sub-v">{num(macaulay)}y</span>
-          <span className="bm-sub-k">{t("bondModifiedShort")}<IntuitionTrigger sectionId="modified-duration" /></span>
+          <span className="bm-sub-k intuition-reveal">{t("bondModifiedShort")}<IntuitionTrigger sectionId="modified-duration" /></span>
           <span className="bm-sub-v">{num(modified)}</span>
         </div>
       </div>
 
       <div className="bm-group">
-        <span className="bm-label">
+        <span className="bm-label intuition-reveal">
           {t("bondConvexity")}
           <IntuitionTrigger sectionId="convexity" />
         </span>

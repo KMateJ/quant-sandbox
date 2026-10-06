@@ -1,6 +1,8 @@
 import NumberInput from "../../../components/NumberInput";
 import SliderField from "../../../components/SliderField";
 import { useI18n } from "../../../i18n";
+import { useId } from "react";
+import { IntuitionTrigger } from "../../../components/intuition";
 
 type BondParametersProps = {
   face: number;
@@ -31,6 +33,7 @@ export default function BondParameters({
   onYtm,
 }: BondParametersProps) {
   const { t } = useI18n();
+  const frequencyId = useId();
   const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
   const pct0 = (v: number) => `${(v * 100).toFixed(0)}%`;
 
@@ -46,12 +49,13 @@ export default function BondParameters({
   return (
     <div className="bond-params">
       <div className="num-grid">
-        <NumberInput label={t("bondFaceLabel")} value={face} onChange={onFace} min={1} step={1} />
+        <NumberInput sectionId="face-value" label={t("bondFaceLabel")} value={face} onChange={onFace} min={1} step={1} />
         <NumberInput sectionId="coupon-rate" label={t("bondCouponLabel")} value={coupon} onChange={onCoupon} min={0} max={0.3} step={0.0025} percent />
-        <NumberInput label={t("bondMaturityLabel")} value={years} onChange={onYears} min={1} max={30} step={1} />
-        <label className="num-field">
-          <span className="num-label">{t("bondFrequencyLabel")}</span>
+        <NumberInput sectionId="maturity" label={t("bondMaturityLabel")} value={years} onChange={onYears} min={1} max={30} step={1} />
+        <div className="num-field intuition-reveal">
+          <span className="num-label"><label htmlFor={frequencyId}>{t("bondFrequencyLabel")}</label><IntuitionTrigger sectionId="payment-frequency" /></span>
           <select
+            id={frequencyId}
             className="bond-select"
             value={freq}
             onChange={(e) => onFreq(Number(e.target.value))}
@@ -60,7 +64,7 @@ export default function BondParameters({
             <option value={2}>{t("bondFreqSemiannual")}</option>
             <option value={4}>{t("bondFreqQuarterly")}</option>
           </select>
-        </label>
+        </div>
       </div>
 
       <div className="bond-ytm-slider">

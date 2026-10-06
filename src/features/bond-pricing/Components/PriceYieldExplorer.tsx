@@ -1,218 +1,42 @@
-import { useMemo, useState } from "react";
 import { ScatterChart } from "../../../components/charts";
-import type {
-  ScatterAnnotation,
-  ScatterBand,
-  ScatterSeries,
-  ChartReferenceLine,
-} from "../../../components/charts";
+import { IntuitionTrigger } from "../../../components/intuition";
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { useI18n } from "../../../i18n";
-import {
-  bondPrice,
-  priceYieldCurve,
-  durationApproxCurve,
-  durationConvexityApproxCurve,
-} from "../bondPricing.math";
-import { BOND_COLORS } from "../bondColors";
+import { usePriceYieldExplorer, type PriceYieldProps } from "../usePriceYieldExplorer";
 import PyOverlayControls from "./PyOverlayControls";
-import BondEduStrip from "./BondEduStrip";
 
-type Props = {
-  face: number;
-  coupon: number;
-  years: number;
-  freq: number;
-  ytm: number;
-  price: number;
-  modified: number;
-  convexity: number;
-  maxYtm: number;
-  onYtm: (v: number) => void;
-};
-
-/// Price–yield curve with a draggable current point, soft hover halo, faint
-/// premium/discount regions and optional duration / convexity approximation overlays.
-export default function PriceYieldExplorer({
-  face,
-  coupon,
-  years,
-  freq,
-  ytm,
-  price,
-  modified,
-  convexity,
-  maxYtm,
-  onYtm,
-}: Props) {
+export default function PriceYieldExplorer(props: PriceYieldProps) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const [showDuration, setShowDuration] = useState(false);
-  const [showConvexity, setShowConvexity] = useState(false);
-
-  const curve = useMemo(
-    () => priceYieldCurve(face, coupon, years, freq, maxYtm, 80),
-    [face, coupon, years, freq, maxYtm]
-  );
-
-  const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
-  const num = (v: number) => v.toFixed(2);
-  const yTop = bondPrice(face, coupon, 0.001, years, freq);
-  const yMax = yTop * 1.05;
-
-  const durCurve = useMemo(
-    () =>
-      showDuration
-        ? durationApproxCurve(price, modified, ytm, maxYtm, 60).filter((p) => p.price >= 0 && p.price <= yMax)
-        : [],
-    [showDuration, price, modified, ytm, maxYtm, yMax]
-  );
-  const convCurve = useMemo(
-    () =>
-      showConvexity
-        ? durationConvexityApproxCurve(price, modified, convexity, ytm, maxYtm, 60).filter(
-            (p) => p.price >= 0 && p.price <= yMax
-          )
-        : [],
-    [showConvexity, price, modified, convexity, ytm, maxYtm, yMax]
-  );
-
-  const tooltipRows = [
-    { label: t("bondMetricYtm"), value: pct(ytm) },
-    { label: t("bondPyPriceAxis"), value: num(price) },
-  ];
-
-  const series: ScatterSeries[] = [
-    {
-      key: "halo",
-      label: t("bondPyCurrent"),
-      color: BOND_COLORS.current,
-      radius: 15,
-      opacity: 0.16,
-      legend: false,
-      points: [{ x: ytm, y: price, label: t("bondPyCurrent"), tooltipRows }],
-    },
-    {
-      key: "curve",
-      label: t("bondPyCurve"),
-      color: BOND_COLORS.curve,
-      strokeWidth: 2.5,
-      line: true,
-      legend: false,
-      points: curve.map((p) => ({ x: p.ytm, y: p.price })),
-    },
-    ...(showDuration
-      ? [
-          {
-            key: "dur",
-            label: t("bondPyDuration"),
-            color: BOND_COLORS.durationApprox,
-            line: true,
-            dash: "7 4",
-            strokeWidth: 1.8,
-            legend: false,
-            points: durCurve.map((p) => ({ x: p.ytm, y: p.price })),
-          } as ScatterSeries,
-        ]
-      : []),
-    ...(showConvexity
-      ? [
-          {
-            key: "conv",
-            label: t("bondPyConvexity"),
-            color: BOND_COLORS.convexityApprox,
-            line: true,
-            dash: "2 4",
-            strokeWidth: 1.8,
-            legend: false,
-            points: convCurve.map((p) => ({ x: p.ytm, y: p.price })),
-          } as ScatterSeries,
-        ]
-      : []),
-    {
-      key: "par",
-      label: t("bondPyPar"),
-      color: BOND_COLORS.par,
-      radius: 6,
-      hollow: true,
-      legend: false,
-      points: [{ x: coupon, y: face, label: t("bondPyPar") }],
-    },
-    {
-      key: "current",
-      label: t("bondPyCurrent"),
-      color: BOND_COLORS.current,
-      radius: 7,
-      draggable: true,
-      legend: false,
-      points: [{ x: ytm, y: price, label: t("bondPyCurrent"), tooltipRows }],
-    },
-  ];
-
-  const bands: ScatterBand[] = [
-    { from: 0, to: coupon, color: "#22c55e", opacity: 0.05, label: t("bondPyPremium"), labelColor: "#22c55e" },
-    { from: coupon, to: maxYtm, color: "#ef4444", opacity: 0.045, label: t("bondPyDiscount"), labelColor: "#ef4444" },
-  ];
-
-  const referenceLines: ChartReferenceLine[] = [
-    { axis: "x", value: ytm, color: BOND_COLORS.current, dash: "4 4" },
-    { axis: "y", value: price, color: BOND_COLORS.current, dash: "4 4" },
-    { axis: "y", value: face, color: BOND_COLORS.par, dash: "2 4" },
-  ];
-
-  // Keep the two point labels apart: place the current label on the side away from
-  // par, and push them further apart when the bond sits close to par.
-  const curRight = ytm >= coupon;
-  const near = Math.abs(ytm - coupon) < maxYtm * 0.07 && Math.abs(price - face) < yMax * 0.07;
-  const sep = near ? 10 : 0;
-  const annotations: ScatterAnnotation[] = [
-    {
-      x: ytm,
-      y: price,
-      text: t("bondPyCurrent"),
-      color: BOND_COLORS.current,
-      dx: curRight ? 10 : -10,
-      dy: -10 - sep,
-      anchor: curRight ? "start" : "end",
-    },
-    {
-      x: coupon,
-      y: face,
-      text: t("bondPyPar"),
-      color: BOND_COLORS.par,
-      dx: curRight ? -8 : 8,
-      dy: 18 + sep,
-      anchor: curRight ? "end" : "start",
-    },
-  ];
-
+  const model = usePriceYieldExplorer(props);
   return (
     <div className="bond-py">
       <PyOverlayControls
-        showDuration={showDuration}
-        showConvexity={showConvexity}
-        onToggleDuration={() => setShowDuration((v) => !v)}
-        onToggleConvexity={() => setShowConvexity((v) => !v)}
+        showDuration={model.showDuration}
+        showConvexity={model.showConvexity}
+        onToggleDuration={() => model.setShowDuration((value) => !value)}
+        onToggleConvexity={() => model.setShowConvexity((value) => !value)}
       />
       <div className="bond-py-chart">
         <ScatterChart
-          series={series}
-          xDomain={[0, maxYtm]}
-          yDomain={[0, yMax]}
-          referenceLines={referenceLines}
-          bands={bands}
-          annotations={annotations}
+          series={model.series}
+          xDomain={[0, props.maxYtm]}
+          yDomain={[0, model.yMax]}
+          referenceLines={model.referenceLines}
+          bands={model.bands}
+          annotations={model.annotations}
           isMobile={isMobile}
           legend={false}
-          xFormat={pct}
-          yFormat={num}
+          xFormat={(value) => `${(value * 100).toFixed(2)}%`}
+          yFormat={(value) => value.toFixed(2)}
           xLabel={t("bondPyYtmAxis")}
           yLabel={t("bondPyPriceAxis")}
-          onDrag={(x) => onYtm(Math.min(maxYtm, Math.max(0.001, x)))}
+          onDrag={(x) => props.onYtm(Math.min(props.maxYtm, Math.max(0.001, x)))}
         />
       </div>
-      <BondEduStrip modified={modified} convexity={convexity} />
-      <p className="bond-py-hint">{t("bondPyDragHint")}</p>
+      <p className="bond-py-hint intuition-reveal">
+        {t("bondPyDragHint")} <IntuitionTrigger sectionId="price-yield" />
+      </p>
     </div>
   );
 }

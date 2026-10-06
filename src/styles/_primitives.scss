@@ -703,13 +703,14 @@
 }
 
 .info-tooltip-bubble {
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  z-index: var(--z-topnav);
-  transform: translateX(-50%);
+  position: fixed;
+  z-index: var(--z-tooltip);
   width: max-content;
-  max-width: 260px;
+  max-width: min(260px, calc(100vw - 16px));
+  max-height: calc(100dvh - 16px);
+  box-sizing: border-box;
+  overflow: auto;
+  overflow-wrap: anywhere;
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-xs);
   line-height: 1.4;
@@ -718,15 +719,6 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--transition-fast);
-}
-
-.info-tooltip-trigger:hover + .info-tooltip-bubble,
-.info-tooltip-trigger:focus-visible + .info-tooltip-bubble {
-  opacity: 1;
-  visibility: visible;
 }
 
 .stat-title .info-tooltip {

@@ -310,7 +310,8 @@
   color: var(--muted);
 }
 
-.bond-py-toggle {
+.bond-py-toggle,
+.bond-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -331,6 +332,15 @@
     border-color: var(--border-hover);
     background: var(--surface);
   }
+}
+
+.bond-legend-split {
+  margin-left: auto;
+}
+
+.bond-toggle.active {
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .bond-py-legend-item .line,

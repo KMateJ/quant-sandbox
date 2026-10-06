@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useI18n } from "../../i18n";
-import { type SliderDescriptor } from "../../components/SliderDock";
+import { createHestonSliders } from "./heston.controls";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { fellerMargin } from "./heston.math";
 import type { GreeksComparison, HestonControlsSetters, HestonControlsState, HestonGreekProfilePoint, HestonPathPoint, HestonWorkerResponse, PriceComparisonPoint, SmilePoint } from "./heston.types";
@@ -44,7 +44,7 @@ type PricingInput = Omit<HestonControlsState, "steps" | "pathCount">;
 
 type PathsInput = HestonControlsState;
 export function useHestonView() {
-  const { language } = useI18n();
+  const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchParams, setSearchParams] = useSearchParams();
   const queryString = searchParams.toString();
@@ -447,22 +447,8 @@ export function useHestonView() {
     setPricingPaths,
   };
 
-  const sliders: SliderDescriptor[] = [
-    { key: "S0", symbol: "S₀", name: "S0", value: S0, min: 20, max: 200, step: 1, format: (v) => v.toFixed(0), onChange: setS0 },
-    { key: "K", symbol: "K", name: "K (strike)", value: strike, min: 20, max: 200, step: 1, format: (v) => v.toFixed(0), onChange: setStrike },
-    { key: "r", symbol: "r", name: "r", value: rate, min: 0, max: 0.2, step: 0.005, format: (v) => v.toFixed(3), onChange: setRate },
-    { key: "v0", sectionId: "stochastic-volatility", symbol: "v₀", name: "v0", value: v0, min: 0.0001, max: 0.25, step: 0.0025, format: (v) => v.toFixed(4), onChange: setV0 },
-    { key: "theta", sectionId: "mean-reversion", symbol: "θ", name: "θ", value: theta, min: 0.0001, max: 0.25, step: 0.0025, format: (v) => v.toFixed(4), onChange: setTheta },
-    { key: "kappa", sectionId: "mean-reversion", symbol: "κ", name: "κ", value: kappa, min: 0.1, max: 10, step: 0.1, format: (v) => v.toFixed(2), onChange: setKappa },
-    { key: "xi", sectionId: "vol-of-vol", symbol: "ξ", name: "ξ (vol-of-vol)", value: xi, min: 0.01, max: 2, step: 0.01, format: (v) => v.toFixed(2), onChange: setXi },
-    { key: "rho", sectionId: "correlation", symbol: "ρ", name: "ρ", value: rho, min: -0.99, max: 0.99, step: 0.01, format: (v) => v.toFixed(2), onChange: setRho },
-    { key: "T", symbol: "T", name: "T", value: maturity, min: 0.25, max: 10, step: 0.25, format: (v) => (language === "hu" ? `${v.toFixed(2)} év` : `${v.toFixed(2)} years`), onChange: setMaturity },
-    { key: "steps", symbol: "steps", name: "Path steps", value: steps, min: 25, max: 500, step: 25, format: (v) => v.toFixed(0), onChange: setSteps },
-    { key: "paths", symbol: "paths", name: "Visual paths", value: pathCount, min: 1, max: 30, step: 1, format: (v) => v.toFixed(0), onChange: setPathCount },
-    { key: "pSteps", sectionId: "smile", symbol: "pSteps", name: "Pricing steps", value: pricingSteps, min: 25, max: 400, step: 25, format: (v) => v.toFixed(0), onChange: setPricingSteps },
-    { key: "pPaths", sectionId: "smile", symbol: "pPaths", name: "Pricing paths", value: pricingPaths, min: 100, max: 2000, step: 100, format: (v) => v.toFixed(0), onChange: setPricingPaths },
-  ];
+  const sliders = createHestonSliders(currentControls, controlSetters, t);
 
   
-  return { language, isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, controlSetters, sliders };
+  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders };
 }

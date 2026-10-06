@@ -1,4 +1,6 @@
 import { sliderFill } from "./sliderFill";
+import { useId } from "react";
+import { IntuitionTrigger } from "./intuition";
 
 type NumberStepperProps = {
   label: string;
@@ -8,6 +10,7 @@ type NumberStepperProps = {
   step?: number;
   onChange: (value: number) => void;
   formatValue?: (value: number) => string;
+  sectionId?: string;
 };
 
 export default function NumberStepper({
@@ -18,7 +21,9 @@ export default function NumberStepper({
   step = 1,
   onChange,
   formatValue,
+  sectionId,
 }: NumberStepperProps) {
+  const id = useId();
   const displayValue = formatValue ? formatValue(value) : String(value);
 
   const decrease = () => {
@@ -32,7 +37,7 @@ export default function NumberStepper({
   return (
     <div className="slider-field">
       <div className="slider-row">
-        <span className="slider-label">{label}</span>
+        <span className="slider-label"><label htmlFor={id}>{label}</label>{sectionId && <IntuitionTrigger sectionId={sectionId} />}</span>
         <span className="value-badge">{displayValue}</span>
       </div>
 
@@ -42,6 +47,7 @@ export default function NumberStepper({
         </button>
 
         <input
+          id={id}
           className="slider-input"
           type="range"
           min={min}

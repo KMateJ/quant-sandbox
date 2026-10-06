@@ -7,6 +7,7 @@ export type SwitchOption = {
 export type SwitchGroup = {
   key: string;
   options: SwitchOption[];
+  sectionId?: string;
 };
 
 type SwitchRowProps = {
@@ -19,7 +20,7 @@ export default function SwitchRow({ groups }: SwitchRowProps) {
   return (
     <div className="switch-row">
       {groups.map((group) => (
-        <div key={group.key} className="switch-group metric-switch" role="group">
+        <div key={group.key} className="switch-group metric-switch intuition-reveal" role="group">
           {group.options.map((option) => (
             <button
               key={option.label}
@@ -31,8 +32,10 @@ export default function SwitchRow({ groups }: SwitchRowProps) {
               {option.label}
             </button>
           ))}
+          {group.sectionId && <IntuitionTrigger sectionId={group.sectionId} />}
         </div>
       ))}
     </div>
   );
 }
+import { IntuitionTrigger } from "./intuition";

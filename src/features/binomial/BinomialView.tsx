@@ -8,42 +8,24 @@ import { useBinomialView } from "./useBinomialView";
 import { IntuitionTrigger } from "../../components/intuition";
 export default function BinomialView() {
   const model = useBinomialView();
-  const { isMobile, mode, setMode, S0, setS0, K, setK, u, setU, d, setD, r, setR, q, setQ, h, setH, steps, setSteps, optionKind, setOptionKind, controlsOpen, setControlsOpen, showPrimaryMetric, setShowPrimaryMetric, showSecondaryMetric, setShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel } = model;
+  const { isMobile, mode, setMode, sliders, optionKind, setOptionKind, controlsOpen, setControlsOpen, showPrimaryMetric, setShowPrimaryMetric, showSecondaryMetric, setShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel } = model;
   const { t: translate } = useI18n();
-  return (<>
-    <PageHeader title={translate("navBinomial")} actions={<>
-      <IntuitionTrigger sectionId={mode === "rates" ? "short-rate-tree" : "risk-neutral-probability"} />
-      <IntuitionTrigger sectionId="replication" />
-    </>} />
+  return (<div className="intuition-on-demand">
+    <PageHeader title={translate("navBinomial")} />
     <div className="view-layout binomial-view">
       {!isMobile ? (
         <div className="view-controls">
           <BinomialControls
             mode={mode}
-            S0={S0}
-            K={K}
-            u={u}
-            d={d}
-            r={r}
-            q={q}
-            h={h}
-            steps={steps}
+            sliders={sliders}
             optionKind={optionKind}
             controlsOpen={controlsOpen}
             onToggleControls={() => setControlsOpen((prev) => !prev)}
             onModeChange={setMode}
-            onS0Change={setS0}
-            onKChange={setK}
-            onUChange={setU}
-            onDChange={setD}
-            onRChange={setR}
-            onQChange={setQ}
-            onHChange={setH}
-            onStepsChange={setSteps}
             onOptionKindChange={setOptionKind}
           />
           <div className="card" style={{ marginTop: 20 }}>
-            <div className="metric-switch">
+            <div className="metric-switch intuition-reveal">
               <button
                 type="button"
                 className={showPrimaryMetric ? "metric-button active" : "metric-button"}
@@ -58,6 +40,7 @@ export default function BinomialView() {
               >
                 {secondaryToggleLabel}
               </button>
+              <IntuitionTrigger sectionId={mode === "rates" ? "short-rate-tree" : "replication"} />
             </div>
           </div>
         </div>
@@ -81,25 +64,9 @@ export default function BinomialView() {
 
       {isMobile ? (
         <BinomialSliderDock
-          mode={mode}
-          S0={S0}
-          K={K}
-          u={u}
-          d={d}
-          r={r}
-          q={q}
-          h={h}
-          steps={steps}
-          onS0Change={setS0}
-          onKChange={setK}
-          onUChange={setU}
-          onDChange={setD}
-          onRChange={setR}
-          onQChange={setQ}
-          onHChange={setH}
-          onStepsChange={setSteps}
+          sliders={sliders}
         />
       ) : null}
     </div>
-  </>);
+  </div>);
 }

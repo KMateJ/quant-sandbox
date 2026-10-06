@@ -25,7 +25,7 @@ export default function SensitivityChart({ model }: Props) {
   const lineSeries: ScatterSeries[] = [
     {
       key: "exact",
-      intuitionSectionId: "yield-shock",
+      intuitionSectionId: "exact-repricing",
       label: t("dcExactLabel"),
       color: EXACT,
       line: true,

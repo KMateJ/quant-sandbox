@@ -1,3 +1,5 @@
+import { useId } from "react";
+import { IntuitionTrigger } from "../../../components/intuition";
 import { useI18n } from "../../../i18n";
 import type { DcModel } from "../useDurationConvexity";
 
@@ -21,6 +23,7 @@ function divergingFill(value: number, min: number, max: number) {
 /// large Δy readout and precise numeric entry.
 export default function YieldShockControl({ model }: Props) {
   const { t } = useI18n();
+  const inputId = useId();
   const { shockBp, setShockBp, maxBp } = model;
   const clamp = (v: number) => Math.max(-maxBp, Math.min(maxBp, v));
   const sign = shockBp > 0 ? "+" : "";
@@ -29,17 +32,18 @@ export default function YieldShockControl({ model }: Props) {
   return (
     <div className="dc-shock">
       <div className="dc-shock-top">
-        <div className="dc-shock-readout">
-          <span className="dc-shock-caption">{t("dcShockCaption")}</span>
+        <div className="dc-shock-readout intuition-reveal">
+          <span className="dc-shock-caption intuition-control-help">{t("dcShockCaption")}<IntuitionTrigger sectionId="yield-shock" /></span>
           <span className={`dc-shock-value ${tone}`}>
             {sign}
             {shockBp} bp
           </span>
         </div>
-        <label className="dc-shock-entry num-field">
-          <span className="num-label">{t("dcShockPrecise")}</span>
+        <div className="dc-shock-entry num-field">
+          <span className="num-label"><label htmlFor={inputId}>{t("dcShockPrecise")}</label><IntuitionTrigger sectionId="yield-shock" /></span>
           <span className="num-input-wrap">
             <input
+              id={inputId}
               className="num-input"
               type="number"
               value={shockBp}
@@ -53,7 +57,7 @@ export default function YieldShockControl({ model }: Props) {
             />
             <span className="num-suffix">bp</span>
           </span>
-        </label>
+        </div>
       </div>
 
       <div className="dc-shock-track">

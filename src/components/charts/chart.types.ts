@@ -110,6 +110,11 @@ export type ScatterChartProps = {
   yFormat?: (value: number) => string;
   xLabel?: string;
   yLabel?: string;
+  xTickValues?: number[];
+  yNumTicks?: number;
+  onSelectPoint?: (index: number) => void;
+  onDragStart?: (index: number) => void;
+  onDragEnd?: () => void;
   /// Fires with data coordinates while a draggable marker is being dragged.
   /// `index` is the position of the grabbed point within its series.
   onDrag?: (x: number, y: number, index: number) => void;

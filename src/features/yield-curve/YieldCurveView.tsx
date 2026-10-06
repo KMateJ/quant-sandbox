@@ -27,9 +27,10 @@ export default function YieldCurveView() {
   return (
     <>
       <PageHeader title={t("yieldCurveTitle")} description={t("yieldCurveDesc")} />
+      {model.error && <p className="yc-error" role="alert">{t("ycInvalidQuote")}</p>}
 
       <div className="yc-tabbar">
-        <Tabs<Tab> segmented items={tabs} value={tab} onChange={setTab} ariaLabel={t("yieldCurveTitle")} />
+        <Tabs<Tab> items={tabs} value={tab} onChange={setTab} ariaLabel={t("yieldCurveTitle")} />
       </div>
 
       {tab === "curve" && <CurveView model={model} />}

@@ -9,7 +9,7 @@ type Props = {
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
 /// Horizontal allocation bar plus a compact signed-weight list for the selection.
-/// Long and short exposures each get their own normalised bar.
+/// Bar segments use total long exposure as their denominator.
 export default function AllocationBar({ assets, weights }: Props) {
   const { t } = useI18n();
   const longTotal = weights.reduce((a, w) => a + Math.max(0, w), 0) || 1;
@@ -22,7 +22,7 @@ export default function AllocationBar({ assets, weights }: Props) {
   return (
     <div className="alloc">
       {hasShort && <span className="alloc-bar-label">{t("optAllocLong")}</span>}
-      <div className="alloc-bar" role="img" aria-label="Portfolio long allocation">
+      <div className="alloc-bar" role="img" aria-label={t("optAllocLong")}>
         {assets.map((a, i) =>
           weights[i] > 0.0005 ? (
             <span
@@ -37,7 +37,7 @@ export default function AllocationBar({ assets, weights }: Props) {
       {hasShort && (
         <>
           <span className="alloc-bar-label">{t("optAllocShort")}</span>
-          <div className="alloc-bar alloc-bar--short" role="img" aria-label="Portfolio short allocation">
+          <div className="alloc-bar alloc-bar--short" role="img" aria-label={t("optAllocShort")}>
             {assets.map((a, i) =>
               weights[i] < -0.0005 ? (
                 <span
