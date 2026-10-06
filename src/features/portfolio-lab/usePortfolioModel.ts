@@ -24,7 +24,7 @@ export function usePortfolioModel() {
 
   const [rawWeights, setRawWeights] = useState<number[]>(assets.map(() => 1 / assets.length));
   const [cashWeight, setCashWeight] = useState(0);
-  const [cloudCount, setCloudCount] = useState(320);
+  const [cloudCount, setCloudCount] = useState(800);
   const [cloudSeed, setCloudSeed] = useState(1);
   const [showCloud, setShowCloud] = useState(true);
 

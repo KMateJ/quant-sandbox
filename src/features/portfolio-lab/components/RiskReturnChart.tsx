@@ -20,15 +20,24 @@ export default function RiskReturnChart({ m }: Props) {
 
   const cloudPoints = useMemo(
     () =>
-      m.cloud.map((p) => ({
-        x: p.vol,
-        y: p.ret,
-        tooltipRows: assets
-          .map((a, i) => ({ label: a.name, value: pct(p.weights[i]), color: a.color, w: p.weights[i] }))
-          .filter((r) => r.w >= 0.005)
-          .sort((a, b) => b.w - a.w)
-          .map(({ label, value, color }) => ({ label, value, color })),
-      })),
+      m.cloud.map((p) => {
+        let maxI = 0;
+        for (let i = 1; i < p.weights.length; i++) {
+          if (p.weights[i] > p.weights[maxI]) maxI = i;
+        }
+        const maxW = p.weights[maxI];
+        return {
+          x: p.vol,
+          y: p.ret,
+          color: assets[maxI]?.color,
+          opacity: Math.max(0.1, Math.min(0.9, 1 - maxW)),
+          tooltipRows: assets
+            .map((a, i) => ({ label: a.name, value: pct(p.weights[i]), color: a.color, w: p.weights[i] }))
+            .filter((r) => r.w >= 0.005)
+            .sort((a, b) => b.w - a.w)
+            .map(({ label, value, color }) => ({ label, value, color })),
+        };
+      }),
     [m.cloud, assets]
   );
   const assetPoints = useMemo(
@@ -40,7 +49,7 @@ export default function RiskReturnChart({ m }: Props) {
     { key: "cloud", label: t("portfolioCloudLabel"), color: "#64748b", radius: 2.5, opacity: 0.35, legend: true, points: cloudPoints },
     { key: "frontier", label: t("portfolioFrontierLabel"), color: "#3b82f6", line: true, strokeWidth: 3, points: m.frontier.map((p) => ({ x: p.vol, y: p.ret })) },
     { key: "cml", label: t("portfolioCmlLabel"), color: "#22c55e", line: true, dash: "6 4", strokeWidth: 2, points: m.cml.map((p) => ({ x: p.vol, y: p.ret })) },
-    { key: "assets", label: t("portfolioAssetPointsLabel"), color: "#94a3b8", radius: 6, legend: true, points: assetPoints },
+    { key: "assets", label: t("portfolioAssetPointsLabel"), color: "#94a3b8", radius: 6, legend: true, draggable: true, points: assetPoints },
     { key: "cash", label: t("portfolioCashLabel"), color: "#94a3b8", radius: 5, legend: false, points: [{ x: 0, y: m.riskFree, label: t("portfolioCashLabel") }] },
     { key: "gmv", label: t("portfolioGmvLabel"), color: "#38bdf8", radius: 6, legend: false, points: [{ x: m.gmv.vol, y: m.gmv.ret, label: t("portfolioGmvLabel") }] },
     { key: "tangency", label: t("portfolioTangencyLabel"), color: "#22c55e", radius: 6, legend: false, points: [{ x: m.tangency.vol, y: m.tangency.ret, label: t("portfolioTangencyLabel") }] },
@@ -50,6 +59,12 @@ export default function RiskReturnChart({ m }: Props) {
     { axis: "x", value: current.vol, color: "#64748b", dash: "4 4" },
     { axis: "y", value: current.ret, color: "#64748b", dash: "4 4" },
   ];
+
+  const onAssetDrag = (x: number, y: number, i: number) => {
+    if (i < 0 || i >= assets.length) return;
+    m.setAssetParam(i, "sigma", Math.min(0.6, Math.max(0.02, x)));
+    m.setAssetParam(i, "mu", Math.min(0.4, Math.max(-0.05, y)));
+  };
 
   return (
     <ChartContainer title={t("portfolioChartTitle")}>
@@ -64,6 +79,7 @@ export default function RiskReturnChart({ m }: Props) {
           yFormat={pct}
           xLabel={t("portfolioVolAxis")}
           yLabel={t("portfolioRetAxis")}
+          onDrag={onAssetDrag}
         />
       </div>
     </ChartContainer>

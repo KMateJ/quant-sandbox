@@ -43,6 +43,8 @@ export type ScatterPoint = {
   label?: string;
   /// Optional per-point fill colour, overriding the series colour.
   color?: string;
+  /// Optional per-point fill opacity, overriding the series opacity.
+  opacity?: number;
   /// Optional extra rows (e.g. portfolio composition) rendered in the tooltip.
   tooltipRows?: { label: string; value: string; color?: string }[];
 };
@@ -107,5 +109,6 @@ export type ScatterChartProps = {
   xLabel?: string;
   yLabel?: string;
   /// Fires with data coordinates while a draggable marker is being dragged.
-  onDrag?: (x: number, y: number) => void;
+  /// `index` is the position of the grabbed point within its series.
+  onDrag?: (x: number, y: number, index: number) => void;
 };

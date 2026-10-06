@@ -73,7 +73,7 @@ export default function PortfolioLabView() {
           </div>
 
           <ControlGroup label={t("portfolioCloudLabel")}>
-            <SliderField label={t("portfolioCloudCountLabel")} min={0} max={1000} step={20} value={m.cloudCount} onChange={m.setCloudCount} formatValue={(v) => v.toFixed(0)} />
+            <SliderField label={t("portfolioCloudCountLabel")} min={0} max={5000} step={50} value={m.cloudCount} onChange={m.setCloudCount} formatValue={(v) => v.toFixed(0)} />
             <div className="preset-row">
               <button type="button" className={m.showCloud ? "preset-btn preset-btn--active" : "preset-btn"} onClick={() => m.setShowCloud(!m.showCloud)}>
                 {m.showCloud ? t("portfolioCloudHide") : t("portfolioCloudShow")}

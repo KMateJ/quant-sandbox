@@ -73,6 +73,7 @@ export default function ScatterChartInner({
 
   const svgRef = useRef<SVGSVGElement>(null);
   const draggingRef = useRef(false);
+  const dragIndexRef = useRef(0);
 
   useEffect(() => {
     if (!onDrag) return;
@@ -84,7 +85,7 @@ export default function ScatterChartInner({
       const scaleY = rect.height ? svgHeight / rect.height : 1;
       const sx = (clientX - rect.left) * scaleX - margin.left;
       const sy = (clientY - rect.top) * scaleY - margin.top;
-      onDrag(xScale.invert(sx), yScale.invert(sy));
+      onDrag(xScale.invert(sx), yScale.invert(sy), dragIndexRef.current);
     };
     const move = (e: MouseEvent) => {
       if (!draggingRef.current) return;
@@ -174,11 +175,11 @@ export default function ScatterChartInner({
                   cy={yScale(p.y)}
                   r={s.radius ?? 5}
                   fill={s.hollow ? "transparent" : p.color ?? s.color}
-                  fillOpacity={s.opacity ?? 1}
+                  fillOpacity={p.opacity ?? s.opacity ?? 1}
                   stroke={s.hollow ? p.color ?? s.color : CHART_COLORS.tooltipBg}
                   strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : 1.5}
                   style={{ cursor: s.draggable ? "grab" : "pointer" }}
-                  onMouseDown={s.draggable ? () => { draggingRef.current = true; } : undefined}
+                  onMouseDown={s.draggable ? () => { draggingRef.current = true; dragIndexRef.current = i; } : undefined}
                   onMouseEnter={() =>
                     tip.showTooltip({
                       tooltipLeft: margin.left + xScale(p.x),
