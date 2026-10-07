@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Line as SvgLine } from "@visx/shape";
@@ -64,13 +64,20 @@ export default function ScatterChartInner({
     [allPoints, yDomain]
   );
 
+  // While dragging a marker, hold the axis domains fixed so the scale does not
+  // jerk as the dragged values feed back into the domain bounds.
+  const [dragging, setDragging] = useState(false);
+  const frozen = useRef<{ x: [number, number]; y: [number, number] } | null>(null);
+  const activeX = dragging && frozen.current ? frozen.current.x : resolvedX;
+  const activeY = dragging && frozen.current ? frozen.current.y : resolvedY;
+
   const xScale = useMemo(
-    () => scaleLinear({ domain: resolvedX, range: [0, innerW] }),
-    [resolvedX, innerW]
+    () => scaleLinear({ domain: activeX, range: [0, innerW] }),
+    [activeX, innerW]
   );
   const yScale = useMemo(
-    () => scaleLinear({ domain: resolvedY, range: [innerH, 0] }),
-    [resolvedY, innerH]
+    () => scaleLinear({ domain: activeY, range: [innerH, 0] }),
+    [activeY, innerH]
   );
 
   const tip = useTooltip<Hover>();
@@ -79,7 +86,17 @@ export default function ScatterChartInner({
 
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useScatterDrag({
-    svgRef, onDrag, onDragStart, onDragEnd,
+    svgRef, onDrag,
+    onDragStart: (index) => {
+      frozen.current = { x: resolvedX, y: resolvedY };
+      setDragging(true);
+      onDragStart?.(index);
+    },
+    onDragEnd: () => {
+      frozen.current = null;
+      setDragging(false);
+      onDragEnd?.();
+    },
     toData: (event) => {
       const svg = svgRef.current;
       const matrix = svg?.getScreenCTM();

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
+import "@fontsource-variable/inter";
 import App from "./App.tsx";
 import "./styles/main.scss";
 import { LanguageProvider } from "./i18n";

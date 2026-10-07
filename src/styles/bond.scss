@@ -9,6 +9,7 @@
 .bond-select {
   width: 100%;
   min-width: 0;
+  height: var(--control-height-sm);
   padding: var(--space-1) var(--space-2);
   font-size: var(--text-sm);
   font-weight: 600;
@@ -21,6 +22,10 @@
     outline: none;
     border-color: var(--primary);
   }
+}
+
+.bond-params .num-input-wrap {
+  height: var(--control-height-sm);
 }
 
 .bond-metrics-grid {
@@ -54,6 +59,7 @@
   font-size: var(--text-xs);
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--muted);
 }
 
