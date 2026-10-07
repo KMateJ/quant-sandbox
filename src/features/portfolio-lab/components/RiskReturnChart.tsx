@@ -30,7 +30,7 @@ export default function RiskReturnChart({ m }: Props) {
           x: p.vol,
           y: p.ret,
           color: assets[maxI]?.color,
-          opacity: Math.max(0.1, Math.min(0.9, 1 - maxW)),
+          opacity: Math.max(0.1, Math.min(0.9, maxW)),
           tooltipRows: assets
             .map((a, i) => ({ label: a.name, value: pct(p.weights[i]), color: a.color, w: p.weights[i] }))
             .filter((r) => r.w >= 0.005)
