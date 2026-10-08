@@ -189,7 +189,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  min-height: 56px;
+  padding: var(--space-2) var(--space-4);
   border-bottom: 1px solid var(--border);
 }
 
@@ -249,6 +250,7 @@
   .tab {
     padding: var(--space-2) 0;
     font-size: var(--text-sm);
+    line-height: 1.25;
     color: var(--muted);
     background: transparent;
     border: none;
@@ -280,11 +282,13 @@
   .tab {
     padding: var(--space-1) var(--space-3);
     font-size: var(--text-sm);
+    line-height: 1.25;
     color: var(--muted);
     background: transparent;
     border: none;
     border-radius: var(--radius-xs);
     cursor: pointer;
+    white-space: nowrap;
     transition: color var(--transition-fast), background var(--transition-fast);
 
     &:hover:not(:disabled) {

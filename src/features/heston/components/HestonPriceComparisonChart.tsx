@@ -1,4 +1,4 @@
-import SectionCard from "../../../components/SectionCard";
+import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { PriceComparisonPoint } from "../heston.types";
@@ -29,10 +29,9 @@ export default function HestonPriceComparisonChart({
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   return (
-    <SectionCard
-      className="chart-card"
+    <ChartContainer
       title={t("hestonPriceComparisonTitle")}
-      headerRight={<IntuitionTrigger sectionId="spot-strike" />}
+      actions={<IntuitionTrigger sectionId="spot-strike" />}
     >
       <div className="chart-wrap">
         <LineChart
@@ -49,6 +48,6 @@ export default function HestonPriceComparisonChart({
           valueFormat={(v) => v.toFixed(3)}
         />
       </div>
-    </SectionCard>
+    </ChartContainer>
   );
 }

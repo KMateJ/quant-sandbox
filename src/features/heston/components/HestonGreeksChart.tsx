@@ -1,18 +1,25 @@
 import { useMemo, useState } from "react";
-import SectionCard from "../../../components/SectionCard";
+import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
+import { Tabs, type TabItem } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
-import type { GreekKey, HestonGreekProfilePoint } from "../heston.types";
+import type { GreekKey, HestonGreekProfilePoint, HestonGreeksSurfaceData } from "../heston.types";
 import { IntuitionTrigger } from "../../../components/intuition";
 import { HESTON_GREEKS } from "../heston.greeks";
+import HestonGreeksSurface from "./HestonGreeksSurface";
+
+type ViewMode = "2d" | "3d";
 
 type Props = {
   data: HestonGreekProfilePoint[];
   strike: number;
+  greeks3d: boolean;
+  setGreeks3d: (value: boolean) => void;
+  surface: HestonGreeksSurfaceData | null;
 };
 
-export default function HestonGreeksChart({ data, strike }: Props) {
+export default function HestonGreeksChart({ data, strike, greeks3d, setGreeks3d, surface }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
@@ -32,66 +39,75 @@ export default function HestonGreeksChart({ data, strike }: Props) {
     return list;
   }, [showBs, showHeston, bsKey, hestonKey]);
 
+  const metricTabs: TabItem[] = HESTON_GREEKS.map((m) => ({ id: m.key, label: t(m.labelKey) }));
+  const viewTabs: TabItem<ViewMode>[] = [
+    { id: "2d", label: t("hestonView2d") },
+    { id: "3d", label: t("hestonView3d") },
+  ];
+
   return (
-    <SectionCard
-      className="chart-card"
+    <ChartContainer
       title={t("hestonGreeksChartTitle")}
-      headerRight={<IntuitionTrigger sectionId={metric} />}
+      actions={
+        <span className="chart-actions">
+          <Tabs<ViewMode>
+            segmented
+            items={viewTabs}
+            value={greeks3d ? "3d" : "2d"}
+            onChange={(id) => setGreeks3d(id === "3d")}
+            ariaLabel={t("hestonView3d")}
+          />
+          <IntuitionTrigger sectionId={metric} />
+        </span>
+      }
     >
-      <div className="greeks-toolbar">
-        <div className="greeks-metric-seg" role="tablist">
-          {HESTON_GREEKS.map((m) => (
-            <button
-              key={m.key}
-              type="button"
-              role="tab"
-              aria-selected={metric === m.key}
-              className={
-                metric === m.key ? "greeks-seg-btn active" : "greeks-seg-btn"
-              }
-              onClick={() => setMetric(m.key)}
-            >
-              {t(m.labelKey)}
-            </button>
-          ))}
-        </div>
-
-        <div className="greeks-series-toggles">
-          <button
-            type="button"
-            className={showBs ? "greeks-series active" : "greeks-series"}
-            aria-pressed={showBs}
-            onClick={() => setShowBs((v) => !v)}
-          >
-            <span className="greeks-series-dot" style={{ background: "#3b82f6" }} />
-            Black–Scholes
-          </button>
-          <button
-            type="button"
-            className={showHeston ? "greeks-series active" : "greeks-series"}
-            aria-pressed={showHeston}
-            onClick={() => setShowHeston((v) => !v)}
-          >
-            <span className="greeks-series-dot" style={{ background: "#f59e0b" }} />
-            Heston
-          </button>
-        </div>
-      </div>
-
-      <div className="chart-wrap">
-        <LineChart
-          data={data}
-          xKey="S"
-          series={series}
-          referenceLines={[
-            { axis: "x", value: strike, color: "#94a3b8", dash: "4 4" },
-          ]}
-          isMobile={isMobile}
-          legend={false}
-          tooltipLabel={(x) => `S = ${x}`}
-          valueFormat={(v) => v.toFixed(4)}
+      <div className="chart-toolbar">
+        <Tabs
+          items={metricTabs}
+          value={metric}
+          onChange={(id) => setMetric(id as GreekKey)}
+          ariaLabel={t("hestonGreeksChartTitle")}
         />
+        {!greeks3d && (
+          <div className="series-toggles">
+            <button
+              type="button"
+              className={showBs ? "series-toggle active" : "series-toggle"}
+              aria-pressed={showBs}
+              onClick={() => setShowBs((v) => !v)}
+            >
+              <span className="series-toggle-dot" style={{ background: "#3b82f6" }} />
+              Black–Scholes
+            </button>
+            <button
+              type="button"
+              className={showHeston ? "series-toggle active" : "series-toggle"}
+              aria-pressed={showHeston}
+              onClick={() => setShowHeston((v) => !v)}
+            >
+              <span className="series-toggle-dot" style={{ background: "#f59e0b" }} />
+              Heston
+            </button>
+          </div>
+        )}
       </div>
-    </SectionCard>
+
+      {greeks3d ? (
+        <HestonGreeksSurface surface={surface} metric={metric} />
+      ) : (
+        <div className="chart-wrap">
+          <LineChart
+            data={data}
+            xKey="S"
+            series={series}
+            referenceLines={[{ axis: "x", value: strike, color: "#94a3b8", dash: "4 4" }]}
+            isMobile={isMobile}
+            legend={false}
+            tooltipLabel={(x) => `S = ${x}`}
+            valueFormat={(v) => v.toFixed(4)}
+          />
+        </div>
+      )}
+    </ChartContainer>
   );
 }

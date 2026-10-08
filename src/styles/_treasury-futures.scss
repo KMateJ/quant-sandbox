@@ -1,0 +1,71 @@
+.treasury-futures {
+  .tf-controls { display: grid; gap: 14px; }
+  .tf-scenario, .tf-frequency {
+    display: grid;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .tf-scenario select, .tf-frequency select {
+    width: 100%;
+    min-height: 34px;
+    padding: 5px 8px;
+    color: var(--text);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+  .tf-bond {
+    min-width: 0;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .tf-bond legend { padding: 0 5px; color: var(--primary, #38bdf8); font-size: 12px; font-weight: 650; }
+  .tf-input-grid { display: grid; gap: 10px; }
+  .tf-remove, .tf-add {
+    min-height: 32px;
+    padding: 5px 9px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .tf-add { color: var(--primary, #38bdf8); }
+  .tf-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--border); }
+  .tf-metric { display: grid; gap: 7px; min-width: 0; padding: 12px 14px; border-right: 1px solid var(--border); }
+  .tf-metric:last-child { border-right: 0; }
+  .tf-metric span { color: var(--muted); font-size: 11px; }
+  .tf-metric strong { overflow: hidden; color: var(--text); font-size: 18px; text-overflow: ellipsis; }
+  .tf-metric.accent strong { color: #34d399; }
+  .tf-factor-strip { display: flex; gap: 1px; overflow-x: auto; background: var(--border); border: 1px solid var(--border); }
+  .tf-factor-item { display: grid; flex: 1 0 125px; gap: 4px; padding: 8px 10px; background: var(--surface); font-size: 11px; }
+  .tf-factor-item strong { color: var(--text); }
+  .tf-factor-item span { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .tf-chart-wrap { width: 100%; height: 330px; }
+  .tf-cashflow-chart { width: 100%; height: 230px; margin: 2px 0 10px; }
+  .tf-chart-wrap path, .tf-cashflow-chart circle { transition: all 180ms ease; }
+  .tf-scenario input[type="date"] { min-height: 34px; padding: 5px 8px; color: var(--text); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 5px; }
+  .tf-explanation, .tf-note { margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+  .tf-error { color: #fb923c; font-size: 12px; }
+  .tf-table-scroll { overflow-x: auto; }
+  .tf-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .tf-table th, .tf-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+  .tf-table th:first-child, .tf-table td:first-child { text-align: left; }
+  .tf-table thead { color: var(--muted); font-size: 10px; }
+  .tf-table tr.is-ctd { color: #6ee7b7; background: color-mix(in srgb, #10b981 9%, transparent); }
+  .tf-cashflows { min-width: 540px; }
+  @media (max-width: 900px) {
+    .tf-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tf-metric:nth-child(2) { border-right: 0; }
+    .tf-metric:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+  }
+  @media (max-width: 540px) {
+    .tf-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tf-metric { padding: 9px; }
+    .tf-metric strong { font-size: 15px; }
+    .tf-chart-wrap { height: 290px; }
+  }
+}

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import SectionCard from "../../../components/SectionCard";
+import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { HestonPathPoint } from "../heston.types";
@@ -41,10 +41,9 @@ export default function HestonVarianceChart({
   );
 
   return (
-    <SectionCard
-      className="chart-card"
+    <ChartContainer
       title={t("hestonVariancePathsTitle")}
-      headerRight={<IntuitionTrigger sectionId="mean-reversion" />}
+      actions={<IntuitionTrigger sectionId="mean-reversion" />}
     >
       <div className="chart-wrap">
         <LineChart
@@ -60,6 +59,6 @@ export default function HestonVarianceChart({
           valueFormat={(v) => v.toFixed(4)}
         />
       </div>
-    </SectionCard>
+    </ChartContainer>
   );
 }

@@ -43,6 +43,15 @@ export const durationIntuition: IntuitionDocument = {
     { id: "approximation-error", titleKey: "intuitionErrorTitle", summaryKey: "intuitionErrorSummary", bodyKey: "intuitionErrorBody", formula: "e=\\widehat{\\Delta P\\%}-\\Delta P\\%_{exact},\\quad |e|_{bp}=100|e|" },
   ],
 };
+export const treasuryFuturesIntuition: IntuitionDocument = {
+  titleKey: "tfIntuitionTitle",
+  sections: [
+    { id: "conversion-factor", titleKey: "tfFactor", summaryKey: "tfFactorSummary", bodyKey: "tfFactorBody", formula: "CF=\\frac{P_{notional}(6\\%)}{100}" },
+    { id: "invoice-price", titleKey: "tfInvoice", summaryKey: "tfInvoiceSummary", bodyKey: "tfInvoiceBody", formula: "Invoice_{dirty}=F\\times CF+AI_{delivery}" },
+    { id: "net-basis", titleKey: "tfBasis", summaryKey: "tfBasisSummary", bodyKey: "tfBasisBody", formula: "NetBasis=P_{clean}-F\\times CF" },
+    { id: "accrued-interest", titleKey: "tfAccrued", summaryKey: "tfAccruedSummary", bodyKey: "tfAccruedBody" },
+  ],
+};
 export const frontierIntuition: IntuitionDocument = {
   titleKey: "optTitle",
   sections: [

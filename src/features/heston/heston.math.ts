@@ -1,5 +1,6 @@
 import { blackScholesCall, blackScholesDelta, blackScholesGamma, blackScholesRho, blackScholesTheta, blackScholesVega } from "../black-scholes/blackScholes.math";
-import type { HestonGreekProfilePoint, HestonGreeks, HestonParams, HestonPathPoint, HestonPricingCore } from "./heston.types";
+import type { GreekKey, HestonGreekProfilePoint, HestonGreeks, HestonGreeksSurfaceData, HestonGreekSurface, HestonParams, HestonPathPoint, HestonPricingCore, HestonVolSurfaceData } from "./heston.types";
+import { smooth } from "./heston.utils";
 
 function clampPositive(x: number) {
   return Math.max(x, 0);
@@ -530,4 +531,151 @@ export function hestonGreeksProfile(
   seed = 0x9e3779b9
 ): HestonGreekProfilePoint[] {
   return hestonGreeksAndProfile(params, spots, seed).profile;
+}
+
+const GREEK_KEYS: GreekKey[] = ["delta", "gamma", "vega", "theta", "rho"];
+
+/// Builds a Heston surface for every greek over a (spot × maturity) grid.
+/// Common random draws are reused across maturities; for each maturity we run a
+/// handful of unit simulations (base + bumps) and reprice them at every spot,
+/// so cost scales with the maturity count, not spots × maturities.
+export function buildHestonGreekSurfaces(
+  params: HestonParams,
+  spots: number[],
+  maturities: number[],
+  seed = 0x9e3779b9
+): HestonGreeksSurfaceData {
+  const { K, r, v0, theta, kappa, xi, rho, steps, paths } = params;
+  const safeSteps = Math.max(2, Math.round(steps));
+  const safePaths = Math.max(2, Math.round(paths));
+
+  const sigma = Math.sqrt(v0);
+  const hSig = 0.01;
+  const hR = 0.005;
+  const vUp = (sigma + hSig) ** 2;
+  const vDown = Math.max((sigma - hSig) ** 2, 1e-8);
+
+  const { z1, z2 } = getNormals(safePaths, safeSteps, seed, true);
+
+  const byGreek = Object.fromEntries(
+    GREEK_KEYS.map((key) => [
+      key,
+      { values: [] as number[][], min: Infinity, max: -Infinity } as HestonGreekSurface,
+    ])
+  ) as Record<GreekKey, HestonGreekSurface>;
+
+  const priceAt = (unit: Float64Array, maturity: number, rate: number, S: number): number => {
+    const growth = Math.exp(rate * maturity);
+    const disc = Math.exp(-rate * maturity);
+    const n = unit.length;
+    let acc = 0;
+    for (let p = 0; p < n; p++) acc += Math.max(S * growth * unit[p] - K, 0);
+    return disc * (acc / n);
+  };
+
+  for (const T of maturities) {
+    const hT = Math.min(0.02, T * 0.05);
+    const base = simulateUnitTerminal(z1, z2, v0, theta, kappa, xi, rho, T);
+    const vUpU = simulateUnitTerminal(z1, z2, vUp, theta, kappa, xi, rho, T);
+    const vDownU = simulateUnitTerminal(z1, z2, vDown, theta, kappa, xi, rho, T);
+    const tUpU = simulateUnitTerminal(z1, z2, v0, theta, kappa, xi, rho, T + hT);
+    const tDownU = simulateUnitTerminal(z1, z2, v0, theta, kappa, xi, rho, T - hT);
+
+    const rows: Record<GreekKey, number[]> = {
+      delta: [], gamma: [], vega: [], theta: [], rho: [],
+    };
+
+    for (const S of spots) {
+      const hS = S * 0.01;
+      const cUp = priceAt(base, T, r, S + hS);
+      const cMid = priceAt(base, T, r, S);
+      const cDown = priceAt(base, T, r, S - hS);
+
+      const values: Record<GreekKey, number> = {
+        delta: (cUp - cDown) / (2 * hS),
+        gamma: (cUp - 2 * cMid + cDown) / (hS * hS),
+        vega: (priceAt(vUpU, T, r, S) - priceAt(vDownU, T, r, S)) / (2 * hSig),
+        theta: -(priceAt(tUpU, T + hT, r, S) - priceAt(tDownU, T - hT, r, S)) / (2 * hT),
+        rho: (priceAt(base, T, r + hR, S) - priceAt(base, T, r - hR, S)) / (2 * hR),
+      };
+
+      for (const key of GREEK_KEYS) {
+        const v = values[key];
+        rows[key].push(v);
+        const g = byGreek[key];
+        if (v < g.min) g.min = v;
+        if (v > g.max) g.max = v;
+      }
+    }
+
+    for (const key of GREEK_KEYS) byGreek[key].values.push(rows[key]);
+  }
+
+  for (const key of GREEK_KEYS) {
+    const g = byGreek[key];
+    if (!Number.isFinite(g.min) || !Number.isFinite(g.max)) {
+      g.min = 0;
+      g.max = 0;
+    }
+  }
+
+  return {
+    spots: spots.map((s) => Number(s.toFixed(2))),
+    maturities: maturities.map((m) => Number(m.toFixed(3))),
+    byGreek,
+  };
+}
+
+/// Builds an implied-volatility surface over a (moneyness × maturity) grid by
+/// repricing one unit simulation per maturity across strikes and inverting
+/// Black–Scholes. Each maturity row is lightly smoothed like the 2D smile.
+export function buildHestonVolSurface(
+  params: HestonParams,
+  moneyness: number[],
+  maturities: number[],
+  seed = 0x9e3779b9
+): HestonVolSurfaceData {
+  const { S0, r, v0, theta, kappa, xi, rho, steps, paths } = params;
+  const safeSteps = Math.max(2, Math.round(steps));
+  const safePaths = Math.max(2, Math.round(paths));
+
+  const { z1, z2 } = getNormals(safePaths, safeSteps, seed, true);
+
+  let min = Infinity;
+  let max = -Infinity;
+
+  const values = maturities.map((T) => {
+    const unit = simulateUnitTerminal(z1, z2, v0, theta, kappa, xi, rho, T);
+    const growth = Math.exp(r * T);
+    const disc = Math.exp(-r * T);
+    const n = unit.length;
+
+    const rawRow = moneyness.map((m) => {
+      const K = S0 * m;
+      let sum = 0;
+      for (let p = 0; p < n; p++) sum += Math.max(S0 * growth * unit[p] - K, 0);
+      const price = disc * (sum / n);
+      return impliedVolFromCallPrice(price, S0, K, T, r);
+    });
+
+    const row = smooth(rawRow, 1);
+    for (const v of row) {
+      if (v < min) min = v;
+      if (v > max) max = v;
+    }
+    return row.map((v) => Number(v.toFixed(6)));
+  });
+
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
+    min = 0;
+    max = 0;
+  }
+
+  return {
+    moneyness: moneyness.map((m) => Number(m.toFixed(3))),
+    maturities: maturities.map((m) => Number(m.toFixed(3))),
+    values,
+    min,
+    max,
+  };
 }

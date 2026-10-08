@@ -45,21 +45,30 @@
 .bs-chart-fill {
   display: flex;
   flex-direction: column;
+}
+
+// Black–Scholes only: stretch the chart to the controls-panel height. Elsewhere
+// (e.g. the Heston greeks card) the surface keeps its definite clamp height so
+// react-three-fiber can measure the canvas.
+.bs-workspace .bs-chart-fill {
   flex: 1;
   min-height: clamp(360px, 60vh, 760px);
 }
 
-.bs-chart-fill .surface3d-wrap {
+.bs-workspace .bs-chart-fill .surface3d-wrap {
   flex: 1;
   height: auto;
   min-height: 0;
 }
 
 .chart-wrap.bs-chart-tall {
+  zoom: 1;
+}
+
+.bs-workspace .chart-wrap.bs-chart-tall {
   flex: 1;
   height: auto;
   min-height: 0;
-  zoom: 1;
 }
 
 .surface3d-wrap {

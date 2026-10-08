@@ -34,6 +34,7 @@ import { monteCarloEn, monteCarloHu } from "./Language/MonteCarlo";
 import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
 import { intuitionEn, intuitionHu } from "./Language/Intuition";
 import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
+import { treasuryFuturesEn, treasuryFuturesHu } from "./Language/TreasuryFutures";
 
 export type Language = "hu" | "en";
 
@@ -69,6 +70,7 @@ const translations = {
     ...bondPricingHu,
     ...yieldCurveHu,
     ...durationConvexityHu,
+    ...treasuryFuturesHu,
     ...brownianMotionHu,
     ...gbmHu,
     ...itoProcessHu,
@@ -98,6 +100,7 @@ const translations = {
     ...bondPricingEn,
     ...yieldCurveEn,
     ...durationConvexityEn,
+    ...treasuryFuturesEn,
     ...brownianMotionEn,
     ...gbmEn,
     ...itoProcessEn,

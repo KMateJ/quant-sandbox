@@ -1,7 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
-import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, yieldCurveIntuition } from "./intuition";
+import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -194,6 +194,19 @@ export const modules: ModuleDef[] = [
         "Interactive comparison of a bond's actual price–yield curve with its duration and duration-plus-convexity approximations.",
     },
     Component: lazy(() => import("../features/duration-convexity/DurationConvexityView")),
+  },
+  {
+    id: "treasury-futures",
+    intuition: treasuryFuturesIntuition,
+    path: "/treasury-futures",
+    navKey: "navTreasuryFutures",
+    category: "fixed-income",
+    status: "beta",
+    seo: {
+      title: "Treasury Futures Lab",
+      description: "Interactive conversion factors, delivery invoices, cash-flow structures and cheapest-to-deliver switching analysis.",
+    },
+    Component: lazy(() => import("../features/treasury-futures/TreasuryFuturesView")),
   },
   {
     id: "risk-return",

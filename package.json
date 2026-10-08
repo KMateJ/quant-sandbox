@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "test:intuition": "node --test scripts/intuition.test.mjs",
     "test:yield-curve": "node --test scripts/yield-curve.test.mjs",
+    "test:treasury-futures": "node --test scripts/treasury-futures.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

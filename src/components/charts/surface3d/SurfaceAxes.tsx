@@ -29,7 +29,7 @@ function Label({
   variant?: "tick" | "name";
 }) {
   return (
-    <Html position={position} center distanceFactor={3.5} zIndexRange={[10, 0]}>
+    <Html position={position} center zIndexRange={[10, 0]}>
       <span className={`surface3d-label surface3d-label--${variant}`}>{text}</span>
     </Html>
   );

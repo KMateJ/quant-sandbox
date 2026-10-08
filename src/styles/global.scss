@@ -130,129 +130,117 @@ button {
 }
 
 /* Greeks chart toolbar: segmented metric picker + legend-style series toggles */
-.greeks-toolbar {
+.chart-toolbar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 14px 20px;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
-.greeks-metric-seg {
+.chart-toolbar--end {
+  justify-content: flex-end;
+}
+
+.chart-toolbar-actions {
   display: inline-flex;
-  padding: 3px;
-  gap: 2px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  background: var(--surface-soft);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
 }
 
-.greeks-seg-btn {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  padding: 6px 15px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border-radius: var(--radius-pill);
-  transition: var(--transition-fast);
-}
-
-.greeks-seg-btn:hover {
-  color: var(--text);
-}
-
-.greeks-seg-btn.active {
-  background: var(--primary);
-  color: var(--text-inverse);
-}
-
-.greeks-series-toggles {
+.series-toggles {
   display: inline-flex;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
-.greeks-series {
+.series-toggle {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   border: 1px solid var(--border);
   background: var(--surface-soft);
   color: var(--muted);
-  padding: 6px 13px;
+  padding: 5px 11px;
   font-size: 0.82rem;
   font-weight: 600;
-  border-radius: var(--radius-pill);
-  opacity: 0.55;
+  border-radius: var(--radius-sm);
+  opacity: 0.6;
+  cursor: pointer;
   transition: var(--transition-fast);
 }
 
-.greeks-series:hover {
+.series-toggle:hover {
   color: var(--text);
 }
 
-.greeks-series.active {
+.series-toggle.active {
   opacity: 1;
   color: var(--text);
   border-color: var(--border-hover);
 }
 
-.greeks-series-dot {
-  width: 10px;
-  height: 10px;
+.series-toggle-dot {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   opacity: 0.4;
   transition: var(--transition-fast);
 }
 
-.greeks-series.active .greeks-series-dot {
+.series-toggle.active .series-toggle-dot {
   opacity: 1;
 }
 
 /* =========================================================
-   Heston chart grid — pack more charts above the fold
+   Heston tabbed workspace
 ========================================================= */
 
-.heston-chart-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-7);
-  align-items: start;
+.heston-view-tabs {
+  display: flex;
 }
 
-.heston-chart-grid > *,
-.heston-chart-grid .heston-grid-span,
-.heston-chart-grid .heston-grid-span > * {
+/* Each tab shows at most two charts, stacked full-width so every chart (and 3D
+   surface) gets the entire workspace width. */
+.heston-pair {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.heston-pair > * {
   min-width: 0;
 }
 
-.heston-chart-grid .heston-grid-span {
-  grid-column: 1 / -1;
+/* Header action cluster: segmented control + intuition trigger, aligned. */
+.chart-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-/* Reserve two subtitle lines so a wrapped subtitle doesn't make one card in a
-   row taller than its neighbour. */
-.heston-chart-grid .chart-card .section-subtitle {
-  min-height: 3.1em;
+.panel-subtitle {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
 }
 
-/* Shorter panes so a 2x2 block of charts fits with far less scrolling. */
-.heston-chart-grid .chart-wrap {
-  height: clamp(220px, 30vh, 320px);
+/* Full-width charts get generous height. */
+.heston-main .chart-wrap {
+  height: clamp(300px, 42vh, 460px);
 }
 
-/* The full-width Greeks chart can breathe a little more. */
-.heston-chart-grid .heston-grid-span .chart-wrap {
-  height: clamp(280px, 38vh, 400px);
+.heston-main .surface3d-wrap {
+  height: clamp(360px, 54vh, 600px);
 }
 
 @media (max-width: 900px) {
-  .heston-chart-grid {
-    grid-template-columns: 1fr;
+  .heston-main .chart-wrap {
+    height: clamp(260px, 40vh, 400px);
   }
 
-  .heston-chart-grid .chart-wrap {
-    height: clamp(240px, 42vh, 420px);
+  .heston-main .surface3d-wrap {
+    height: clamp(320px, 50vh, 480px);
   }
 }

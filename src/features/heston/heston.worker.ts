@@ -10,6 +10,8 @@ import {
 } from "../black-scholes/blackScholes.math";
 import {
   discountedCallPriceFromTerminalStock,
+  buildHestonGreekSurfaces,
+  buildHestonVolSurface,
   hestonGreeksAndProfile,
   impliedVolFromCallPrice,
   scaledCallCurveFromTerminalStock,
@@ -17,7 +19,9 @@ import {
 } from "./heston.math";
 import type {
   GreeksComparison,
+  HestonGreeksSurfaceData,
   HestonPricingWorkerResponse,
+  HestonVolSurfaceData,
   HestonWorkerRequest,
   HestonWorkerResponse,
   PriceComparisonPoint,
@@ -192,6 +196,36 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     ],
   };
 
+  const greeksSurface: HestonGreeksSurfaceData | null = data.includeGreekSurface
+    ? (() => {
+        const nT = 14;
+        const tMin = 0.1;
+        const tMax = Math.max(maturity, tMin + 0.05);
+        const surfaceMaturities = Array.from(
+          { length: nT },
+          (_, i) => tMin + (i / (nT - 1)) * (tMax - tMin)
+        );
+        return buildHestonGreekSurfaces(hestonParams, profileSpots, surfaceMaturities);
+      })()
+    : null;
+
+  const volSurface: HestonVolSurfaceData | null = data.includeVolSurface
+    ? (() => {
+        const nT = 14;
+        const tMin = 0.1;
+        const tMax = Math.max(maturity, tMin + 0.05);
+        const surfaceMaturities = Array.from(
+          { length: nT },
+          (_, i) => tMin + (i / (nT - 1)) * (tMax - tMin)
+        );
+        const moneyness = Array.from(
+          { length: strikeCount },
+          (_, i) => 0.75 + (i / (strikeCount - 1)) * 0.5
+        );
+        return buildHestonVolSurface(hestonParams, moneyness, surfaceMaturities);
+      })()
+    : null;
+
   const response: HestonPricingWorkerResponse = {
     kind: "pricing",
     requestId,
@@ -199,6 +233,8 @@ self.onmessage = (event: MessageEvent<HestonWorkerRequest>) => {
     smileData,
     greeks,
     greeksProfile: core.profile,
+    greeksSurface,
+    volSurface,
   };
 
   self.postMessage(response);

@@ -1,4 +1,4 @@
-import SectionCard from "../../../components/SectionCard";
+import { Panel } from "../../../components/layout";
 import { IntuitionTrigger } from "../../../components/intuition";
 import { useI18n } from "../../../i18n";
 import { HESTON_GREEKS } from "../heston.greeks";
@@ -9,11 +9,15 @@ type Props = { data: GreeksComparison | null };
 export default function HestonGreeksSummary({ data }: Props) {
   const { t } = useI18n();
   return (
-    <SectionCard
-      title={t("hestonGreeksSummaryTitle")}
-      subtitle={t("hestonGreeksSummarySubtitle")}
-      headerRight={<IntuitionTrigger sectionId="pricing-paths" />}
+    <Panel
+      title={
+        <span className="chart-actions">
+          {t("hestonGreeksSummaryTitle")}
+          <IntuitionTrigger sectionId="pricing-paths" />
+        </span>
+      }
     >
+      <p className="panel-subtitle">{t("hestonGreeksSummarySubtitle")}</p>
       {data ? (
         <div className="greeks-table-wrap">
           <table className="greeks-table">
@@ -58,6 +62,6 @@ export default function HestonGreeksSummary({ data }: Props) {
       ) : (
         <div className="text-block"><p>{t("hestonComputingGreeks")}</p></div>
       )}
-    </SectionCard>
+    </Panel>
   );
 }

@@ -101,6 +101,30 @@ export type HestonGreekProfilePoint = {
   rho_heston: number;
 };
 
+export type HestonGreekSurface = {
+  /// Row-major Heston greek values indexed as `values[maturityIndex][spotIndex]`.
+  values: number[][];
+  min: number;
+  max: number;
+};
+
+export type HestonGreeksSurfaceData = {
+  spots: number[];
+  maturities: number[];
+  byGreek: Record<GreekKey, HestonGreekSurface>;
+};
+
+export type HestonVolSurfaceData = {
+  /// Moneyness grid (K / S₀), the x axis.
+  moneyness: number[];
+  /// Maturity grid (years), the z axis.
+  maturities: number[];
+  /// Row-major implied vols indexed as `values[maturityIndex][moneynessIndex]`.
+  values: number[][];
+  min: number;
+  max: number;
+};
+
 export type HestonPricingCore = {
   greeks: HestonGreeks;
   profile: HestonGreekProfilePoint[];
@@ -124,6 +148,8 @@ export type HestonPricingWorkerRequest = {
   maturity: number;
   pricingSteps: number;
   pricingPaths: number;
+  includeGreekSurface: boolean;
+  includeVolSurface: boolean;
 };
 
 export type HestonPathsWorkerRequest = {
@@ -149,6 +175,8 @@ export type HestonPricingWorkerResponse = {
   smileData: SmilePoint[];
   greeks: GreeksComparison;
   greeksProfile: HestonGreekProfilePoint[];
+  greeksSurface: HestonGreeksSurfaceData | null;
+  volSurface: HestonVolSurfaceData | null;
 };
 
 export type HestonPathsWorkerResponse = {

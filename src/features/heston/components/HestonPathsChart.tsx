@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import SectionCard from "../../../components/SectionCard";
+import { ChartContainer } from "../../../components/layout";
 import { LineChart, type ChartSeries } from "../../../components/charts";
 import type { HestonPathPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
@@ -51,10 +51,9 @@ export default function HestonPathsChart({
   );
 
   return (
-    <SectionCard
-      className="chart-card"
+    <ChartContainer
       title={t("hestonStockPathsTitle")}
-      headerRight={<IntuitionTrigger sectionId="visual-paths" />}
+      actions={<IntuitionTrigger sectionId="visual-paths" />}
     >
       <div className="chart-wrap">
         <LineChart
@@ -70,6 +69,6 @@ export default function HestonPathsChart({
           valueFormat={(v) => v.toFixed(3)}
         />
       </div>
-    </SectionCard>
+    </ChartContainer>
   );
 }

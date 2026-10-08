@@ -4,7 +4,7 @@ import { useI18n } from "../../i18n";
 import { createHestonSliders } from "./heston.controls";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { fellerMargin } from "./heston.math";
-import type { GreeksComparison, HestonControlsSetters, HestonControlsState, HestonGreekProfilePoint, HestonPathPoint, HestonWorkerResponse, PriceComparisonPoint, SmilePoint } from "./heston.types";
+import type { GreeksComparison, HestonControlsSetters, HestonControlsState, HestonGreekProfilePoint, HestonGreeksSurfaceData, HestonPathPoint, HestonVolSurfaceData, HestonWorkerResponse, PriceComparisonPoint, SmilePoint } from "./heston.types";
 import { formatNumber, parseNumber } from "./heston.utils";
 import { useAdaptiveDebouncedValue } from "./useDebouncedValue";
 
@@ -40,7 +40,10 @@ const FAST_DELAY = 24;
 const SLOW_DELAY = 180;
 
 
-type PricingInput = Omit<HestonControlsState, "steps" | "pathCount">;
+type PricingInput = Omit<HestonControlsState, "steps" | "pathCount"> & {
+  includeGreekSurface: boolean;
+  includeVolSurface: boolean;
+};
 
 type PathsInput = HestonControlsState;
 export function useHestonView() {
@@ -99,6 +102,10 @@ export function useHestonView() {
   const [greeksProfileData, setGreeksProfileData] = useState<
     HestonGreekProfilePoint[]
   >([]);
+  const [greeks3d, setGreeks3d] = useState(false);
+  const [greeksSurface, setGreeksSurface] = useState<HestonGreeksSurfaceData | null>(null);
+  const [vol3d, setVol3d] = useState(false);
+  const [volSurface, setVolSurface] = useState<HestonVolSurfaceData | null>(null);
   const [stockPathData, setStockPathData] = useState<HestonPathPoint[]>([]);
   const [variancePathData, setVariancePathData] = useState<HestonPathPoint[]>(
     []
@@ -188,6 +195,8 @@ export function useHestonView() {
       maturity,
       pricingSteps,
       pricingPaths,
+      includeGreekSurface: greeks3d,
+      includeVolSurface: vol3d,
     }),
     [
       S0,
@@ -201,6 +210,8 @@ export function useHestonView() {
       maturity,
       pricingSteps,
       pricingPaths,
+      greeks3d,
+      vol3d,
     ]
   );
 
@@ -345,6 +356,8 @@ export function useHestonView() {
         setSmileData(response.smileData);
         setGreeksData(response.greeks);
         setGreeksProfileData(response.greeksProfile);
+        setGreeksSurface(response.greeksSurface);
+        setVolSurface(response.volSurface);
       }
 
       const pending = pricingPendingRef.current;
@@ -450,5 +463,5 @@ export function useHestonView() {
   const sliders = createHestonSliders(currentControls, controlSetters, t);
 
   
-  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders };
+  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders };
 }
