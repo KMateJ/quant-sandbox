@@ -20,6 +20,11 @@ export const blackScholesHu = {
   blackScholesChartHidden: "Grafikon elrejtve",
   blackScholesExplanationTitle: "Intuíció",
   blackScholesExplanationSubtitle: "Mit mutat a grafikon?",
+  blackScholesView2d: "2D",
+  blackScholesView3d: "3D felület",
+  blackScholesAxisSpot: "S (árfolyam)",
+  blackScholesAxisMaturity: "T (évek)",
+  blackScholesSurfaceHint: "Húzd a forgatáshoz · görgess a nagyításhoz",
 };
 
 export const blackScholesEn = {
@@ -44,4 +49,9 @@ export const blackScholesEn = {
   blackScholesChartHidden: "Chart hidden",
   blackScholesExplanationTitle: "Intuition",
   blackScholesExplanationSubtitle: "What does the chart show?",
+  blackScholesView2d: "2D",
+  blackScholesView3d: "3D surface",
+  blackScholesAxisSpot: "S (spot)",
+  blackScholesAxisMaturity: "T (years)",
+  blackScholesSurfaceHint: "Drag to rotate · scroll to zoom",
 };

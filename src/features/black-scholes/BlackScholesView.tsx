@@ -1,15 +1,15 @@
 import SectionCard from "../../components/SectionCard";
 import SliderDock from "../../components/SliderDock";
 import SwitchRow from "../../components/SwitchRow";
-import { LineChart } from "../../components/charts";
 import BlackScholesControls from "./BlackScholesControls";
+import BlackScholesChart from "./BlackScholesChart";
 import { PageHeader } from "../../components/layout";
 import { useBlackScholesView } from "./useBlackScholesView";
 import { IntuitionTrigger } from "../../components/intuition";
 
 export default function BlackScholesView() {
   const model = useBlackScholesView();
-  const { t, isMobile, strike, metric, setMetric, optionType, setOptionType, yDomain, chartData, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle } = model;
+  const { t, isMobile, metric, setMetric, optionType, setOptionType, metricOptions, getMetricTitle, view3d, setView3d } = model;
   return (<div className="intuition-on-demand">
     <PageHeader title={t("navBlackScholes")} />
     <div className="view-layout">
@@ -52,25 +52,27 @@ export default function BlackScholesView() {
               ]}
             />
           )}
-          <div className="chart-wrap">
-            <LineChart
-              data={chartData}
-              xKey="S"
-              series={chartSeries}
-              xDomain={[10, 200]}
-              yDomain={yDomain}
-              referenceLines={[
-                { axis: "x", value: strike, color: "#94a3b8", dash: "4 4" },
-              ]}
-              isMobile={isMobile}
-              tooltipLabel={(x) => `${t("blackScholesTooltipStock")} = ${x}`}
-              valueFormat={(v) => v.toFixed(tooltipDigits)}
-            />
+          <div className="metric-switch view-toggle">
+            <button
+              type="button"
+              className={!view3d ? "metric-button active" : "metric-button"}
+              onClick={() => setView3d(false)}
+            >
+              {t("blackScholesView2d")}
+            </button>
+            <button
+              type="button"
+              className={view3d ? "metric-button active" : "metric-button"}
+              onClick={() => setView3d(true)}
+            >
+              {t("blackScholesView3d")}
+            </button>
           </div>
+          <BlackScholesChart model={model} />
         </SectionCard>
       </div>
 
-      {isMobile ? <SliderDock sliders={sliders} /> : null}
+      {isMobile ? <SliderDock sliders={model.sliders} /> : null}
     </div>
   </div>);
 }

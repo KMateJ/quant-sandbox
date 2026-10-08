@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { blackScholesCall, blackScholesPut, blackScholesDelta, blackScholesPutDelta, blackScholesGamma, blackScholesVega, blackScholesTheta, blackScholesPutTheta, blackScholesRho, blackScholesPutRho, makeMaturities } from "./blackScholes.math";
+import { blackScholesCall, blackScholesPut, makeMaturities, evaluateMetric, buildMetricSurface, type MetricSurface } from "./blackScholes.math";
 import { type SliderDescriptor } from "../../components/SliderDock";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { type ChartSeries } from "../../components/charts";
@@ -70,6 +70,11 @@ function parseOptionType(value: string | null): OptionType {
 }
 
 
+function parseView3d(value: string | null): boolean {
+  return value === "3d";
+}
+
+
 function formatNumber(value: number, decimals?: number) {
   if (decimals == null) return String(value);
   return String(Number(value.toFixed(decimals)));
@@ -131,6 +136,9 @@ export function useBlackScholesView() {
   const [optionType, setOptionType] = useState<OptionType>(() =>
     parseOptionType(searchParams.get("type"))
   );
+  const [view3d, setView3d] = useState<boolean>(() =>
+    parseView3d(searchParams.get("view"))
+  );
   useEffect(() => {
     setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
     setRate(parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
@@ -139,6 +147,7 @@ export function useBlackScholesView() {
     setCurveCount(parseNumber(searchParams.get("curves"), 5, 2, 6));
     setMetric(parseMetric(searchParams.get("metric")));
     setOptionType(parseOptionType(searchParams.get("type")));
+    setView3d(parseView3d(searchParams.get("view")));
   }, [queryString, searchParams]);
 
   useEffect(() => {
@@ -150,6 +159,7 @@ export function useBlackScholesView() {
     next.set("curves", formatNumber(curveCount));
     next.set("metric", metric);
     next.set("type", optionType);
+    next.set("view", view3d ? "3d" : "2d");
 
     const nextString = next.toString();
     if (nextString !== queryString) {
@@ -163,6 +173,7 @@ export function useBlackScholesView() {
     curveCount,
     metric,
     optionType,
+    view3d,
     queryString,
     setSearchParams,
   ]);
@@ -187,40 +198,8 @@ export function useBlackScholesView() {
     const sMax = 200;
     const pointCount = 140;
 
-    const metricFn = (S: number, T: number) => {
-      switch (metric) {
-        case "price":
-          return optionType === "call"
-            ? blackScholesCall(S, strike, T, rate, volatility)
-            : blackScholesPut(S, strike, T, rate, volatility);
-
-        case "delta":
-          return optionType === "call"
-            ? blackScholesDelta(S, strike, T, rate, volatility)
-            : blackScholesPutDelta(S, strike, T, rate, volatility);
-
-        case "gamma":
-          return blackScholesGamma(S, strike, T, rate, volatility);
-
-        case "vega":
-          return blackScholesVega(S, strike, T, rate, volatility);
-
-        case "theta":
-          return optionType === "call"
-            ? blackScholesTheta(S, strike, T, rate, volatility)
-            : blackScholesPutTheta(S, strike, T, rate, volatility);
-
-        case "rho":
-          return optionType === "call"
-            ? blackScholesRho(S, strike, T, rate, volatility)
-            : blackScholesPutRho(S, strike, T, rate, volatility);
-
-        default:
-          return optionType === "call"
-            ? blackScholesCall(S, strike, T, rate, volatility)
-            : blackScholesPut(S, strike, T, rate, volatility);
-      }
-    };
+    const metricFn = (S: number, T: number) =>
+      evaluateMetric(metric, optionType, S, strike, T, rate, volatility);
 
     return Array.from({ length: pointCount }, (_, i) => {
       const S = sMin + (i / (pointCount - 1)) * (sMax - sMin);
@@ -257,6 +236,23 @@ export function useBlackScholesView() {
   );
 
   const tooltipDigits = metric === "gamma" ? 5 : metric === "delta" ? 4 : 3;
+
+  const metricLabel = useMemo(() => {
+    if (metric === "price") return t("blackScholesMetricPrice");
+    return metric.charAt(0).toUpperCase() + metric.slice(1);
+  }, [metric, t]);
+
+  const surface = useMemo<MetricSurface | null>(() => {
+    if (!view3d) return null;
+    return buildMetricSurface(
+      metric,
+      optionType,
+      { sMin: 10, sMax: 200, nS: 48, tMin: 0.05, tMax: maxMaturity, nT: 40 },
+      strike,
+      rate,
+      volatility
+    );
+  }, [view3d, metric, optionType, maxMaturity, strike, rate, volatility]);
 
   const sliders: SliderDescriptor[] = [
     {
@@ -330,5 +326,5 @@ export function useBlackScholesView() {
   ];
 
   
-  return { t, language, isMobile, strike, rate, volatility, maxMaturity, curveCount, controlsOpen, setControlsOpen, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle };
+  return { t, language, isMobile, strike, rate, volatility, maxMaturity, curveCount, controlsOpen, setControlsOpen, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle, view3d, setView3d, surface, metricLabel };
 }
