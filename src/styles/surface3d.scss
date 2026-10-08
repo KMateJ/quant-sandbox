@@ -1,5 +1,65 @@
-.view-toggle {
-  margin-bottom: var(--space-4);
+.bs-chart-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bs-option-seg {
+  display: flex;
+  width: 100%;
+
+  .tab {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.bs-metric-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+// Stretch the chart column to the controls panel height (desktop two-column).
+.bs-workspace.cols-sidebar {
+  align-items: stretch;
+}
+
+.bs-workspace .module-main {
+  height: 100%;
+}
+
+.bs-workspace .chart-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.bs-workspace .chart-container-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.bs-chart-fill {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: clamp(360px, 60vh, 760px);
+}
+
+.bs-chart-fill .surface3d-wrap {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+}
+
+.chart-wrap.bs-chart-tall {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  zoom: 1;
 }
 
 .surface3d-wrap {
@@ -7,7 +67,7 @@
   max-width: 100%;
   height: clamp(380px, 66vh, 700px);
   margin: 0 auto;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--border);
   background: #0b1120;

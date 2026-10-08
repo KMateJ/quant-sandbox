@@ -1,78 +1,60 @@
-import SectionCard from "../../components/SectionCard";
-import SliderDock from "../../components/SliderDock";
-import SwitchRow from "../../components/SwitchRow";
+import { PageHeader, Workspace, Panel, ChartContainer } from "../../components/layout";
+import { Tabs, type TabItem } from "../../components/ui";
 import BlackScholesControls from "./BlackScholesControls";
 import BlackScholesChart from "./BlackScholesChart";
-import { PageHeader } from "../../components/layout";
-import { useBlackScholesView } from "./useBlackScholesView";
 import { IntuitionTrigger } from "../../components/intuition";
+import { useBlackScholesView } from "./useBlackScholesView";
+
+type ViewMode = "2d" | "3d";
 
 export default function BlackScholesView() {
   const model = useBlackScholesView();
-  const { t, isMobile, metric, setMetric, optionType, setOptionType, metricOptions, getMetricTitle, view3d, setView3d } = model;
-  return (<div className="intuition-on-demand">
-    <PageHeader title={t("navBlackScholes")} />
-    <div className="view-layout">
-      {!isMobile ? (
-        <BlackScholesControls model={model} />
-      ) : null}
+  const { t, metric, setMetric, optionType, metricOptions, getMetricTitle, view3d, setView3d } = model;
 
-      <div className="view-main view-main--docked">
-        <SectionCard
-          className="chart-card"
-          title={getMetricTitle(metric, optionType, t)}
-          headerRight={<IntuitionTrigger sectionId={metric} />}
-        >
-          {isMobile && (
-            <SwitchRow
-              groups={[
-                {
-                  key: "type",
-                  options: [
-                    {
-                      label: t("blackScholesOptionCall"),
-                      active: optionType === "call",
-                      onSelect: () => setOptionType("call"),
-                    },
-                    {
-                      label: t("blackScholesOptionPut"),
-                      active: optionType === "put",
-                      onSelect: () => setOptionType("put"),
-                    },
-                  ],
-                },
-                {
-                  key: "metric",
-                  options: metricOptions.map((option) => ({
-                    label: option.label,
-                    active: metric === option.key,
-                    onSelect: () => setMetric(option.key),
-                  })),
-                },
-              ]}
+  const metricTabs: TabItem[] = metricOptions.map((o) => ({ id: o.key, label: o.label }));
+  const viewTabs: TabItem<ViewMode>[] = [
+    { id: "2d", label: t("blackScholesView2d") },
+    { id: "3d", label: t("blackScholesView3d") },
+  ];
+
+  return (
+    <>
+      <PageHeader title={t("navBlackScholes")} />
+
+      <Workspace columns="sidebar" className="bs-workspace">
+        <Panel title={t("blackScholesControlsTitle")}>
+          <BlackScholesControls model={model} />
+        </Panel>
+
+        <div className="module-main">
+          <ChartContainer
+            title={
+              <span className="bs-chart-title">
+                {getMetricTitle(metric, optionType, t)}
+                <IntuitionTrigger sectionId={metric} />
+              </span>
+            }
+            actions={
+              <Tabs<ViewMode>
+                segmented
+                items={viewTabs}
+                value={view3d ? "3d" : "2d"}
+                onChange={(id) => setView3d(id === "3d")}
+                ariaLabel={t("blackScholesView3d")}
+              />
+            }
+          >
+            <Tabs
+              className="bs-metric-tabs"
+              items={metricTabs}
+              value={metric}
+              onChange={(id) => setMetric(id as typeof metric)}
+              ariaLabel={t("blackScholesControlsTitle")}
             />
-          )}
-          <div className="metric-switch view-toggle">
-            <button
-              type="button"
-              className={!view3d ? "metric-button active" : "metric-button"}
-              onClick={() => setView3d(false)}
-            >
-              {t("blackScholesView2d")}
-            </button>
-            <button
-              type="button"
-              className={view3d ? "metric-button active" : "metric-button"}
-              onClick={() => setView3d(true)}
-            >
-              {t("blackScholesView3d")}
-            </button>
-          </div>
-          <BlackScholesChart model={model} />
-        </SectionCard>
-      </div>
-
-      {isMobile ? <SliderDock sliders={model.sliders} /> : null}
-    </div>
-  </div>);
+            <BlackScholesChart model={model} />
+          </ChartContainer>
+        </div>
+      </Workspace>
+    </>
+  );
 }
