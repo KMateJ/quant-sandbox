@@ -14,6 +14,17 @@ export const CHART_COLORS = {
   tooltipText: "#e2e8f0",
 } as const;
 
+/// Categorical series palette, themed via `--chart-1…8` in tokens.scss.
+export const SERIES_PALETTE = Array.from({ length: 8 }, (_, i) => `var(--chart-${i + 1})`);
+
+/// Semantic series colours shared by experiment charts.
+export const SERIES_ROLE = {
+  empirical: "var(--chart-empirical)",
+  reference: "var(--chart-reference)",
+  candidate: "var(--chart-candidate)",
+  cloud: "var(--chart-cloud)",
+} as const;
+
 export const LEGEND_HEIGHT = 28;
 
 /// Axis gutters sized to fit tick labels (visx needs explicit room).

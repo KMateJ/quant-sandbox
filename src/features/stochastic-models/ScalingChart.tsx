@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { LineChart } from "../../components/charts";
+import { LineChart, SERIES_ROLE } from "../../components/charts";
 import type { ChartDatum, ChartSeries } from "../../components/charts";
 import { ChartContainer } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
@@ -38,9 +38,9 @@ export default function ScalingChart({ points, alpha, mode }: Props) {
   }, [points, alpha, log]);
 
   const series: ChartSeries[] = [
-    { key: "empirical", label: t("stochSqrtEmpiricalSeries"), color: "#60a5fa", strokeWidth: 2 },
-    { key: "reference", label: t("stochSqrtReferenceSeries"), color: "#34d399", strokeWidth: 2, dash: "6 4" },
-    { key: "candidate", label: t("stochSqrtCandidateSeries"), color: "#f59e0b", strokeWidth: 2, dash: "2 4" },
+    { key: "empirical", label: t("stochSqrtEmpiricalSeries"), color: SERIES_ROLE.empirical, strokeWidth: 2 },
+    { key: "reference", label: t("stochSqrtReferenceSeries"), color: SERIES_ROLE.reference, strokeWidth: 2, dash: "6 4" },
+    { key: "candidate", label: t("stochSqrtCandidateSeries"), color: SERIES_ROLE.candidate, strokeWidth: 2, dash: "2 4" },
   ];
 
   const format = (value: number) => (log ? (10 ** value).toFixed(2) : value.toFixed(2));

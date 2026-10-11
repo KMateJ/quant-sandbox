@@ -352,7 +352,7 @@ a.stoch-lesson-item.is-available:hover {
 // #region Experiment + controls
 .stoch-experiment {
   display: grid;
-  grid-template-columns: minmax(240px, 288px) minmax(0, 1fr);
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
   gap: 14px;
   align-items: start;
 }
@@ -360,9 +360,15 @@ a.stoch-lesson-item.is-available:hover {
 .stoch-sidebar {
   display: grid;
   gap: 14px;
+  align-content: start;
   position: sticky;
   top: calc(var(--topnav-height) + 14px);
   align-self: start;
+  max-height: calc(100vh - var(--topnav-height) - 28px);
+  overflow-y: auto;
+  // Room so the scrollbar and focus rings aren't clipped against the charts.
+  padding-right: 2px;
+  scrollbar-width: thin;
 }
 
 .stoch-stage {
@@ -371,90 +377,41 @@ a.stoch-lesson-item.is-available:hover {
   min-width: 0;
 }
 
-.stoch-controls {
-  display: grid;
-  gap: 14px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface-muted);
-}
-
-.stoch-control-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px 16px;
-}
-
-.stoch-control-grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
-  align-items: end;
-}
-
-// In the side panel, controls stack into a single readable column.
-.stoch-sidebar .stoch-control-grid,
-.stoch-sidebar .stoch-control-grid-2,
-.stoch-sidebar .stoch-playback-row {
-  grid-template-columns: 1fr;
-}
-
 .stoch-control-hint {
   color: var(--muted);
   font-size: var(--text-xs);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .stoch-segmented {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
-.stoch-segmented button {
-  padding: 7px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  color: var(--muted);
-  cursor: pointer;
-  font: inherit;
-  font-size: var(--text-xs);
+.stoch-segmented .preset-btn {
   font-variant-numeric: tabular-nums;
-  transition: all var(--transition-fast);
 }
 
-.stoch-segmented button:hover {
-  border-color: var(--border-hover);
-}
-
-.stoch-segmented button.is-active {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--text-inverse);
-}
-
-.stoch-resample-cell {
-  display: flex;
-  align-items: end;
-}
-
-.stoch-resample-cell .button {
-  width: 100%;
-}
-
-.stoch-animation-controls {
-  margin-top: 0;
+.stoch-resample-btn {
+  justify-self: start;
 }
 
 .stoch-playback-row {
-  display: grid;
-  grid-template-columns: auto minmax(130px, 1fr) auto;
-  gap: 12px;
-  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.stoch-playback-row .preset-btn {
+  flex: 1;
+  text-align: center;
 }
 
 .stoch-progress-label {
   display: block;
-  margin: 10px 0 4px;
+  margin: 2px 0 4px;
   color: var(--muted);
   font-size: var(--text-xs);
 }
@@ -549,48 +506,46 @@ a.stoch-lesson-item.is-available:hover {
   font-size: var(--text-xs);
 }
 
-.stoch-metrics {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-}
-
-.stoch-metrics h3 {
-  margin: 0;
-  font-size: var(--text-sm);
-}
-
 .stoch-metric-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 8px;
+  gap: var(--space-3);
 }
 
-.stoch-metric {
-  display: grid;
-  gap: 4px;
-  padding: 9px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface-muted);
-  color: var(--muted);
-  font-size: var(--text-xs);
+// Compact stat cards inside the narrow side panel.
+.stoch-metric-grid .stat-card {
+  padding: var(--space-3) var(--space-4);
 }
 
-.stoch-metric strong {
-  color: var(--text);
-  font-family: var(--font-mono);
+.stoch-metric-grid .stat-value {
   font-size: var(--text-md);
-  font-weight: 600;
 }
 
 .stoch-metric-note {
   margin: 0;
   color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+// Two-item legend for the √n envelope hero (overrides the auto-fit path legend).
+.stoch-envelope-legend {
+  grid-template-columns: repeat(2, auto);
+  justify-content: start;
+  gap: 8px 18px;
+}
+
+.stoch-envelope-legend li span {
+  border-radius: 2px;
+}
+
+.stoch-predictor-note {
+  margin: 8px 0 0;
+  padding: 9px 11px;
+  border-left: 2px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface-muted);
+  color: var(--text);
   font-size: var(--text-xs);
   line-height: 1.5;
 }
@@ -632,12 +587,6 @@ a.stoch-lesson-item.is-available:hover {
 // #endregion
 
 // #region Responsive
-@media (max-width: 1100px) {
-  .stoch-control-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 860px) {
   .stoch-experiment {
     grid-template-columns: minmax(0, 1fr);
@@ -645,6 +594,8 @@ a.stoch-lesson-item.is-available:hover {
 
   .stoch-sidebar {
     position: static;
+    max-height: none;
+    overflow-y: visible;
   }
 }
 
@@ -652,15 +603,10 @@ a.stoch-lesson-item.is-available:hover {
   .stoch-chapter-card.has-lessons {
     grid-column: auto;
   }
-
-  .stoch-linked-results {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 520px) {
-  .stoch-control-grid,
-  .stoch-control-grid-2 {
+  .stoch-metric-grid {
     grid-template-columns: 1fr;
   }
 
@@ -670,19 +616,6 @@ a.stoch-lesson-item.is-available:hover {
 
   .stoch-lesson-nav {
     grid-template-columns: 1fr;
-  }
-
-  .stoch-playback-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .stoch-playback-row .slider-field {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  .stoch-playback-row button {
-    width: 100%;
   }
 
   .stoch-path-chart,

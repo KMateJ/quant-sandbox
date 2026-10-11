@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IntuitionTrigger } from "../../components/intuition";
+import { Panel } from "../../components/layout";
+import { StatCard } from "../../components/ui";
 import { useI18n } from "../../i18n";
 import RandomWalkControls from "./RandomWalkControls";
 import TerminalDistribution from "./TerminalDistribution";
@@ -9,7 +11,7 @@ import { createRandomWalkDraws, simulateRandomWalk, walkMoments } from "./stocha
 export default function RandomWalkExperiment() {
   const { t } = useI18n();
   const [steps, setSteps] = useState(100);
-  const [paths, setPaths] = useState(200);
+  const [paths, setPaths] = useState(60);
   const [probability, setProbability] = useState(0.5);
   const [seed, setSeed] = useState(7);
   const [speed, setSpeed] = useState(180);
@@ -65,33 +67,26 @@ export default function RandomWalkExperiment() {
           setPlaying={setPlaying}
           onResample={() => setSeed((value) => (value >= 9999 ? 1 : value + 1))}
         />
-        <section className="stoch-metrics" aria-label={t("stochWalkMetrics")}>
-          <h3>{t("stochWalkMetrics")}</h3>
+        <Panel title={t("stochWalkMetrics")}>
           <div className="stoch-metric-grid">
-            <Metric label={t("stochEmpiricalMean")} value={empirical.mean} />
-            <Metric label={t("stochTheoreticalMean")} value={shownStep * (2 * probability - 1)} />
-            <Metric label={t("stochEmpiricalVariance")} value={empirical.variance} />
-            <Metric label={t("stochTheoreticalVariance")} value={expectedVariance} />
+            <StatCard label={t("stochEmpiricalMean")} value={(empirical.mean).toFixed(2)} />
+            <StatCard label={t("stochTheoreticalMean")} value={(shownStep * (2 * probability - 1)).toFixed(2)} />
+            <StatCard label={t("stochEmpiricalVariance")} value={(empirical.variance).toFixed(2)} />
+            <StatCard label={t("stochTheoreticalVariance")} value={(expectedVariance).toFixed(2)} />
           </div>
-          <p className="stoch-metric-note">
-            {t("stochDisplayedPathNote", { count: Math.min(paths, 8), paths })}
-          </p>
+          <p className="stoch-metric-note">{t("stochDisplayedPathNote", { paths })}</p>
           <IntuitionTrigger sectionId="walk-variance" variant="button" />
-        </section>
+        </Panel>
       </aside>
       <div className="stoch-stage">
-        <WalkPathChart data={result.data} steps={steps} activeStep={shownStep} />
+        <WalkPathChart
+          data={result.data}
+          steps={steps}
+          activeStep={shownStep}
+          renderedPaths={result.renderedPaths}
+        />
         <TerminalDistribution values={stepPositions} />
       </div>
-    </div>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="stoch-metric">
-      <span>{label}</span>
-      <strong>{value.toFixed(2)}</strong>
     </div>
   );
 }

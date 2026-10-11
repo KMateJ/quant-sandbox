@@ -33,6 +33,9 @@ export type LineChartProps = {
   referenceLines?: ChartReferenceLine[];
   isMobile?: boolean;
   legend?: boolean;
+  /// Show the hover tooltip and crosshair (defaults to true). Disable for dense
+  /// overlays where per-series rows would be unreadable.
+  tooltip?: boolean;
   tooltipLabel?: (x: number) => string;
   valueFormat?: (value: number) => string;
 };

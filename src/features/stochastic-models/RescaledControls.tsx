@@ -1,5 +1,6 @@
 import SliderField from "../../components/SliderField";
 import { ControlGroup } from "../../components/ui";
+import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
 import { RESCALED_LEVELS } from "./rescaledWalk.types";
 
@@ -16,14 +17,14 @@ type Props = {
 export default function RescaledControls(props: Props) {
   const { t } = useI18n();
   return (
-    <section className="stoch-controls" aria-label={t("stochControlsLabel")}>
+    <Panel title={t("stochControlsLabel")}>
       <ControlGroup label={t("stochRescaledLevel")} hint={<span className="stoch-control-hint">{t("stochRescaledLevelHint")}</span>}>
         <div className="stoch-segmented" role="group" aria-label={t("stochRescaledLevel")}>
           {RESCALED_LEVELS.map((value) => (
             <button
               key={value}
               type="button"
-              className={value === props.level ? "is-active" : ""}
+              className={value === props.level ? "preset-btn preset-btn--active" : "preset-btn"}
               aria-pressed={value === props.level}
               onClick={() => props.setLevel(value)}
             >
@@ -32,7 +33,7 @@ export default function RescaledControls(props: Props) {
           ))}
         </div>
       </ControlGroup>
-      <div className="stoch-control-grid stoch-control-grid-2">
+      <div className="controls-grid">
         <SliderField
           label={t("stochRescaledPaths")}
           min={1}
@@ -50,12 +51,10 @@ export default function RescaledControls(props: Props) {
           value={props.seed}
           onChange={props.setSeed}
         />
-        <div className="stoch-resample-cell">
-          <button className="button button-secondary" type="button" onClick={props.onResample}>
-            {t("stochResample")}
-          </button>
-        </div>
       </div>
-    </section>
+      <button className="preset-btn stoch-resample-btn" type="button" onClick={props.onResample}>
+        {t("stochResample")}
+      </button>
+    </Panel>
   );
 }

@@ -8,3 +8,4 @@ export type { DataColumn } from "./DataTable";
 export { default as InfoTooltip } from "./InfoTooltip";
 export { default as Popover } from "./Popover";
 export { default as HelpDrawer } from "./HelpDrawer";
+export { default as StatCard } from "./StatCard";

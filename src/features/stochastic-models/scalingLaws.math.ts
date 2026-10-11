@@ -71,3 +71,27 @@ export function candidateCurve(points: ScalingPoint[], alpha: number): number[] 
 export function referenceCurve(points: ScalingPoint[]): number[] {
   return points.map((p) => Math.sqrt(p.n));
 }
+
+/// Coefficient c anchoring the candidate c·nᵃ to the true √n envelope at the final
+/// step, so only α = 1/2 matches across the whole range (any other α visibly bows).
+export function envelopeCoefficient(steps: number, alpha: number): number {
+  return Math.sqrt(steps) / steps ** alpha;
+}
+
+/// Largest relative gap between the candidate c·nᵃ envelope and the true √n
+/// envelope over 1…steps — a single "how close is your guess" number (0 at α=½).
+export function envelopeMismatch(steps: number, alpha: number): number {
+  const c = envelopeCoefficient(steps, alpha);
+  let worst = 0;
+  for (let n = 1; n <= steps; n++) {
+    const tru = Math.sqrt(n);
+    const rel = Math.abs(c * n ** alpha - tru) / tru;
+    if (rel > worst) worst = rel;
+  }
+  return worst;
+}
+
+/// Growth of the typical spread when the step count is multiplied by k: sd ∝ √n ⇒ ×√k.
+export function spreadFactor(k: number): number {
+  return Math.sqrt(k);
+}

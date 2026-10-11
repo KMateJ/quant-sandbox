@@ -35,6 +35,7 @@ export default function LineChartInner({
   referenceLines = [],
   isMobile = false,
   legend = true,
+  tooltip = true,
   tooltipLabel,
   valueFormat,
 }: Props) {
@@ -158,7 +159,7 @@ export default function LineChartInner({
             tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })}
           />
 
-          {tip.tooltipData && (
+          {tip.tooltipData && tooltip && (
             <SvgLine
               from={{ x: xScale(Number(tip.tooltipData[xKey])), y: 0 }}
               to={{ x: xScale(Number(tip.tooltipData[xKey])), y: innerH }}
@@ -172,16 +173,16 @@ export default function LineChartInner({
             width={innerW}
             height={innerH}
             fill="transparent"
-            onMouseMove={tip.handleMove}
-            onMouseLeave={tip.hideTooltip}
-            onTouchMove={tip.handleMove}
-            onTouchStart={tip.handleMove}
-            onTouchEnd={tip.hideTooltip}
+            onMouseMove={tooltip ? tip.handleMove : undefined}
+            onMouseLeave={tooltip ? tip.hideTooltip : undefined}
+            onTouchMove={tooltip ? tip.handleMove : undefined}
+            onTouchStart={tooltip ? tip.handleMove : undefined}
+            onTouchEnd={tooltip ? tip.hideTooltip : undefined}
           />
         </Group>
       </svg>
 
-      {tip.tooltipData && (
+      {tip.tooltipData && tooltip && (
         <ChartTooltip
           left={(tip.tooltipLeft ?? 0) + margin.left}
           top={tip.tooltipTop ?? 0}

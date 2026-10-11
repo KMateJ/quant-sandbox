@@ -1,35 +1,41 @@
-import { LineChart } from "../../components/charts";
+import type { ReactNode } from "react";
+import { LineChart, SERIES_ROLE } from "../../components/charts";
 import type { ChartSeries } from "../../components/charts";
 import { ChartContainer } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 import type { DensityPoint } from "./rescaledWalk.types";
 
-type Props = { data: DensityPoint[] };
+type Props = {
+  data: DensityPoint[];
+  title: string;
+  actions?: ReactNode;
+  caption?: string;
+};
 
-/// Empirical density of W⁽ⁿ⁾(1) against the standard-normal limit density.
-export default function DensityComparisonChart({ data }: Props) {
+/// Empirical density of a standardised sample against the standard-normal density.
+export default function DensityComparisonChart({ data, title, actions, caption }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
   const series: ChartSeries[] = [
     {
       key: "empirical",
       label: t("stochEmpiricalDensity"),
-      color: "#60a5fa",
+      color: SERIES_ROLE.empirical,
       strokeWidth: 1.5,
       area: true,
-      areaColor: "#60a5fa",
+      areaColor: SERIES_ROLE.empirical,
     },
     {
       key: "normal",
       label: t("stochNormalDensity"),
-      color: "#f59e0b",
+      color: SERIES_ROLE.candidate,
       strokeWidth: 2,
       dash: "6 4",
     },
   ];
   return (
-    <ChartContainer className="stoch-distribution-frame" title={t("stochRescaledDensity")}>
+    <ChartContainer className="stoch-distribution-frame" title={title} actions={actions}>
       <div className="stoch-density-chart">
         <LineChart
           data={data}
@@ -41,6 +47,7 @@ export default function DensityComparisonChart({ data }: Props) {
           valueFormat={(value) => value.toFixed(3)}
         />
       </div>
+      {caption && <p className="stoch-chart-caption">{caption}</p>}
     </ChartContainer>
   );
 }

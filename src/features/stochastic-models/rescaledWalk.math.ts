@@ -1,4 +1,5 @@
 import { makeRng } from "../../lib/math/random";
+import { normPdf } from "../../lib/stats/distributions";
 import type {
   DensityPoint,
   RescaledPathData,
@@ -73,12 +74,6 @@ export function terminalSummary(values: Float64Array): TerminalSummary {
   return { mean, variance: values.length > 1 ? squared / (values.length - 1) : 0 };
 }
 
-const NORMAL_SCALE = 1 / Math.sqrt(2 * Math.PI);
-
-function standardNormalPdf(x: number): number {
-  return NORMAL_SCALE * Math.exp(-0.5 * x * x);
-}
-
 /// Empirical density of the terminal values on a fixed grid, paired with the
 /// standard-normal density W⁽ⁿ⁾(1) converges to under Donsker's theorem.
 export function densityComparison(
@@ -94,6 +89,6 @@ export function densityComparison(
   }
   return counts.map((count, index) => {
     const x = -range + (index + 0.5) * width;
-    return { x, empirical: count / (values.length * width), normal: standardNormalPdf(x) };
+    return { x, empirical: count / (values.length * width), normal: normPdf(x) };
   });
 }

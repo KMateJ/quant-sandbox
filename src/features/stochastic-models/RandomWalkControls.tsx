@@ -1,6 +1,8 @@
 import SliderField from "../../components/SliderField";
 import { ControlGroup } from "../../components/ui";
+import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
+import { MAX_RENDERED_PATHS } from "./stochasticModels.math";
 
 type Props = {
   steps: number;
@@ -24,8 +26,8 @@ export default function RandomWalkControls(props: Props) {
   const { t } = useI18n();
   const pct = (value: number) => `${(value * 100).toFixed(0)}%`;
   return (
-    <section className="stoch-controls" aria-label={t("stochControlsLabel")}>
-      <div className="stoch-control-grid">
+    <Panel title={t("stochControlsLabel")}>
+      <div className="controls-grid">
         <SliderField
           label={t("stochWalkSteps")}
           min={20}
@@ -37,9 +39,9 @@ export default function RandomWalkControls(props: Props) {
         />
         <SliderField
           label={t("stochWalkPaths")}
-          min={20}
-          max={1000}
-          step={20}
+          min={4}
+          max={MAX_RENDERED_PATHS}
+          step={4}
           value={props.paths}
           onChange={props.setPaths}
         />
@@ -62,10 +64,10 @@ export default function RandomWalkControls(props: Props) {
           onChange={props.setSeed}
         />
       </div>
-      <ControlGroup label={t("stochAnimationLabel")} className="stoch-animation-controls">
+      <ControlGroup label={t("stochAnimationLabel")}>
         <div className="stoch-playback-row">
           <button
-            className="button button-secondary"
+            className="preset-btn"
             type="button"
             onClick={() => {
               if (props.playing) props.setPlaying(false);
@@ -77,19 +79,19 @@ export default function RandomWalkControls(props: Props) {
           >
             {t(props.playing ? "stochPause" : "stochPlay")}
           </button>
-          <SliderField
-            label={t("stochAnimationSpeed")}
-            min={60}
-            max={500}
-            step={20}
-            value={props.speed}
-            onChange={props.setSpeed}
-            formatValue={(value) => `${(1000 / value).toFixed(1)} ${t("stochStepsPerSecond")}`}
-          />
-          <button className="button button-secondary" type="button" onClick={props.onResample}>
+          <button className="preset-btn" type="button" onClick={props.onResample}>
             {t("stochResample")}
           </button>
         </div>
+        <SliderField
+          label={t("stochAnimationSpeed")}
+          min={60}
+          max={500}
+          step={20}
+          value={props.speed}
+          onChange={props.setSpeed}
+          formatValue={(value) => `${(1000 / value).toFixed(1)} ${t("stochStepsPerSecond")}`}
+        />
         <label className="stoch-progress-label" htmlFor="stoch-walk-progress">
           {t("stochWalkProgress", { current: props.activeStep, total: props.steps })}
         </label>
@@ -108,6 +110,6 @@ export default function RandomWalkControls(props: Props) {
           aria-label={t("stochWalkProgress", { current: props.activeStep, total: props.steps })}
         />
       </ControlGroup>
-    </section>
+    </Panel>
   );
 }

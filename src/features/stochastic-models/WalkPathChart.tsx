@@ -5,18 +5,23 @@ import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 
 const COLORS = ["#60a5fa", "#34d399", "#fbbf24", "#f87171", "#c084fc", "#22d3ee", "#fb7185", "#a3e635"];
+const LEGEND_LIMIT = COLORS.length;
+const CLOUD_COLOR = "color-mix(in srgb, var(--primary) 42%, transparent)";
 
-type Props = { data: ChartDatum[]; steps: number; activeStep: number };
+type Props = { data: ChartDatum[]; steps: number; activeStep: number; renderedPaths: number };
 
-export default function WalkPathChart({ data, steps, activeStep }: Props) {
+export default function WalkPathChart({ data, steps, activeStep, renderedPaths }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const series: ChartSeries[] = COLORS.map((color, index) => ({
+  const many = renderedPaths > LEGEND_LIMIT;
+
+  const series: ChartSeries[] = Array.from({ length: renderedPaths }, (_, index) => ({
     key: `p${index}`,
     label: `${t("stochPathLabel")} ${index + 1}`,
-    color,
-    strokeWidth: 1.6,
+    color: many ? CLOUD_COLOR : COLORS[index % COLORS.length],
+    strokeWidth: many ? 1 : 1.6,
   }));
+
   return (
     <ChartContainer
       className="stoch-path-frame"
@@ -31,18 +36,23 @@ export default function WalkPathChart({ data, steps, activeStep }: Props) {
           xDomain={[0, steps]}
           isMobile={isMobile}
           legend={false}
+          tooltip={!many}
           tooltipLabel={(step) => `${t("stochStepLabel")} ${step.toFixed(0)}`}
           valueFormat={(value) => value.toFixed(0)}
         />
       </div>
-      <ul className="stoch-path-legend" aria-label={t("stochPathLegend")}>
-        {series.map((path) => (
-          <li key={path.key}>
-            <span aria-hidden="true" style={{ backgroundColor: path.color }} />
-            {path.label}
-          </li>
-        ))}
-      </ul>
+      {many ? (
+        <p className="stoch-chart-caption">{t("stochWalkCloudNote", { paths: renderedPaths })}</p>
+      ) : (
+        <ul className="stoch-path-legend" aria-label={t("stochPathLegend")}>
+          {series.map((path) => (
+            <li key={path.key}>
+              <span aria-hidden="true" style={{ backgroundColor: path.color }} />
+              {path.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </ChartContainer>
   );
 }

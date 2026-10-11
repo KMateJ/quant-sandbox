@@ -1,11 +1,10 @@
-import { LineChart } from "../../components/charts";
+import { LineChart, SERIES_PALETTE } from "../../components/charts";
 import type { ChartSeries } from "../../components/charts";
 import { ChartContainer } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 import type { RescaledPathData } from "./rescaledWalk.types";
 
-const COLORS = ["#60a5fa", "#34d399", "#fbbf24", "#f87171", "#c084fc", "#22d3ee"];
 
 type Props = { paths: RescaledPathData; level: number };
 
@@ -15,7 +14,7 @@ export default function RescaledPathChart({ paths, level }: Props) {
   const series: ChartSeries[] = paths.pathKeys.map((key, index) => ({
     key,
     label: `${t("stochPathLabel")} ${index + 1}`,
-    color: COLORS[index % COLORS.length],
+    color: SERIES_PALETTE[index % SERIES_PALETTE.length],
     strokeWidth: 1.3,
   }));
   const jump = 1 / Math.sqrt(level);
