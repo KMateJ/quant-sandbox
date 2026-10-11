@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Link } from "react-router-dom";
 import { IntuitionTrigger } from "../../components/intuition";
 import { useI18n } from "../../i18n";
@@ -5,8 +6,7 @@ import type { LessonLocation } from "./stochasticModels.curriculum";
 
 export default function LessonPage({ location }: { location: LessonLocation }) {
   const { t } = useI18n();
-  const { lesson, chapter, previous, next } = location;
-  const Lesson = lesson.Component!;
+  const { lesson, Lesson, chapter, previous, next } = location;
 
   return (
     <div className="stoch-lesson-page">
@@ -21,7 +21,9 @@ export default function LessonPage({ location }: { location: LessonLocation }) {
         <IntuitionTrigger variant="button" />
       </div>
 
-      <Lesson />
+      <Suspense fallback={<div className="route-fallback" aria-busy="true" />}>
+        <Lesson />
+      </Suspense>
 
       <footer className="stoch-lesson-nav">
         {previous ? (

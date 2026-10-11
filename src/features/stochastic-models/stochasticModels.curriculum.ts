@@ -1,10 +1,7 @@
-import type { ComponentType } from "react";
+import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../../i18n";
-import RandomWalkLesson from "./RandomWalkLesson";
-import RescaledWalkLesson from "./RescaledWalkLesson";
-import WhySqrtLesson from "./WhySqrtLesson";
 
-export type LessonStatus = "available" | "planned";
+type LessonComponent = LazyExoticComponent<ComponentType>;
 
 export interface StochLesson {
   id: string;
@@ -14,8 +11,8 @@ export interface StochLesson {
   questionKey: TranslationKey;
   objectiveKey: TranslationKey;
   intuitionSectionId?: string;
-  status: LessonStatus;
-  Component?: ComponentType;
+  /// Lazily loaded interactive body; a lesson without one is planned.
+  Component?: LessonComponent;
 }
 
 export interface StochChapter {
@@ -42,8 +39,7 @@ export const curriculum: StochChapter[] = [
         questionKey: "stochWalkQuestion",
         objectiveKey: "stochWalkObjective",
         intuitionSectionId: "walk-randomness",
-        status: "available",
-        Component: RandomWalkLesson,
+        Component: lazy(() => import("./RandomWalkLesson")),
       },
       {
         id: "rescaled-walk",
@@ -53,8 +49,7 @@ export const curriculum: StochChapter[] = [
         questionKey: "stochRescaledQuestion",
         objectiveKey: "stochRescaledObjective",
         intuitionSectionId: "rescaled-definition",
-        status: "available",
-        Component: RescaledWalkLesson,
+        Component: lazy(() => import("./RescaledWalkLesson")),
       },
       {
         id: "why-sqrt-t",
@@ -64,8 +59,7 @@ export const curriculum: StochChapter[] = [
         questionKey: "stochSqrtQuestion",
         objectiveKey: "stochSqrtObjective",
         intuitionSectionId: "scaling-law",
-        status: "available",
-        Component: WhySqrtLesson,
+        Component: lazy(() => import("./WhySqrtLesson")),
       },
       {
         id: "clt",
@@ -74,7 +68,6 @@ export const curriculum: StochChapter[] = [
         descKey: "stochLessonCltDesc",
         questionKey: "stochLessonClt",
         objectiveKey: "stochLessonCltDesc",
-        status: "planned",
       },
     ],
   },
@@ -127,11 +120,21 @@ export const allLessons: StochLesson[] = curriculum.flatMap((chapter) => chapter
 
 /// Lessons that have a working interactive component.
 export const availableLessons: StochLesson[] = allLessons.filter(
-  (lesson) => lesson.status === "available" && lesson.Component
+  (lesson) => lesson.Component !== undefined
 );
+
+/// Lesson ids as query-string links into the studio, for registry sub-navigation.
+export const lessonNavItems = (basePath: string) =>
+  availableLessons.map((lesson) => ({
+    id: lesson.id,
+    labelKey: lesson.titleKey,
+    prefix: lesson.number,
+    to: `${basePath}?lesson=${lesson.id}`,
+  }));
 
 export type LessonLocation = {
   lesson: StochLesson;
+  Lesson: LessonComponent;
   chapter: StochChapter;
   previous?: StochLesson;
   next?: StochLesson;
@@ -141,10 +144,11 @@ export type LessonLocation = {
 export function findLesson(id: string): LessonLocation | undefined {
   const chapter = curriculum.find((c) => c.lessons.some((l) => l.id === id));
   const lesson = chapter?.lessons.find((l) => l.id === id);
-  if (!chapter || !lesson || !lesson.Component) return undefined;
+  if (!chapter || !lesson?.Component) return undefined;
   const index = availableLessons.findIndex((l) => l.id === id);
   return {
     lesson,
+    Lesson: lesson.Component,
     chapter,
     previous: index > 0 ? availableLessons[index - 1] : undefined,
     next: index < availableLessons.length - 1 ? availableLessons[index + 1] : undefined,

@@ -94,7 +94,8 @@
 // Collapsed rail: show icons only, hide the clipped text.
 .sidebar:not(.pinned):not(:hover) {
   .side-label,
-  .side-badge {
+  .side-badge,
+  .side-subtree {
     display: none;
   }
 
@@ -238,6 +239,57 @@
   background: var(--info-bg);
   border: 1px solid var(--info-border);
   border-radius: var(--radius-xs);
+}
+
+// Lesson sub-tabs nested under the active studio module.
+.side-subtree {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 2px 0 2px var(--space-5);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--border);
+}
+
+.side-subrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 3px var(--space-2);
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    color: var(--text);
+    background: var(--surface-soft);
+  }
+
+  &.active {
+    color: var(--text);
+    background: var(--surface-soft);
+
+    .side-sub-number {
+      color: var(--primary);
+    }
+  }
+}
+
+.side-sub-number {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.side-sub-label {
+  flex: 1 1 auto;
+  font-size: var(--text-xs);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .side-section-label {

@@ -10,6 +10,7 @@ import {
 import { useActiveModule } from "./useActiveModule";
 import ConnectedGuides from "./ConnectedGuides";
 import ModuleIcon from "./ModuleIcon";
+import SideSubNav from "./SideSubNav";
 
 const STATUS_KEY: Partial<Record<ModuleStatus, "statusBeta" | "statusPlanned">> = {
   beta: "statusBeta",
@@ -55,21 +56,23 @@ export default function Sidebar({ category }: { category: ModuleCategory }) {
             const active = m.id === activeModule?.id;
             const statusKey = STATUS_KEY[m.status];
             return (
-              <NavLink
-                key={m.id}
-                to={m.path}
-                end={m.end}
-                className={active ? "side-row active" : "side-row"}
-                title={label}
-              >
-                <span className="side-icon" aria-hidden="true">
-                  <ModuleIcon id={m.id} />
-                </span>
-                <span className="side-label">{label}</span>
-                {statusKey ? (
-                  <span className="side-badge">{t(statusKey)}</span>
-                ) : null}
-              </NavLink>
+              <div key={m.id}>
+                <NavLink
+                  to={m.path}
+                  end={m.end}
+                  className={active ? "side-row active" : "side-row"}
+                  title={label}
+                >
+                  <span className="side-icon" aria-hidden="true">
+                    <ModuleIcon id={m.id} />
+                  </span>
+                  <span className="side-label">{label}</span>
+                  {statusKey ? (
+                    <span className="side-badge">{t(statusKey)}</span>
+                  ) : null}
+                </NavLink>
+                {active && m.subNav?.length ? <SideSubNav items={m.subNav} /> : null}
+              </div>
             );
           })}
         </nav>
@@ -81,4 +84,3 @@ export default function Sidebar({ category }: { category: ModuleCategory }) {
     </aside>
   );
 }
-

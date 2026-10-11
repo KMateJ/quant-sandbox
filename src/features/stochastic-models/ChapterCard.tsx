@@ -26,7 +26,7 @@ export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
       {chapter.lessons.length > 0 && (
         <ul className="stoch-lesson-list">
           {chapter.lessons.map((lesson) => {
-            const available = lesson.status === "available" && lesson.Component;
+            const available = lesson.Component !== undefined;
             const inner = (
               <>
                 <span className="stoch-lesson-number">{lesson.number}</span>

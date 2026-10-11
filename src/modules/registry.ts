@@ -3,6 +3,7 @@ import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
 import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
 import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
+import { lessonNavItems } from "../features/stochastic-models/stochasticModels.curriculum";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -14,6 +15,14 @@ export type ModuleCategory =
   | "guides";
 
 export type ModuleStatus = "live" | "beta" | "planned";
+
+/// Nested sidebar link shown under a module while it is active.
+export interface ModuleSubNavItem {
+  id: string;
+  labelKey: TranslationKey;
+  prefix?: string;
+  to: string;
+}
 
 /// A single Quant Sandbox module. Single source of truth for routing, nav and home.
 export interface ModuleDef {
@@ -27,6 +36,7 @@ export interface ModuleDef {
   end?: boolean; // exact route match (home)
   relatedGuides?: string[];
   intuition?: IntuitionDocument;
+  subNav?: ModuleSubNavItem[];
 }
 
 export const CATEGORY_ORDER: ModuleCategory[] = [
@@ -334,6 +344,7 @@ export const modules: ModuleDef[] = [
     category: "stochastic",
     status: "beta",
     intuition: stochasticModelsIntuition,
+    subNav: lessonNavItems("/stochastic-models"),
     seo: {
       title: "Stochastic Models Learning Studio",
       description:
