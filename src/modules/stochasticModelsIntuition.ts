@@ -50,5 +50,19 @@ export const stochasticModelsIntuition: IntuitionDocument = {
       summaryKey: "stochIntuitionConvergenceSummary",
       bodyKey: "stochIntuitionConvergenceBody",
     },
+    {
+      id: "scaling-law",
+      titleKey: "stochIntuitionScalingTitle",
+      summaryKey: "stochIntuitionScalingSummary",
+      bodyKey: "stochIntuitionScalingBody",
+      formula: "\\operatorname{sd}(S_n)=\\sqrt{n},\\quad \\operatorname{sd}(W(t))=\\sqrt{t}",
+    },
+    {
+      id: "scaling-exponents",
+      titleKey: "stochIntuitionExponentTitle",
+      summaryKey: "stochIntuitionExponentSummary",
+      bodyKey: "stochIntuitionExponentBody",
+      formula: "\\operatorname{sd}(S_n)\\sim n^{\\alpha},\\quad \\alpha=\\tfrac12",
+    },
   ],
 };
