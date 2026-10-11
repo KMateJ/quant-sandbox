@@ -4,7 +4,7 @@ import { useI18n } from "../../i18n";
 import { createHestonSliders } from "./heston.controls";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { fellerMargin } from "./heston.math";
-import type { GreeksComparison, HestonControlsSetters, HestonControlsState, HestonGreekProfilePoint, HestonGreeksSurfaceData, HestonPathPoint, HestonVolSurfaceData, HestonWorkerResponse, PriceComparisonPoint, SmilePoint } from "./heston.types";
+import type { GreeksComparison, HestonControlsSetters, HestonControlsState, HestonGreekProfilePoint, HestonGreeksSurfaceData, HestonPathPoint, HestonTab, HestonVolSurfaceData, HestonWorkerResponse, PriceComparisonPoint, SmilePoint } from "./heston.types";
 import { formatNumber, parseNumber } from "./heston.utils";
 import { useAdaptiveDebouncedValue } from "./useDebouncedValue";
 
@@ -23,21 +23,18 @@ const PRICING_EXPENSIVE_KEYS = [
 ] as const;
 
 
-const PATHS_EXPENSIVE_KEYS = [
-  "v0",
-  "theta",
-  "kappa",
-  "xi",
-  "rho",
-  "maturity",
-  "steps",
-  "pathCount",
-] as const;
+const PATHS_EXPENSIVE_KEYS = ["steps", "pathCount"] as const;
 
 
 const FAST_DELAY = 24;
 
 const SLOW_DELAY = 180;
+
+// The paths simulation is cheap, so continuous sliders stream through with no
+// delay for an instant reaction; only grid-size changes get a small guard.
+const PATHS_FAST_DELAY = 0;
+
+const PATHS_SLOW_DELAY = 48;
 
 
 type PricingInput = Omit<HestonControlsState, "steps" | "pathCount"> & {
@@ -106,6 +103,7 @@ export function useHestonView() {
   const [greeksSurface, setGreeksSurface] = useState<HestonGreeksSurfaceData | null>(null);
   const [vol3d, setVol3d] = useState(false);
   const [volSurface, setVolSurface] = useState<HestonVolSurfaceData | null>(null);
+  const [tab, setTab] = useState<HestonTab>("paths");
   const [stockPathData, setStockPathData] = useState<HestonPathPoint[]>([]);
   const [variancePathData, setVariancePathData] = useState<HestonPathPoint[]>(
     []
@@ -195,8 +193,8 @@ export function useHestonView() {
       maturity,
       pricingSteps,
       pricingPaths,
-      includeGreekSurface: greeks3d,
-      includeVolSurface: vol3d,
+      includeGreekSurface: greeks3d && tab === "greeks",
+      includeVolSurface: vol3d && tab === "pricing",
     }),
     [
       S0,
@@ -212,6 +210,7 @@ export function useHestonView() {
       pricingPaths,
       greeks3d,
       vol3d,
+      tab,
     ]
   );
 
@@ -257,8 +256,8 @@ export function useHestonView() {
   const debouncedPathsControls = useAdaptiveDebouncedValue(
     pathsInput,
     PATHS_EXPENSIVE_KEYS,
-    FAST_DELAY,
-    SLOW_DELAY
+    PATHS_FAST_DELAY,
+    PATHS_SLOW_DELAY
   );
 
   // Only ever keep one request in flight per worker. New inputs that arrive
@@ -414,23 +413,25 @@ export function useHestonView() {
 
   useEffect(() => {
     if (!pricingWorkerRef.current) return;
+    if (tab === "paths") return;
 
     if (pricingBusyRef.current) {
       pricingPendingRef.current = debouncedPricingControls;
     } else {
       sendPricing(debouncedPricingControls);
     }
-  }, [debouncedPricingControls, sendPricing, pricingReady]);
+  }, [debouncedPricingControls, sendPricing, pricingReady, tab]);
 
   useEffect(() => {
     if (!pathsWorkerRef.current) return;
+    if (tab !== "paths") return;
 
     if (pathsBusyRef.current) {
       pathsPendingRef.current = debouncedPathsControls;
     } else {
       sendPaths(debouncedPathsControls);
     }
-  }, [debouncedPathsControls, sendPaths, pathsReady]);
+  }, [debouncedPathsControls, sendPaths, pathsReady, tab]);
 
   const pathsParams = appliedPaths ?? debouncedPathsControls;
 
@@ -463,5 +464,5 @@ export function useHestonView() {
   const sliders = createHestonSliders(currentControls, controlSetters, t);
 
   
-  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders };
+  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders, tab, setTab };
 }

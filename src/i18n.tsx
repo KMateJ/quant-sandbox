@@ -31,6 +31,7 @@ import { brownianMotionEn, brownianMotionHu } from "./Language/BrownianMotion";
 import { gbmEn, gbmHu } from "./Language/Gbm";
 import { itoProcessEn, itoProcessHu } from "./Language/ItoProcess";
 import { monteCarloEn, monteCarloHu } from "./Language/MonteCarlo";
+import { stochasticModelsEn, stochasticModelsHu } from "./Language/StochasticModels";
 import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
 import { intuitionEn, intuitionHu } from "./Language/Intuition";
 import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
@@ -43,7 +44,7 @@ type TranslationTree = Record<string, string>;
 type I18nContextValue = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof translations.hu) => string;
+  t: (key: keyof typeof translations.hu, options?: Record<string, string | number>) => string;
 };
 
 const STORAGE_KEY = "qs-language";
@@ -75,6 +76,7 @@ const translations = {
     ...gbmHu,
     ...itoProcessHu,
     ...monteCarloHu,
+    ...stochasticModelsHu,
     ...deltaHedgingHu,
     ...themeHu,
     navGuide: "Útmutató",
@@ -105,6 +107,7 @@ const translations = {
     ...gbmEn,
     ...itoProcessEn,
     ...monteCarloEn,
+    ...stochasticModelsEn,
     ...deltaHedgingEn,
     ...themeEn,
     navGuide: "Guide",
@@ -154,7 +157,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(STORAGE_KEY, lang);
         setLanguageState(lang);
       },
-      t: (key) => t(key),
+      t: (key, options) => t(key, options),
     };
   }, [language, t, instance]);
 

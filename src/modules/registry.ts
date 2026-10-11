@@ -2,6 +2,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
 import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
+import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -325,6 +326,20 @@ export const modules: ModuleDef[] = [
         "Interactive Modigliani–Miller capital structure: levered cost of equity, WACC and the interest tax shield as leverage changes.",
     },
     Component: lazy(() => import("../features/capital-structure/CapitalStructureView")),
+  },
+  {
+    id: "stochastic-models",
+    path: "/stochastic-models",
+    navKey: "navStochasticStudio",
+    category: "stochastic",
+    status: "beta",
+    intuition: stochasticModelsIntuition,
+    seo: {
+      title: "Stochastic Models Learning Studio",
+      description:
+        "An interactive learning path through random walks, Brownian motion, stochastic calculus, and financial models.",
+    },
+    Component: lazy(() => import("../features/stochastic-models/StochasticModelsView")),
   },
   {
     id: "brownian-motion",

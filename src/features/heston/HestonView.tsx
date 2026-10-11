@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useI18n } from "../../i18n";
 import HestonControls from "./components/HestonControls";
 import HestonGreeksChart from "./components/HestonGreeksChart";
@@ -9,9 +8,8 @@ import HestonSmileChart from "./components/HestonSmileChart";
 import HestonVarianceChart from "./components/HestonVarianceChart";
 import { PageHeader, Workspace, Panel } from "../../components/layout";
 import { Tabs, type TabItem } from "../../components/ui";
+import type { HestonTab } from "./heston.types";
 import { useHestonView } from "./useHestonView";
-
-type HestonTab = "paths" | "pricing" | "greeks";
 
 export default function HestonView() {
   const model = useHestonView();
@@ -19,9 +17,9 @@ export default function HestonView() {
     S0, strike, priceComparisonData, smileData, greeksData, greeksProfileData,
     greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface,
     stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders,
+    tab, setTab,
   } = model;
   const { t } = useI18n();
-  const [tab, setTab] = useState<HestonTab>("paths");
 
   const tabs: TabItem<HestonTab>[] = [
     { id: "paths", label: t("hestonTabPaths") },

@@ -74,6 +74,8 @@ export type HestonGreeks = {
 
 export type GreekKey = "delta" | "gamma" | "vega" | "theta" | "rho";
 
+export type HestonTab = "paths" | "pricing" | "greeks";
+
 export type GreekRow = {
   key: GreekKey;
   bs: number;
