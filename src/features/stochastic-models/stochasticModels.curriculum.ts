@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import type { TranslationKey } from "../../i18n";
 import RandomWalkLesson from "./RandomWalkLesson";
 import RescaledWalkLesson from "./RescaledWalkLesson";
+import WhySqrtLesson from "./WhySqrtLesson";
 
 export type LessonStatus = "available" | "planned";
 
@@ -60,9 +61,11 @@ export const curriculum: StochChapter[] = [
         number: "1.3",
         titleKey: "stochLessonSqrt",
         descKey: "stochLessonSqrtDesc",
-        questionKey: "stochLessonSqrt",
-        objectiveKey: "stochLessonSqrtDesc",
-        status: "planned",
+        questionKey: "stochSqrtQuestion",
+        objectiveKey: "stochSqrtObjective",
+        intuitionSectionId: "scaling-law",
+        status: "available",
+        Component: WhySqrtLesson,
       },
       {
         id: "clt",
