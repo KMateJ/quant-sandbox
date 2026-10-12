@@ -1,5 +1,5 @@
 import SliderField from "../../components/SliderField";
-import { ControlGroup } from "../../components/ui";
+import { ControlGroup, SegmentedControl } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
 import { RESCALED_LEVELS } from "./rescaledWalk.types";
@@ -19,19 +19,12 @@ export default function RescaledControls(props: Props) {
   return (
     <Panel title={t("stochControlsLabel")}>
       <ControlGroup label={t("stochRescaledLevel")} hint={<span className="stoch-control-hint">{t("stochRescaledLevelHint")}</span>}>
-        <div className="stoch-segmented" role="group" aria-label={t("stochRescaledLevel")}>
-          {RESCALED_LEVELS.map((value) => (
-            <button
-              key={value}
-              type="button"
-              className={value === props.level ? "preset-btn preset-btn--active" : "preset-btn"}
-              aria-pressed={value === props.level}
-              onClick={() => props.setLevel(value)}
-            >
-              {value.toLocaleString()}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={RESCALED_LEVELS.map((value) => ({ value, label: value.toLocaleString() }))}
+          value={props.level}
+          onChange={props.setLevel}
+          ariaLabel={t("stochRescaledLevel")}
+        />
       </ControlGroup>
       <div className="controls-grid">
         <SliderField

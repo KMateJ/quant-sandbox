@@ -1,26 +1,15 @@
-import { LineChart } from "../../components/charts";
-import type { ChartDatum, ChartSeries } from "../../components/charts";
+import { PathCloudChart, SERIES_PALETTE } from "../../components/charts";
 import { ChartContainer } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 
-const COLORS = ["#60a5fa", "#34d399", "#fbbf24", "#f87171", "#c084fc", "#22d3ee", "#fb7185", "#a3e635"];
-const LEGEND_LIMIT = COLORS.length;
-const CLOUD_COLOR = "color-mix(in srgb, var(--primary) 42%, transparent)";
+type Props = { positions: Int16Array; pathCount: number; steps: number; activeStep: number };
 
-type Props = { data: ChartDatum[]; steps: number; activeStep: number; renderedPaths: number };
-
-export default function WalkPathChart({ data, steps, activeStep, renderedPaths }: Props) {
+/// Every simulated walk; a handful get distinct colours, more become a density cloud.
+export default function WalkPathChart({ positions, pathCount, steps, activeStep }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const many = renderedPaths > LEGEND_LIMIT;
-
-  const series: ChartSeries[] = Array.from({ length: renderedPaths }, (_, index) => ({
-    key: `p${index}`,
-    label: `${t("stochPathLabel")} ${index + 1}`,
-    color: many ? CLOUD_COLOR : COLORS[index % COLORS.length],
-    strokeWidth: many ? 1 : 1.6,
-  }));
+  const many = pathCount > SERIES_PALETTE.length;
 
   return (
     <ChartContainer
@@ -29,26 +18,24 @@ export default function WalkPathChart({ data, steps, activeStep, renderedPaths }
       actions={<span className="stoch-chart-readout">{t("stochStepReadout", { current: activeStep, total: steps })}</span>}
     >
       <div className="stoch-path-chart">
-        <LineChart
-          data={data.slice(0, activeStep + 1)}
-          xKey="step"
-          series={series}
-          xDomain={[0, steps]}
+        <PathCloudChart
+          values={positions}
+          pathCount={pathCount}
+          stepCount={steps + 1}
+          visibleSteps={activeStep + 1}
+          palette={many ? undefined : SERIES_PALETTE}
           isMobile={isMobile}
-          legend={false}
-          tooltip={!many}
-          tooltipLabel={(step) => `${t("stochStepLabel")} ${step.toFixed(0)}`}
-          valueFormat={(value) => value.toFixed(0)}
+          ariaLabel={t("stochWalkPathsChart")}
         />
       </div>
       {many ? (
-        <p className="stoch-chart-caption">{t("stochWalkCloudNote", { paths: renderedPaths })}</p>
+        <p className="stoch-chart-caption">{t("stochWalkCloudNote", { paths: pathCount })}</p>
       ) : (
         <ul className="stoch-path-legend" aria-label={t("stochPathLegend")}>
-          {series.map((path) => (
-            <li key={path.key}>
-              <span aria-hidden="true" style={{ backgroundColor: path.color }} />
-              {path.label}
+          {Array.from({ length: pathCount }, (_, index) => (
+            <li key={index}>
+              <span aria-hidden="true" style={{ backgroundColor: SERIES_PALETTE[index] }} />
+              {`${t("stochPathLabel")} ${index + 1}`}
             </li>
           ))}
         </ul>

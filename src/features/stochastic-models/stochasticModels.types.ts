@@ -1,10 +1,6 @@
-import type { ChartDatum } from "../../components/charts";
-
 export type RandomWalkResult = {
-  data: ChartDatum[];
+  /// Step-major positions: `positionsByStep[step * pathCount + path]`.
   positionsByStep: Int16Array;
-  /// How many of the simulated paths are drawn as trajectories.
-  renderedPaths: number;
 };
 
 export type WalkMoments = {

@@ -10,6 +10,7 @@
     "test:intuition": "node --test scripts/intuition.test.mjs",
     "test:yield-curve": "node --test scripts/yield-curve.test.mjs",
     "test:treasury-futures": "node --test scripts/treasury-futures.test.mjs",
+    "test:clt": "node --test scripts/clt.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

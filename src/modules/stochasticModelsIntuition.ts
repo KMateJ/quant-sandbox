@@ -64,5 +64,26 @@ export const stochasticModelsIntuition: IntuitionDocument = {
       bodyKey: "stochIntuitionExponentBody",
       formula: "\\operatorname{sd}(S_n)\\sim n^{\\alpha},\\quad \\alpha=\\tfrac12",
     },
+    {
+      id: "clt-statement",
+      titleKey: "stochIntuitionCltTitle",
+      summaryKey: "stochIntuitionCltSummary",
+      bodyKey: "stochIntuitionCltBody",
+      formula: "Z_n=\\frac{S_n-n\\mu}{\\sigma\\sqrt{n}}\\;\\xrightarrow{d}\\;\\mathcal{N}(0,1)",
+    },
+    {
+      id: "clt-universality",
+      titleKey: "stochIntuitionUniversalityTitle",
+      summaryKey: "stochIntuitionUniversalitySummary",
+      bodyKey: "stochIntuitionUniversalityBody",
+      formula: "\\operatorname{skew}(Z_n)=\\frac{\\gamma}{\\sqrt{n}}\\to 0",
+    },
+    {
+      id: "berry-esseen",
+      titleKey: "stochIntuitionBerryEsseenTitle",
+      summaryKey: "stochIntuitionBerryEsseenSummary",
+      bodyKey: "stochIntuitionBerryEsseenBody",
+      formula: "\\sup_x\\left|P(Z_n\\le x)-\\Phi(x)\\right|\\le\\frac{C\\,\\mathbb{E}|X|^3}{\\sigma^3\\sqrt{n}}",
+    },
   ],
 };

@@ -385,16 +385,6 @@ a.stoch-lesson-item.is-available:hover {
   letter-spacing: 0;
 }
 
-.stoch-segmented {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.stoch-segmented .preset-btn {
-  font-variant-numeric: tabular-nums;
-}
-
 .stoch-resample-btn {
   justify-self: start;
 }
@@ -510,6 +500,13 @@ a.stoch-lesson-item.is-available:hover {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
+}
+
+// Lesson labels carry math symbols (α, γ/√n, n); uppercasing would turn them into Α, Γ/√N.
+.stoch-sidebar .stat-title,
+.stoch-sidebar .control-group-label {
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 // Compact stat cards inside the narrow side panel.

@@ -2,7 +2,7 @@ import SliderField from "../../components/SliderField";
 import { ControlGroup } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
-import { MAX_RENDERED_PATHS } from "./stochasticModels.math";
+import { RANDOM_WALK_MAX_PATHS } from "./stochasticModels.math";
 
 type Props = {
   steps: number;
@@ -40,7 +40,7 @@ export default function RandomWalkControls(props: Props) {
         <SliderField
           label={t("stochWalkPaths")}
           min={4}
-          max={MAX_RENDERED_PATHS}
+          max={RANDOM_WALK_MAX_PATHS}
           step={4}
           value={props.paths}
           onChange={props.setPaths}

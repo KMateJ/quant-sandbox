@@ -3,9 +3,6 @@ import type { Histogram, RandomWalkResult, WalkMoments } from "./stochasticModel
 
 export const RANDOM_WALK_MAX_STEPS = 500;
 export const RANDOM_WALK_MAX_PATHS = 1000;
-/// Safety ceiling on how many sample paths are drawn as trajectories (statistics
-/// still use every simulated path). The paths slider stays at or below this.
-export const MAX_RENDERED_PATHS = 200;
 
 /// One fixed field of uniforms lets probability and display settings reuse the same trials.
 export function createRandomWalkDraws(seed: number): Float32Array {
@@ -22,14 +19,7 @@ export function simulateRandomWalk(
   pathCount: number,
   upProbability: number
 ): RandomWalkResult {
-  const levels = new Float64Array(pathCount);
   const positionsByStep = new Int16Array((steps + 1) * pathCount);
-  const rendered = Math.min(pathCount, MAX_RENDERED_PATHS);
-  const data = Array.from({ length: steps + 1 }, (_, step) => {
-    const row: Record<string, number> = { step };
-    for (let path = 0; path < rendered; path++) row[`p${path}`] = 0;
-    return row;
-  });
 
   for (let path = 0; path < pathCount; path++) {
     const offset = path * RANDOM_WALK_MAX_STEPS;
@@ -37,12 +27,10 @@ export function simulateRandomWalk(
     for (let step = 0; step < steps; step++) {
       level += draws[offset + step] < upProbability ? 1 : -1;
       positionsByStep[(step + 1) * pathCount + path] = level;
-      if (path < rendered) data[step + 1][`p${path}`] = level;
     }
-    levels[path] = level;
   }
 
-  return { data, positionsByStep, renderedPaths: rendered };
+  return { positionsByStep };
 }
 
 export function walkMoments(values: ArrayLike<number>): WalkMoments {

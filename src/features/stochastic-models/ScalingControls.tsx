@@ -1,5 +1,5 @@
 import SliderField from "../../components/SliderField";
-import { ControlGroup } from "../../components/ui";
+import { ControlGroup, SegmentedControl } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
 import { spreadFactor } from "./scalingLaws.math";
@@ -75,19 +75,15 @@ export default function ScalingControls(props: Props) {
       </div>
 
       <ControlGroup label={t("stochSqrtScaleLabel")}>
-        <div className="stoch-segmented" role="group" aria-label={t("stochSqrtScaleLabel")}>
-          {MODES.map((value) => (
-            <button
-              key={value}
-              type="button"
-              className={value === props.mode ? "preset-btn preset-btn--active" : "preset-btn"}
-              aria-pressed={value === props.mode}
-              onClick={() => props.setMode(value)}
-            >
-              {t(value === "loglog" ? "stochScaleLogLog" : "stochScaleLinear")}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={MODES.map((value) => ({
+            value,
+            label: t(value === "loglog" ? "stochScaleLogLog" : "stochScaleLinear"),
+          }))}
+          value={props.mode}
+          onChange={props.setMode}
+          ariaLabel={t("stochSqrtScaleLabel")}
+        />
       </ControlGroup>
 
       <ControlGroup label={t("stochSqrtPredictorLabel")} hint={<span className="stoch-control-hint">{t("stochSqrtPredictorHint")}</span>}>

@@ -1,5 +1,6 @@
 export { default as LineChart } from "./LineChart";
 export { default as ScatterChart } from "./ScatterChart";
+export { default as PathCloudChart } from "./PathCloudChart";
 export { SERIES_PALETTE, SERIES_ROLE } from "./chart.theme";
 export type { SurfaceData } from "./surface3d/surface3d.geometry";
 export type {
@@ -7,6 +8,8 @@ export type {
   ChartSeries,
   ChartReferenceLine,
   LineChartProps,
+  PathCloudProps,
+  PathOverlay,
   ScatterPoint,
   ScatterSeries,
   ScatterBand,

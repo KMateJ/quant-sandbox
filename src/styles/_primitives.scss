@@ -731,6 +731,18 @@
 }
 // #endregion
 
+// #region Segmented control
+.segmented-control {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.segmented-control .preset-btn {
+  font-variant-numeric: tabular-nums;
+}
+// #endregion
+
 // #region Stat cards
 .stats-grid {
   display: grid;

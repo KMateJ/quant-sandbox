@@ -78,6 +78,11 @@ export function envelopeCoefficient(steps: number, alpha: number): number {
   return Math.sqrt(steps) / steps ** alpha;
 }
 
+/// Points (n, c·nᵃ) for n = 0…steps — the upper half of a ±c·nᵃ envelope.
+export function envelopeCurve(steps: number, coefficient: number, exponent: number): { x: number; y: number }[] {
+  return Array.from({ length: steps + 1 }, (_, n) => ({ x: n, y: coefficient * n ** exponent }));
+}
+
 /// Largest relative gap between the candidate c·nᵃ envelope and the true √n
 /// envelope over 1…steps — a single "how close is your guess" number (0 at α=½).
 export function envelopeMismatch(steps: number, alpha: number): number {

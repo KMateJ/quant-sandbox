@@ -10,7 +10,7 @@ import { envelopeMismatch, scalingData } from "./scalingLaws.math";
 import { createRandomWalkDraws, simulateRandomWalk } from "./stochasticModels.math";
 import type { ScaleMode } from "./scalingLaws.types";
 
-const CLOUD_PATHS = 30;
+const CLOUD_PATHS = 300;
 
 export default function WhySqrtExplore() {
   const { t } = useI18n();
@@ -59,8 +59,8 @@ export default function WhySqrtExplore() {
       </aside>
       <div className="stoch-stage">
         <EnvelopeChart
-          data={cloud.data}
-          renderedPaths={cloud.renderedPaths}
+          positions={cloud.positionsByStep}
+          pathCount={CLOUD_PATHS}
           steps={steps}
           alpha={alpha}
         />

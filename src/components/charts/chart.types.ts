@@ -33,11 +33,39 @@ export type LineChartProps = {
   referenceLines?: ChartReferenceLine[];
   isMobile?: boolean;
   legend?: boolean;
-  /// Show the hover tooltip and crosshair (defaults to true). Disable for dense
-  /// overlays where per-series rows would be unreadable.
-  tooltip?: boolean;
   tooltipLabel?: (x: number) => string;
   valueFormat?: (value: number) => string;
+};
+
+/// A light vector curve drawn over a path cloud (envelopes, means, bounds).
+export type PathOverlay = {
+  key: string;
+  color: string;
+  points: { x: number; y: number }[];
+  strokeWidth?: number;
+  dash?: string;
+};
+
+export type PathCloudProps = {
+  /// Step-major samples: `values[step * pathCount + path]`.
+  values: ArrayLike<number>;
+  pathCount: number;
+  /// Points per path (steps + 1 for a walk that starts at 0).
+  stepCount: number;
+  /// x spacing between consecutive points (defaults to 1, i.e. x = step).
+  dx?: number;
+  xDomain?: [number, number];
+  /// Omit to fit every value (not just the visible prefix), so axes stay put while animating.
+  yDomain?: [number, number];
+  /// Draw only the first `visibleSteps` points of each path (animation).
+  visibleSteps?: number;
+  /// Single cloud colour; opacity is scaled down as the path count grows.
+  color?: string;
+  /// Distinct opaque colour per path instead of a cloud (for a handful of paths).
+  palette?: string[];
+  overlays?: PathOverlay[];
+  isMobile?: boolean;
+  ariaLabel?: string;
 };
 
 export type ScatterPoint = {

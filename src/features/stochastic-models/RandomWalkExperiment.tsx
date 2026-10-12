@@ -11,7 +11,7 @@ import { createRandomWalkDraws, simulateRandomWalk, walkMoments } from "./stocha
 export default function RandomWalkExperiment() {
   const { t } = useI18n();
   const [steps, setSteps] = useState(100);
-  const [paths, setPaths] = useState(60);
+  const [paths, setPaths] = useState(200);
   const [probability, setProbability] = useState(0.5);
   const [seed, setSeed] = useState(7);
   const [speed, setSpeed] = useState(180);
@@ -80,10 +80,10 @@ export default function RandomWalkExperiment() {
       </aside>
       <div className="stoch-stage">
         <WalkPathChart
-          data={result.data}
+          positions={result.positionsByStep}
+          pathCount={paths}
           steps={steps}
           activeStep={shownStep}
-          renderedPaths={result.renderedPaths}
         />
         <TerminalDistribution values={stepPositions} />
       </div>

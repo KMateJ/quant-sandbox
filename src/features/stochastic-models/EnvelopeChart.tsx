@@ -1,57 +1,39 @@
 import { useMemo } from "react";
-import { LineChart } from "../../components/charts";
-import type { ChartDatum, ChartSeries } from "../../components/charts";
+import { PathCloudChart, SERIES_ROLE } from "../../components/charts";
+import type { PathOverlay } from "../../components/charts";
 import { ChartContainer } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
-import { envelopeCoefficient } from "./scalingLaws.math";
-
-const CLOUD_COLOR = "color-mix(in srgb, var(--primary) 22%, transparent)";
-const TRUE_COLOR = "#10b981";
-const CANDIDATE_COLOR = "#f59e0b";
+import { envelopeCoefficient, envelopeCurve } from "./scalingLaws.math";
 
 type Props = {
-  data: ChartDatum[];
-  renderedPaths: number;
+  positions: Int16Array;
+  pathCount: number;
   steps: number;
   alpha: number;
 };
 
+const mirror = (points: { x: number; y: number }[]) => points.map((p) => ({ x: p.x, y: -p.y }));
+
 /// Hero view: a translucent cloud of walks with the ±√n "typical spread" envelope
 /// and an adjustable ±c·nᵃ candidate. Only α = 1/2 hugs the cloud at every step.
-export default function EnvelopeChart({ data, renderedPaths, steps, alpha }: Props) {
+export default function EnvelopeChart({ positions, pathCount, steps, alpha }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
-  const rows = useMemo<ChartDatum[]>(() => {
-    const c = envelopeCoefficient(steps, alpha);
-    return data.map((row) => {
-      const step = Number(row.step);
-      const tru = Math.sqrt(step);
-      const cand = c * step ** alpha;
-      return {
-        ...row,
-        trueUpper: tru,
-        trueLower: -tru,
-        candUpper: cand,
-        candLower: -cand,
-      };
+  const overlays = useMemo<PathOverlay[]>(() => {
+    const truth = envelopeCurve(steps, 1, 0.5);
+    const guess = envelopeCurve(steps, envelopeCoefficient(steps, alpha), alpha);
+    const line = (key: string, points: PathOverlay["points"], color: string, dash?: string) => ({
+      key, points, color, dash, strokeWidth: 2.5,
     });
-  }, [data, steps, alpha]);
-
-  const cloud: ChartSeries[] = Array.from({ length: renderedPaths }, (_, index) => ({
-    key: `p${index}`,
-    label: `p${index}`,
-    color: CLOUD_COLOR,
-    strokeWidth: 0.8,
-  }));
-
-  const envelopes: ChartSeries[] = [
-    { key: "trueUpper", label: t("stochSqrtTrueEnvelope"), color: TRUE_COLOR, strokeWidth: 2.5 },
-    { key: "trueLower", label: "", color: TRUE_COLOR, strokeWidth: 2.5 },
-    { key: "candUpper", label: t("stochSqrtCandidateEnvelope"), color: CANDIDATE_COLOR, strokeWidth: 2.5, dash: "5 4" },
-    { key: "candLower", label: "", color: CANDIDATE_COLOR, strokeWidth: 2.5, dash: "5 4" },
-  ];
+    return [
+      line("trueUpper", truth, SERIES_ROLE.reference),
+      line("trueLower", mirror(truth), SERIES_ROLE.reference),
+      line("candUpper", guess, SERIES_ROLE.candidate, "5 4"),
+      line("candLower", mirror(guess), SERIES_ROLE.candidate, "5 4"),
+    ];
+  }, [steps, alpha]);
 
   return (
     <ChartContainer
@@ -60,20 +42,18 @@ export default function EnvelopeChart({ data, renderedPaths, steps, alpha }: Pro
       actions={<span className="stoch-chart-readout">α = {alpha.toFixed(2)}</span>}
     >
       <div className="stoch-path-chart">
-        <LineChart
-          data={rows}
-          xKey="step"
-          series={[...cloud, ...envelopes]}
-          xDomain={[0, steps]}
+        <PathCloudChart
+          values={positions}
+          pathCount={pathCount}
+          stepCount={steps + 1}
+          overlays={overlays}
           isMobile={isMobile}
-          legend={false}
-          tooltip={false}
-          valueFormat={(value) => value.toFixed(1)}
+          ariaLabel={t("stochSqrtEnvelopeChart")}
         />
       </div>
       <ul className="stoch-path-legend stoch-envelope-legend" aria-hidden="true">
-        <li><span style={{ backgroundColor: TRUE_COLOR }} />{t("stochSqrtTrueEnvelope")}</li>
-        <li><span style={{ backgroundColor: CANDIDATE_COLOR }} />{t("stochSqrtCandidateEnvelope")}</li>
+        <li><span style={{ backgroundColor: SERIES_ROLE.reference }} />{t("stochSqrtTrueEnvelope")}</li>
+        <li><span style={{ backgroundColor: SERIES_ROLE.candidate }} />{t("stochSqrtCandidateEnvelope")}</li>
       </ul>
       <p className="stoch-chart-caption">{t("stochSqrtEnvelopeCaption")}</p>
     </ChartContainer>
