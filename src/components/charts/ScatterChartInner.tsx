@@ -184,7 +184,7 @@ export default function ScatterChartInner({
                   fill={s.hollow ? "transparent" : p.color ?? s.color}
                   fillOpacity={p.opacity ?? s.opacity ?? 1}
                   stroke={s.hollow ? p.color ?? s.color : CHART_COLORS.tooltipBg}
-                  strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : 1.5}
+                  strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : s.outline === false ? 0 : 1.5}
                   style={{ cursor: s.draggable ? "grab" : "pointer", touchAction: s.draggable ? "none" : undefined }}
                   onPointerDown={s.draggable ? (event) => drag.start(event, i) : undefined}
                   onClick={() => onSelectPoint?.(i)}

@@ -5,7 +5,7 @@ import { LinePath, Area, Line as SvgLine } from "@visx/shape";
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { GridRows, GridColumns } from "@visx/grid";
 import { LinearGradient } from "@visx/gradient";
-import { curveMonotoneX } from "@visx/curve";
+import { curveLinear, curveMonotoneX } from "@visx/curve";
 import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
 import { useChartTooltip } from "./useChartTooltip";
@@ -37,7 +37,9 @@ export default function LineChartInner({
   legend = true,
   tooltipLabel,
   valueFormat,
+  curve = "smooth",
 }: Props) {
+  const curveFactory = curve === "linear" ? curveLinear : curveMonotoneX;
   const margin = chartMargin(isMobile);
   const svgHeight = height - (legend ? LEGEND_HEIGHT : 0);
   const innerW = Math.max(0, width - margin.left - margin.right);
@@ -124,7 +126,7 @@ export default function LineChartInner({
                   x={px}
                   y0={() => yScale(0)}
                   y1={(d) => yScale(Number(d[s.key])) ?? 0}
-                  curve={curveMonotoneX}
+                  curve={curveFactory}
                   fill={`url(#area-${s.key})`}
                   stroke="none"
                 />
@@ -136,7 +138,7 @@ export default function LineChartInner({
                 stroke={s.color}
                 strokeWidth={s.strokeWidth ?? 2}
                 strokeDasharray={s.dash}
-                curve={curveMonotoneX}
+                curve={curveFactory}
                 shapeRendering="geometricPrecision"
               />
             </Group>

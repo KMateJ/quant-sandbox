@@ -7,7 +7,7 @@ import { GridRows, GridColumns } from "@visx/grid";
 import { useTheme } from "../../theme";
 import { CHART_COLORS, SERIES_ROLE, chartMargin } from "./chart.theme";
 import { cloudLineWidth, cloudOpacity, drawPathCloud, resolveCssColor, valueExtent } from "./pathCloud.draw";
-import type { PathCloudProps } from "./chart.types";
+import type { PathCloudProps, PlotFrame } from "./chart.types";
 
 type Props = PathCloudProps & { width: number; height: number };
 
@@ -26,7 +26,9 @@ export default function PathCloudChartInner({
   visibleSteps = stepCount,
   color = SERIES_ROLE.cloud,
   palette,
+  maxOpacity = 1,
   overlays = NO_OVERLAYS,
+  layer,
   isMobile = false,
   ariaLabel,
 }: Props) {
@@ -61,10 +63,21 @@ export default function PathCloudChartInner({
       xPx: (i) => (i * dx - x0) * kx,
       yPx: (v) => (y1 - v) * ky,
       colors: (palette ?? [color]).map((c) => resolveCssColor(c, canvas)),
-      alpha: palette ? 1 : cloudOpacity(pathCount),
+      alpha: palette ? 1 : Math.min(maxOpacity, cloudOpacity(pathCount)),
       lineWidth: palette ? 1.6 : cloudLineWidth(pathCount),
     });
-  }, [values, pathCount, stepCount, visibleSteps, dx, x0, x1, y0, y1, innerW, innerH, color, palette, resolvedTheme]);
+  }, [values, pathCount, stepCount, visibleSteps, dx, x0, x1, y0, y1, innerW, innerH, color, palette, maxOpacity, resolvedTheme]);
+
+  const frame: PlotFrame = {
+    x: (v) => xScale(v) ?? 0,
+    y: (v) => yScale(v) ?? 0,
+    xInvert: (px) => xScale.invert(px),
+    yInvert: (px) => yScale.invert(px),
+    width: innerW,
+    height: innerH,
+    left: margin.left,
+    top: margin.top,
+  };
 
   const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio || 1;
   const tickProps = { fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12 };
@@ -111,6 +124,7 @@ export default function PathCloudChartInner({
               strokeDasharray={o.dash}
             />
           ))}
+          {layer?.(frame)}
         </Group>
       </svg>
     </div>

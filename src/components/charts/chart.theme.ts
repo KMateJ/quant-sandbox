@@ -23,6 +23,7 @@ export const SERIES_ROLE = {
   reference: "var(--chart-reference)",
   candidate: "var(--chart-candidate)",
   cloud: "var(--chart-cloud)",
+  estimate: "var(--chart-estimate)",
 } as const;
 
 export const LEGEND_HEIGHT = 28;

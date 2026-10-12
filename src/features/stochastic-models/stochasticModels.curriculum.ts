@@ -8,8 +8,8 @@ export interface StochLesson {
   number: string;
   titleKey: TranslationKey;
   descKey: TranslationKey;
-  questionKey: TranslationKey;
-  objectiveKey: TranslationKey;
+  questionKey?: TranslationKey;
+  objectiveKey?: TranslationKey;
   intuitionSectionId?: string;
   /// Lazily loaded interactive body; a lesson without one is planned.
   Component?: LessonComponent;
@@ -77,15 +77,104 @@ export const curriculum: StochChapter[] = [
     number: 2,
     titleKey: "stochChapter2",
     descKey: "stochChapter2Desc",
-    lessons: [],
+    lessons: [
+      {
+        id: "wiener-process",
+        number: "2.1",
+        titleKey: "stochLessonWiener",
+        descKey: "stochLessonWienerDesc",
+        questionKey: "wpQuestion",
+        objectiveKey: "wpObjective",
+        intuitionSectionId: "wiener-definition",
+        Component: lazy(() => import("./WienerLesson")),
+      },
+      {
+        id: "increments",
+        number: "2.2",
+        titleKey: "stochLessonIncrements",
+        descKey: "stochLessonIncrementsDesc",
+        questionKey: "stochIncQuestion",
+        objectiveKey: "stochIncObjective",
+        intuitionSectionId: "wiener-increments",
+        Component: lazy(() => import("./IncrementLesson")),
+      },
+      {
+        id: "covariance",
+        number: "2.3",
+        titleKey: "stochLessonCovariance",
+        descKey: "stochLessonCovarianceDesc",
+        questionKey: "stochCovQuestion",
+        objectiveKey: "stochCovObjective",
+        intuitionSectionId: "wiener-covariance",
+        Component: lazy(() => import("./CovarianceLesson")),
+      },
+      {
+        id: "transformations",
+        number: "2.4",
+        titleKey: "stochLessonTransforms",
+        descKey: "stochLessonTransformsDesc",
+      },
+      {
+        id: "quadratic-variation",
+        number: "2.5",
+        titleKey: "stochLessonQuadVar",
+        descKey: "stochLessonQuadVarDesc",
+      },
+      {
+        id: "brownian-bridge",
+        number: "2.6",
+        titleKey: "stochLessonBridge",
+        descKey: "stochLessonBridgeDesc",
+      },
+    ],
     standalone: { route: "/brownian-motion", labelKey: "stochBrownianStandalone" },
   },
   {
     number: 3,
     titleKey: "stochChapter3",
     descKey: "stochChapter3Desc",
-    lessons: [],
-    planned: true,
+    lessons: [
+      {
+        id: "running-max",
+        number: "3.1",
+        titleKey: "pgLessonRunningMax",
+        descKey: "pgLessonRunningMaxDesc",
+        questionKey: "pgMaxQuestion",
+        objectiveKey: "pgMaxObjective",
+        intuitionSectionId: "pg-running-max",
+        Component: lazy(() => import("./RunningMaxLesson")),
+      },
+      {
+        id: "reflection",
+        number: "3.2",
+        titleKey: "pgLessonReflection",
+        descKey: "pgLessonReflectionDesc",
+        questionKey: "pgReflQuestion",
+        objectiveKey: "pgReflObjective",
+        intuitionSectionId: "pg-reflection",
+        Component: lazy(() => import("./ReflectionLesson")),
+      },
+      {
+        id: "first-passage",
+        number: "3.3",
+        titleKey: "pgLessonFirstPassage",
+        descKey: "pgLessonFirstPassageDesc",
+        questionKey: "pgFpQuestion",
+        objectiveKey: "pgFpObjective",
+        intuitionSectionId: "pg-first-passage",
+        Component: lazy(() => import("./FirstPassageLesson")),
+      },
+      {
+        id: "hitting",
+        number: "3.4",
+        titleKey: "pgLessonHitting",
+        descKey: "pgLessonHittingDesc",
+        questionKey: "pgHitQuestion",
+        objectiveKey: "pgHitObjective",
+        intuitionSectionId: "pg-hitting-drift",
+        Component: lazy(() => import("./HittingLesson")),
+      },
+    ],
   },
   {
     number: 4,

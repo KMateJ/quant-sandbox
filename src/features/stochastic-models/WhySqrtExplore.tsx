@@ -6,27 +6,23 @@ import { useI18n } from "../../i18n";
 import EnvelopeChart from "./EnvelopeChart";
 import ScalingChart from "./ScalingChart";
 import ScalingControls from "./ScalingControls";
-import { envelopeMismatch, scalingData } from "./scalingLaws.math";
+import { maxRelativeGap, scalingData, stdByStep } from "./scalingLaws.math";
 import { createRandomWalkDraws, simulateRandomWalk } from "./stochasticModels.math";
 import type { ScaleMode } from "./scalingLaws.types";
-
-const CLOUD_PATHS = 300;
 
 export default function WhySqrtExplore() {
   const { t } = useI18n();
   const [steps, setSteps] = useState(250);
-  const [alpha, setAlpha] = useState(1);
-  const [paths, setPaths] = useState(2000);
+  const [paths, setPaths] = useState(5);
   const [seed, setSeed] = useState(7);
   const [mode, setMode] = useState<ScaleMode>("linear");
   const [horizonK, setHorizonK] = useState(4);
 
-  const cloud = useMemo(
-    () => simulateRandomWalk(createRandomWalkDraws(seed), steps, CLOUD_PATHS, 0.5),
-    [seed, steps]
-  );
+  const draws = useMemo(() => createRandomWalkDraws(seed), [seed]);
+  const cloud = useMemo(() => simulateRandomWalk(draws, steps, paths, 0.5), [draws, steps, paths]);
+  const std = useMemo(() => stdByStep(cloud.positionsByStep, paths, steps), [cloud, paths, steps]);
   const scaling = useMemo(() => scalingData(seed, paths), [seed, paths]);
-  const mismatch = useMemo(() => envelopeMismatch(steps, alpha), [steps, alpha]);
+  const finalStd = std[std.length - 1].y;
 
   return (
     <div className="stoch-experiment">
@@ -34,8 +30,6 @@ export default function WhySqrtExplore() {
         <ScalingControls
           steps={steps}
           setSteps={setSteps}
-          alpha={alpha}
-          setAlpha={setAlpha}
           paths={paths}
           setPaths={setPaths}
           seed={seed}
@@ -48,23 +42,18 @@ export default function WhySqrtExplore() {
         />
         <Panel title={t("stochSqrtMetrics")}>
           <div className="stoch-metric-grid">
-            <StatCard label={t("stochSqrtCandidateAlpha")} value={alpha.toFixed(2)} />
-            <StatCard label={t("stochSqrtEnvelopeMatch")} value={`${(mismatch * 100).toFixed(0)}%`} />
+            <StatCard label={t("stochSqrtEmpiricalAtN", { n: steps })} value={finalStd.toFixed(2)} />
+            <StatCard label={t("stochSqrtTheoryAtN", { n: steps })} value={Math.sqrt(steps).toFixed(2)} />
+            <StatCard label={t("stochSqrtMaxGap")} value={`${(maxRelativeGap(std) * 100).toFixed(1)}%`} />
             <StatCard label={t("stochSqrtFittedSlope")} value={scaling.slope.toFixed(3)} />
-            <StatCard label={t("stochSqrtTheoreticalSlope")} value="0.500" />
           </div>
           <p className="stoch-metric-note">{t("stochSqrtObservation")}</p>
           <IntuitionTrigger sectionId="scaling-exponents" variant="button" />
         </Panel>
       </aside>
       <div className="stoch-stage">
-        <EnvelopeChart
-          positions={cloud.positionsByStep}
-          pathCount={CLOUD_PATHS}
-          steps={steps}
-          alpha={alpha}
-        />
-        <ScalingChart points={scaling.points} alpha={alpha} mode={mode} />
+        <EnvelopeChart positions={cloud.positionsByStep} pathCount={paths} steps={steps} std={std} />
+        <ScalingChart points={scaling.points} mode={mode} />
       </div>
     </div>
   );

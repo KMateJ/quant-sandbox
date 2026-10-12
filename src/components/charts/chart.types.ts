@@ -1,3 +1,18 @@
+import type { ReactNode } from "react";
+
+/// Plot-area geometry handed to interactive chart layers; coordinates are relative
+/// to the plot origin, `left`/`top` give its offset inside the chart's SVG.
+export type PlotFrame = {
+  x: (value: number) => number;
+  y: (value: number) => number;
+  xInvert: (px: number) => number;
+  yInvert: (px: number) => number;
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+};
+
 export type ChartDatum = Record<string, number | string | undefined>;
 
 export type ChartSeries = {
@@ -35,6 +50,8 @@ export type LineChartProps = {
   legend?: boolean;
   tooltipLabel?: (x: number) => string;
   valueFormat?: (value: number) => string;
+  /// "smooth" (default) fits a monotone curve; "linear" joins the data points with straight segments only.
+  curve?: "smooth" | "linear";
 };
 
 /// A light vector curve drawn over a path cloud (envelopes, means, bounds).
@@ -63,7 +80,11 @@ export type PathCloudProps = {
   color?: string;
   /// Distinct opaque colour per path instead of a cloud (for a handful of paths).
   palette?: string[];
+  /// Upper bound on the cloud opacity, so sparse clouds stay see-through.
+  maxOpacity?: number;
   overlays?: PathOverlay[];
+  /// Interactive SVG drawn above the cloud and overlays (handles, markers, annotations).
+  layer?: (frame: PlotFrame) => ReactNode;
   isMobile?: boolean;
   ariaLabel?: string;
 };
@@ -100,6 +121,8 @@ export type ScatterSeries = {
   intuitionSectionId?: string;
   /// Draw markers as a hollow ring (transparent fill) so overlapping points stay distinct.
   hollow?: boolean;
+  /// Draw a contrasting outline around filled markers (defaults to true); turn off for dense clouds.
+  outline?: boolean;
 };
 
 /// Shaded vertical region between two x-values (e.g. lending vs borrowing).

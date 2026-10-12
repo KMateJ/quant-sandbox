@@ -8,20 +8,26 @@ import RescaledControls from "./RescaledControls";
 import RescaledPathChart from "./RescaledPathChart";
 import {
   densityComparison,
+  fineWalks,
   rescaledPaths,
   rescaledTerminalSamples,
   terminalSummary,
+  walksExtent,
 } from "./rescaledWalk.math";
 
 const TERMINAL_SAMPLES = 1500;
 
 export default function RescaledWalkExplore() {
   const { t } = useI18n();
-  const [level, setLevel] = useState(100);
+  const [exponent, setExponent] = useState(0);
   const [paths, setPaths] = useState(4);
   const [seed, setSeed] = useState(7);
 
-  const pathData = useMemo(() => rescaledPaths(seed, level, paths), [seed, level, paths]);
+  const level = 2 ** exponent;
+
+  const walks = useMemo(() => fineWalks(seed, paths), [seed, paths]);
+  const yDomain = useMemo(() => walksExtent(walks), [walks]);
+  const pathData = useMemo(() => rescaledPaths(walks, level), [walks, level]);
   const terminal = useMemo(
     () => rescaledTerminalSamples(seed, level, TERMINAL_SAMPLES),
     [seed, level]
@@ -33,8 +39,8 @@ export default function RescaledWalkExplore() {
     <div className="stoch-experiment">
       <aside className="stoch-sidebar">
         <RescaledControls
-          level={level}
-          setLevel={setLevel}
+          exponent={exponent}
+          setExponent={setExponent}
           paths={paths}
           setPaths={setPaths}
           seed={seed}
@@ -53,7 +59,7 @@ export default function RescaledWalkExplore() {
         </Panel>
       </aside>
       <div className="stoch-stage">
-        <RescaledPathChart paths={pathData} level={level} />
+        <RescaledPathChart paths={pathData} level={level} yDomain={yDomain} />
         <DensityComparisonChart data={density} title={t("stochRescaledDensity")} />
       </div>
     </div>

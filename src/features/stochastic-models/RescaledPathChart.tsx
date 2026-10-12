@@ -5,10 +5,9 @@ import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
 import type { RescaledPathData } from "./rescaledWalk.types";
 
+type Props = { paths: RescaledPathData; level: number; yDomain: [number, number] };
 
-type Props = { paths: RescaledPathData; level: number };
-
-export default function RescaledPathChart({ paths, level }: Props) {
+export default function RescaledPathChart({ paths, level, yDomain }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
   const series: ChartSeries[] = paths.pathKeys.map((key, index) => ({
@@ -31,6 +30,8 @@ export default function RescaledPathChart({ paths, level }: Props) {
           xKey="t"
           series={series}
           xDomain={[0, 1]}
+          yDomain={yDomain}
+          curve="linear"
           isMobile={isMobile}
           legend={false}
           tooltipLabel={(x) => `t = ${x.toFixed(3)}`}

@@ -1,5 +1,6 @@
 import { makeRng } from "../../lib/math/random";
 import { normPdf } from "../../lib/stats/distributions";
+import { RESCALED_FINE_STEPS } from "./rescaledWalk.types";
 import type {
   DensityPoint,
   RescaledPathData,
@@ -7,7 +8,6 @@ import type {
 } from "./rescaledWalk.types";
 
 const STREAM_STRIDE = 1_000_003;
-const MAX_DRAW_POINTS = 1600;
 
 type ChartRow = Record<string, number>;
 
@@ -18,30 +18,38 @@ function streamRng(seed: number, pathIndex: number) {
   return makeRng((seed * STREAM_STRIDE + pathIndex) >>> 0);
 }
 
-/// Rescaled walk W⁽ⁿ⁾(t) = S₍⌊nt⌋₎ / √n on t ∈ [0, 1] for a few overlaid paths.
-/// Long paths are subsampled for rendering while keeping the ±1/√n step scale.
-export function rescaledPaths(seed: number, n: number, pathCount: number): RescaledPathData {
-  const sqrtN = Math.sqrt(n);
-  const stride = Math.max(1, Math.ceil(n / MAX_DRAW_POINTS));
-  const pathKeys = Array.from({ length: pathCount }, (_, i) => `p${i}`);
-  const levels = new Array<number>(pathCount).fill(0);
-  const rngs = pathKeys.map((_, path) => streamRng(seed, path));
+/// One finest-level rescaled walk per path: S_k / √N for k = 0…N with N = RESCALED_FINE_STEPS.
+export function fineWalks(seed: number, pathCount: number): Float64Array[] {
+  const scale = 1 / Math.sqrt(RESCALED_FINE_STEPS);
+  return Array.from({ length: pathCount }, (_, path) => {
+    const rng = streamRng(seed, path);
+    const walk = new Float64Array(RESCALED_FINE_STEPS + 1);
+    for (let k = 1; k <= RESCALED_FINE_STEPS; k++) walk[k] = walk[k - 1] + (rng() < 0.5 ? scale : -scale);
+    return walk;
+  });
+}
 
-  const first: ChartRow = { t: 0 };
-  for (const key of pathKeys) first[key] = 0;
-  const rows: ChartRow[] = [first];
-
-  for (let k = 1; k <= n; k++) {
-    for (let path = 0; path < pathCount; path++) {
-      levels[path] += rngs[path]() < 0.5 ? 1 : -1;
-    }
-    if (k % stride === 0 || k === n) {
-      const row: ChartRow = { t: k / n };
-      for (let path = 0; path < pathCount; path++) row[pathKeys[path]] = levels[path] / sqrtN;
-      rows.push(row);
-    }
+/// View of the fine walks on n equal steps of [0, 1] (n a power of two dividing N).
+/// Every level samples the same paths, so W(0) = 0 and W(1) never move and each
+/// doubling keeps the existing points while inserting a new one between each pair.
+export function rescaledPaths(walks: Float64Array[], n: number): RescaledPathData {
+  const stride = RESCALED_FINE_STEPS / n;
+  const pathKeys = walks.map((_, i) => `p${i}`);
+  const rows: ChartRow[] = [];
+  for (let k = 0; k <= n; k++) {
+    const row: ChartRow = { t: k / n };
+    walks.forEach((walk, path) => (row[pathKeys[path]] = walk[k * stride]));
+    rows.push(row);
   }
   return { rows, pathKeys };
+}
+
+/// Symmetric y extent of the fine walks, so the axes stay put across refinement levels.
+export function walksExtent(walks: Float64Array[]): [number, number] {
+  let max = 1;
+  for (const walk of walks) for (let k = 0; k < walk.length; k++) max = Math.max(max, Math.abs(walk[k]));
+  const padded = Math.ceil(max * 1.1 * 4) / 4;
+  return [-padded, padded];
 }
 
 /// Terminal values W⁽ⁿ⁾(1) = Sₙ / √n across many independent paths. The PRNG is

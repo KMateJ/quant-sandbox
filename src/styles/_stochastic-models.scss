@@ -438,6 +438,78 @@ a.stoch-lesson-item.is-available:hover {
   min-width: 0;
 }
 
+// Square plot so the ellipse and the 45° conditional-mean line keep their true shape.
+.stoch-joint-chart {
+  width: min(100%, 540px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+// #region Chapter 2 widgets
+.stoch-cov-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: var(--space-3);
+}
+
+.stoch-cov-cell {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--chart-empirical) var(--strength, 0%), transparent);
+  transition: background 120ms ease;
+}
+
+.stoch-cov-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stoch-cov-theory {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stoch-guided-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.stoch-property-bar {
+  margin-bottom: var(--space-3);
+  overflow-x: auto;
+}
+
+.stoch-chart-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0;
+}
+
+.stoch-square-chart {
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 420px;
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .stoch-chart-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+// #endregion
+
 .stoch-path-legend {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -619,5 +691,7 @@ a.stoch-lesson-item.is-available:hover {
   .stoch-density-chart {
     height: 260px;
   }
+
+
 }
 // #endregion

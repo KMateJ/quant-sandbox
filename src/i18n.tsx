@@ -32,6 +32,9 @@ import { gbmEn, gbmHu } from "./Language/Gbm";
 import { itoProcessEn, itoProcessHu } from "./Language/ItoProcess";
 import { monteCarloEn, monteCarloHu } from "./Language/MonteCarlo";
 import { stochasticModelsEn, stochasticModelsHu } from "./Language/StochasticModels";
+import { brownianFundamentalsEn, brownianFundamentalsHu } from "./Language/BrownianFundamentals";
+import { wienerProcessEn, wienerProcessHu } from "./Language/WienerProcess";
+import { pathGeometryEn, pathGeometryHu } from "./Language/PathGeometry";
 import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
 import { intuitionEn, intuitionHu } from "./Language/Intuition";
 import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
@@ -77,6 +80,9 @@ const translations = {
     ...itoProcessHu,
     ...monteCarloHu,
     ...stochasticModelsHu,
+    ...brownianFundamentalsHu,
+    ...wienerProcessHu,
+    ...pathGeometryHu,
     ...deltaHedgingHu,
     ...themeHu,
     navGuide: "Útmutató",
@@ -108,6 +114,9 @@ const translations = {
     ...itoProcessEn,
     ...monteCarloEn,
     ...stochasticModelsEn,
+    ...brownianFundamentalsEn,
+    ...wienerProcessEn,
+    ...pathGeometryEn,
     ...deltaHedgingEn,
     ...themeEn,
     navGuide: "Guide",

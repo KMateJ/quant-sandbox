@@ -1,12 +1,15 @@
 import SliderField from "../../components/SliderField";
-import { ControlGroup, SegmentedControl } from "../../components/ui";
+import { ControlGroup } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
-import { RESCALED_LEVELS } from "./rescaledWalk.types";
+import { RESCALED_MAX_EXPONENT } from "./rescaledWalk.types";
+
+const stepsLabel = (exponent: number) => (2 ** exponent).toLocaleString();
+const MARKS = [0, 4, 8, RESCALED_MAX_EXPONENT].map((value) => ({ value, label: stepsLabel(value) }));
 
 type Props = {
-  level: number;
-  setLevel: (value: number) => void;
+  exponent: number;
+  setExponent: (value: number) => void;
   paths: number;
   setPaths: (value: number) => void;
   seed: number;
@@ -19,11 +22,15 @@ export default function RescaledControls(props: Props) {
   return (
     <Panel title={t("stochControlsLabel")}>
       <ControlGroup label={t("stochRescaledLevel")} hint={<span className="stoch-control-hint">{t("stochRescaledLevelHint")}</span>}>
-        <SegmentedControl
-          options={RESCALED_LEVELS.map((value) => ({ value, label: value.toLocaleString() }))}
-          value={props.level}
-          onChange={props.setLevel}
-          ariaLabel={t("stochRescaledLevel")}
+        <SliderField
+          label={t("stochRescaledSteps")}
+          min={0}
+          max={RESCALED_MAX_EXPONENT}
+          step={1}
+          value={props.exponent}
+          onChange={props.setExponent}
+          formatValue={stepsLabel}
+          marks={MARKS}
         />
       </ControlGroup>
       <div className="controls-grid">

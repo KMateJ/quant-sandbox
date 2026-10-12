@@ -1,7 +1,8 @@
 import type { ChartDatum } from "../../components/charts";
 
-/// The refinement levels n offered for W⁽ⁿ⁾(t) = S₍⌊nt⌋₎ / √n.
-export const RESCALED_LEVELS = [10, 50, 100, 500, 1000, 5000, 10000] as const;
+/// Refinement slider runs over n = 2^0 … 2^MAX steps; the finest level is the walk itself.
+export const RESCALED_MAX_EXPONENT = 12;
+export const RESCALED_FINE_STEPS = 2 ** RESCALED_MAX_EXPONENT;
 
 export type RescaledPathData = {
   /// One row per t = k/n with a column per overlaid path (`p0`, `p1`, …).

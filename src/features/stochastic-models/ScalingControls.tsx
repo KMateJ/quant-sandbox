@@ -2,14 +2,13 @@ import SliderField from "../../components/SliderField";
 import { ControlGroup, SegmentedControl } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
-import { spreadFactor } from "./scalingLaws.math";
+import { pathsToSlider, sliderToPaths, spreadFactor } from "./scalingLaws.math";
 import type { ScaleMode } from "./scalingLaws.types";
+import { RANDOM_WALK_MAX_PATHS, RANDOM_WALK_MAX_STEPS } from "./stochasticModels.math";
 
 type Props = {
   steps: number;
   setSteps: (value: number) => void;
-  alpha: number;
-  setAlpha: (value: number) => void;
   paths: number;
   setPaths: (value: number) => void;
   seed: number;
@@ -22,26 +21,24 @@ type Props = {
 };
 
 const MODES: ScaleMode[] = ["linear", "loglog"];
+const MIN_PATHS = 2;
+const PATH_MARKS = [2, 10, 100, 1000];
 
 export default function ScalingControls(props: Props) {
   const { t } = useI18n();
   const factor = spreadFactor(props.horizonK);
   return (
     <Panel title={t("stochControlsLabel")}>
-      <ControlGroup label={t("stochSqrtCandidateExponent")} hint={<span className="stoch-control-hint">{t("stochSqrtExponentHint")}</span>}>
+      <ControlGroup label={t("stochWalkPaths")} hint={<span className="stoch-control-hint">{t("stochSqrtPathsHint")}</span>}>
         <SliderField
-          label="α"
-          min={0.2}
-          max={1}
-          step={0.05}
-          value={props.alpha}
-          onChange={props.setAlpha}
-          formatValue={(value) => value.toFixed(2)}
-          marks={[
-            { value: 0.25, label: "¼" },
-            { value: 0.5, label: "½" },
-            { value: 1, label: "1" },
-          ]}
+          label={t("stochWalkPaths")}
+          min={pathsToSlider(MIN_PATHS)}
+          max={pathsToSlider(RANDOM_WALK_MAX_PATHS)}
+          step={0.01}
+          value={pathsToSlider(props.paths)}
+          onChange={(value) => props.setPaths(sliderToPaths(value))}
+          formatValue={(value) => sliderToPaths(value).toFixed(0)}
+          marks={PATH_MARKS.map((n) => ({ value: pathsToSlider(n), label: String(n) }))}
         />
       </ControlGroup>
 
@@ -49,19 +46,10 @@ export default function ScalingControls(props: Props) {
         <SliderField
           label={t("stochSqrtHorizon")}
           min={50}
-          max={500}
+          max={RANDOM_WALK_MAX_STEPS}
           step={50}
           value={props.steps}
           onChange={props.setSteps}
-          formatValue={(value) => value.toFixed(0)}
-        />
-        <SliderField
-          label={t("stochWalkPaths")}
-          min={200}
-          max={5000}
-          step={200}
-          value={props.paths}
-          onChange={props.setPaths}
           formatValue={(value) => value.toFixed(0)}
         />
         <SliderField
