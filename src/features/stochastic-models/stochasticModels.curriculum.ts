@@ -3,6 +3,11 @@ import type { TranslationKey } from "../../i18n";
 
 type LessonComponent = LazyExoticComponent<ComponentType>;
 
+/// Route of the studio; each lesson lives at `${STUDIO_PATH}/<lesson id>`.
+export const STUDIO_PATH = "/stochastic-models";
+
+export const lessonPath = (id: string) => `${STUDIO_PATH}/${id}`;
+
 export interface StochLesson {
   id: string;
   number: string;
@@ -214,13 +219,14 @@ export const availableLessons: StochLesson[] = allLessons.filter(
   (lesson) => lesson.Component !== undefined
 );
 
-/// Lesson ids as query-string links into the studio, for registry sub-navigation.
-export const lessonNavItems = (basePath: string) =>
+/// Lesson links for registry sub-navigation; the description doubles as the page's SEO text.
+export const lessonNavItems = () =>
   availableLessons.map((lesson) => ({
     id: lesson.id,
     labelKey: lesson.titleKey,
+    descKey: lesson.descKey,
     prefix: lesson.number,
-    to: `${basePath}?lesson=${lesson.id}`,
+    to: lessonPath(lesson.id),
   }));
 
 export type LessonLocation = {

@@ -5,13 +5,12 @@ import type { ModuleSubNavItem } from "../../modules/registry";
 /// Nested links under the active sidebar module (e.g. studio lessons).
 export default function SideSubNav({ items }: { items: ModuleSubNavItem[] }) {
   const { t } = useI18n();
-  const { pathname, search } = useLocation();
-  const current = pathname + search;
+  const { pathname } = useLocation();
 
   return (
     <div className="side-subtree">
       {items.map((item) => {
-        const active = item.to === current;
+        const active = item.to === pathname;
         const label = t(item.labelKey);
         return (
           <Link

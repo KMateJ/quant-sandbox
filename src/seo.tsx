@@ -1,4 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { useI18n } from "./i18n";
+import { BASE_URL, SITE_NAME, seoPages } from "./seo.routes";
 
 type SeoProps = {
   title: string;
@@ -6,8 +9,6 @@ type SeoProps = {
   path?: string;
 };
 
-const SITE_NAME = "Quant Sandbox";
-const BASE_URL = "https://quantsandbox.dev";
 
 function upsertMeta(
   selector: string,
@@ -73,4 +74,12 @@ export function Seo({ title, description, path = "/" }: SeoProps) {
   }, [title, description, path]);
 
   return null;
+}
+
+/// Head tags for the current route, looked up in the shared page list (modules and lessons).
+export function RouteSeo() {
+  const { pathname } = useLocation();
+  const { t } = useI18n();
+  const page = useMemo(() => seoPages(t).find((p) => p.path === pathname), [t, pathname]);
+  return page ? <Seo title={page.title} description={page.description} path={page.path} /> : null;
 }

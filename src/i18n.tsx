@@ -52,7 +52,7 @@ type I18nContextValue = {
 
 const STORAGE_KEY = "qs-language";
 
-const translations = {
+export const translations = {
   hu: {
     ...intuitionHu,
     ...legacyIntuitionHu,

@@ -1,4 +1,13 @@
 {
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/stochastic-models",
+      "has": [{ "type": "query", "key": "lesson", "value": "(?<lesson>[a-z0-9-]+)" }],
+      "destination": "/stochastic-models/:lesson",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

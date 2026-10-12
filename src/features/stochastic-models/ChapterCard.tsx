@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
-import type { StochChapter } from "./stochasticModels.curriculum";
+import { lessonPath, type StochChapter } from "./stochasticModels.curriculum";
 
 export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
   const { t } = useI18n();
@@ -43,7 +43,7 @@ export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
             );
             return available ? (
               <li key={lesson.id}>
-                <Link className="stoch-lesson-item is-available" to={`?lesson=${lesson.id}`}>
+                <Link className="stoch-lesson-item is-available" to={lessonPath(lesson.id)}>
                   {inner}
                 </Link>
               </li>

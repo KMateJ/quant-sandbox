@@ -1,12 +1,12 @@
 export const pathGeometryHu = {
   pgLessonRunningMax: "Futó maximum és minimum",
-  pgLessonRunningMaxDesc: "Milyen magasra jut el egy Brown-pálya t időig? M(t) eloszlása megegyezik |W(t)|-ével.",
+  pgLessonRunningMaxDesc: "Interaktív szimuláció a Brown-mozgás futó maximumáról és minimumáról: miért egyezik meg M(t) eloszlása |W(t)|-ével.",
   pgLessonReflection: "Tükrözési elv",
-  pgLessonReflectionDesc: "Tükrözd a pályát az első szintátlépés után: P(M(T) ≥ a) = 2·P(W(T) ≥ a).",
+  pgLessonReflectionDesc: "A Brown-mozgás tükrözési elve animációval és Monte Carlo-ellenőrzéssel: P(M(T) ≥ a) = 2·P(W(T) ≥ a).",
   pgLessonFirstPassage: "Első elérési idők",
-  pgLessonFirstPassageDesc: "Mikor éri el először a pálya az a szintet? Lévy-sűrűség, nehéz farok, végtelen várható érték.",
+  pgLessonFirstPassageDesc: "Brown-mozgás első elérési ideje: Lévy-sűrűség, nehéz farok és végtelen várható érték interaktív szimulációval.",
   pgLessonHitting: "Elérési valószínűségek",
-  pgLessonHittingDesc: "Szintátlépés drifttel és diszkrét megfigyeléssel — a korlátos opciók alapja.",
+  pgLessonHittingDesc: "Korlátátlépési valószínűségek drifttel és diszkrét megfigyeléssel, a BGK-korrekcióval — a korlátos opciók alapja.",
 
   pgPaths: "Szimulált pályák",
   pgMetrics: "Empirikus vs elméleti",
@@ -154,13 +154,13 @@ export const pathGeometryHu = {
 
 export const pathGeometryEn = {
   pgLessonRunningMax: "Running maximum and minimum",
-  pgLessonRunningMaxDesc: "How high does a Brownian path get by time t? M(t) has the same law as |W(t)|.",
+  pgLessonRunningMaxDesc: "Interactive simulation of the running maximum and minimum of Brownian motion, and why M(t) has the same law as |W(t)|.",
   pgLessonReflection: "Reflection principle",
-  pgLessonReflectionDesc: "Reflect the path after its first crossing: P(M(T) ≥ a) = 2·P(W(T) ≥ a).",
+  pgLessonReflectionDesc: "The reflection principle for Brownian motion, animated and checked by Monte Carlo: P(M(T) ≥ a) = 2·P(W(T) ≥ a).",
   pgLessonFirstPassage: "First passage times",
-  pgLessonFirstPassageDesc: "When does the path first reach level a? Lévy density, heavy tail, infinite mean.",
+  pgLessonFirstPassageDesc: "First passage times of Brownian motion: the Lévy density, its heavy tail and infinite mean, in an interactive simulation.",
   pgLessonHitting: "Hitting probabilities",
-  pgLessonHittingDesc: "Barrier crossing with drift and discrete monitoring — the basis of barrier options.",
+  pgLessonHittingDesc: "Barrier-hitting probabilities with drift and discrete monitoring, plus the BGK correction — the basis of barrier option pricing.",
 
   pgPaths: "Simulated paths",
   pgMetrics: "Empirical vs theory",

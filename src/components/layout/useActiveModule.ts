@@ -11,6 +11,9 @@ export function useActiveModule(): {
   activeCategory: ModuleCategory | undefined;
 } {
   const { pathname } = useLocation();
-  const activeModule = modules.find((m) => pathname === m.path);
+  // Modules with sub-pages (e.g. studio lessons) stay active on their nested paths.
+  const activeModule = modules.find(
+    (m) => pathname === m.path || (m.subNav !== undefined && pathname.startsWith(`${m.path}/`))
+  );
   return { activeModule, activeCategory: activeModule?.category };
 }
