@@ -34,6 +34,7 @@ import { monteCarloEn, monteCarloHu } from "./Language/MonteCarlo";
 import { stochasticModelsEn, stochasticModelsHu } from "./Language/StochasticModels";
 import { brownianFundamentalsEn, brownianFundamentalsHu } from "./Language/BrownianFundamentals";
 import { wienerProcessEn, wienerProcessHu } from "./Language/WienerProcess";
+import { moduleAboutEn, moduleAboutHu } from "./Language/ModuleAbout";
 import { pathGeometryEn, pathGeometryHu } from "./Language/PathGeometry";
 import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
 import { intuitionEn, intuitionHu } from "./Language/Intuition";
@@ -82,6 +83,7 @@ export const translations = {
     ...stochasticModelsHu,
     ...brownianFundamentalsHu,
     ...wienerProcessHu,
+    ...moduleAboutHu,
     ...pathGeometryHu,
     ...deltaHedgingHu,
     ...themeHu,
@@ -116,6 +118,7 @@ export const translations = {
     ...stochasticModelsEn,
     ...brownianFundamentalsEn,
     ...wienerProcessEn,
+    ...moduleAboutEn,
     ...pathGeometryEn,
     ...deltaHedgingEn,
     ...themeEn,

@@ -1,23 +1,25 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import "@fontsource-variable/inter";
 import App from "./App.tsx";
+import AppProviders from "./AppProviders";
 import "./styles/main.scss";
-import { LanguageProvider } from "./i18n";
-import { ThemeProvider } from "./theme";
 import "katex/dist/katex.min.css";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root")!;
+const app = (
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <LanguageProvider>
-          <App />
-          <Analytics />
-        </LanguageProvider>
-      </ThemeProvider>
+      <AppProviders>
+        <App />
+        <Analytics />
+      </AppProviders>
     </BrowserRouter>
   </StrictMode>
 );
+
+// Production pages arrive pre-rendered (see seo.plugin.ts): hydrate them; the dev server's empty root mounts fresh.
+if (root.hasChildNodes()) hydrateRoot(root, app);
+else createRoot(root).render(app);

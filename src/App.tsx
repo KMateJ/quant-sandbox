@@ -5,6 +5,7 @@ import { RouteSeo } from "./seo";
 import { modules } from "./modules/registry";
 import { PortfolioUniverseProvider } from "./features/portfolio-lab/PortfolioUniverseContext";
 import { IntuitionProvider } from "./components/intuition";
+import ModuleAboutSection from "./components/layout/ModuleAboutSection";
 
 /* =======================
    APP
@@ -24,6 +25,7 @@ export default function App() {
                 element={
                   <IntuitionProvider key={m.id} document={m.intuition}>
                     <m.Component />
+                    {m.about && <ModuleAboutSection about={m.about} path={m.path} />}
                   </IntuitionProvider>
                 }
               />

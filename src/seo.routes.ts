@@ -4,7 +4,13 @@ import { modules } from "./modules/registry";
 export const SITE_NAME = "Quant Sandbox";
 export const BASE_URL = "https://quantsandbox.dev";
 
-export type SeoPage = { path: string; title: string; description: string };
+export type SeoPage = {
+  path: string;
+  title: string;
+  description: string;
+  /// The module page a sub-page (lesson) belongs to, for breadcrumbs.
+  parent?: { path: string; title: string };
+};
 
 type Translate = (key: TranslationKey) => string;
 
@@ -14,7 +20,9 @@ export function seoPages(t: Translate): SeoPage[] {
   return modules.flatMap((m) => [
     { path: m.path, title: m.seo.title, description: m.seo.description },
     ...(m.subNav ?? []).flatMap((item) =>
-      item.descKey ? [{ path: item.to, title: t(item.labelKey), description: t(item.descKey) }] : []
+      item.descKey
+        ? [{ path: item.to, title: t(item.labelKey), description: t(item.descKey), parent: { path: m.path, title: m.seo.title } }]
+        : []
     ),
   ]);
 }
