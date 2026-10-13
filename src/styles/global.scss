@@ -11,15 +11,6 @@ body,
   color: var(--text);
 }
 
-/* Shrink the whole UI by 10%; charts are counter-scaled back to 100% below. */
-#root {
-  zoom: 0.9;
-}
-
-.chart-wrap {
-  zoom: 1.1111;
-}
-
 .chart-legend {
   position: absolute;
   bottom: 0;

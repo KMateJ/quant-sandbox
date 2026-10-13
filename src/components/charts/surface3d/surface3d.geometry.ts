@@ -71,7 +71,8 @@ export function buildSurfaceBuffers(data: SurfaceData): SurfaceBuffers {
   const colors = new Float32Array(vertexCount * 3);
 
   for (let zi = 0; zi < nz; zi++) {
-    const z = mapAxis(zi, nz);
+    // Rows run front (+z) to back so x and z share the origin corner facing the camera.
+    const z = -mapAxis(zi, nz);
     for (let xi = 0; xi < nx; xi++) {
       const i = (zi * nx + xi) * 3;
       const v = data.values[zi][xi];

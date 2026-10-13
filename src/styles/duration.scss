@@ -132,13 +132,6 @@
   align-items: stretch;
 }
 
-// The global `.chart-wrap` zoom hack overflows its grid column and overlaps the
-// neighbouring result panel; keep charts in this module at the root zoom scale.
-.dc-main-row .chart-wrap,
-.dc-error-wrap {
-  zoom: 1;
-}
-
 .dc-result-panel .panel-body {
   padding-top: var(--space-3);
 }

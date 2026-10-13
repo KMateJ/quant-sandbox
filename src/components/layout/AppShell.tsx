@@ -4,11 +4,13 @@ import TopNavigation from "./TopNavigation";
 import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
 import { useActiveModule } from "./useActiveModule";
+import { useStickyFit } from "./useStickyFit";
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { activeCategory } = useActiveModule();
   const { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
+  useStickyFit();
 
   useEffect(() => {
     setNavOpen(false);

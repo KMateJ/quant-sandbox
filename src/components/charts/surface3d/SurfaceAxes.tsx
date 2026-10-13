@@ -47,13 +47,13 @@ export default function SurfaceAxes(props: SurfaceAxesProps) {
       <Label position={[-H, -0.16, H + 0.12]} text={formatX(props.xMin)} />
       <Label position={[H, -0.16, H + 0.12]} text={formatX(props.xMax)} />
 
-      <Label position={[H + 0.45, -0.18, 0]} text={zLabel} variant="name" />
-      <Label position={[H + 0.12, -0.16, -H]} text={formatZ(props.zMin)} />
-      <Label position={[H + 0.12, -0.16, H]} text={formatZ(props.zMax)} />
+      <Label position={[-H - 0.45, -0.18, 0]} text={zLabel} variant="name" />
+      <Label position={[-H - 0.12, -0.16, H]} text={formatZ(props.zMin)} />
+      <Label position={[-H - 0.12, -0.16, -H]} text={formatZ(props.zMax)} />
 
-      <Label position={[-H - 0.3, Y / 2, -H]} text={valueLabel} variant="name" />
-      <Label position={[-H - 0.18, 0, -H]} text={formatValue(props.valueMin)} />
-      <Label position={[-H - 0.18, Y, -H]} text={formatValue(props.valueMax)} />
+      <Label position={[H + 0.3, Y / 2, -H]} text={valueLabel} variant="name" />
+      <Label position={[H + 0.18, 0, -H]} text={formatValue(props.valueMin)} />
+      <Label position={[H + 0.18, Y, -H]} text={formatValue(props.valueMax)} />
     </group>
   );
 }

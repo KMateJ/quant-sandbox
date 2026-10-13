@@ -364,7 +364,7 @@ a.stoch-lesson-item.is-available:hover {
   position: sticky;
   top: calc(var(--topnav-height) + 14px);
   align-self: start;
-  max-height: calc(100vh - var(--topnav-height) - 28px);
+  max-height: var(--fit-max-h, calc(100vh - var(--topnav-height) - 28px));
   overflow-y: auto;
   // Room so the scrollbar and focus rings aren't clipped against the charts.
   padding-right: 2px;
