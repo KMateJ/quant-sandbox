@@ -22,6 +22,13 @@ export const blackScholes: GuideLessonContent = {
     p("Under $\\mathbb{Q}$ the stock is GBM with drift $r$. Writing $W_T^{\\mathbb{Q}} = \\sqrt{T}\\,Z$ with $Z \\sim N(0,1)$,"),
     eq("S_T = S_0 \\exp\\!\\left( \\left(r - \\tfrac{1}{2}\\sigma^2\\right)T + \\sigma\\sqrt{T}\\,Z \\right)."),
 
+    h("The Black–Scholes differential equation"),
+    p("This expectation can be reached another way, which is how Black and Scholes originally argued. Hold a portfolio that is long one option worth $V(S,t)$ and short $\\Delta$ shares. By Itô's lemma the option value changes by"),
+    eq("dV = \\left( \\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} \\right) dt + \\frac{\\partial V}{\\partial S}\\,dS."),
+    p("Choosing $\\Delta = \\partial V/\\partial S$ cancels the random $dS$ term, so the hedged portfolio $\\Pi = V - \\Delta S$ is riskless and must earn the rate $r$. Setting its return equal to $r\\Pi$ gives the **Black–Scholes partial differential equation**:"),
+    eq("\\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} - rV = 0."),
+    p("Every European option on the stock satisfies the same equation; only the terminal condition differs. For the call it is $V(S,T) = (S_T - K)^+$, and solving the PDE with that boundary condition gives exactly the formula derived below. The Feynman–Kac theorem makes the two routes equivalent: it rewrites the solution of this PDE as the discounted risk-neutral expectation."),
+
     h("Deriving the formula"),
     p("The computation takes three steps."),
     steps(
@@ -101,6 +108,13 @@ export const blackScholes: GuideLessonContent = {
     eq("C_0 = e^{-rT}\\,\\mathbb{E}^{\\mathbb{Q}}\\left[(S_T - K)^+\\right]."),
     p("$\\mathbb{Q}$ alatt a részvény $r$ driftű GBM. A $W_T^{\\mathbb{Q}} = \\sqrt{T}\\,Z$ jelöléssel, ahol $Z \\sim N(0,1)$,"),
     eq("S_T = S_0 \\exp\\!\\left( \\left(r - \\tfrac{1}{2}\\sigma^2\\right)T + \\sigma\\sqrt{T}\\,Z \\right)."),
+
+    h("A Black–Scholes-differenciálegyenlet"),
+    p("Ez a várható érték másként is levezethető — eredetileg Black és Scholes így érvelt. Tartsunk egy portfóliót, amely egy $V(S,t)$ értékű opcióra hosszú, és $\\Delta$ részvényre rövid. Itô-lemma szerint az opció értékének változása"),
+    eq("dV = \\left( \\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} \\right) dt + \\frac{\\partial V}{\\partial S}\\,dS."),
+    p("A $\\Delta = \\partial V/\\partial S$ választással kiesik a véletlen $dS$ tag, így a fedezett $\\Pi = V - \\Delta S$ portfólió kockázatmentes, ezért $r$ ütemben kell kamatoznia. Hozamát $r\\Pi$-vel egyenlővé téve adódik a **Black–Scholes parciális differenciálegyenlet**:"),
+    eq("\\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} - rV = 0."),
+    p("A részvényre szóló minden európai opció ugyanezt az egyenletet elégíti ki; csak a lejáratkori feltétel más. A call esetén ez $V(S,T) = (S_T - K)^+$, és az egyenletet ezzel a peremfeltétellel megoldva pontosan a lenti képletet kapjuk. A két út egyenértékűségét a Feynman–Kac-tétel biztosítja: a PDE megoldását diszkontált kockázatsemleges várható értékként írja fel."),
 
     h("A képlet levezetése"),
     p("A számolás három lépés."),
