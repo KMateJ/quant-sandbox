@@ -1,4 +1,13 @@
 export const brownianFundamentalsHu = {
+  stochCovPredictPrompt: "Az aktuális ablakra mennyi Cov(W({{s}}), W({{t}}))?",
+  stochCovMaskedNote: "Előbb tippeld meg a kovarianciát, majd fedd fel, hogy összevesd az empirikus és az elméleti értékkel.",
+  stochCovExQ: "Miért {{min}} a Cov(W({{s}}), W({{t}})), nem pedig {{st}}?",
+  stochCovExA0: "A független növekmények miatt a kovariancia 0.",
+  stochCovExA1: "Az s·t szorzat, azaz {{st}}.",
+  stochCovExA2: "W(t) = W(s) + független növekmény, így Cov = Var(W(s)) = min(s,t) = {{min}}.",
+  stochCovExF0: "W(s) és W(t) közös múlton osztozik s-ig, ezért korreláltak; a kovariancia nem 0.",
+  stochCovExF1: "Ez független tényezőkre igaz volna; itt a két érték közös múltra épül.",
+  stochCovExF2: "Így van: a közös rész W(s), a független növekmény 0 kovarianciát ad, így marad Var(W(s)) = min(s,t) = {{min}}.",
   stochLessonWiener: "A Wiener-folyamat definíciója",
   stochLessonWienerDesc: "A négy definiáló tulajdonság, és miért folytonos, de sehol sem differenciálható a pálya.",
   stochLessonIncrements: "Növekmény-felfedező",
@@ -78,6 +87,15 @@ export const brownianFundamentalsHu = {
 };
 
 export const brownianFundamentalsEn = {
+  stochCovPredictPrompt: "For the current window, what is Cov(W({{s}}), W({{t}}))?",
+  stochCovMaskedNote: "Predict the covariance first, then reveal to compare it with the empirical and theoretical values.",
+  stochCovExQ: "Why is Cov(W({{s}}), W({{t}})) equal to {{min}} rather than {{st}}?",
+  stochCovExA0: "Independent increments make the covariance 0.",
+  stochCovExA1: "It is the product s·t, that is {{st}}.",
+  stochCovExA2: "W(t) = W(s) + an independent increment, so Cov = Var(W(s)) = min(s,t) = {{min}}.",
+  stochCovExF0: "W(s) and W(t) share their history up to s, so they are correlated; the covariance is not 0.",
+  stochCovExF1: "That would hold for independent factors; here the two values build on a common past.",
+  stochCovExF2: "Right: the shared part is W(s) and the independent increment adds nothing, leaving Var(W(s)) = min(s,t) = {{min}}.",
   stochLessonWiener: "Defining the Wiener process",
   stochLessonWienerDesc: "The four defining properties, and why paths are continuous yet nowhere differentiable.",
   stochLessonIncrements: "Increment explorer",
