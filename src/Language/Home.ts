@@ -3,6 +3,13 @@ export const homeHu = {
     brandTitle: "Quant Sandbox",
     brandSubtitle: "Interaktív matek és pénzügyi demók",
 
+    footerAria: "Lábléc",
+    footerTagline: "Tanulást segítő eszköz a kvantitatív pénzügyekhez",
+    privacySummary: "Adatvédelem és adatok",
+    privacyHint: "Nincsenek sütik",
+    privacyBody:
+      "Ez az oldal nem használ sütiket (cookie-kat), és nem kér személyes adatokat. Néhány apró beállítást a böngésződ helyi tárolójában (local storage) őriz meg — a választott témát és nyelvet, az oldalsáv elrendezését, valamint az útmutatókban elért haladást és a válaszaidat —, hogy a következő látogatáskor is emlékezzen rájuk. Ezek az adatok nem hagyják el az eszközödet; a böngésző tárhelyének törlésével eltávolíthatók. A módosított bemenetek az oldal URL-címében is rögzülhetnek, így megoszthatsz vagy könyvjelzőként elmenthetsz egy adott beállítást. Az oldal a Vercel Web Analytics szolgáltatást használja, amely adatvédelem-barát és süti nélküli: csak névtelen, összesített használati adatokat (például oldalletöltéseket) rögzít, anélkül hogy azonosítana téged vagy más oldalakon követne.",
+
     navHome: "Home",
     navPayoff: "Payoff Lab",
     navBinomial: "Binomiális",
@@ -169,6 +176,13 @@ export const homeHu = {
 export const homeEn = {
     brandTitle: "Quant Sandbox",
     brandSubtitle: "Interactive math & finance demos",
+
+    footerAria: "Footer",
+    footerTagline: "A study aid for quantitative finance",
+    privacySummary: "Privacy & data",
+    privacyHint: "No cookies",
+    privacyBody:
+      "This site does not use cookies and asks for no personal data. It keeps a few small settings in your browser's local storage — your chosen theme and language, the sidebar layout, and your progress and answers in the Guides — so it remembers them on your next visit. This data never leaves your device; clearing your browser storage removes it. Inputs you change can also be captured in the page URL, so you can share or bookmark a specific setup. The site uses Vercel Web Analytics, a privacy-friendly, cookieless service that records only anonymous, aggregated usage (such as page views) without identifying you or tracking you across other sites.",
 
     navHome: "Home",
     navPayoff: "Payoff Lab",

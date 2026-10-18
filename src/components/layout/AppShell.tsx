@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import TopNavigation from "./TopNavigation";
 import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
+import SiteFooter from "./SiteFooter";
 import { useActiveModule } from "./useActiveModule";
 import { useStickyFit } from "./useStickyFit";
 
@@ -23,6 +24,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         {activeCategory && <Sidebar category={activeCategory} />}
         <main className="workspace-main">{children}</main>
       </div>
+      <SiteFooter />
       <MobileNav open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
