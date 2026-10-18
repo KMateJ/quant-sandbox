@@ -293,3 +293,88 @@
     padding: 12px;
   }
 }
+
+/* =========================================================
+   Payoff replication (Breeden–Litzenberger / Carr–Madan)
+========================================================= */
+
+.repl-controls {
+  display: grid;
+  gap: 20px;
+}
+
+.repl-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.repl-link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover { color: var(--text); }
+}
+
+.repl-empty {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.repl-node-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.repl-node-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+}
+
+.repl-instrument {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.repl-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.repl-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 4px 0;
+  border-top: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.repl-table-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0 16px;
+}
+
+.repl-density-wrap {
+  height: clamp(220px, 30vh, 320px);
+}

@@ -172,4 +172,6 @@ export type ScatterChartProps = {
   /// Fires with data coordinates while a draggable marker is being dragged.
   /// `index` is the position of the grabbed point within its series.
   onDrag?: (x: number, y: number, index: number) => void;
+  /// Fires with data coordinates when empty plot area is clicked (enables a crosshair cursor).
+  onPlotClick?: (x: number, y: number) => void;
 };

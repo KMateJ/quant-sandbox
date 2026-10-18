@@ -11,6 +11,7 @@
     "test:yield-curve": "node --test scripts/yield-curve.test.mjs",
     "test:treasury-futures": "node --test scripts/treasury-futures.test.mjs",
     "test:clt": "node --test scripts/clt.test.mjs",
+    "test:payoff-replication": "node --test scripts/payoff-replication.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

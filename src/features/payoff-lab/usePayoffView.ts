@@ -167,7 +167,8 @@ function serializeLeg(leg: StrategyLeg): string {
 }
 
 
-function serializeLegs(legs: StrategyLeg[]): string {
+/// URL encoding of strategy legs, as read back by the `legs` search param.
+export function serializeLegs(legs: StrategyLeg[]): string {
   return legs.map(serializeLeg).join(";");
 }
 

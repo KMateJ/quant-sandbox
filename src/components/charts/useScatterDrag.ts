@@ -2,7 +2,7 @@ import { useRef, type PointerEvent, type RefObject } from "react";
 
 type Options = {
   svgRef: RefObject<SVGSVGElement | null>;
-  toData: (event: PointerEvent<SVGSVGElement>) => [number, number] | null;
+  toData: (event: { clientX: number; clientY: number }) => [number, number] | null;
   onDrag?: (x: number, y: number, index: number) => void;
   onDragStart?: (index: number) => void;
   onDragEnd?: () => void;

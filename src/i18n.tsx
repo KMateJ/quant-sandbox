@@ -11,6 +11,7 @@ import { initReactI18next, useTranslation } from "react-i18next";
 import { homeEn, homeHu } from "./Language/Home";
 import { binomialEn, binomialHu } from "./Language/Binomial";
 import { payoffEn, payoffHu } from "./Language/Payoff";
+import { payoffReplicationEn, payoffReplicationHu } from "./Language/PayoffReplication";
 import { diffusionEn, diffusionHu } from "./Language/Diffusion";
 import { blackScholesEn, blackScholesHu } from "./Language/BlackScholes";
 import { themeEn, themeHu } from "./Language/Theme";
@@ -60,6 +61,7 @@ export const translations = {
     ...homeHu,
     ...binomialHu,
     ...payoffHu,
+    ...payoffReplicationHu,
     ...diffusionHu,
     ...blackScholesHu,
     ...hestonHu,
@@ -95,6 +97,7 @@ export const translations = {
     ...homeEn,
     ...binomialEn,
     ...payoffEn,
+    ...payoffReplicationEn,
     ...diffusionEn,
     ...blackScholesEn,
     ...hestonEn,

@@ -1,15 +1,16 @@
-import { useMemo, useRef, useState } from "react";
+import { useId, useMemo, useRef, useState } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Line as SvgLine } from "@visx/shape";
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { GridRows, GridColumns } from "@visx/grid";
 import { curveLinear } from "@visx/curve";
-import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
+import { useTooltip } from "@visx/tooltip";
 import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
 import type { ScatterChartProps, ScatterPoint, ScatterSeries } from "./chart.types";
 import { useScatterDrag } from "./useScatterDrag";
+import ScatterTooltip from "./ScatterTooltip";
 
 type Props = ScatterChartProps & { width: number; height: number };
 
@@ -41,6 +42,7 @@ export default function ScatterChartInner({
   onDragStart,
   onDragEnd,
   onSelectPoint,
+  onPlotClick,
   xTickValues,
   yNumTicks = 7,
 }: Props) {
@@ -85,6 +87,17 @@ export default function ScatterChartInner({
   const fmtY = yFormat ?? ((v: number) => v.toFixed(2));
 
   const svgRef = useRef<SVGSVGElement>(null);
+  const clipId = `clip-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const toData = (event: { clientX: number; clientY: number }): [number, number] | null => {
+    const svg = svgRef.current;
+    const matrix = svg?.getScreenCTM();
+    if (!svg || !matrix) return null;
+    const screenPoint = svg.createSVGPoint();
+    screenPoint.x = event.clientX;
+    screenPoint.y = event.clientY;
+    const point = screenPoint.matrixTransform(matrix.inverse());
+    return [xScale.invert(point.x - margin.left), yScale.invert(point.y - margin.top)];
+  };
   const drag = useScatterDrag({
     svgRef, onDrag,
     onDragStart: (index) => {
@@ -97,22 +110,16 @@ export default function ScatterChartInner({
       setDragging(false);
       onDragEnd?.();
     },
-    toData: (event) => {
-      const svg = svgRef.current;
-      const matrix = svg?.getScreenCTM();
-      if (!svg || !matrix) return null;
-      const screenPoint = svg.createSVGPoint();
-      screenPoint.x = event.clientX;
-      screenPoint.y = event.clientY;
-      const point = screenPoint.matrixTransform(matrix.inverse());
-      return [xScale.invert(point.x - margin.left), yScale.invert(point.y - margin.top)];
-    },
+    toData,
   });
 
   return (
     <>
       <svg ref={svgRef} width={width} height={svgHeight} {...drag.handlers}>
         <Group left={margin.left} top={margin.top}>
+          <clipPath id={clipId}>
+            <rect width={innerW} height={innerH} />
+          </clipPath>
           {bands.map((b, i) => {
             const x0 = xScale(b.from);
             const x1 = xScale(b.to);
@@ -147,6 +154,19 @@ export default function ScatterChartInner({
           <GridRows scale={yScale} numTicks={yNumTicks} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
           <GridColumns scale={xScale} height={innerH} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
 
+          {onPlotClick && (
+            <rect
+              width={innerW}
+              height={innerH}
+              fill="transparent"
+              style={{ cursor: "crosshair" }}
+              onClick={(event) => {
+                const point = toData(event);
+                if (point) onPlotClick(point[0], point[1]);
+              }}
+            />
+          )}
+
           {referenceLines.map((r, i) =>
             r.axis === "x" ? (
               <SvgLine key={`ref-${i}`} from={{ x: xScale(r.value), y: 0 }} to={{ x: xScale(r.value), y: innerH }} stroke={r.color ?? CHART_COLORS.axis} strokeWidth={r.width ?? 1} strokeDasharray={r.dash ?? "4 4"} />
@@ -169,6 +189,8 @@ export default function ScatterChartInner({
                 opacity={s.opacity}
                 curve={curveLinear}
                 shapeRendering="geometricPrecision"
+                pointerEvents="none"
+                clipPath={`url(#${clipId})`}
               />
             ))}
 
@@ -237,38 +259,14 @@ export default function ScatterChartInner({
       </svg>
 
       {tip.tooltipData && (
-        <TooltipWithBounds
+        <ScatterTooltip
           left={tip.tooltipLeft ?? 0}
           top={tip.tooltipTop ?? 0}
-          style={{
-            position: "absolute",
-            background: CHART_COLORS.tooltipBg,
-            border: `1px solid ${CHART_COLORS.tooltipBorder}`,
-            borderRadius: 8,
-            color: CHART_COLORS.tooltipText,
-            padding: "8px 10px",
-            fontSize: 12,
-            pointerEvents: "none",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-            <span style={{ width: 10, height: 10, borderRadius: 999, background: tip.tooltipData.point.color ?? tip.tooltipData.series.color }} />
-            <span>{tip.tooltipData.point.label ?? tip.tooltipData.series.label}</span>
-          </div>
-          <div>x: {fmtX(tip.tooltipData.point.x)}</div>
-          <div>y: {fmtY(tip.tooltipData.point.y)}</div>
-          {tip.tooltipData.point.tooltipRows && tip.tooltipData.point.tooltipRows.length > 0 && (
-            <div style={{ marginTop: 6, paddingTop: 6, borderTop: `1px solid ${CHART_COLORS.tooltipBorder}`, display: "flex", flexDirection: "column", gap: 2 }}>
-              {tip.tooltipData.point.tooltipRows.map((row, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  {row.color && <span style={{ width: 8, height: 8, borderRadius: 999, background: row.color }} />}
-                  <span style={{ flex: 1 }}>{row.label}</span>
-                  <span style={{ fontVariantNumeric: "tabular-nums" }}>{row.value}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </TooltipWithBounds>
+          point={tip.tooltipData.point}
+          series={tip.tooltipData.series}
+          fmtX={fmtX}
+          fmtY={fmtY}
+        />
       )}
     </>
   );

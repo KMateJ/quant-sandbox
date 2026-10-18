@@ -78,6 +78,8 @@ export const payoffIntuition: IntuitionDocument = {
     { id: "positions", titleKey: "intuitionPositionsTitle", summaryKey: "intuitionPositionsSummary", bodyKey: "intuitionPositionsBody" },
     { id: "instruments", titleKey: "intuitionInstrumentsTitle", summaryKey: "intuitionInstrumentsSummary", bodyKey: "intuitionInstrumentsBody" },
     { id: "synthetic-strategies", titleKey: "intuitionSyntheticTitle", summaryKey: "intuitionSyntheticSummary", bodyKey: "intuitionSyntheticBody", formula: "(S_T-K)^+-(K-S_T)^+=S_T-K" },
+    { id: "breeden-litzenberger", titleKey: "intuitionBLTitle", summaryKey: "intuitionBLSummary", bodyKey: "intuitionBLBody", formula: "q(K)=e^{rT}\\frac{\\partial^2 C}{\\partial K^2}" },
+    { id: "carr-madan", titleKey: "intuitionCarrMadanTitle", summaryKey: "intuitionCarrMadanSummary", bodyKey: "intuitionCarrMadanBody", formula: "f(S)=f(F)+f'(F)(S-F)+\\int_0^F f''(K)(K-S)^+dK+\\int_F^\\infty f''(K)(S-K)^+dK" },
   ],
 };
 export const binomialIntuition: IntuitionDocument = {
