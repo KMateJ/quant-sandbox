@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { PageHeader, Workspace, Panel, ChartContainer } from "../../components/layout";
 import { Tabs } from "../../components/ui";
 import { useI18n } from "../../i18n";
+import type { BondSpec } from "../../lib/finance/bond";
 import { analyzeBond } from "./bondPricing.math";
 import BondParameters from "./Components/BondParameters";
 import BondMetrics from "./Components/BondMetrics";
@@ -16,17 +17,24 @@ type TabId = "cashflows" | "price-yield";
 export default function BondPricingView() {
   const { t } = useI18n();
 
-  const [face, setFace] = useState(100);
-  const [coupon, setCoupon] = useState(0.05);
-  const [years, setYears] = useState(10);
-  const [freq, setFreq] = useState(2);
-  const [ytm, setYtm] = useState(0.06);
+  const [bond, setBond] = useState<BondSpec>({
+    face: 100,
+    couponRate: 0.05,
+    years: 10,
+    freq: 2,
+    ytm: 0.06,
+  });
   const [tab, setTab] = useState<TabId>("cashflows");
 
-  const analytics = useMemo(
-    () => analyzeBond({ face, couponRate: coupon, ytm, years, freq }),
-    [face, coupon, ytm, years, freq]
+  const patchBond = useCallback(
+    (patch: Partial<BondSpec>) => setBond((prev) => ({ ...prev, ...patch })),
+    []
   );
+  const setYtm = useCallback((ytm: number) => patchBond({ ytm }), [patchBond]);
+
+  const { face, couponRate, years, freq, ytm } = bond;
+
+  const analytics = useMemo(() => analyzeBond(bond), [bond]);
 
   return (
     <div className="intuition-on-demand">
@@ -34,19 +42,7 @@ export default function BondPricingView() {
 
       <Workspace columns="sidebar">
         <Panel title={t("bondParamsTitle")}>
-          <BondParameters
-            face={face}
-            coupon={coupon}
-            years={years}
-            freq={freq}
-            ytm={ytm}
-            maxYtm={MAX_YTM}
-            onFace={setFace}
-            onCoupon={setCoupon}
-            onYears={setYears}
-            onFreq={setFreq}
-            onYtm={setYtm}
-          />
+          <BondParameters bond={bond} maxYtm={MAX_YTM} onChange={patchBond} />
         </Panel>
 
         <div className="module-main">
@@ -83,7 +79,7 @@ export default function BondPricingView() {
               <div className="chart-wrap">
                 <PriceYieldExplorer
                   face={face}
-                  coupon={coupon}
+                  coupon={couponRate}
                   years={years}
                   freq={freq}
                   ytm={ytm}
