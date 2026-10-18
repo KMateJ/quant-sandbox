@@ -31,6 +31,12 @@
   line-height: 1.6;
 }
 
+.guide-track-empty {
+  margin: 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
 .guide-track-cta {
   flex: 0 0 auto;
   display: inline-flex;
@@ -213,8 +219,8 @@
 }
 
 .guide-toc-link {
-  padding: 5px 0 5px var(--space-3);
-  box-shadow: inset 2px 0 0 var(--border);
+  padding: 5px var(--space-3);
+  border-radius: var(--radius-sm);
   color: var(--muted);
   line-height: 1.4;
   text-decoration: none;
@@ -224,7 +230,7 @@
   }
 
   &.active {
-    box-shadow: inset 2px 0 0 var(--primary);
+    background: var(--surface-soft);
     color: var(--text);
   }
 }
@@ -290,7 +296,7 @@
     margin: 0 0 1.05em;
   }
 
-  h3 {
+  h2 {
     margin: 2em 0 0.6em;
     font-family: var(--font-sans);
     font-size: 1.08rem;
@@ -340,9 +346,25 @@
   }
 }
 
-.guide-highlight {
-  font-size: 1.22rem;
-  line-height: 1.5;
+// A quoted lesson title linking to that lesson: reads as text, marked by a thin accent underline.
+.guide-content .guide-cite {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+// A definition or result worth remembering: a softly tinted block (no edge accent bar).
+.guide-content .guide-note {
+  margin: 1.4em 0;
+  padding: 0.85em 1.1em;
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
   color: var(--text);
 }
 // #endregion
@@ -382,6 +404,197 @@
   &:hover {
     text-decoration: underline;
   }
+}
+// #endregion
+
+// #region Figures
+.guide-figure {
+  margin: 1.8em 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.45;
+}
+
+.guide-figure-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  min-height: 38px;
+  padding: var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.guide-figure-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.guide-content .guide-figure-lab {
+  font-size: var(--text-sm);
+  color: var(--primary);
+}
+
+.guide-figure-body {
+  padding: var(--space-5);
+}
+
+.gf-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6) 28px;
+}
+
+.gf-visual {
+  flex: 1 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gf-controls {
+  flex: 1 1 220px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.gf-tree {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  font-family: var(--font-mono);
+}
+
+.gf-node {
+  fill: var(--surface-soft);
+  stroke: var(--border);
+}
+
+.gf-node-main {
+  fill: var(--text);
+  font-size: 12.5px;
+}
+
+.gf-node-sub {
+  fill: var(--muted);
+  font-size: 11.5px;
+}
+
+.gf-edge {
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-width: 1.5;
+}
+
+.gf-edge-q {
+  fill: var(--primary);
+  font-size: 12px;
+}
+
+.gf-edge-label {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.gf-readout {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: 6px 20px;
+  margin: 0;
+  font-size: var(--text-sm);
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+
+  .gf-accent {
+    color: var(--primary);
+  }
+
+  .gf-strong {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+}
+
+.guide-content .gf-warning {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--warning-title);
+}
+
+.gf-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4) var(--space-7);
+  margin-bottom: var(--space-4);
+}
+
+.gf-toolbar-slider {
+  flex: 1 1 220px;
+  max-width: 320px;
+}
+
+.gf-chart {
+  height: 260px;
+}
+
+.gf-sliders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+.gf-select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  select {
+    min-width: 220px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-soft);
+    color: var(--text);
+    font: inherit;
+  }
+}
+
+// Readout under a chart: label above value, items flowing in a row.
+.gf-readout--row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) 28px;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.gf-readout-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 // #endregion
 

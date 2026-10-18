@@ -75,35 +75,23 @@
   min-height: 0;
 }
 
+// Motion shared by the rail: a soft ease-out that settles rather than snaps.
+$side-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+$side-open: 0.26s;
+
 .sidebar {
+  position: relative;
+  z-index: var(--z-sidebar);
   flex: 0 0 var(--sidebar-rail);
   width: var(--sidebar-rail);
   border-right: 1px solid var(--border);
   background: var(--surface);
-  transition: width var(--transition-base), flex-basis var(--transition-base);
-  overflow-x: clip;
+  // Only pinning changes the layout column; hovering an unpinned rail overlays the page instead.
+  transition: width $side-open $side-ease, flex-basis $side-open $side-ease;
 
-  &:hover,
   &.pinned {
     flex-basis: var(--sidebar-width);
     width: var(--sidebar-width);
-  }
-}
-
-// Collapsed rail: show icons only, hide the clipped text.
-.sidebar:not(.pinned):not(:hover) {
-  .side-label,
-  .side-badge,
-  .side-subtree {
-    display: none;
-  }
-
-  .sidebar-head {
-    justify-content: flex-start;
-  }
-
-  .side-section-label {
-    display: none;
   }
 }
 
@@ -113,11 +101,52 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  width: var(--sidebar-width);
+  width: 100%;
   max-height: calc(100vh - var(--topnav-height));
   padding: var(--space-3) var(--space-2);
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-width: thin;
+  background: var(--surface);
+  transition: width $side-open $side-ease, box-shadow $side-open $side-ease;
+}
+
+// Unpinned: an icon rail that slides open over the content after a short hover intent,
+// and closes immediately when the pointer leaves. Keyboard focus opens it too.
+.sidebar:not(.pinned) .sidebar-inner {
+  width: var(--sidebar-rail);
+  transition-delay: 0s;
+}
+
+.sidebar:not(.pinned):hover .sidebar-inner,
+.sidebar:not(.pinned):focus-within .sidebar-inner {
+  width: var(--sidebar-width);
+  border-right: 1px solid var(--border);
+  box-shadow: 8px 0 24px -12px rgb(0 0 0 / 0.35);
+  transition-delay: 0.12s;
+}
+
+// Text fades rather than popping; it trails the width so it never shows clipped mid-slide.
+.side-label,
+.side-badge,
+.side-section-label {
+  transition: opacity 0.18s ease 0.08s;
+}
+
+.sidebar:not(.pinned):not(:hover):not(:focus-within) {
+  .side-label,
+  .side-badge,
+  .side-section-label {
+    opacity: 0;
+    transition-delay: 0s;
+  }
+
+  .side-subtree,
+  .side-collapse,
+  .side-expander,
+  .connected-guides .side-section-label {
+    display: none;
+  }
 }
 
 .sidebar-head {
@@ -146,18 +175,53 @@
   svg {
     width: 16px;
     height: 16px;
+    transition: transform $side-open $side-ease;
   }
 
   &:hover {
     color: var(--text);
     border-color: var(--border);
   }
+
+  &[aria-pressed="false"] svg {
+    transform: rotate(180deg);
+  }
 }
 
 .side-tree {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1px;
+}
+
+// One highlight for the whole tree that slides behind the active row (positioned by useActiveIndicator).
+.side-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  height: var(--ind-h, 34px);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  opacity: var(--ind-o, 0);
+  transform: translateY(var(--ind-y, 0));
+  transition: transform 0.32s $side-ease, height 0.32s $side-ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+// The tree draws the shared highlight, so rows inside it sit above it and skip their own background.
+.side-tree .side-row {
+  z-index: 1;
+
+  &::before {
+    display: none;
+  }
+
+  &.active {
+    background: transparent;
+  }
 }
 
 .side-row {
@@ -189,6 +253,16 @@
   &:hover {
     background: var(--surface-soft);
     color: var(--text);
+
+    .side-icon {
+      color: var(--text);
+      transform: translateX(1px) scale(1.06);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
   }
 
   &.active {
@@ -213,6 +287,7 @@
   width: 20px;
   height: 20px;
   color: var(--muted);
+  transition: color var(--transition-fast), transform 0.2s $side-ease;
 
   svg {
     width: 18px;
@@ -240,14 +315,101 @@
   border-radius: var(--radius-xs);
 }
 
+// A module row with children: the chevron sits over the row's right end.
+.side-node {
+  position: relative;
+}
+
+.side-node.has-children .side-row {
+  padding-right: 30px;
+}
+
+.side-expander {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  svg {
+    width: 14px;
+    height: 14px;
+    transition: transform $side-open $side-ease;
+  }
+
+  &.open svg {
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    color: var(--text);
+    background: var(--surface-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+// Children slide open and shut: the grid row animates between 0fr and 1fr, so no height is hard-coded.
+.side-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows $side-open $side-ease, opacity 0.2s ease;
+
+  &.open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+.side-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
 // Lesson sub-tabs nested under the active studio module.
 .side-subtree {
   display: flex;
   flex-direction: column;
   gap: 1px;
   margin: 2px 0 2px var(--space-5);
-  padding-left: var(--space-3);
-  border-left: 1px solid var(--border);
+  padding-left: var(--space-1);
+  transform-origin: top;
+  animation: side-subtree-in 0.28s $side-ease both;
+}
+
+// Lesson rows arrive one after another (index capped in SideSubNav so long lists stay quick).
+.side-subrow {
+  animation: side-row-in 0.3s $side-ease both;
+  animation-delay: calc(var(--i, 0) * 22ms);
+}
+
+@keyframes side-subtree-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0.96);
+  }
+}
+
+@keyframes side-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
 }
 
 .side-subrow {
@@ -266,9 +428,15 @@
     background: var(--surface-soft);
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+
   &.active {
     color: var(--text);
-    background: var(--surface-soft);
+    background: var(--surface-muted);
+    font-weight: 500;
 
     .side-sub-number {
       color: var(--primary);
@@ -340,6 +508,20 @@
 
   .side-icon {
     color: var(--muted);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar * {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation: none !important;
   }
 }
 // #endregion

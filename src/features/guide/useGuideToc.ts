@@ -2,6 +2,13 @@ import { useEffect, useState, type RefObject } from "react";
 import type { GuideHeading } from "./guide.types";
 import { activeHeadingIndex, headingId, readingMinutes, tocLabel } from "./guide.toc";
 
+/// Heading text as displayed: KaTeX also renders hidden MathML and the TeX source, which must not reach the label.
+function visibleText(el: HTMLElement): string {
+  const clone = el.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll(".katex-mathml").forEach((n) => n.remove());
+  return clone.textContent ?? "";
+}
+
 /// Distance below the viewport top (past the sticky top nav) at which a section counts as current.
 const ACTIVE_OFFSET = 120;
 
@@ -15,10 +22,10 @@ export function useGuideToc(bodyRef: RefObject<HTMLElement | null>, contentKey: 
   useEffect(() => {
     const body = bodyRef.current;
     if (!body) return;
-    const els = Array.from(body.querySelectorAll<HTMLHeadingElement>("h3"));
+    const els = Array.from(body.querySelectorAll<HTMLHeadingElement>("h2"));
     const headings = els.map((el, i) => {
       el.id = headingId(i);
-      return { id: el.id, label: tocLabel(el.textContent) };
+      return { id: el.id, label: tocLabel(visibleText(el)) };
     });
     const minutes = readingMinutes(body.textContent);
 

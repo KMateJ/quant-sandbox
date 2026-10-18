@@ -3,12 +3,13 @@ import { useI18n } from "../../../../i18n";
 import { METHOD_LABEL_KEYS } from "../replication.labels";
 import type { ReplicationModel } from "../useReplication";
 
-/// Every static portfolio and the density integral price the same payoff; the gap shows how close.
+/// The static portfolios agree with each other; on a strike grid they drift from the density price.
 export default function PriceComparison({ model }: { model: ReplicationModel }) {
   const { t } = useI18n();
-  const { portfolios, bl } = model;
-  const prices = [...portfolios.map((p) => p.total), bl.price];
-  const gap = Math.max(...prices) - Math.min(...prices);
+  const { portfolios, bl, market } = model;
+  const totals = portfolios.map((p) => p.total);
+  const gap = Math.max(...totals) - Math.min(...totals);
+  const error = totals[0] - bl.price;
 
   return (
     <div className="stats-grid repl-prices">
@@ -17,7 +18,10 @@ export default function PriceComparison({ model }: { model: ReplicationModel }) 
       ))}
       <StatCard label={t("replPriceBL")} value={bl.price.toFixed(4)} />
       <StatCard label={t("replMaxDiff")} value={gap.toExponential(1)} />
-      <StatCard label={t("replDensityMass")} value={bl.mass.toFixed(4)} />
+      <StatCard
+        label={market.strikeStep > 0 ? t("replGridError") : t("replQuadError")}
+        value={`${error >= 0 ? "+" : "−"}${Math.abs(error).toFixed(4)}`}
+      />
     </div>
   );
 }

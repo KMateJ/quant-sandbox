@@ -1,0 +1,19 @@
+// Styles for the "iv-surface" guide figure.
+
+.ix-iv-controls {
+  gap: var(--space-3) var(--space-6);
+}
+
+.ix-iv-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+// A figure in the reading column is shorter than the full-page labs.
+.guide-figure .surface3d-wrap.ix-iv-surface {
+  height: clamp(300px, 48vh, 440px);
+  margin-bottom: var(--space-2);
+}

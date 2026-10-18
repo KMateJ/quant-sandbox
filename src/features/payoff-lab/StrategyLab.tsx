@@ -7,12 +7,13 @@ import { usePayoffView } from "./usePayoffView";
 /// Leg-by-leg strategy builder: controls, payoff/profit chart and synthetic detection.
 export default function StrategyLab() {
   const model = usePayoffView();
-  const { isMobile, legs, setLegs, mode, setMode, controlsOpen, setControlsOpen, showComponents, setShowComponents, selectedPreset, setSelectedPreset, xDomain, syntheticMatches, primarySyntheticMatch, chartData, strikes } = model;
+  const { isMobile, legs, setLegs, groups, setPositions, effectiveLegs, components, mode, setMode, controlsOpen, setControlsOpen, showComponents, setShowComponents, selectedPreset, setSelectedPreset, xDomain, syntheticMatches, primarySyntheticMatch, chartData, strikes } = model;
   return (
     <div className="view-layout">
       <div className="view-controls">
         <PayoffBuilder
           legs={legs}
+          groups={groups}
           mode={mode}
           controlsOpen={controlsOpen}
           selectedPreset={selectedPreset}
@@ -21,7 +22,7 @@ export default function StrategyLab() {
           onModeChange={setMode}
           onPresetChange={setSelectedPreset}
           onShowComponentsChange={setShowComponents}
-          onChange={setLegs}
+          onChange={setPositions}
         />
       </div>
       <div className="view-main view-main--dock-tall">
@@ -30,11 +31,11 @@ export default function StrategyLab() {
           strikes={strikes}
           xDomain={xDomain}
           mode={mode}
-          showComponents={showComponents}
+          components={components}
           syntheticOverlayActive={mode === "payoff" && syntheticMatches.length > 0}
           syntheticOverlayLabel={primarySyntheticMatch?.label ?? null}
         />
-        <PayoffSummary legs={legs} mode={mode} />
+        <PayoffSummary legs={effectiveLegs} positionCount={groups.length} mode={mode} />
       </div>
 
       {isMobile ? (

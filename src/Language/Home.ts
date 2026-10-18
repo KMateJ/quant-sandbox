@@ -26,6 +26,13 @@ export const homeHu = {
     navMonteCarlo: "Monte Carlo",
     navDeltaHedging: "Delta-fedezés",
 
+    navCategoriesAria: "Kategóriák",
+    navModulesAria: "Modulnavigáció",
+    navCollapseSidebar: "Oldalsáv összecsukása",
+    navExpandSidebar: "Oldalsáv kinyitása",
+    navExpandSection: "{{name}} kinyitása",
+    navCollapseSection: "{{name}} összecsukása",
+
     catDerivatives: "Származtatott",
     catPortfolio: "Portfólió & kockázat",
     catFixedIncome: "Fix hozamú",
@@ -156,6 +163,13 @@ export const homeEn = {
     navItoProcess: "Itô Process",
     navMonteCarlo: "Monte Carlo",
     navDeltaHedging: "Delta Hedging",
+
+    navCategoriesAria: "Categories",
+    navModulesAria: "Module navigation",
+    navCollapseSidebar: "Collapse sidebar",
+    navExpandSidebar: "Expand sidebar",
+    navExpandSection: "Expand {{name}}",
+    navCollapseSection: "Collapse {{name}}",
 
     catDerivatives: "Derivatives",
     catPortfolio: "Portfolio & Risk",

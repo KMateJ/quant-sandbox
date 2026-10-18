@@ -1,5 +1,5 @@
 import { blackScholesCall, blackScholesPut } from "../../black-scholes/blackScholes.math";
-import type { StrategyLeg } from "../payoff.types";
+import type { PositionGroup, StrategyLeg } from "../payoff.types";
 import type {
   DensityPoint,
   MarketParams,
@@ -22,12 +22,12 @@ export function sortNodes(shape: PayoffShape) {
 }
 
 /// Turns the drawn nodes into a piecewise-linear payoff on [0, ∞).
-/// Each edge between two nodes stays flat, then ramps over a width that shrinks with steepness.
+/// Each edge between two nodes stays flat, then ramps over a width that shrinks with steepness
+/// (the node's own edge override, else the shape-wide value).
 export function buildPiecewise(shape: PayoffShape): PiecewiseLinear {
   const nodes = sortNodes(shape);
   if (!nodes.length) return { xs: [0], ys: [0], rightSlope: shape.rightSlope };
 
-  const width = 1 - 0.98 * Math.min(1, Math.max(0, shape.steepness));
   const xs: number[] = [];
   const ys: number[] = [];
   const push = (x: number, y: number) => {
@@ -42,6 +42,7 @@ export function buildPiecewise(shape: PayoffShape): PiecewiseLinear {
   nodes.forEach((node, i) => {
     push(node.x, node.y);
     const next = nodes[i + 1];
+    const width = 1 - 0.98 * Math.min(1, Math.max(0, node.steepness ?? shape.steepness));
     if (!next || width >= 1) return;
     const mid = (node.x + next.x) / 2;
     const half = ((next.x - node.x) * width) / 2;
@@ -221,6 +222,39 @@ export function densityCurve(m: MarketParams, xMax: number, n = 160): DensityPoi
 
 // #endregion
 
+// #region Discrete strike grid
+
+/// What can actually be replicated when options trade only every `step`:
+/// the payoff interpolated linearly between grid strikes (exact when `step` is 0).
+export function onStrikeGrid(pw: PiecewiseLinear, step: number): PiecewiseLinear {
+  if (step <= 0) return pw;
+  const top = Math.max(step, Math.ceil(pw.xs[pw.xs.length - 1] / step - EPS) * step);
+  const xs = Array.from({ length: Math.round(top / step) + 1 }, (_, i) => i * step);
+  return { xs, ys: xs.map((x) => evalPiecewise(pw, x)), rightSlope: pw.rightSlope };
+}
+
+/// All replication methods on the tradable strike grid.
+export function replicateAll(pw: PiecewiseLinear, m: MarketParams, methods: ReplicationMethod[]) {
+  const tradable = onStrikeGrid(pw, m.strikeStep);
+  return { tradable, portfolios: methods.map((method) => replicate(tradable, m, method)) };
+}
+
+/// Replication price minus the exact density price, for a range of strike spacings.
+export function gridConvergence(pw: PiecewiseLinear, m: MarketParams, exact: number, steps: number[]) {
+  return steps.map((step) => {
+    const price = replicate(onStrikeGrid(pw, step), m, "calls").total;
+    return { step, price, error: price - exact };
+  });
+}
+
+/// Largest single option position and total option count Σ|q| (cost of steep edges).
+export function optionSizing(p: ReplicationPortfolio) {
+  const qs = p.legs.filter((l) => l.kind === "call" || l.kind === "put").map((l) => Math.abs(l.quantity));
+  return { max: qs.length ? Math.max(...qs) : 0, gross: qs.reduce((a, b) => a + b, 0) };
+}
+
+// #endregion
+
 // #region Strategy builder export
 
 const round6 = (v: number) => Math.round(v * 1e6) / 1e6;
@@ -241,6 +275,19 @@ export function toStrategyLegs(p: ReplicationPortfolio, m: MarketParams): Strate
       default: return { ...base, type: leg.kind, strike: round6(leg.strike ?? 0), premium: round6(leg.unitPrice) };
     }
   });
+}
+
+/// Each portfolio becomes one named builder position (long ×1) holding its legs.
+export function toBuilderPositions(
+  portfolios: ReplicationPortfolio[],
+  m: MarketParams,
+  name: (p: ReplicationPortfolio) => string
+): { legs: StrategyLeg[]; groups: PositionGroup[] } {
+  const groups = portfolios.map((p, i) => ({ id: `repl-pos-${i + 1}`, name: name(p), direction: "long" as const, quantity: 1 }));
+  const legs = portfolios.flatMap((p, i) =>
+    toStrategyLegs(p, m).map((leg, j) => ({ ...leg, id: `repl-${i + 1}-${j + 1}`, groupId: groups[i].id }))
+  );
+  return { legs, groups };
 }
 
 // #endregion

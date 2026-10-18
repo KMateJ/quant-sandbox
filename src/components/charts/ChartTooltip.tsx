@@ -42,7 +42,8 @@ export default function ChartTooltip({
       <div style={{ marginBottom: 4 }}>{label ? label(x) : String(x)}</div>
       {series.map((s) => {
         const v = datum[s.key];
-        if (typeof v !== "number") return null;
+        // Unlabelled series (e.g. sample paths) stay out of the tooltip, as in the legend.
+        if (typeof v !== "number" || !s.label) return null;
         return (
           <div
             key={s.key}

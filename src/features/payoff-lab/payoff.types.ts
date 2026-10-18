@@ -33,7 +33,22 @@ export type StrategyLeg = {
   upperStrike?: number;
   triggerStrike?: number;
   settlementStrike?: number;
+
+  /// Position this leg belongs to; grouped legs scale and flip together.
+  groupId?: string;
 };
+
+/// Several legs handled as one instrument: its quantity multiplies every member,
+/// a short position flips every member's direction.
+export type PositionGroup = {
+  id: string;
+  name: string;
+  direction: Direction;
+  quantity: number;
+};
+
+/// One curve in the components view: a stand-alone leg or a whole position.
+export type ChartComponent = { key: string; label: string; legs: StrategyLeg[] };
 
 export type PayoffChartPoint = {
   S: number;

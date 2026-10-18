@@ -22,4 +22,4 @@ export const SHAPE_PRESETS: Record<ShapePresetKey, PayoffShape> = {
   capped: { nodes: [{ x: 60, y: 0 }, { x: 100, y: 0 }, { x: 130, y: 30 }], steepness: 0, leftSlope: 0, rightSlope: 0 },
 };
 
-export const DEFAULT_MARKET: MarketParams = { spot: 100, rate: 0.04, sigma: 0.25, maturity: 1, skew: 0 };
+export const DEFAULT_MARKET: MarketParams = { spot: 100, rate: 0.04, sigma: 0.25, maturity: 1, skew: 0, strikeStep: 0 };

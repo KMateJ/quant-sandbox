@@ -52,6 +52,9 @@ export type LineChartProps = {
   valueFormat?: (value: number) => string;
   /// "smooth" (default) fits a monotone curve; "linear" joins the data points with straight segments only.
   curve?: "smooth" | "linear";
+  /// Axis tick label formats (defaults: plain numbers).
+  xFormat?: (value: number) => string;
+  yFormat?: (value: number) => string;
 };
 
 /// A light vector curve drawn over a path cloud (envelopes, means, bounds).

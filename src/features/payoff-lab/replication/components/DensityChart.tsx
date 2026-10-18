@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { InlineMath } from "react-katex";
 import SectionCard from "../../../../components/SectionCard";
 import { useMediaQuery } from "../../../../components/useMediaQuery";
 import { LineChart, SERIES_PALETTE, type ChartSeries } from "../../../../components/charts";
@@ -10,11 +11,11 @@ import type { ReplicationModel } from "../useReplication";
 export default function DensityChart({ model }: { model: ReplicationModel }) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { density, market, xMax } = model;
+  const { density, market, xMax, bl } = model;
 
   const series = useMemo<ChartSeries[]>(() => {
     const list: ChartSeries[] = [
-      { key: "density", label: t("replDensitySkew"), color: SERIES_PALETTE[0], strokeWidth: 2.5, area: true },
+      { key: "density", label: t(market.skew !== 0 ? "replDensitySkew" : "replDensityFlat"), color: SERIES_PALETTE[0], strokeWidth: 2.5, area: true },
     ];
     if (market.skew !== 0) {
       list.push({ key: "flat", label: t("replDensityFlat"), color: SERIES_PALETTE[1], strokeWidth: 1.5, dash: "5 4" });
@@ -29,6 +30,12 @@ export default function DensityChart({ model }: { model: ReplicationModel }) {
       subtitle={t("replDensitySubtitle")}
       headerRight={<IntuitionTrigger sectionId="breeden-litzenberger" />}
     >
+      <div className="repl-density-head">
+        <InlineMath math={"q(K)=e^{rT}\\,\\frac{\\partial^2 C}{\\partial K^2}"} />
+        <span className="repl-density-mass">
+          {t("replDensityMass")}: <strong>{bl.mass.toFixed(4)}</strong>
+        </span>
+      </div>
       <div className="chart-wrap repl-density-wrap">
         <LineChart
           data={density}

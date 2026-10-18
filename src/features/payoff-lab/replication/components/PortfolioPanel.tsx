@@ -2,23 +2,25 @@ import SectionCard from "../../../../components/SectionCard";
 import { Tabs } from "../../../../components/ui";
 import { IntuitionTrigger } from "../../../../components/intuition";
 import { useI18n } from "../../../../i18n";
-import type { StrategyLeg } from "../../payoff.types";
-import { toStrategyLegs } from "../replication.math";
+import type { PositionGroup, StrategyLeg } from "../../payoff.types";
+import { toBuilderPositions } from "../replication.math";
 import { METHOD_LABEL_KEYS } from "../replication.labels";
 import type { ReplicationMethod } from "../replication.types";
-import { REPLICATION_METHODS, type ReplicationModel } from "../useReplication";
+import { LARGE_POSITION, REPLICATION_METHODS, type ReplicationModel } from "../useReplication";
 import PortfolioTable from "./PortfolioTable";
 import PriceComparison from "./PriceComparison";
 
 type Props = {
   model: ReplicationModel;
-  onOpenInBuilder: (legs: StrategyLeg[]) => void;
+  onOpenInBuilder: (next: { legs: StrategyLeg[]; groups: PositionGroup[] }, showComponents: boolean) => void;
 };
 
 /// The replicating portfolios side by side: pick one to inspect, compare all prices below.
 export default function PortfolioPanel({ model, onOpenInBuilder }: Props) {
   const { t } = useI18n();
-  const { method, setMethod, selected, market } = model;
+  const { method, setMethod, selected, portfolios, market, sizing } = model;
+  const open = (list: typeof portfolios) =>
+    onOpenInBuilder(toBuilderPositions(list, market, (p) => t(METHOD_LABEL_KEYS[p.method])), list.length > 1);
 
   return (
     <SectionCard
@@ -33,14 +35,22 @@ export default function PortfolioPanel({ model, onOpenInBuilder }: Props) {
         ariaLabel={t("replPortfoliosTitle")}
       />
       <PortfolioTable portfolio={selected} />
+      {sizing.max > LARGE_POSITION && (
+        <p className="repl-warning" role="note">
+          {t("replWarnLarge", { q: sizing.max.toFixed(1), g: sizing.gross.toFixed(1) })}
+        </p>
+      )}
       <div className="repl-table-actions">
         <button
           type="button"
           className="metric-button"
           disabled={!selected.legs.length}
-          onClick={() => onOpenInBuilder(toStrategyLegs(selected, market))}
+          onClick={() => open([selected])}
         >
           {t("replOpenInBuilder")} →
+        </button>
+        <button type="button" className="metric-button" onClick={() => open(portfolios)}>
+          {t("replOpenAllInBuilder")} →
         </button>
       </div>
       <PriceComparison model={model} />

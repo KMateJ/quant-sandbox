@@ -38,7 +38,7 @@ export default function HomeModules() {
                   return (
                     <NavLink key={m.id} to={m.path} end={m.end} className="mod-card">
                       <span className="mod-icon" aria-hidden="true">
-                        <ModuleIcon id={m.id} />
+                        <ModuleIcon id={m.icon ?? m.id} />
                       </span>
                       <span className="mod-name">{t(m.navKey)}</span>
                       {statusKey ? (

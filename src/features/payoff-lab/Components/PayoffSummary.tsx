@@ -4,11 +4,13 @@ import { detectSyntheticMatches } from "../payoff.math";
 import { useI18n } from "../../../i18n";
 
 type PayoffSummaryProps = {
+  /// Effective legs (positions already applied).
   legs: StrategyLeg[];
+  positionCount: number;
   mode: ViewMode;
 };
 
-export default function PayoffSummary({ legs, mode }: PayoffSummaryProps) {
+export default function PayoffSummary({ legs, positionCount, mode }: PayoffSummaryProps) {
   const { language, t } = useI18n();
   const syntheticMatches = detectSyntheticMatches(legs);
   const primaryMatch = syntheticMatches[0] ?? null;
@@ -38,7 +40,10 @@ export default function PayoffSummary({ legs, mode }: PayoffSummaryProps) {
 
         <div className="stat-card">
           <div className="stat-title">{t("payoffSummaryLegCount")}</div>
-          <div className="stat-value">{legs.length}</div>
+          <div className="stat-value">
+            {legs.length}
+            {positionCount > 0 && ` · ${t("payoffPositionCount", { n: positionCount })}`}
+          </div>
         </div>
 
         <div className="stat-card">

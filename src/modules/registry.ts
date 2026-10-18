@@ -5,7 +5,9 @@ import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuit
 import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
 import { STUDIO_PATH, lessonNavItems } from "../features/stochastic-models/stochasticModels.curriculum";
 import { moduleAbout, type ModuleAbout } from "./moduleAbout";
-import { GUIDE_PATH, guideNavItems } from "../features/guide/guide.meta";
+import { guideNavItems, guideRedirects, guideTrackById, guideTrackPath } from "../features/guide/guide.meta";
+import type { GuideTrackId } from "../features/guide/guide.types";
+import { GUIDE_SEO_DESC_SUFFIX, guideSeoTitles } from "../features/guide/guide.seo";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -24,6 +26,10 @@ export interface ModuleSubNavItem {
   labelKey: TranslationKey;
   /// Page description for SEO when the item is a page of its own.
   descKey?: TranslationKey;
+  /// English search-result title when it should differ from the label.
+  seoTitle?: string;
+  /// Sentence appended to the meta description when the result stays snippet-length.
+  seoDescSuffix?: string;
   prefix?: string;
   to: string;
 }
@@ -33,6 +39,8 @@ export interface ModuleDef {
   id: string;
   path: string;
   navKey: TranslationKey;
+  /// Glyph id for `ModuleIcon` when it differs from the module id.
+  icon?: string;
   category?: ModuleCategory; // home has none (landing page)
   status: ModuleStatus;
   seo: { title: string; description: string };
@@ -82,6 +90,25 @@ export const CATEGORY_ACCENT: Record<ModuleCategory, string> = {
   guides: "#06b6d4",
 };
 
+const GuideView = lazy(() => import("../features/guide/GuideView"));
+
+/// One sidebar node per guide track; tracks without lessons yet show as planned.
+function guideModule(trackId: GuideTrackId, seo: ModuleDef["seo"]): ModuleDef {
+  const track = guideTrackById(trackId);
+  return {
+    id: `guide-${trackId}`,
+    path: guideTrackPath(trackId),
+    navKey: track.titleKey,
+    icon: "guide",
+    category: "guides",
+    status: track.lessons.length ? "live" : "planned",
+    subNav: guideNavItems(track).map((item) => ({ ...item, seoTitle: guideSeoTitles[item.id], seoDescSuffix: GUIDE_SEO_DESC_SUFFIX })),
+    seo,
+    about: moduleAbout("Guide"),
+    Component: GuideView,
+  };
+}
+
 export const modules: ModuleDef[] = [
   {
     id: "home",
@@ -109,7 +136,7 @@ export const modules: ModuleDef[] = [
         "Build option strategies and see payoff and profit diagrams instantly: calls, puts, covered calls, spreads, straddles, strangles, butterflies and synthetic forwards.",
     },
     about: moduleAbout("Payoff"),
-    relatedGuides: ["instruments", "no-arbitrage"],
+    relatedGuides: ["instruments", "strategies", "no-arbitrage", "put-call-parity"],
     Component: lazy(() => import("../features/payoff-lab/PayofView")),
   },
   {
@@ -125,7 +152,7 @@ export const modules: ModuleDef[] = [
         "Price options on an interactive binomial tree: risk-neutral probabilities, backward induction and the replicating portfolio at every node.",
     },
     about: moduleAbout("Binomial"),
-    relatedGuides: ["no-arbitrage", "risk-neutral", "delta-hedging"],
+    relatedGuides: ["one-step-binomial", "risk-neutral", "multi-step-trees"],
     Component: lazy(() => import("../features/binomial/BinomialView")),
   },
   {
@@ -141,7 +168,7 @@ export const modules: ModuleDef[] = [
         "Price European calls and puts with the Black–Scholes formula and visualize delta, gamma, vega and theta across stock prices and maturities, in 2D and 3D.",
     },
     about: moduleAbout("BlackScholes"),
-    relatedGuides: ["toward-black-scholes", "delta-hedging"],
+    relatedGuides: ["toward-black-scholes", "delta-hedging", "put-call-parity"],
     Component: lazy(() => import("../features/black-scholes/BlackScholesView")),
   },
   {
@@ -157,7 +184,7 @@ export const modules: ModuleDef[] = [
         "Simulate the Heston model: mean-reverting stochastic variance, vol-of-vol and correlation, with sample paths and Monte Carlo option pricing.",
     },
     about: moduleAbout("Heston"),
-    relatedGuides: ["risk-neutral"],
+    relatedGuides: ["toward-black-scholes", "gbm"],
     Component: lazy(() => import("../features/heston/HestonView")),
   },
   {
@@ -172,7 +199,7 @@ export const modules: ModuleDef[] = [
         "Simulate discrete delta hedging of a call option: a replicating portfolio tracks the option value, rebalanced along a simulated stock path, with the residual hedge error.",
     },
     about: moduleAbout("DeltaHedging"),
-    relatedGuides: ["delta-hedging"],
+    relatedGuides: ["delta-hedging", "multi-step-trees"],
     Component: lazy(() => import("../features/delta-hedging/DeltaHedgingView")),
   },
   {
@@ -188,6 +215,7 @@ export const modules: ModuleDef[] = [
         "Value a bond from its cash flows: discounting to present value, price, duration, convexity and a draggable price–yield curve.",
     },
     about: moduleAbout("BondPricing"),
+    relatedGuides: ["bond-pricing", "duration-convexity"],
     Component: lazy(() => import("../features/bond-pricing/BondPricingView")),
   },
   {
@@ -203,6 +231,7 @@ export const modules: ModuleDef[] = [
         "Shape a par yield curve by level, slope and curvature, bootstrap the spot curve and read off forward rates interactively.",
     },
     about: moduleAbout("YieldCurve"),
+    relatedGuides: ["yield-curve", "bond-pricing"],
     Component: lazy(() => import("../features/yield-curve/YieldCurveView")),
   },
   {
@@ -218,6 +247,7 @@ export const modules: ModuleDef[] = [
         "Compare a bond's exact price–yield curve with its duration and duration-plus-convexity approximations, and see where each one breaks down.",
     },
     about: moduleAbout("DurationConvexity"),
+    relatedGuides: ["duration-convexity", "bond-pricing"],
     Component: lazy(() => import("../features/duration-convexity/DurationConvexityView")),
   },
   {
@@ -233,6 +263,7 @@ export const modules: ModuleDef[] = [
         "Explore Treasury bond futures: conversion factors, invoice prices, deliverable cash flows and cheapest-to-deliver switching as yields move.",
     },
     about: moduleAbout("TreasuryFutures"),
+    relatedGuides: ["yield-curve", "duration-convexity"],
     Component: lazy(() => import("../features/treasury-futures/TreasuryFuturesView")),
   },
   {
@@ -247,6 +278,7 @@ export const modules: ModuleDef[] = [
         "Combine a risky asset with the risk-free rate: expected return, volatility, the Sharpe ratio and leverage along the capital allocation line.",
     },
     about: moduleAbout("RiskReturn"),
+    relatedGuides: ["returns-volatility", "diversification"],
     Component: lazy(() => import("../features/risk-return/RiskReturnView")),
   },
   {
@@ -261,6 +293,7 @@ export const modules: ModuleDef[] = [
         "Interactive Capital Asset Pricing Model: beta, the market risk premium, the security market line and Jensen's alpha for individual assets.",
     },
     about: moduleAbout("Capm"),
+    relatedGuides: ["capm", "efficient-frontier"],
     Component: lazy(() => import("../features/capm/CapmView")),
   },
   {
@@ -275,6 +308,7 @@ export const modules: ModuleDef[] = [
         "See how correlation drives diversification: expected return, volatility and the minimum-variance portfolio of two assets on an interactive frontier.",
     },
     about: moduleAbout("PortfolioLab"),
+    relatedGuides: ["diversification", "efficient-frontier"],
     Component: lazy(() => import("../features/portfolio-lab/PortfolioLabView")),
   },
   {
@@ -290,6 +324,7 @@ export const modules: ModuleDef[] = [
         "Markowitz mean–variance optimization: the efficient frontier, minimum-variance and maximum-Sharpe (tangency) portfolios, target return or volatility, and the cost of constraints.",
     },
     about: moduleAbout("EfficientFrontier"),
+    relatedGuides: ["efficient-frontier", "diversification", "capm"],
     Component: lazy(() => import("../features/efficient-frontier/PortfolioOptimizationView")),
   },
   {
@@ -304,6 +339,7 @@ export const modules: ModuleDef[] = [
         "Capital budgeting made visual: net present value, internal rate of return, profitability index and the NPV profile across discount rates.",
     },
     about: moduleAbout("NpvIrr"),
+    relatedGuides: ["npv-irr", "interest-discounting"],
     Component: lazy(() => import("../features/npv-irr/NpvIrrView")),
   },
   {
@@ -318,6 +354,7 @@ export const modules: ModuleDef[] = [
         "Build a discounted cash flow valuation: free cash flow projection, terminal value, discounting at WACC and enterprise value.",
     },
     about: moduleAbout("Valuation"),
+    relatedGuides: ["dcf-valuation", "wacc"],
     Component: lazy(() => import("../features/valuation/ValuationView")),
   },
   {
@@ -332,6 +369,7 @@ export const modules: ModuleDef[] = [
         "Compound growth of a principal and regular contributions over time, splitting the final balance into interest earned and money paid in.",
     },
     about: moduleAbout("Tvm"),
+    relatedGuides: ["interest-discounting", "npv-irr"],
     Component: lazy(() => import("../features/tvm/TvmView")),
   },
   {
@@ -346,6 +384,7 @@ export const modules: ModuleDef[] = [
         "Compute the weighted average cost of capital: cost of equity, after-tax cost of debt, the tax shield and how leverage changes WACC.",
     },
     about: moduleAbout("Wacc"),
+    relatedGuides: ["wacc", "capital-structure"],
     Component: lazy(() => import("../features/wacc/WaccView")),
   },
   {
@@ -360,6 +399,7 @@ export const modules: ModuleDef[] = [
         "Modigliani–Miller with and without taxes: levered cost of equity, WACC and the interest tax shield as leverage changes.",
     },
     about: moduleAbout("CapitalStructure"),
+    relatedGuides: ["capital-structure", "wacc"],
     Component: lazy(() => import("../features/capital-structure/CapitalStructureView")),
   },
   {
@@ -390,6 +430,7 @@ export const modules: ModuleDef[] = [
         "Simulate arithmetic Brownian motion: drift, volatility and reproducible seeded sample paths, with the mean and spread over time.",
     },
     about: moduleAbout("BrownianMotion"),
+    relatedGuides: ["random-walks", "ito-lemma"],
     Component: lazy(() => import("../features/brownian-motion/BrownianMotionView")),
   },
   {
@@ -404,6 +445,7 @@ export const modules: ModuleDef[] = [
         "Simulate geometric Brownian motion, the stock price model behind Black–Scholes: drift, volatility, sample paths and the theoretical expected value.",
     },
     about: moduleAbout("Gbm"),
+    relatedGuides: ["gbm", "returns-volatility"],
     Component: lazy(() => import("../features/gbm/GbmView")),
   },
   {
@@ -418,6 +460,7 @@ export const modules: ModuleDef[] = [
         "See Itô's lemma at work on log prices: why the log of geometric Brownian motion drifts at μ − ½σ² instead of μ.",
     },
     about: moduleAbout("ItoProcess"),
+    relatedGuides: ["ito-lemma", "random-walks"],
     Component: lazy(() => import("../features/ito-process/ItoProcessView")),
   },
   {
@@ -432,24 +475,57 @@ export const modules: ModuleDef[] = [
         "Price a European option by Monte Carlo: simulate terminal stock prices and watch the estimate and its confidence interval converge to Black–Scholes.",
     },
     about: moduleAbout("MonteCarlo"),
+    relatedGuides: ["monte-carlo-pricing", "gbm"],
     Component: lazy(() => import("../features/monte-carlo/MonteCarloView")),
   },
+  guideModule("derivatives", {
+    title: "Option Pricing Course: From Payoffs to Black–Scholes and Heston",
+    description:
+      "Free step-by-step option pricing lessons: payoffs, no-arbitrage, binomial trees, delta hedging, the Greeks, Black–Scholes, implied volatility and Heston.",
+  }),
+  guideModule("portfolio", {
+    title: "Portfolio Theory Course: Diversification, Efficient Frontier & CAPM",
+    description:
+      "Free step-by-step lessons on returns and volatility, diversification and correlation, the efficient frontier, the Sharpe ratio, CAPM and beta, and Value at Risk.",
+  }),
+  guideModule("fixed-income", {
+    title: "Fixed Income Course: Bond Pricing, Yield Curves & Duration",
+    description:
+      "Free step-by-step lessons on bond prices and yields, duration and convexity, spot and forward rates, Treasury futures and interest rate swaps.",
+  }),
+  guideModule("corporate", {
+    title: "Corporate Finance Course: NPV, IRR, WACC & DCF Valuation",
+    description:
+      "Free step-by-step lessons on compounding and discounting, NPV and IRR, the cost of capital, Modigliani–Miller capital structure and DCF valuation.",
+  }),
+  guideModule("stochastic", {
+    title: "Stochastic Calculus for Finance: Brownian Motion, Itô & Monte Carlo",
+    description:
+      "Free step-by-step lessons on random walks and Brownian motion, Itô's lemma, change of measure, Monte Carlo option pricing and mean-reverting processes.",
+  }),
   {
-    id: "guide",
-    path: GUIDE_PATH,
-    navKey: "navGuide",
+    id: "guide-graph",
+    path: "/guide/graph",
+    navKey: "navGuideGraph",
+    icon: "guide",
     category: "guides",
     status: "live",
-    subNav: guideNavItems(),
     seo: {
-      title: "Options, No-Arbitrage & Risk-Neutral Pricing Guides",
+      title: "Knowledge graph of the quant finance guides",
       description:
-        "Step-by-step guides to derivatives: financial instruments, no-arbitrage, risk-neutral pricing, delta hedging and the road to Black–Scholes.",
+        "Interactive map of every guide lesson and lab: which lessons build on which, by track, with links to each lesson.",
     },
-    about: moduleAbout("Guide"),
-    Component: lazy(() => import("../features/guide/GuideView")),
+    Component: lazy(() => import("../features/guide/components/graph/GuideGraphPage")),
   },
 ];
+
+/// Old URLs that now live elsewhere.
+export const redirects = guideRedirects();
+
+/// A module by its registry id.
+export function moduleById(id: string): ModuleDef | undefined {
+  return modules.find((m) => m.id === id);
+}
 
 /// Modules belonging to a category, in registry order.
 export function modulesInCategory(category: ModuleCategory): ModuleDef[] {

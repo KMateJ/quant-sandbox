@@ -52,3 +52,31 @@ test("full steepness turns an edge into a near-vertical jump", () => {
   assert.equal(m.evalPiecewise(pw, 99.7), 0);
   assert.equal(m.evalPiecewise(pw, 100.3), 10);
 });
+
+test("a node's own steepness overrides the shape-wide value for its edge only", () => {
+  const pw = m.buildPiecewise({
+    nodes: [{ x: 80, y: 0, steepness: 1 }, { x: 100, y: 10 }, { x: 120, y: 0 }],
+    steepness: 0,
+    leftSlope: 0,
+    rightSlope: 0,
+  });
+  assert.equal(m.evalPiecewise(pw, 89.7), 0);
+  assert.equal(m.evalPiecewise(pw, 90.3), 10);
+  assert.ok(Math.abs(m.evalPiecewise(pw, 110) - 5) < 1e-12);
+});
+
+test("a coarse strike grid only approximates, and the error shrinks as strikes get denser", () => {
+  const pw = m.buildPiecewise(shape);
+  const exact = m.blPrice(pw, market, 200).price;
+  const rows = m.gridConvergence(pw, market, exact, [10, 5, 2.5, 1, 0.5]);
+  assert.ok(Math.abs(rows[0].error) > 0.05);
+  assert.ok(Math.abs(rows.at(-1).error) < Math.abs(rows[0].error) / 10);
+  const { tradable, portfolios } = m.replicateAll(pw, { ...market, strikeStep: 5 }, methods);
+  for (const p of portfolios) {
+    assert.ok(Math.abs(p.total - portfolios[0].total) < 1e-8);
+    for (const leg of p.legs.filter((l) => l.kind === "call" || l.kind === "put")) {
+      assert.ok(Math.abs(leg.strike / 5 - Math.round(leg.strike / 5)) < 1e-9, `strike ${leg.strike} off grid`);
+    }
+    assert.ok(Math.abs(m.portfolioPayoff(p, 137) - m.evalPiecewise(tradable, 137)) < 1e-8);
+  }
+});

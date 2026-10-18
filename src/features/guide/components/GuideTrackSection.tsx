@@ -26,7 +26,8 @@ export default function GuideTrackSection({ track }: { track: GuideTrackMeta }) 
           </Link>
         )}
       </header>
-      <GuideProgressBar done={done} total={lessons.length} />
+      {lessons.length === 0 && <p className="guide-track-empty">{t("guideTrackEmpty")}</p>}
+      {lessons.length > 0 && <GuideProgressBar done={done} total={lessons.length} />}
 
       <ol className="guide-list">
         {lessons.map((lesson, i) => {

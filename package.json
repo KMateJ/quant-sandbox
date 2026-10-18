@@ -12,6 +12,11 @@
     "test:treasury-futures": "node --test scripts/treasury-futures.test.mjs",
     "test:clt": "node --test scripts/clt.test.mjs",
     "test:payoff-replication": "node --test scripts/payoff-replication.test.mjs",
+    "test:payoff-positions": "node --test scripts/payoff-positions.test.mjs",
+    "test:guide-wave2": "node --test scripts/guide-wave2.test.mjs",
+    "test:guide-wave3": "node --test scripts/guide-wave3.test.mjs",
+    "test:guide-graph": "node --test scripts/guide-graph.test.mjs",
+    "test:guide-interactive": "node --test scripts/guide-interactive-*.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

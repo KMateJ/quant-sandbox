@@ -1,11 +1,12 @@
 import SectionCard from "../../../../components/SectionCard";
 import SliderField from "../../../../components/SliderField";
+import { ControlGroup, SegmentedControl } from "../../../../components/ui";
 import { useI18n, type TranslationKey } from "../../../../i18n";
 import type { MarketParams } from "../replication.types";
-import type { ReplicationModel } from "../useReplication";
+import { STRIKE_STEPS, type ReplicationModel } from "../useReplication";
 
 type SliderSpec = {
-  key: keyof MarketParams;
+  key: Exclude<keyof MarketParams, "strikeStep">;
   label: TranslationKey;
   min: number;
   max: number;
@@ -42,6 +43,14 @@ export default function MarketControls({ model }: { model: ReplicationModel }) {
           sectionId={s.key === "skew" ? "breeden-litzenberger" : undefined}
         />
       ))}
+      <ControlGroup label={t("replStrikeGrid")} hint={t("replStrikeGridHint")}>
+        <SegmentedControl
+          options={STRIKE_STEPS.map((step) => ({ value: step, label: step === 0 ? t("replStrikeAll") : String(step) }))}
+          value={market.strikeStep}
+          onChange={(strikeStep) => updateMarket({ strikeStep })}
+          ariaLabel={t("replStrikeGrid")}
+        />
+      </ControlGroup>
     </SectionCard>
   );
 }

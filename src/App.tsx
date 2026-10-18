@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppShell from "./components/layout/AppShell";
 import { RouteSeo } from "./seo";
-import { modules } from "./modules/registry";
+import { modules, redirects } from "./modules/registry";
 import { PortfolioUniverseProvider } from "./features/portfolio-lab/PortfolioUniverseContext";
 import { IntuitionProvider } from "./components/intuition";
 import ModuleAboutSection from "./components/layout/ModuleAboutSection";
@@ -29,6 +29,9 @@ export default function App() {
                   </IntuitionProvider>
                 }
               />
+            ))}
+            {redirects.map((r) => (
+              <Route key={r.from} path={r.from} element={<Navigate to={r.to} replace />} />
             ))}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

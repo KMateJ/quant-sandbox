@@ -5,17 +5,17 @@ import { Tabs } from "../../components/ui";
 import StrategyLab from "./StrategyLab";
 import ReplicationLab from "./replication/components/ReplicationLab";
 import { useReplication } from "./replication/useReplication";
-import { serializeLegs } from "./usePayoffView";
-import type { StrategyLeg } from "./payoff.types";
+import { buildSearchParams } from "./payoff.url";
+import type { PositionGroup, StrategyLeg } from "./payoff.types";
 
 type Lab = "builder" | "replicate";
 
 export default function PayoffView() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
-  // Lives here so the drawn payoff survives switching tabs.
-  const replication = useReplication();
   const lab: Lab = searchParams.get("lab") === "replicate" ? "replicate" : "builder";
+  // Lives here so the drawn payoff survives switching tabs.
+  const replication = useReplication(lab === "replicate");
 
   const setLab = (next: Lab) =>
     setSearchParams((prev) => {
@@ -25,8 +25,8 @@ export default function PayoffView() {
       return params;
     }, { replace: true });
 
-  const openInBuilder = (legs: StrategyLeg[]) => {
-    setSearchParams(new URLSearchParams({ legs: serializeLegs(legs) }));
+  const openInBuilder = (next: { legs: StrategyLeg[]; groups: PositionGroup[] }, showComponents: boolean) => {
+    setSearchParams(buildSearchParams("payoff", showComponents, null, next.legs, next.groups));
     window.scrollTo({ top: 0 });
   };
 

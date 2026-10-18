@@ -27,7 +27,7 @@ export default function HomeCategories() {
         style={{ ["--mod-accent" as string]: CATEGORY_ACCENT[category] }}
       >
         <span className="cat-icon" aria-hidden="true">
-          <ModuleIcon id={mods[0].id} />
+          <ModuleIcon id={mods[0].icon ?? mods[0].id} />
         </span>
         <span className="cat-body">
           <span className="cat-title">{t(CATEGORY_LABEL_KEYS[category])}</span>

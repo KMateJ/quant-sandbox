@@ -6,3 +6,4 @@ export * from "./portfolio";
 export * from "./bond";
 export * from "./valuation";
 export * from "./yieldcurve";
+export * from "./options";

@@ -37,6 +37,8 @@ export default function LineChartInner({
   legend = true,
   tooltipLabel,
   valueFormat,
+  xFormat,
+  yFormat,
   curve = "smooth",
 }: Props) {
   const curveFactory = curve === "linear" ? curveLinear : curveMonotoneX;
@@ -148,6 +150,7 @@ export default function LineChartInner({
             top={innerH}
             scale={xScale}
             numTicks={isMobile ? 5 : 8}
+            tickFormat={xFormat && ((v) => xFormat(Number(v)))}
             stroke={CHART_COLORS.axis}
             tickStroke={CHART_COLORS.axis}
             tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })}
@@ -155,6 +158,7 @@ export default function LineChartInner({
           <AxisLeft
             scale={yScale}
             numTicks={7}
+            tickFormat={yFormat && ((v) => yFormat(Number(v)))}
             stroke={CHART_COLORS.axis}
             tickStroke={CHART_COLORS.axis}
             tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })}

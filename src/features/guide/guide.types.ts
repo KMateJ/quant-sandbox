@@ -1,13 +1,49 @@
 import type { TranslationKey } from "../../i18n";
 
-export type GuideTrackId = "derivatives";
+/// One track per large module area.
+export type GuideTrackId = "derivatives" | "portfolio" | "fixed-income" | "corporate" | "stochastic";
 
 export type GuideId =
+  | "interest-discounting"
+  | "returns-volatility"
+  | "random-walks"
   | "instruments"
+  | "strategies"
   | "no-arbitrage"
+  | "put-call-parity"
+  | "one-step-binomial"
   | "risk-neutral"
+  | "multi-step-trees"
   | "delta-hedging"
-  | "toward-black-scholes";
+  | "gbm"
+  | "toward-black-scholes"
+  | "diversification"
+  | "efficient-frontier"
+  | "capm"
+  | "bond-pricing"
+  | "duration-convexity"
+  | "yield-curve"
+  | "npv-irr"
+  | "wacc"
+  | "capital-structure"
+  | "dcf-valuation"
+  | "ito-lemma"
+  | "monte-carlo-pricing"
+  | "greeks"
+  | "implied-volatility"
+  | "static-replication"
+  | "risk-measures"
+  | "mean-reversion"
+  | "treasury-futures"
+  | "stochastic-volatility"
+  | "american-options"
+  | "interest-rate-swaps"
+  | "change-of-measure"
+  | "real-options"
+  | "exotic-options"
+  | "jump-diffusion"
+  | "credit-risk"
+  | "factor-models";
 
 /// A single ordered lesson inside a track.
 export type GuideLessonMeta = {

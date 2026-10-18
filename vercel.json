@@ -6,6 +6,12 @@
       "has": [{ "type": "query", "key": "lesson", "value": "(?<lesson>[a-z0-9-]+)" }],
       "destination": "/stochastic-models/:lesson",
       "permanent": true
+    },
+    {
+      "source": "/guide",
+      "has": [{ "type": "query", "key": "topic", "value": "(?<topic>[a-z0-9-]+)" }],
+      "destination": "/guide/:topic",
+      "permanent": true
     }
   ],
   "rewrites": [

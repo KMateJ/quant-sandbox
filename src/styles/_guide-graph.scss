@@ -1,0 +1,617 @@
+// #region Guide knowledge graph (global page + local graph in the lesson rail)
+.gg-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.gg-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.gg-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+
+  &.on {
+    color: var(--text);
+  }
+
+  &:hover {
+    border-color: var(--border);
+  }
+
+  // Off: a hollow ring in the track colour, so the state reads without colour fill alone.
+  &:not(.on) .gg-dot {
+    background: none;
+    box-shadow: inset 0 0 0 1.5px var(--dot, var(--muted));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+}
+
+.gg-dot {
+  display: inline-block;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--dot, var(--muted));
+
+  &--lab {
+    background: var(--muted);
+  }
+}
+
+.gg-search {
+  flex: 1 1 180px;
+  max-width: 280px;
+  padding: 6px 10px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.gg-reset {
+  padding: 5px 10px;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.gg-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.gg-stage {
+  min-width: 0;
+  padding: var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-strong, 12px);
+}
+
+.gg-canvas-wrap {
+  position: relative;
+}
+
+.gg-zoom {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.gg-zoom-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: var(--text);
+    background: var(--surface-muted);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+.gg-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.gg-edge {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+  transition: opacity 0.2s ease, stroke 0.2s ease;
+
+  &--citation {
+    stroke: var(--muted);
+    stroke-opacity: 0.55;
+    stroke-width: 1.1;
+  }
+
+  &--sequence {
+    stroke-dasharray: 3 4;
+    stroke-opacity: 0.7;
+  }
+
+  &--practice {
+    stroke-opacity: 0.45;
+  }
+
+  &.is-lit {
+    stroke: var(--text);
+    stroke-opacity: 0.9;
+    stroke-width: 1.6;
+  }
+
+  &.is-dim {
+    opacity: 0.12;
+  }
+}
+
+.gg-arrowhead {
+  fill: var(--muted);
+  fill-opacity: 0.7;
+
+  &.is-lit {
+    fill: var(--text);
+    fill-opacity: 1;
+  }
+}
+
+.gg-cluster {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 4px;
+  pointer-events: none;
+}
+
+.gg-read-ring {
+  fill: none;
+  stroke: var(--gg-color, var(--muted));
+  stroke-width: 1.5;
+  stroke-opacity: 0.8;
+}
+
+.gg-label {
+  font-size: 10.5px;
+  fill: var(--text);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 3px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &.is-dim {
+    opacity: 0.2;
+  }
+
+  &.is-strong {
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+.gg-node {
+  cursor: pointer;
+  animation: gg-node-in 0.45s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+  animation-delay: calc(var(--i, 0) * 12ms);
+  transition: opacity 0.2s ease;
+
+  circle {
+    fill: var(--gg-color);
+    stroke: var(--surface);
+    stroke-width: 1.5;
+    transition: r 0.2s ease, stroke 0.2s ease;
+  }
+
+  text {
+    font-size: 10.5px;
+    fill: var(--text);
+    paint-order: stroke;
+    stroke: var(--surface);
+    stroke-width: 3px;
+    pointer-events: none;
+  }
+
+  &--lab circle {
+    fill: var(--surface);
+    stroke: var(--muted);
+    stroke-width: 1.5;
+  }
+
+  &.is-target circle:not(.gg-read-ring) {
+    stroke: var(--text);
+    stroke-width: 3;
+  }
+
+  &.is-match circle {
+    stroke: var(--primary);
+    stroke-width: 3;
+  }
+
+  &:hover circle,
+  &:focus-visible circle {
+    stroke: var(--text);
+    stroke-width: 2.5;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &.is-dim {
+    opacity: 0.18;
+  }
+}
+
+@keyframes gg-node-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.gg-hint,
+.gg-muted {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.gg-hint {
+  margin: var(--space-2) var(--space-2) 0;
+}
+
+.gg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.gg-legend-sample {
+  width: 28px;
+  height: 10px;
+  overflow: visible;
+
+  &--node {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.gg-legend-line {
+  display: inline-block;
+  width: 22px;
+  border-top: 1.5px solid var(--muted);
+
+  &--sequence {
+    border-top-style: dashed;
+  }
+
+  &--practice {
+    opacity: 0.5;
+  }
+}
+
+.gg-details {
+  position: sticky;
+  top: calc(var(--topnav-height) + var(--space-3));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-strong, 12px);
+  font-size: var(--text-sm);
+
+  h3 {
+    margin: var(--space-2) 0 var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  ul {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+}
+
+.gg-details-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gg-details-title {
+  margin: var(--space-1) 0 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.gg-list {
+  display: grid;
+  gap: var(--space-4);
+
+  h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-base, 1rem);
+  }
+
+  ol {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding-left: 1.4em;
+  }
+
+  .is-match {
+    background: var(--surface-muted);
+    border-radius: var(--radius-sm);
+  }
+}
+
+.gg-local {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  .gg-canvas {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+}
+
+.gg-local-link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+// Links in the side panels read as text until hovered, like the rest of the rail.
+.gg-details a,
+.gg-path a,
+.gg-list a {
+  color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 1100px) {
+  .gg-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gg-details {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-node,
+  .gg-edge {
+    animation: none;
+    transition: none;
+  }
+}
+
+// Learning path: lit edges are drawn stronger, nodes carry their step number.
+.gg-edge.is-path {
+  stroke: var(--primary);
+  stroke-opacity: 0.85;
+  stroke-width: 1.8;
+}
+
+.gg-step {
+  font-size: 9px;
+  font-weight: 700;
+  fill: #fff;
+  pointer-events: none;
+}
+
+.gg-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.gg-path {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-strong, 12px);
+
+  h3 {
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+}
+
+.gg-path-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+
+  .gg-reset {
+    flex: none;
+    padding: 0;
+    white-space: nowrap;
+  }
+}
+
+.gg-path-steps {
+  display: grid;
+  gap: 6px;
+  max-height: 46vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    animation: gg-node-in 0.3s ease both;
+  }
+
+  li.is-read a {
+    color: var(--muted);
+  }
+
+  li.is-target {
+    padding: 4px 6px;
+    margin: 0 -6px;
+    font-weight: 600;
+    background: var(--surface-muted);
+    border-radius: var(--radius-sm);
+  }
+}
+
+.gg-path-num {
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.gg-path-open {
+  font-weight: 600;
+}
+// #endregion
+
+.gg-details-open {
+  display: inline-block;
+  margin: var(--space-1) 0 var(--space-3);
+  padding: 6px 12px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--primary-contrast, #fff);
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.gg-count {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.gg-more {
+  padding: 2px 0;
+  font-size: var(--text-sm);
+  color: var(--primary);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

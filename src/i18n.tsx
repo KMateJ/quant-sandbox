@@ -42,6 +42,15 @@ import { intuitionEn, intuitionHu } from "./Language/Intuition";
 import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
 import { treasuryFuturesEn, treasuryFuturesHu } from "./Language/TreasuryFutures";
 import { guideEn, guideHu } from "./Language/Guide";
+import { guidePortfolioEn, guidePortfolioHu } from "./Language/GuidePortfolio";
+import { guideFixedIncomeEn, guideFixedIncomeHu } from "./Language/GuideFixedIncome";
+import { guideCorporateEn, guideCorporateHu } from "./Language/GuideCorporate";
+import { guideStochasticEn, guideStochasticHu } from "./Language/GuideStochastic";
+import { guideWave2En, guideWave2Hu } from "./Language/GuideWave2";
+import { guideWave3En, guideWave3Hu } from "./Language/GuideWave3";
+import { guideGraphEn, guideGraphHu } from "./Language/GuideGraph";
+import { guideInteractiveEn, guideInteractiveHu } from "./Language/GuideInteractive";
+import { guideInteractive2En, guideInteractive2Hu } from "./Language/GuideInteractive2";
 
 export type Language = "hu" | "en";
 
@@ -80,6 +89,15 @@ export const translations = {
     ...durationConvexityHu,
     ...treasuryFuturesHu,
     ...guideHu,
+    ...guidePortfolioHu,
+    ...guideFixedIncomeHu,
+    ...guideCorporateHu,
+    ...guideStochasticHu,
+    ...guideWave2Hu,
+    ...guideWave3Hu,
+    ...guideGraphHu,
+    ...guideInteractiveHu,
+    ...guideInteractive2Hu,
     ...brownianMotionHu,
     ...gbmHu,
     ...itoProcessHu,
@@ -117,6 +135,15 @@ export const translations = {
     ...durationConvexityEn,
     ...treasuryFuturesEn,
     ...guideEn,
+    ...guidePortfolioEn,
+    ...guideFixedIncomeEn,
+    ...guideCorporateEn,
+    ...guideStochasticEn,
+    ...guideWave2En,
+    ...guideWave3En,
+    ...guideGraphEn,
+    ...guideInteractiveEn,
+    ...guideInteractive2En,
     ...brownianMotionEn,
     ...gbmEn,
     ...itoProcessEn,
@@ -152,7 +179,17 @@ if (!i18n.isInitialized) {
     fallbackLng: "en",
     interpolation: { escapeValue: false },
     react: { useSuspense: false },
+    // The dev server skips type-checking, so a key missing from the tables would otherwise render silently as raw text.
+    saveMissing: import.meta.env.DEV,
+    missingKeyHandler: (lngs, _ns, key) => console.warn(`[i18n] missing key "${key}" (${lngs.join(", ")})`),
   });
+} else {
+  // Hot reload re-runs this module with edited tables; push them into the live instance,
+  // otherwise keys added since the page loaded render as raw key names.
+  (["en", "hu"] as const).forEach((lng) =>
+    i18n.addResourceBundle(lng, "translation", translations[lng], true, true)
+  );
+  void i18n.changeLanguage(i18n.language);
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);

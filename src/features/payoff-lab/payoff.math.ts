@@ -1,4 +1,4 @@
-import type { PayoffChartPoint, StrategyLeg, ViewMode } from "./payoff.types";
+import type { ChartComponent, PayoffChartPoint, StrategyLeg, ViewMode } from "./payoff.types";
 
 export type SyntheticMatch = {
   key: string;
@@ -1225,7 +1225,7 @@ export function buildChartData(
   minS = 10,
   maxS = 200,
   points = 140,
-  showComponents = false
+  components: ChartComponent[] = []
 ): PayoffChartPoint[] {
   const data: PayoffChartPoint[] = [];
   const step = (maxS - minS) / points;
@@ -1237,11 +1237,9 @@ export function buildChartData(
       total: getStrategyValue(legs, S, mode),
     };
 
-    if (showComponents) {
-      legs.forEach((leg, index) => {
-        row[`leg-${index + 1}`] = getLegValue(leg, S, mode);
-      });
-    }
+    components.forEach((component) => {
+      row[component.key] = getStrategyValue(component.legs, S, mode);
+    });
 
     data.push(row);
   }

@@ -1,0 +1,89 @@
+// Styles for the "cashflow-builder" guide figure.
+
+.ixcf-hint {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.ixcf-chart {
+  touch-action: none;
+}
+
+.ixcf-col {
+  cursor: ns-resize;
+  outline: none;
+
+  &:focus-visible .ixcf-hit {
+    fill: var(--surface-muted);
+  }
+}
+
+.ixcf-hit {
+  fill: transparent;
+}
+
+.ixcf-pv {
+  fill: var(--chart-1);
+  opacity: 0.22;
+}
+
+.ixcf-flow {
+  fill: var(--chart-1);
+
+  &.negative {
+    fill: var(--chart-4);
+  }
+}
+
+.ixcf-handle {
+  fill: var(--text);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.ixcf-col:hover .ixcf-handle,
+.ixcf-col:focus-visible .ixcf-handle {
+  opacity: 0.55;
+}
+
+.ixcf-value {
+  fill: var(--text);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.ixcf-year {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.ixcf-zero {
+  stroke: var(--border-hover);
+  stroke-width: 1.5;
+}
+
+.ixcf-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.ixcf-key::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  border-radius: 3px;
+  background: var(--chart-1);
+}
+
+.ixcf-key.pv::before {
+  opacity: 0.22;
+}

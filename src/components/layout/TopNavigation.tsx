@@ -25,7 +25,7 @@ export default function TopNavigation({ navOpen, onToggleNav }: Props) {
           {t("brandTitle")}
         </NavLink>
 
-        <nav className="cat-tabs" aria-label="Categories">
+        <nav className="cat-tabs" aria-label={t("navCategoriesAria")}>
           {CATEGORY_ORDER.map((cat) => {
             const first = modulesInCategory(cat)[0];
             if (!first) return null;

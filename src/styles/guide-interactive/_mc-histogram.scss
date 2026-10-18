@@ -1,0 +1,114 @@
+// Styles for the "mc-histogram" guide figure.
+
+.ixmc-controls {
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.ixmc-play {
+  min-width: 84px;
+}
+
+.ixmc-last {
+  flex: 1 1 200px;
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.ixmc-hist {
+  height: 240px;
+}
+
+.ixmc-pays-zone {
+  fill: var(--chart-2);
+  opacity: 0.07;
+}
+
+.ixmc-pays-label,
+.ixmc-strike-label {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ixmc-bar {
+  fill: var(--chart-1);
+  opacity: 0.45;
+
+  &.pays {
+    fill: var(--chart-2);
+    opacity: 0.9;
+  }
+}
+
+.ixmc-flash {
+  fill: var(--chart-3);
+  opacity: 0;
+  animation: ixmc-flash 0.6s ease-out;
+}
+
+@keyframes ixmc-flash {
+  from { opacity: 0.45; }
+  to { opacity: 0; }
+}
+
+.ixmc-strike {
+  stroke: var(--text);
+  stroke-width: 1.25;
+}
+
+.ixmc-strip-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.ixmc-key::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 0;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-top: 2px solid var(--chart-1);
+}
+
+.ixmc-key--bs::before {
+  border-top: 2px dashed var(--chart-4);
+}
+
+.ixmc-strip {
+  height: 110px;
+}
+
+.ixmc-band {
+  fill: var(--chart-1);
+  opacity: 0.16;
+}
+
+.ixmc-estimate {
+  fill: none;
+  stroke: var(--chart-1);
+  stroke-width: 2;
+}
+
+.ixmc-bs {
+  stroke: var(--chart-4);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ixmc-flash {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ixmc-hist {
+    height: 200px;
+  }
+}

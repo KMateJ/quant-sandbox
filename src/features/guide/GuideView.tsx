@@ -1,19 +1,20 @@
-import { Navigate, useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import GuideIndex from "./components/GuideIndex";
 import GuideLessonPage from "./components/GuideLessonPage";
-import { GUIDE_PATH, findGuideLesson, guidePath, isGuideId } from "./guide.meta";
+import { GUIDE_PATH, findGuideLesson, guidePath, guideTrackFromPath, guideTrackPath } from "./guide.meta";
 
 export default function GuideView() {
   const { "*": lessonId } = useParams();
-  const [params] = useSearchParams();
-  const legacyId = params.get("topic");
+  const { pathname } = useLocation();
+  const track = guideTrackFromPath(pathname);
 
-  // Old `?topic=<id>` links redirect to the lesson's own path.
-  if (!lessonId && isGuideId(legacyId)) return <Navigate to={guidePath(legacyId)} replace />;
-  if (!lessonId) return <GuideIndex />;
+  if (!track) return <Navigate to={GUIDE_PATH} replace />;
+  if (!lessonId) return <GuideIndex track={track} />;
 
   const location = findGuideLesson(lessonId);
-  if (!location) return <Navigate to={GUIDE_PATH} replace />;
+  if (!location) return <Navigate to={guideTrackPath(track.id)} replace />;
+  // A lesson opened under the wrong track moves to its own.
+  if (location.track.id !== track.id) return <Navigate to={guidePath(location.lesson.id)} replace />;
 
   return <GuideLessonPage key={location.lesson.id} location={location} />;
 }

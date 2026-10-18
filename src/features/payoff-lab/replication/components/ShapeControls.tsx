@@ -10,7 +10,7 @@ import NodeList from "./NodeList";
 /// Shape presets, edge steepness, tail slopes and the editable node list.
 export default function ShapeControls({ model }: { model: ReplicationModel }) {
   const { t } = useI18n();
-  const { shape, updateShape, applyPreset } = model;
+  const { shape, updateShape, applyPreset, setSteepness } = model;
   const slope = (v: number) => v.toFixed(2);
 
   return (
@@ -32,8 +32,9 @@ export default function ShapeControls({ model }: { model: ReplicationModel }) {
           max={1}
           step={0.01}
           value={shape.steepness}
-          onChange={(steepness) => updateShape({ steepness })}
+          onChange={setSteepness}
           formatValue={(v) => `${Math.round(v * 100)}%`}
+          marks={[{ value: 0, label: t("replSteepLinear") }, { value: 1, label: t("replSteepJump") }]}
         />
         <SliderField
           label={t("replLeftSlope")}

@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../../../i18n";
-import { GUIDE_PATH } from "../guide.meta";
+import { guideTrackPath } from "../guide.meta";
 import type { GuideLessonLocation } from "../guide.types";
-import { guideRenderers } from "../GuideRegistry";
+import { guideContent } from "../../../Language/guides";
 import { useMarkReadAtEnd } from "../useGuideProgress";
 import { useGuideToc } from "../useGuideToc";
+import GuideBlocks from "./GuideBlocks";
 import GuideLessonNav from "./GuideLessonNav";
 import GuideRail from "./GuideRail";
 
@@ -28,9 +29,9 @@ export default function GuideLessonPage({ location }: { location: GuideLessonLoc
         <article className="guide-article">
           <header className="guide-lesson-head">
             <nav className="guide-breadcrumb" aria-label={t("guideBreadcrumbLabel")}>
-              <Link to={GUIDE_PATH}>{t("navGuide")}</Link>
+              <span>{t("navGuide")}</span>
               <span aria-hidden="true">/</span>
-              <span>{t(track.titleKey)}</span>
+              <Link to={guideTrackPath(track.id)}>{t(track.titleKey)}</Link>
             </nav>
             <h1 className="guide-lesson-title">{t(lesson.titleKey)}</h1>
             <p className="guide-lesson-meta">
@@ -41,13 +42,13 @@ export default function GuideLessonPage({ location }: { location: GuideLessonLoc
           </header>
 
           <div ref={bodyRef} className="guide-article-body">
-            {guideRenderers[lesson.id]()}
+            <GuideBlocks blocks={guideContent[lesson.id][language]} lessonId={lesson.id} />
           </div>
 
-          <GuideLessonNav ref={endRef} previous={previous} next={next} />
+          <GuideLessonNav ref={endRef} track={track} previous={previous} next={next} />
         </article>
 
-        <GuideRail headings={toc.headings} activeId={toc.activeId} labs={lesson.labs} />
+        <GuideRail lessonId={lesson.id} headings={toc.headings} activeId={toc.activeId} labs={lesson.labs} />
       </div>
     </div>
   );

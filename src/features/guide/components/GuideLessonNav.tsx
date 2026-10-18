@@ -1,17 +1,18 @@
 import type { Ref } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../../../i18n";
-import { GUIDE_PATH, guidePath } from "../guide.meta";
-import type { GuideLessonMeta } from "../guide.types";
+import { guidePath, guideTrackPath } from "../guide.meta";
+import type { GuideLessonMeta, GuideTrackMeta } from "../guide.types";
 
 type GuideLessonNavProps = {
   ref?: Ref<HTMLElement>;
+  track: GuideTrackMeta;
   previous?: GuideLessonMeta;
   next?: GuideLessonMeta;
 };
 
-/// Previous / next lesson links at the end of a lesson; the last one leads back to the index.
-export default function GuideLessonNav({ ref, previous, next }: GuideLessonNavProps) {
+/// Previous / next lesson links at the end of a lesson; the last one leads back to its track.
+export default function GuideLessonNav({ ref, track, previous, next }: GuideLessonNavProps) {
   const { t } = useI18n();
 
   return (
@@ -30,9 +31,9 @@ export default function GuideLessonNav({ ref, previous, next }: GuideLessonNavPr
           <span className="guide-lesson-nav-title">{t(next.titleKey)}</span>
         </Link>
       ) : (
-        <Link className="guide-lesson-nav-link next" to={GUIDE_PATH}>
+        <Link className="guide-lesson-nav-link next" to={guideTrackPath(track.id)}>
           <span className="guide-lesson-nav-dir">{t("guideBackToIndex")} →</span>
-          <span className="guide-lesson-nav-title">{t("navGuide")}</span>
+          <span className="guide-lesson-nav-title">{t(track.titleKey)}</span>
         </Link>
       )}
     </nav>

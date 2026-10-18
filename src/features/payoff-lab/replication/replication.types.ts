@@ -1,5 +1,6 @@
 /// A clicked node of the target terminal payoff (S_T, payoff).
-export type PayoffNode = { x: number; y: number };
+/// `steepness` overrides the shape-wide value for the edge towards the next node.
+export type PayoffNode = { x: number; y: number; steepness?: number };
 
 /// User-drawn terminal payoff: nodes joined by edges of adjustable steepness.
 export type PayoffShape = {
@@ -20,6 +21,8 @@ export type MarketParams = {
   sigma: number;
   maturity: number;
   skew: number;
+  /// Spacing of listed strikes; 0 = every strike trades (exact replication).
+  strikeStep: number;
 };
 
 export type InstrumentKind = "bond" | "stock" | "forward" | "call" | "put";

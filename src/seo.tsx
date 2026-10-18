@@ -79,7 +79,10 @@ export function Seo({ title, description, path = "/" }: SeoProps) {
 /// Head tags for the current route, looked up in the shared page list (modules and lessons).
 export function RouteSeo() {
   const { pathname } = useLocation();
-  const { t } = useI18n();
-  const page = useMemo(() => seoPages(t).find((p) => p.path === pathname), [t, pathname]);
+  const { t, language } = useI18n();
+  const page = useMemo(
+    () => seoPages(t, language === "en").find((p) => p.path === pathname),
+    [t, language, pathname]
+  );
   return page ? <Seo title={page.title} description={page.description} path={page.path} /> : null;
 }

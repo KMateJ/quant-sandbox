@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../../i18n";
-import { modules } from "../../../modules/registry";
-import type { GuideHeading } from "../guide.types";
+import { moduleById, type ModuleDef } from "../../../modules/registry";
+import type { GuideHeading, GuideId } from "../guide.types";
+import LessonGraph from "./graph/LessonGraph";
 
 type GuideRailProps = {
+  lessonId: GuideId;
   headings: GuideHeading[];
   activeId: string | null;
   labs: string[];
 };
 
-/// Right rail of a lesson: section contents (with the current one marked) and related labs.
-export default function GuideRail({ headings, activeId, labs }: GuideRailProps) {
+/// Right rail of a lesson: section contents (with the current one marked), its local graph and related labs.
+export default function GuideRail({ lessonId, headings, activeId, labs }: GuideRailProps) {
   const { t } = useI18n();
-  const labModules = labs
-    .map((id) => modules.find((m) => m.id === id))
-    .filter((m): m is (typeof modules)[number] => Boolean(m));
+  const labModules = labs.map(moduleById).filter((m): m is ModuleDef => Boolean(m));
 
   return (
     <aside className="guide-rail">
@@ -33,6 +33,7 @@ export default function GuideRail({ headings, activeId, labs }: GuideRailProps) 
           ))}
         </nav>
       )}
+      <LessonGraph lessonId={lessonId} />
       {labModules.length > 0 && (
         <div className="guide-labs">
           <div className="guide-rail-label">{t("guideLabsTitle")}</div>

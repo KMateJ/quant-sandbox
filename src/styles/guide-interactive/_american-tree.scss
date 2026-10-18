@@ -1,0 +1,171 @@
+// Styles for the "american-tree" guide figure.
+
+.ixat-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ixat-control-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+// Narrow screens scroll the tree sideways instead of shrinking the labels to nothing.
+.ixat-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ixat-svg {
+  display: block;
+  width: 100%;
+  min-width: 520px;
+  height: auto;
+  font-family: var(--font-mono);
+}
+
+.ixat-edge {
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-width: 1.25;
+}
+
+.ixat-node {
+  cursor: pointer;
+  outline: none;
+
+  rect {
+    fill: var(--surface-soft);
+    stroke: var(--border);
+    stroke-width: 1;
+    transition: fill 0.2s ease, stroke 0.2s ease;
+  }
+
+  &:hover rect {
+    stroke: var(--border-hover);
+  }
+
+  &:focus-visible rect {
+    stroke: var(--primary);
+    stroke-width: 2;
+  }
+
+  &.is-selected rect {
+    stroke: var(--text);
+    stroke-width: 2.25;
+  }
+}
+
+.ixat-node--exercise rect {
+  fill: color-mix(in srgb, var(--primary) 24%, var(--surface));
+  stroke: var(--primary);
+}
+
+.ixat-node--terminal rect {
+  fill: var(--surface);
+  stroke-dasharray: 4 3;
+}
+
+.ixat-node-main {
+  fill: var(--text);
+  font-size: 11.5px;
+}
+
+.ixat-node-sub {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ixat-node--exercise .ixat-node-sub {
+  fill: var(--text);
+  font-weight: 600;
+}
+
+.ixat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.ixat-swatch {
+  width: 14px;
+  height: 10px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--surface-soft);
+}
+
+.ixat-swatch--exercise {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 24%, var(--surface));
+}
+
+.ixat-swatch--terminal {
+  border-style: dashed;
+  background: var(--surface);
+}
+
+.ixat-details {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-size: var(--text-sm);
+}
+
+.ixat-details-title {
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ixat-details-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .is-exercise {
+    color: var(--primary);
+    font-weight: 600;
+  }
+}
+
+.ixat-details-note {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+}
+
+@media (max-width: 520px) {
+  .ixat-details-grid {
+    grid-template-columns: 1fr;
+
+    dd {
+      margin-bottom: var(--space-2);
+    }
+  }
+}

@@ -1,0 +1,135 @@
+// Styles for the "swap-timeline" guide figure.
+
+.ix-sw-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ix-sw-control-label {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.ix-sw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  li::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px;
+    border-radius: 2px;
+    vertical-align: -1px;
+    background: currentColor;
+  }
+}
+
+.ix-sw-legend--floating::before { background: var(--chart-2) !important; }
+.ix-sw-legend--fixed::before { background: var(--chart-1) !important; }
+.ix-sw-legend--pv::before { background: var(--muted) !important; opacity: 0.35; }
+
+.ix-sw-chart {
+  height: 250px;
+  user-select: none;
+}
+
+.ix-sw-axis,
+.ix-sw-tick {
+  stroke: var(--border-hover);
+  stroke-width: 1.5;
+}
+
+.ix-sw-year {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.ix-sw-arrow {
+  cursor: pointer;
+  outline: none;
+
+  rect,
+  polygon {
+    transition: y 0.35s ease, height 0.35s ease;
+  }
+}
+
+.ix-sw-hit {
+  fill: transparent;
+  stroke: none;
+}
+
+.ix-sw-arrow--floating { color: var(--chart-2); }
+.ix-sw-arrow--fixed { color: var(--chart-1); }
+
+.ix-sw-pv,
+.ix-sw-head {
+  fill: currentColor;
+}
+
+.ix-sw-discount {
+  fill: currentColor;
+  opacity: 0.28;
+}
+
+.ix-sw-arrow:hover .ix-sw-hit,
+.ix-sw-arrow.is-selected .ix-sw-hit {
+  fill: var(--surface-muted);
+}
+
+.ix-sw-arrow:focus-visible .ix-sw-hit {
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.ix-sw-details {
+  min-height: 92px;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+  font-size: var(--text-sm);
+}
+
+.ix-sw-details--hint {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.ix-sw-details-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: var(--space-2);
+}
+
+.ix-sw-details--fixed .ix-sw-details-head span { color: var(--chart-1); }
+.ix-sw-details--floating .ix-sw-details-head span { color: var(--chart-2); }
+
+.ix-sw-details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+  margin: 0 0 var(--space-2);
+
+  div { display: flex; gap: 6px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+}
+
+.ix-sw-formula {
+  margin: 2px 0 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}

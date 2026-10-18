@@ -2,7 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { createServer, type Plugin } from "vite";
 
-type SeoPage = { path: string; title: string; description: string; parent?: { path: string; title: string } };
+type SeoLink = { path: string; title: string };
+type SeoPage = { path: string; title: string; description: string; parent?: SeoLink; lessons?: SeoLink[] };
 type SeoModule = { englishSeoPages: () => SeoPage[]; BASE_URL: string; SITE_NAME: string };
 type RenderModule = { renderPage: (url: string) => Promise<string> };
 
@@ -50,6 +51,30 @@ function structuredData(page: SeoPage, site: SeoModule): object[] {
   if (page.path === "/") {
     return [{ "@context": "https://schema.org", "@type": "WebSite", name: site.SITE_NAME, url: url("/"), description: page.description }];
   }
+  const provider = { "@type": "Organization", name: site.SITE_NAME, url: url("/") };
+  if (page.lessons) {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        name: page.title,
+        description: page.description,
+        url: url(page.path),
+        inLanguage: "en",
+        isAccessibleForFree: true,
+        provider,
+        hasPart: page.lessons.map((l) => ({ "@type": "LearningResource", name: l.title, url: url(l.path) })),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: site.SITE_NAME, item: url("/") },
+          { "@type": "ListItem", position: 2, name: page.title, item: url(page.path) },
+        ],
+      },
+    ];
+  }
   if (page.parent) {
     return [
       {
@@ -59,7 +84,9 @@ function structuredData(page: SeoPage, site: SeoModule): object[] {
         description: page.description,
         url: url(page.path),
         learningResourceType: "Interactive lesson",
+        inLanguage: "en",
         isAccessibleForFree: true,
+        provider,
         isPartOf: { "@type": "Course", name: page.parent.title, url: url(page.parent.path) },
       },
       {

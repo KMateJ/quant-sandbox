@@ -1,0 +1,200 @@
+// Styles for the "capital-split" guide figure.
+
+.cs-hint {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.cs-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cs-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cs-row-label,
+.cs-cost-label {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.cs-track {
+  position: relative;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+}
+
+.cs-track--drag {
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.cs-seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: width 0.12s ease, left 0.12s ease;
+}
+
+.cs-debt {
+  background: var(--chart-3);
+}
+
+.cs-equity {
+  background: var(--chart-1);
+}
+
+.cs-shield {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--chart-2) 0 6px,
+    color-mix(in srgb, var(--chart-2) 45%, transparent) 6px 12px
+  );
+}
+
+.cs-seg:first-child {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.cs-vu-mark {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  border-left: 2px dashed var(--text);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.cs-handle {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 14px;
+  margin-left: -7px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 2px solid var(--text);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.25);
+  cursor: ew-resize;
+
+  &:focus-visible {
+    outline: 3px solid var(--chart-1);
+    outline-offset: 2px;
+  }
+}
+
+.cs-axis {
+  position: relative;
+  height: 1.2rem;
+  margin-left: calc(7.5rem + var(--space-3));
+}
+
+.cs-vu-label {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.cs-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-3) 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: var(--text-sm);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
+.cs-swatch {
+  position: static;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.cs-costs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cs-cost {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr) 4.5rem;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cs-cost-track {
+  position: relative;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--surface-muted);
+}
+
+.cs-cost-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.12s ease;
+}
+
+.cs-cost-bar--equity {
+  background: var(--chart-1);
+}
+
+.cs-cost-bar--debt {
+  background: var(--chart-3);
+}
+
+.cs-cost-bar--wacc {
+  background: var(--chart-4);
+}
+
+.cs-ru-mark {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  border-left: 2px dashed var(--muted);
+}
+
+.cs-cost-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 560px) {
+  .cs-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+
+  .cs-axis {
+    margin-left: 0;
+  }
+
+  .cs-cost {
+    grid-template-columns: minmax(0, 1fr) 4rem;
+
+    .cs-cost-track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+}
