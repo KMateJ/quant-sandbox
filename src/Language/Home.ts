@@ -85,6 +85,11 @@ export const homeHu = {
     exploreSubtitle: "Interaktív eszközök — kattints bármelyikre és játssz a paraméterekkel.",
     exploreCta: "Megnyitás",
 
+    homeSearchPlaceholder: "Modulok keresése…",
+    homeSearchAria: "Modulok keresése",
+    homeMatchCount: "{{n}} találat",
+    homeNoResults: "Nincs találat erre: „{{query}}”.",
+
     teaserGuideTitle: "Útmutatók",
     teaserGuideDesc:
       "Oktató jellegű írások a származtatott termékek és a delta-fedezés fő gondolatairól.",
@@ -246,6 +251,11 @@ export const homeEn = {
     exploreTitle: "Explore the modules",
     exploreSubtitle: "Interactive tools — pick any of them and start playing with the parameters.",
     exploreCta: "Open",
+
+    homeSearchPlaceholder: "Search modules…",
+    homeSearchAria: "Search modules",
+    homeMatchCount: "{{n}} found",
+    homeNoResults: "No modules match “{{query}}”.",
 
     teaserGuideTitle: "Guides",
     teaserGuideDesc:

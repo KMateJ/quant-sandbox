@@ -54,9 +54,9 @@ export default function HomeHero() {
       <h1 className="home-hero-title">{t("heroTitle")}</h1>
       <p className="home-hero-lede">{t("heroLede")}</p>
 
-      <div className="home-pillars">
+      <ul className="home-pillars">
         {pillars.map((p) => (
-          <div key={p.titleKey} className="home-pillar">
+          <li key={p.titleKey} className="home-pillar">
             <span className="home-pillar-icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
@@ -69,11 +69,13 @@ export default function HomeHero() {
                 {p.icon}
               </svg>
             </span>
-            <span className="home-pillar-title">{t(p.titleKey)}</span>
-            <span className="home-pillar-desc">{t(p.descKey)}</span>
-          </div>
+            <span className="home-pillar-body">
+              <span className="home-pillar-title">{t(p.titleKey)}</span>
+              <span className="home-pillar-desc">{t(p.descKey)}</span>
+            </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
