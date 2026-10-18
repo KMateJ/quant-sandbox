@@ -26,6 +26,13 @@ export const itoLemma: GuideLessonContent = {
     eq("(dW_t)^2 = dt, \\qquad dt\\,dW_t = 0, \\qquad (dt)^2 = 0."),
     note("Quadratic variation: the squared increments of Brownian motion over $[0,T]$ add up to $T$. In shorthand, $(dW_t)^2 = dt$."),
 
+    {
+      kind: "check",
+      id: "ito-lemma/quadratic-variation",
+      prompt: "A Brownian path on $[0, 2]$ is cut into ever finer steps. What does the sum of squared increments $\\sum (\\Delta W)^2$ approach?",
+      answer: { type: "number", value: 2, tolerance: 0.01 },
+      explain: "The quadratic variation of Brownian motion over $[0, T]$ is $T$: each $(\\Delta W)^2$ has mean $\\Delta t$, and the sum stops fluctuating as the steps shrink. Here $T = 2$.",
+    },
     h("Itô's lemma"),
     p("Let $f(t, x)$ be a smooth function and $X_t$ an Itô process as above. We want the increment of $Y_t = f(t, X_t)$. Expand $f$ to second order in a Taylor series:"),
     eq("df = \\frac{\\partial f}{\\partial t}\\,dt + \\frac{\\partial f}{\\partial x}\\,dX_t + \\frac{1}{2}\\frac{\\partial^2 f}{\\partial x^2}\\,(dX_t)^2 + \\cdots"),
@@ -48,6 +55,23 @@ export const itoLemma: GuideLessonContent = {
     p("This is the solution quoted in \"Geometric Brownian motion\", and the $-\\tfrac12\\sigma^2$ correction is exactly Itô's extra term. Naive calculus would have predicted a log drift of $\\mu$."),
     p("Example: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. The log price drifts at $0.08 - \\tfrac12 \\cdot 0.2^2 = 0.06$ per year, not $0.08$. Over $T = 10$ years the centre of the log price is $\\ln 100 + 0.6$, which corresponds to a median price of $100\\,e^{0.6} \\approx 182.21$. The naive line $\\ln 100 + 0.8$ would point to $100\\,e^{0.8} \\approx 222.55$, which is the **mean** price, not where a typical path ends."),
 
+    {
+      kind: "worked",
+      title: "Median and mean of a stock price from Itô's lemma",
+      steps: [
+        { text: "Take $S_0 = 100$, $\\mu = 10\\%$, $\\sigma = 30\\%$ and $T = 5$. Drift of the log price per year.", tex: "\\mu - \\tfrac12\\sigma^2", result: { value: 0.055, tolerance: 0.0005 } },
+        { text: "Median price after five years: the centre of the log price, exponentiated.", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T}", result: { value: 131.65, tolerance: 0.05 } },
+        { text: "Mean price after five years.", tex: "S_0\\,e^{\\mu T}", result: { value: 164.87, tolerance: 0.05 } },
+        { text: "Ratio of mean to median: the size of the Itô correction over the whole horizon.", tex: "e^{\\frac12\\sigma^2 T}", result: { value: 1.2523, tolerance: 0.0005 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "ito-lemma/log-drift",
+      prompt: "A stock follows geometric Brownian motion with $\\mu = 12\\%$ and $\\sigma = 40\\%$. At what rate per year does its log price drift? Answer in percent.",
+      answer: { type: "number", value: 4, tolerance: 0.05, unit: "%" },
+      explain: "Itô's lemma for $\\ln S$ gives the drift $\\mu - \\tfrac12\\sigma^2 = 0.12 - 0.08 = 0.04$. Naive calculus would say 12%.",
+    },
     h("Size of the correction"),
     p("Take one day, $\\Delta t = 1/252$, with $\\sigma = 20\\%$. The random part of the return, $\\sigma\\,\\Delta W$, is typically about $0.2 \\times \\sqrt{1/252} \\approx 1.26\\%$. Its square is about $\\sigma^2 \\Delta t \\approx 0.016\\%$, the same order of magnitude as the daily drift $\\mu\\,\\Delta t \\approx 0.032\\%$. Adding up such squares day after day does not average out, because they are never negative. That is why the second-order term changes the drift and cannot be ignored."),
 
@@ -86,6 +110,13 @@ export const itoLemma: GuideLessonContent = {
     eq("(dW_t)^2 = dt, \\qquad dt\\,dW_t = 0, \\qquad (dt)^2 = 0."),
     note("Kvadratikus variáció: a Brown-mozgás négyzetes növekményei a $[0,T]$ intervallumon $T$-t adnak összegként. Röviden: $(dW_t)^2 = dt$."),
 
+    {
+      kind: "check",
+      id: "ito-lemma/quadratic-variation",
+      prompt: "Egy $[0, 2]$ intervallumon futó Brown-pályát egyre finomabb lépésekre bontunk. Mihez tart a növekmények négyzetösszege, $\\sum (\\Delta W)^2$?",
+      answer: { type: "number", value: 2, tolerance: 0.01 },
+      explain: "A Brown-mozgás kvadratikus variációja $[0, T]$-n $T$: minden $(\\Delta W)^2$ várható értéke $\\Delta t$, és az összeg ingadozása a lépések finomodásával eltűnik. Itt $T = 2$.",
+    },
     h("Az Itô-lemma"),
     p("Legyen $f(t, x)$ sima függvény, $X_t$ pedig a fenti Itô-folyamat. Az $Y_t = f(t, X_t)$ folyamat növekményét keressük. Fejtsük $f$-et másodrendig Taylor-sorba:"),
     eq("df = \\frac{\\partial f}{\\partial t}\\,dt + \\frac{\\partial f}{\\partial x}\\,dX_t + \\frac{1}{2}\\frac{\\partial^2 f}{\\partial x^2}\\,(dX_t)^2 + \\cdots"),
@@ -108,6 +139,23 @@ export const itoLemma: GuideLessonContent = {
     p("Ez a „Geometriai Brown-mozgás” leckében idézett megoldás, és a $-\\tfrac12\\sigma^2$ korrekció pontosan az Itô-féle extra tag. A naiv analízis $\\mu$ log-driftet jósolt volna."),
     p("Példa: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. A logár évente $0{,}08 - \\tfrac12 \\cdot 0{,}2^2 = 0{,}06$ ütemben sodródik, nem $0{,}08$-cal. $T = 10$ év alatt a logár középpontja $\\ln 100 + 0{,}6$, ami $100\\,e^{0{,}6} \\approx 182{,}21$ medián árnak felel meg. A naiv $\\ln 100 + 0{,}8$ egyenes $100\\,e^{0{,}8} \\approx 222{,}55$-re mutatna, ami a **várható** ár, nem pedig az, ahol egy tipikus pálya végződik."),
 
+    {
+      kind: "worked",
+      title: "A részvényár mediánja és várható értéke az Itô-lemmából",
+      steps: [
+        { text: "Legyen $S_0 = 100$, $\\mu = 10\\%$, $\\sigma = 30\\%$ és $T = 5$. A logár éves driftje.", tex: "\\mu - \\tfrac12\\sigma^2", result: { value: 0.055, tolerance: 0.0005 } },
+        { text: "A medián ár öt év múlva: a logár középpontja, exponenciálisra emelve.", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T}", result: { value: 131.65, tolerance: 0.05 } },
+        { text: "A várható ár öt év múlva.", tex: "S_0\\,e^{\\mu T}", result: { value: 164.87, tolerance: 0.05 } },
+        { text: "A várható érték és a medián hányadosa: az Itô-korrekció mérete a teljes időtávon.", tex: "e^{\\frac12\\sigma^2 T}", result: { value: 1.2523, tolerance: 0.0005 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "ito-lemma/log-drift",
+      prompt: "Egy részvény geometriai Brown-mozgást követ $\\mu = 12\\%$ és $\\sigma = 40\\%$ paraméterekkel. Évente mekkora ütemben sodródik a logára? A választ százalékban add meg.",
+      answer: { type: "number", value: 4, tolerance: 0.05, unit: "%" },
+      explain: "Az Itô-lemma $\\ln S$-re a $\\mu - \\tfrac12\\sigma^2 = 0{,}12 - 0{,}08 = 0{,}04$ driftet adja. A hagyományos láncszabály 12%-ot mondana.",
+    },
     h("A korrekció nagysága"),
     p("Vegyünk egy napot, $\\Delta t = 1/252$, $\\sigma = 20\\%$ mellett. A hozam véletlen része, $\\sigma\\,\\Delta W$, jellemzően kb. $0{,}2 \\times \\sqrt{1/252} \\approx 1{,}26\\%$. Ennek négyzete kb. $\\sigma^2 \\Delta t \\approx 0{,}016\\%$, ugyanolyan nagyságrendű, mint a napi $\\mu\\,\\Delta t \\approx 0{,}032\\%$ drift. Az ilyen négyzetek napról napra összeadva nem átlagolódnak ki, mert sosem negatívak. Ezért változtatja meg a másodrendű tag a driftet, és ezért nem hagyható el."),
 

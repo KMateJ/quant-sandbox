@@ -23,6 +23,23 @@ export const realOptions: GuideLessonContent = {
     p("With $\\delta = 0$ the argument from \"American options and early exercise\" carries over. Investing at time $t$ gives $V_t - I$, while keeping the right is worth at least $V_t - Ie^{-r(T-t)}$, which is larger: waiting delays the payment of $I$ and keeps the protection against a fall in $V$. So with no forgone cash flows it is never optimal to invest before $T$."),
     p("With $\\delta > 0$ waiting has a cost. A project already running pays roughly $\\delta V$ per year, and a firm that waits receives none of it. When the project is deep in the money, a fall below $I$ is unlikely, so the protection is worth little, while the forgone cash flow $\\delta V$ is large because $V$ is large. Then investing at once beats waiting, exactly as a large dividend can make early exercise of an American call optimal."),
 
+    {
+      kind: "check",
+      id: "real-options/no-early-investment",
+      prompt: "A firm holds a three-year licence to build a plant. Waiting costs nothing in forgone cash flows ($\\delta = 0$), and today $V > I$. When should the firm invest?",
+      answer: {
+        type: "choice",
+        options: [
+          "Now, because the static NPV is positive.",
+          "Not before the licence expires; then invest if $V_T > I$.",
+          "As soon as $V$ exceeds $I$ by $\\sigma V$.",
+          "Never: with $\\delta = 0$ the option is worthless.",
+        ],
+        correct: 1,
+      },
+      explain: "With $\\delta = 0$ the option to delay is like an American call on a stock without dividends. Keeping the right is worth at least $V_t - Ie^{-r(T-t)}$, more than the $V_t - I$ from investing now, so investing before $T$ is never optimal.",
+    },
+
     h("Valuation on a binomial tree"),
     p("Split $[0, T]$ into $n$ steps of length $\\Delta t = T/n$. As in \"Multi-step trees and backward induction\", $V$ moves up by $u = e^{\\sigma\\sqrt{\\Delta t}}$ or down by $d = 1/u$ in each step. The forgone cash flows lower the risk-neutral growth of $V$ from $r$ to $r - \\delta$, so the risk-neutral probability is"),
     eq("q = \\frac{e^{(r-\\delta)\\Delta t} - d}{u - d}."),
@@ -30,6 +47,14 @@ export const realOptions: GuideLessonContent = {
     eq("F = \\max\\Big(V - I,\\; e^{-r\\Delta t}\\big[q\\,F_{\\text{up}} + (1-q)\\,F_{\\text{down}}\\big]\\Big)."),
     p("The value $F_0$ at the root is the value of the investment opportunity, called the **expanded NPV**. A now-or-never decision is worth $\\max(V_0 - I, 0)$, since a project with negative NPV is simply rejected. The difference is the value of flexibility."),
     note("Expanded NPV = now-or-never value + value of flexibility, where the now-or-never value is $\\max(V_0 - I, 0)$. Some texts write expanded NPV = static NPV + option premium; with a negative static NPV the premium then also covers the shortfall below zero."),
+
+    {
+      kind: "check",
+      id: "real-options/risk-neutral-q",
+      prompt: "On a tree with one step per year, $\\sigma = 25\\%$, $r = 5\\%$ and $\\delta = 1\\%$, what is the risk-neutral probability $q$ of an up move?",
+      answer: { type: "number", value: 0.5186, tolerance: 0.002 },
+      explain: "$u = e^{0.25} \\approx 1.2840$ and $d = 1/u \\approx 0.7788$, so $q = (e^{0.04} - 0.7788)/(1.2840 - 0.7788) \\approx 0.2620/0.5052 \\approx 0.519$.",
+    },
 
     h("Worked example"),
     p("Let $V_0 = 100$, $I = 105$, $\\sigma = 30\\%$, $r = 5\\%$, $\\delta = 4\\%$ and $T = 3$ years, with one step per year ($\\Delta t = 1$). Then $u = e^{0.3} \\approx 1.3499$, $d \\approx 0.7408$, the one-step discount factor is $e^{-0.05} \\approx 0.9512$, and"),
@@ -88,6 +113,23 @@ export const realOptions: GuideLessonContent = {
     p("$\\delta = 0$ esetén az „Amerikai opciók és korai lehívás” lecke érvelése átvihető. A $t$ időpontban beruházva $V_t - I$-t kapunk, a jog megtartása viszont legalább $V_t - Ie^{-r(T-t)}$-t ér, ami nagyobb: a várakozás későbbre tolja $I$ kifizetését, és megőrzi a védelmet $V$ esése ellen. Elmaradó pénzáramok nélkül tehát sosem optimális $T$ előtt beruházni."),
     p("$\\delta > 0$ esetén a várakozásnak ára van. Egy már működő projekt évente nagyjából $\\delta V$-t fizet, a váró vállalat ebből semmit sem kap meg. Ha a projekt mélyen pénzben van, $V$ csak kis eséllyel esik $I$ alá, így a védelem keveset ér, az elmaradó $\\delta V$ pénzáram viszont nagy, mert $V$ nagy. Ilyenkor az azonnali beruházás jobb a várakozásnál, ahogy egy nagy osztalék is optimálissá teheti egy amerikai call korai lehívását."),
 
+    {
+      kind: "check",
+      id: "real-options/no-early-investment",
+      prompt: "Egy vállalat hároméves engedéllyel rendelkezik egy üzem megépítésére. A várakozás nem jár elmaradó pénzáramlással ($\\delta = 0$), és ma $V > I$. Mikor érdemes beruháznia?",
+      answer: {
+        type: "choice",
+        options: [
+          "Most, mert a statikus NPV pozitív.",
+          "Az engedély lejárta előtt nem; akkor pedig, ha $V_T > I$.",
+          "Amint $V$ legalább $\\sigma V$-vel meghaladja $I$-t.",
+          "Soha: $\\delta = 0$ mellett az opció értéktelen.",
+        ],
+        correct: 1,
+      },
+      explain: "$\\delta = 0$ mellett a halasztási opció olyan, mint egy osztalékot nem fizető részvényre szóló amerikai vételi opció. A jog megtartása legalább $V_t - Ie^{-r(T-t)}$-t ér, többet, mint a mostani beruházás $V_t - I$ értéke, így $T$ előtt sosem optimális beruházni.",
+    },
+
     h("Értékelés binomiális fán"),
     p("Osszuk a $[0, T]$ intervallumot $n$ darab $\\Delta t = T/n$ hosszú lépésre. A „Többlépéses fák és visszafelé indukció” leckéhez hasonlóan $V$ minden lépésben $u = e^{\\sigma\\sqrt{\\Delta t}}$-szeresére nő vagy $d = 1/u$-szorosára csökken. Az elmaradó pénzáramok $V$ kockázatsemleges növekedését $r$-ről $r - \\delta$-ra csökkentik, így a kockázatsemleges valószínűség"),
     eq("q = \\frac{e^{(r-\\delta)\\Delta t} - d}{u - d}."),
@@ -95,6 +137,14 @@ export const realOptions: GuideLessonContent = {
     eq("F = \\max\\Big(V - I,\\; e^{-r\\Delta t}\\big[q\\,F_{\\text{fel}} + (1-q)\\,F_{\\text{le}}\\big]\\Big)."),
     p("A gyökérben kapott $F_0$ a beruházási lehetőség értéke, a **kiterjesztett NPV**. Egy most-vagy-soha döntés $\\max(V_0 - I, 0)$-t ér, hiszen a negatív NPV-jű projektet egyszerűen elvetjük. A kettő különbsége a rugalmasság értéke."),
     note("Kiterjesztett NPV = most-vagy-soha érték + a rugalmasság értéke, ahol a most-vagy-soha érték $\\max(V_0 - I, 0)$. Egyes tankönyvek a kiterjesztett NPV = statikus NPV + opciós prémium alakot használják; negatív statikus NPV esetén ez a prémium a nulla alatti hiányt is fedezi."),
+
+    {
+      kind: "check",
+      id: "real-options/risk-neutral-q",
+      prompt: "Évente egy lépéses fán $\\sigma = 25\\%$, $r = 5\\%$ és $\\delta = 1\\%$. Mekkora a felfelé lépés $q$ kockázatsemleges valószínűsége?",
+      answer: { type: "number", value: 0.5186, tolerance: 0.002 },
+      explain: "$u = e^{0{,}25} \\approx 1{,}2840$ és $d = 1/u \\approx 0{,}7788$, így $q = (e^{0{,}04} - 0{,}7788)/(1{,}2840 - 0{,}7788) \\approx 0{,}2620/0{,}5052 \\approx 0{,}519$.",
+    },
 
     h("Számpélda"),
     p("Legyen $V_0 = 100$, $I = 105$, $\\sigma = 30\\%$, $r = 5\\%$, $\\delta = 4\\%$ és $T = 3$ év, évente egy lépéssel ($\\Delta t = 1$). Ekkor $u = e^{0{,}3} \\approx 1{,}3499$, $d \\approx 0{,}7408$, az egylépéses diszkontfaktor $e^{-0{,}05} \\approx 0{,}9512$, és"),

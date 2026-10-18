@@ -171,12 +171,15 @@ export type ScatterChartProps = {
   yLabel?: string;
   xTickValues?: number[];
   yNumTicks?: number;
-  onSelectPoint?: (index: number) => void;
-  onDragStart?: (index: number) => void;
+  /// `seriesKey` tells which series the point belongs to when several have markers.
+  onSelectPoint?: (index: number, seriesKey: string) => void;
+  onDragStart?: (index: number, seriesKey: string) => void;
   onDragEnd?: () => void;
   /// Fires with data coordinates while a draggable marker is being dragged.
-  /// `index` is the position of the grabbed point within its series.
-  onDrag?: (x: number, y: number, index: number) => void;
+  /// `index` is the position of the grabbed point within the series `seriesKey`.
+  onDrag?: (x: number, y: number, index: number, seriesKey: string) => void;
   /// Fires with data coordinates when empty plot area is clicked (enables a crosshair cursor).
   onPlotClick?: (x: number, y: number) => void;
+  /// Interactive overlay (e.g. DragHandles, SketchLayer) drawn above the series, in plot coordinates.
+  layer?: (frame: PlotFrame) => ReactNode;
 };

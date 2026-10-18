@@ -9,6 +9,7 @@ import App from "./App.tsx";
 import AppProviders from "./AppProviders";
 import "./styles/main.scss";
 import "katex/dist/katex.min.css";
+import { PRERENDER_LANGUAGE, savedLanguage } from "./languageStorage";
 
 const root = document.getElementById("root")!;
 const app = (
@@ -22,6 +23,12 @@ const app = (
   </StrictMode>
 );
 
-// Production pages arrive pre-rendered (see seo.plugin.ts): hydrate them; the dev server's empty root mounts fresh.
-if (root.hasChildNodes()) hydrateRoot(root, app);
-else createRoot(root).render(app);
+// Production pages arrive pre-rendered in English (see seo.plugin.ts): hydrate them when the reader also reads English.
+// In another language the markup can't match (lazy modules hydrate after any switch), so render fresh instead of
+// letting React discard it with error #418; crawlers and the first paint still get the pre-rendered HTML.
+const language = savedLanguage() ?? PRERENDER_LANGUAGE;
+if (root.hasChildNodes() && language === PRERENDER_LANGUAGE) hydrateRoot(root, app);
+else {
+  root.replaceChildren();
+  createRoot(root).render(app);
+}

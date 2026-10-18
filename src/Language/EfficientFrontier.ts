@@ -54,6 +54,11 @@ export const efficientFrontierHu = {
   optAllocationTitle: "Portfólió összetétel",
   optColAsset: "Eszköz",
   optColWeight: "Súly",
+  optPreviewTitle: "Határpont előnézete",
+  optPointReadout: "σ {{vol}} · μ {{ret}}",
+  optBrushAria: "Pont a hatékony határon (nyilakkal léptethető)",
+  optBrushHint:
+    "Vidd az egeret a határgörbe vagy az összetétel fölé az előnézethez; kattintással vagy húzással rögzítheted a kiválasztást. Célhozam / célvolatilitás módban a célvonal húzható.",
   optInfeasible:
     "A cél a korlátok mellett nem érhető el – a legközelebbi megengedett portfólió látható.",
 };
@@ -114,6 +119,11 @@ export const efficientFrontierEn = {
   optAllocShort: "Short",
   optColAsset: "Asset",
   optColWeight: "Weight",
+  optPreviewTitle: "Previewing frontier point",
+  optPointReadout: "σ {{vol}} · μ {{ret}}",
+  optBrushAria: "Point on the efficient frontier (arrow keys step along it)",
+  optBrushHint:
+    "Hover the frontier or the composition to preview a portfolio; click or drag to pin the selection. In target-return / target-volatility mode, drag the target line.",
   optInfeasible:
     "The target is not reachable under the constraints — showing the closest feasible portfolio.",
 };

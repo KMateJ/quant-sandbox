@@ -7,8 +7,8 @@ import type {
 } from "../../components/charts";
 import { useI18n } from "../../i18n";
 import {
-  bondPrice,
-  priceYieldCurve,
+  streamPrice,
+  streamPriceYieldCurve,
   durationApproxCurve,
   durationConvexityApproxCurve,
 } from "./bondPricing.math";
@@ -17,7 +17,10 @@ import { BOND_COLORS } from "./bondColors";
 export type PriceYieldProps = {
   face: number;
   coupon: number;
-  years: number;
+  /// The stream being priced (the standard bond's flows unless the reader reshaped them).
+  flows: number[];
+  /// Custom flows have no par coupon, so the par point and premium/discount regions are hidden.
+  custom: boolean;
   freq: number;
   ytm: number;
   price: number;
@@ -32,7 +35,8 @@ export type PriceYieldProps = {
 export function usePriceYieldExplorer({
   face,
   coupon,
-  years,
+  flows,
+  custom,
   freq,
   ytm,
   price,
@@ -45,13 +49,13 @@ export function usePriceYieldExplorer({
   const [showConvexity, setShowConvexity] = useState(false);
 
   const curve = useMemo(
-    () => priceYieldCurve(face, coupon, years, freq, maxYtm, 80),
-    [face, coupon, years, freq, maxYtm]
+    () => streamPriceYieldCurve(flows, freq, maxYtm, 80),
+    [flows, freq, maxYtm]
   );
 
   const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
   const num = (v: number) => v.toFixed(2);
-  const yTop = bondPrice(face, coupon, 0.001, years, freq);
+  const yTop = Math.max(streamPrice(flows, 0.001, freq), face, 1);
   const yMax = yTop * 1.05;
 
   const durCurve = useMemo(
@@ -123,7 +127,7 @@ export function usePriceYieldExplorer({
           } as ScatterSeries,
         ]
       : []),
-    {
+    ...(custom ? [] : [{
       key: "par",
       label: t("bondPyPar"),
       color: BOND_COLORS.par,
@@ -131,7 +135,7 @@ export function usePriceYieldExplorer({
       hollow: true,
       legend: false,
       points: [{ x: coupon, y: face, label: t("bondPyPar") }],
-    },
+    }]),
     {
       key: "current",
       label: t("bondPyCurrent"),
@@ -143,7 +147,7 @@ export function usePriceYieldExplorer({
     },
   ];
 
-  const bands: ScatterBand[] = [
+  const bands: ScatterBand[] = custom ? [] : [
     { from: 0, to: coupon, color: "#22c55e", opacity: 0.05, label: t("bondPyPremium"), labelColor: "#22c55e" },
     { from: coupon, to: maxYtm, color: "#ef4444", opacity: 0.045, label: t("bondPyDiscount"), labelColor: "#ef4444" },
   ];
@@ -151,7 +155,7 @@ export function usePriceYieldExplorer({
   const referenceLines: ChartReferenceLine[] = [
     { axis: "x", value: ytm, color: BOND_COLORS.current, dash: "4 4" },
     { axis: "y", value: price, color: BOND_COLORS.current, dash: "4 4" },
-    { axis: "y", value: face, color: BOND_COLORS.par, dash: "2 4" },
+    ...(custom ? [] : [{ axis: "y" as const, value: face, color: BOND_COLORS.par, dash: "2 4" }]),
   ];
 
   // Keep the two point labels apart: place the current label on the side away from
@@ -169,15 +173,15 @@ export function usePriceYieldExplorer({
       dy: -10 - sep,
       anchor: curRight ? "start" : "end",
     },
-    {
+    ...(custom ? [] : [{
       x: coupon,
       y: face,
       text: t("bondPyPar"),
       color: BOND_COLORS.par,
       dx: curRight ? -8 : 8,
       dy: 18 + sep,
-      anchor: curRight ? "end" : "start",
-    },
+      anchor: curRight ? ("end" as const) : ("start" as const),
+    }]),
   ];
 
   return { series, bands, referenceLines, annotations, yMax, showDuration, setShowDuration, showConvexity, setShowConvexity };

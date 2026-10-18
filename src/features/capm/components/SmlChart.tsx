@@ -19,13 +19,15 @@ type Props = {
   maxBeta: number;
   isMobile: boolean;
   onDrag: (x: number, y: number) => void;
+  /// The market point (β = 1) dragged vertically to a new E[rm].
+  onMarketDrag: (y: number) => void;
 };
 
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 const signed = (v: number) => `${v >= 0 ? "+" : ""}${(v * 100).toFixed(1)}%`;
 
 /// Security market line with directly-labelled risk-free, market, CAPM and asset points
-/// plus a draggable asset marker and a vertical alpha segment.
+/// plus draggable market (tilts the SML) and asset markers and a vertical alpha segment.
 export default function SmlChart({
   riskFree,
   marketReturn,
@@ -37,6 +39,7 @@ export default function SmlChart({
   maxBeta,
   isMobile,
   onDrag,
+  onMarketDrag,
 }: Props) {
   const { t } = useI18n();
   const accent = alphaColor(jensenAlpha);
@@ -75,13 +78,7 @@ export default function SmlChart({
       radius: 6,
       points: [{ x: 0, y: riskFree, label: t("capmRiskFreePoint") }],
     },
-    {
-      key: "market",
-      label: t("capmMarketPoint"),
-      color: CAPM_COLORS.market,
-      radius: 7,
-      points: [{ x: 1, y: marketReturn, label: t("capmMarketPoint") }],
-    },
+    { key: "market", label: t("capmMarketPoint"), color: CAPM_COLORS.market, points: [] },
     {
       key: "capm",
       label: t("capmCapmPoint"),
@@ -89,13 +86,19 @@ export default function SmlChart({
       radius: 6,
       points: [{ x: beta, y: required, label: t("capmCapmPoint") }],
     },
+    { key: "asset", label: t("capmSelectedPoint"), color: accent, points: [] },
     {
-      key: "asset",
+      // Both handles share one series so the drag index tells them apart: 0 = market, 1 = asset.
+      key: "handles",
       label: t("capmSelectedPoint"),
       color: accent,
       radius: 8,
       draggable: true,
-      points: [{ x: beta, y: actualReturn, label: t("capmSelectedPoint") }],
+      legend: false,
+      points: [
+        { x: 1, y: marketReturn, label: t("capmMarketPoint"), color: CAPM_COLORS.market },
+        { x: beta, y: actualReturn, label: t("capmSelectedPoint") },
+      ],
     },
   ];
 
@@ -124,7 +127,7 @@ export default function SmlChart({
       yFormat={pct}
       xLabel={t("capmBetaAxis")}
       yLabel={t("capmReturnAxis")}
-      onDrag={onDrag}
+      onDrag={(x, y, index) => (index === 0 ? onMarketDrag(y) : onDrag(x, y))}
     />
   );
 }

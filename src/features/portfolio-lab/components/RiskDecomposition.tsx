@@ -1,6 +1,7 @@
 import { Panel } from "../../../components/layout";
 import { DataTable, type DataColumn } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
+import { CASH_COLOR } from "../portfolioLab.colors";
 import type { Asset } from "../portfolioLab.types";
 
 type AssetRow = {
@@ -22,7 +23,6 @@ type Props = {
   cashLabel: string;
 };
 
-const CASH_COLOR = "#94a3b8";
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
 /// Per-asset weight / risk-contribution breakdown table.

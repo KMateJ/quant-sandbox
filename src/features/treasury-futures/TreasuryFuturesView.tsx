@@ -114,7 +114,7 @@ export default function TreasuryFuturesView() {
         </div>
         <ChartContainer title={<span>{data.id === "bund" ? t("tfConversionExplorer") : t("tfSwitching")}
           <IntuitionTrigger sectionId={data.id === "bund" ? "conversion-factor" : "net-basis"} /></span>}>
-          {data.id !== "bund" && ctd && <DeliveryChart bonds={data.bonds} futures={data.futures} selected={ctd.id} />}
+          {data.id !== "bund" && ctd && <DeliveryChart bonds={data.bonds} futures={data.futures} selected={ctd.id} onFutures={(futures) => setData((d) => ({ ...d, futures }))} />}
           {data.id !== "bund" && ctd && <p className="tf-explanation"><strong>{t("tfBond")} {ctd.id} · {ctd.netBasis.toFixed(4)}.</strong> {t("tfWhyCtd")}</p>}
           {data.id === "bund" && <p className="tf-explanation">{t("tfNoMarketPrices")}</p>}
         </ChartContainer>

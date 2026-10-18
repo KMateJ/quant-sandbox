@@ -14,6 +14,7 @@ import TimeCursorControl from "./TimeCursorControl";
 import { extremaUpTo, firstPassageTimes, maxTailProbability, nextHittingPath, reflectAfterHit, tailFraction } from "./pathGeometry.math";
 import { curve, curvesExtent, level, marker } from "./pathGeometry.overlays";
 import { pathPoints } from "./brownianFundamentals.math";
+import { REFLECTION_URL_SCHEMA } from "./stochStudio.url";
 import { usePathGeometry } from "./usePathGeometry";
 import { useTimeCursor } from "./useTimeCursor";
 
@@ -21,10 +22,10 @@ const LEVELS = Array.from({ length: 31 }, (_, i) => i / 10);
 
 export default function ReflectionExplore() {
   const { t } = useI18n();
-  const sim = usePathGeometry(2000);
+  const sim = usePathGeometry(REFLECTION_URL_SCHEMA);
   const { cloud } = sim;
   const cursor = useTimeCursor(cloud.steps);
-  const [barrier, setBarrier] = useState(1);
+  const barrier = sim.url.a;
   const [pathCursor, setPathCursor] = useState(0);
 
   const times = useMemo(() => firstPassageTimes(cloud, barrier), [cloud, barrier]);
@@ -69,7 +70,7 @@ export default function ReflectionExplore() {
       <aside className="stoch-sidebar">
         <GeometrySimControls sim={sim}>
           <ControlGroup label={t("pgBarrier")} hint={<span className="stoch-control-hint">{t("pgReflBarrierHint")}</span>}>
-            <SliderField label="a" min={0.2} max={2.5} step={0.05} value={barrier} onChange={setBarrier} formatValue={(v) => v.toFixed(2)} />
+            <SliderField label="a" min={0.2} max={2.5} step={0.05} value={barrier} onChange={(a) => sim.setUrl({ a })} formatValue={(v) => v.toFixed(2)} />
           </ControlGroup>
           <TimeCursorControl cursor={cursor} steps={cloud.steps} labelKey="pgReflAnimation" />
           <button className="preset-btn" type="button" onClick={() => setPathCursor(nextHittingPath(times, path))}>

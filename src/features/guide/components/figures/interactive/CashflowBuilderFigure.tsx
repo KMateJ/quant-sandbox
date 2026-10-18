@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
-import { ParentSize } from "@visx/responsive";
+import { DraggableBars } from "../../../../../components/charts";
 import SliderField from "../../../../../components/SliderField";
 import { useI18n } from "../../../../../i18n";
-import { CASHFLOW_DEFAULTS, presentValues, summarizeCashflows } from "../../../guide.interactive.cashflowBuilder.math";
+import { CASHFLOW_DEFAULTS, CASHFLOW_MAX, CASHFLOW_MIN, presentValues, summarizeCashflows } from "../../../guide.interactive.cashflowBuilder.math";
 import GuideFigure from "../../GuideFigure";
 import FigureReadout from "../FigureReadout";
 import { fmt, pct } from "../figureFormat";
-import CashflowBuilderChart from "./CashflowBuilderChart";
 
 /// Project cash flows the reader drags into shape; lighter bars show each flow's present value.
 export default function CashflowBuilderFigure() {
@@ -35,14 +34,17 @@ export default function CashflowBuilderFigure() {
         </button>
       </div>
       <p className="ixcf-hint">{t("ixCfHint")}</p>
-      <div className="gf-chart ixcf-chart" role="group" aria-label={t("ixCfAria")}>
-        <ParentSize>
-          {({ width, height }) =>
-            width > 0 && height > 0 ? (
-              <CashflowBuilderChart width={width} height={height} flows={flows} pvs={pvs} onChange={setFlow} />
-            ) : null
-          }
-        </ParentSize>
+      <div className="gf-chart ixcf-chart">
+        <DraggableBars
+          values={flows}
+          shadows={pvs}
+          onChange={setFlow}
+          min={CASHFLOW_MIN}
+          max={CASHFLOW_MAX}
+          domain={[CASHFLOW_MIN - 20, CASHFLOW_MAX + 20]}
+          barAriaLabel={(year) => t("ixCfBarAria", { year })}
+          ariaLabel={t("ixCfAria")}
+        />
       </div>
       <div className="ixcf-legend" aria-hidden="true">
         <span className="ixcf-key flow">{t("ixCfLegendFlow")}</span>

@@ -6,6 +6,8 @@
 @use "shell";
 @use "primitives";
 @use "playback";
+@use "lab-primitives";
+@use "tvm";
 @use "intuition";
 @use "mobile";
 @use "binomial";
@@ -14,6 +16,7 @@
 @use "guide-graph";
 @use "guide-interactive";
 @use "guide-interactive2";
+@use "guide-stochastic";
 @use "capm";
 @use "portfolio";
 @use "duration";

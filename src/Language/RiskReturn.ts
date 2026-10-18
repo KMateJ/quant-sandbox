@@ -39,6 +39,19 @@ export const riskReturnHu = {
   riskReturnResultVol: "Volatilitás",
   riskReturnResultSharpe: "Sharpe",
   riskReturnResultWeight: "Kockázatos súly",
+  riskReturnOptimalPoint: "Optimális portfólió",
+  riskReturnIndifference: "Közömbösségi görbe",
+  riskReturnOptimalGroup: "Kockázatkerülés és optimum",
+  riskReturnRiskAversionLabel: "Kockázatkerülés A",
+  riskReturnOptimalReadout: "Optimális kockázatos súly y* = (μ − rf) / (Aσ²) = {{value}}.",
+  riskReturnOptimalClamped: "A megengedett tartományban: {{value}}.",
+  riskReturnUseOptimal: "Optimális súly használata",
+  riskReturnAssetDragHint:
+    "Húzd az eszközpontokat a μ és σ módosításához; a CAL élőben fordul. A szaggatott görbe az y*-on átmenő közömbösségi görbe.",
+  riskReturnRgPrompt:
+    "Mekkora lesz a portfólió hozama jövőre? Adj meg egy 90%-os sávot (most E[rₚ] = {{mu}}, σₚ = {{sigma}}).",
+  riskReturnRgHint: "A felfedés egy évet sorsol az N(E[rₚ], σₚ²) eloszlásból; minden kör új év. Egy bemenet módosítása új kört indít.",
+  riskReturnRgTextbook: "Tankönyvi 90%: E ± 1,645σ",
 };
 
 export const riskReturnEn = {
@@ -82,4 +95,17 @@ export const riskReturnEn = {
   riskReturnResultVol: "Volatility",
   riskReturnResultSharpe: "Sharpe",
   riskReturnResultWeight: "Risky weight",
+  riskReturnOptimalPoint: "Optimal portfolio",
+  riskReturnIndifference: "Indifference curve",
+  riskReturnOptimalGroup: "Risk aversion & optimum",
+  riskReturnRiskAversionLabel: "Risk aversion A",
+  riskReturnOptimalReadout: "Optimal risky weight y* = (μ − rf) / (Aσ²) = {{value}}.",
+  riskReturnOptimalClamped: "Within the allowed range: {{value}}.",
+  riskReturnUseOptimal: "Use optimal weight",
+  riskReturnAssetDragHint:
+    "Drag the asset points to change μ and σ; the CAL pivots live. The dashed curve is the indifference curve through y*.",
+  riskReturnRgPrompt:
+    "What will the portfolio return next year? Set a 90% range (now E[rₚ] = {{mu}}, σₚ = {{sigma}}).",
+  riskReturnRgHint: "Reveal draws one year from N(E[rₚ], σₚ²); every round is a fresh year. Changing an input starts a new round.",
+  riskReturnRgTextbook: "Textbook 90%: E ± 1.645σ",
 };

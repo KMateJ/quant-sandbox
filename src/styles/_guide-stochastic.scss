@@ -1,0 +1,96 @@
+// Figures of the stochastic-calculus foundation lessons (σ-algebra tiles, filtration tree).
+
+$blocks: (0: --chart-1, 1: --chart-2, 2: --chart-3, 3: --chart-4, 4: --chart-5, 5: --chart-6);
+
+@each $i, $token in $blocks {
+  .gs-block-#{$i} {
+    --gs-block: var(#{$token});
+  }
+}
+
+.gs-tiles {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gs-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  border: 1px solid var(--gs-block);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--gs-block) 14%, var(--surface));
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text);
+}
+
+.gs-tile-omega {
+  font-weight: 600;
+}
+
+.gs-tile-cond {
+  color: var(--muted);
+}
+
+.gs-tree {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: var(--space-3) 0;
+}
+
+.gs-atom {
+  fill: color-mix(in srgb, var(--gs-block) 14%, transparent);
+  stroke: var(--gs-block);
+  stroke-width: 1;
+}
+
+.gs-edge {
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+
+  &.is-known {
+    stroke: var(--text);
+    stroke-dasharray: none;
+  }
+}
+
+.gs-flip {
+  font-size: 12px;
+  fill: var(--muted);
+  opacity: 0.4;
+
+  &.is-known {
+    opacity: 1;
+    fill: var(--text);
+  }
+}
+
+.gs-node {
+  fill: var(--text);
+}
+
+.gs-leaf {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--text);
+}
+
+.gs-verdict {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .gs-tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

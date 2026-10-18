@@ -17,11 +17,25 @@ export const monteCarloPricing: GuideLessonContent = {
     p("This is the **standard error** of the estimate. It falls like $1/\\sqrt{N}$, the same square-root law that governed the random walk in \"Random walks and Brownian motion\". The consequence is sobering: to make the error 10 times smaller you need 100 times as many simulations."),
     note("Monte Carlo error: $\\operatorname{SE} = s/\\sqrt{N}$. One extra digit of accuracy costs a hundredfold more draws."),
 
+    {
+      kind: "check",
+      id: "monte-carlo-pricing/draws-for-se",
+      prompt: "With $N = 10\\,000$ draws the standard error of a price estimate is $0.20$. How many draws give a standard error of $0.05$?",
+      answer: { type: "number", value: 160000, tolerance: 1 },
+      explain: "The standard error falls like $1/\\sqrt{N}$. Quartering it needs $4^2 = 16$ times as many draws: $160\\,000$.",
+    },
     h("Confidence intervals"),
     p("By the central limit theorem, for large $N$ the estimate $\\hat\\mu_N$ is approximately normal around the true mean with standard deviation $\\operatorname{SE}$. The true value $s$ is unknown, so we use the sample standard deviation of the draws in its place. An approximate **95% confidence interval** for $\\mathbb{E}[X]$ is"),
     eq("\\hat\\mu_N \\pm 1.96\\,\\frac{s}{\\sqrt{N}}."),
     p("If the whole experiment were repeated many times, about 95% of such intervals would contain the true mean. Always report a Monte Carlo estimate together with its interval: the estimate alone says nothing about how much to trust it."),
 
+    {
+      kind: "check",
+      id: "monte-carlo-pricing/ci-upper",
+      prompt: "A Monte Carlo estimate is $10.40$ with standard error $0.15$. What is the upper end of the 95% confidence interval?",
+      answer: { type: "number", value: 10.694, tolerance: 0.002 },
+      explain: "$10.40 + 1.96 \\cdot 0.15 = 10.694$; the interval is $[10.106,\\ 10.694]$.",
+    },
     h("Pricing a European call"),
     p("\"Risk-neutral probabilities\" showed that a derivative's price is its discounted expected payoff under the measure $\\mathbb{Q}$. For a European call with strike $K$ and maturity $T$,"),
     eq("C_0 = e^{-rT}\\,\\mathbb{E}^{\\mathbb{Q}}\\big[\\max(S_T - K,\\ 0)\\big]."),
@@ -45,6 +59,16 @@ export const monteCarloPricing: GuideLessonContent = {
       "$Z = -0.3$: $S_T = 100\\,e^{-0.03} \\approx 97.04$, payoff $0$.",
     ),
     p("The average payoff is $58.11 / 5 \\approx 11.62$, and discounting gives $11.62\\,e^{-0.05} \\approx 11.05$. The Black–Scholes price for these inputs is $10.45$. Five draws are far too few: the estimate is in the right region, but its error is large."),
+
+    {
+      kind: "worked",
+      title: "One more draw, step by step",
+      steps: [
+        { text: "With the same inputs ($S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$), take the draw $Z = 0.8$. Terminal price.", tex: "S_T = S_0\\,e^{(r - \\frac12\\sigma^2)T + \\sigma\\sqrt{T}\\,Z}", result: { value: 120.92, tolerance: 0.01 } },
+        { text: "Payoff of the call.", tex: "(S_T - K)^+", result: { value: 20.92, tolerance: 0.01 } },
+        { text: "Discounted payoff, this draw's contribution to the average.", tex: "e^{-rT}(S_T - K)^+", result: { value: 19.9, tolerance: 0.01 } },
+      ],
+    },
 
     h("Comparing with Black–Scholes"),
     p("For these inputs the standard deviation of one discounted payoff is about $s \\approx 14.72$, larger than the price itself, because most of the value comes from a minority of paths that end far in the money. The standard error and the half-width of the 95% interval are therefore"),
@@ -88,11 +112,25 @@ export const monteCarloPricing: GuideLessonContent = {
     p("Ez a becslés **standard hibája**. $1/\\sqrt{N}$-ként csökken, ugyanazzal a négyzetgyökös törvénnyel, amely a „Véletlen bolyongás és Brown-mozgás” lecke bolyongását is irányította. A következmény kijózanító: a hiba tizedére csökkentéséhez százszor annyi szimuláció kell."),
     note("Monte Carlo-hiba: $\\operatorname{SE} = s/\\sqrt{N}$. Egy további tizedesjegy pontosság százszor annyi sorsolásba kerül."),
 
+    {
+      kind: "check",
+      id: "monte-carlo-pricing/draws-for-se",
+      prompt: "$N = 10\\,000$ húzással egy árbecslés standard hibája $0{,}20$. Hány húzás kell a $0{,}05$-ös standard hibához?",
+      answer: { type: "number", value: 160000, tolerance: 1 },
+      explain: "A standard hiba $1/\\sqrt{N}$ szerint csökken. A negyedére csökkentéshez $4^2 = 16$-szor annyi húzás kell: $160\\,000$.",
+    },
     h("Konfidenciaintervallum"),
     p("A centrális határeloszlás-tétel szerint nagy $N$ esetén $\\hat\\mu_N$ közelítőleg normális eloszlású a valódi várható érték körül, $\\operatorname{SE}$ szórással. A valódi $s$ ismeretlen, ezért a sorsolások mintabeli szórását használjuk helyette. Az $\\mathbb{E}[X]$ közelítő **95%-os konfidenciaintervalluma**"),
     eq("\\hat\\mu_N \\pm 1{,}96\\,\\frac{s}{\\sqrt{N}}."),
     p("Ha a teljes kísérletet sokszor megismételnénk, az ilyen intervallumok kb. 95%-a tartalmazná a valódi várható értéket. Monte Carlo-becslést mindig az intervallumával együtt közölj: a becslés önmagában semmit sem mond arról, mennyire lehet megbízni benne."),
 
+    {
+      kind: "check",
+      id: "monte-carlo-pricing/ci-upper",
+      prompt: "Egy Monte Carlo-becslés $10{,}40$, a standard hibája $0{,}15$. Mennyi a 95%-os konfidenciaintervallum felső végpontja?",
+      answer: { type: "number", value: 10.694, tolerance: 0.002 },
+      explain: "$10{,}40 + 1{,}96 \\cdot 0{,}15 = 10{,}694$; az intervallum $[10{,}106;\\ 10{,}694]$.",
+    },
     h("Egy európai call árazása"),
     p("A „Kockázatsemleges valószínűségek” lecke megmutatta, hogy egy derivatíva ára a $\\mathbb{Q}$ mérték szerinti diszkontált várható kifizetése. Egy $K$ kötési árú, $T$ lejáratú európai callra"),
     eq("C_0 = e^{-rT}\\,\\mathbb{E}^{\\mathbb{Q}}\\big[\\max(S_T - K,\\ 0)\\big]."),
@@ -116,6 +154,16 @@ export const monteCarloPricing: GuideLessonContent = {
       "$Z = -0{,}3$: $S_T = 100\\,e^{-0{,}03} \\approx 97{,}04$, kifizetés $0$.",
     ),
     p("Az átlagos kifizetés $58{,}11 / 5 \\approx 11{,}62$, diszkontálva $11{,}62\\,e^{-0{,}05} \\approx 11{,}05$. Ezekre az adatokra a Black–Scholes-ár $10{,}45$. Öt sorsolás messze kevés: a becslés jó tartományban van, de a hibája nagy."),
+
+    {
+      kind: "worked",
+      title: "Még egy húzás, lépésről lépésre",
+      steps: [
+        { text: "Ugyanazokkal a bemenetekkel ($S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$) vegyük a $Z = 0{,}8$ húzást. A lejárati ár.", tex: "S_T = S_0\\,e^{(r - \\frac12\\sigma^2)T + \\sigma\\sqrt{T}\\,Z}", result: { value: 120.92, tolerance: 0.01 } },
+        { text: "A call kifizetése.", tex: "(S_T - K)^+", result: { value: 20.92, tolerance: 0.01 } },
+        { text: "A diszkontált kifizetés: ennek a húzásnak a hozzájárulása az átlaghoz.", tex: "e^{-rT}(S_T - K)^+", result: { value: 19.9, tolerance: 0.01 } },
+      ],
+    },
 
     h("Összevetés a Black–Scholes-árral"),
     p("Ezekre az adatokra egyetlen diszkontált kifizetés szórása kb. $s \\approx 14{,}72$, nagyobb, mint maga az ár, mert az érték nagy része a pályák kisebb hányadából származik, amelyek mélyen pénzben végződnek. A standard hiba és a 95%-os intervallum fél szélessége így"),

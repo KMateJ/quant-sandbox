@@ -17,6 +17,13 @@ export const americanOptions: GuideLessonContent = {
     p("written here for a put, with $q = (e^{r\\Delta t} - d)/(u - d)$ as before. At maturity the value is the payoff. Nodes where the exercise value is larger form the **exercise region**: if the stock reaches such a node, the holder exercises there."),
     note("**American option in a tree.** At every node take the larger of the intrinsic value and the continuation value. A node where the intrinsic value wins is a node where the option is exercised."),
 
+    {
+      kind: "check",
+      id: "american-options/node-value",
+      prompt: "At a node of the tree $S = 80$, the strike of an American put is $K = 100$, and the continuation value is $18.5$. What is the node worth?",
+      answer: { type: "number", value: 20, tolerance: 0.01 },
+      explain: "The node takes the larger of the intrinsic value $100 - 80 = 20$ and the continuation value $18.5$, so 20, and the put is exercised there.",
+    },
     h("Worked example"),
     p("Take the two-step tree of \"Multi-step trees and backward induction\": $S_0 = 100$, $T = 1$, $\\sigma = 20\\%$, $r = 5\\%$, $n = 2$, so $u \\approx 1.1519$, $d \\approx 0.8681$, $q \\approx 0.5539$ and the one-step discount factor is $e^{-0.025} \\approx 0.9753$. Price a put with $K = 100$."),
     steps(
@@ -30,12 +37,42 @@ export const americanOptions: GuideLessonContent = {
     p("The figure below draws the same tree node by node. Every node shows the stock price $S$ and the put value $P$; nodes where exercising now beats waiting are highlighted. Select 2 steps and click the lower node after one step: the panel writes out the continuation value $0.9753\\,(0.5539\\cdot 0 + 0.4461\\cdot 24.64) \\approx 10.72$, the intrinsic value $13.19$, and their maximum. Switch the rule to European and that node falls back to its continuation value, so the root drops from $5.74$ to $4.66$. With more steps more nodes near the bottom of the tree are exercised, and the premium readout shows how much the right is worth at each tree size (for example $0.33$ with 3 steps and $0.79$ with 4); the coarse trees jump around before settling, as in \"Multi-step trees and backward induction\"."),
     figure("american-tree"),
 
+    p("Repeat the calculation with a higher strike, $K = 105$, on the same tree."),
+    {
+      kind: "worked",
+      title: "American and European put with K = 105 on the two-step tree",
+      steps: [
+        { text: "Put payoff at the lowest final node, $S = 100d^2$.", tex: "K - 100d^2", result: { value: 29.64, tolerance: 0.01 } },
+        { text: "Upper node after one step: continuation value (its intrinsic value is 0, since $S > K$).", tex: "e^{-r\\Delta t}\\big[q \\cdot 0 + (1-q)(K - 100)\\big]", result: { value: 2.18, tolerance: 0.01 } },
+        { text: "Lower node: continuation value.", tex: "e^{-r\\Delta t}\\big[q\\,(K - 100) + (1-q)(K - 100d^2)\\big]", result: { value: 15.6, tolerance: 0.01 } },
+        { text: "Lower node: intrinsic value, which beats the continuation value, so the put is exercised there.", tex: "K - 100d", result: { value: 18.19, tolerance: 0.01 } },
+        { text: "American put at the root (the intrinsic value 5 is lower, so the holder waits).", tex: "e^{-r\\Delta t}\\big[q\\,V_u + (1-q)\\,V_d\\big]", result: { value: 9.09, tolerance: 0.01 } },
+        { text: "European put at the root, using the continuation value at the lower node.", tex: "e^{-r\\Delta t}\\big[q\\,C_u + (1-q)\\,C_d\\big]", result: { value: 7.96, tolerance: 0.01 } },
+      ],
+    },
+
     h("No early exercise of a call"),
     p("For a call on a stock without dividends the extra right is worthless. A European call is bounded below by the no-arbitrage bound from \"Put–call parity\":"),
     eq("C^{\\text{Eu}}_t \\ \\ge\\ S_t - K e^{-r(T-t)} \\ >\\ S_t - K \\qquad (r > 0,\\ t < T)."),
     p("So even a European call, which cannot be exercised before $T$, is worth more than the $S_t - K$ that early exercise would give. Selling the call is always better than exercising it, and the American call has the same price as the European one. The reason is that exercising early pays $K$ sooner than necessary, which loses interest, and gives up the protection the option provides if the stock falls."),
     p("For a put the interest argument works the other way. Exercising early *receives* $K$ sooner, and the cash then earns interest. When the stock is far below the strike, the interest on $K$ outweighs the remaining chance of a further fall, and early exercise is optimal. The **early-exercise premium** $P^{\\text{Am}} - P^{\\text{Eu}}$ is therefore positive for a put."),
 
+    {
+      kind: "check",
+      id: "american-options/call-no-exercise",
+      prompt: "Why is an American call on a stock without dividends never exercised early?",
+      answer: {
+        type: "choice",
+        options: [
+          "Because even the European call is worth at least $S_t - Ke^{-r(T-t)} > S_t - K$, so selling beats exercising.",
+          "Because calls are usually out of the money.",
+          "Because the contract forbids exercise before maturity.",
+          "Because the delta of a call is below 1.",
+        ],
+        correct: 0,
+      },
+      explain: "Exercising pays $K$ early and loses the interest on it, and gives up the protection against a fall. The no-arbitrage bound from put–call parity makes the live option worth more than $S_t - K$.",
+    },
     h("The exercise boundary"),
     p("For an American put, the exercise region at each time $t$ consists of all stock prices below a critical level $S^*(t)$, the **exercise boundary**. Above $S^*(t)$ the holder waits; at or below it, the holder exercises. The boundary lies below $K$ and rises towards $K$ as $t$ approaches $T$, because with little time left there is little reason to wait. It is not given by a closed-form formula; the tree finds it numerically as the dividing line between exercise and continuation nodes."),
 
@@ -74,6 +111,13 @@ export const americanOptions: GuideLessonContent = {
     p("itt putra felírva, a korábbi $q = (e^{r\\Delta t} - d)/(u - d)$ valószínűséggel. Lejáratkor az érték a kifizetés. Azok a csomópontok, ahol a lehívás értéke a nagyobb, alkotják a **lehívási tartományt**: ha az árfolyam ilyen csomópontba jut, a tulajdonos ott lehív."),
     note("**Amerikai opció a fában.** Minden csomópontban a belső érték és a továbbtartási érték közül a nagyobbat vesszük. Ahol a belső érték nyer, ott az opciót lehívják."),
 
+    {
+      kind: "check",
+      id: "american-options/node-value",
+      prompt: "A fa egy csúcsában $S = 80$, az amerikai put kötési ára $K = 100$, a továbbtartási érték $18{,}5$. Mennyit ér a csúcs?",
+      answer: { type: "number", value: 20, tolerance: 0.01 },
+      explain: "A csúcs a belső érték, $100 - 80 = 20$, és a $18{,}5$-es továbbtartási érték közül a nagyobbat veszi fel, tehát 20-at, és a putot ott lehívják.",
+    },
     h("Kidolgozott példa"),
     p("Vegyük a „Többlépéses fák és visszafelé indukció” lecke kétlépéses fáját: $S_0 = 100$, $T = 1$, $\\sigma = 20\\%$, $r = 5\\%$, $n = 2$, így $u \\approx 1{,}1519$, $d \\approx 0{,}8681$, $q \\approx 0{,}5539$, az egylépéses diszkontfaktor pedig $e^{-0{,}025} \\approx 0{,}9753$. Árazzunk egy $K = 100$ kötési árú putot."),
     steps(
@@ -87,12 +131,42 @@ export const americanOptions: GuideLessonContent = {
     p("Az alábbi ábra ugyanezt a fát rajzolja meg csomópontról csomópontra. Minden csomópont az $S$ árfolyamot és a put $P$ értékét mutatja; kiemelve azok a csomópontok látszanak, ahol a lehívás most jobb a várakozásnál. Válasszunk 2 lépést, és kattintsunk az egy lépés utáni alsó csomópontra: a panel kiírja a továbbtartási értéket, $0{,}9753\\,(0{,}5539\\cdot 0 + 0{,}4461\\cdot 24{,}64) \\approx 10{,}72$, a $13{,}19$-es belső értéket és a kettő maximumát. Állítsuk a szabályt európaira: ez a csomópont visszaesik a továbbtartási értékére, így a gyökér értéke $5{,}74$-ről $4{,}66$-ra csökken. Több lépésnél a fa alján egyre több csomópontban éri meg lehívni, és a prémium kijelzője mutatja, mennyit ér a jog az adott fán (például 3 lépésnél $0{,}33$, 4 lépésnél $0{,}79$); a durva fák értéke ugrál, mielőtt beállna, ahogy a „Többlépéses fák és visszafelé indukció” leckében is láttuk."),
     figure("american-tree"),
 
+    p("Ismételjük meg a számítást ugyanazon a fán magasabb, $K = 105$-ös kötési árral."),
+    {
+      kind: "worked",
+      title: "Amerikai és európai put K = 105 mellett a kétlépéses fán",
+      steps: [
+        { text: "A put kifizetése a legalsó végső csúcsban, ahol $S = 100d^2$.", tex: "K - 100d^2", result: { value: 29.64, tolerance: 0.01 } },
+        { text: "A felső csúcs egy lépés után: a továbbtartási érték (a belső érték 0, mert $S > K$).", tex: "e^{-r\\Delta t}\\big[q \\cdot 0 + (1-q)(K - 100)\\big]", result: { value: 2.18, tolerance: 0.01 } },
+        { text: "Az alsó csúcs: a továbbtartási érték.", tex: "e^{-r\\Delta t}\\big[q\\,(K - 100) + (1-q)(K - 100d^2)\\big]", result: { value: 15.6, tolerance: 0.01 } },
+        { text: "Az alsó csúcs belső értéke, amely felülmúlja a továbbtartási értéket, így ott lehívják a putot.", tex: "K - 100d", result: { value: 18.19, tolerance: 0.01 } },
+        { text: "Az amerikai put a gyökérben (a belső érték, 5, kisebb, ezért a tulajdonos vár).", tex: "e^{-r\\Delta t}\\big[q\\,V_u + (1-q)\\,V_d\\big]", result: { value: 9.09, tolerance: 0.01 } },
+        { text: "Az európai put a gyökérben, az alsó csúcs továbbtartási értékével számolva.", tex: "e^{-r\\Delta t}\\big[q\\,C_u + (1-q)\\,C_d\\big]", result: { value: 7.96, tolerance: 0.01 } },
+      ],
+    },
+
     h("A call korai lehívása nem éri meg"),
     p("Osztalékot nem fizető részvényre szóló callnál a többletjog értéktelen. Az európai callt alulról a „Put–call paritás” leckében levezetett arbitrázsmentes korlát határolja:"),
     eq("C^{\\text{Eu}}_t \\ \\ge\\ S_t - K e^{-r(T-t)} \\ >\\ S_t - K \\qquad (r > 0,\\ t < T)."),
     p("Tehát már az európai call is, amely $T$ előtt le sem hívható, többet ér annál az $S_t - K$-nál, amelyet a korai lehívás adna. A call eladása mindig jobb a lehívásánál, így az amerikai call ára megegyezik az európaiéval. Az ok az, hogy a korai lehívás a szükségesnél hamarabb fizeti ki $K$-t, ami kamatveszteség, és lemond arról a védelemről, amelyet az opció az árfolyam esése esetén nyújt."),
     p("Putnál a kamatérv fordítva működik. A korai lehívás hamarabb *kapja meg* $K$-t, és a pénz onnantól kamatozik. Ha az árfolyam jóval a kötési ár alatt van, $K$ kamata többet ér a további esés maradék esélyénél, és a korai lehívás optimális. A $P^{\\text{Am}} - P^{\\text{Eu}}$ **korai lehívási prémium** ezért putnál pozitív."),
 
+    {
+      kind: "check",
+      id: "american-options/call-no-exercise",
+      prompt: "Miért nem hívják le soha korán az osztalékot nem fizető részvényre szóló amerikai callt?",
+      answer: {
+        type: "choice",
+        options: [
+          "Mert már az európai call is legalább $S_t - Ke^{-r(T-t)} > S_t - K$ értékű, így eladni jobb, mint lehívni.",
+          "Mert a callok általában kívül vannak a pénzen.",
+          "Mert a szerződés tiltja a lejárat előtti lehívást.",
+          "Mert a call deltája 1 alatt van.",
+        ],
+        correct: 0,
+      },
+      explain: "A lehívás korán fizeti ki $K$-t, ezért elvész a kamata, és elvész a zuhanás elleni védelem is. A put–call paritásból adódó arbitrázsmentes korlát miatt az élő opció többet ér $S_t - K$-nál.",
+    },
     h("A lehívási határ"),
     p("Amerikai putnál a lehívási tartomány minden $t$ időpontban egy $S^*(t)$ kritikus szint alatti árfolyamokból áll, ez a **lehívási határ**. $S^*(t)$ fölött a tulajdonos vár, azon vagy alatta lehív. A határ $K$ alatt fekszik, és $t$ a $T$-hez közeledve $K$ felé emelkedik, mert kevés hátralévő idő mellett kevés ok van a várakozásra. Zárt képlet nem adja meg; a fa numerikusan találja meg, a lehívási és a továbbtartási csomópontok választóvonalaként."),
 

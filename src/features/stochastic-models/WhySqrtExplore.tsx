@@ -1,22 +1,21 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { IntuitionTrigger } from "../../components/intuition";
 import { Panel } from "../../components/layout";
 import { StatCard } from "../../components/ui";
+import { useUrlState } from "../../components/useUrlState";
 import { useI18n } from "../../i18n";
 import EnvelopeChart from "./EnvelopeChart";
 import ScalingChart from "./ScalingChart";
 import ScalingControls from "./ScalingControls";
+import SqrtPrediction from "./SqrtPrediction";
 import { maxRelativeGap, scalingData, stdByStep } from "./scalingLaws.math";
 import { createRandomWalkDraws, simulateRandomWalk } from "./stochasticModels.math";
-import type { ScaleMode } from "./scalingLaws.types";
+import { SQRT_URL_SCHEMA } from "./stochStudio.url";
 
 export default function WhySqrtExplore() {
   const { t } = useI18n();
-  const [steps, setSteps] = useState(250);
-  const [paths, setPaths] = useState(5);
-  const [seed, setSeed] = useState(7);
-  const [mode, setMode] = useState<ScaleMode>("linear");
-  const [horizonK, setHorizonK] = useState(4);
+  const [url, setUrl] = useUrlState(SQRT_URL_SCHEMA);
+  const { steps, paths, seed, scale: mode } = url;
 
   const draws = useMemo(() => createRandomWalkDraws(seed), [seed]);
   const cloud = useMemo(() => simulateRandomWalk(draws, steps, paths, 0.5), [draws, steps, paths]);
@@ -29,17 +28,16 @@ export default function WhySqrtExplore() {
       <aside className="stoch-sidebar">
         <ScalingControls
           steps={steps}
-          setSteps={setSteps}
+          setSteps={(value) => setUrl({ steps: value })}
           paths={paths}
-          setPaths={setPaths}
+          setPaths={(value) => setUrl({ paths: value })}
           seed={seed}
-          setSeed={setSeed}
+          setSeed={(value) => setUrl({ seed: value })}
           mode={mode}
-          setMode={setMode}
-          horizonK={horizonK}
-          setHorizonK={setHorizonK}
-          onResample={() => setSeed((value) => (value >= 9999 ? 1 : value + 1))}
+          setMode={(scale) => setUrl({ scale })}
+          onResample={() => setUrl({ seed: seed >= 9999 ? 1 : seed + 1 })}
         />
+        <SqrtPrediction k={url.k} setK={(k) => setUrl({ k })} />
         <Panel title={t("stochSqrtMetrics")}>
           <div className="stoch-metric-grid">
             <StatCard label={t("stochSqrtEmpiricalAtN", { n: steps })} value={finalStd.toFixed(2)} />

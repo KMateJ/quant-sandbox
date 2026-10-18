@@ -49,6 +49,8 @@ export default function PlaybackControls({ playback, steps, label, formatStep, s
         value={playback.step}
         onChange={playback.setStep}
         formatValue={formatStep ?? ((v) => String(v))}
+        // With a formatter, the end labels speak the same units as the value (e.g. years, not step numbers).
+        marks={formatStep ? [{ value: 0, label: formatStep(0) }, { value: steps, label: formatStep(steps) }] : undefined}
       />
     </div>
   );

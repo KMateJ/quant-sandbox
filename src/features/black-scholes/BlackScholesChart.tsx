@@ -1,8 +1,6 @@
 import { lazy, Suspense } from "react";
 import { LineChart } from "../../components/charts";
 import type { useBlackScholesView } from "./useBlackScholesView";
-import BsSpotLayer from "./BsSpotLayer";
-import BsSpotReadout from "./BsSpotReadout";
 
 const Surface3D = lazy(() => import("../../components/charts/surface3d/Surface3D"));
 
@@ -12,7 +10,7 @@ export default function BlackScholesChart({
 }: {
   model: ReturnType<typeof useBlackScholesView>;
 }) {
-  const { t, view3d, surface, metricLabel, chartData, chartSeries, yDomain, isMobile, tooltipDigits } = model;
+  const { t, view3d, surface, metricLabel, chartData, chartSeries, yDomain, strike, isMobile, tooltipDigits } = model;
 
   if (view3d && surface) {
     return (
@@ -50,13 +48,12 @@ export default function BlackScholesChart({
           series={chartSeries}
           xDomain={[10, 200]}
           yDomain={yDomain}
+          referenceLines={[{ axis: "x", value: strike, color: "#94a3b8", dash: "4 4" }]}
           isMobile={isMobile}
           tooltipLabel={(x) => `${t("blackScholesTooltipStock")} = ${x}`}
           valueFormat={(v) => v.toFixed(tooltipDigits)}
-          layer={(frame) => <BsSpotLayer frame={frame} model={model} />}
         />
       </div>
-      <BsSpotReadout model={model} />
     </div>
   );
 }

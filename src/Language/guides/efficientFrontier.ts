@@ -59,7 +59,7 @@ export const efficientFrontier: GuideLessonContent = {
       "The capital market line $\\mu = r_f + \\text{SR}_T\\,\\sigma$ dominates every other risky portfolio.",
       "Two-fund separation: every investor holds the risk-free asset and the tangency portfolio, only in different proportions.",
     ),
-    note("The next lesson, \"CAPM, beta and the security market line\", assumes all investors reason this way and derives what it implies for the expected return of each single asset."),
+    note("The next lesson, \"Risk aversion and the optimal complete portfolio\", shows which point on the capital market line a given investor picks. After it, \"CAPM, beta and the security market line\" assumes all investors reason this way and derives what that implies for the expected return of each single asset."),
     lab("/efficient-frontier", "Build efficient frontiers from many assets in the Efficient Frontier lab"),
   ],
 
@@ -120,7 +120,7 @@ export const efficientFrontier: GuideLessonContent = {
       "A $\\mu = r_f + \\text{SR}_T\\,\\sigma$ tőkepiaci egyenes minden más kockázatos portfóliót dominál.",
       "Kétalapos szétválasztás: minden befektető a kockázatmentes eszközt és az érintési portfóliót tartja, csak eltérő arányban.",
     ),
-    note("A következő lecke („CAPM, béta és az értékpapír-piaci egyenes”) feltételezi, hogy minden befektető így gondolkodik, és levezeti, mit jelent ez az egyes eszközök várható hozamára."),
+    note("A következő lecke („Kockázatkerülés és az optimális teljes portfólió”) megmutatja, melyik pontot választja egy adott befektető a tőkepiaci egyenesen. Utána a „CAPM, béta és az értékpapír-piaci egyenes” feltételezi, hogy minden befektető így gondolkodik, és levezeti, mit jelent ez az egyes eszközök várható hozamára."),
     lab("/efficient-frontier", "Építs hatékony frontot sok eszközből a Hatékony front laborban"),
   ],
 };

@@ -35,15 +35,29 @@ export function smlEndpoints(
   ];
 }
 
-/// Default securities for the cross-sectional "Assets" view, each carrying a persistent alpha
-/// so its return shifts with E[rm] while keeping a fixed distance from the SML.
+/// Default securities for the cross-sectional "Assets" view. Each has a fixed actual return, so tilting
+/// the SML (moving E[rm] or rf) changes — and can flip the sign of — every asset's alpha.
 export const PRESET_ASSETS: CapmAsset[] = [
-  { name: "Defensive", beta: 0.45, alpha: 0.001 },
-  { name: "Utility", beta: 0.75, alpha: -0.003 },
-  { name: "Broad index", beta: 1.0, alpha: 0 },
-  { name: "Cyclical", beta: 1.35, alpha: 0.007 },
-  { name: "Growth", beta: 1.7, alpha: 0.018 },
+  { name: "Defensive", beta: 0.45, expectedReturn: 0.058 },
+  { name: "Utility", beta: 0.75, expectedReturn: 0.072 },
+  { name: "Broad index", beta: 1.0, expectedReturn: 0.09 },
+  { name: "Cyclical", beta: 1.35, expectedReturn: 0.118 },
+  { name: "Growth", beta: 1.7, expectedReturn: 0.15 },
 ];
+
+/// Range an actual or market return can be dragged / typed to.
+export const RETURN_RANGE: [number, number] = [0, 0.25];
+
+/// Clamp `v` into the closed interval [lo, hi].
+export function clamp(v: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+/// Copy of `assets` with asset `index` moved to a new (clamped) fixed actual return.
+export function withAssetReturn(assets: CapmAsset[], index: number, actualReturn: number): CapmAsset[] {
+  const value = clamp(actualReturn, ...RETURN_RANGE);
+  return assets.map((a, i) => (i === index ? { name: a.name, beta: a.beta, expectedReturn: value } : a));
+}
 
 /// A security priced against the SML: its CAPM-required return and the resulting alpha.
 export type AssetRow = CapmAsset & { expectedReturn: number; capmReturn: number; alpha: number };
@@ -82,15 +96,16 @@ function gaussian(rand: () => number): number {
 }
 
 /// Synthetic market/asset return observations whose OLS slope equals `beta`.
-/// `dispersion` scales the idiosyncratic noise (higher ⇒ lower R²).
+/// `dispersion` scales the idiosyncratic noise (higher ⇒ lower R²); `seed` picks the sample.
 export function betaObservations(
   beta: number,
   marketReturn: number,
   riskFree: number,
   dispersion: number,
+  seed = 1,
   count = 40
 ): BetaObservation[] {
-  const rand = mulberry32(0x9e3779b9);
+  const rand = mulberry32(0x9e3779b9 + (seed - 1) * 7919);
   const obs: BetaObservation[] = [];
   for (let i = 0; i < count; i++) {
     const market = marketReturn + gaussian(rand) * 0.09;
@@ -116,3 +131,11 @@ export function observationCorrelation(observations: BetaObservation[]): number 
     observations.map((o) => o.asset)
   );
 }
+
+/// Two endpoints of a fitted line `intercept + slope·x` spanning [xMin, xMax].
+export function fittedLine(fit: { slope: number; intercept: number }, xMin: number, xMax: number): { x: number; y: number }[] {
+  return [xMin, xMax].map((x) => ({ x, y: fit.intercept + fit.slope * x }));
+}
+
+/// A β guess within this distance of the OLS slope counts as a hit.
+export const BETA_TOLERANCE = 0.15;

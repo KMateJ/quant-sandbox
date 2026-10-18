@@ -40,6 +40,14 @@ export const interestRateSwaps: GuideLessonContent = {
     eq("S_n = \\frac{1 - P(0,t_n)}{\\sum_{i=1}^{n} \\tau_i\\,P(0,t_i)} = \\frac{1 - P(0,t_n)}{A}."),
     note("The par swap rate is the coupon of a bond priced at par: $S_n = (1 - P(0,t_n))/A$, where $A = \\sum_i \\tau_i P(0,t_i)$ is the annuity factor."),
 
+    {
+      kind: "check",
+      id: "interest-rate-swaps/par-rate",
+      prompt: "Annual payments, discount factors $P(0,1) = 0.96$ and $P(0,2) = 0.92$. What is the two-year par swap rate? Answer in percent.",
+      answer: { type: "number", value: 4.255, tolerance: 0.01, unit: "%" },
+      explain: "$S_2 = (1 - 0.92)/(0.96 + 0.92) = 0.08/1.88 \\approx 4.26\\%$: one minus the last discount factor, over the annuity factor.",
+    },
+
     h("A three-year example"),
     p("Take annual payments and the discount factors $P(0,1) = 0.9589$, $P(0,2) = 0.9160$ and $P(0,3) = 0.8730$. They come from an upward-sloping curve with annually compounded zero rates of about 4.28%, 4.49% and 4.63%, via $P(0,t) = (1 + r(t))^{-t}$; this is the default curve of the figure below. The annuity factor is $A = 0.9589 + 0.9160 + 0.8730 = 2.7479$, and"),
     eq("S_3 = \\frac{1 - 0.8730}{2.7479} = \\frac{0.1270}{2.7479} \\approx 4.62\\%."),
@@ -54,6 +62,35 @@ export const interestRateSwaps: GuideLessonContent = {
     p("The same formula gives the swap's sensitivity. A change of one basis point (0.01%) in the swap rate changes the value by about $N A \\times 0.0001$. This is the swap's **DV01**, here $10{,}000{,}000 \\times 2.7222 \\times 0.0001 \\approx 2{,}722$. It plays the role that duration played in \"Duration and convexity\"."),
     p("The figure lays out this swap's cash flows on a timeline. Each year the payer receives the floating payment, an upward arrow of length $N f_i$ (its expected value, from the forward rate), and pays the fixed payment $N s$, a downward arrow. The solid part of each arrow is its present value and the faded rest is the discount. Hover over, focus or tap a payment to see its amount, its discount factor $P(0,t_i)$ and the multiplication that gives its present value. On today's curve the two legs are worth the same, so the swap is worth 0. Then switch the curve to +50 bp and note that only the floating arrows grow, because the fixed rate was agreed at 4.62%; the value to the payer becomes about 135,800, the number computed above. The small gap to 135,900 comes from rounding the swap rates."),
     figure("swap-timeline"),
+
+    p("Now let the curve fall instead: the whole zero curve moves down by half a percentage point, and the discount factors become $0.9635$, $0.9248$ and $0.8856$."),
+    {
+      kind: "worked",
+      title: "The same payer swap after a 50 bp fall",
+      steps: [
+        { text: "New annuity factor.", tex: "A' = \\sum_{i=1}^{3} P'(0,t_i)", result: { value: 2.7739, tolerance: 0.0005 } },
+        { text: "New three-year par swap rate.", tex: "S_3' = \\frac{1 - P'(0,t_3)}{A'}", result: { value: 4.124, tolerance: 0.005, unit: "%" } },
+        { text: "Value to the payer, who still pays $s = 4.62\\%$ (more precisely 4.622%) on $N = 10{,}000{,}000$.", tex: "V_{\\text{payer}} = N\\,(S_3' - s)\\,A'", result: { value: -138100, tolerance: 400 } },
+        { text: "DV01 on the new curve.", tex: "N\\,A' \\times 0.0001", result: { value: 2774, tolerance: 2 } },
+      ],
+    },
+    p("The loss on a fall is a little larger than the gain on a rise of the same size, because the annuity factor is larger when rates are lower."),
+    {
+      kind: "check",
+      id: "interest-rate-swaps/payer-falls",
+      prompt: "You entered a payer swap (you pay fixed, receive floating) at the par rate. The next day the whole curve falls. What is your swap worth now?",
+      answer: {
+        type: "choice",
+        options: [
+          "Less than zero: you pay a fixed rate above the new par rate.",
+          "More than zero: lower rates make the fixed payments cheaper to discount.",
+          "Exactly zero: the floating leg stays at par.",
+          "It depends on the notional, not on rates.",
+        ],
+        correct: 0,
+      },
+      explain: "$V_{\\text{payer}} = N\\,(S_n' - s)\\,A'$ and $S_n' < s$ after a fall, so the value is negative. The floating leg does stay at par, but the fixed leg you owe is now worth more.",
+    },
 
     h("Uses of swaps"),
     list(
@@ -114,6 +151,14 @@ export const interestRateSwaps: GuideLessonContent = {
     eq("S_n = \\frac{1 - P(0,t_n)}{\\sum_{i=1}^{n} \\tau_i\\,P(0,t_i)} = \\frac{1 - P(0,t_n)}{A}."),
     note("A par swapkamat egy névértéken forgó kötvény szelvénye: $S_n = (1 - P(0,t_n))/A$, ahol $A = \\sum_i \\tau_i P(0,t_i)$ az annuitásfaktor."),
 
+    {
+      kind: "check",
+      id: "interest-rate-swaps/par-rate",
+      prompt: "Éves kifizetések, diszkontfaktorok: $P(0,1) = 0{,}96$ és $P(0,2) = 0{,}92$. Mekkora a kétéves par swapkamat? A választ százalékban add meg.",
+      answer: { type: "number", value: 4.255, tolerance: 0.01, unit: "%" },
+      explain: "$S_2 = (1 - 0{,}92)/(0{,}96 + 0{,}92) = 0{,}08/1{,}88 \\approx 4{,}26\\%$: egy mínusz az utolsó diszkontfaktor, osztva az annuitásfaktorral.",
+    },
+
     h("Hároméves számpélda"),
     p("Legyenek a kifizetések évesek, a diszkontfaktorok pedig $P(0,1) = 0{,}9589$, $P(0,2) = 0{,}9160$ és $P(0,3) = 0{,}8730$. Ezek egy emelkedő görbéből származnak, nagyjából 4,28%, 4,49% és 4,63%-os éves kamatozású zérókamatokkal, a $P(0,t) = (1 + r(t))^{-t}$ összefüggés szerint; ez az alábbi ábra alapgörbéje. Az annuitásfaktor $A = 0{,}9589 + 0{,}9160 + 0{,}8730 = 2{,}7479$, és"),
     eq("S_3 = \\frac{1 - 0{,}8730}{2{,}7479} = \\frac{0{,}1270}{2{,}7479} \\approx 4{,}62\\%."),
@@ -128,6 +173,35 @@ export const interestRateSwaps: GuideLessonContent = {
     p("Ugyanez a képlet adja az ügylet érzékenységét. Egy bázispontos (0,01%-os) swapkamat-változás nagyjából $N A \\times 0{,}0001$-gyel változtatja az értéket. Ez a swap **DV01**-e, itt $10\\,000\\,000 \\times 2{,}7222 \\times 0{,}0001 \\approx 2722$. Ugyanazt a szerepet tölti be, mint a duráció a „Duráció és konvexitás” című leckében."),
     p("Az ábra ennek a swapnak a pénzáramait egy időtengelyen mutatja. A fix fizető minden évben megkapja a változó kifizetést, egy $N f_i$ hosszú felfelé mutató nyilat (a várható értékét, a forward kamatból), és kifizeti az $N s$ fix összeget, egy lefelé mutató nyilat. Minden nyíl teli része a jelenértéke, a halvány maradék a diszkont. Vigye az egeret egy kifizetésre, fókuszálja vagy koppintson rá, és látja az összegét, a $P(0,t_i)$ diszkontfaktort és a szorzást, amely a jelenértékét adja. A mai görbén a két láb ugyanannyit ér, így a swap értéke 0. Ezután állítsa a görbét +50 bázispontra: csak a változó nyilak nőnek, mert a fix kamatot 4,62%-on rögzítették, és a fix fizető számára az érték nagyjából 135 800 lesz, a fent kiszámolt szám. A 135 900-tól való kis eltérés a swapkamatok kerekítéséből adódik."),
     figure("swap-timeline"),
+
+    p("Most essen a görbe: a teljes zérókupon-görbe fél százalékponttal lejjebb kerül, a diszkontfaktorok pedig $0{,}9635$, $0{,}9248$ és $0{,}8856$ lesznek."),
+    {
+      kind: "worked",
+      title: "Ugyanaz a fix fizető swap 50 bázispontos esés után",
+      steps: [
+        { text: "Az új annuitásfaktor.", tex: "A' = \\sum_{i=1}^{3} P'(0,t_i)", result: { value: 2.7739, tolerance: 0.0005 } },
+        { text: "Az új hároméves par swapkamat.", tex: "S_3' = \\frac{1 - P'(0,t_3)}{A'}", result: { value: 4.124, tolerance: 0.005, unit: "%" } },
+        { text: "Az érték a fix fizetőnek, aki továbbra is $s = 4{,}62\\%$-ot (pontosabban 4,622%-ot) fizet $N = 10\\,000\\,000$ névértékre.", tex: "V_{\\text{fix}} = N\\,(S_3' - s)\\,A'", result: { value: -138100, tolerance: 400 } },
+        { text: "A DV01 az új görbén.", tex: "N\\,A' \\times 0{,}0001", result: { value: 2774, tolerance: 2 } },
+      ],
+    },
+    p("Az esés okozta veszteség kicsit nagyobb, mint az ugyanakkora emelkedés okozta nyereség, mert alacsonyabb kamatok mellett nagyobb az annuitásfaktor."),
+    {
+      kind: "check",
+      id: "interest-rate-swaps/payer-falls",
+      prompt: "Par kamaton fix fizető swapot kötöttél (fixet fizetsz, változót kapsz). Másnap az egész görbe esik. Mennyit ér most a swapod?",
+      answer: {
+        type: "choice",
+        options: [
+          "Kevesebbet nullánál: az új par kamatnál magasabb fix kamatot fizetsz.",
+          "Többet nullánál: alacsonyabb kamatok mellett olcsóbb diszkontálni a fix kifizetéseket.",
+          "Pontosan nullát: a változó láb névértéken marad.",
+          "A névértéktől függ, nem a kamatoktól.",
+        ],
+        correct: 0,
+      },
+      explain: "$V_{\\text{fix}} = N\\,(S_n' - s)\\,A'$, és esés után $S_n' < s$, ezért az érték negatív. A változó láb valóban névértéken marad, de a fizetendő fix láb most többet ér.",
+    },
 
     h("A swapok felhasználása"),
     list(

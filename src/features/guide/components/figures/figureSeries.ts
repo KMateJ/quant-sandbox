@@ -1,4 +1,4 @@
-import { SERIES_PALETTE, SERIES_ROLE, type ChartReferenceLine, type ChartSeries, type ScatterSeries } from "../../../../components/charts";
+import { SERIES_PALETTE, SERIES_ROLE, type ChartSeries, type ScatterSeries } from "../../../../components/charts";
 import type { TranslationKey } from "../../../../i18n";
 
 /// Thin dashed guide line (bands, envelopes); unlabelled twins stay out of legend and tooltip.
@@ -40,5 +40,4 @@ export const assetMarkers = (t: Translate, [a, b]: { sigma: number; mu: number }
   ],
 });
 
-/// Solid text-coloured line marking the value currently chosen on a slider (distinct from the dashed grid).
-export const markerLine = (value: number): ChartReferenceLine => ({ axis: "x", value, color: "var(--text)", dash: "none", width: 1.25 });
+export { markerLine } from "../../../../components/charts";

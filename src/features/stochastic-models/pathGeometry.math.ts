@@ -207,3 +207,28 @@ export function discreteMonitoringApprox(a: number, t: number, drift: number, dt
 }
 
 // #endregion
+
+// #region First-passage calibration
+
+/// Track of the τₐ range guess in log₁₀ time: 0.001 … 10 000.
+export const FP_LOG_TIME_DOMAIN: readonly [number, number] = [-3, 4];
+
+/// P(W(t) ≥ a): the share of paths that merely end above a (half the hitting probability).
+export const terminalTailProbability = (a: number, t: number) => 1 - normCdf(a / Math.sqrt(t));
+
+/// A time on the log track, with significant digits that suit 0.001 … 10 000.
+export function formatPassageTime(t: number): string {
+  return t >= 100 ? t.toFixed(0) : t >= 1 ? t.toFixed(2) : t.toPrecision(2);
+}
+
+/// p-quantile of τₐ for driftless motion: P(τₐ ≤ t) = 2(1 − Φ(a/√t)) gives t = (a / Φ⁻¹(1 − p/2))².
+export function firstPassageQuantile(a: number, p: number): number {
+  return (a / normInv(1 - p / 2)) ** 2;
+}
+
+/// One exact draw of τₐ: τₐ has the law of a² / Z² with Z ~ N(0, 1) (so it may exceed any horizon).
+export function drawFirstPassageTime(a: number, z: number): number {
+  return (a * a) / Math.max(z * z, 1e-12);
+}
+
+// #endregion

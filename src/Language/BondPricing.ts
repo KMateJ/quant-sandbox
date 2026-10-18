@@ -5,6 +5,14 @@ export const bondPricingHu = {
 
   bondTabCashflows: "Pénzáramok",
   bondTabPriceYield: "Ár–hozam",
+  bondTabPullToPar: "Árkonvergencia",
+  bondPtpElapsed: "Eltelt idő",
+  bondPtpYears: "{{y}} év",
+  bondPtpThis: "Ez a kötvény ({{c}} kupon)",
+  bondPtpHigher: "{{c}} kupon (prémium)",
+  bondPtpLower: "{{c}} kupon (diszkont)",
+  bondPtpAria: "A kötvényár változása az idő múlásával változatlan hozam mellett; lejáratkor minden ár a névértékhez tart",
+  bondPtpReadout: "Lejáratig hátralévő idő: {{left}} év · ár: {{price}} · eltérés a névértéktől: {{gap}}",
 
   bondParamsTitle: "Paraméterek",
   bondFaceLabel: "Névérték",
@@ -22,6 +30,11 @@ export const bondPricingHu = {
   bondTimelineCashflowLegend: "Jövőbeli pénzáram",
   bondTimelinePvLegend: "Jelenérték",
   bondTimelineAxisTime: "Idő (év)",
+  bondDragHint: "Húzz függőlegesen egy oszlopot (vagy fókuszáld, és használd a nyilakat, Shift ×10) a pénzáramlás átírásához.",
+  bondCustomActive: "Saját pénzáramlás-sorozat: az ár, a duration és az ár–hozam görbe ebből számol.",
+  bondResetToBond: "Vissza a kötvényhez",
+  bondDragAria: "Pénzáramlások idővonala: minden oszlop egy csúszka",
+  bondDragBarAria: "Pénzáramlás {{time}} évnél",
   bondTimelineSplitLabel: "Osztott skála",
   bondTimelineSplitHelp:
     "A tőke jóval nagyobb a kamatoknál, ezért elnyomná őket. Az osztott skála külön sávban mutatja a kamatokat, így minden kifizetés látható marad.",
@@ -81,6 +94,14 @@ export const bondPricingEn = {
 
   bondTabCashflows: "Cash Flows",
   bondTabPriceYield: "Price–Yield",
+  bondTabPullToPar: "Pull to par",
+  bondPtpElapsed: "Time elapsed",
+  bondPtpYears: "{{y}} y",
+  bondPtpThis: "This bond ({{c}} coupon)",
+  bondPtpHigher: "{{c}} coupon (premium)",
+  bondPtpLower: "{{c}} coupon (discount)",
+  bondPtpAria: "Bond price as time passes at an unchanged yield; every price converges to face value at maturity",
+  bondPtpReadout: "Time to maturity: {{left}} y · price: {{price}} · distance from face: {{gap}}",
 
   bondParamsTitle: "Parameters",
   bondFaceLabel: "Face value",
@@ -98,6 +119,11 @@ export const bondPricingEn = {
   bondTimelineCashflowLegend: "Future cash flow",
   bondTimelinePvLegend: "Present value",
   bondTimelineAxisTime: "Time (years)",
+  bondDragHint: "Drag a bar up or down (or focus it and use the arrow keys, Shift ×10) to reshape that cash flow.",
+  bondCustomActive: "Custom cash-flow stream: price, duration and the price–yield curve now use it.",
+  bondResetToBond: "Reset to bond",
+  bondDragAria: "Cash-flow timeline: each bar is a slider",
+  bondDragBarAria: "Cash flow at {{time}} years",
   bondTimelineSplitLabel: "Split scale",
   bondTimelineSplitHelp:
     "The principal dwarfs the coupons and would squash them. Split scale shows coupons on a separate band so every payment stays visible.",

@@ -14,15 +14,44 @@ export const valuationMultiples: GuideLessonContent = {
     ),
     p("Mixing the families is the most common error. EBITDA is earned for lenders and shareholders together, so dividing the share price by EBITDA compares a part with the whole, and the result depends on how much debt the firm has, not on how well it operates."),
     note("Numerator and denominator must belong to the same investors: equity value with net income or book equity, enterprise value with EBITDA, EBIT or sales."),
+    {
+      kind: "check",
+      id: "valuation-multiples/consistent-pair",
+      prompt: "Which of these multiples pairs a numerator and a denominator that belong to the same investors?",
+      answer: {
+        type: "choice",
+        options: ["Share price / EBITDA", "Enterprise value / net income", "Enterprise value / EBITDA", "Share price / sales"],
+        correct: 2,
+      },
+      explain: "EBITDA is earned for lenders and shareholders together, so it goes with the enterprise value. Price with EBITDA or sales, or EV with net income, mixes a part with the whole, and the result depends on the firm's debt.",
+    },
 
     h("From a multiple to a value"),
     p("Applying an enterprise multiple gives an enterprise value; the equity value then follows by subtracting net debt, exactly as at the end of a DCF valuation:"),
     eq("\\text{EV}_{\\text{target}} = m \\cdot \\text{EBITDA}_{\\text{target}}, \\qquad \\text{Equity}_{\\text{target}} = \\text{EV}_{\\text{target}} - \\text{net debt}."),
     p("Example: a target with EBITDA of 50 and net debt of 120 (in millions), valued at 10 times EBITDA, has $\\text{EV} = 500$ and equity worth $500 - 120 = 380$. Using 500 as the equity value would overstate it by the whole debt."),
+    {
+      kind: "check",
+      id: "valuation-multiples/equity-from-ev",
+      prompt: "Peers trade at 8 times EBITDA. The target has EBITDA of 80 and net debt of 200. What is its implied equity value?",
+      answer: { type: "number", value: 440, tolerance: 0.5 },
+      explain: "The enterprise multiple gives $\\text{EV} = 8 \\times 80 = 640$; subtracting net debt leaves $640 - 200 = 440$ for the shareholders.",
+    },
 
     h("Choosing comparable firms"),
     p("A multiple is only as good as the firms it comes from. **Comparable firms** (peers) should resemble the target in what drives value: the same industry and business model, similar growth, similar risk and similar margins. Peers are rarely perfect, so the analyst summarises several of them."),
-    p("Worked example: five peers trade at P/E ratios of 14, 16, 15, 22 and 13. The mean is $(14 + 16 + 15 + 22 + 13)/5 = 16$; the **median**, the middle value after sorting (13, 14, 15, 16, 22), is 15. For a target with earnings of 4 per share the two give 64 and 60 per share. The single high value of 22 pulls the mean up but does not move the median, which is why the median is the usual summary."),
+    p("Example: five peers trade at P/E ratios of 14, 16, 15, 22 and 13, and the target earns 4 per share. The **median** is the middle value after sorting (13, 14, 15, 16, 22)."),
+    {
+      kind: "worked",
+      title: "Mean and median P/E of five peers",
+      steps: [
+        { text: "The mean of the five peer multiples.", tex: "\\bar m = \\frac{1}{5}\\sum_{i=1}^{5} m_i", result: { value: 16, tolerance: 0.01 } },
+        { text: "The median: the middle value of the sorted list.", tex: "\\tilde m = m_{(3)}", result: { value: 15, tolerance: 0.01 } },
+        { text: "Value per share using the mean.", tex: "P = \\bar m \\cdot E", result: { value: 64, tolerance: 0.01 } },
+        { text: "Value per share using the median.", tex: "P = \\tilde m \\cdot E", result: { value: 60, tolerance: 0.01 } },
+      ],
+    },
+    p("The single high value of 22 pulls the mean up but does not move the median, which is why the median is the usual summary."),
 
     h("Multiples and growth"),
     p("Peers seldom have the same growth, and faster-growing firms deserve higher multiples. A simple fix is to plot the peers' multiples against their expected growth and fit a straight line by least squares, $m = a + b \\cdot g$. The target's multiple is then read off the line at its own expected growth, instead of taking the median of firms that grow faster or slower than it does."),
@@ -58,15 +87,44 @@ export const valuationMultiples: GuideLessonContent = {
     ),
     p("A két család összekeverése a leggyakoribb hiba. Az EBITDA-t a hitelezők és a részvényesek együtt kapják, ezért ha az árfolyamot EBITDA-val osztjuk, egy részt hasonlítunk az egészhez, és az eredmény attól függ, mennyi adóssága van a vállalatnak, nem attól, mennyire jól működik."),
     note("A számlálónak és a nevezőnek ugyanazokhoz a befektetőkhöz kell tartoznia: a saját tőke értéke az adózott eredménnyel vagy a könyv szerinti saját tőkével, a vállalatérték az EBITDA-val, az EBIT-tel vagy az árbevétellel."),
+    {
+      kind: "check",
+      id: "valuation-multiples/consistent-pair",
+      prompt: "Az alábbi szorzók közül melyikben tartozik a számláló és a nevező ugyanazokhoz a befektetőkhöz?",
+      answer: {
+        type: "choice",
+        options: ["Árfolyam / EBITDA", "Vállalatérték / adózott eredmény", "Vállalatérték / EBITDA", "Árfolyam / árbevétel"],
+        correct: 2,
+      },
+      explain: "Az EBITDA-t a hitelezőknek és a részvényeseknek együtt termeli a vállalat, ezért a vállalatértékhez illik. Az árfolyam az EBITDA-val vagy az árbevétellel, illetve a vállalatérték az adózott eredménnyel részt állít szembe az egésszel, és az eredmény a vállalat adósságától függ.",
+    },
 
     h("A szorzótól az értékig"),
     p("Egy vállalatérték-szorzó alkalmazása vállalatértéket ad; a saját tőke értéke ebből a nettó adósság levonásával adódik, pontosan úgy, mint egy DCF-értékelés végén:"),
     eq("\\text{EV}_{\\text{cél}} = m \\cdot \\text{EBITDA}_{\\text{cél}}, \\qquad \\text{Saját tőke}_{\\text{cél}} = \\text{EV}_{\\text{cél}} - \\text{nettó adósság}."),
     p("Példa: egy célvállalat EBITDA-ja 50, nettó adóssága 120 (millió). Az EBITDA tízszeresén értékelve $\\text{EV} = 500$, a saját tőke értéke pedig $500 - 120 = 380$. Ha az 500-at a saját tőke értékének vennénk, a teljes adósággal túlbecsülnénk."),
+    {
+      kind: "check",
+      id: "valuation-multiples/equity-from-ev",
+      prompt: "A társcégek az EBITDA nyolcszorosán forognak. A célvállalat EBITDA-ja 80, nettó adóssága 200. Mennyi a saját tőkéjének implikált értéke?",
+      answer: { type: "number", value: 440, tolerance: 0.5 },
+      explain: "A vállalatérték-szorzóból $\\text{EV} = 8 \\times 80 = 640$; a nettó adósság levonása után $640 - 200 = 440$ marad a részvényeseknek.",
+    },
 
     h("A hasonló vállalatok kiválasztása"),
     p("Egy szorzó csak annyira jó, amennyire a vállalatok, amelyekből származik. A **hasonló vállalatoknak** (társcégeknek) abban kell hasonlítaniuk a célvállalatra, ami az értéket hajtja: ugyanaz az iparág és üzleti modell, hasonló növekedés, hasonló kockázat és hasonló árrés. Tökéletes társcég ritkán van, ezért az elemző több cég szorzóját foglalja össze."),
-    p("Számpélda: öt társcég P/E-je 14, 16, 15, 22 és 13. Az átlag $(14 + 16 + 15 + 22 + 13)/5 = 16$; a **medián**, a sorba rendezés (13, 14, 15, 16, 22) utáni középső érték, 15. Egy részvényenként 4 nyereséget termelő célvállalatra a kettő részvényenként 64-et, illetve 60-at ad. Az egyetlen magas, 22-es érték felhúzza az átlagot, a mediánt viszont nem mozdítja el; ezért a medián a szokásos összefoglaló."),
+    p("Számpélda: öt társcég P/E-je 14, 16, 15, 22 és 13, a célvállalat részvényenként 4 nyereséget termel. A **medián** a sorba rendezés (13, 14, 15, 16, 22) utáni középső érték."),
+    {
+      kind: "worked",
+      title: "Öt társcég P/E-jének átlaga és mediánja",
+      steps: [
+        { text: "Az öt társcég szorzójának átlaga.", tex: "\\bar m = \\frac{1}{5}\\sum_{i=1}^{5} m_i", result: { value: 16, tolerance: 0.01 } },
+        { text: "A medián: a rendezett sor középső eleme.", tex: "\\tilde m = m_{(3)}", result: { value: 15, tolerance: 0.01 } },
+        { text: "Részvényenkénti érték az átlaggal.", tex: "P = \\bar m \\cdot E", result: { value: 64, tolerance: 0.01 } },
+        { text: "Részvényenkénti érték a mediánnal.", tex: "P = \\tilde m \\cdot E", result: { value: 60, tolerance: 0.01 } },
+      ],
+    },
+    p("Az egyetlen magas, 22-es érték felhúzza az átlagot, a mediánt viszont nem mozdítja el; ezért a medián a szokásos összefoglaló."),
 
     h("Szorzók és növekedés"),
     p("A társcégek ritkán nőnek ugyanolyan ütemben, és a gyorsabban növekvő vállalatok magasabb szorzót érdemelnek. Egyszerű megoldás, ha a társcégek szorzóit a várt növekedésük függvényében ábrázoljuk, és a legkisebb négyzetek módszerével egyenest illesztünk rájuk, $m = a + b \\cdot g$. A célvállalat szorzóját ezután a saját várt növekedésénél olvassuk le az egyenesről, ahelyett hogy nála gyorsabban vagy lassabban növekvő cégek mediánját vennénk."),

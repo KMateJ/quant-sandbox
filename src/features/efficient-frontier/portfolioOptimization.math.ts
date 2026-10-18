@@ -170,3 +170,20 @@ export function feasibleCloud(
   }
   return out;
 }
+
+/// Keeps mutually exclusive toggles coherent after `changed` was edited: long-only vs shorting
+/// (enabling shorts opens a −30% floor), and gross exposure pinned to 100% without leverage.
+export function reconcileConstraints(c: OptConstraints, changed: keyof OptConstraints): OptConstraints {
+  const next = { ...c };
+  if (changed === "longOnly" && next.longOnly) next.allowShort = false;
+  if (changed === "allowShort" && next.allowShort) {
+    next.longOnly = false;
+    if (next.minWeight >= 0) next.minWeight = -0.3;
+  }
+  if (changed === "allowShort" && !next.allowShort) {
+    next.longOnly = true;
+    next.minWeight = Math.max(0, next.minWeight);
+  }
+  if (!next.allowLeverage) next.maxGross = 1;
+  return next;
+}

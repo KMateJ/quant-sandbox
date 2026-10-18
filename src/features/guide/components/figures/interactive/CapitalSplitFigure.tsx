@@ -31,10 +31,10 @@ export default function CapitalSplitFigure() {
       </div>
       <div role="group" aria-label={t("ixCsAria")}>
         <CapitalSplitBars split={split} tax={tax} onChange={setDv} />
-        <ul className="cs-legend">
-          <li><span className="cs-swatch cs-debt" />{t("ixCsDebt")}</li>
-          <li><span className="cs-swatch cs-equity" />{t("ixCsEquity")}</li>
-          <li><span className="cs-swatch cs-shield" />{t("ixCsShield")}</li>
+        <ul className="csb-legend">
+          <li><span className="csb-swatch csb-debt" />{t("ixCsDebt")}</li>
+          <li><span className="csb-swatch csb-equity" />{t("ixCsEquity")}</li>
+          <li><span className="csb-swatch csb-shield" />{t("ixCsShield")}</li>
         </ul>
         <CapitalSplitCosts split={split} />
       </div>

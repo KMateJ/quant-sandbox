@@ -57,6 +57,13 @@ import DragAssetsFigure from "./interactive2/DragAssetsFigure";
 import DurationBalanceFigure from "./interactive2/DurationBalanceFigure";
 import GaltonWalkFigure from "./interactive2/GaltonWalkFigure";
 import HedgeSimulationFigure from "./interactive2/HedgeSimulationFigure";
+import SigmaPartitionFigure from "./stochastic/SigmaPartitionFigure";
+import FiltrationTreeFigure from "./stochastic/FiltrationTreeFigure";
+import BmTransformationsFigure from "./stochastic/BmTransformationsFigure";
+import ReflectionMaxFigure from "./stochastic/ReflectionMaxFigure";
+import BrownianBridgeFigure from "./stochastic/BrownianBridgeFigure";
+import ItoSumsFigure from "./stochastic/ItoSumsFigure";
+import FeynmanKacFigure from "./stochastic/FeynmanKacFigure";
 
 /// Interactive figure component per id, as referenced by lesson content.
 export const guideFigures: Record<GuideFigureId, ComponentType> = {
@@ -117,4 +124,11 @@ export const guideFigures: Record<GuideFigureId, ComponentType> = {
   "callable-price-yield": CallablePriceYieldFigure,
   "martingale-betting": MartingaleBettingFigure,
   "euler-convergence": EulerConvergenceFigure,
+  "sigma-partition": SigmaPartitionFigure,
+  "filtration-tree": FiltrationTreeFigure,
+  "bm-transformations": BmTransformationsFigure,
+  "reflection-max": ReflectionMaxFigure,
+  "brownian-bridge": BrownianBridgeFigure,
+  "ito-sums": ItoSumsFigure,
+  "feynman-kac": FeynmanKacFigure,
 };

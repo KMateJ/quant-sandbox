@@ -48,6 +48,13 @@ import { immunization } from "./immunization";
 import { callableBonds } from "./callableBonds";
 import { martingales } from "./martingales";
 import { sdeSimulation } from "./sdeSimulation";
+import { probabilitySpaces } from "./probabilitySpaces";
+import { filtrations } from "./filtrations";
+import { brownianProperties } from "./brownianProperties";
+import { reflectionPrinciple } from "./reflectionPrinciple";
+import { brownianBridge } from "./brownianBridge";
+import { itoIntegral } from "./itoIntegral";
+import { feynmanKac } from "./feynmanKac";
 
 /// Body text of every lesson, per language.
 export const guideContent: Record<GuideId, GuideLessonContent> = {
@@ -99,4 +106,11 @@ export const guideContent: Record<GuideId, GuideLessonContent> = {
   "callable-bonds": callableBonds,
   martingales,
   "sde-simulation": sdeSimulation,
+  "probability-spaces": probabilitySpaces,
+  filtrations,
+  "brownian-properties": brownianProperties,
+  "reflection-principle": reflectionPrinciple,
+  "brownian-bridge": brownianBridge,
+  "ito-integral": itoIntegral,
+  "feynman-kac": feynmanKac,
 };

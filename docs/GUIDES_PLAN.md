@@ -54,11 +54,11 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | returns-volatility | Returns and volatility | earlier | done | volatility-horizon |
-| 2 | diversification | Diversification and correlation | my-app-1b | review | two-asset-frontier |
-| 3 | efficient-frontier | The efficient frontier and the capital market line | my-app-1b | review | capital-market-line |
-| 3b | risk-aversion | Risk aversion and the optimal complete portfolio | my-app-6c | writing | utility-indifference |
-| 4 | capm | CAPM, beta and the security market line | my-app-1b | review | security-market-line |
-| 4b | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | writing | performance-ranking |
+| 2 | diversification | Diversification and correlation | my-app-1b | done | two-asset-frontier |
+| 3 | efficient-frontier | The efficient frontier and the capital market line | my-app-1b | done | capital-market-line |
+| 3b | risk-aversion | Risk aversion and the optimal complete portfolio | my-app-6c | done | utility-indifference |
+| 4 | capm | CAPM, beta and the security market line | my-app-1b | done | security-market-line |
+| 4b | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | done | performance-ranking |
 | 4b | factor-models | Factor models and systematic risk | my-app-46 | done | factor-variance |
 | 5 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
 
@@ -66,13 +66,13 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
-| 1 | bond-pricing | Bond prices and yields | my-app-1b | review | price-yield |
-| 2 | duration-convexity | Duration and convexity | my-app-1b | review | duration-convexity |
-| 2b | immunization | Immunization and duration matching | my-app-6c | writing | immunization-shock |
-| 3 | yield-curve | Spot rates, forward rates and the yield curve | my-app-1b | review | spot-forward |
+| 1 | bond-pricing | Bond prices and yields | my-app-1b | done | price-yield |
+| 2 | duration-convexity | Duration and convexity | my-app-1b | done | duration-convexity |
+| 2b | immunization | Immunization and duration matching | my-app-6c | done | immunization-shock |
+| 3 | yield-curve | Spot rates, forward rates and the yield curve | my-app-1b | done | spot-forward |
 | 4 | treasury-futures | Bond futures and the cheapest-to-deliver | my-app-6c | done | ctd-switch |
 | 5 | interest-rate-swaps | Interest rate swaps | my-app-6c | done | swap-rate |
-| 5b | callable-bonds | Callable bonds and negative convexity | my-app-6c | writing | callable-price-yield |
+| 5b | callable-bonds | Callable bonds and negative convexity | my-app-6c | done | callable-price-yield |
 | 6 | credit-risk | Credit risk: default probabilities and credit spreads | my-app-46 | done | credit-spread |
 
 ### Corporate finance
@@ -80,12 +80,12 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | interest-discounting | Interest, compounding and discounting | earlier | done | compounding |
-| 1b | annuities | Annuities, perpetuities and loan amortization | my-app-6c | writing | amortization-schedule |
+| 1b | annuities | Annuities, perpetuities and loan amortization | my-app-6c | done | amortization-schedule |
 | 2 | npv-irr | Net present value and internal rate of return | my-app-6c | done | npv-profile |
 | 3 | wacc | The weighted average cost of capital | my-app-6c | done | (none) |
 | 4 | capital-structure | Capital structure and the Modigliani–Miller theorems | my-app-6c | done | wacc-leverage |
 | 5 | dcf-valuation | Discounted cash flow valuation | my-app-6c | done | dcf-terminal |
-| 5b | valuation-multiples | Relative valuation with multiples | my-app-6c | writing | multiples-peers |
+| 5b | valuation-multiples | Relative valuation with multiples | my-app-6c | done | multiples-peers |
 | 6 | real-options | Real options: the value of flexibility | my-app-46 | done | real-option-tree |
 
 ### Stochastic models
@@ -93,11 +93,11 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | random-walks | Random walks and Brownian motion | earlier | done | random-walk |
-| 1b | martingales | Conditional expectation and martingales | my-app-6c | writing | martingale-betting |
+| 1b | martingales | Conditional expectation and martingales | my-app-6c | done | martingale-betting |
 | 2 | ito-lemma | Itô's lemma | my-app-6c | done | quadratic-variation |
 | 2b | change-of-measure | Change of measure and Girsanov's theorem | my-app-6c | done | girsanov-shift |
 | 3 | monte-carlo-pricing | Monte Carlo option pricing | my-app-6c | done | monte-carlo-convergence |
-| 3b | sde-simulation | Simulating SDEs: the Euler–Maruyama scheme | my-app-6c | writing | euler-convergence |
+| 3b | sde-simulation | Simulating SDEs: the Euler–Maruyama scheme | my-app-6c | done | euler-convergence |
 | 4 | mean-reversion | Mean reversion: Ornstein–Uhlenbeck and Vasicek | my-app-46 | done | ou-paths |
 | 5 | jump-diffusion | Jumps and the Merton jump-diffusion model | my-app-46 | done | jump-density |
 
@@ -190,9 +190,9 @@ Requested by the user: an Obsidian-style graph so readers see how lessons, track
 | Force layout (`guide.graph.layout.ts`) + tests | my-app-46 | done |
 | Global graph page + list view | my-app-46 → my-app-6c (UI) | done; UI polish with my-app-6c |
 | Local graph in the lesson rail | my-app-46 → my-app-6c (UI) | done; UI polish with my-app-6c |
-| Registry module `guide-graph`, i18n, scss import, test script | my-app-1b | waiting for files |
-| `LessonGraph` slot in `GuideRail` | my-app-1b | waiting for component |
-| Citation auto-links in `parseInline` / `GuideInline` | my-app-1b | waiting for matcher |
+| Registry module `guide-graph`, i18n, scss import, test script | my-app-1b | done |
+| `LessonGraph` slot in `GuideRail` | my-app-1b | done |
+| Citation auto-links in `parseInline` / `GuideInline` | my-app-1b | done |
 
 ## Reading-order audit (owner: my-app-46)
 
@@ -746,3 +746,60 @@ previews. Last run ({now}): 6 forward citations in total.
   8 figure ids → ./interactive/*, and EN/HU titles and descriptions in Guide.ts. tsc, eslint and build pass (89 pages, 48 lessons). The
   test:guide-interactive glob was already done earlier (6 files, 23 tests). NOTE: my earlier Log times (19:xx/20:00)
   were wrong; from now on I use the real clock.
+- 21:3x my-app-6c: batch 4 done (all 8 lessons + 8 figures), each browser-checked in EN + HU by its builder; tsc clean,
+  `node --test scripts/guide-interactive-*.test.mjs` 54/54, TeX clean, xref clean for the new lessons. Tracks now:
+  derivatives 16, corporate / portfolio / fixed-income / stochastic 8 each.
+  my-app-1b: one stale pointer from the insertion: efficientFrontier.ts [en] next lesson "CAPM, beta and the security market
+  line" / [hu] „CAPM, béta és az értékpapír-piaci egyenes”, but the next lesson is now "Risk aversion and the optimal complete
+  portfolio" / „Kockázatkerülés és az optimális teljes portfólió” (which itself points on to CAPM).
+- 22:1x my-app-46: new guide block kinds coming (LABS_PLAN "Wave 2" W3–W5): `{ kind: "check", ... }` (retrieval question with feedback) and `{ kind: "worked", ... }` (faded worked example), plus a review queue on the guide index. I own guide.content.types.ts GuideBlock union, GuideBlocks.tsx and the new components for this; once the format is posted here, lesson authors can add checks to their own lessons.
+- 19:01 my-app-1b: My six lessons → done (checked in the browser in EN and HU, no raw keys, figures present, headings match the
+  source) and the three graph wiring rows → done. Also fixed a site-wide bug: every Hungarian reader got React error #418
+  on every pre-rendered page (the HTML is English). Lazy route modules hydrate after any language switch, so switching after
+  hydration can't work; main.tsx now hydrates only when the saved language is the pre-render language (English) and
+  otherwise renders fresh (crawlers and the first paint still get the HTML). Shared helper `src/languageStorage.ts`. Verified with
+  fresh browser profiles in EN and HU on a lesson, a lab and home: no errors.
+- 19:08 my-app-1b (user: "check yourself is nice, but it introduces friction, I don't want it inside a page; maybe at the end of
+  the guides at each main node"): `check` blocks stay in lesson content but no longer render inside lessons (GuideBlocks returns
+  null). Each track page ends with **Check yourself** (`GuideTrackChecks`): the track's questions grouped per lesson in folded
+  <details>, due-for-review ones marked (replaces the separate review box at the top; GuideReview.tsx removed), plus a
+  "Re-read the lesson" link. Lessons with questions get one link at the end, "N questions on this lesson at the end of the series →",
+  to `/guide/<track>#checks-<lesson>`, which opens and scrolls to that group (`checksAnchor` in guide.check.logic.ts). Verified headless.
+  Authors: keep writing `check` blocks next to the sections they test; they show up on the track page automatically.
+- 19:3x my-app-46: **check / worked block format (W3/W4)** — usable in any lesson now (src/features/guide/guide.content.types.ts):
+  `{ kind: "check", id: "<lessonId>/<slug>", prompt, answer: { type: "number", value, tolerance, unit? } | { type: "choice", options, correct }, explain }`
+  and `{ kind: "worked", title, steps: [{ text, tex?, result?: { value, tolerance, unit? } }] }`. Same id in EN and HU; prompt / explain /
+  options / step text take paragraph inline syntax ($tex$, **bold**); a step's `tex` must be symbolic (never contain an earlier
+  step's number, or the blank gives it away). Per the user, checks do NOT render inside lessons: my-app-1b collects them in a
+  per-track "Check yourself" section; write them right after the section they test. Worked examples render inline (a full
+  solution first; "Try it yourself" blanks results from the end). Reusable: `GuideCheck({ block, cite?, context? })` (records answers
+  via `recordCheck`), `GuideWorked({ block, cite? })`, pure logic in guide.check.logic.ts (`collectChecks`, `selectReviewQueue`,
+  `judgeCheck`, `blankSteps`), `useGuideReadLog()` (read-at timestamps, new key qs-guide-read-at). Examples: riskMeasures,
+  creditRisk (worked), meanReversion, realOptions, factorModels. Test: scripts/guide-checks.test.mjs (also checks EN/HU parity of
+  ids and answers). `GuideReview` / `useReviewQueue` are superseded by 1b's track section; 1b, delete them or reuse the queue
+  logic for "due" marks, your call.
+- 23:1x my-app-6c: adding W3 / W4 blocks to all 19 of my lessons (2 `check`s after the sections they test + 1 `worked` example
+  each, EN and HU with identical ids and answers): annuities, npv-irr, wacc, capital-structure, dcf-valuation,
+  valuation-multiples, risk-aversion, performance-measures, immunization, treasury-futures, interest-rate-swaps,
+  callable-bonds, martingales, ito-lemma, change-of-measure, monte-carlo-pricing, sde-simulation, american-options,
+  stochastic-volatility. Lesson files only.
+- 19:11 my-app-1b (user: the stochastic-calculus guides are "too vague, there are a lot missing, like filtration, Brownian
+  motion facts like time inversion, Brownian bridge, sigma algebra, so on"): I claim 7 NEW rigorous lessons with figures in the
+  stochastic track (writers start now): probability-spaces, filtrations, brownian-properties, reflection-principle, brownian-bridge,
+  ito-integral, feynman-kac. New order: random-walks → probability-spaces → filtrations → martingales → brownian-properties →
+  reflection-principle → brownian-bridge → ito-integral → ito-lemma → change-of-measure → feynman-kac → monte-carlo-pricing →
+  sde-simulation → mean-reversion → jump-diffusion. Figure ids: sigma-partition, filtration-tree, bm-transformations, reflection-max,
+  brownian-bridge, ito-sums, feynman-kac (built by me). The full spec, with titles, outlines and figure behaviour, is in my
+  scratchpad guide-spec-3.md; ask if you need it pasted.
+  my-app-6c, request for your two lessons, which the user finds too vague: please deepen **martingales** (define
+  E[X | 𝒢] for a σ-algebra 𝒢 with its defining property and the tower, take-out-what-is-known and independence rules; martingale
+  w.r.t. a filtration; optional stopping theorem with hypotheses; Doob's maximal inequality stated) and **ito-lemma** (state it for
+  f(t, X_t) with X an Itô process, prove the 1-D case via Taylor plus [W]_t = t, and cite "The Itô integral" instead of
+  re-deriving the integral). Cite "Probability spaces, σ-algebras and random variables" and "Filtrations, adapted processes and
+  stopping times" by title. Don't edit the stochastic order; I'll register everything.
+- 23:2x my-app-6c → my-app-1b: OK, deepening martingales (σ-algebra conditional expectation with defining property, tower,
+  take-out-what-is-known, independence; martingale w.r.t. a filtration; optional stopping with hypotheses, doubling as the
+  counterexample; Doob's maximal inequality) and ito-lemma (f(t, X_t) for an Itô process, 1-D proof via Taylor + [W]_t = t,
+  cite "The Itô integral"), plus 3 checks each. Both cite your new titles exactly. I'm also updating martingales' next-lesson
+  note to "Properties of Brownian motion" (your new order). The same writer is adding the W3/W4 blocks to those files, so
+  there's one editor per file.

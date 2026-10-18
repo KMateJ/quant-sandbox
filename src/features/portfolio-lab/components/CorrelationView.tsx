@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { ChartContainer } from "../../../components/layout";
 import { useI18n } from "../../../i18n";
 import type { CorrPreset } from "../PortfolioUniverseContext";
 import type { Asset } from "../portfolioLab.types";
 import CorrelationMatrix from "./CorrelationMatrix";
+import CorrScrubber from "./CorrScrubber";
 
 type Props = {
   assets: Asset[];
@@ -12,10 +14,12 @@ type Props = {
   onReset: () => void;
   onPreset: (kind: CorrPreset) => void;
   onRepair: () => void;
+  onScrub: (i: number, j: number, v: number) => void;
+  onScrubStart: () => void;
 };
 
-/// Dedicated Correlations workspace view: presets, validity warning, the editable
-/// correlation heatmap and a one-line note on how correlation drives diversification.
+/// Dedicated Correlations workspace view: presets, validity warning, the editable correlation heatmap,
+/// a scrubber for the selected pair and a one-line note on how correlation drives diversification.
 export default function CorrelationView({
   assets,
   corr,
@@ -24,8 +28,13 @@ export default function CorrelationView({
   onReset,
   onPreset,
   onRepair,
+  onScrub,
+  onScrubStart,
 }: Props) {
   const { t } = useI18n();
+  const [picked, setPicked] = useState<[number, number]>([1, 0]);
+  // Fall back to the first pair if an asset was removed from under the selection.
+  const pair: [number, number] = picked[0] < assets.length ? picked : [1, 0];
 
   return (
     <ChartContainer title={t("portfolioCorrMatrixTitle")}>
@@ -54,7 +63,15 @@ export default function CorrelationView({
           </div>
         )}
 
-        <CorrelationMatrix assets={assets} corr={corr} onChange={onChange} />
+        <CorrelationMatrix
+          assets={assets}
+          corr={corr}
+          onChange={onChange}
+          selected={pair}
+          onSelect={(i, j) => setPicked([i, j])}
+        />
+
+        <CorrScrubber assets={assets} corr={corr} pair={pair} onScrub={onScrub} onScrubStart={onScrubStart} />
 
         <p className="corr-explain">{t("portfolioCorrExplain")}</p>
       </div>

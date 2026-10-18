@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUrlState } from "../../components/useUrlState";
 import { PageHeader } from "../../components/layout";
 import { Tabs, type TabItem, HelpDrawer } from "../../components/ui";
 import { useI18n } from "../../i18n";
@@ -11,13 +12,13 @@ import ScenariosTab from "./components/ScenariosTab";
 import SensitivityTab from "./components/SensitivityTab";
 import MonteCarloTab from "./components/MonteCarloTab";
 import RealOptionsTab from "./components/RealOptionsTab";
-
-type NpvTab = "overview" | "cashflow" | "scenarios" | "sensitivity" | "montecarlo" | "realoptions";
+import { NPV_TAB_SCHEMA, type NpvTab } from "./npvIrr.url";
 
 export default function NpvIrrView() {
   const { t } = useI18n();
   const lab = useNpvLab(t);
-  const [tab, setTab] = useState<NpvTab>("overview");
+  const [{ tab }, setUrl] = useUrlState(NPV_TAB_SCHEMA);
+  const setTab = (next: NpvTab) => setUrl({ tab: next });
   const [advanced, setAdvanced] = useState(false);
   const [learnOpen, setLearnOpen] = useState(false);
 

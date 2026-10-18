@@ -38,14 +38,28 @@ export const creditRisk: GuideLessonContent = {
     p("This is the **credit triangle**: spread, hazard rate and loss given default, any two of which give the third. In words, the spread pays for the expected loss per year: the chance of default per year times the fraction lost. The approximation is good when $\\lambda T$ is small (a few percent) and exact when $R = 0$; for high hazard rates or long maturities the exact spread falls below $\\lambda(1 - R)$."),
     note("Credit triangle: $s \\approx \\lambda\\,(1 - R)$. The spread is the expected loss rate: hazard rate times loss given default."),
 
+    {
+      kind: "check",
+      id: "credit-risk/implied-hazard",
+      prompt: "A bond trades at a credit spread of 150 basis points. Assuming a recovery rate of 40%, what hazard rate does the credit triangle imply? Answer in percent per year.",
+      answer: { type: "number", value: 2.5, tolerance: 0.02, unit: "%" },
+      explain: "$\\lambda \\approx s/(1 - R) = 1.5\\%/0.6 = 2.5\\%$ per year. Over five years this means a default probability of $1 - e^{-0.125} \\approx 11.75\\%$.",
+    },
+
     h("Worked example"),
     p("Take $\\lambda = 2\\%$, $R = 40\\%$, $r = 3\\%$ and $T = 5$ years."),
-    list(
-      "Survival probability: $Q(5) = e^{-0.02 \\cdot 5} = e^{-0.1} \\approx 0.9048$, so the 5-year default probability is about 9.52%.",
-      "Risky zero price: $e^{-0.15}\\,[0.9048 + 0.0952 \\cdot 0.4] \\approx 0.8607 \\cdot 0.9429 \\approx 0.8116$ per unit of face, against the risk-free $e^{-0.15} \\approx 0.8607$.",
-      "Yield: $y = -\\ln(0.8116)/5 \\approx 4.176\\%$, so the exact spread is $s(5) \\approx 1.176\\%$, or about 118 basis points.",
-      "Credit triangle: $\\lambda(1 - R) = 0.02 \\cdot 0.6 = 1.20\\%$, within about 2.4 basis points of the exact value.",
-    ),
+    {
+      kind: "worked",
+      title: "Price and credit spread of a five-year risky zero",
+      steps: [
+        { text: "Survival probability to five years.", tex: "Q(5) = e^{-0.02 \\cdot 5} = e^{-0.1}", result: { value: 0.9048, tolerance: 0.0005 } },
+        { text: "Default probability over the five years, in percent.", tex: "1 - Q(5)", result: { value: 9.52, tolerance: 0.02, unit: "%" } },
+        { text: "Price per unit of face: survival pays 1, default pays $R = 0.4$ at maturity; discount with $e^{-0.15} \\approx 0.8607$, the risk-free price.", tex: "P_{\\text{risky}} = e^{-0.15}\\,\\big[Q(5) + (1 - Q(5)) \\cdot 0.4\\big]", result: { value: 0.8116, tolerance: 0.0005 } },
+        { text: "Continuously compounded yield of the risky zero.", tex: "y = -\\ln P_{\\text{risky}}/5", result: { value: 4.176, tolerance: 0.005, unit: "%" } },
+        { text: "Credit spread over the risk-free 3%; in basis points about 118.", tex: "s(5) = y - r", result: { value: 1.176, tolerance: 0.005, unit: "%" } },
+        { text: "The credit triangle, within about 2.4 basis points of the exact spread.", tex: "\\lambda(1 - R) = 0.02 \\cdot 0.6", result: { value: 1.2, tolerance: 0.005, unit: "%" } },
+      ],
+    },
     p("With $\\lambda = 10\\%$ instead, the 5-year exact spread is about 5.39% while the triangle gives 6%: the approximation degrades as $\\lambda T$ grows."),
 
     h("Spread against maturity"),
@@ -54,6 +68,23 @@ export const creditRisk: GuideLessonContent = {
 
     h("Risk-neutral and historical default probabilities"),
     p("Reading the triangle backwards, a market spread $s$ and an assumed recovery $R$ imply a hazard rate $\\lambda = s/(1 - R)$. This implied $\\lambda$ is a **risk-neutral** default intensity: the one that makes the formula match market prices. It is typically well above the **historical** default rate observed for similar issuers. The spread is not only expected loss: investors also demand a premium for bearing default risk, which tends to strike in bad times for everyone, and for holding bonds that are harder to sell than government bonds (a liquidity premium). For pricing and hedging, use the implied $\\lambda$; for forecasting actual losses, use historical rates."),
+
+    {
+      kind: "check",
+      id: "credit-risk/implied-vs-historical",
+      prompt: "Hazard rates implied by market spreads are usually well above the historical default rates of similar issuers. Why?",
+      answer: {
+        type: "choice",
+        options: [
+          "Historical data always undercount defaults.",
+          "The spread also pays investors for bearing default risk and for lower liquidity.",
+          "The credit triangle overstates $\\lambda$ whenever $R > 0$.",
+          "Risk-neutral probabilities ignore recovery.",
+        ],
+        correct: 1,
+      },
+      explain: "The spread is the expected loss plus a risk premium (defaults cluster in bad times) and a liquidity premium. Dividing the whole spread by $1 - R$ therefore gives a risk-neutral $\\lambda$ above the historical default rate.",
+    },
 
     h("Credit default swaps"),
     p("A **credit default swap** (CDS) is insurance against the default of a reference issuer. The **protection buyer** pays a fixed premium $s_{\\text{CDS}}$ per year on a notional until maturity or default, whichever comes first. If the issuer defaults, the **protection seller** pays $1 - R$ per unit of notional. Like the swaps of \"Interest rate swaps\", the fair premium sets the present values of the two legs equal. With continuous premium payments, constant $\\lambda$ and $r$, and the protection paid at the moment of default:"),
@@ -107,14 +138,28 @@ export const creditRisk: GuideLessonContent = {
     p("Ez a **hitelháromszög** (credit triangle): felár, csődintenzitás és veszteségráta, amelyek közül bármely kettő megadja a harmadikat. Szavakkal: a felár az évi várható veszteséget fizeti meg, vagyis az évi csődesély és az elveszett hányad szorzatát. A közelítés jó, ha $\\lambda T$ kicsi (néhány százalék), és pontos, ha $R = 0$; nagy csődintenzitásnál vagy hosszú lejáratnál a pontos felár $\\lambda(1 - R)$ alá esik."),
     note("Hitelháromszög: $s \\approx \\lambda\\,(1 - R)$. A felár a várható veszteségráta: csődintenzitás szorozva a csőd esetén elszenvedett veszteséggel."),
 
+    {
+      kind: "check",
+      id: "credit-risk/implied-hazard",
+      prompt: "Egy kötvény hitelfelára 150 bázispont. 40%-os megtérülési rátát feltételezve mekkora csődintenzitást ad a hitelháromszög? A választ évi százalékban add meg.",
+      answer: { type: "number", value: 2.5, tolerance: 0.02, unit: "%" },
+      explain: "$\\lambda \\approx s/(1 - R) = 1{,}5\\%/0{,}6 = 2{,}5\\%$ évente. Öt évre ez $1 - e^{-0{,}125} \\approx 11{,}75\\%$ csődvalószínűséget jelent.",
+    },
+
     h("Számpélda"),
     p("Legyen $\\lambda = 2\\%$, $R = 40\\%$, $r = 3\\%$ és $T = 5$ év."),
-    list(
-      "Túlélési valószínűség: $Q(5) = e^{-0{,}02 \\cdot 5} = e^{-0{,}1} \\approx 0{,}9048$, így az 5 éves csődvalószínűség körülbelül 9,52%.",
-      "A kockázatos zérókupon-kötvény ára: $e^{-0{,}15}\\,[0{,}9048 + 0{,}0952 \\cdot 0{,}4] \\approx 0{,}8607 \\cdot 0{,}9429 \\approx 0{,}8116$ névértékegységenként, szemben a kockázatmentes $e^{-0{,}15} \\approx 0{,}8607$-tel.",
-      "Hozam: $y = -\\ln(0{,}8116)/5 \\approx 4{,}176\\%$, a pontos felár tehát $s(5) \\approx 1{,}176\\%$, azaz körülbelül 118 bázispont.",
-      "Hitelháromszög: $\\lambda(1 - R) = 0{,}02 \\cdot 0{,}6 = 1{,}20\\%$, ez körülbelül 2,4 bázisponttal tér el a pontos értéktől.",
-    ),
+    {
+      kind: "worked",
+      title: "Egy ötéves kockázatos zérókupon-kötvény ára és hitelfelára",
+      steps: [
+        { text: "Túlélési valószínűség öt évre.", tex: "Q(5) = e^{-0{,}02 \\cdot 5} = e^{-0{,}1}", result: { value: 0.9048, tolerance: 0.0005 } },
+        { text: "Csődvalószínűség az öt év alatt, százalékban.", tex: "1 - Q(5)", result: { value: 9.52, tolerance: 0.02, unit: "%" } },
+        { text: "Ár névértékegységenként: túléléskor 1, csődkor $R = 0{,}4$ a kifizetés lejáratkor; a diszkonttényező $e^{-0{,}15} \\approx 0{,}8607$, a kockázatmentes ár.", tex: "P_{\\text{kock}} = e^{-0{,}15}\\,\\big[Q(5) + (1 - Q(5)) \\cdot 0{,}4\\big]", result: { value: 0.8116, tolerance: 0.0005 } },
+        { text: "A kockázatos zérókupon-kötvény folytonos hozama.", tex: "y = -\\ln P_{\\text{kock}}/5", result: { value: 4.176, tolerance: 0.005, unit: "%" } },
+        { text: "Hitelfelár a 3%-os kockázatmentes kamat fölött; bázispontban körülbelül 118.", tex: "s(5) = y - r", result: { value: 1.176, tolerance: 0.005, unit: "%" } },
+        { text: "A hitelháromszög, amely körülbelül 2,4 bázisponttal tér el a pontos felártól.", tex: "\\lambda(1 - R) = 0{,}02 \\cdot 0{,}6", result: { value: 1.2, tolerance: 0.005, unit: "%" } },
+      ],
+    },
     p("Ha viszont $\\lambda = 10\\%$, az 5 éves pontos felár nagyjából 5,39%, a háromszög pedig 6%-ot ad: $\\lambda T$ növekedésével a közelítés romlik."),
 
     h("A felár és a lejárat"),
@@ -123,6 +168,23 @@ export const creditRisk: GuideLessonContent = {
 
     h("Kockázatsemleges és historikus csődvalószínűség"),
     p("A háromszöget visszafelé olvasva egy piaci $s$ felárból és egy feltételezett $R$ megtérülésből a $\\lambda = s/(1 - R)$ implikált csődintenzitás adódik. Ez **kockázatsemleges** csődintenzitás: az, amelyikkel a képlet visszaadja a piaci árakat. Jellemzően jóval magasabb a hasonló kibocsátóknál megfigyelt **historikus** csődgyakoriságnál. A felár ugyanis nemcsak a várható veszteséget tartalmazza: a befektetők prémiumot kérnek a csődkockázat viseléséért, mert a csődök jellemzően akkor halmozódnak, amikor mindenkinek rosszul megy, és azért is, mert ezeket a kötvényeket nehezebb eladni, mint az állampapírokat (likviditási prémium). Árazáshoz és fedezéshez az implikált $\\lambda$ kell, a tényleges veszteségek előrejelzéséhez a historikus gyakoriság."),
+
+    {
+      kind: "check",
+      id: "credit-risk/implied-vs-historical",
+      prompt: "A piaci felárakból implikált csődintenzitás általában jóval magasabb a hasonló kibocsátók historikus csődgyakoriságánál. Miért?",
+      answer: {
+        type: "choice",
+        options: [
+          "A historikus adatok mindig kevesebb csődöt rögzítenek.",
+          "A felár a csődkockázat viseléséért és a gyengébb likviditásért is fizet a befektetőknek.",
+          "A hitelháromszög $R > 0$ esetén mindig túlbecsüli $\\lambda$-t.",
+          "A kockázatsemleges valószínűségek nem veszik figyelembe a megtérülést.",
+        ],
+        correct: 1,
+      },
+      explain: "A felár a várható veszteségen felül kockázati prémiumot (a csődök rossz időkben halmozódnak) és likviditási prémiumot is tartalmaz. Ha a teljes felárat osztjuk $1 - R$-rel, a historikus csődgyakoriságnál nagyobb, kockázatsemleges $\\lambda$-t kapunk.",
+    },
 
     h("Hitel-nemteljesítési csereügyletek"),
     p("A **hitel-nemteljesítési csereügylet** (credit default swap, CDS) egy referencia-kibocsátó csődje elleni biztosítás. A **védelem vevője** évente rögzített $s_{\\text{CDS}}$ díjat fizet egy névleges összeg után a lejáratig vagy a csődig, amelyik előbb bekövetkezik. Csőd esetén a **védelem eladója** névleges egységenként $1 - R$-et fizet. Ahogy a „Kamatcsereügyletek” swapjainál, a méltányos díj a két láb jelenértékét teszi egyenlővé. Folytonos díjfizetéssel, állandó $\\lambda$-val és $r$-rel, és ha a védelmet a csőd pillanatában fizetik ki:"),

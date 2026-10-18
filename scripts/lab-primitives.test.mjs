@@ -61,3 +61,18 @@ test("heatmap: nearest grid value, diverging and sequential paint, arrow steps c
   assert.deepEqual(hm.stepCell("ArrowDown", 3, 3, 5, 5), [3, 2]);
   assert.equal(hm.stepCell("Tab", 0, 0, 5, 5), null);
 });
+
+const db = await import(await load(new URL("../src/components/charts/draggableBars.logic.ts", import.meta.url)));
+
+test("draggable bars: snapping, clamping and key moves", () => {
+  assert.equal(db.snapToStep(12.6, -150, 80, 1), 13);
+  assert.equal(db.snapToStep(-400, -150, 80, 1), -150);
+  assert.equal(db.snapToStep(263, -1500, 1500, 5), 265);
+  assert.equal(db.snapToStep(0.30000000000000004, 0, 1, 0.1), 0.3);
+  assert.equal(db.keyTarget("ArrowUp", false, 25, -150, 80, 1), 26);
+  assert.equal(db.keyTarget("ArrowDown", true, 25, -150, 80, 1), 15);
+  assert.equal(db.keyTarget("PageUp", false, 75, -150, 80, 1), 80);
+  assert.equal(db.keyTarget("Home", false, 25, -150, 80, 1), -150);
+  assert.equal(db.keyTarget("Tab", false, 25, -150, 80, 1), null);
+  assert.deepEqual(db.paddedDomain(-100, 100), [-116, 116]);
+});

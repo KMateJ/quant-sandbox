@@ -59,6 +59,11 @@ export function useYieldCurve() {
     commit(current.current.map((n, i) => ({ ...n, rate: rates[i] ?? n.rate })), "custom");
   }, [commit, endEdit]);
 
+  /// Sets every par rate without closing the current edit, so a sketch stroke counts as one before/after change.
+  const sketchRates = useCallback((rates: number[]) => {
+    commit(current.current.map((n, i) => ({ ...n, rate: rates[i] ?? n.rate })), "custom");
+  }, [commit]);
+
   const applyPreset = useCallback((id: PresetId) => {
     endEdit();
     commit(presetNodes(id), id);
@@ -86,6 +91,7 @@ export function useYieldCurve() {
     setSelected,
     setRate,
     setAllRates,
+    sketchRates,
     applyPreset,
     beginEdit,
     endEdit,

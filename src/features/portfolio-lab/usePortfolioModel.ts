@@ -1,45 +1,52 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   capitalMarketLine,
   diversificationBenefit,
   frontierCurve,
   gmvWeights,
+  isValidCorrelation,
   maxSharpeWeights,
   normalize,
   portfolioMetrics,
   portfolioPoint,
   randomPortfolios,
   riskContributions,
+  setCorrEntry,
   withCash,
 } from "./portfolioLab.math";
+import {
+  allocationFrom,
+  decodeAllocation,
+  equalAllocation,
+  removeShare,
+  resizeAllocation,
+  setShareProportional,
+} from "./portfolioLab.weights";
 import { usePortfolioUniverse } from "./PortfolioUniverseContext";
 
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
 /// State, handlers and derived risk/return model powering the Portfolio Lab view.
-/// Asset assumptions come from the shared portfolio universe; weights/cash/cloud are local.
-export function usePortfolioModel() {
+/// Asset assumptions come from the shared portfolio universe; the allocation (assets + cash, summing to 1)
+/// starts from the URL form `urlWeights` and is local once edited.
+export function usePortfolioModel(urlWeights: string) {
   const universe = usePortfolioUniverse();
   const { assets, mus, sigmas, cov, corr, corrValid, riskFree } = universe;
+  const n = assets.length;
 
-  const [rawWeights, setRawWeights] = useState<number[]>(assets.map(() => 1 / assets.length));
-  const [cashWeight, setCashWeight] = useState(0);
+  const [edited, setEdited] = useState<number[] | null>(null);
   const [cloudCount, setCloudCount] = useState(800);
   const [cloudSeed, setCloudSeed] = useState(1);
   const [showCloud, setShowCloud] = useState(true);
 
-  // Keep the local weight vector aligned with the shared asset list.
-  useEffect(() => {
-    setRawWeights((prev) => {
-      if (prev.length === assets.length) return prev;
-      if (prev.length < assets.length) {
-        return [...prev, ...assets.slice(prev.length).map(() => 1 / assets.length)];
-      }
-      return prev.slice(0, assets.length);
-    });
-  }, [assets.length]);
+  // Always sized to the shared asset list (assets may be added or removed in another lab).
+  const allocation = useMemo(
+    () => resizeAllocation(edited ?? decodeAllocation(urlWeights, n) ?? equalAllocation(n), n),
+    [edited, urlWeights, n]
+  );
+  const rawWeights = allocation.slice(0, n);
+  const cashWeight = allocation[n];
+  const update = (f: (a: number[]) => number[]) => setEdited(f(allocation));
 
-  const weights = useMemo(() => normalize(rawWeights), [rawWeights]);
+  const weights = useMemo(() => normalize(allocation.slice(0, n)), [allocation, n]);
   const riskyCurrent = portfolioMetrics(weights, mus, cov, riskFree);
   const combined = withCash(riskyCurrent, cashWeight, riskFree);
   const current = { ...combined, sharpe: riskyCurrent.sharpe };
@@ -78,9 +85,11 @@ export function usePortfolioModel() {
   const retMax = Math.max(...mus) * 1.1;
   const cml = useMemo(() => capitalMarketLine(tangency, riskFree, volMax), [tangency, riskFree, volMax]);
 
-  const setWeight = (i: number, v: number) =>
-    setRawWeights((prev) => prev.map((w, j) => (j === i ? v : w)));
-  const applyPreset = (target: number[]) => setRawWeights(target.map(clamp01));
+  /// Share `k` (cash is k = n) set to `v`, the others rescaled proportionally.
+  const setShare = (k: number, v: number) => update((a) => setShareProportional(a, k, v));
+  const applyPreset = (target: number[]) => update((a) => allocationFrom(target, a[n]));
+  /// Take a fully invested mix as-is (e.g. a clicked random portfolio), so the portfolio lands on its point.
+  const adoptWeights = (target: number[]) => update(() => allocationFrom(target, 0));
   const applyEqual = () => applyPreset(assets.map(() => 1 / assets.length));
   const applyMinVar = () => {
     try {
@@ -97,19 +106,21 @@ export function usePortfolioModel() {
     }
   };
 
-  const addAsset = () => {
-    universe.addAsset();
-    setRawWeights((prev) => [...prev, 1 / (prev.length + 1)]);
-  };
-
   const removeAsset = (i: number) => {
     if (!universe.canRemove) return;
     universe.removeAsset(i);
-    setRawWeights((prev) => prev.filter((_, j) => j !== i));
+    update((a) => removeShare(a, i));
+  };
+
+  // The scrubber already clamps to the PSD range; should an edit still leave the matrix invalid, repair it.
+  const scrubCorrelation = (i: number, j: number, v: number) => {
+    universe.setCorrelation(i, j, v);
+    if (!isValidCorrelation(setCorrEntry(corr, i, j, v))) universe.repairCorr();
   };
 
   return {
     assets,
+    allocation,
     rawWeights,
     weights,
     finalWeights,
@@ -134,19 +145,20 @@ export function usePortfolioModel() {
     cloudCount,
     showCloud,
     setCorrelation: universe.setCorrelation,
+    scrubCorrelation,
     resetCorr: universe.resetCorr,
     applyCorrPreset: universe.applyCorrPreset,
     repairCorr: universe.repairCorr,
     setRiskFree: universe.setRiskFree,
-    setCashWeight,
-    setWeight,
+    setShare,
     applyPreset,
+    adoptWeights,
     applyEqual,
     applyMinVar,
     applyMaxSharpe,
     setAssetParam: universe.setAssetParam,
     setAssetName: universe.setAssetName,
-    addAsset,
+    addAsset: universe.addAsset,
     removeAsset,
     setCloudCount,
     setShowCloud,

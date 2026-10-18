@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SketchLayer } from "../../../components/charts";
 import { ChartContainer, Panel } from "../../../components/layout";
 import { IntuitionTrigger } from "../../../components/intuition";
 import { useI18n } from "../../../i18n";
@@ -15,11 +16,18 @@ import { rateDomain } from "../effects.math";
 export default function CurveView({ model }: { model: YieldCurveModel }) {
   const { t } = useI18n();
   const [dragDomain, setDragDomain] = useState<[number, number] | null>(null);
+  const [sketching, setSketching] = useState(false);
   const { term, beforeTerm, selected } = model;
   const labels = { par: t("ycMarketCurve"), zero: t("ycBootstrappedCurve"), forward: t("ycImpliedCurve") };
   const domain = rateDomain([...term, ...beforeTerm]);
   const rateEffects = buildEffectOverlay(beforeTerm, term, ["zero", "fwd"]);
   const dfEffects = buildEffectOverlay(beforeTerm, term, ["df"]);
+  // A sketch session is one edit: the axis is frozen and the before/after overlay compares against the curve before it.
+  const toggleSketch = () => {
+    if (sketching) { model.endEdit(); setDragDomain(null); }
+    else { model.beginEdit(selected); setDragDomain(domain); }
+    setSketching(!sketching);
+  };
 
   return (
     <div className="workspace cols-sidebar yc-workspace">
@@ -43,7 +51,12 @@ export default function CurveView({ model }: { model: YieldCurveModel }) {
       </Panel>
 
       <div className="module-main">
-        <ChartContainer title={t("ycTermStructure")} actions={<span className="yc-chart-selection">{t("ycSelectedMaturity")}: {term[selected].label}</span>}>
+        <ChartContainer title={t("ycTermStructure")} actions={<>
+          <button type="button" className={sketching ? "preset-btn preset-btn--active" : "preset-btn"} aria-pressed={sketching} onClick={toggleSketch}>
+            {t(sketching ? "ycSketchDone" : "ycSketch")}
+          </button>
+          <span className="yc-chart-selection">{t("ycSelectedMaturity")}: {term[selected].label}</span>
+        </>}>
           <CurveLegend />
           <div className="chart-wrap yc-term-chart">
             <MaturityChart labels={MATURITY_LABELS}
@@ -53,7 +66,13 @@ export default function CurveView({ model }: { model: YieldCurveModel }) {
               onSelectIndex={model.setSelected}
               onDragStart={(i) => { setDragDomain(domain); model.beginEdit(i); }}
               onDragEnd={() => { setDragDomain(null); model.endEdit(); }}
-              onDragRate={(i, y) => model.setRate(i, Math.max(0, Math.min(0.12, y)))} />
+              onDragRate={(i, y) => model.setRate(i, Math.max(0, Math.min(0.12, y)))}
+              layer={sketching ? (frame) => (
+                <SketchLayer frame={frame} mode="curve" xGrid={term.map((_, i) => i)} yRange={[0, 0.12]} smooth={0.3}
+                  value={model.nodes.map((n, i) => ({ x: i, y: n.rate }))}
+                  onChange={(points) => model.sketchRates(points.map((p) => p.y))}
+                  ariaLabel={t("ycSketchAria")} />
+              ) : undefined} />
           </div>
           <div className="yc-df-heading">
             <span>{t("ycDiscountFactor")} <IntuitionTrigger variant="question" sectionId="discount-factor" /></span>
@@ -66,7 +85,7 @@ export default function CurveView({ model }: { model: YieldCurveModel }) {
               yFormat={(value) => value.toFixed(2)} yLabel={t("ycDiscountFactor")} selectedIndex={selected}
               onSelectIndex={model.setSelected} />
           </div>
-          <div className="yc-chart-caption"><span>{t("ycDragHint")}</span><span>{t("ycChartKey")}</span></div>
+          <div className="yc-chart-caption"><span>{t(sketching ? "ycSketchHint" : "ycDragHint")}</span><span>{t("ycChartKey")}</span></div>
         </ChartContainer>
       </div>
       <SelectedReadout model={model} />

@@ -30,3 +30,6 @@ export function blendColors(colors: string[], weights: number[]): string {
   });
   return `#${channel(r)}${channel(g)}${channel(b)}`;
 }
+
+/// Swatch for the cash (risk-free) allocation.
+export const CASH_COLOR = "#94a3b8";

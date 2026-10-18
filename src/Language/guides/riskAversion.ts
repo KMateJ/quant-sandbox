@@ -20,6 +20,14 @@ export const riskAversion: GuideLessonContent = {
     h("Certainty equivalent"),
     p("A risk-free investment has $\\sigma = 0$, so its utility is just its return. The utility of any portfolio can therefore be read as a rate: the **certainty equivalent**, the sure return that the investor finds exactly as attractive as the risky portfolio. In the example the investor values P like a sure 3%. If the risk-free rate is $r_f = 3\\%$, holding only P and holding only bills are equally good for this investor."),
 
+    {
+      kind: "check",
+      id: "risk-aversion/certainty-equivalent",
+      prompt: "A portfolio has $\\mu = 9\\%$ and $\\sigma = 15\\%$. What is its certainty equivalent for an investor with $A = 4$? Answer in percent.",
+      answer: { type: "number", value: 4.5, tolerance: 0.05, unit: "%" },
+      explain: "$U = 0.09 - \\tfrac{1}{2}\\times 4 \\times 0.15^2 = 0.09 - 0.045 = 4.5\\%$: the investor values the portfolio like a sure 4.5%.",
+    },
+
     h("Indifference curves"),
     p("All portfolios with the same utility $U$ satisfy"),
     eq("\\mu = U + \\tfrac{1}{2} A\\,\\sigma^2."),
@@ -33,10 +41,39 @@ export const riskAversion: GuideLessonContent = {
     p("where $\\text{SR}_P = (\\mu_P - r_f)/\\sigma_P$ is the Sharpe ratio. Geometrically, $y^*$ is where an indifference curve just touches the capital allocation line: higher curves miss the line, lower ones cut it in two points that are both worse."),
     note("The optimal weight in the risky portfolio is $y^{*} = (\\mu_P - r_f)/(A\\sigma_P^2)$: proportional to its excess return, inversely proportional to its variance and to the investor's risk aversion."),
 
+    {
+      kind: "check",
+      id: "risk-aversion/double-a",
+      prompt: "An investor's optimal weight in the risky portfolio is $y^{*} = 0.6$. Their risk aversion doubles while the market stays the same. What is the new optimal weight?",
+      answer: {
+        type: "choice",
+        options: [
+          "0.3: $y^{*}$ is inversely proportional to $A$",
+          "0.15: risk enters squared",
+          "0.6: the tangency portfolio does not change",
+          "1.2: a more cautious investor needs more return",
+        ],
+        correct: 0,
+      },
+      explain: "$y^{*} = (\\mu_P - r_f)/(A\\sigma_P^2)$ is proportional to $1/A$, so doubling $A$ halves it. The risky portfolio itself stays the same; only the amount held changes.",
+    },
+
     h("Worked example"),
     p("Take $\\mu_P = 11\\%$, $\\sigma_P = 20\\%$, $r_f = 3\\%$ and $A = 4$. Then"),
     eq("y^{*} = \\frac{0.08}{4 \\times 0.04} = 0.5, \\qquad \\mu = 3\\% + 0.5 \\times 8\\% = 7\\%, \\qquad \\sigma = 0.5 \\times 20\\% = 10\\%,"),
     p("and $U^{*} = 0.07 - \\tfrac{1}{2}\\times 4 \\times 0.01 = 5\\%$. Holding only bills or only P each gives a certainty equivalent of 3%, so the half-and-half mix is clearly better than either end. A more risk-averse investor with $A = 8$ holds $y^* = 0.25$ (expected return 5%, volatility 5%); one with $A = 2$ holds exactly P ($y^* = 1$)."),
+
+    p("A second investor faces a different market, $\\mu_P = 10\\%$, $\\sigma_P = 25\\%$ and $r_f = 2\\%$, and has $A = 3$."),
+    {
+      kind: "worked",
+      title: "Optimal complete portfolio for a second investor",
+      steps: [
+        { text: "Optimal weight in the risky portfolio.", tex: "y^{*} = \\frac{\\mu_P - r_f}{A\\,\\sigma_P^2}", result: { value: 0.4267, tolerance: 0.0005 } },
+        { text: "Expected return of the complete portfolio.", tex: "\\mu = r_f + y^{*}(\\mu_P - r_f)", result: { value: 5.413, tolerance: 0.005, unit: "%" } },
+        { text: "Its volatility.", tex: "\\sigma = y^{*}\\sigma_P", result: { value: 10.67, tolerance: 0.01, unit: "%" } },
+        { text: "Its utility, through the Sharpe ratio $\\text{SR}_P = 0.32$.", tex: "U^{*} = r_f + \\frac{\\text{SR}_P^2}{2A}", result: { value: 3.707, tolerance: 0.005, unit: "%" } },
+      ],
+    },
 
     h("Borrowing"),
     p("The optimal weight exceeds one when $A < (\\mu_P - r_f)/\\sigma_P^2$, here when $A < 2$. With $A = 1.6$ the investor wants $y^* = 0.08/(1.6 \\times 0.04) = 1.25$: borrow a quarter of the own capital at $r_f$ and invest 125% in P, for an expected return of 13% and a volatility of 25%. In practice investors borrow at a higher rate than they lend, which bends the line downwards beyond P and lowers the optimal borrowing."),
@@ -76,6 +113,14 @@ export const riskAversion: GuideLessonContent = {
     h("Biztos egyenérték"),
     p("Egy kockázatmentes befektetésre $\\sigma = 0$, így a hasznossága egyszerűen a hozama. Bármely portfólió hasznossága tehát hozamként is olvasható: ez a **biztos egyenérték**, az a biztos hozam, amelyet a befektető pontosan annyira tart vonzónak, mint a kockázatos portfóliót. A példában a befektető P-t egy biztos 3%-kal egyenértékűnek tartja. Ha a kockázatmentes kamat $r_f = 3\\%$, akkor ennek a befektetőnek mindegy, hogy csak P-t vagy csak kincstárjegyet tart."),
 
+    {
+      kind: "check",
+      id: "risk-aversion/certainty-equivalent",
+      prompt: "Egy portfólióra $\\mu = 9\\%$ és $\\sigma = 15\\%$. Mekkora a biztos egyenértéke egy $A = 4$ kockázatkerülésű befektető számára? A választ százalékban add meg.",
+      answer: { type: "number", value: 4.5, tolerance: 0.05, unit: "%" },
+      explain: "$U = 0{,}09 - \\tfrac{1}{2}\\times 4 \\times 0{,}15^2 = 0{,}09 - 0{,}045 = 4{,}5\\%$: a befektető a portfóliót egy biztos 4,5%-os hozammal tartja egyenértékűnek.",
+    },
+
     h("Közömbösségi görbék"),
     p("Az azonos $U$ hasznosságú portfóliókra"),
     eq("\\mu = U + \\tfrac{1}{2} A\\,\\sigma^2."),
@@ -89,10 +134,39 @@ export const riskAversion: GuideLessonContent = {
     p("ahol $\\text{SR}_P = (\\mu_P - r_f)/\\sigma_P$ a Sharpe-ráta. Geometriailag $y^*$ az a pont, ahol egy közömbösségi görbe éppen érinti a tőkeallokációs egyenest: a magasabb görbék elkerülik az egyenest, az alacsonyabbak két pontban metszik, és mindkét pont rosszabb."),
     note("A kockázatos portfólió optimális súlya $y^{*} = (\\mu_P - r_f)/(A\\sigma_P^2)$: arányos a többlethozamával, és fordítottan arányos a varianciájával és a befektető kockázatkerülésével."),
 
+    {
+      kind: "check",
+      id: "risk-aversion/double-a",
+      prompt: "Egy befektető optimális súlya a kockázatos portfólióban $y^{*} = 0{,}6$. A kockázatkerülése megduplázódik, a piac változatlan. Mekkora az új optimális súly?",
+      answer: {
+        type: "choice",
+        options: [
+          "0,3: $y^{*}$ fordítottan arányos $A$-val",
+          "0,15: a kockázat négyzetesen szerepel",
+          "0,6: az érintési portfólió nem változik",
+          "1,2: egy óvatosabb befektetőnek nagyobb hozam kell",
+        ],
+        correct: 0,
+      },
+      explain: "$y^{*} = (\\mu_P - r_f)/(A\\sigma_P^2)$ arányos $1/A$-val, így $A$ duplázása felezi. Maga a kockázatos portfólió nem változik, csak a tartott mennyiség.",
+    },
+
     h("Számpélda"),
     p("Legyen $\\mu_P = 11\\%$, $\\sigma_P = 20\\%$, $r_f = 3\\%$ és $A = 4$. Ekkor"),
     eq("y^{*} = \\frac{0{,}08}{4 \\times 0{,}04} = 0{,}5, \\qquad \\mu = 3\\% + 0{,}5 \\times 8\\% = 7\\%, \\qquad \\sigma = 0{,}5 \\times 20\\% = 10\\%,"),
     p("és $U^{*} = 0{,}07 - \\tfrac{1}{2}\\times 4 \\times 0{,}01 = 5\\%$. Csak kincstárjegyet vagy csak P-t tartva a biztos egyenérték egyaránt 3%, így a fele-fele keverék mindkét végpontnál egyértelműen jobb. Egy kockázatkerülőbb, $A = 8$ együtthatójú befektető $y^* = 0{,}25$-öt tart (várható hozam 5%, szórás 5%), egy $A = 2$ együtthatójú pedig pontosan P-t ($y^* = 1$)."),
+
+    p("Egy második befektető más piacon van, $\\mu_P = 10\\%$, $\\sigma_P = 25\\%$ és $r_f = 2\\%$, kockázatkerülése pedig $A = 3$."),
+    {
+      kind: "worked",
+      title: "Optimális teljes portfólió egy második befektetőnek",
+      steps: [
+        { text: "Az optimális súly a kockázatos portfólióban.", tex: "y^{*} = \\frac{\\mu_P - r_f}{A\\,\\sigma_P^2}", result: { value: 0.4267, tolerance: 0.0005 } },
+        { text: "A teljes portfólió várható hozama.", tex: "\\mu = r_f + y^{*}(\\mu_P - r_f)", result: { value: 5.413, tolerance: 0.005, unit: "%" } },
+        { text: "A volatilitása.", tex: "\\sigma = y^{*}\\sigma_P", result: { value: 10.67, tolerance: 0.01, unit: "%" } },
+        { text: "A hasznossága a $\\text{SR}_P = 0{,}32$ Sharpe-rátán keresztül.", tex: "U^{*} = r_f + \\frac{\\text{SR}_P^2}{2A}", result: { value: 3.707, tolerance: 0.005, unit: "%" } },
+      ],
+    },
 
     h("Hitelfelvétel"),
     p("Az optimális súly akkor nagyobb egynél, ha $A < (\\mu_P - r_f)/\\sigma_P^2$, itt ha $A < 2$. $A = 1{,}6$ mellett a befektető $y^* = 0{,}08/(1{,}6 \\times 0{,}04) = 1{,}25$-öt szeretne: a saját tőkéje negyedét kölcsönveszi $r_f$ kamatra, és 125%-ot fektet P-be, 13%-os várható hozammal és 25%-os szórással. A gyakorlatban a befektetők drágábban vesznek fel hitelt, mint amennyiért kölcsönadnak, ezért az egyenes P után lefelé törik, és az optimális hitelfelvétel kisebb."),

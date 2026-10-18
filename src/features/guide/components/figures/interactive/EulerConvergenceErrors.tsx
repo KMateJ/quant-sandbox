@@ -35,7 +35,7 @@ function Inner({ errors, current, width, height }: Props & { width: number; heig
             <text x={x(e.dt)} y={y(e.error) + (e.n === current ? 18 : 15)} textAnchor="middle">{e.error.toFixed(2)}</text>
           </g>
         ))}
-        <AxisLeft scale={y} numTicks={3} tickFormat={(v) => Number(v).toFixed(1)} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tickStyle, textAnchor: "end", dx: -4, dy: 3 })} />
+        <AxisLeft scale={y} tickValues={[0.5, 1, 2, 5].filter((v) => v >= y.domain()[0] && v <= y.domain()[1])} tickFormat={(v) => String(v)} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tickStyle, textAnchor: "end", dx: -4, dy: 3 })} />
         <AxisBottom top={h} scale={x} tickValues={dts} tickFormat={(v) => `1/${Math.round(1 / Number(v))}`} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tickStyle, textAnchor: "middle" })} />
       </Group>
     </svg>

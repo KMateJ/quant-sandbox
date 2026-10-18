@@ -7,59 +7,30 @@ import type {
 } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
 import type { DcModel } from "../useDurationConvexity";
+import { DURATION, DURCONVEX, EXACT } from "./sensitivitySeries";
 
-type Props = { model: DcModel };
-
-const EXACT = "#22c55e";
-const DURATION = "#38bdf8";
-const DURCONVEX = "#f59e0b";
+type Props = {
+  model: DcModel;
+  /// The price-change curves to draw (from `sensitivitySeries`, possibly with pinned ghosts in front).
+  lines: ScatterSeries[];
+};
 
 /// Main experiment: price change (%) vs yield shock Δy (bp). Exact repricing is
 /// the dominant curved line; duration is its tangent; convexity bends back toward
 /// it. Markers and a reference line expose the gap at the selected shock.
-export default function SensitivityChart({ model }: Props) {
+export default function SensitivityChart({ model, lines }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { curve, result, measures, maxBp } = model;
-
-  const lineSeries: ScatterSeries[] = [
-    {
-      key: "exact",
-      intuitionSectionId: "exact-repricing",
-      label: t("dcExactLabel"),
-      color: EXACT,
-      line: true,
-      strokeWidth: 2.8,
-      points: curve.map((d) => ({ x: d.dyBp, y: d.exact })),
-    },
-    {
-      key: "duration",
-      intuitionSectionId: "modified-duration",
-      label: t("dcDurationLabel"),
-      color: DURATION,
-      line: true,
-      strokeWidth: 2,
-      dash: "6 5",
-      points: curve.map((d) => ({ x: d.dyBp, y: d.duration })),
-    },
-    {
-      key: "durConvex",
-      intuitionSectionId: "convexity",
-      label: t("dcDurConvexLabel"),
-      color: DURCONVEX,
-      line: true,
-      strokeWidth: 2.2,
-      dash: "2 3",
-      points: curve.map((d) => ({ x: d.dyBp, y: d.durConvex })),
-    },
-  ];
+  const { result, measures, maxBp } = model;
+  const setShock = (x: number) => model.setShockBp(Math.max(-maxBp, Math.min(maxBp, Math.round(x / 5) * 5)));
 
   const markers: ScatterSeries = {
     key: "selected",
     label: "",
     color: "#e2e8f0",
     legend: false,
-    radius: 5,
+    radius: 6,
+    draggable: true,
     points: [
       { x: result.dyBp, y: result.exactPct, color: EXACT, label: t("dcExactLabel") },
       { x: result.dyBp, y: result.durConvexPct, color: DURCONVEX, label: t("dcDurConvexLabel") },
@@ -67,7 +38,8 @@ export default function SensitivityChart({ model }: Props) {
     ],
   };
 
-  const ys = curve.flatMap((d) => [d.exact, d.duration, d.durConvex]);
+  // Fit every drawn line, pinned ghosts included; dragging the shock leaves the lines (and so the axis) unchanged.
+  const ys = lines.flatMap((series) => series.points.map((p) => p.y));
   const lo = Math.min(...ys);
   const hi = Math.max(...ys);
   const padY = (hi - lo) * 0.08 || 1;
@@ -94,7 +66,7 @@ export default function SensitivityChart({ model }: Props) {
 
   return (
     <ScatterChart
-      series={[...lineSeries, markers]}
+      series={[...lines, markers]}
       xDomain={[-maxBp, maxBp]}
       yDomain={yDomain}
       referenceLines={referenceLines}
@@ -104,6 +76,8 @@ export default function SensitivityChart({ model }: Props) {
       yLabel={t("dcChartYLabel")}
       xFormat={(v) => `${v > 0 ? "+" : ""}${v.toFixed(0)}`}
       yFormat={(v) => `${v.toFixed(0)}%`}
+      onDrag={(x) => setShock(x)}
+      onPlotClick={(x) => setShock(x)}
     />
   );
 }

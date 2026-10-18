@@ -1,4 +1,5 @@
 import { sharpeRatio } from "../../lib/finance/capm";
+import { nextGaussian, type Rng } from "../../lib/math/random";
 import type { CalPoint } from "./riskReturn.types";
 
 /// Expected return when `weight` of wealth sits in the risky asset and the rest earns `riskFree`.
@@ -39,4 +40,60 @@ export function capitalAllocationLine(
     });
   }
   return points;
+}
+
+/// Clamps `value` into [min, max].
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+/// Mean–variance utility of an allocation: U = E[r] − ½·A·σ².
+export function meanVarianceUtility(ret: number, vol: number, riskAversion: number): number {
+  return ret - 0.5 * riskAversion * vol * vol;
+}
+
+/// Unconstrained optimal risky weight for a mean–variance investor: y* = (μ − rf) / (A·σ²).
+export function optimalRiskyWeight(mu: number, sigma: number, riskFree: number, riskAversion: number): number {
+  return (mu - riskFree) / (riskAversion * sigma * sigma || 1e-9);
+}
+
+/// Best feasible weight on the CAL when it is limited to [0, maxWeight]. Utility is concave in the
+/// weight, so the constrained optimum is simply y* clamped to the allowed range.
+export function constrainedOptimalWeight(
+  mu: number,
+  sigma: number,
+  riskFree: number,
+  riskAversion: number,
+  maxWeight: number
+): number {
+  return clamp(optimalRiskyWeight(mu, sigma, riskFree, riskAversion), 0, maxWeight);
+}
+
+/// Indifference curve of utility level `utility`: E[r] = U + ½·A·σ², sampled for σ in [0, maxVol].
+export function indifferenceCurve(utility: number, riskAversion: number, maxVol: number, steps: number): CalPoint[] {
+  const points: CalPoint[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const vol = (i / steps) * maxVol;
+    points.push({ vol, ret: utility + 0.5 * riskAversion * vol * vol });
+  }
+  return points;
+}
+
+/// Two-sided 90% standard normal quantile.
+export const Z_90 = 1.6449;
+
+/// Central interval mean ± z·sd of a normal distribution.
+export function normalInterval(mean: number, sd: number, z = Z_90): [number, number] {
+  return [mean - z * sd, mean + z * sd];
+}
+
+/// One year's realised portfolio return, drawn from N(mean, sd²).
+export function drawAnnualReturn(mean: number, sd: number, rng: Rng = Math.random): number {
+  return nextGaussian(mean, sd, rng);
+}
+
+/// Slider domain for guessing a return from N(mean, sd²): mean ± max(10%, 3.5·sd), snapped outward to 5% steps.
+export function returnGuessDomain(mean: number, sd: number): [number, number] {
+  const half = Math.max(0.1, 3.5 * sd);
+  return [Math.floor((mean - half) * 20) / 20, Math.ceil((mean + half) * 20) / 20];
 }

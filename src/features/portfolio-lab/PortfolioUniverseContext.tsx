@@ -13,6 +13,7 @@ import {
   uniformCorr,
 } from "./portfolioLab.math";
 import type { Asset } from "./portfolioLab.types";
+import { DEFAULT_RISK_FREE } from "./portfolioLab.url";
 
 export type CorrPreset = "low" | "high" | "identity";
 
@@ -43,7 +44,7 @@ const PortfolioUniverseContext = createContext<UniverseValue | null>(null);
 export function PortfolioUniverseProvider({ children }: { children: ReactNode }) {
   const [assets, setAssets] = useState<Asset[]>(DEFAULT_ASSETS);
   const [corr, setCorr] = useState<number[][]>(() => defaultCorr(DEFAULT_ASSETS.length));
-  const [riskFree, setRiskFree] = useState(0.03);
+  const [riskFree, setRiskFree] = useState(DEFAULT_RISK_FREE);
 
   const mus = useMemo(() => assets.map((a) => a.mu), [assets]);
   const sigmas = useMemo(() => assets.map((a) => a.sigma), [assets]);

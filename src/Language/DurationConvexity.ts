@@ -29,7 +29,7 @@ export const durationConvexityHu = {
   dcShockTitle: "Hozamsokk",
   dcShockCaption: "Hozamváltozás Δy",
   dcShockPrecise: "Pontos érték",
-  dcShockHint: "Húzd a csúszkát −200 és +200 bp között.",
+  dcShockHint: "Húzd a csúszkát, vagy kattints, illetve húzd a pontokat a grafikonon (−200 és +200 bp között).",
 
   dcChartTitle: "Árváltozás vs. közelítések",
   dcChartXLabel: "Hozamváltozás Δy (bp)",
@@ -92,7 +92,7 @@ export const durationConvexityEn = {
   dcShockTitle: "Yield shock",
   dcShockCaption: "Yield change Δy",
   dcShockPrecise: "Precise value",
-  dcShockHint: "Drag the slider between −200 and +200 bp.",
+  dcShockHint: "Drag the slider, or click or drag the markers on the chart (−200 to +200 bp).",
 
   dcChartTitle: "Price change vs. approximations",
   dcChartXLabel: "Yield change Δy (bp)",

@@ -6,6 +6,7 @@ import type { GuideLessonLocation } from "../guide.types";
 import { guideContent } from "../../../Language/guides";
 import { useMarkReadAtEnd } from "../useGuideProgress";
 import { useGuideToc } from "../useGuideToc";
+import { checksAnchor, collectChecks } from "../guide.check.logic";
 import GuideBlocks from "./GuideBlocks";
 import GuideLessonNav from "./GuideLessonNav";
 import GuideRail from "./GuideRail";
@@ -16,6 +17,7 @@ export default function GuideLessonPage({ location }: { location: GuideLessonLoc
   const { lesson, track, index, previous, next } = location;
   const bodyRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLElement>(null);
+  const checkCount = collectChecks([lesson.id], guideContent, language).length;
   const toc = useGuideToc(bodyRef, `${lesson.id}:${language}`);
   useMarkReadAtEnd(endRef, lesson.id);
 
@@ -44,6 +46,12 @@ export default function GuideLessonPage({ location }: { location: GuideLessonLoc
           <div ref={bodyRef} className="guide-article-body">
             <GuideBlocks blocks={guideContent[lesson.id][language]} lessonId={lesson.id} />
           </div>
+
+          {checkCount > 0 && (
+            <Link className="guide-lesson-checks-link" to={`${guideTrackPath(track.id)}#${checksAnchor(lesson.id)}`}>
+              {t("guideLessonChecksLink", { n: checkCount })}
+            </Link>
+          )}
 
           <GuideLessonNav ref={endRef} track={track} previous={previous} next={next} />
         </article>

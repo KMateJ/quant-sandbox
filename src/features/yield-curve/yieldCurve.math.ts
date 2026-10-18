@@ -107,3 +107,28 @@ export function scenarioDelta(id: FactorScenario): Factors {
       return { level: 0, slope: 0, curvature: 0.008 };
   }
 }
+
+// #region Forward interval brush
+
+/// Snaps a brushed x-range (node-index units, either order) to two distinct node indices `[lo, hi]`.
+export function snapInterval(a: number, b: number, count: number): [number, number] {
+  const node = (v: number) => Math.min(count - 1, Math.max(0, Math.round(v)));
+  let lo = node(Math.min(a, b));
+  let hi = node(Math.max(a, b));
+  if (lo === hi) {
+    if (hi < count - 1) hi += 1;
+    else lo -= 1;
+  }
+  return [lo, hi];
+}
+
+/// Forward rate between two points of the curve, with the growth of 1 both ways: rolling
+/// (1+z₁)^t₁·(1+f)^(t₂−t₁) equals investing directly (1+z₂)^t₂ — that equality defines f.
+export function forwardBetween(start: TermPoint, end: TermPoint) {
+  const dt = end.t - start.t;
+  const fwd = forwardRate(start.df, end.df, dt);
+  const toStart = 1 / start.df;
+  return { fwd, dt, toStart, rolled: toStart * Math.pow(1 + fwd, dt), direct: 1 / end.df };
+}
+
+// #endregion

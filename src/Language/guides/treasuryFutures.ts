@@ -29,6 +29,14 @@ export const treasuryFutures: GuideLessonContent = {
     eq("\\text{net cost} = P - F \\cdot CF."),
     p("The seller delivers the bond with the smallest net cost: the **cheapest-to-deliver** bond, or CTD. Equivalently, the CTD is the bond with the lowest ratio $P/CF$."),
 
+    {
+      kind: "check",
+      id: "treasury-futures/net-basis",
+      prompt: "At delivery the futures price is $F = 95$. A deliverable bond with conversion factor $CF = 1.10$ trades at a clean price of 106.00. What is its net delivery cost per 100 of face?",
+      answer: { type: "number", value: 1.5, tolerance: 0.01 },
+      explain: "Net cost $= P - F \\cdot CF = 106.00 - 95 \\times 1.10 = 1.50$. Accrued interest cancels: the seller receives it in the invoice and paid it when buying the bond.",
+    },
+
     h("The futures price at delivery"),
     p("At the delivery date the futures price cannot exceed $P/CF$ for any bond in the basket. If it did, a trader could buy that bond, sell the future, deliver at once and keep $F \\cdot CF - P > 0$, an arbitrage of the kind in \"Arbitrage and the forward price\". Competition among sellers pushes $F$ down to the lowest such ratio:"),
     eq("F = \\min_i \\frac{P_i}{CF_i}."),
@@ -43,9 +51,37 @@ export const treasuryFutures: GuideLessonContent = {
       "When yields fall below 6%, all prices rise, and the short-duration bond A rises the least. It now has the lowest $P/CF$ and becomes the CTD.",
     ),
     p("Worked example at a flat yield of 4%: the prices are $P_A = 91{.}89$, $P_B = 111{.}12$ and $P_C = 146{.}87$. The ratios are $91{.}89/0{.}7792 = 117{.}93$, $111{.}12/0{.}9029 = 123{.}07$ and $146{.}87/1{.}1278 = 130{.}22$. So $F = 117{.}93$ and A is the CTD. The net costs are 0 for A, $111{.}12 - 117{.}93 \\times 0{.}9029 = 4{.}64$ for B and 13.86 for C."),
-    p("At 8% the order reverses: $F = 79{.}20$, C is the CTD, and the net costs are 4.74 for A, 2.81 for B and 0 for C."),
+    p("At 8% the order reverses. Work it out step by step:"),
+    {
+      kind: "worked",
+      title: "The cheapest-to-deliver bond at a flat 8% yield",
+      steps: [
+        { text: "Price of bond A (3% coupon, 10 years) at 8%.", tex: "P_A = \\sum_{t=1}^{10} \\frac{3}{1.08^t} + \\frac{100}{1.08^{10}}", result: { value: 66.45, tolerance: 0.02 } },
+        { text: "Price of bond C (7% coupon, 25 years) at 8%.", tex: "P_C = \\sum_{t=1}^{25} \\frac{7}{1.08^t} + \\frac{100}{1.08^{25}}", result: { value: 89.33, tolerance: 0.02 } },
+        { text: "Ratio for A. For B the same steps give 82.32.", tex: "P_A / CF_A", result: { value: 85.28, tolerance: 0.05 } },
+        { text: "Ratio for C. It is the lowest of the three, so C is the CTD and its ratio is the futures price.", tex: "F = P_C / CF_C", result: { value: 79.2, tolerance: 0.05 } },
+        { text: "Net delivery cost of A (B's is 2.81, C's is 0).", tex: "P_A - F \\cdot CF_A", result: { value: 4.74, tolerance: 0.05 } },
+      ],
+    },
     p("The figure plots the net delivery cost $P - F\\cdot CF$ of A, B and C against a flat market yield from 2% to 10%, with a line at the chosen yield. The readouts show the CTD, the futures price $F$, and each bond's conversion factor and net cost. Start at 6%, where all three costs are zero, then move the yield down and up and watch the CTD switch from A to C."),
     figure("ctd-switch"),
+
+    {
+      kind: "check",
+      id: "treasury-futures/ctd-low-yield",
+      prompt: "Yields fall from 6% to 3%. Which of the three bonds becomes the cheapest to deliver?",
+      answer: {
+        type: "choice",
+        options: [
+          "A, the 3% bond with the shortest duration",
+          "C, the 7% bond with the longest duration",
+          "B, the bond in the middle",
+          "None: all three stay equally cheap",
+        ],
+        correct: 0,
+      },
+      explain: "Below the notional 6% all prices rise, the low-duration bond least in relative terms, so A has the lowest $P/CF$. Equal costs hold only at exactly 6%.",
+    },
 
     h("The value of the delivery option"),
     p("Because the seller always picks the cheapest bond, the futures price is lower than it would be for any single named bond. The buyer accepts this in exchange for a liquid, standardised contract. The further yields move from 6%, the more the bonds' costs spread out, and the more the choice is worth to the seller. Traders who hedge with bond futures must therefore track which bond is the CTD: the future's price sensitivity follows the duration of the CTD, and it jumps when the CTD switches."),
@@ -87,6 +123,14 @@ export const treasuryFutures: GuideLessonContent = {
     eq("\\text{nettó költség} = P - F \\cdot CF."),
     p("Az eladó a legkisebb nettó költségű kötvényt szállítja: ez a **legolcsóbban szállítható** kötvény (cheapest-to-deliver, CTD). Másképp mondva a CTD az a kötvény, amelyre a $P/CF$ arány a legkisebb."),
 
+    {
+      kind: "check",
+      id: "treasury-futures/net-basis",
+      prompt: "Szállításkor a határidős ár $F = 95$. Egy szállítható kötvény konverziós faktora $CF = 1{,}10$, nettó árfolyama 106,00. Mekkora a nettó szállítási költsége 100 névértékre?",
+      answer: { type: "number", value: 1.5, tolerance: 0.01 },
+      explain: "Nettó költség $= P - F \\cdot CF = 106{,}00 - 95 \\times 1{,}10 = 1{,}50$. A felhalmozott kamat kiesik: az eladó a számlázási árban megkapja, a kötvény vételekor pedig kifizette.",
+    },
+
     h("A határidős ár a szállítási napon"),
     p("A szállítási napon a határidős ár egyetlen kosárbeli kötvény $P/CF$ arányát sem haladhatja meg. Ha meghaladná, egy kereskedő megvehetné azt a kötvényt, eladhatná a futurest, azonnal szállíthatna, és zsebre tehetné az $F \\cdot CF - P > 0$ különbséget, ami az „Arbitrázs és a határidős ár” leckében látott fajta arbitrázs. Az eladók versenye $F$-et a legkisebb ilyen arányig nyomja le:"),
     eq("F = \\min_i \\frac{P_i}{CF_i}."),
@@ -101,9 +145,37 @@ export const treasuryFutures: GuideLessonContent = {
       "Ha a hozamok 6% alá csökkennek, minden ár emelkedik, és a rövid durációjú A emelkedik a legkevésbé. Most neki a legkisebb a $P/CF$ aránya, így ő lesz a CTD.",
     ),
     p("Számpélda 4%-os egységes hozamon: az árak $P_A = 91{,}89$, $P_B = 111{,}12$ és $P_C = 146{,}87$. Az arányok $91{,}89/0{,}7792 = 117{,}93$, $111{,}12/0{,}9029 = 123{,}07$ és $146{,}87/1{,}1278 = 130{,}22$. Tehát $F = 117{,}93$, és A a CTD. A nettó költségek: A-ra 0, B-re $111{,}12 - 117{,}93 \\times 0{,}9029 = 4{,}64$, C-re 13,86."),
-    p("8%-on megfordul a sorrend: $F = 79{,}20$, C a CTD, a nettó költségek pedig A-ra 4,74, B-re 2,81, C-re 0."),
+    p("8%-on megfordul a sorrend. Számoljuk végig lépésről lépésre:"),
+    {
+      kind: "worked",
+      title: "A legolcsóbban szállítható kötvény 8%-os lapos hozamnál",
+      steps: [
+        { text: "Az A kötvény (3%-os szelvény, 10 év) ára 8%-on.", tex: "P_A = \\sum_{t=1}^{10} \\frac{3}{1{,}08^t} + \\frac{100}{1{,}08^{10}}", result: { value: 66.45, tolerance: 0.02 } },
+        { text: "A C kötvény (7%-os szelvény, 25 év) ára 8%-on.", tex: "P_C = \\sum_{t=1}^{25} \\frac{7}{1{,}08^t} + \\frac{100}{1{,}08^{25}}", result: { value: 89.33, tolerance: 0.02 } },
+        { text: "Az A arányszáma. B-re ugyanezek a lépések 82,32-t adnak.", tex: "P_A / CF_A", result: { value: 85.28, tolerance: 0.05 } },
+        { text: "A C arányszáma. Ez a legkisebb a három közül, így C a CTD, és az arányszáma a határidős ár.", tex: "F = P_C / CF_C", result: { value: 79.2, tolerance: 0.05 } },
+        { text: "Az A nettó szállítási költsége (B-é 2,81, C-é 0).", tex: "P_A - F \\cdot CF_A", result: { value: 4.74, tolerance: 0.05 } },
+      ],
+    },
     p("Az ábra A, B és C $P - F\\cdot CF$ nettó szállítási költségét mutatja a 2% és 10% közötti egységes piaci hozam függvényében, a választott hozamnál egy függőleges vonallal. A kijelzők a CTD-t, az $F$ határidős árat, valamint minden kötvény konverziós faktorát és nettó költségét mutatják. Kezdd 6%-on, ahol mindhárom költség nulla, majd mozgasd a hozamot lefelé és felfelé, és figyeld, ahogy a CTD A-ról C-re vált."),
     figure("ctd-switch"),
+
+    {
+      kind: "check",
+      id: "treasury-futures/ctd-low-yield",
+      prompt: "A hozamok 6%-ról 3%-ra esnek. A három kötvény közül melyik lesz a legolcsóbban szállítható?",
+      answer: {
+        type: "choice",
+        options: [
+          "A, a legrövidebb durációjú 3%-os kötvény",
+          "C, a leghosszabb durációjú 7%-os kötvény",
+          "B, a középső kötvény",
+          "Egyik sem: mindhárom ugyanolyan olcsó marad",
+        ],
+        correct: 0,
+      },
+      explain: "A névleges 6% alatt minden ár emelkedik, relatíve a rövid durációjú kötvényé a legkevésbé, így A-nak a legkisebb a $P/CF$ aránya. Az egyenlő költség csak pontosan 6%-on áll fenn.",
+    },
 
     h("A szállítási opció értéke"),
     p("Mivel az eladó mindig a legolcsóbb kötvényt választja, a határidős ár alacsonyabb, mint bármely egyetlen, megnevezett kötvényre szóló ügylet ára lenne. A vevő ezt egy likvid, szabványosított szerződésért cserébe elfogadja. Minél messzebb kerülnek a hozamok a 6%-tól, annál jobban szétválnak a kötvények költségei, és annál többet ér a választás az eladónak. Aki kötvényfuturesszel fedez, annak ezért követnie kell, melyik kötvény a CTD: a futures árérzékenysége a CTD durációját követi, és ugrik, amikor a CTD vált."),

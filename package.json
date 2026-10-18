@@ -20,6 +20,11 @@
     "test:drag-handles": "node --test scripts/drag-handles.test.mjs",
     "test:url-state": "node --test scripts/url-state.test.mjs",
     "test:lab-primitives": "node --test scripts/lab-primitives.test.mjs",
+    "test:pinned-series": "node --test scripts/pinned-series.test.mjs",
+    "test:sketch": "node --test scripts/sketch.test.mjs",
+    "test:labs": "node --test scripts/lab-*.test.mjs",
+    "test:portfolio-labs": "node --test scripts/risk-return.test.mjs scripts/capm-lab.test.mjs scripts/portfolio-lab.test.mjs scripts/efficient-frontier.test.mjs",
+    "test:guide-checks": "node --test scripts/guide-checks.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

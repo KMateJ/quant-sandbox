@@ -6,6 +6,7 @@ import { useCitationFinder } from "../useCitationFinder";
 import { guideFigures } from "./figures";
 import GuideInline from "./GuideInline";
 import GuideTryIt from "./GuideTryIt";
+import GuideWorked from "./GuideWorked";
 
 // Quoted lesson titles become links in running text; headings stay plain and lab links cannot nest links.
 function Block({ block, cite }: { block: GuideBlock; cite: CitationFinder }) {
@@ -28,6 +29,11 @@ function Block({ block, cite }: { block: GuideBlock; cite: CitationFinder }) {
     }
     case "lab":
       return <GuideTryIt to={block.to}>{block.text}</GuideTryIt>;
+    case "check":
+      // Questions are collected at the end of the track (GuideTrackChecks), not shown inside the lesson.
+      return null;
+    case "worked":
+      return <GuideWorked block={block} cite={cite} />;
   }
 }
 

@@ -18,6 +18,13 @@ export const sdeSimulation: GuideLessonContent = {
     eq("S_{k+1} = S_k \\exp\\!\\Big(\\big(\\mu - \\tfrac12\\sigma^2\\big)\\Delta t + \\sigma\\,\\Delta W_k\\Big)."),
     p("Example: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0.25$ and $Z = 1$, so $\\Delta W = 0.5$. Euler gives $100\\,(1 + 0.02 + 0.2) = 122.00$. The exact value is $100\\,e^{(0.08 - 0.08) \\cdot 0.25 + 0.2} = 100\\,e^{0.2} = 122.14$. With $Z = -1$ Euler gives $82.00$ against the exact $81.87$. The step misses by about $0.13$ either way, because it ignores the curvature of the exponential."),
 
+    {
+      kind: "check",
+      id: "sde-simulation/euler-step",
+      prompt: "One Euler step for geometric Brownian motion with $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0.25$ and the draw $Z = -0.5$. What is $S_1$?",
+      answer: { type: "number", value: 92, tolerance: 0.01 },
+      explain: "$\\Delta W = \\sqrt{0.25} \\cdot (-0.5) = -0.25$, so $S_1 = 100\\,(1 + 0.08 \\cdot 0.25 + 0.4 \\cdot (-0.25)) = 100 \\cdot 0.92 = 92$.",
+    },
     h("Strong and weak error"),
     p("There are two ways to judge a simulation scheme, depending on what it is used for."),
     list(
@@ -27,6 +34,23 @@ export const sdeSimulation: GuideLessonContent = {
     note("For smooth coefficients the Euler–Maruyama scheme has strong order $\\tfrac12$ and weak order 1: the strong error shrinks like $\\sqrt{\\Delta t}$, the weak error like $\\Delta t$. Four times as many steps halve the strong error but cut the weak error to a quarter."),
     p("Geometric Brownian motion makes the weak error easy to compute. Each Euler step multiplies the expected value by $1 + \\mu\\,\\Delta t$, so $\\mathbb{E}[\\hat S_T] = S_0\\,(1 + \\mu T/n)^n$, against the exact $S_0\\,e^{\\mu T}$. With the numbers above, $100\\,e^{0.08} = 108.3287$, and the gaps for $n = 4$, $16$ and $64$ are $0.0855$, $0.0216$ and $0.0054$: a quarter each time."),
 
+    {
+      kind: "worked",
+      title: "Weak error of Euler for GBM with two steps",
+      steps: [
+        { text: "With $S_0 = 100$, $\\mu = 8\\%$, $T = 1$ and $n = 2$, each Euler step multiplies the expected value by this factor.", tex: "1 + \\mu T/n", result: { value: 1.04, tolerance: 0.0005 } },
+        { text: "Expected value of the Euler approximation at $T$.", tex: "S_0\\,(1 + \\mu T/n)^n", result: { value: 108.16, tolerance: 0.005 } },
+        { text: "Exact expected value.", tex: "S_0\\,e^{\\mu T}", result: { value: 108.3287, tolerance: 0.0005 } },
+        { text: "Weak error: twice the gap at $n = 4$, as order 1 predicts.", tex: "S_0\\,e^{\\mu T} - S_0\\,(1 + \\mu T/n)^n", result: { value: 0.1687, tolerance: 0.0005 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "sde-simulation/strong-order",
+      prompt: "You increase the number of Euler steps from 16 to 256. Roughly what happens to the strong error?",
+      answer: { type: "choice", options: ["It halves.", "It shrinks about 4 times.", "It shrinks about 16 times.", "It does not change."], correct: 1 },
+      explain: "Strong order $\\tfrac12$: the error scales like $\\sqrt{\\Delta t}$. Sixteen times more steps shrink it by $\\sqrt{16} = 4$. The weak error, of order 1, would shrink about 16 times.",
+    },
     h("The same path on finer grids"),
     p("To see the strong error you must compare a simulation with the exact path driven by the same randomness. The figure draws one Brownian path on a fine grid of 256 steps over one year, with $S_0 = 100$, $\\mu = 8\\%$ and $\\sigma = 40\\%$; the high volatility makes the error visible. The exact solution is drawn from that path, and the Euler approximation uses the same path on a coarser grid: each coarse increment is the sum of the fine increments it spans."),
     p("Choose $n = 4$, $16$, $64$ or $256$ steps and watch the Euler path close in on the exact one; \"New path\" draws another Brownian path. Hover over the chart, or focus it and use the arrow keys, to compare the two values at a grid time. Below, the strong error at $T$ averaged over 500 paths is plotted against $\\Delta t$ on log–log axes, next to a reference line of slope $\\tfrac12$. It falls from about $4.82$ at $n = 4$ to $2.34$, $1.23$ and $0.63$ at $n = 256$: roughly halving with every fourfold refinement, as order $\\tfrac12$ predicts. On the first path the terminal values at $n = 16$ are $177.23$ exact against $183.44$ for Euler."),
@@ -64,6 +88,13 @@ export const sdeSimulation: GuideLessonContent = {
     eq("S_{k+1} = S_k \\exp\\!\\Big(\\big(\\mu - \\tfrac12\\sigma^2\\big)\\Delta t + \\sigma\\,\\Delta W_k\\Big)."),
     p("Példa: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0{,}25$ és $Z = 1$, tehát $\\Delta W = 0{,}5$. Az Euler-lépés $100\\,(1 + 0{,}02 + 0{,}2) = 122{,}00$-t ad. A pontos érték $100\\,e^{(0{,}08 - 0{,}08) \\cdot 0{,}25 + 0{,}2} = 100\\,e^{0{,}2} = 122{,}14$. $Z = -1$ mellett az Euler-érték $82{,}00$, a pontos $81{,}87$. A lépés mindkét irányban nagyjából $0{,}13$-mal téved, mert figyelmen kívül hagyja az exponenciális görbületét."),
 
+    {
+      kind: "check",
+      id: "sde-simulation/euler-step",
+      prompt: "Egy Euler-lépés geometriai Brown-mozgásra: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0{,}25$, a húzás $Z = -0{,}5$. Mennyi $S_1$?",
+      answer: { type: "number", value: 92, tolerance: 0.01 },
+      explain: "$\\Delta W = \\sqrt{0{,}25} \\cdot (-0{,}5) = -0{,}25$, így $S_1 = 100\\,(1 + 0{,}08 \\cdot 0{,}25 + 0{,}4 \\cdot (-0{,}25)) = 100 \\cdot 0{,}92 = 92$.",
+    },
     h("Erős és gyenge hiba"),
     p("Egy szimulációs sémát kétféleképpen ítélhetünk meg, attól függően, mire használjuk."),
     list(
@@ -73,6 +104,23 @@ export const sdeSimulation: GuideLessonContent = {
     note("Sima együtthatók esetén az Euler–Maruyama-séma erős rendje $\\tfrac12$, gyenge rendje 1: az erős hiba $\\sqrt{\\Delta t}$-vel, a gyenge hiba $\\Delta t$-vel arányosan csökken. Négyszer annyi lépés felezi az erős hibát, a gyenge hibát viszont negyedére csökkenti."),
     p("A geometriai Brown-mozgásnál a gyenge hiba könnyen kiszámolható. Minden Euler-lépés $1 + \\mu\\,\\Delta t$-vel szorozza a várható értéket, így $\\mathbb{E}[\\hat S_T] = S_0\\,(1 + \\mu T/n)^n$, szemben a pontos $S_0\\,e^{\\mu T}$ értékkel. A fenti számokkal $100\\,e^{0{,}08} = 108{,}3287$, az eltérés pedig $n = 4$, $16$ és $64$ esetén $0{,}0855$, $0{,}0216$ és $0{,}0054$: minden alkalommal a negyedére csökken."),
 
+    {
+      kind: "worked",
+      title: "Az Euler-séma gyenge hibája GBM-re két lépéssel",
+      steps: [
+        { text: "$S_0 = 100$, $\\mu = 8\\%$, $T = 1$ és $n = 2$ mellett minden Euler-lépés ennyivel szorozza a várható értéket.", tex: "1 + \\mu T/n", result: { value: 1.04, tolerance: 0.0005 } },
+        { text: "Az Euler-közelítés várható értéke $T$-ben.", tex: "S_0\\,(1 + \\mu T/n)^n", result: { value: 108.16, tolerance: 0.005 } },
+        { text: "A pontos várható érték.", tex: "S_0\\,e^{\\mu T}", result: { value: 108.3287, tolerance: 0.0005 } },
+        { text: "A gyenge hiba: kétszerese az $n = 4$ melletti eltérésnek, ahogy az elsőrendű konvergencia mondja.", tex: "S_0\\,e^{\\mu T} - S_0\\,(1 + \\mu T/n)^n", result: { value: 0.1687, tolerance: 0.0005 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "sde-simulation/strong-order",
+      prompt: "Az Euler-lépések számát 16-ról 256-ra növeled. Nagyjából mi történik az erős hibával?",
+      answer: { type: "choice", options: ["A felére csökken.", "Nagyjából a negyedére csökken.", "Nagyjából a tizenhatodára csökken.", "Nem változik."], correct: 1 },
+      explain: "Az erős rend $\\tfrac12$: a hiba $\\sqrt{\\Delta t}$ szerint skálázódik. Tizenhatszor több lépés $\\sqrt{16} = 4$-szeresére csökkenti. Az elsőrendű gyenge hiba nagyjából a tizenhatodára esne.",
+    },
     h("Ugyanaz a pálya finomabb rácson"),
     p("Az erős hiba csak úgy látható, ha a szimulációt az ugyanazzal a véletlennel hajtott pontos pályával vetjük össze. Az ábra egy Brown-pályát rajzol egy 256 lépéses finom rácson egy évre, $S_0 = 100$, $\\mu = 8\\%$ és $\\sigma = 40\\%$ mellett; a nagy volatilitás teszi láthatóvá a hibát. A pontos megoldás ebből a pályából adódik, az Euler-közelítés pedig ugyanezt a pályát használja egy durvább rácson: minden durva növekmény az általa lefedett finom növekmények összege."),
     p("Válasszunk $n = 4$, $16$, $64$ vagy $256$ lépést, és figyeljük, ahogy az Euler-pálya rásimul a pontosra; az „Új pálya” másik Brown-pályát sorsol. Vigyük az egeret a grafikon fölé, vagy fókuszáljunk rá és használjuk a nyílbillentyűket, hogy egy rácsidőpontban összevessük a két értéket. Alatta az 500 pálya átlagaként mért erős hiba látható $T$-ben, $\\Delta t$ függvényében, log–log tengelyeken, egy $\\tfrac12$ meredekségű referenciavonal mellett. A hiba $n = 4$ esetén nagyjából $4{,}82$, majd $2{,}34$, $1{,}23$ és $n = 256$-nál $0{,}63$: minden négyszeres finomítással nagyjából feleződik, ahogy a $\\tfrac12$-es rend előre jelzi. Az első pályán $n = 16$ mellett a végső érték pontosan $177{,}23$, Euler-sémával $183{,}44$."),

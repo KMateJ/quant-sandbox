@@ -4,9 +4,11 @@ import type { ScatterSeries, ScatterBand } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
 import type { YieldCurveModel } from "../useYieldCurve";
 import { MATURITY_LABELS } from "../presets";
-import { forwardRate } from "../yieldCurve.math";
+import { forwardBetween, snapInterval } from "../yieldCurve.math";
 import { pct2, YC_COLORS } from "../curveChartUtils";
 import MaturityChart from "./MaturityChart";
+import ForwardBrushLayer from "./ForwardBrushLayer";
+import ForwardExplain from "./ForwardExplain";
 
 type Props = { model: YieldCurveModel };
 
@@ -15,12 +17,13 @@ export default function ForwardsView({ model }: Props) {
   const { term } = model;
   const [start, setStart] = useState(5);
   const [end, setEnd] = useState(6);
-  const lo = Math.min(start, end);
-  const hi = Math.max(start, end);
+  // The selects may pick the same maturity or a reversed pair; the interval is always two distinct, ordered nodes.
+  const [lo, hi] = snapInterval(start, end, term.length);
+  const setRange = (from: number, to: number) => { setStart(from); setEnd(to); };
 
   const zStart = term[lo]?.zero ?? 0;
   const zEnd = term[hi]?.zero ?? 0;
-  const fwd = forwardRate(term[lo]?.df ?? 1, term[hi]?.df ?? 1, (term[hi]?.t ?? 1) - (term[lo]?.t ?? 0));
+  const fwd = term[lo] && term[hi] ? forwardBetween(term[lo], term[hi]).fwd : 0;
 
   const band: ScatterBand[] = [{ from: lo, to: hi, color: YC_COLORS.forward, opacity: 0.12 }];
 
@@ -52,8 +55,8 @@ export default function ForwardsView({ model }: Props) {
   return (
     <div className="module-main yc-forwards">
       <div className="yc-forward-bar">
-        {pick(start, setStart, t("ycStart"))}
-        {pick(end, setEnd, t("ycEnd"))}
+        {pick(lo, (i) => setRange(i, hi), t("ycStart"))}
+        {pick(hi, (i) => setRange(lo, i), t("ycEnd"))}
         <div className="yc-forward-readout">
           <span><i style={{ background: YC_COLORS.zero }} />z({term[lo]?.label}) {pct2(zStart)}</span>
           <span><i style={{ background: YC_COLORS.zero }} />z({term[hi]?.label}) {pct2(zEnd)}</span>
@@ -64,9 +67,14 @@ export default function ForwardsView({ model }: Props) {
       <ChartContainer title={t("ycZeroCurve")}>
         <div className="chart-wrap">
           <MaturityChart labels={MATURITY_LABELS} series={zeroSeries} yDomain={zDomain}
-            yFormat={pct2} yLabel={t("ycYieldAxis")} bands={band}
-            extraRefs={[{ axis: "x", value: hi, color: YC_COLORS.forward, dash: "4 4" }]} />
+            yFormat={pct2} yLabel={t("ycYieldAxis")}
+            layer={(frame) => (
+              <ForwardBrushLayer frame={frame} lo={lo} hi={hi} labels={MATURITY_LABELS}
+                color={YC_COLORS.forward} onChange={setRange} />
+            )} />
         </div>
+        <p className="yc-hint">{t("ycFwdBrushHint")}</p>
+        {term[lo] && term[hi] && <ForwardExplain start={term[lo]} end={term[hi]} />}
       </ChartContainer>
 
       <ChartContainer title={t("ycImpliedForwardCurve")}>

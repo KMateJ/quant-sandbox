@@ -27,6 +27,14 @@ export const factorModels: GuideLessonContent = {
     eq("\\operatorname{Cov}(R_i, R_j) = \\beta_i\\beta_j\\,\\operatorname{Cov}(R_M, R_M) = \\beta_i\\beta_j\\,\\sigma_M^2 \\qquad (i \\ne j)."),
     p("Every entry of the covariance matrix now follows from the betas, the specific volatilities and $\\sigma_M$. Counting the numbers that the covariance matrix needs, there are $N$ betas, $N$ specific volatilities and one market volatility: $2N + 1$ parameters instead of $N(N+1)/2$. If the alphas are included as well, to describe expected returns, the count is $3N + 1$. For 500 stocks that is 1001 risk parameters (1501 with the alphas) instead of 125 250."),
 
+    {
+      kind: "check",
+      id: "factor-models/index-covariance",
+      prompt: "In the single-index model stock A has $\\beta_A = 1.2$, stock B has $\\beta_B = 0.8$, and the index volatility is $\\sigma_M = 20\\%$. What is $\\operatorname{Cov}(R_A, R_B)$, as a decimal?",
+      answer: { type: "number", value: 0.0384, tolerance: 0.0002 },
+      explain: "$\\operatorname{Cov}(R_A, R_B) = \\beta_A\\beta_B\\sigma_M^2 = 1.2 \\times 0.8 \\times 0.04 = 0.0384$. The specific volatilities do not enter: in this model only the index links the two stocks.",
+    },
+
     h("Diversification in the index model"),
     p("A portfolio with weights $w_i$ has return $R_p = \\sum_i w_i R_i = \\alpha_p + \\beta_p R_M + \\sum_i w_i\\varepsilon_i$, where $\\beta_p = \\sum_i w_i\\beta_i$ is the weighted average beta. The specific returns are uncorrelated with the index and with each other, so"),
     eq("\\sigma_p^2 = \\beta_p^2\\sigma_M^2 + \\sum_{i=1}^{N} w_i^2\\,\\sigma_{\\varepsilon,i}^2."),
@@ -34,6 +42,18 @@ export const factorModels: GuideLessonContent = {
     eq("\\sigma_p^2 = \\beta^2\\sigma_M^2 + \\frac{\\sigma_\\varepsilon^2}{N} \\;\\longrightarrow\\; \\beta^2\\sigma_M^2 \\quad (N \\to \\infty)."),
     p("This is the result of \"Diversification and correlation\" with a structure filled in. There, the variance of an equally weighted portfolio tended to the average covariance. In the index model every covariance between different stocks is $\\beta^2\\sigma_M^2$, so the average covariance is exactly the systematic variance, and the volatility can never fall below the **systematic floor** $\\beta\\sigma_M$."),
     note("In the single-index model the specific variance of an equally weighted portfolio is $\\sigma_\\varepsilon^2/N$ and vanishes as $N$ grows. The systematic part $\\beta_p^2\\sigma_M^2$ does not depend on $N$ at all."),
+
+    {
+      kind: "check",
+      id: "factor-models/diversification-floor",
+      prompt: "An equally weighted portfolio holds more and more stocks, all with beta $\\beta$ and specific volatility $\\sigma_\\varepsilon$. What does its volatility tend to?",
+      answer: {
+        type: "choice",
+        options: ["Zero", "$\\beta\\sigma_M$", "$\\sigma_\\varepsilon$", "$\\sqrt{\\beta^2\\sigma_M^2 + \\sigma_\\varepsilon^2}$, the volatility of one stock"],
+        correct: 1,
+      },
+      explain: "The specific part $\\sigma_\\varepsilon^2/N$ vanishes while the systematic part $\\beta^2\\sigma_M^2$ stays, so the volatility falls to the floor $\\beta\\sigma_M$.",
+    },
 
     h("The systematic share of variance"),
     p("The fraction of variance explained by the index is"),
@@ -97,6 +117,14 @@ export const factorModels: GuideLessonContent = {
     eq("\\operatorname{Cov}(R_i, R_j) = \\beta_i\\beta_j\\,\\operatorname{Cov}(R_M, R_M) = \\beta_i\\beta_j\\,\\sigma_M^2 \\qquad (i \\ne j)."),
     p("A kovarianciamátrix minden eleme következik a bétákból, az egyedi volatilitásokból és $\\sigma_M$-ből. Ha a kovarianciamátrixhoz szükséges számokat számoljuk, ez $N$ béta, $N$ egyedi volatilitás és egy piaci volatilitás: $N(N+1)/2$ helyett $2N + 1$ paraméter. Ha a várható hozamok leírásához az alfákat is beszámítjuk, $3N + 1$. 500 részvénynél ez 125 250 helyett 1001 kockázati paraméter (az alfákkal 1501)."),
 
+    {
+      kind: "check",
+      id: "factor-models/index-covariance",
+      prompt: "Az egyindexes modellben az A részvényre $\\beta_A = 1{,}2$, a B részvényre $\\beta_B = 0{,}8$, az index volatilitása $\\sigma_M = 20\\%$. Mennyi $\\operatorname{Cov}(R_A, R_B)$ tizedes törtként?",
+      answer: { type: "number", value: 0.0384, tolerance: 0.0002 },
+      explain: "$\\operatorname{Cov}(R_A, R_B) = \\beta_A\\beta_B\\sigma_M^2 = 1{,}2 \\times 0{,}8 \\times 0{,}04 = 0{,}0384$. Az egyedi volatilitások nem szerepelnek: ebben a modellben csak az index köti össze a két részvényt.",
+    },
+
     h("Diverzifikáció az indexmodellben"),
     p("Egy $w_i$ súlyú portfólió hozama $R_p = \\sum_i w_i R_i = \\alpha_p + \\beta_p R_M + \\sum_i w_i\\varepsilon_i$, ahol $\\beta_p = \\sum_i w_i\\beta_i$ a béták súlyozott átlaga. Az egyedi hozamok korrelálatlanok az indexszel és egymással, ezért"),
     eq("\\sigma_p^2 = \\beta_p^2\\sigma_M^2 + \\sum_{i=1}^{N} w_i^2\\,\\sigma_{\\varepsilon,i}^2."),
@@ -104,6 +132,18 @@ export const factorModels: GuideLessonContent = {
     eq("\\sigma_p^2 = \\beta^2\\sigma_M^2 + \\frac{\\sigma_\\varepsilon^2}{N} \\;\\longrightarrow\\; \\beta^2\\sigma_M^2 \\quad (N \\to \\infty)."),
     p("Ez a „Diverzifikáció és korreláció” című lecke eredménye, kitöltött szerkezettel. Ott az egyenlő súlyú portfólió varianciája az átlagos kovarianciához tartott. Az indexmodellben két különböző részvény kovarianciája mindig $\\beta^2\\sigma_M^2$, így az átlagos kovariancia pontosan a szisztematikus variancia, és a volatilitás soha nem eshet a $\\beta\\sigma_M$ **szisztematikus padló** alá."),
     note("Az egyindexes modellben az egyenlő súlyú portfólió egyedi varianciája $\\sigma_\\varepsilon^2/N$, és $N$ növekedésével eltűnik. A $\\beta_p^2\\sigma_M^2$ szisztematikus rész egyáltalán nem függ $N$-től."),
+
+    {
+      kind: "check",
+      id: "factor-models/diversification-floor",
+      prompt: "Egy egyenlő súlyú portfólió egyre több részvényt tartalmaz, mindegyik bétája $\\beta$, egyedi volatilitása $\\sigma_\\varepsilon$. Mihez tart a portfólió volatilitása?",
+      answer: {
+        type: "choice",
+        options: ["Nullához", "$\\beta\\sigma_M$-hez", "$\\sigma_\\varepsilon$-hoz", "$\\sqrt{\\beta^2\\sigma_M^2 + \\sigma_\\varepsilon^2}$-hez, egyetlen részvény volatilitásához"],
+        correct: 1,
+      },
+      explain: "Az egyedi rész, $\\sigma_\\varepsilon^2/N$, eltűnik, a szisztematikus $\\beta^2\\sigma_M^2$ rész megmarad, így a volatilitás a $\\beta\\sigma_M$ alsó korlátig csökken.",
+    },
 
     h("A variancia szisztematikus hányada"),
     p("Az index által magyarázott varianciahányad"),

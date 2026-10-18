@@ -19,6 +19,9 @@ export type BrokenAxis = {
   lowerMax: number;
   upperMax: number;
   y: (v: number) => number;
+  /// Value at pixel `py` (inverse of `y`): the gap reads as the lower band's top, and the upper band
+  /// extrapolates past its top so a dragged bar can grow beyond the current scale.
+  invert: (py: number) => number;
 };
 
 /// Full parameter set describing a fixed-coupon bond.

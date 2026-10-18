@@ -275,22 +275,3 @@ export function makeMaturities(
     return Number((start + ratio * (maxMaturity - start)).toFixed(2));
   });
 }
-
-/// Value and slope ∂/∂S of the plotted metric at one spot (slope by central difference, so it works for every metric:
-/// for the price it is Δ, for Δ it is Γ).
-export function metricAtSpot(metric: BsMetric, optionType: BsOptionType, S: number, K: number, T: number, r: number, sigma: number) {
-  const f = (s: number) => evaluateMetric(metric, optionType, s, K, T, r, sigma);
-  const h = Math.max(1e-3, S * 1e-4);
-  return { value: f(S), slope: (f(S + h) - f(S - h)) / (2 * h) };
-}
-
-/// Tangent to a metric curve at `S`, as a segment of half-width `halfWidth` in spot.
-export function tangentSegment(metric: BsMetric, optionType: BsOptionType, S: number, K: number, T: number, r: number, sigma: number, halfWidth = 25) {
-  const { value, slope } = metricAtSpot(metric, optionType, S, K, T, r, sigma);
-  return { x1: S - halfWidth, y1: value - slope * halfWidth, x2: S + halfWidth, y2: value + slope * halfWidth, slope };
-}
-
-/// Index of the maturity closest to `target` years (the curve that carries the tangent).
-export function mainMaturityIndex(maturities: number[], target = 1): number {
-  return maturities.reduce((best, T, i) => (Math.abs(T - target) < Math.abs(maturities[best] - target) ? i : best), 0);
-}

@@ -1,7 +1,18 @@
+import type { TranslationKey } from "../../i18n";
+
 /// Step laws offered in the CLT lesson; each is standardised to mean 0, variance 1.
 export type StepDistribution = "coin" | "uniform" | "exponential";
 
 export const STEP_DISTRIBUTIONS: StepDistribution[] = ["coin", "uniform", "exponential"];
+
+export const DISTRIBUTION_KEYS: Record<StepDistribution, TranslationKey> = {
+  coin: "stochCltDistCoin",
+  uniform: "stochCltDistUniform",
+  exponential: "stochCltDistExponential",
+};
+
+/// Sum length asked about in the prediction round — the classic "n ≥ 30 is enough" rule of thumb.
+export const CLT_PREDICT_N = 30;
 
 /// Sum lengths n selectable for the histogram of Zₙ = Sₙ / √n.
 export const CLT_LEVELS = [1, 2, 3, 5, 10, 30, 100] as const;

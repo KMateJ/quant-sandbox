@@ -1,71 +1,64 @@
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import { ScatterChart } from "../../../components/charts";
-import type { ChartReferenceLine, ScatterAnnotation, ScatterSeries } from "../../../components/charts";
+import { DragHandles, ScatterChart } from "../../../components/charts";
+import type { DragHandle, PlotFrame } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
-import type { Asset } from "../../portfolio-lab/portfolioLab.types";
-import type { OptPoint } from "../portfolioOptimization.types";
+import type { FrontierBrush } from "../useFrontierBrush";
+import type { useFrontierSeries } from "../useFrontierSeries";
 import type { useOptimization } from "../useOptimization";
+import FrontierBrushLayer from "./FrontierBrushLayer";
+import { TARGET_COLOR, pct1 } from "./frontierChart.style";
 
-type Props = { model: ReturnType<typeof useOptimization> };
+type Props = {
+  model: ReturnType<typeof useOptimization>;
+  chart: ReturnType<typeof useFrontierSeries>;
+  brush: FrontierBrush;
+};
 
-const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+const TARGET_STEP = 0.0025;
 
-/// Risk/return scatter: feasible set, unconstrained & constrained frontiers,
-/// reference portfolios, assets, the CML and the draggable selected portfolio.
-export default function OptimizationChart({ model }: Props) {
+/// Risk/return scatter: feasible set, unconstrained & constrained frontiers (plus a pinned ghost),
+/// reference portfolios, assets and the CML. The frontier is brushable and the target line draggable.
+export default function OptimizationChart({ model, chart, brush }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { assets, branch, unconBranch, cloud, gmv, tangency, selected, cml, constraints, objective } = model;
+  const { objective, retMin, retMax, volMax } = model;
 
-  const rows = (p: OptPoint) =>
-    assets
-      .map((a, i) => ({ label: a.name, value: pct(p.weights[i]), color: a.color, w: p.weights[i] }))
-      .filter((r) => Math.abs(r.w) >= 0.005)
-      .sort((a, b) => b.w - a.w)
-      .map(({ label, value, color }) => ({ label, value, color }));
+  const handles: DragHandle[] =
+    objective === "targetReturn"
+      ? [{ id: "target", axis: "y", y: model.targetReturn, min: Math.max(-0.5, retMin), max: Math.min(1, retMax), step: TARGET_STEP, label: t("optTargetReturnLabel"), format: pct1, color: TARGET_COLOR }]
+      : objective === "targetVolatility"
+        ? [{ id: "target", axis: "x", x: model.targetVol, min: 0, max: Math.min(1, volMax), step: TARGET_STEP, label: t("optTargetVolLabel"), format: pct1, color: TARGET_COLOR }]
+        : [];
 
-  const frontierPts = branch.map((p) => ({ x: p.vol, y: p.ret, tooltipRows: rows(p) }));
-
-  const series: ScatterSeries[] = [
-    { key: "feasible", intuitionSectionId: "portfolio-selection", label: t("optFeasible"), color: "#64748b", radius: 2, opacity: 0.22, points: cloud.map((p) => ({ x: p.vol, y: p.ret })) },
-    { key: "unconstrained", intuitionSectionId: "constraint-cost", label: t("optFrontierUnconstrained"), color: "#64748b", line: true, dash: "5 4", strokeWidth: 1.75, points: unconBranch.map((p) => ({ x: p.vol, y: p.ret })) },
-    { key: "constrained", intuitionSectionId: "efficient-frontier", label: t("optFrontierConstrained"), color: "#3b82f6", line: true, strokeWidth: 3, points: branch.map((p) => ({ x: p.vol, y: p.ret })) },
-    { key: "fpts", label: t("optFrontierConstrained"), color: "#3b82f6", radius: 3, opacity: 0.55, legend: false, points: frontierPts },
-    ...(constraints.useRiskFree && cml.length
-      ? [{ key: "cml", intuitionSectionId: "capital-market-line", label: t("optCml"), color: "#22c55e", line: true, dash: "6 4", strokeWidth: 2, points: cml.map((p) => ({ x: p.vol, y: p.ret })) } as ScatterSeries]
-      : []),
-    { key: "assets", intuitionSectionId: "allocation", label: t("optAssets"), color: "#94a3b8", radius: 6, points: assets.map((a: Asset) => ({ x: a.sigma, y: a.mu, color: a.color, label: a.name })) },
-    { key: "gmv", label: t("optGmv"), color: "#38bdf8", radius: 6, legend: false, points: [{ x: gmv.vol, y: gmv.ret, label: t("optGmv"), tooltipRows: rows(gmv) }] },
-    ...(constraints.useRiskFree
-      ? [{ key: "tangency", label: t("optTangency"), color: "#22c55e", radius: 6, legend: false, points: [{ x: tangency.vol, y: tangency.ret, label: t("optTangency"), tooltipRows: rows(tangency) }] } as ScatterSeries]
-      : []),
-    { key: "selected", intuitionSectionId: "portfolio-selection", label: t("optSelected"), color: "#f97316", radius: 9, draggable: true, points: [{ x: selected.vol, y: selected.ret, label: t("optSelected"), tooltipRows: rows(selected) }] },
-  ];
-
-  const referenceLines: ChartReferenceLine[] = [];
-  if (objective === "targetReturn") referenceLines.push({ axis: "y", value: model.targetReturn, color: "#f59e0b", dash: "5 4" });
-  if (objective === "targetVolatility") referenceLines.push({ axis: "x", value: model.targetVol, color: "#f59e0b", dash: "5 4" });
-
-  const annotations: ScatterAnnotation[] = [
-    { x: gmv.vol, y: gmv.ret, text: t("optGmv"), color: "#38bdf8", dx: 8, dy: 4, fontSize: 11 },
-    { x: selected.vol, y: selected.ret, text: t("optSelected"), color: "#f97316", dx: 10, dy: -8, fontSize: 11, fontWeight: 700 },
-  ];
-  if (constraints.useRiskFree) annotations.push({ x: tangency.vol, y: tangency.ret, text: t("optTangency"), color: "#22c55e", dx: 8, dy: 14, fontSize: 11 });
+  const layer = (frame: PlotFrame) => (
+    <>
+      <FrontierBrushLayer frame={frame} brush={brush} />
+      {handles.length > 0 && (
+        <DragHandles
+          frame={frame}
+          handles={handles}
+          onChange={(_id, { x, y }) => {
+            if (objective === "targetReturn" && y !== undefined) model.setTargetReturn(y);
+            if (objective === "targetVolatility" && x !== undefined) model.setTargetVol(x);
+          }}
+        />
+      )}
+    </>
+  );
 
   return (
     <div className="chart-wrap">
       <ScatterChart
-        series={series}
-        xDomain={[0, model.volMax]}
-        yDomain={[model.retMin, model.retMax]}
-        referenceLines={referenceLines}
-        annotations={annotations}
+        series={chart.series}
+        xDomain={[0, volMax]}
+        yDomain={[retMin, retMax]}
+        annotations={chart.annotations}
         isMobile={isMobile}
-        xFormat={pct}
-        yFormat={pct}
+        xFormat={pct1}
+        yFormat={pct1}
         xLabel={t("optVolAxis")}
         yLabel={t("optRetAxis")}
-        onDrag={(_x, y) => model.selectReturn(Math.max(model.retMin, Math.min(model.retMax, y)))}
+        layer={layer}
       />
     </div>
   );

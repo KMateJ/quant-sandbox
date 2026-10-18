@@ -98,6 +98,10 @@ export const yieldCurveHu = {
   ycImpliedForwardCurve: "Implikált forward görbe",
   ycForwardHint:
     "A forward ráta a lejárati szerkezetből származik, nem önállóan megadott érték.",
+  ycFwdBrushHint: "Húzz végig a zéró görbén az intervallum kijelöléséhez; a széleit és a sávot is húzhatod. A legördülő listákkal pontosan is beállíthatod.",
+  ycFwdExplain: "Ez az a ráta, amely mellett {{a}}-ig befektetni, majd {{b}}-ig továbbgörgetni ugyanannyit hoz, mint egyből {{b}}-ig befektetni.",
+  ycFwdRolled: "{{a}}-ig, majd f-fel {{b}}-ig",
+  ycFwdDirect: "Egyből {{b}}-ig",
 
   ycFactorsTitle: "Görbe faktorok",
   ycLevel: "Szint",
@@ -113,6 +117,10 @@ export const yieldCurveHu = {
   ycScenario_curvature: "Görbület növelése",
   ycApplyToCurve: "Alkalmazás a görbére",
   ycReset: "Visszaállítás",
+  ycSketch: "Görbe rajzolása",
+  ycSketchDone: "Kész",
+  ycSketchHint: "Rajzold meg egérrel vagy ujjal a par hozamgörbét; a zéró- és forward görbe azonnal követi.",
+  ycSketchAria: "Rajzfelület: húzd végig a par hozamgörbét a lejáratokon",
   ycFactorChart: "Faktor dekompozíció",
   ycBaseline: "Alapgörbe",
   ycResultingCurve: "Eredő görbe",
@@ -218,6 +226,10 @@ export const yieldCurveEn = {
   ycImpliedForwardCurve: "Implied forward curve",
   ycForwardHint:
     "The forward rate is derived from the term structure, not entered independently.",
+  ycFwdBrushHint: "Drag across the zero curve to pick the interval; drag its edges or slide the band. The selects set it precisely.",
+  ycFwdExplain: "The rate that makes investing to {{a}} and then rolling over to {{b}} worth exactly as much as investing to {{b}} directly.",
+  ycFwdRolled: "To {{a}}, then roll at f to {{b}}",
+  ycFwdDirect: "Straight to {{b}}",
 
   ycFactorsTitle: "Curve factors",
   ycLevel: "Level",
@@ -233,6 +245,10 @@ export const yieldCurveEn = {
   ycScenario_curvature: "Increase curvature",
   ycApplyToCurve: "Apply to curve",
   ycReset: "Reset",
+  ycSketch: "Sketch the curve",
+  ycSketchDone: "Done",
+  ycSketchHint: "Draw the par yield curve with the mouse or a finger; the zero and forward curves follow at once.",
+  ycSketchAria: "Drawing surface: draw the par yield curve across the maturities",
   ycFactorChart: "Factor decomposition",
   ycBaseline: "Baseline",
   ycResultingCurve: "Resulting curve",

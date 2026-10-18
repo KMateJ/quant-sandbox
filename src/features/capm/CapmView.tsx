@@ -1,62 +1,26 @@
-import { useMemo, useState } from "react";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { PageHeader, Workspace, Panel, ChartContainer } from "../../components/layout";
 import { Tabs, type TabItem } from "../../components/ui";
 import { useI18n } from "../../i18n";
-import {
-  alpha,
-  assetRows,
-  betaObservations,
-  expectedReturn,
-  marketRiskPremium,
-  observationCorrelation,
-  regressBeta,
-  PRESET_ASSETS,
-} from "./capm.math";
 import type { CapmTab } from "./capm.types";
+import { useCapmLab } from "./useCapmLab";
 import CapmControls from "./components/CapmControls";
 import CapmResults from "./components/CapmResults";
 import SmlChart from "./components/SmlChart";
 import AssetsChart from "./components/AssetsChart";
 import AssetsTable from "./components/AssetsTable";
-import BetaChart from "./components/BetaChart";
-import BetaStats from "./components/BetaStats";
+import BetaTab from "./components/BetaTab";
 
-const MAX_BETA = 2;
+const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+const signed = (v: number) => `${v >= 0 ? "+" : ""}${pct(v)}`;
 
-const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+const HINTS = { sml: "capmDragHint", assets: "capmAssetsDragHint", beta: "capmSketchHint" } as const;
 
 export default function CapmView() {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-
-  const [riskFree, setRiskFree] = useState(0.03);
-  const [marketReturn, setMarketReturn] = useState(0.09);
-  const [beta, setBeta] = useState(1.1);
-  const [actualReturn, setActualReturn] = useState(0.1);
-  const [dispersion, setDispersion] = useState(0.03);
-  const [tab, setTab] = useState<CapmTab>("sml");
-
-  const required = expectedReturn(riskFree, beta, marketReturn);
-  const premium = marketRiskPremium(riskFree, marketReturn);
-  const jensenAlpha = alpha(actualReturn, riskFree, beta, marketReturn);
-
-  const rows = useMemo(() => {
-    const selected = { name: t("capmSelectedPoint"), beta, expectedReturn: actualReturn };
-    return assetRows([...PRESET_ASSETS, selected], riskFree, marketReturn);
-  }, [beta, actualReturn, riskFree, marketReturn, t]);
-
-  const observations = useMemo(
-    () => betaObservations(beta, marketReturn, riskFree, dispersion),
-    [beta, marketReturn, riskFree, dispersion]
-  );
-  const regression = useMemo(() => regressBeta(observations), [observations]);
-  const corr = useMemo(() => observationCorrelation(observations), [observations]);
-
-  const handleDrag = (x: number, y: number) => {
-    setBeta(clamp(x, 0, MAX_BETA));
-    setActualReturn(clamp(y, 0, 0.3));
-  };
+  const lab = useCapmLab();
+  const { tab, riskFree, marketReturn, beta, actualReturn, required, premium, jensenAlpha, maxBeta } = lab;
 
   const tabs: TabItem<CapmTab>[] = [
     { id: "sml", label: t("capmTabSml") },
@@ -78,22 +42,22 @@ export default function CapmView() {
             required={required}
             premium={premium}
             jensenAlpha={jensenAlpha}
-            maxBeta={MAX_BETA}
-            onRiskFree={setRiskFree}
-            onMarketReturn={setMarketReturn}
-            onBeta={setBeta}
-            onActualReturn={setActualReturn}
+            maxBeta={maxBeta}
+            onRiskFree={lab.setRiskFree}
+            onMarketReturn={lab.setMarketReturn}
+            onBeta={lab.setBeta}
+            onActualReturn={lab.setActualReturn}
           />
-          {tab === "sml" && <p className="control-hint">{t("capmDragHint")}</p>}
+          <p className="control-hint">{t(HINTS[tab])}</p>
         </Panel>
 
         <div className="module-main">
           <ChartContainer
             title={t("capmChartTitle")}
-            actions={<Tabs<CapmTab> segmented items={tabs} value={tab} onChange={setTab} ariaLabel={t("capmChartTitle")} />}
+            actions={<Tabs<CapmTab> segmented items={tabs} value={tab} onChange={(next) => lab.setState({ tab: next })} ariaLabel={t("capmChartTitle")} />}
           >
-            <div className="chart-wrap">
-              {tab === "sml" && (
+            {tab === "sml" && (
+              <div className="chart-wrap">
                 <SmlChart
                   riskFree={riskFree}
                   marketReturn={marketReturn}
@@ -102,31 +66,38 @@ export default function CapmView() {
                   required={required}
                   premium={premium}
                   jensenAlpha={jensenAlpha}
-                  maxBeta={MAX_BETA}
+                  maxBeta={maxBeta}
                   isMobile={isMobile}
-                  onDrag={handleDrag}
+                  onDrag={lab.dragSelected}
+                  onMarketDrag={lab.setMarketReturn}
                 />
-              )}
-              {tab === "assets" && (
-                <AssetsChart riskFree={riskFree} marketReturn={marketReturn} rows={rows} maxBeta={MAX_BETA} isMobile={isMobile} />
-              )}
-              {tab === "beta" && (
-                <BetaChart observations={observations} regression={regression} isMobile={isMobile} />
-              )}
-            </div>
+              </div>
+            )}
+            {tab === "assets" && (
+              <div className="chart-wrap">
+                <AssetsChart riskFree={riskFree} marketReturn={marketReturn} rows={lab.rows} maxBeta={maxBeta} isMobile={isMobile} onDrag={lab.dragAsset} />
+              </div>
+            )}
+            {tab === "beta" && <BetaTab lab={lab} isMobile={isMobile} />}
           </ChartContainer>
 
-          {tab === "assets" && <AssetsTable rows={rows} />}
-          {tab === "beta" && (
-            <BetaStats regression={regression} correlation={corr} dispersion={dispersion} onDispersion={setDispersion} />
+          {tab === "assets" && (
+            <>
+              <AssetsTable rows={lab.rows} />
+              {lab.presetsEdited && (
+                <button type="button" className="preset-btn capm-reset-btn" onClick={lab.resetPresets}>
+                  {t("capmResetAssets")}
+                </button>
+              )}
+            </>
           )}
           {tab === "sml" && (
             <CapmResults
               rows={[
-                { label: t("capmExpectedReturn"), value: `${(required * 100).toFixed(1)}%` },
-                { label: t("capmActualReturnFull"), value: `${(actualReturn * 100).toFixed(1)}%` },
-                { label: t("capmAlpha"), value: `${jensenAlpha >= 0 ? "+" : ""}${(jensenAlpha * 100).toFixed(1)}%` },
-                { label: t("capmPremium"), value: `${(premium * 100).toFixed(1)}%` },
+                { label: t("capmExpectedReturn"), value: pct(required) },
+                { label: t("capmActualReturnFull"), value: pct(actualReturn) },
+                { label: t("capmAlpha"), value: signed(jensenAlpha) },
+                { label: t("capmPremium"), value: pct(premium) },
               ]}
             />
           )}
@@ -135,4 +106,3 @@ export default function CapmView() {
     </>
   );
 }
-

@@ -8,4 +8,6 @@ export const BOND_COLORS = {
   par: "#a78bfa",
   durationApprox: "#818cf8",
   convexityApprox: "#2dd4bf",
+  premium: "#22c55e",
+  discount: "#f87171",
 } as const;

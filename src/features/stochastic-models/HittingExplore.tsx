@@ -3,18 +3,21 @@ import { SERIES_ROLE } from "../../components/charts";
 import type { ChartSeries } from "../../components/charts";
 import { IntuitionTrigger } from "../../components/intuition";
 import { Panel } from "../../components/layout";
-import { StatCard } from "../../components/ui";
+import { StatCard, usePredictReveal } from "../../components/ui";
 import { useI18n } from "../../i18n";
 import GeometryCurveChart from "./GeometryCurveChart";
 import GuidedExperiments from "../../components/GuidedExperiments";
 import GeometryPathChart from "./GeometryPathChart";
 import HittingControls from "./HittingControls";
+import HittingPrediction from "./HittingPrediction";
 import { curve, level } from "./pathGeometry.overlays";
+import { masked } from "./predictRound";
 import { useHittingExperiment } from "./useHittingExperiment";
 
 export default function HittingExplore() {
   const { t } = useI18n();
   const e = useHittingExperiment();
+  const round = usePredictReveal({ truth: e.stats.discrete, tolerance: 0.03 });
 
   const overlays = useMemo(
     () => [
@@ -35,12 +38,13 @@ export default function HittingExplore() {
     <div className="stoch-experiment">
       <aside className="stoch-sidebar">
         <HittingControls e={e} />
+        <HittingPrediction state={round} e={e} />
         <Panel title={t("pgMetrics")}>
           <div className="stoch-metric-grid">
-            <StatCard label={t("pgHitDiscreteEmp", { n: e.monitoring })} value={e.stats.discrete.toFixed(3)} />
+            <StatCard label={t("pgHitDiscreteEmp", { n: e.monitoring })} value={masked(round.revealed, e.stats.discrete.toFixed(3))} />
             <StatCard label={t("pgHitFineEmp")} value={e.stats.fine.toFixed(3)} />
             <StatCard label={t("pgHitContinuous")} value={e.stats.continuous.toFixed(3)} />
-            <StatCard label={t("pgHitBgk")} value={e.stats.bgk.toFixed(3)} />
+            <StatCard label={t("pgHitBgk")} value={masked(round.revealed, e.stats.bgk.toFixed(3))} />
           </div>
           <p className="stoch-metric-note">{t("pgHitObservation")}</p>
           <IntuitionTrigger sectionId="pg-discrete-monitoring" variant="button" />
@@ -78,6 +82,7 @@ export default function HittingExplore() {
           yDomain={[0, 1]}
           referenceLines={[{ axis: "x", value: e.barrier, color: SERIES_ROLE.candidate, dash: "4 4" }]}
           title={t("pgHitLevelChart")}
+          pinLabel={`μ = ${e.drift.toFixed(2)}, n = ${e.monitoring}`}
           caption={t("pgHitLevelCaption")}
         />
       </div>

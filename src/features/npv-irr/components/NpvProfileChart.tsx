@@ -17,6 +17,8 @@ export type NpvProfileChartProps = {
   isMobile?: boolean;
   valueFormat: (v: number) => string;
   rateFormat: (v: number) => string;
+  /// Predict-the-IRR mode: clicks and drags place the guess instead of moving the rate.
+  predict?: { guess: number | null; onGuess: (rate: number) => void; label: string };
 };
 
 /// Responsive interactive NPV-vs-discount-rate chart with a draggable rate marker.

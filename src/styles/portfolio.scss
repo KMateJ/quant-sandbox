@@ -126,3 +126,107 @@
   line-height: 1.5;
 }
 // #endregion
+
+// #region Interactive weights, ρ scrubber, chart hints (Portfolio Lab)
+.pl-weight-stack {
+  display: flex;
+  height: 10px;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  background: var(--surface-soft);
+
+  span {
+    height: 100%;
+    transition: width 120ms ease;
+  }
+}
+
+.pl-weight-track {
+  position: relative;
+  height: 16px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  cursor: ew-resize;
+  touch-action: none;
+
+  &:hover {
+    border-color: var(--border-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+}
+
+.pl-weight-fill {
+  height: 100%;
+  border-radius: var(--radius-xs);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.weight-row .weight-row-pct {
+  min-width: 46px;
+}
+
+.pl-weight-hint,
+.pl-chart-hint,
+.pl-corr-range {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.pl-chart-hint {
+  margin-top: var(--space-2);
+}
+
+.corr-matrix .corr-cell--mirror {
+  cursor: pointer;
+}
+
+.corr-matrix .corr-cell--selected {
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+  opacity: 1;
+}
+
+.pl-corr-scrub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+}
+
+.pl-corr-band {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+
+  span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 2px;
+    background: var(--primary);
+    opacity: 0.6;
+  }
+}
+
+.pl-corr-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+
+  @media (min-width: 1280px) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+// #endregion

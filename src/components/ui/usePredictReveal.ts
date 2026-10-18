@@ -29,7 +29,8 @@ export function usePredictReveal({ truth, tolerance, resetKey }: Options): Predi
   const [round, setRound] = useState({ truth, resetKey });
 
   // Reset during render when the question changes (React's "adjust state on prop change" pattern).
-  if (round.truth !== truth || round.resetKey !== resetKey) {
+  // Object.is, so a NaN truth (e.g. no IRR) counts as unchanged instead of resetting on every render.
+  if (!Object.is(round.truth, truth) || !Object.is(round.resetKey, resetKey)) {
     setRound({ truth, resetKey });
     setGuess(null);
     setRevealed(false);

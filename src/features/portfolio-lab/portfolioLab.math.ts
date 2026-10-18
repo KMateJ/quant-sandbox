@@ -1,4 +1,5 @@
 import { dot, inverse, matVec, symmetricEig } from "../../lib/math/matrix";
+import { makeRng } from "../../lib/math/random";
 import {
   minVarianceWeights,
   portfolioReturn,
@@ -271,4 +272,70 @@ export function diversificationBenefit(
   const weightedAvg = weights.reduce((acc, w, i) => acc + Math.abs(w) * sigmas[i], 0);
   if (weightedAvg <= 0) return 0;
   return 1 - portfolioVol / weightedAvg;
+}
+
+/// Interval of values ρij can take, with every other correlation held fixed, while the matrix stays positive
+/// definite with smallest eigenvalue above `margin` (the PSD cone cut along one entry is an interval; the margin keeps
+/// Σ safely invertible for the frontier). Bisection from the current value; a matrix already at or past the edge
+/// gives the full range (the caller repairs after the edit).
+export function feasibleCorrRange(corr: number[][], i: number, j: number, margin = 1e-3, iterations = 24): [number, number] {
+  const limit = 0.999;
+  const valid = (m: number[][]) => minEigenvalue(m) > margin;
+  if (i === j || !valid(corr)) return [-limit, limit];
+  const validAt = (v: number) => valid(setCorrEntry(corr, i, j, v));
+  const edge = (to: number) => {
+    if (validAt(to)) return to;
+    let inside = corr[i][j];
+    let outside = to;
+    for (let k = 0; k < iterations; k++) {
+      const mid = (inside + outside) / 2;
+      if (validAt(mid)) inside = mid;
+      else outside = mid;
+    }
+    return inside;
+  };
+  return [edge(-limit), edge(limit)];
+}
+
+/// Index of the point nearest to (px, py) in pixel space, or -1 when none lies within `maxDist` pixels.
+export function nearestPointIndex(
+  points: FrontierPoint[],
+  toPx: (p: FrontierPoint) => [number, number],
+  px: number,
+  py: number,
+  maxDist: number
+): number {
+  let best = -1;
+  let bestD = maxDist * maxDist;
+  points.forEach((p, i) => {
+    const [x, y] = toPx(p);
+    const d = (x - px) ** 2 + (y - py) ** 2;
+    if (d <= bestD) {
+      bestD = d;
+      best = i;
+    }
+  });
+  return best;
+}
+
+/// Slider domain for guessing a long-only portfolio's σ: [0, largest asset σ + 5%], snapped up to 5% steps.
+/// σₚ never exceeds the largest asset σ when the weights are non-negative and sum to at most 1.
+export function volGuessDomain(sigmas: readonly number[]): [number, number] {
+  const top = Math.max(0.05, ...sigmas);
+  return [0, Math.ceil(top * 20) / 20 + 0.05];
+}
+
+/// A random long-only quiz mix in whole percent (sums to exactly 1), reproducible from `seed`; at least two assets
+/// get weight so the answer depends on correlation, not just one σ.
+export function quizMix(n: number, seed: number): number[] {
+  const rng = makeRng(seed);
+  const raw = Array.from({ length: n }, () => -Math.log(1 - rng()));
+  if (n > 1) {
+    const order = raw.map((_, i) => i).sort((a, b) => raw[b] - raw[a]);
+    for (const i of order.slice(2)) if (rng() < 0.4) raw[i] = 0;
+  }
+  const total = raw.reduce((a, b) => a + b, 0);
+  const pct = raw.map((r) => Math.floor((r / total) * 100));
+  pct[raw.indexOf(Math.max(...raw))] += 100 - pct.reduce((a, b) => a + b, 0);
+  return pct.map((p) => p / 100);
 }

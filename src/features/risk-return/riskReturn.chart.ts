@@ -4,7 +4,13 @@ import type {
   ScatterAnnotation,
   ChartReferenceLine,
 } from "../../components/charts";
-import { allocationReturn, allocationVolatility, riskyAssetSharpe } from "./riskReturn.math";
+import {
+  allocationReturn,
+  allocationVolatility,
+  indifferenceCurve,
+  meanVarianceUtility,
+  riskyAssetSharpe,
+} from "./riskReturn.math";
 
 /// Colour roles for the capital-allocation chart (kept in one place for consistency).
 export const RR_COLORS = {
@@ -16,6 +22,7 @@ export const RR_COLORS = {
   current: "#f97316",
   guide: "#64748b",
   wOne: "#f59e0b",
+  optimal: "#e879f9",
 } as const;
 
 export type RiskAsset = { mu: number; sigma: number };
@@ -30,6 +37,8 @@ export type CalChartLabels = {
   lending: string;
   leverage: string;
   slope: string;
+  optimal: string;
+  indifference: string;
 };
 
 export type CalChartInput = {
@@ -38,10 +47,16 @@ export type CalChartInput = {
   weight: number;
   maxWeight: number;
   assetB?: RiskAsset;
+  riskAversion: number;
+  /// Constrained optimal weight y* (already clamped to [0, maxWeight]).
+  optimalWeight: number;
+  /// Axis domains held fixed while an asset is dragged (otherwise fitted to the data).
+  frozenDomain?: { x: [number, number]; y: [number, number] };
   labels: CalChartLabels;
 };
 
 export type CalChartModel = {
+  guides: ScatterSeries[];
   series: ScatterSeries[];
   bands: ScatterBand[];
   annotations: ScatterAnnotation[];
@@ -54,7 +69,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
 /// Build every drawable object for the capital-allocation line from the current parameters.
 export function buildCalChart(input: CalChartInput): CalChartModel {
-  const { asset, riskFree, weight, maxWeight, assetB, labels } = input;
+  const { asset, riskFree, weight, maxWeight, assetB, riskAversion, optimalWeight, frozenDomain, labels } = input;
   const { mu, sigma } = asset;
   const compare = assetB != null;
 
@@ -67,14 +82,20 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
     ? { x: assetB.sigma * maxWeight, y: allocationReturn(assetB.mu, riskFree, maxWeight) }
     : null;
 
-  const xMax = Math.max(calEnd.x, calBEnd?.x ?? 0, sigma) * 1.08 || 0.01;
-  const yMax = Math.max(calEnd.y, calBEnd?.y ?? 0, mu) * 1.1;
-  const yMin = Math.min(0, riskFree);
+  const xDomain: [number, number] = frozenDomain?.x ?? [0, Math.max(calEnd.x, calBEnd?.x ?? 0, sigma) * 1.08 || 0.01];
+  const yDomain: [number, number] = frozenDomain?.y ?? [Math.min(0, riskFree), Math.max(calEnd.y, calBEnd?.y ?? 0, mu, riskFree + 0.01) * 1.1];
+  const [, xMax] = xDomain;
+  const [yMin] = yDomain;
+
+  const optVol = allocationVolatility(sigma, optimalWeight);
+  const optReturn = allocationReturn(mu, riskFree, optimalWeight);
+  const utility = meanVarianceUtility(optReturn, optVol, riskAversion);
+  const indifference = indifferenceCurve(utility, riskAversion, xMax, 60).map((p) => ({ x: p.vol, y: p.ret }));
 
   const assetALabel = compare ? labels.assetA : labels.risky;
 
-  const series: ScatterSeries[] = [
-    // Projection guides for the current portfolio (drawn under the markers).
+  // Projection guides for the current portfolio (drawn under the markers; never pinned).
+  const guides: ScatterSeries[] = [
     {
       key: "guide-v",
       label: "",
@@ -101,6 +122,9 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
         { x: portVol, y: portReturn },
       ],
     },
+  ];
+
+  const series: ScatterSeries[] = [
     {
       key: "cal",
       label: compare ? `${labels.cal} · ${labels.assetA}` : labels.cal,
@@ -108,6 +132,15 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
       line: true,
       strokeWidth: 2.5,
       points: [{ x: 0, y: riskFree }, calEnd],
+    },
+    {
+      key: "indifference",
+      label: labels.indifference,
+      color: RR_COLORS.optimal,
+      line: true,
+      dash: "3 4",
+      strokeWidth: 1.75,
+      points: indifference,
     },
   ];
 
@@ -136,7 +169,7 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
       key: "risky",
       label: assetALabel,
       color: RR_COLORS.risky,
-      radius: 7,
+      radius: 6,
       legend: false,
       points: [{ x: sigma, y: mu, label: assetALabel }],
     }
@@ -147,11 +180,30 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
       key: "risky-b",
       label: labels.assetB,
       color: RR_COLORS.riskyB,
-      radius: 7,
+      radius: 6,
       legend: false,
       points: [{ x: assetB.sigma, y: assetB.mu, label: labels.assetB }],
     });
   }
+
+  series.push({
+    key: "optimal",
+    label: labels.optimal,
+    color: RR_COLORS.optimal,
+    radius: 6,
+    legend: false,
+    points: [
+      {
+        x: optVol,
+        y: optReturn,
+        label: labels.optimal,
+        tooltipRows: [
+          { label: "y*", value: `${(optimalWeight * 100).toFixed(0)}%` },
+          { label: "U", value: pct(utility) },
+        ],
+      },
+    ],
+  });
 
   series.push({
     key: "current",
@@ -185,7 +237,6 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
 
   const annotations: ScatterAnnotation[] = [
     { x: 0, y: riskFree, text: `rf ${pct(riskFree)}`, color: "#7dd3fc", dx: 8, dy: 16 },
-    { x: sigma, y: mu, text: assetALabel, color: "#fcd34d", dx: 10, dy: -8 },
     {
       x: calEnd.x * 0.55,
       y: allocationReturn(mu, riskFree, maxWeight * 0.55),
@@ -196,11 +247,8 @@ export function buildCalChart(input: CalChartInput): CalChartModel {
       fontSize: 11,
     },
     { x: portVol, y: portReturn, text: `w ${(weight * 100).toFixed(0)}%`, color: "#fdba74", dx: 12, dy: 20, fontSize: 11 },
+    { x: optVol, y: optReturn, text: `y* ${(optimalWeight * 100).toFixed(0)}%`, color: "#f0abfc", dx: -10, dy: -10, anchor: "end", fontSize: 11 },
   ];
 
-  if (assetB) {
-    annotations.push({ x: assetB.sigma, y: assetB.mu, text: labels.assetB, color: "#c4b5fd", dx: 10, dy: -8 });
-  }
-
-  return { series, bands, annotations, referenceLines, xDomain: [0, xMax], yDomain: [yMin, yMax] };
+  return { guides, series, bands, annotations, referenceLines, xDomain, yDomain };
 }

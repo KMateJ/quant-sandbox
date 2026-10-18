@@ -648,3 +648,348 @@
   }
 }
 // #endregion
+
+// #region Practice: checks, worked examples, review
+.guide-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.guide-check,
+.guide-worked {
+  margin: 1.6em 0;
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.55;
+  color: var(--text);
+
+  p {
+    margin: 0;
+  }
+
+  .katex {
+    font-size: 1em;
+  }
+}
+
+.guide-practice-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.guide-practice-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.guide-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.guide-answer-input {
+  width: 9.5em;
+  height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--negative);
+  }
+}
+
+.guide-check .guide-check-prompt {
+  margin-bottom: var(--space-4);
+}
+
+.guide-check-answer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-4);
+}
+
+.guide-check-number {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.guide-check-unit {
+  color: var(--muted);
+}
+
+.guide-check-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 100%;
+}
+
+.guide-check-option {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+
+  &:hover,
+  &[data-selected] {
+    background: var(--surface-soft);
+  }
+
+  input {
+    flex: 0 0 auto;
+    accent-color: var(--primary);
+  }
+}
+
+.guide-check-feedback:not(:empty) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-xs);
+  background: var(--surface-soft);
+}
+
+.guide-check-verdict {
+  font-weight: 600;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.guide-check[data-verdict="correct"] .guide-check-feedback,
+.guide-worked .guide-check-verdict[data-ok]:not(:empty) {
+  background: var(--success-bg);
+}
+
+.guide-check[data-verdict="correct"] .guide-check-verdict {
+  color: var(--positive);
+}
+
+.guide-check[data-verdict="high"],
+.guide-check[data-verdict="low"],
+.guide-check[data-verdict="wrong"] {
+  .guide-check-feedback {
+    background: var(--warning-bg);
+  }
+}
+
+.guide-worked-title {
+  margin: 0 0 var(--space-2);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.guide-worked-progress {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-worked-hint {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.guide-worked .guide-worked-steps {
+  margin: var(--space-4) 0;
+  padding-left: 1.6em;
+}
+
+.guide-worked-step {
+  margin-bottom: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
+
+  &[data-state="correct"] {
+    background: var(--success-bg);
+  }
+
+  &[data-state="wrong"] {
+    background: var(--warning-bg);
+  }
+}
+
+.guide-worked-calc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-2);
+  overflow-x: auto;
+}
+
+.guide-worked-eq {
+  color: var(--muted);
+}
+
+.guide-worked-result {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-worked-blank {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.guide-worked-solution {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.guide-worked .guide-check-verdict:not(:empty) {
+  background: var(--warning-bg);
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
+}
+
+.guide-review {
+  margin-bottom: 40px;
+}
+
+.guide-review-title {
+  margin: 0 0 6px;
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.guide-review-intro {
+  margin: 0 0 var(--space-4);
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.guide-review-list .guide-check {
+  margin: 0 0 var(--space-4);
+}
+
+.guide-review-from {
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+// #endregion
+
+// #region Check yourself at the end of a track (GuideTrackChecks)
+.guide-track-checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.guide-track-checks-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.guide-track-checks-intro {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.guide-track-checks-group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+
+  > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover {
+      background: var(--surface-soft);
+    }
+  }
+
+  &[open] > summary {
+    border-bottom: 1px solid var(--border);
+  }
+
+  > :not(summary) {
+    margin: var(--space-3) var(--space-4);
+  }
+}
+
+.guide-track-checks-lesson {
+  font-weight: 600;
+}
+
+.guide-track-checks-count,
+.guide-check-due {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.guide-track-checks-reread,
+.guide-lesson-checks-link {
+  display: inline-block;
+  font-size: var(--text-sm);
+  color: var(--primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.guide-lesson-checks-link {
+  margin: var(--space-5) 0 0;
+}
+// #endregion

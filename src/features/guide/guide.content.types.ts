@@ -58,7 +58,14 @@ export type GuideFigureId =
   | "immunization-shock"
   | "callable-price-yield"
   | "martingale-betting"
-  | "euler-convergence";
+  | "euler-convergence"
+  | "sigma-partition"
+  | "filtration-tree"
+  | "bm-transformations"
+  | "reflection-max"
+  | "brownian-bridge"
+  | "ito-sums"
+  | "feynman-kac";
 
 /// One block of lesson text. Inline text supports `$tex$`, `**bold**` and `*italic*`.
 export type GuideBlock =
@@ -71,7 +78,25 @@ export type GuideBlock =
   | { kind: "note"; text: string }
   | { kind: "figure"; id: GuideFigureId }
   /// Link to the lab where the idea can be tried.
-  | { kind: "lab"; to: string; text: string };
+  | { kind: "lab"; to: string; text: string }
+  /// Retrieval check after the section it tests; `id` (`<lessonId>/<slug>`) is shared by both languages
+  /// and keys the review queue.
+  | { kind: "check"; id: string; prompt: string; answer: GuideCheckAnswer; explain: string }
+  /// Worked example: shown in full first, then faded step by step into blanks the reader fills in.
+  | { kind: "worked"; title: string; steps: GuideWorkedStep[] };
+
+/// A numeric answer (accepted within `tolerance`, in the displayed `unit`) or one correct option.
+export type GuideCheckAnswer =
+  | { type: "number"; value: number; tolerance: number; unit?: string }
+  | { type: "choice"; options: string[]; correct: number };
+
+/// A numeric result shown after a worked step; it becomes a blank when the step is faded.
+export type GuideWorkedResult = { value: number; tolerance: number; unit?: string };
+
+export type GuideWorkedStep = { text: string; tex?: string; result?: GuideWorkedResult };
+
+export type GuideCheckBlock = Extract<GuideBlock, { kind: "check" }>;
+export type GuideWorkedBlock = Extract<GuideBlock, { kind: "worked" }>;
 
 /// A lesson's body in every language.
 export type GuideLessonContent = Record<Language, GuideBlock[]>;

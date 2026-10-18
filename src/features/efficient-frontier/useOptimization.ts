@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useUrlState } from "../../components/useUrlState";
 import { usePortfolioUniverse } from "../portfolio-lab/PortfolioUniverseContext";
 import {
   frontierVolatility,
@@ -18,17 +19,7 @@ import {
   summarize,
 } from "./portfolioOptimization.math";
 import type { OptConstraints, OptObjective, OptPoint } from "./portfolioOptimization.types";
-
-const DEFAULT_CONSTRAINTS: OptConstraints = {
-  longOnly: true,
-  allowShort: false,
-  minWeight: 0,
-  maxWeight: 1,
-  useRiskFree: false,
-  riskFree: 0.03,
-  allowLeverage: false,
-  maxGross: 1,
-};
+import { FRONTIER_URL_SCHEMA, constraintPatch, constraintsFromUrl } from "./frontier.url";
 
 export type ConstraintCost = {
   metric: "vol" | "sharpe" | "ret";
@@ -42,14 +33,11 @@ export type ConstraintCost = {
 export function useOptimization() {
   const { assets, mus, cov, sigmas, riskFree: universeRf } = usePortfolioUniverse();
 
-  const [objective, setObjective] = useState<OptObjective>("minVariance");
-  const [constraints, setConstraints] = useState<OptConstraints>({
-    ...DEFAULT_CONSTRAINTS,
-    riskFree: universeRf,
-  });
-  const [targetReturn, setTargetReturn] = useState(0.1);
-  const [targetVol, setTargetVol] = useState(0.15);
-  const [selReturn, setSelReturn] = useState<number | null>(null);
+  // The problem definition lives in the URL; the manual frontier selection stays local.
+  const [url, setUrl] = useUrlState(FRONTIER_URL_SCHEMA);
+  const { objective, targetReturn, targetVol } = url;
+  const constraints = useMemo(() => constraintsFromUrl(url, universeRf), [url, universeRf]);
+  const [manual, setManual] = useState<{ key: string; ret: number } | null>(null);
 
   const rf = constraints.useRiskFree ? constraints.riskFree : universeRf;
   const bounds = useMemo(() => boundsFromConstraints(constraints, mus.length), [constraints, mus.length]);
@@ -80,9 +68,9 @@ export function useOptimization() {
     return gmv;
   }, [objective, frontier, gmv, tangency, targetReturn, targetVol]);
 
-  // Reset manual selection whenever the problem definition changes.
+  // A manual selection only holds for the problem it was made in; any change falls back to the objective.
   const problemKey = `${objective}|${targetReturn}|${targetVol}|${JSON.stringify(constraints)}|${mus.join(",")}`;
-  useEffect(() => setSelReturn(null), [problemKey]);
+  const selReturn = manual?.key === problemKey ? manual.ret : null;
 
   const selected = useMemo<OptPoint>(
     () => (selReturn == null ? objectivePoint : pointAtReturn(frontier, selReturn)),
@@ -121,7 +109,10 @@ export function useOptimization() {
   }, [constraints.useRiskFree, constraints.allowLeverage, tangency, rf, volMax]);
 
   const updateConstraint = <K extends keyof OptConstraints>(key: K, value: OptConstraints[K]) =>
-    setConstraints((prev) => reconcile({ ...prev, [key]: value }, key));
+    setUrl((prev) => constraintPatch(prev, key, value, universeRf));
+  const setObjective = (next: OptObjective) => setUrl({ objective: next });
+  const setTargetReturn = (next: number) => setUrl({ targetReturn: next });
+  const setTargetVol = (next: number) => setUrl({ targetVol: next });
 
   return {
     assets,
@@ -145,7 +136,7 @@ export function useOptimization() {
     gmvU,
     tangencyU,
     selected,
-    selectReturn: setSelReturn,
+    selectReturn: (ret: number) => setManual({ key: problemKey, ret }),
     objectivePoint,
     cost,
     cml,
@@ -157,20 +148,4 @@ export function useOptimization() {
 
 function nearestByVol(pts: OptPoint[], vol: number): OptPoint {
   return pts.reduce((best, p) => (Math.abs(p.vol - vol) < Math.abs(best.vol - vol) ? p : best), pts[0]);
-}
-
-// Keep mutually-exclusive toggles coherent (long-only vs shorting, leverage vs gross).
-function reconcile(c: OptConstraints, changed: keyof OptConstraints): OptConstraints {
-  const next = { ...c };
-  if (changed === "longOnly" && next.longOnly) next.allowShort = false;
-  if (changed === "allowShort" && next.allowShort) {
-    next.longOnly = false;
-    if (next.minWeight >= 0) next.minWeight = -0.3;
-  }
-  if (changed === "allowShort" && !next.allowShort) {
-    next.longOnly = true;
-    next.minWeight = Math.max(0, next.minWeight);
-  }
-  if (!next.allowLeverage) next.maxGross = 1;
-  return next;
 }

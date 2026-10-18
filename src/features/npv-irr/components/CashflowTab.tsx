@@ -4,16 +4,19 @@ import { Tabs, type TabItem } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
 import CashflowTable from "./CashflowTable";
 import CashflowChart, { type CashflowMode } from "./CashflowChart";
+import CashflowDragChart from "./CashflowDragChart";
 import ScenarioSummaryTable from "./ScenarioSummaryTable";
 import { money } from "../npvIrr.format";
 import type { NpvLab } from "../useNpvLab";
 
 type CashflowTabProps = { lab: NpvLab };
+/// The chart either shows the schedule (nominal or discounted) or turns into draggable input bars.
+type CashflowView = CashflowMode | "drag";
 
 /// Cashflow analysis: editable schedule, bar visualisation and scenario summary.
 export default function CashflowTab({ lab }: CashflowTabProps) {
   const { t } = useI18n();
-  const [mode, setMode] = useState<CashflowMode>("nominal");
+  const [mode, setMode] = useState<CashflowView>("nominal");
   const [cumulative, setCumulative] = useState(false);
   const [hoverYear, setHoverYear] = useState<number | null>(null);
 
@@ -22,9 +25,10 @@ export default function CashflowTab({ lab }: CashflowTabProps) {
     lab.setCustomFlow(year - 1, value);
   };
 
-  const modeTabs: TabItem<CashflowMode>[] = [
+  const modeTabs: TabItem<CashflowView>[] = [
     { id: "nominal", label: t("npvModeNominal") },
     { id: "pv", label: t("npvModePv") },
+    { id: "drag", label: t("npvModeDrag") },
   ];
 
   return (
@@ -44,17 +48,23 @@ export default function CashflowTab({ lab }: CashflowTabProps) {
           title={t("npvCashflowChart")}
           actions={
             <div className="npv-chart-actions">
-              <Tabs<CashflowMode> segmented items={modeTabs} value={mode} onChange={setMode} ariaLabel={t("npvCashflowChart")} />
-              <button type="button" className={cumulative ? "metric-button active" : "metric-button"} aria-pressed={cumulative} onClick={() => setCumulative((v) => !v)}>
-                {t("npvToggleCumulative")}
-              </button>
+              <Tabs<CashflowView> segmented items={modeTabs} value={mode} onChange={setMode} ariaLabel={t("npvCashflowChart")} />
+              {mode !== "drag" && (
+                <button type="button" className={cumulative ? "metric-button active" : "metric-button"} aria-pressed={cumulative} onClick={() => setCumulative((v) => !v)}>
+                  {t("npvToggleCumulative")}
+                </button>
+              )}
             </div>
           }
         >
           <div className="chart-wrap">
-            <CashflowChart rows={lab.schedule} mode={mode} showCumulative={cumulative} hoverYear={hoverYear} onHoverYear={setHoverYear} valueFormat={money} />
+            {mode === "drag" ? (
+              <CashflowDragChart model={lab.model} rows={lab.schedule} editFlow={editFlow} updateModel={lab.updateModel} valueFormat={money} />
+            ) : (
+              <CashflowChart rows={lab.schedule} mode={mode} showCumulative={cumulative} hoverYear={hoverYear} onHoverYear={setHoverYear} valueFormat={money} />
+            )}
           </div>
-          <p className="npv-chart-hint">{t("npvCashflowLegend")}</p>
+          <p className="npv-chart-hint">{t(mode === "drag" ? "npvDragEditHint" : "npvCashflowLegend")}</p>
         </ChartContainer>
       </div>
       <ScenarioSummaryTable stats={lab.scenarioStats} activeId={lab.activeId} />

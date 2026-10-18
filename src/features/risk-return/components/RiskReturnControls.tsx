@@ -1,31 +1,17 @@
 import SliderField from "../../../components/SliderField";
 import NumberInput from "../../../components/NumberInput";
-import SwitchRow from "../../../components/SwitchRow";
 import { Panel } from "../../../components/layout";
-import { ControlGroup } from "../../../components/ui";
+import { ControlGroup, Tabs } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
+import { RR_RANGES } from "../riskReturn.url";
+import type { RiskReturnLab } from "../useRiskReturnLab";
+import AssetInputs from "./AssetInputs";
+import OptimalAllocation from "./OptimalAllocation";
 
-type RiskReturnControlsProps = {
-  mu: number;
-  sigma: number;
-  riskFree: number;
-  weight: number;
-  maxWeight: number;
-  compare: boolean;
-  muB: number;
-  sigmaB: number;
-  onMu: (v: number) => void;
-  onSigma: (v: number) => void;
-  onRiskFree: (v: number) => void;
-  onWeight: (v: number) => void;
-  onCompare: (v: boolean) => void;
-  onMuB: (v: number) => void;
-  onSigmaB: (v: number) => void;
-};
-
-export default function RiskReturnControls(props: RiskReturnControlsProps) {
+export default function RiskReturnControls({ lab }: { lab: RiskReturnLab }) {
   const { t } = useI18n();
-  const { mu, sigma, riskFree, weight, maxWeight, compare, muB, sigmaB } = props;
+  const { state, set, maxWeight } = lab;
+  const { cmp } = state;
 
   const marks = [
     { value: 0, label: t("riskReturnMarkRiskFree") },
@@ -36,15 +22,20 @@ export default function RiskReturnControls(props: RiskReturnControlsProps) {
   return (
     <Panel title={t("riskReturnControlsTitle")}>
       <ControlGroup label={t("riskReturnRiskyAssetGroup")}>
-        <div className="num-grid">
-          <NumberInput label={t("riskReturnMuLabel")} value={mu} onChange={props.onMu} min={0} max={0.5} percent step={0.5} />
-          <NumberInput label={t("riskReturnSigmaLabel")} value={sigma} onChange={props.onSigma} min={0.01} max={0.6} percent step={0.5} />
-        </div>
+        <AssetInputs mu={state.mu} sigma={state.sigma} onChange={(v) => set({ mu: v.mu, sigma: v.sigma })} />
       </ControlGroup>
 
       <ControlGroup label={t("riskReturnRiskFreeGroup")}>
         <div className="num-grid">
-          <NumberInput label={t("riskReturnRiskFreeLabel")} value={riskFree} onChange={props.onRiskFree} min={0} max={0.15} percent step={0.25} />
+          <NumberInput
+            label={t("riskReturnRiskFreeLabel")}
+            value={state.rf}
+            onChange={(rf) => set({ rf })}
+            min={RR_RANGES.riskFree[0]}
+            max={RR_RANGES.riskFree[1]}
+            percent
+            step={0.25}
+          />
         </div>
       </ControlGroup>
 
@@ -54,32 +45,28 @@ export default function RiskReturnControls(props: RiskReturnControlsProps) {
           min={0}
           max={maxWeight}
           step={0.01}
-          value={weight}
-          onChange={props.onWeight}
+          value={state.w}
+          onChange={(w) => set({ w })}
           formatValue={(v) => `${(v * 100).toFixed(0)}%`}
           marks={marks}
         />
         <p className="control-hint">{t("riskReturnDragHint")}</p>
       </ControlGroup>
 
+      <OptimalAllocation lab={lab} />
+
       <ControlGroup label={t("riskReturnAssetB")}>
-        <SwitchRow
-          groups={[
-            {
-              key: "compare",
-              options: [
-                { label: t("riskReturnSingle"), active: !compare, onSelect: () => props.onCompare(false) },
-                { label: t("riskReturnCompare"), active: compare, onSelect: () => props.onCompare(true) },
-              ],
-            },
+        <Tabs
+          segmented
+          ariaLabel={t("riskReturnAssetB")}
+          value={cmp ? "compare" : "single"}
+          onChange={(id) => set({ cmp: id === "compare" })}
+          items={[
+            { id: "single", label: t("riskReturnSingle") },
+            { id: "compare", label: t("riskReturnCompare") },
           ]}
         />
-        {compare && (
-          <div className="num-grid">
-            <NumberInput label={t("riskReturnMuLabel")} value={muB} onChange={props.onMuB} min={0} max={0.5} percent step={0.5} />
-            <NumberInput label={t("riskReturnSigmaLabel")} value={sigmaB} onChange={props.onSigmaB} min={0.01} max={0.6} percent step={0.5} />
-          </div>
-        )}
+        {cmp && <AssetInputs mu={state.muB} sigma={state.sigmaB} onChange={(v) => set({ muB: v.mu, sigmaB: v.sigma })} />}
       </ControlGroup>
     </Panel>
   );

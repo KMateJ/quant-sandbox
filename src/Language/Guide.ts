@@ -202,6 +202,11 @@ export const guideHu = {
     guideMartingalesDesc: "Feltételes várható érték a múlt ismeretében, igazságos játékok, miért nem győzhető le egy martingál fogadási stratégiával, és a diszkontált árak Q alatt.",
     guideSdeTitle: "SDE-k szimulációja: az Euler–Maruyama-séma",
     guideSdeDesc: "Sztochasztikus differenciálegyenlet diszkretizálása, erős és gyenge hiba, lépésköz, és összevetés a geometriai Brown-mozgás pontos megoldásával.",
+    guideTrackChecksIntro: "Kérdések a sorozat leckéiből. Nyisd ki egy lecke csoportját, amikor ellenőriznéd magad.",
+    guideTrackChecksCount: "{{n}} kérdés",
+    guideTrackChecksDue: "{{n}} ismétlésre vár",
+    guideTrackChecksReread: "A lecke újraolvasása →",
+    guideLessonChecksLink: "{{n}} kérdés ehhez a leckéhez a sorozat végén →",
 };
 
 export const guideEn = {
@@ -408,4 +413,9 @@ export const guideEn = {
     guideMartingalesDesc: "Conditional expectation given the past, fair games, why no betting strategy beats a martingale, and discounted prices under Q.",
     guideSdeTitle: "Simulating SDEs: the Euler–Maruyama scheme",
     guideSdeDesc: "Discretising a stochastic differential equation, strong and weak error, step size, and checking against the exact GBM solution.",
+    guideTrackChecksIntro: "Questions from the lessons of this series. Open a lesson's group whenever you want to test yourself.",
+    guideTrackChecksCount: "{{n}} questions",
+    guideTrackChecksDue: "{{n}} due for review",
+    guideTrackChecksReread: "Re-read the lesson →",
+    guideLessonChecksLink: "{{n}} questions on this lesson at the end of the series →",
 };

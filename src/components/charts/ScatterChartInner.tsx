@@ -8,11 +8,11 @@ import { curveLinear } from "@visx/curve";
 import { useTooltip } from "@visx/tooltip";
 import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
-import type { ScatterChartProps, ScatterPoint, ScatterSeries } from "./chart.types";
+import type { PlotFrame, ScatterChartProps, ScatterPoint, ScatterSeries } from "./chart.types";
 import { useScatterDrag } from "./useScatterDrag";
 import ScatterTooltip from "./ScatterTooltip";
 
-type Props = ScatterChartProps & { width: number; height: number };
+type Props = ScatterChartProps & { width: number; height: number; legendHeight?: number };
 
 type Hover = { point: ScatterPoint; series: ScatterSeries };
 
@@ -34,6 +34,7 @@ export default function ScatterChartInner({
   annotations = [],
   isMobile = false,
   legend = true,
+  legendHeight = LEGEND_HEIGHT,
   xFormat,
   yFormat,
   xLabel,
@@ -43,6 +44,7 @@ export default function ScatterChartInner({
   onDragEnd,
   onSelectPoint,
   onPlotClick,
+  layer,
   xTickValues,
   yNumTicks = 7,
 }: Props) {
@@ -52,7 +54,7 @@ export default function ScatterChartInner({
     bottom: base.bottom + (xLabel ? 16 : 0),
     left: base.left + (yLabel ? 14 : 0),
   };
-  const svgHeight = height - (legend ? LEGEND_HEIGHT : 0);
+  const svgHeight = height - (legend ? legendHeight : 0);
   const innerW = Math.max(0, width - margin.left - margin.right);
   const innerH = Math.max(0, svgHeight - margin.top - margin.bottom);
 
@@ -99,9 +101,9 @@ export default function ScatterChartInner({
   };
   const drag = useScatterDrag({
     svgRef, onDrag,
-    onDragStart: (index) => {
+    onDragStart: (index, seriesKey) => {
       setFrozen({ x: resolvedX, y: resolvedY });
-      onDragStart?.(index);
+      onDragStart?.(index, seriesKey);
     },
     onDragEnd: () => {
       setFrozen(null);
@@ -205,8 +207,8 @@ export default function ScatterChartInner({
                   stroke={s.hollow ? p.color ?? s.color : CHART_COLORS.tooltipBg}
                   strokeWidth={s.hollow ? 2.5 : s.draggable ? 2 : s.outline === false ? 0 : 1.5}
                   style={{ cursor: s.draggable ? "grab" : "pointer", touchAction: s.draggable ? "none" : undefined }}
-                  onPointerDown={s.draggable ? (event) => drag.start(event, i) : undefined}
-                  onClick={() => onSelectPoint?.(i)}
+                  onPointerDown={s.draggable ? (event) => drag.start(event, i, s.key) : undefined}
+                  onClick={() => onSelectPoint?.(i, s.key)}
                   onMouseEnter={() =>
                     tip.showTooltip({
                       tooltipLeft: margin.left + xScale(p.x),
@@ -252,6 +254,16 @@ export default function ScatterChartInner({
               {yLabel}
             </text>
           )}
+          {layer?.({
+            x: (v) => xScale(v) ?? 0,
+            y: (v) => yScale(v) ?? 0,
+            xInvert: (px) => xScale.invert(px),
+            yInvert: (px) => yScale.invert(px),
+            width: innerW,
+            height: innerH,
+            left: margin.left,
+            top: margin.top,
+          } satisfies PlotFrame)}
         </Group>
       </svg>
 

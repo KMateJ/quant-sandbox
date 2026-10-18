@@ -194,6 +194,15 @@
   border-bottom: 1px solid var(--border);
 }
 
+// Several header actions (pin, formulas, info) sit in one row with a gap and wrap on narrow screens.
+.chart-container-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
 .chart-container-title {
   font-size: var(--text-md);
   font-weight: 600;
@@ -954,6 +963,32 @@
   color: var(--warning, #f59e0b);
 }
 
+.opt-brush {
+  outline: none;
+}
+
+rect.opt-brush:focus-visible {
+  stroke: var(--primary);
+  stroke-width: 1.5;
+}
+
+.opt-brush-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--text);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 3px;
+}
+
+.opt-brush-hint {
+  margin-top: var(--space-2);
+}
+
+.opt-comp-wrap.chart-wrap {
+  height: clamp(170px, 24vh, 240px);
+}
+
 @media (max-width: 640px) {
   .result-strip-item--cost {
     margin-left: 0;
@@ -1094,6 +1129,346 @@
 @media (prefers-reduced-motion: reduce) {
   .drag-handle-knob {
     transition: none;
+  }
+}
+// #endregion
+
+// #region Pin & compare (PinButton + usePinnedSeries)
+.pin-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pin-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: var(--text-sm);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: var(--surface-soft);
+  }
+
+  &.is-pinned {
+    background: var(--surface-muted);
+    border-color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+}
+
+.pin-clear {
+  padding: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+  }
+}
+// #endregion
+
+// #region Waterfall chart
+.waterfall-bar {
+  cursor: default;
+  outline: none;
+
+  &[role="button"] {
+    cursor: pointer;
+  }
+
+  rect {
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover rect,
+  &:focus-visible rect {
+    opacity: 0.85;
+    stroke: var(--text);
+    stroke-width: 1.5;
+  }
+
+  &.is-selected rect {
+    stroke: var(--text);
+    stroke-width: 2;
+  }
+}
+
+.waterfall-value {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--text);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.waterfall-label {
+  font-size: 11px;
+  fill: var(--muted);
+  pointer-events: none;
+}
+
+.waterfall-connector {
+  stroke: var(--muted);
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+// #endregion
+
+// #region Sketch layer (draw a curve or a line on a chart)
+.sketch-surface {
+  fill: transparent;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.sketch-path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.sketch-end {
+  fill: currentColor;
+  stroke: var(--surface);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.sketch-layer.is-drawing .sketch-path {
+  stroke-dasharray: 4 3;
+}
+// #endregion
+
+// #region Range guess (RangeGuess calibration panel; reuses the .lp-predict shell)
+.rg {
+  --rg-thumb: 16px;
+}
+
+.rg-hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.rg-track {
+  position: relative;
+  height: 28px;
+  margin-top: var(--space-1);
+}
+
+@mixin rg-span {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--rg-lo) * (100% - var(--rg-thumb)) + var(--rg-thumb) / 2);
+  width: calc((var(--rg-hi) - var(--rg-lo)) * (100% - var(--rg-thumb)));
+  transform: translateY(-50%);
+}
+
+.rg-rail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  transform: translateY(-50%);
+  background: var(--border);
+  border-radius: var(--radius-xs);
+}
+
+.rg-fill {
+  @include rg-span;
+  height: 6px;
+  background: var(--primary);
+  border-radius: var(--radius-xs);
+}
+
+.rg-ref {
+  @include rg-span;
+  height: 18px;
+  background: color-mix(in srgb, var(--chart-reference, var(--muted)) 22%, transparent);
+  border: 1px dashed var(--muted);
+  border-radius: var(--radius-xs);
+}
+
+.rg-outcome {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--rg-at) * (100% - var(--rg-thumb)) + var(--rg-thumb) / 2);
+  width: 3px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  z-index: 3;
+  pointer-events: none;
+
+  &.is-hit {
+    background: var(--positive);
+  }
+
+  &.is-miss {
+    background: var(--negative);
+  }
+}
+
+@mixin rg-thumb-knob {
+  width: var(--rg-thumb);
+  height: var(--rg-thumb);
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.rg-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  pointer-events: none;
+  z-index: 1;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    @include rg-thumb-knob;
+  }
+
+  &::-moz-range-thumb {
+    @include rg-thumb-knob;
+  }
+
+  &::-moz-range-track {
+    background: transparent;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    &::-moz-range-thumb {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
+
+  &:disabled {
+    &::-webkit-slider-thumb {
+      cursor: default;
+      border-color: var(--muted);
+    }
+
+    &::-moz-range-thumb {
+      cursor: default;
+      border-color: var(--muted);
+    }
+  }
+}
+
+// When the thumbs meet near the right end, the lower one must stay grabbable.
+.rg-track.is-lo-top .rg-thumb:first-of-type {
+  z-index: 2;
+}
+
+.rg-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rg-interval {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  align-self: center;
+
+  strong {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.rg-calibration {
+  display: grid;
+  gap: 4px;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+
+  p {
+    margin: 0;
+  }
+
+  .rg-verdict {
+    font-weight: 600;
+  }
+
+  &.is-tooNarrow .rg-verdict {
+    color: var(--negative);
+  }
+
+  &.is-calibrated .rg-verdict {
+    color: var(--positive);
+  }
+
+  &.is-pending .rg-verdict {
+    font-weight: 400;
+    color: var(--muted);
+  }
+}
+
+.rg-rounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    &.is-hit {
+      background: var(--positive);
+    }
+
+    &.is-miss {
+      background: var(--negative);
+    }
   }
 }
 // #endregion

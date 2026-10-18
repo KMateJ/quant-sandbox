@@ -34,6 +34,8 @@ export default function HistogramInner({ bins, normalize = "count", density, tin
   };
   const onDown = (event: PointerEvent<SVGRectElement>) => {
     if (!selectable) return;
+    // Brushing is a drag: don't let it start a text selection on the page.
+    event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
     const i = indexAt(event);
     if (selection && selection[0] === i && selection[1] === i) return onSelectionChange!(null);
@@ -80,7 +82,7 @@ export default function HistogramInner({ bins, normalize = "count", density, tin
           </g>
         ))}
         {selectable && (
-          <rect x={0} y={0} width={w} height={h} fill="transparent" style={{ cursor: "col-resize", touchAction: "none" }}
+          <rect x={0} y={0} width={w} height={h} fill="transparent" style={{ cursor: "col-resize", touchAction: "none", userSelect: "none" }}
             onPointerDown={onDown} onPointerMove={onMove} onPointerUp={() => setAnchor(null)} onPointerCancel={() => setAnchor(null)} />
         )}
         <AxisLeft scale={y} numTicks={4} tickFormat={(v) => (yFormat ? yFormat(Number(v)) : String(v))} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tick, textAnchor: "end", dx: -4, dy: 3 })} />

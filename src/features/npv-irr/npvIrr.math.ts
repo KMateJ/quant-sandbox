@@ -134,3 +134,18 @@ export function discountedPayback(rows: NpvScheduleRow[]): number | null {
   }
   return null;
 }
+
+/// Flows as the lab lets the reader drag them: −outlay at year 0, then each year's (pre-tax) pattern inflow,
+/// i.e. the same numbers the schedule table edits.
+export function editableFlows(model: ProjectModel): number[] {
+  return [-model.outlay, ...Array.from({ length: model.years }, (_, i) => patternInflow(model, i + 1))];
+}
+
+/// Drag range for the cash-flow bars, ±span with a round span about 1.5× the largest flow, and a step of
+/// 1, 5 or 10 so the snapped values stay readable at that scale.
+export function dragScale(flows: number[]): { span: number; step: number } {
+  const m = Math.max(1, ...flows.map(Math.abs)) * 1.5;
+  const mag = Math.pow(10, Math.floor(Math.log10(m)));
+  const span = (Math.ceil((m / mag) * 2) / 2) * mag;
+  return { span, step: span <= 400 ? 1 : span <= 2000 ? 5 : 10 };
+}

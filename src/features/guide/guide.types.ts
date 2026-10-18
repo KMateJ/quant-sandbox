@@ -51,7 +51,14 @@ export type GuideId =
   | "immunization"
   | "callable-bonds"
   | "martingales"
-  | "sde-simulation";
+  | "sde-simulation"
+  | "probability-spaces"
+  | "filtrations"
+  | "brownian-properties"
+  | "reflection-principle"
+  | "brownian-bridge"
+  | "ito-integral"
+  | "feynman-kac";
 
 /// A single ordered lesson inside a track.
 export type GuideLessonMeta = {

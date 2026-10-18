@@ -3,13 +3,7 @@ import { ControlGroup, SegmentedControl } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
 import type { TranslationKey } from "../../i18n";
-import { CLT_LEVELS, STEP_DISTRIBUTIONS, type StepDistribution } from "./clt.types";
-
-const DISTRIBUTION_KEYS: Record<StepDistribution, TranslationKey> = {
-  coin: "stochCltDistCoin",
-  uniform: "stochCltDistUniform",
-  exponential: "stochCltDistExponential",
-};
+import { CLT_LEVELS, DISTRIBUTION_KEYS, STEP_DISTRIBUTIONS, type StepDistribution } from "./clt.types";
 
 type Props = {
   distribution: StepDistribution;

@@ -77,6 +77,8 @@ const PREVIEWS = new Set([
   "instruments>multi-step-trees",
   "strategies>put-call-parity",
   "put-call-parity>toward-black-scholes",
+  "probability-spaces>martingales",
+  "reflection-principle>change-of-measure",
 ]);
 
 test("reading order: no lesson depends on a later lesson of its own track (beyond the next one)", () => {

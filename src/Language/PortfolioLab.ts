@@ -59,6 +59,16 @@ export const portfolioLabHu = {
     "Érvénytelen korrelációs mátrix — a megadott páronkénti korrelációk együtt nem alkotnak konzisztens korrelációs mátrixot.",
   portfolioCorrExplain:
     "Az alacsonyabb korreláció kitágítja a lehetséges halmazt és csökkentheti az elérhető portfólió-volatilitást: a diverzifikáció nemcsak az egyedi volatilitástól függ, hanem attól is, hogyan mozognak együtt az eszközök.",
+  portfolioWeightBarAria: "{{name}} súlya",
+  portfolioWeightBarsHint:
+    "Húzd a sávokat (vagy fókuszálj rájuk, és használd a nyilakat: ±1%, Shift ±5%). A többi súly arányosan igazodik, így az összeg mindig 100%.",
+  portfolioCloudPickHint: "Kattints egy véletlen portfólió pontjára, hogy átvedd a súlyait.",
+  portfolioGhostCaption: "Szaggatott, halvány vonalak: a hatékony határ és a CML a rögzítéskor.",
+  portfolioCorrScrubLabel: "ρ ({{a}} × {{b}})",
+  portfolioCorrFeasible:
+    "Érvényes tartomány a többi korreláció mellett: {{lo}} … {{hi}}. A csúszka ezen belül marad, így a mátrix pozitív szemidefinit.",
+  portfolioRgPrompt: "Mennyire kockázatos ez a keverék: {{mix}}? Adj meg egy 90%-os sávot a σ-jára (a jelenlegi eszközökkel és korrelációkkal).",
+  portfolioRgHint: "Tipp: a σ-k súlyozott átlaga felső korlát; minél kisebbek a korrelációk, annál lejjebb van a valódi érték. Egy korreláció vagy σ módosítása új kört indít.",
 };
 
 export const portfolioLabEn = {
@@ -122,4 +132,14 @@ export const portfolioLabEn = {
     "Invalid correlation matrix — the selected pairwise correlations are not jointly consistent.",
   portfolioCorrExplain:
     "Lower correlations expand the feasible opportunity set and can reduce achievable portfolio volatility — diversification depends not only on each asset's volatility, but on how the assets move together.",
+  portfolioWeightBarAria: "{{name}} weight",
+  portfolioWeightBarsHint:
+    "Drag the bars (or focus one and use the arrow keys: ±1%, Shift ±5%). The other weights rescale proportionally, so the total stays 100%.",
+  portfolioCloudPickHint: "Click a random-portfolio dot to adopt its weights.",
+  portfolioGhostCaption: "Faded dashed lines: the efficient frontier and CML as pinned.",
+  portfolioCorrScrubLabel: "ρ ({{a}} × {{b}})",
+  portfolioCorrFeasible:
+    "Feasible range with the other correlations fixed: {{lo}} … {{hi}}. The slider stays inside it, so the matrix remains positive semidefinite.",
+  portfolioRgPrompt: "How volatile is this mix: {{mix}}? Set a 90% range for its σ (with the current assets and correlations).",
+  portfolioRgHint: "Hint: the weighted average of the σs is an upper bound; the lower the correlations, the further below it the true value is. Changing a correlation or a σ starts a new round.",
 };

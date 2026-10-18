@@ -9,12 +9,13 @@ import GuidedExperiments from "../../components/GuidedExperiments";
 import IncrementFanChart from "./IncrementFanChart";
 import { difference } from "./brownianFundamentals.math";
 import { terminalSummary } from "./rescaledWalk.math";
+import { INCREMENT_URL_SCHEMA } from "./stochStudio.url";
 import { useBrownianExperiment } from "./useBrownianExperiment";
 import { useWindowSweep } from "./useWindowSweep";
 
 export default function IncrementExplore() {
   const { t } = useI18n();
-  const experiment = useBrownianExperiment(400);
+  const experiment = useBrownianExperiment(INCREMENT_URL_SCHEMA);
   const { s, t: time, ws, wt } = experiment;
   const width = time - s;
   const sweep = useWindowSweep(s, time, experiment.setWindow);

@@ -1,26 +1,30 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import SliderField from "../../components/SliderField";
 import { useMediaQuery } from "../../components/useMediaQuery";
+import { useUrlState } from "../../components/useUrlState";
 import { LineChart } from "../../components/charts";
-import type { ChartReferenceLine, ChartSeries } from "../../components/charts";
+import type { ChartReferenceLine, ChartSeries, PlotFrame } from "../../components/charts";
 import { PageHeader, Workspace, Panel, ChartContainer } from "../../components/layout";
 import { Tabs, type TabItem } from "../../components/ui";
 import { useI18n } from "../../i18n";
+import ValuationExplore from "./components/ValuationExplore";
 import ValuationResults from "./components/ValuationResults";
-import { dcfSchedule, enterpriseValue, horizonTerminalValue } from "./valuation.math";
-
-type ValuationTab = "projection" | "buildup";
+import { dcfSchedule, enterpriseValue, horizonTerminalValue, yearDomain } from "./valuation.math";
+import { VALUATION_URL_SCHEMA, type ValuationTab } from "./valuation.url";
 
 export default function ValuationView() {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
 
-  const [fcf1, setFcf1] = useState(100);
-  const [growth, setGrowth] = useState(0.08);
-  const [years, setYears] = useState(5);
-  const [terminalGrowth, setTerminalGrowth] = useState(0.02);
-  const [wacc, setWacc] = useState(0.1);
-  const [tab, setTab] = useState<ValuationTab>("projection");
+  // Inputs and tab live in the query string, so a valuation can be linked.
+  const [url, setUrl] = useUrlState(VALUATION_URL_SCHEMA);
+  const { fcf: fcf1, g: growth, n: years, tg: terminalGrowth, wacc, tab } = url;
+  const setFcf1 = (v: number) => setUrl({ fcf: v });
+  const setGrowth = (v: number) => setUrl({ g: v });
+  const setYears = (v: number) => setUrl({ n: v });
+  const setTerminalGrowth = (v: number) => setUrl({ tg: v });
+  const setWacc = (v: number) => setUrl({ wacc: v });
+  const setTab = (v: ValuationTab) => setUrl({ tab: v });
 
   const ev = enterpriseValue(fcf1, growth, years, wacc, terminalGrowth);
   const tv = horizonTerminalValue(fcf1, growth, years, wacc, terminalGrowth);
@@ -37,7 +41,13 @@ export default function ValuationView() {
     { id: "buildup", label: t("valuationTabBuildup") },
   ];
 
-  const xDomain: [number, number] = [1, years];
+  const xDomain = yearDomain(years);
+  const yearTick = (v: number) => (Number.isInteger(v) ? v.toFixed(0) : "");
+  // A single forecast year has no line to draw, so its points get markers instead.
+  const singleYearDots = (keys: { key: string; color: string }[]) =>
+    years === 1
+      ? (frame: PlotFrame) => <>{keys.map((k) => <circle key={k.key} cx={frame.x(1)} cy={frame.y(Number(data[0][k.key as keyof (typeof data)[0]]))} r={5} fill={k.color} />)}</>
+      : undefined;
   const projectionSeries: ChartSeries[] = [
     { key: "fcf", label: t("valuationFcfLabel"), color: "#22c55e", strokeWidth: 2.5 },
     { key: "pv", label: t("valuationPvLabel"), color: "#38bdf8", strokeWidth: 2.5, dash: "5 4" },
@@ -77,6 +87,8 @@ export default function ValuationView() {
                   xKey="year"
                   series={projectionSeries}
                   xDomain={xDomain}
+                  xFormat={yearTick}
+                  layer={singleYearDots(projectionSeries)}
                   yDomain={[0, projectionYMax]}
                   isMobile={isMobile}
                   tooltipLabel={(x) => `${t("valuationColYear")} ${x.toFixed(0)}`}
@@ -88,6 +100,8 @@ export default function ValuationView() {
                   xKey="year"
                   series={buildupSeries}
                   xDomain={xDomain}
+                  xFormat={yearTick}
+                  layer={singleYearDots(buildupSeries)}
                   yDomain={[0, buildupYMax]}
                   referenceLines={buildupRefs}
                   isMobile={isMobile}
@@ -97,6 +111,18 @@ export default function ValuationView() {
               )}
             </div>
           </ChartContainer>
+
+          <ValuationExplore
+            fcf1={fcf1}
+            growth={growth}
+            years={years}
+            wacc={wacc}
+            terminalGrowth={terminalGrowth}
+            onPickRates={(w, g) => {
+              setWacc(w);
+              setTerminalGrowth(g);
+            }}
+          />
 
           <ValuationResults
             enterpriseValue={ev}

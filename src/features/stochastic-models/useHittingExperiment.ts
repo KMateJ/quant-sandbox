@@ -12,6 +12,7 @@ import {
 } from "./pathGeometry.math";
 import { PG_MONITORING_STEPS } from "./pathGeometry.types";
 import { pathPoints } from "./brownianFundamentals.math";
+import { HITTING_URL_SCHEMA, nearestOf } from "./stochStudio.url";
 import { usePathGeometry } from "./usePathGeometry";
 
 const FINE_STEPS = PG_MONITORING_STEPS[PG_MONITORING_STEPS.length - 1];
@@ -21,10 +22,9 @@ const LEVELS = Array.from({ length: 30 }, (_, i) => (i + 1) / 10);
 /// State and derived statistics for lesson 3.4: one fine Brownian sample with drift,
 /// monitored on a coarser sub-grid, against continuous and BGK-corrected theory.
 export function useHittingExperiment() {
-  const sim = usePathGeometry(1000, FINE_STEPS);
-  const [barrier, setBarrier] = useState(1);
-  const [drift, setDrift] = useState(0);
-  const [monitoring, setMonitoring] = useState<number>(PG_MONITORING_STEPS[1]);
+  const sim = usePathGeometry(HITTING_URL_SCHEMA, FINE_STEPS);
+  const { a: barrier, mu: drift } = sim.url;
+  const monitoring = nearestOf(PG_MONITORING_STEPS, sim.url.mon);
   const [pathCursor, setPathCursor] = useState(0);
   const dt = 1 / monitoring;
 
@@ -62,11 +62,11 @@ export function useHittingExperiment() {
   return {
     sim,
     barrier,
-    setBarrier,
+    setBarrier: (a: number) => sim.setUrl({ a }),
     drift,
-    setDrift,
+    setDrift: (mu: number) => sim.setUrl({ mu }),
     monitoring,
-    setMonitoring,
+    setMonitoring: (mon: number) => sim.setUrl({ mon }),
     nextPath: () => setPathCursor(path + 1),
     coarse,
     finePath,

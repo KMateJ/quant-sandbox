@@ -14,13 +14,15 @@ type Props = {
   rows: AssetRow[];
   maxBeta: number;
   isMobile: boolean;
+  /// Row `index` dragged vertically to actual return `y`.
+  onDrag: (index: number, y: number) => void;
 };
 
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 const signed = (v: number) => `${v >= 0 ? "+" : ""}${(v * 100).toFixed(1)}%`;
 
-/// Cross-sectional view: every security as a point with a thin residual line to the SML.
-export default function AssetsChart({ riskFree, marketReturn, rows, maxBeta, isMobile }: Props) {
+/// Cross-sectional view: every security as a draggable point with a thin residual line to the SML.
+export default function AssetsChart({ riskFree, marketReturn, rows, maxBeta, isMobile, onDrag }: Props) {
   const { t } = useI18n();
 
   const top = Math.max(...rows.map((r) => Math.max(r.expectedReturn, r.capmReturn)), marketReturn) * 1.12;
@@ -55,7 +57,8 @@ export default function AssetsChart({ riskFree, marketReturn, rows, maxBeta, isM
       key: "assets",
       label: t("capmTabAssets"),
       color: CAPM_COLORS.capmPoint,
-      radius: 6,
+      radius: 7,
+      draggable: true,
       points: rows.map((r) => ({
         x: r.beta,
         y: r.expectedReturn,
@@ -97,6 +100,7 @@ export default function AssetsChart({ riskFree, marketReturn, rows, maxBeta, isM
       yFormat={pct}
       xLabel={t("capmBetaAxis")}
       yLabel={t("capmReturnAxis")}
+      onDrag={(_x, y, index) => onDrag(index, y)}
     />
   );
 }

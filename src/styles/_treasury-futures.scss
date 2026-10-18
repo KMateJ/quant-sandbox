@@ -69,3 +69,9 @@
     .tf-chart-wrap { height: 290px; }
   }
 }
+
+.tf-drag-hint {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}

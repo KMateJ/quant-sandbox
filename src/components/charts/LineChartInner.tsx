@@ -12,7 +12,7 @@ import { useChartTooltip } from "./useChartTooltip";
 import ChartTooltip from "./ChartTooltip";
 import type { ChartDatum, LineChartProps, PlotFrame } from "./chart.types";
 
-type Props = LineChartProps & { width: number; height: number };
+type Props = LineChartProps & { width: number; height: number; legendHeight?: number };
 
 function fallbackDomain(
   values: number[],
@@ -35,6 +35,7 @@ export default function LineChartInner({
   referenceLines = [],
   isMobile = false,
   legend = true,
+  legendHeight = LEGEND_HEIGHT,
   tooltipLabel,
   valueFormat,
   xFormat,
@@ -44,7 +45,7 @@ export default function LineChartInner({
 }: Props) {
   const curveFactory = curve === "linear" ? curveLinear : curveMonotoneX;
   const margin = chartMargin(isMobile);
-  const svgHeight = height - (legend ? LEGEND_HEIGHT : 0);
+  const svgHeight = height - (legend ? legendHeight : 0);
   const innerW = Math.max(0, width - margin.left - margin.right);
   const innerH = Math.max(0, svgHeight - margin.top - margin.bottom);
 

@@ -69,6 +69,10 @@ export function blockTexts(blocks: GuideBlock[]): string[] {
         return b.items;
       case "lab":
         return [b.text];
+      case "check":
+        return [b.prompt, ...(b.answer.type === "choice" ? b.answer.options : []), b.explain];
+      case "worked":
+        return [b.title, ...b.steps.map((s) => s.text)];
       default:
         return [];
     }

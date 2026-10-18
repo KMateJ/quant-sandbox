@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useMemo, type PointerEvent } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { Area, Line as SvgLine } from "@visx/shape";
@@ -7,46 +7,31 @@ import { CHART_COLORS, chartMargin } from "../../../components/charts/chart.them
 import { useMediaQuery } from "../../../components/useMediaQuery";
 import { useI18n } from "../../../i18n";
 import type { Asset } from "../../portfolio-lab/portfolioLab.types";
-import type { OptPoint } from "../portfolioOptimization.types";
+import { indexAtFraction } from "../frontierBrush.math";
+import { useBoxSize } from "../useBoxSize";
+import { useBrushHandlers, type FrontierBrush } from "../useFrontierBrush";
+import { SELECTED_COLOR, pointReadout } from "./frontierChart.style";
 
 type Props = {
-  branch: OptPoint[];
   assets: Asset[];
-  selectedReturn: number;
-  onSelect: (ret: number) => void;
+  brush: FrontierBrush;
+  className?: string;
 };
 
 const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
 
-/// Measures a container synchronously (ref-based) so the SVG renders on first
-/// paint, without waiting for a ResizeObserver callback that can lag under CSS zoom.
-function useBoxSize() {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () =>
-      setSize((prev) => {
-        const width = el.clientWidth;
-        const height = el.clientHeight;
-        return prev.width === width && prev.height === height ? prev : { width, height };
-      });
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  return { ref, ...size };
-}
-
-/// Stacked-area chart of optimal weights along the efficient branch.
-/// Hovering/clicking selects the matching frontier point (linked to the scatter).
-export default function CompositionAreaChart({ branch, assets, selectedReturn, onSelect }: Props) {
+/// Stacked-area chart of optimal weights along the efficient branch, brushed with the frontier:
+/// hover previews a point, press/drag (or arrow keys) moves the selection.
+export default function CompositionAreaChart({ assets, brush, className = "chart-wrap" }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const [hover, setHover] = useState<number | null>(null);
   const { ref, width, height } = useBoxSize();
+  const { branch } = brush;
+  // The hit rect spans exactly the plot, so the pointer's fraction across it maps straight onto the return axis.
+  const handlers = useBrushHandlers(brush, (e: PointerEvent<Element>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    return indexAtFraction(branch, rect.width > 0 ? (e.clientX - rect.left) / rect.width : 0);
+  });
 
   const stacked = useMemo(
     () =>
@@ -68,9 +53,7 @@ export default function CompositionAreaChart({ branch, assets, selectedReturn, o
     [branch]
   );
 
-  if (branch.length < 2) return <div className="chart-wrap" ref={ref} />;
-  const retLo = branch[0].ret;
-  const retHi = branch[branch.length - 1].ret;
+  if (branch.length < 2) return <div className={className} ref={ref} />;
   let yLo = 0;
   let yHi = 1;
   for (const s of stacked)
@@ -79,22 +62,19 @@ export default function CompositionAreaChart({ branch, assets, selectedReturn, o
       yHi = Math.max(yHi, b.y1);
     }
 
-  const margin = chartMargin(isMobile);
+  // Extra bottom room keeps the axis title clear of the tick labels.
+  const base = chartMargin(isMobile);
+  const margin = { ...base, bottom: base.bottom + 14 };
   const innerW = Math.max(0, width - margin.left - margin.right);
   const innerH = Math.max(0, height - margin.top - margin.bottom);
-  const x = scaleLinear({ domain: [retLo, retHi], range: [0, innerW] });
+  const x = scaleLinear({ domain: [branch[0].ret, branch[branch.length - 1].ret], range: [0, innerW] });
   const y = scaleLinear({ domain: [yLo, yHi], range: [innerH, 0] });
-  const nearest = (clientX: number, rect: DOMRect) => {
-    const rx = x.invert(((clientX - rect.left) / rect.width) * width - margin.left);
-    let best = 0;
-    for (let i = 1; i < branch.length; i++)
-      if (Math.abs(branch[i].ret - rx) < Math.abs(branch[best].ret - rx)) best = i;
-    return best;
-  };
-  const hoverRet = hover != null ? branch[hover].ret : null;
+  const selX = x(branch[brush.selectedIndex].ret);
+  const hoverX = brush.hoverIndex != null ? x(branch[brush.hoverIndex].ret) : null;
+  const tick = { fill: CHART_COLORS.axis, fontSize: isMobile ? 10 : 11 };
 
   return (
-    <div className="chart-wrap" ref={ref}>
+    <div className={className} ref={ref}>
       {width > 0 && height > 0 && (
         <svg width={width} height={height}>
           <Group left={margin.left} top={margin.top}>
@@ -112,21 +92,27 @@ export default function CompositionAreaChart({ branch, assets, selectedReturn, o
               />
             ))}
             <SvgLine from={{ x: 0, y: y(0) }} to={{ x: innerW, y: y(0) }} stroke={CHART_COLORS.axis} strokeWidth={1} />
-            <SvgLine from={{ x: x(selectedReturn), y: 0 }} to={{ x: x(selectedReturn), y: innerH }} stroke="#f97316" strokeWidth={1.5} strokeDasharray="4 3" />
-            {hoverRet != null && (
-              <SvgLine from={{ x: x(hoverRet), y: 0 }} to={{ x: x(hoverRet), y: innerH }} stroke={CHART_COLORS.axis} strokeWidth={1} strokeDasharray="2 2" />
+            <SvgLine from={{ x: selX, y: 0 }} to={{ x: selX, y: innerH }} stroke={SELECTED_COLOR} strokeWidth={2} strokeDasharray="4 3" />
+            {hoverX != null && (
+              <SvgLine className="opt-comp-hover" from={{ x: hoverX, y: 0 }} to={{ x: hoverX, y: innerH }} stroke={CHART_COLORS.tooltipText} strokeWidth={1.5} />
             )}
-            <AxisBottom top={innerH} scale={x} numTicks={isMobile ? 4 : 7} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => pct(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 10 : 11, textAnchor: "middle" })} />
-            <AxisLeft scale={y} numTicks={5} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => pct(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 10 : 11, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />
+            <AxisBottom top={innerH} scale={x} numTicks={isMobile ? 4 : 7} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => pct(Number(v))} tickLabelProps={() => ({ ...tick, textAnchor: "middle" })} />
+            <AxisLeft scale={y} numTicks={height < 240 ? 3 : 5} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => pct(Number(v))} tickLabelProps={() => ({ ...tick, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />
             <text x={innerW / 2} y={innerH + margin.bottom - 2} textAnchor="middle" fill={CHART_COLORS.axis} fontSize={isMobile ? 11 : 12}>{t("optCompReturnAxis")}</text>
             <rect
+              className="opt-brush"
               width={innerW}
               height={innerH}
               fill="transparent"
-              style={{ cursor: "pointer" }}
-              onMouseMove={(e) => setHover(nearest(e.clientX, e.currentTarget.getBoundingClientRect()))}
-              onMouseLeave={() => setHover(null)}
-              onClick={(e) => onSelect(branch[nearest(e.clientX, e.currentTarget.getBoundingClientRect())].ret)}
+              style={{ cursor: "pointer", touchAction: "pan-y" }}
+              tabIndex={0}
+              role="slider"
+              aria-label={t("optBrushAria")}
+              aria-valuemin={0}
+              aria-valuemax={branch.length - 1}
+              aria-valuenow={brush.selectedIndex}
+              aria-valuetext={pointReadout(t, branch[brush.selectedIndex])}
+              {...handlers}
             />
           </Group>
         </svg>

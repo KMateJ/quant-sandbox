@@ -1,3 +1,4 @@
+import { LANGUAGE_STORAGE_KEY, savedLanguage } from "./languageStorage";
 import {
   createContext,
   useContext,
@@ -46,6 +47,7 @@ import { guidePortfolioEn, guidePortfolioHu } from "./Language/GuidePortfolio";
 import { guideFixedIncomeEn, guideFixedIncomeHu } from "./Language/GuideFixedIncome";
 import { guideCorporateEn, guideCorporateHu } from "./Language/GuideCorporate";
 import { guideStochasticEn, guideStochasticHu } from "./Language/GuideStochastic";
+import { guideStochasticTheoryEn, guideStochasticTheoryHu } from "./Language/GuideStochasticTheory";
 import { guideWave2En, guideWave2Hu } from "./Language/GuideWave2";
 import { guideWave3En, guideWave3Hu } from "./Language/GuideWave3";
 import { guideGraphEn, guideGraphHu } from "./Language/GuideGraph";
@@ -66,7 +68,7 @@ type I18nContextValue = {
   t: (key: keyof typeof translations.hu, options?: Record<string, string | number>) => string;
 };
 
-const STORAGE_KEY = "qs-language";
+const STORAGE_KEY = LANGUAGE_STORAGE_KEY;
 
 export const translations = {
   hu: {
@@ -97,6 +99,7 @@ export const translations = {
     ...guideFixedIncomeHu,
     ...guideCorporateHu,
     ...guideStochasticHu,
+    ...guideStochasticTheoryHu,
     ...guideWave2Hu,
     ...guideWave3Hu,
     ...guideGraphHu,
@@ -147,6 +150,7 @@ export const translations = {
     ...guideFixedIncomeEn,
     ...guideCorporateEn,
     ...guideStochasticEn,
+    ...guideStochasticTheoryEn,
     ...guideWave2En,
     ...guideWave3En,
     ...guideGraphEn,
@@ -174,11 +178,7 @@ export const translations = {
 export type TranslationKey = keyof typeof translations.hu;
 
 function getInitialLanguage(): Language {
-  if (typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "hu" || saved === "en") return saved;
-  }
-  return "en";
+  return savedLanguage() ?? "en";
 }
 
 if (!i18n.isInitialized) {

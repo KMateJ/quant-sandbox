@@ -1,6 +1,6 @@
 import { Panel, ChartContainer } from "../../../components/layout";
 import SliderField from "../../../components/SliderField";
-import SwitchRow from "../../../components/SwitchRow";
+import { SegmentedControl } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
 import KpiCard from "./KpiCard";
 import NpvBars from "./NpvBars";
@@ -25,14 +25,14 @@ export default function RealOptionsTab({ lab }: RealOptionsTabProps) {
   return (
     <div className="npv-realoptions-tab">
       <Panel title={t("npvOptionControls")}>
-        <SwitchRow
-          groups={[{
-            key: "enabled",
-            options: [
-              { label: t("npvOptionOn"), active: option.enabled, onSelect: () => patch({ enabled: true }) },
-              { label: t("npvOptionOff"), active: !option.enabled, onSelect: () => patch({ enabled: false }) },
-            ],
-          }]}
+        <SegmentedControl<"on" | "off">
+          options={[
+            { value: "on", label: t("npvOptionOn") },
+            { value: "off", label: t("npvOptionOff") },
+          ]}
+          value={option.enabled ? "on" : "off"}
+          onChange={(v) => patch({ enabled: v === "on" })}
+          ariaLabel={t("npvOptionControls")}
         />
         <div className="controls-grid">
           <SliderField label={t("npvExpansionInvest")} min={0} max={5000} step={50} value={option.expansionInvestment} onChange={(v) => patch({ expansionInvestment: v })} formatValue={money} />

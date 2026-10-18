@@ -1,4 +1,5 @@
 import { ScatterChart } from "../../../components/charts";
+import type { ScatterChartProps } from "../../../components/charts";
 import type {
   ScatterSeries,
   ChartReferenceLine,
@@ -25,6 +26,8 @@ type Props = {
   onDragEnd?: () => void;
   legend?: boolean;
   yNumTicks?: number;
+  /// Interactive overlay (e.g. a sketch layer) on top of the plot.
+  layer?: ScatterChartProps["layer"];
 };
 
 /// Term-structure chart on an evenly-spaced maturity axis (node index → label).
@@ -45,6 +48,7 @@ export default function MaturityChart({
   onDragEnd,
   legend = true,
   yNumTicks,
+  layer,
 }: Props) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const n = labels.length;
@@ -70,6 +74,7 @@ export default function MaturityChart({
       yFormat={yFormat}
       yLabel={yLabel}
       yNumTicks={yNumTicks}
+      layer={layer}
       onSelectPoint={onSelectIndex}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}

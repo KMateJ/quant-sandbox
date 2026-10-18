@@ -1,3 +1,5 @@
+import type { CAPM_TABS } from "./capm.url";
+
 /// A named security positioned by its beta and either a fixed actual return or a persistent alpha.
 export type CapmAsset = {
   name: string;
@@ -15,4 +17,4 @@ export type BetaObservation = {
 };
 
 /// Which visualisation is active in the CAPM workspace.
-export type CapmTab = "sml" | "assets" | "beta";
+export type CapmTab = (typeof CAPM_TABS)[number];

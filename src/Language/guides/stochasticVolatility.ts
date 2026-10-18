@@ -30,15 +30,40 @@ export const stochasticVolatility: GuideLessonContent = {
     eq("2\\kappa\\theta \\ge \\xi^2."),
     p("When it fails the variance can touch zero and bounce back. The model still works, but simulations need care near zero."),
 
+    {
+      kind: "check",
+      id: "stochastic-volatility/half-life",
+      prompt: "In the Heston model the variance mean-reverts with speed $\\kappa = 4$. What is the half-life of a variance shock, in years?",
+      answer: { type: "number", value: 0.1733, tolerance: 0.002, unit: "years" },
+      explain: "The gap to $\\theta$ shrinks like $e^{-\\kappa t}$, so it halves after $\\ln 2/\\kappa = 0.693/4 \\approx 0.173$ years, about two months.",
+    },
     h("A worked example"),
     p("Take $v_0 = 0.09$, $\\theta = 0.04$ and $\\kappa = 2$. Today's volatility is $\\sqrt{0.09} = 30\\%$ and the long-run volatility is $\\sqrt{0.04} = 20\\%$. The half-life is $\\ln 2/2 \\approx 0.35$ years, a little over four months."),
     p("After half a year the expected variance is $0.04 + 0.05\\,e^{-1} \\approx 0.0584$, a volatility of about $24.2\\%$. After one year it is $0.04 + 0.05\\,e^{-2} \\approx 0.0468$, about $21.6\\%$."),
     p("For the Feller condition, $2\\kappa\\theta = 0.16$. With $\\xi = 0.3$ we have $\\xi^2 = 0.09 \\le 0.16$, so the condition holds. With $\\xi = 0.5$ we have $\\xi^2 = 0.25 > 0.16$, so it fails, and the variance can reach zero."),
 
+    {
+      kind: "worked",
+      title: "Expected variance and the Feller check",
+      steps: [
+        { text: "Take $v_0 = 0.0625$ (25% volatility), $\\theta = 0.04$, $\\kappa = 1.5$. Half-life of a variance shock, in years.", tex: "\\ln 2 / \\kappa", result: { value: 0.4621, tolerance: 0.0005 } },
+        { text: "Expected variance after one year.", tex: "\\theta + (v_0 - \\theta)\\,e^{-\\kappa \\cdot 1}", result: { value: 0.04502, tolerance: 0.00002 } },
+        { text: "The corresponding volatility, in percent.", tex: "\\sqrt{\\mathbb{E}^{\\mathbb{Q}}[v_1]}", result: { value: 21.22, tolerance: 0.01, unit: "%" } },
+        { text: "Feller margin with $\\xi = 0.35$; it is negative, so the condition just fails.", tex: "2\\kappa\\theta - \\xi^2", result: { value: -0.0025, tolerance: 0.00005 } },
+      ],
+    },
+
     h("Correlation and the skew"),
     p("For equities $\\rho$ is typically negative, often between $-0.5$ and $-0.9$. A negative $\\rho$ means that a fall in the price tends to come with a rise in variance. This is the **leverage effect**: as the share price drops, the firm's debt is larger relative to its equity, and the equity becomes riskier."),
     p("Consider what this does to the distribution of $S_T$. Paths that fall gain variance and spread out further downwards. Paths that rise lose variance and stay closer together. The left tail becomes longer than the right. Out-of-the-money puts, which pay off in that left tail, become more valuable than under Black–Scholes, so their implied volatility is higher. Implied volatility then falls as the strike rises: the **skew**."),
 
+    {
+      kind: "check",
+      id: "stochastic-volatility/skew-side",
+      prompt: "With $\\rho = -0.7$, which options have a higher implied volatility than the at-the-money ones?",
+      answer: { type: "choice", options: ["Low-strike (out-of-the-money) puts", "High-strike (out-of-the-money) calls", "All strikes equally", "None: $\\rho$ only shifts the level"], correct: 0 },
+      explain: "A negative $\\rho$ raises the variance on falling paths and lengthens the left tail, so low strikes become dearer than under Black–Scholes: the equity skew.",
+    },
     h("Vol-of-vol and the curvature"),
     p("The parameter $\\xi$ controls how much the variance moves. With $\\xi = 0$ the variance follows its deterministic path and the model is close to Black–Scholes with a time-varying volatility, so the smile is nearly flat. A larger $\\xi$ mixes calm paths with very turbulent ones. The resulting distribution of returns has a sharper peak and fatter tails on both sides than a normal distribution with the same variance. Options far from the money on either side gain value, and the smile curves upwards at both ends."),
     note("In the Heston model, $\\rho$ tilts the implied-volatility curve (negative $\\rho$ gives the equity skew), and $\\xi$ bends it (larger vol-of-vol gives more curvature)."),
@@ -96,15 +121,40 @@ export const stochasticVolatility: GuideLessonContent = {
     eq("2\\kappa\\theta \\ge \\xi^2."),
     p("Ha nem teljesül, a variancia elérheti a nullát, majd visszapattan. A modell ekkor is használható, de a szimulációban gondosan kell kezelni a nulla környékét."),
 
+    {
+      kind: "check",
+      id: "stochastic-volatility/half-life",
+      prompt: "A Heston-modellben a variancia $\\kappa = 4$ sebességgel tér vissza az átlaghoz. Hány év egy varianciasokk felezési ideje?",
+      answer: { type: "number", value: 0.1733, tolerance: 0.002, unit: "év" },
+      explain: "A $\\theta$-tól való eltérés $e^{-\\kappa t}$ szerint csökken, így $\\ln 2/\\kappa = 0{,}693/4 \\approx 0{,}173$ év alatt feleződik, ami nagyjából két hónap.",
+    },
     h("Számpélda"),
     p("Legyen $v_0 = 0{,}09$, $\\theta = 0{,}04$ és $\\kappa = 2$. A mai volatilitás $\\sqrt{0{,}09} = 30\\%$, a hosszú távú $\\sqrt{0{,}04} = 20\\%$. A felezési idő $\\ln 2/2 \\approx 0{,}35$ év, valamivel több mint négy hónap."),
     p("Fél év múlva a variancia várható értéke $0{,}04 + 0{,}05\\,e^{-1} \\approx 0{,}0584$, ami körülbelül 24,2% volatilitás. Egy év múlva $0{,}04 + 0{,}05\\,e^{-2} \\approx 0{,}0468$, körülbelül 21,6%."),
     p("A Feller-feltételhez: $2\\kappa\\theta = 0{,}16$. Ha $\\xi = 0{,}3$, akkor $\\xi^2 = 0{,}09 \\le 0{,}16$, a feltétel teljesül. Ha $\\xi = 0{,}5$, akkor $\\xi^2 = 0{,}25 > 0{,}16$, a feltétel sérül, és a variancia elérheti a nullát."),
 
+    {
+      kind: "worked",
+      title: "Várható variancia és a Feller-feltétel ellenőrzése",
+      steps: [
+        { text: "Legyen $v_0 = 0{,}0625$ (25%-os volatilitás), $\\theta = 0{,}04$, $\\kappa = 1{,}5$. Egy varianciasokk felezési ideje, években.", tex: "\\ln 2 / \\kappa", result: { value: 0.4621, tolerance: 0.0005 } },
+        { text: "A várható variancia egy év múlva.", tex: "\\theta + (v_0 - \\theta)\\,e^{-\\kappa \\cdot 1}", result: { value: 0.04502, tolerance: 0.00002 } },
+        { text: "A megfelelő volatilitás, százalékban.", tex: "\\sqrt{\\mathbb{E}^{\\mathbb{Q}}[v_1]}", result: { value: 21.22, tolerance: 0.01, unit: "%" } },
+        { text: "A Feller-tartalék $\\xi = 0{,}35$ mellett; negatív, tehát a feltétel épp nem teljesül.", tex: "2\\kappa\\theta - \\xi^2", result: { value: -0.0025, tolerance: 0.00005 } },
+      ],
+    },
+
     h("A korreláció és a ferdeség"),
     p("Részvényeknél $\\rho$ jellemzően negatív, gyakran $-0{,}5$ és $-0{,}9$ között. Negatív $\\rho$ mellett az árfolyam esése általában a variancia növekedésével jár. Ez a **tőkeáttételi hatás**: ha a részvényárfolyam esik, a vállalat adóssága a saját tőkéhez képest nagyobb lesz, és a részvény kockázatosabbá válik."),
     p("Nézzük, mit jelent ez $S_T$ eloszlására. Az eső pályák varianciája nő, ezért lefelé jobban szétszóródnak. Az emelkedő pályák varianciája csökken, ezért közelebb maradnak egymáshoz. A bal oldali szél hosszabb lesz a jobb oldalinál. A pénzen kívüli putok, amelyek éppen ebben a bal szélben fizetnek, többet érnek, mint a Black–Scholes-modellben, így az implikált volatilitásuk magasabb. Az implikált volatilitás ezért a kötési ár növekedésével csökken: ez a **ferdeség** (skew)."),
 
+    {
+      kind: "check",
+      id: "stochastic-volatility/skew-side",
+      prompt: "$\\rho = -0{,}7$ mellett melyik opciók implikált volatilitása magasabb a pénzen lévőkénél?",
+      answer: { type: "choice", options: ["Az alacsony kötési árú (pénzen kívüli) putoké", "A magas kötési árú (pénzen kívüli) calloké", "Minden kötési áron ugyanannyi", "Egyiké sem: $\\rho$ csak a szintet tolja el"], correct: 0 },
+      explain: "A negatív $\\rho$ a zuhanó pályákon növeli a varianciát, és megnyújtja a bal farkat, ezért az alacsony kötési árak drágábbak lesznek, mint a Black–Scholes-modellben: ez a részvénypiaci ferdeség.",
+    },
     h("A vol-of-vol és a görbület"),
     p("A $\\xi$ paraméter szabja meg, mennyit mozog a variancia. Ha $\\xi = 0$, a variancia a determinisztikus pályáját követi, a modell közel áll az időben változó volatilitású Black–Scholes-modellhez, és a mosoly szinte lapos. Nagyobb $\\xi$ mellett nyugodt és nagyon viharos pályák keverednek. Az így kapott hozameloszlás csúcsa élesebb, mindkét széle vastagabb, mint az azonos varianciájú normális eloszlásé. A pénztől mindkét irányban távoli opciók értéke nő, és a mosoly mindkét végén felfelé hajlik."),
     note("A Heston-modellben $\\rho$ megdönti az implikált volatilitás görbéjét (negatív $\\rho$ adja a részvénypiaci ferdeséget), $\\xi$ pedig meghajlítja (nagyobb vol-of-vol nagyobb görbületet ad)."),

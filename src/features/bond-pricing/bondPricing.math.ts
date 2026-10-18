@@ -21,25 +21,8 @@ export function discountFactor(ytm: number, freq: number, period: number): numbe
 }
 
 /// Dated cash-flow schedule with per-payment discount factors and present values.
-export function bondSchedule({ face, couponRate, ytm, years, freq }: BondInputs): CashFlowRow[] {
-  const nPeriods = Math.max(1, Math.round(years * freq));
-  const couponAmt = (face * couponRate) / freq;
-  const rows: CashFlowRow[] = [];
-  for (let t = 1; t <= nPeriods; t++) {
-    const principal = t === nPeriods ? face : 0;
-    const cashflow = couponAmt + principal;
-    const df = discountFactor(ytm, freq, t);
-    rows.push({
-      period: t,
-      time: t / freq,
-      coupon: couponAmt,
-      principal,
-      cashflow,
-      discountFactor: df,
-      presentValue: cashflow * df,
-    });
-  }
-  return rows;
+export function bondSchedule(inputs: BondInputs): CashFlowRow[] {
+  return streamSchedule(bondFlows(inputs), regularCoupon(inputs), inputs.ytm, inputs.freq);
 }
 
 /// Bundle the schedule with price, duration and convexity for a single input set.
@@ -170,6 +153,7 @@ export function brokenCashflowAxis(opts: {
       lowerMax: span,
       upperMax: span,
       y: (v) => base - (v / span) * innerH,
+      invert: (py) => ((base - py) / innerH) * span,
     };
   }
 
@@ -192,6 +176,11 @@ export function brokenCashflowAxis(opts: {
       const frac = Math.min(1, Math.max(0, (v - lowerMax) / (upperMax - lowerMax)));
       return gapTopY - frac * upperH;
     },
+    invert: (py: number) => {
+      if (py >= gapBottomY) return ((base - py) / lowerH) * lowerMax;
+      if (py > gapTopY) return lowerMax;
+      return lowerMax + ((gapTopY - py) / upperH) * (upperMax - lowerMax);
+    },
   };
 }
 
@@ -205,3 +194,104 @@ export function zigzagPath(x0: number, x1: number, y: number, amp = 3, step = 9)
   }
   return `${d} L ${x1} ${y}`;
 }
+
+/// Coupon offset of the two companion bonds drawn next to the current one on the pull-to-par chart.
+export const PULL_TO_PAR_SPREAD = 0.02;
+
+/// Clean price at each coupon date as time passes at a constant yield (one row per period, t = years elapsed),
+/// for the bond itself and for companions with a coupon PULL_TO_PAR_SPREAD above and below. All end at face value.
+export function pullToParPath({ face, couponRate, ytm, years, freq }: BondInputs) {
+  const periods = Math.round(years * freq);
+  const priceLeft = (coupon: number, periodsLeft: number) =>
+    periodsLeft === 0 ? face : bondPrice(face, Math.max(coupon, 0), ytm, periodsLeft / freq, freq);
+  return Array.from({ length: periods + 1 }, (_, k) => ({
+    t: k / freq,
+    bond: priceLeft(couponRate, periods - k),
+    higher: priceLeft(couponRate + PULL_TO_PAR_SPREAD, periods - k),
+    lower: priceLeft(couponRate - PULL_TO_PAR_SPREAD, periods - k),
+  }));
+}
+
+// #region Arbitrary cash-flow streams
+
+/// Coupon paid each period by the standard bond.
+export function regularCoupon({ face, couponRate, freq }: BondInputs): number {
+  return (face * couponRate) / freq;
+}
+
+/// The standard bond as a plain stream: one cash flow per period, the last one carrying the face value.
+export function bondFlows(inputs: BondInputs): number[] {
+  const n = Math.max(1, Math.round(inputs.years * inputs.freq));
+  const coupon = regularCoupon(inputs);
+  return Array.from({ length: n }, (_, k) => coupon + (k === n - 1 ? inputs.face : 0));
+}
+
+/// Schedule for any stream, flow k paid at (k+1)/freq years. Each flow is split into a coupon part
+/// (up to the regular `coupon`) and principal (the rest), so the timeline keeps its two colours.
+export function streamSchedule(flows: number[], coupon: number, ytm: number, freq: number): CashFlowRow[] {
+  return flows.map((cashflow, k) => {
+    const df = discountFactor(ytm, freq, k + 1);
+    const couponPart = Math.min(cashflow, coupon);
+    return {
+      period: k + 1,
+      time: (k + 1) / freq,
+      coupon: couponPart,
+      principal: cashflow - couponPart,
+      cashflow,
+      discountFactor: df,
+      presentValue: cashflow * df,
+    };
+  });
+}
+
+/// Price of a stream: Σ CF_k / (1 + y/f)^k.
+export function streamPrice(flows: number[], ytm: number, freq: number): number {
+  return flows.reduce((sum, cf, k) => sum + cf * discountFactor(ytm, freq, k + 1), 0);
+}
+
+/// Price, Macaulay / modified duration and convexity of a stream (same conventions as the bond formulas).
+/// A stream worth nothing has no meaningful duration; those readouts are 0.
+export function analyzeStream(flows: number[], coupon: number, ytm: number, freq: number): BondAnalytics {
+  const rows = streamSchedule(flows, coupon, ytm, freq);
+  const price = rows.reduce((s, r) => s + r.presentValue, 0);
+  const g = 1 + ytm / freq;
+  const weighted = rows.reduce((s, r) => s + r.time * r.presentValue, 0);
+  const curv = rows.reduce((s, r) => s + r.period * (r.period + 1) * r.presentValue, 0) / (freq * freq);
+  const macaulay = price > 0 ? weighted / price : 0;
+  return {
+    rows,
+    price,
+    macaulay,
+    modified: macaulay / g,
+    convexity: price > 0 ? curv / (price * g * g) : 0,
+  };
+}
+
+/// Yield to maturity of a stream bought at `price` (bisection on [-0.99·f, 10]); NaN when no yield fits.
+export function streamYtm(flows: number[], price: number, freq: number, tol = 1e-10): number {
+  let lo = -0.99 * freq;
+  let hi = 10;
+  const gap = (y: number) => streamPrice(flows, y, freq) - price;
+  if (gap(lo) < 0 || gap(hi) > 0) return NaN;
+  for (let i = 0; i < 200 && hi - lo > tol; i++) {
+    const mid = (lo + hi) / 2;
+    if (gap(mid) > 0) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+/// Price–yield curve of a stream across [0, maxYtm].
+export function streamPriceYieldCurve(flows: number[], freq: number, maxYtm: number, steps: number): PriceYieldPoint[] {
+  return Array.from({ length: steps + 1 }, (_, i) => {
+    const ytm = (i / steps) * maxYtm;
+    return { ytm, price: streamPrice(flows, ytm, freq) };
+  });
+}
+
+/// Copy of `flows` with flow `index` set to `value`.
+export function withFlow(flows: number[], index: number, value: number): number[] {
+  return flows.map((cf, k) => (k === index ? value : cf));
+}
+
+// #endregion

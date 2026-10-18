@@ -364,3 +364,37 @@
   line-height: 1.6;
 }
 // #endregion
+
+// #region Valuation lab: value bridge, WACC × g∞ map, terminal-value share
+.valuation-share {
+  display: grid;
+  gap: 6px;
+  margin-top: var(--space-3);
+
+  svg {
+    display: block;
+    border-radius: var(--radius-xs);
+  }
+}
+
+.valuation-share-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+}
+// #endregion

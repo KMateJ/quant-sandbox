@@ -23,6 +23,14 @@ export const meanReversion: GuideLessonContent = {
     eq("t_{1/2} = \\frac{\\ln 2}{\\kappa}."),
     p("It does not depend on how large the gap is. With $\\kappa = 0.5$ the half-life is $\\ln 2 / 0.5 \\approx 1.39$ years; with $\\kappa = 5$ it is about 35 trading days."),
 
+    {
+      kind: "check",
+      id: "mean-reversion/half-life",
+      prompt: "An interest rate follows an Ornstein–Uhlenbeck process with $\\kappa = 2$ per year. How many years does it take for the expected gap to $\\theta$ to halve?",
+      answer: { type: "number", value: 0.347, tolerance: 0.005, unit: "years" },
+      explain: "$t_{1/2} = \\ln 2/\\kappa = 0.693/2 \\approx 0.347$ years, a little over four months, whatever the size of the gap.",
+    },
+
     h("Exact solution"),
     p("The trick is to remove the pull towards $\\theta$ by a change of variable. Apply Itô's lemma to $Y_t = f(t, X_t) = e^{\\kappa t} X_t$, with $\\partial f/\\partial t = \\kappa e^{\\kappa t} x$, $\\partial f/\\partial x = e^{\\kappa t}$ and $\\partial^2 f/\\partial x^2 = 0$. Since the second derivative is zero, there is no Itô correction:"),
     eq("dY_t = \\kappa e^{\\kappa t} X_t\\,dt + e^{\\kappa t}\\big(\\kappa(\\theta - X_t)\\,dt + \\sigma\\,dW_t\\big) = \\kappa\\theta\\,e^{\\kappa t}\\,dt + \\sigma e^{\\kappa t}\\,dW_t."),
@@ -37,6 +45,14 @@ export const meanReversion: GuideLessonContent = {
     eq("\\mathbb{E}[X_t] = \\theta + (X_0 - \\theta)\\,e^{-\\kappa t}, \\qquad \\operatorname{Var}(X_t) = \\frac{\\sigma^2}{2\\kappa}\\big(1 - e^{-2\\kappa t}\\big)."),
     p("So $X_t$ is normally distributed for every $t$. As $t \\to \\infty$ the mean tends to $\\theta$ and the variance stops growing. Compare Brownian motion, whose variance $\\sigma^2 t$ grows forever."),
     note("Stationary distribution of the Ornstein–Uhlenbeck process: $X_\\infty \\sim N\\big(\\theta,\\ \\sigma^2/(2\\kappa)\\big)$. Faster mean reversion (larger $\\kappa$) means a narrower long-run spread around $\\theta$."),
+
+    {
+      kind: "check",
+      id: "mean-reversion/stationary-spread",
+      prompt: "Double the speed of mean reversion $\\kappa$ and keep $\\sigma$ fixed. What happens to the standard deviation of the stationary distribution?",
+      answer: { type: "choice", options: ["It doubles.", "It halves.", "It is divided by $\\sqrt{2}$.", "It does not change."], correct: 2 },
+      explain: "The stationary variance is $\\sigma^2/(2\\kappa)$, so the standard deviation is $\\sigma/\\sqrt{2\\kappa}$. Doubling $\\kappa$ divides it by $\\sqrt{2}$: a stronger pull keeps the process closer to $\\theta$.",
+    },
 
     h("Exact simulation and the AR(1) form"),
     p("The same calculation over one step of length $\\Delta t$, started from the current value, gives an exact simulation scheme with no discretisation error. With $Z \\sim N(0,1)$ drawn independently at each step:"),
@@ -95,6 +111,14 @@ export const meanReversion: GuideLessonContent = {
     eq("t_{1/2} = \\frac{\\ln 2}{\\kappa}."),
     p("Nem függ a rés nagyságától. $\\kappa = 0{,}5$ mellett a felezési idő $\\ln 2 / 0{,}5 \\approx 1{,}39$ év, $\\kappa = 5$ mellett nagyjából 35 kereskedési nap."),
 
+    {
+      kind: "check",
+      id: "mean-reversion/half-life",
+      prompt: "Egy kamatláb $\\kappa = 2$ (évente) paraméterű Ornstein–Uhlenbeck-folyamatot követ. Hány év alatt feleződik meg a $\\theta$-tól való várható eltérés?",
+      answer: { type: "number", value: 0.347, tolerance: 0.005, unit: "év" },
+      explain: "$t_{1/2} = \\ln 2/\\kappa = 0{,}693/2 \\approx 0{,}347$ év, valamivel több mint négy hónap, akármekkora is az eltérés.",
+    },
+
     h("Egzakt megoldás"),
     p("A fogás az, hogy változócserével eltüntetjük a $\\theta$ felé húzó tagot. Alkalmazzuk az Itô-lemmát az $Y_t = f(t, X_t) = e^{\\kappa t} X_t$ folyamatra, ahol $\\partial f/\\partial t = \\kappa e^{\\kappa t} x$, $\\partial f/\\partial x = e^{\\kappa t}$ és $\\partial^2 f/\\partial x^2 = 0$. Mivel a második derivált nulla, Itô-korrekció nincs:"),
     eq("dY_t = \\kappa e^{\\kappa t} X_t\\,dt + e^{\\kappa t}\\big(\\kappa(\\theta - X_t)\\,dt + \\sigma\\,dW_t\\big) = \\kappa\\theta\\,e^{\\kappa t}\\,dt + \\sigma e^{\\kappa t}\\,dW_t."),
@@ -109,6 +133,14 @@ export const meanReversion: GuideLessonContent = {
     eq("\\mathbb{E}[X_t] = \\theta + (X_0 - \\theta)\\,e^{-\\kappa t}, \\qquad \\operatorname{Var}(X_t) = \\frac{\\sigma^2}{2\\kappa}\\big(1 - e^{-2\\kappa t}\\big)."),
     p("$X_t$ tehát minden $t$-re normális eloszlású. Ha $t \\to \\infty$, a várható érték $\\theta$-hoz tart, a variancia pedig megáll. A Brown-mozgás $\\sigma^2 t$ varianciája ezzel szemben a végtelenségig nő."),
     note("Az Ornstein–Uhlenbeck-folyamat stacionárius eloszlása: $X_\\infty \\sim N\\big(\\theta,\\ \\sigma^2/(2\\kappa)\\big)$. Gyorsabb visszahúzás (nagyobb $\\kappa$) szűkebb hosszú távú szóródást jelent $\\theta$ körül."),
+
+    {
+      kind: "check",
+      id: "mean-reversion/stationary-spread",
+      prompt: "Kétszeresére növeljük a visszahúzás $\\kappa$ sebességét, $\\sigma$ változatlan. Mi történik a stacionárius eloszlás szórásával?",
+      answer: { type: "choice", options: ["A kétszeresére nő.", "A felére csökken.", "A $\\sqrt{2}$-ed részére csökken.", "Nem változik."], correct: 2 },
+      explain: "A stacionárius variancia $\\sigma^2/(2\\kappa)$, a szórás tehát $\\sigma/\\sqrt{2\\kappa}$. Ha $\\kappa$ kétszeres, a szórás $\\sqrt{2}$-vel osztódik: az erősebb visszahúzás közelebb tartja a folyamatot $\\theta$-hoz.",
+    },
 
     h("Egzakt szimuláció és az AR(1) alak"),
     p("Ugyanez a számolás egyetlen $\\Delta t$ hosszú lépésre, az aktuális értékből indulva, diszkretizációs hiba nélküli, egzakt szimulációs sémát ad. Minden lépésben egy független $Z \\sim N(0,1)$ húzással:"),

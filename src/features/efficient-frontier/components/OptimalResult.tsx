@@ -8,12 +8,14 @@ type Props = {
   selected: OptPoint;
   objective: OptObjective;
   cost: ConstraintCost;
+  /// True while a hovered frontier point is previewed instead of the selection.
+  preview?: boolean;
 };
 
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
-/// Compact result strip for the selected portfolio plus the cost-of-constraints row.
-export default function OptimalResult({ selected, objective, cost }: Props) {
+/// Compact result strip for the selected (or previewed) portfolio plus the cost-of-constraints row.
+export default function OptimalResult({ selected, objective, cost, preview = false }: Props) {
   const { t } = useI18n();
   const fmt = (v: number) => (cost.metric === "sharpe" ? v.toFixed(2) : pct(v));
   const costWord =
@@ -23,7 +25,7 @@ export default function OptimalResult({ selected, objective, cost }: Props) {
 
   return (
     <div className="result-strip opt-result">
-      <div className="result-strip-title intuition-reveal intuition-control-help">{t("optSelectedTitle")}<IntuitionTrigger sectionId="portfolio-selection" /></div>
+      <div className="result-strip-title intuition-reveal intuition-control-help">{t(preview ? "optPreviewTitle" : "optSelectedTitle")}<IntuitionTrigger sectionId="portfolio-selection" /></div>
       <div className="result-strip-item">
         <span className="result-strip-label intuition-reveal">{t("optExpReturn")}<IntuitionTrigger sectionId="expected-return" /></span>
         <span className="result-strip-value">{pct(selected.ret)}</span>

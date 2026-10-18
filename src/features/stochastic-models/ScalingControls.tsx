@@ -2,7 +2,7 @@ import SliderField from "../../components/SliderField";
 import { ControlGroup, SegmentedControl } from "../../components/ui";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
-import { pathsToSlider, sliderToPaths, spreadFactor } from "./scalingLaws.math";
+import { pathsToSlider, sliderToPaths } from "./scalingLaws.math";
 import type { ScaleMode } from "./scalingLaws.types";
 import { RANDOM_WALK_MAX_PATHS, RANDOM_WALK_MAX_STEPS } from "./stochasticModels.math";
 
@@ -15,8 +15,6 @@ type Props = {
   setSeed: (value: number) => void;
   mode: ScaleMode;
   setMode: (value: ScaleMode) => void;
-  horizonK: number;
-  setHorizonK: (value: number) => void;
   onResample: () => void;
 };
 
@@ -26,7 +24,6 @@ const PATH_MARKS = [2, 10, 100, 1000];
 
 export default function ScalingControls(props: Props) {
   const { t } = useI18n();
-  const factor = spreadFactor(props.horizonK);
   return (
     <Panel title={t("stochControlsLabel")}>
       <ControlGroup label={t("stochWalkPaths")} hint={<span className="stoch-control-hint">{t("stochSqrtPathsHint")}</span>}>
@@ -72,21 +69,6 @@ export default function ScalingControls(props: Props) {
           onChange={props.setMode}
           ariaLabel={t("stochSqrtScaleLabel")}
         />
-      </ControlGroup>
-
-      <ControlGroup label={t("stochSqrtPredictorLabel")} hint={<span className="stoch-control-hint">{t("stochSqrtPredictorHint")}</span>}>
-        <SliderField
-          label={t("stochSqrtPredictorK")}
-          min={2}
-          max={16}
-          step={1}
-          value={props.horizonK}
-          onChange={props.setHorizonK}
-          formatValue={(value) => `×${value.toFixed(0)}`}
-        />
-        <p className="stoch-predictor-note">
-          {t("stochSqrtPredictor", { k: props.horizonK, factor: factor.toFixed(2) })}
-        </p>
       </ControlGroup>
 
       <button className="preset-btn stoch-resample-btn" type="button" onClick={props.onResample}>

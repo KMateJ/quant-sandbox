@@ -8,6 +8,8 @@ import { curveMonotoneX } from "@visx/curve";
 import { CHART_COLORS, chartMargin } from "../../../components/charts/chart.theme";
 import type { NpvProfileChartProps } from "./NpvProfileChart";
 import type { NpvPoint } from "../npvIrr.types";
+import NpvGuessMarker from "./NpvGuessMarker";
+import { NpvHoverReadout, NpvRateMarker } from "./NpvRateMarker";
 
 type Props = NpvProfileChartProps & { width: number; height: number };
 
@@ -26,6 +28,7 @@ export default function NpvProfileInner({
   isMobile = false,
   valueFormat,
   rateFormat,
+  predict,
 }: Props) {
   const margin = chartMargin(isMobile);
   const innerW = Math.max(0, width - margin.left - margin.right);
@@ -61,14 +64,16 @@ export default function NpvProfileInner({
     dragging.current = true;
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
-    onRateChange(Number(rateFromEvent(event).toFixed(4)));
+    setRate(rateFromEvent(event));
   };
   const onMove = (event: PointerEvent<SVGRectElement>) => {
     const r = rateFromEvent(event);
     setHoverRate(r);
-    if (dragging.current) onRateChange(Number(r.toFixed(4)));
+    if (dragging.current) setRate(r);
   };
   const onUp = () => { dragging.current = false; setIsDragging(false); };
+  // In predict mode the pointer places the guess; otherwise it moves the discount rate.
+  const setRate = (r: number) => (predict ? predict.onGuess(Number(r.toFixed(4))) : onRateChange(Number(r.toFixed(4))));
 
   const markerX = xScale(rate);
   const markerY = yScale(npvAtRate);
@@ -137,27 +142,17 @@ export default function NpvProfileInner({
           </>
         )}
 
+        {predict && predict.guess !== null && (
+          <NpvGuessMarker x={xScale(predict.guess)} height={innerH} label={`${predict.label} ${rateFormat(predict.guess)}`} />
+        )}
+
         {hoverX != null && !isDragging && (
           <SvgLine from={{ x: hoverX, y: 0 }} to={{ x: hoverX, y: innerH }} stroke={CHART_COLORS.axis} strokeWidth={1} strokeDasharray="2 2" />
         )}
 
-        <SvgLine from={{ x: markerX, y: 0 }} to={{ x: markerX, y: innerH }} stroke="#e2e8f0" strokeWidth={1.5} />
-        <circle cx={markerX} cy={markerY} r={6} fill="#0b1220" stroke="#e2e8f0" strokeWidth={2} />
-        <g transform={`translate(${Math.min(markerX + 8, innerW - 70)}, ${Math.max(markerY - 10, 12)})`}>
-          <rect x={0} y={-12} width={66} height={18} rx={4} fill="#1e293b" stroke="#475569" />
-          <text x={6} y={1} fill={npvAtRate >= 0 ? "#86efac" : "#fca5a5"} fontSize={11} fontWeight={700}>
-            {valueFormat(npvAtRate)}
-          </text>
-        </g>
-
+        <NpvRateMarker x={markerX} y={markerY} plotWidth={innerW} plotHeight={innerH} npv={npvAtRate} valueFormat={valueFormat} />
         {hoverRate != null && !isDragging && (
-          <g transform={`translate(${Math.min(hoverX ?? 0, innerW - 96)}, 2)`}>
-            <rect x={0} y={0} width={92} height={32} rx={4} fill="#1e293b" stroke="#475569" />
-            <text x={6} y={13} fill={CHART_COLORS.tooltipText} fontSize={10}>{rateFormat(hoverRate)}</text>
-            <text x={6} y={26} fill={npvAt(hoverRate) >= 0 ? "#86efac" : "#fca5a5"} fontSize={11} fontWeight={700}>
-              {valueFormat(npvAt(hoverRate))}
-            </text>
-          </g>
+          <NpvHoverReadout x={hoverX ?? 0} plotWidth={innerW} rate={rateFormat(hoverRate)} npv={npvAt(hoverRate)} valueFormat={valueFormat} />
         )}
 
         <AxisBottom top={innerH} scale={xScale} numTicks={isMobile ? 5 : 8} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => rateFormat(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 10 : 11, textAnchor: "middle" })} />

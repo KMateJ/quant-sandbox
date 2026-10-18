@@ -1,14 +1,16 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import SliderField from "../../components/SliderField";
 import { SERIES_ROLE } from "../../components/charts";
 import type { ChartSeries } from "../../components/charts";
 import { IntuitionTrigger } from "../../components/intuition";
 import { Panel } from "../../components/layout";
-import { ControlGroup, StatCard } from "../../components/ui";
+import { ControlGroup, StatCard, usePredictReveal } from "../../components/ui";
 import { useI18n } from "../../i18n";
 import GeometryCurveChart from "./GeometryCurveChart";
 import GuidedExperiments from "../../components/GuidedExperiments";
 import GeometryPathChart from "./GeometryPathChart";
+import FirstPassagePrediction from "./FirstPassagePrediction";
+import FirstPassageRange from "./FirstPassageRange";
 import GeometrySimControls from "./GeometrySimControls";
 import {
   densityRows,
@@ -21,15 +23,18 @@ import {
   stoppedCloud,
 } from "./pathGeometry.math";
 import { level } from "./pathGeometry.overlays";
+import { masked } from "./predictRound";
+import { FIRST_PASSAGE_URL_SCHEMA } from "./stochStudio.url";
 import { usePathGeometry } from "./usePathGeometry";
 
 const formatTime = (value: number | undefined) => (value === undefined || value > 1 ? "> 1" : value.toFixed(3));
 
 export default function FirstPassageExplore() {
   const { t } = useI18n();
-  const sim = usePathGeometry(1500);
+  const sim = usePathGeometry(FIRST_PASSAGE_URL_SCHEMA);
   const { cloud } = sim;
-  const [barrier, setBarrier] = useState(0.5);
+  const barrier = sim.url.a;
+  const round = usePredictReveal({ truth: maxTailProbability(barrier, 1), tolerance: 0.03 });
 
   const stopped = useMemo(() => stoppedCloud(cloud, barrier), [cloud, barrier]);
   const overlays = useMemo(() => [level("barrier", barrier, SERIES_ROLE.candidate)], [barrier]);
@@ -50,19 +55,21 @@ export default function FirstPassageExplore() {
       <aside className="stoch-sidebar">
         <GeometrySimControls sim={sim}>
           <ControlGroup label={t("pgBarrier")} hint={<span className="stoch-control-hint">{t("pgFpBarrierHint")}</span>}>
-            <SliderField label="a" min={0.2} max={2.5} step={0.05} value={barrier} onChange={setBarrier} formatValue={(v) => v.toFixed(2)} />
+            <SliderField label="a" min={0.2} max={2.5} step={0.05} value={barrier} onChange={(a) => sim.setUrl({ a })} formatValue={(v) => v.toFixed(2)} />
           </ControlGroup>
         </GeometrySimControls>
+        <FirstPassagePrediction state={round} barrier={barrier} />
         <Panel title={t("pgMetrics")}>
           <div className="stoch-metric-grid">
-            <StatCard label={t("pgFpHitEmp")} value={hitFraction(times, 1).toFixed(3)} />
-            <StatCard label={t("pgFpHitTheory")} value={maxTailProbability(barrier, 1).toFixed(3)} />
+            <StatCard label={t("pgFpHitEmp")} value={masked(round.revealed, hitFraction(times, 1).toFixed(3))} />
+            <StatCard label={t("pgFpHitTheory")} value={masked(round.revealed, maxTailProbability(barrier, 1).toFixed(3))} />
             <StatCard label={t("pgFpMedianEmp")} value={formatTime(finiteMedian(times))} />
             <StatCard label={t("pgFpMedianTheory")} value={theoryMedian.toFixed(3)} />
           </div>
           <p className="stoch-metric-note">{t("pgFpObservation")}</p>
           <IntuitionTrigger sectionId="pg-first-passage" variant="button" />
         </Panel>
+        <FirstPassageRange barrier={barrier} />
         <GuidedExperiments keys={["pgFpTry1", "pgFpTry2", "pgFpTry3"]} />
       </aside>
       <div className="stoch-stage">
@@ -80,6 +87,7 @@ export default function FirstPassageExplore() {
           xLabel="τ"
           xDomain={[0, 1]}
           title={t("pgFpDensityChart")}
+          pinLabel={`a = ${barrier.toFixed(2)}`}
           caption={t("pgFpDensityCaption")}
         />
       </div>

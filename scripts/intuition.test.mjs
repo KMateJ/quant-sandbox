@@ -14,6 +14,12 @@ async function dataModuleUrl(relativePath, dependencies = {}) {
   for (const [specifier, url] of Object.entries(dependencies)) {
     resolved = resolved.replaceAll(JSON.stringify(specifier), JSON.stringify(url));
   }
+  // Relative imports (e.g. an aggregating string table) are inlined as data URLs too.
+  for (const [, specifier] of resolved.matchAll(/from "(\.{1,2}\/[^"]+)"/g)) {
+    const target = new URL(`${specifier}.ts`, new URL(relativePath, root));
+    const url = await dataModuleUrl(target.href.slice(root.href.length));
+    resolved = resolved.replaceAll(JSON.stringify(specifier), JSON.stringify(url));
+  }
   return `data:text/javascript;base64,${Buffer.from(resolved).toString("base64")}`;
 }
 async function loadData(relativePath, dependencies) {

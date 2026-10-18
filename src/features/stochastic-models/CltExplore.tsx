@@ -1,21 +1,23 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { IntuitionTrigger } from "../../components/intuition";
 import { Panel } from "../../components/layout";
 import { StatCard } from "../../components/ui";
+import { useUrlState } from "../../components/useUrlState";
 import { useI18n } from "../../i18n";
 import CltControls from "./CltControls";
 import CltKsChart from "./CltKsChart";
+import CltPrediction from "./CltPrediction";
 import DensityComparisonChart from "./DensityComparisonChart";
 import { cltLevelSamples, ksCurve, ksNoiseFloor, sampleMoments, sumSkewness } from "./clt.math";
-import { KS_LEVELS, type StepDistribution } from "./clt.types";
+import { CLT_LEVELS, CLT_PREDICT_N, DISTRIBUTION_KEYS, KS_LEVELS } from "./clt.types";
 import { densityComparison } from "./rescaledWalk.math";
+import { CLT_URL_SCHEMA, nearestOf } from "./stochStudio.url";
 
 export default function CltExplore() {
   const { t } = useI18n();
-  const [distribution, setDistribution] = useState<StepDistribution>("exponential");
-  const [n, setN] = useState(1);
-  const [samples, setSamples] = useState(5000);
-  const [seed, setSeed] = useState(7);
+  const [url, setUrl] = useUrlState(CLT_URL_SCHEMA);
+  const { dist: distribution, samples, seed } = url;
+  const n = nearestOf(CLT_LEVELS, url.n);
 
   const levelSamples = useMemo(
     () => cltLevelSamples(seed, distribution, KS_LEVELS, samples),
@@ -32,15 +34,16 @@ export default function CltExplore() {
       <aside className="stoch-sidebar">
         <CltControls
           distribution={distribution}
-          setDistribution={setDistribution}
+          setDistribution={(dist) => setUrl({ dist })}
           n={n}
-          setN={setN}
+          setN={(value) => setUrl({ n: value })}
           samples={samples}
-          setSamples={setSamples}
+          setSamples={(value) => setUrl({ samples: value })}
           seed={seed}
-          setSeed={setSeed}
-          onResample={() => setSeed((value) => (value >= 9999 ? 1 : value + 1))}
+          setSeed={(value) => setUrl({ seed: value })}
+          onResample={() => setUrl({ seed: seed >= 9999 ? 1 : seed + 1 })}
         />
+        <CltPrediction onReveal={() => setUrl({ dist: "exponential", n: CLT_PREDICT_N })} />
         <Panel title={t("stochCltMetrics")}>
           <div className="stoch-metric-grid">
             <StatCard label={t("stochEmpiricalVariance")} value={moments.variance.toFixed(3)} />
@@ -60,6 +63,7 @@ export default function CltExplore() {
           title={t("stochCltDensityTitle")}
           actions={<span className="stoch-chart-readout">{t("stochCltLevelReadout", { n })}</span>}
           caption={t("stochCltDensityCaption")}
+          pinLabel={`${t(DISTRIBUTION_KEYS[distribution])}, n = ${n}`}
         />
         <CltKsChart points={ks} floor={ksNoiseFloor(samples)} activeN={n} />
       </div>

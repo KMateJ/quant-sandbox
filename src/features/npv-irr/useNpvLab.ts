@@ -21,6 +21,7 @@ import { interpret } from "./npvIrr.interpret";
 import { realOptionValue } from "./npvIrr.realOptions";
 import type { TranslationKey } from "../../i18n";
 import type { MonteCarloRequest, MonteCarloResponse } from "./npvIrr.worker";
+import { useNpvUrlSync } from "./useNpvUrlSync";
 
 export const RATE_MAX = 0.4;
 const PROFILE_STEPS = 90;
@@ -101,6 +102,9 @@ export function useNpvLab(t: (key: TranslationKey) => string) {
     },
     [patchActive]
   );
+
+  // The active model mirrors the query string (see useNpvUrlSync).
+  useNpvUrlSync(model, useCallback((next: ProjectModel) => patchActive(() => next), [patchActive]));
 
   const reset = useCallback(() => {
     const fresh = defaultScenarios(DEFAULT_MODEL);

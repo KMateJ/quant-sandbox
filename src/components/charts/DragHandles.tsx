@@ -48,15 +48,21 @@ export default function DragHandles({ frame, handles, onChange, onCommit }: Prop
     setDragging(null);
     onCommit?.(h.id);
   };
+  // Last keyboard value per handle, with the prop value it was based on: key repeats faster than the parent
+  // re-renders (e.g. URL-backed state) continue from it instead of from the stale prop.
+  const pending = useRef(new Map<string, { from: HandleValue; value: HandleValue }>());
   const onKey = (event: KeyboardEvent<SVGGElement>, h: DragHandle) => {
-    const next = keyMove(h, event.key, event.shiftKey, span);
+    const last = pending.current.get(h.id);
+    const base = last && last.from.x === h.x && last.from.y === h.y ? { ...h, ...last.value } : h;
+    const next = keyMove(base, event.key, event.shiftKey, span);
     if (!next) return;
     event.preventDefault();
+    pending.current.set(h.id, { from: { x: h.x, y: h.y }, value: next });
     onChange(h.id, next);
   };
 
   return (
-    <g ref={svgRef} className="drag-handles">
+    <g ref={svgRef} className="drag-handles" pointerEvents="auto">
       {handles.map((h, i) => {
         // Line handles of the same kind stack their knobs, so labels never sit on top of each other.
         const lane = handles.slice(0, i).filter((o) => o.axis === h.axis).length;
@@ -89,7 +95,8 @@ export default function DragHandles({ frame, handles, onChange, onCommit }: Prop
             {h.axis === "y" && <rect className="drag-handle-hit" x={0} y={cy - 8} width={frame.width} height={16} />}
             <circle className="drag-handle-knob" cx={h.axis === "y" ? frame.width - 8 - lane * 18 : cx} cy={h.axis === "x" ? 8 + lane * 18 : cy} r={active ? 8 : 6.5} />
             {(h.label || active) && (
-              <text className="drag-handle-label" x={(h.axis === "y" ? frame.width - 8 - lane * 18 : cx) + 10} y={(h.axis === "x" ? 8 + lane * 18 : cy) + 4}>
+              // A "y" handle's knob sits at the right edge, so its label goes to the left of the knob to stay inside the plot.
+              <text className="drag-handle-label" x={h.axis === "y" ? frame.width - 8 - lane * 18 - 10 : cx + 10} y={(h.axis === "x" ? 8 + lane * 18 : cy) + 4} textAnchor={h.axis === "y" ? "end" : undefined}>
                 {active ? valueText : h.label}
               </text>
             )}
