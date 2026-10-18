@@ -1,6 +1,6 @@
+// #region Index
 .guide-page {
-  width: min(1200px, 100%);
-  margin: 0 auto;
+  width: min(1100px, 100%);
 }
 
 .guide-tracks {
@@ -10,215 +10,428 @@
 }
 
 .guide-track-head {
-  margin-bottom: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-4);
 }
 
 .guide-track-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--text);
   margin: 0 0 6px;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text);
 }
 
 .guide-track-desc {
+  margin: 0;
+  max-width: 720px;
   color: var(--muted);
   line-height: 1.6;
-  max-width: 720px;
-  margin: 0;
+}
+
+.guide-track-cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-xs);
+  background: var(--primary-strong);
+  color: var(--text-inverse);
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--primary);
+  }
+}
+
+.guide-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.guide-progress-track {
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--surface-muted);
+}
+
+.guide-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width var(--transition-base);
+}
+
+.guide-progress-label {
+  flex: 0 0 auto;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .guide-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-2);
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+
+  &:hover {
+    background: var(--surface-soft);
+  }
+}
+
+.guide-row-num {
+  flex: 0 0 26px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  &.read {
+    color: var(--positive);
+  }
+}
+
+.guide-row-text {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.guide-item {
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.guide-header {
-  width: 100%;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  padding: 22px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 18px;
-  cursor: pointer;
-  transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast);
-}
-
-.guide-header:hover {
-  background: var(--surface-soft);
-}
-
-.guide-header-index {
-  flex: 0 0 auto;
-  font-size: 0.95rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  opacity: 0.7;
-}
-
-.guide-header-text {
+  gap: 4px;
   min-width: 0;
   flex: 1 1 auto;
-  text-align: left;
 }
 
-.guide-header-title {
-  font-size: 1.2rem;
-  font-weight: 700;
+.guide-row-title {
+  font-weight: 500;
   color: var(--text);
-  margin-bottom: 6px;
 }
 
-.guide-header-description {
+.guide-row-desc {
   color: var(--muted);
-  line-height: 1.55;
+  font-size: var(--text-sm);
+  line-height: 1.5;
 }
 
-.guide-header-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text);
-  font-size: 1.4rem;
+.guide-row-status {
   flex: 0 0 auto;
-  transition:
-    background var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+// #endregion
+
+// #region Lesson layout
+.guide-lesson {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  padding-top: var(--space-6);
 }
 
-.guide-body {
+.guide-article {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 700px;
+}
+
+.guide-lesson-head {
+  margin-bottom: 28px;
+}
+
+.guide-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--text);
+  }
+}
+
+.guide-lesson-title {
+  margin: var(--space-2) 0 var(--space-2);
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.guide-lesson-meta {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.guide-rail {
+  position: sticky;
+  top: calc(var(--topnav-height) + 24px);
+  flex: 0 0 210px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  max-height: calc(100vh - var(--topnav-height) - 48px);
+  overflow-y: auto;
+  font-size: var(--text-sm);
+}
+
+.guide-rail-label {
+  padding-bottom: var(--space-2);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.guide-toc {
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-toc-link {
+  padding: 5px 0 5px var(--space-3);
+  box-shadow: inset 2px 0 0 var(--border);
+  color: var(--muted);
+  line-height: 1.4;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  &.active {
+    box-shadow: inset 2px 0 0 var(--primary);
+    color: var(--text);
+  }
+}
+
+.guide-labs {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-5);
   border-top: 1px solid var(--border);
-  padding: 32px 28px 36px;
 }
 
-.guide-content {
-  color: var(--text);
-  line-height: 1.85;
-  font-size: 1.04rem;
-  text-align: left;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.guide-content h3 {
-  color: var(--text);
-  font-size: 1.2rem;
-  margin: 30px 0 12px;
-  text-align: left;
-}
-
-.guide-content p {
-  margin: 0 0 18px;
-  text-align: left;
-}
-
-.guide-content ul {
-  margin: 0 0 20px 24px;
-  padding: 0;
-}
-
-.guide-content li {
-  margin-bottom: 10px;
-}
-
-.guide-content a {
+.guide-lab-link {
+  padding: 4px 0;
   color: var(--primary);
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.guide-content a:hover {
-  text-decoration: underline;
+.guide-lesson-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: 40px;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.guide-lesson-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-3) 0;
+  color: var(--text);
+  text-decoration: none;
+
+  &.next {
+    text-align: right;
+  }
+
+  &:hover .guide-lesson-nav-title {
+    color: var(--primary);
+  }
+}
+
+.guide-lesson-nav-dir {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+// #endregion
+
+// #region Reading typography
+.guide-content {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--text);
+  text-align: left;
+
+  p {
+    margin: 0 0 1.05em;
+  }
+
+  h3 {
+    margin: 2em 0 0.6em;
+    font-family: var(--font-sans);
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+    scroll-margin-top: calc(var(--topnav-height) + 24px);
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1.1em 1.4em;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 0.45em;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .katex {
+    color: var(--text);
+    font-size: 1.05em;
+  }
+
+  .katex-display {
+    margin: 1.2em 0 1.4em;
+    padding: 0.9em 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  // Consecutive display formulas read as one block.
+  .katex-display + .katex-display {
+    margin-top: -1.4em;
+    border-top: 0;
+  }
 }
 
 .guide-highlight {
-  font-size: 1.08rem;
-  font-weight: 700;
+  font-size: 1.22rem;
+  line-height: 1.5;
   color: var(--text);
 }
+// #endregion
 
+// #region Try it
 .guide-tryit {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px;
-  margin: 28px 0 0;
-  padding: 14px 18px;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin: 1.6em 0;
+  padding: var(--space-5) var(--space-6);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface-soft);
-  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.5;
 }
 
 .guide-tryit-label {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: var(--muted);
 }
 
-.guide-tryit a {
+.guide-tryit-link {
+  flex: 1 1 240px;
+  text-align: right;
   color: var(--primary);
+  font-weight: 500;
   text-decoration: none;
-  font-weight: 600;
-}
 
-.guide-tryit a:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
+// #endregion
 
-.guide-content .katex-display {
-  margin: 20px 0 24px;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.guide-content .katex {
-  color: var(--text);
-}
-
-@media (max-width: 900px) {
-  .guide-header {
-    padding: 18px 18px;
+// #region Responsive
+@media (max-width: 1100px) {
+  .guide-lesson {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-7);
   }
 
-  .guide-body {
-    padding: 24px 18px 28px;
+  .guide-article {
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
   }
 
-  .guide-header-title {
-    font-size: 1.05rem;
+  // On narrow screens the contents list adds little; labs move below the lesson.
+  .guide-rail {
+    position: static;
+    max-height: none;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
   }
 
-  .guide-header-description {
-    font-size: 0.95rem;
+  .guide-toc {
+    display: none;
+  }
+
+  .guide-labs {
+    padding-top: var(--space-5);
+  }
+}
+
+@media (max-width: 640px) {
+  .guide-track-head {
+    flex-direction: column;
+  }
+
+  .guide-lesson-title {
+    font-size: 1.5rem;
   }
 
   .guide-content {
-    max-width: 100%;
-    font-size: 0.98rem;
+    font-size: 1.04rem;
+  }
+
+  .guide-tryit-link {
+    text-align: left;
   }
 }
+// #endregion

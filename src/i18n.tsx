@@ -41,6 +41,7 @@ import { deltaHedgingEn, deltaHedgingHu } from "./Language/DeltaHedging";
 import { intuitionEn, intuitionHu } from "./Language/Intuition";
 import { legacyIntuitionEn, legacyIntuitionHu } from "./Language/LegacyIntuition";
 import { treasuryFuturesEn, treasuryFuturesHu } from "./Language/TreasuryFutures";
+import { guideEn, guideHu } from "./Language/Guide";
 
 export type Language = "hu" | "en";
 
@@ -78,6 +79,7 @@ export const translations = {
     ...yieldCurveHu,
     ...durationConvexityHu,
     ...treasuryFuturesHu,
+    ...guideHu,
     ...brownianMotionHu,
     ...gbmHu,
     ...itoProcessHu,
@@ -114,6 +116,7 @@ export const translations = {
     ...yieldCurveEn,
     ...durationConvexityEn,
     ...treasuryFuturesEn,
+    ...guideEn,
     ...brownianMotionEn,
     ...gbmEn,
     ...itoProcessEn,

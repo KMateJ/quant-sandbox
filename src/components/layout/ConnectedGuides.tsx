@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
-import { guideMeta } from "../../features/guide/guide.meta";
+import { guideLessons, guidePath } from "../../features/guide/guide.meta";
+import type { GuideLessonMeta } from "../../features/guide/guide.types";
 import ModuleIcon from "./ModuleIcon";
 
 /// Secondary sidebar section: guides relevant to the active module.
 export default function ConnectedGuides({ ids }: { ids: string[] }) {
-  const { language, t } = useI18n();
+  const { t } = useI18n();
   const guides = ids
-    .map((id) => guideMeta.find((g) => g.id === id))
-    .filter((g): g is (typeof guideMeta)[number] => Boolean(g));
+    .map((id) => guideLessons.find((g) => g.id === id))
+    .filter((g): g is GuideLessonMeta => Boolean(g));
 
   if (guides.length === 0) return null;
 
@@ -17,10 +18,10 @@ export default function ConnectedGuides({ ids }: { ids: string[] }) {
       <div className="side-section-label">{t("connectedGuides")}</div>
       <ul className="cg-list">
         {guides.map((g) => {
-          const title = language === "hu" ? g.title.hu : g.title.en;
+          const title = t(g.titleKey);
           return (
             <li key={g.id}>
-              <Link className="cg-link" to={`/guide?topic=${g.id}`} title={title}>
+              <Link className="cg-link" to={guidePath(g.id)} title={title}>
                 <span className="side-icon" aria-hidden="true">
                   <ModuleIcon id="guide" />
                 </span>

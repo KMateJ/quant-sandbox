@@ -1,54 +1,19 @@
-import { useSearchParams } from "react-router-dom";
-import SectionCard from "../../components/SectionCard";
-import { useI18n } from "../../i18n";
-import GuideTrackSection from "./components/GuideTrackSection";
-import { guideTracks } from "./guide.meta";
-import { isGuideId } from "./GuideRegistry";
-import type { GuideId } from "./guide.types";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
+import GuideIndex from "./components/GuideIndex";
+import GuideLessonPage from "./components/GuideLessonPage";
+import { GUIDE_PATH, findGuideLesson, guidePath, isGuideId } from "./guide.meta";
 
 export default function GuideView() {
-  const { language } = useI18n();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { "*": lessonId } = useParams();
+  const [params] = useSearchParams();
+  const legacyId = params.get("topic");
 
-  const activeGuide = isGuideId(searchParams.get("topic"))
-    ? (searchParams.get("topic") as GuideId)
-    : null;
+  // Old `?topic=<id>` links redirect to the lesson's own path.
+  if (!lessonId && isGuideId(legacyId)) return <Navigate to={guidePath(legacyId)} replace />;
+  if (!lessonId) return <GuideIndex />;
 
-  const toggleGuide = (guideId: GuideId) => {
-    const next = new URLSearchParams(searchParams);
+  const location = findGuideLesson(lessonId);
+  if (!location) return <Navigate to={GUIDE_PATH} replace />;
 
-    if (activeGuide === guideId) {
-      next.delete("topic");
-    } else {
-      next.set("topic", guideId);
-    }
-
-    setSearchParams(next, { replace: false });
-  };
-
-  return (
-    <div className="page-shell">
-      <div className="page-content guide-page">
-        <SectionCard
-          title={language === "hu" ? "Útmutatók" : "Guides"}
-          subtitle={
-            language === "hu"
-              ? "Az alapoktól építkező, sorban haladó leckék. Olvasd őket fentről lefelé."
-              : "Ground-up lessons meant to be read in order, from top to bottom."
-          }
-        >
-          <div className="guide-tracks">
-            {guideTracks.map((track) => (
-              <GuideTrackSection
-                key={track.id}
-                track={track}
-                activeGuide={activeGuide}
-                onToggle={toggleGuide}
-              />
-            ))}
-          </div>
-        </SectionCard>
-      </div>
-    </div>
-  );
+  return <GuideLessonPage key={location.lesson.id} location={location} />;
 }

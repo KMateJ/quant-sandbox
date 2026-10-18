@@ -5,6 +5,7 @@ import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuit
 import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
 import { STUDIO_PATH, lessonNavItems } from "../features/stochastic-models/stochasticModels.curriculum";
 import { moduleAbout, type ModuleAbout } from "./moduleAbout";
+import { GUIDE_PATH, guideNavItems } from "../features/guide/guide.meta";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
 export type ModuleCategory =
@@ -435,10 +436,11 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "guide",
-    path: "/guide",
+    path: GUIDE_PATH,
     navKey: "navGuide",
     category: "guides",
     status: "live",
+    subNav: guideNavItems(),
     seo: {
       title: "Options, No-Arbitrage & Risk-Neutral Pricing Guides",
       description:

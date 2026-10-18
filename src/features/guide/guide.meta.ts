@@ -1,66 +1,46 @@
-import type { GuideLessonMeta, GuideTrackMeta } from "./guide.types";
+import type { GuideId, GuideLessonLocation, GuideLessonMeta, GuideTrackMeta } from "./guide.types";
+
+/// Route of the guides; each lesson lives at `${GUIDE_PATH}/<lesson id>`.
+export const GUIDE_PATH = "/guide";
+
+export const guidePath = (id: GuideId) => `${GUIDE_PATH}/${id}`;
 
 /// Ordered lessons. Each belongs to a track and builds on the previous one.
 export const guideLessons: GuideLessonMeta[] = [
   {
     id: "instruments",
     track: "derivatives",
-    title: {
-      hu: "Kifizetések lejáratkor",
-      en: "Payoffs at maturity",
-    },
-    description: {
-      hu: "Mi az a derivatíva? Call, put és forward kifizetése a részvényár függvényében.",
-      en: "What is a derivative? Call, put and forward payoffs as a function of the stock price.",
-    },
+    titleKey: "guideInstrumentsTitle",
+    descKey: "guideInstrumentsDesc",
+    labs: ["payoff"],
   },
   {
     id: "no-arbitrage",
     track: "derivatives",
-    title: {
-      hu: "Nincs arbitrázs, van fair ár",
-      en: "No arbitrage, one fair price",
-    },
-    description: {
-      hu: "Diszkontálás, az egy ár törvénye és a put–call paritás mint első árazási eredmény.",
-      en: "Discounting, the law of one price, and put–call parity as a first pricing result.",
-    },
+    titleKey: "guideNoArbitrageTitle",
+    descKey: "guideNoArbitrageDesc",
+    labs: ["payoff"],
   },
   {
     id: "risk-neutral",
     track: "derivatives",
-    title: {
-      hu: "Kockázatsemleges árazás egy lépésben",
-      en: "Risk-neutral pricing in one step",
-    },
-    description: {
-      hu: "Egylépéses binomiális modell: replikáció, a q mérték és a diszkontált várható érték.",
-      en: "The one-step binomial model: replication, the q-measure and the discounted expectation.",
-    },
+    titleKey: "guideRiskNeutralTitle",
+    descKey: "guideRiskNeutralDesc",
+    labs: ["binomial", "payoff"],
   },
   {
     id: "delta-hedging",
     track: "derivatives",
-    title: {
-      hu: "Replikáció és delta hedge",
-      en: "Replication and delta hedging",
-    },
-    description: {
-      hu: "A replikáló portfólió, a delta mint érzékenység, és miért tesz kockázatmentessé.",
-      en: "The replicating portfolio, delta as a sensitivity, and why it removes the risk.",
-    },
+    titleKey: "guideDeltaHedgingTitle",
+    descKey: "guideDeltaHedgingDesc",
+    labs: ["delta-hedging", "binomial"],
   },
   {
     id: "toward-black-scholes",
     track: "derivatives",
-    title: {
-      hu: "Egy lépéstől a folytonos időig",
-      en: "From one step to continuous time",
-    },
-    description: {
-      hu: "Sok kis lépés, a geometriai Brown-mozgás határeset és a Black–Scholes-kép logikája.",
-      en: "Many small steps, the geometric Brownian motion limit, and the logic of Black–Scholes.",
-    },
+    titleKey: "guideTowardBlackScholesTitle",
+    descKey: "guideTowardBlackScholesDesc",
+    labs: ["black-scholes", "gbm"],
   },
 ];
 
@@ -68,23 +48,39 @@ export const guideLessons: GuideLessonMeta[] = [
 export const guideTracks: GuideTrackMeta[] = [
   {
     id: "derivatives",
-    title: {
-      hu: "Derivatívák: a kifizetéstől az árazásig",
-      en: "Derivatives: from payoff to price",
-    },
-    description: {
-      hu: "Az alapoktól építkező sorozat: mit fizet egy opció, miért van egyetlen fair ára, és hogyan jutunk el a Black–Scholes-modellig.",
-      en: "A ground-up series: what an option pays, why it has a single fair price, and how we arrive at the Black–Scholes model.",
-    },
-    lessons: [
-      "instruments",
-      "no-arbitrage",
-      "risk-neutral",
-      "delta-hedging",
-      "toward-black-scholes",
-    ],
+    titleKey: "guideTrackDerivativesTitle",
+    descKey: "guideTrackDerivativesDesc",
+    lessons: ["instruments", "no-arbitrage", "risk-neutral", "delta-hedging", "toward-black-scholes"],
   },
 ];
 
-/// Backwards-compatible flat list for sidebar/nav lookups by id.
-export const guideMeta: GuideLessonMeta[] = guideLessons;
+export function isGuideId(value: string | null | undefined): value is GuideId {
+  return guideLessons.some((lesson) => lesson.id === value);
+}
+
+/// Lessons of a track, in reading order.
+export function trackLessons(track: GuideTrackMeta): GuideLessonMeta[] {
+  return track.lessons
+    .map((id) => guideLessons.find((l) => l.id === id))
+    .filter((l): l is GuideLessonMeta => Boolean(l));
+}
+
+/// Locates a lesson within its track, or `undefined` for an unknown id.
+export function findGuideLesson(id: string | undefined): GuideLessonLocation | undefined {
+  const lesson = guideLessons.find((l) => l.id === id);
+  const track = lesson && guideTracks.find((t) => t.id === lesson.track);
+  if (!lesson || !track) return undefined;
+  const ordered = trackLessons(track);
+  const index = ordered.indexOf(lesson);
+  return { lesson, track, index, previous: ordered[index - 1], next: ordered[index + 1] };
+}
+
+/// Sidebar sub-navigation (and pre-rendered SEO pages) for the guide module.
+export const guideNavItems = () =>
+  guideTracks.flatMap(trackLessons).map((lesson, i) => ({
+    id: lesson.id,
+    labelKey: lesson.titleKey,
+    descKey: lesson.descKey,
+    prefix: String(i + 1).padStart(2, "0"),
+    to: guidePath(lesson.id),
+  }));
