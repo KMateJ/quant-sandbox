@@ -6,7 +6,7 @@ import { useI18n } from "../../i18n";
 import BrownianControls from "./BrownianControls";
 import BrownianWindowChart from "./BrownianWindowChart";
 import CovarianceMatrix from "./CovarianceMatrix";
-import GuidedExperiments from "./GuidedExperiments";
+import GuidedExperiments from "../../components/GuidedExperiments";
 import JointScatterChart from "./JointScatterChart";
 import { correlationOf, difference, empiricalCovariance, jointCovariance } from "./brownianFundamentals.math";
 import type { JointMode } from "./brownianFundamentals.types";

@@ -1,11 +1,7 @@
+import type { BondSpec } from "../../lib/finance/bond";
+
 /// The base bond definition shared by every measure and curve on the page.
-export type BondParams = {
-  face: number;
-  couponRate: number;
-  ytm: number;
-  years: number;
-  freq: number;
-};
+export type BondParams = BondSpec;
 
 /// Current price and interest-rate risk measures of the base bond.
 export type BondMeasures = {

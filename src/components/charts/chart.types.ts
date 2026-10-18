@@ -55,6 +55,8 @@ export type LineChartProps = {
   /// Axis tick label formats (defaults: plain numbers).
   xFormat?: (value: number) => string;
   yFormat?: (value: number) => string;
+  /// Interactive overlay (e.g. DragHandles) drawn on top of the lines and the tooltip catcher.
+  layer?: (frame: PlotFrame) => ReactNode;
 };
 
 /// A light vector curve drawn over a path cloud (envelopes, means, bounds).

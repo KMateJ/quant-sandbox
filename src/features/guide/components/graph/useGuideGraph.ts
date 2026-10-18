@@ -29,9 +29,15 @@ export const nodeHref = (n: GraphNode) =>
 
 /// Deterministic positions for a subset of the graph, fitted into `width × height`.
 export function layoutGraph(nodes: GraphNode[], edges: GraphEdge[], width: number, height: number, seed = 7): Map<string, Point> {
+  const group = new Map(nodes.map((n) => [n.id, n.kind === "lesson" ? n.track : "labs"]));
   return forceLayout(
     nodes.map((n) => ({ id: n.id, group: n.kind === "lesson" ? n.track : "labs", radius: nodeRadius(n) })),
-    edges.map((e) => ({ source: e.source, target: e.target, ...EDGE_SHAPE[e.kind] })),
+    edges.map((e) => {
+      const shape = EDGE_SHAPE[e.kind];
+      // Citations inside one track get longer springs, so a big track loosens instead of knotting.
+      const sameTrack = e.kind === "citation" && group.get(e.source) === group.get(e.target);
+      return { source: e.source, target: e.target, ...shape, length: shape.length * (sameTrack ? 1.4 : 1) };
+    }),
     { width, height, seed }
   );
 }

@@ -21,17 +21,27 @@ export function forceLayout(nodes: LayoutNode[], edges: LayoutEdge[], options: L
   const { width, height, iterations = 320, seed = 7, groupPull = 0.04, padding = 40 } = options;
   const rng = makeRng(seed);
   const groups = [...new Set(nodes.map((n) => n.group))];
-  // Group anchors on an ellipse shaped like the canvas, so clusters use the full width.
+  // Group anchors on an ellipse shaped like the canvas. Each group gets an arc in proportion to its size,
+  // so a large track is not squeezed between small neighbours.
   const aspect = width / height;
-  const anchor = new Map(groups.map((g, i) => {
-    const angle = (2 * Math.PI * i) / Math.max(groups.length, 1) - Math.PI / 2;
+  const size = new Map(groups.map((g) => [g, nodes.filter((n) => n.group === g).length]));
+  const total = nodes.length || 1;
+  let swept = 0;
+  const anchor = new Map(groups.map((g) => {
+    const share = (size.get(g) ?? 0) / total;
+    const angle = 2 * Math.PI * (swept + share / 2) - Math.PI / 2;
+    swept += share;
     const r = groups.length > 1 ? 300 : 0;
     return [g, { x: r * aspect * Math.cos(angle), y: r * Math.sin(angle) }];
   }));
+  // Larger groups are held less tightly to their anchor so they can spread out.
+  const meanSize = total / Math.max(groups.length, 1);
+  const pull = new Map(groups.map((g) => [g, groupPull * Math.min(1, Math.sqrt(meanSize / (size.get(g) ?? 1)))]));
+  const spread = (g: string) => 120 * Math.sqrt((size.get(g) ?? 1) / meanSize);
 
   const index = new Map(nodes.map((n, i) => [n.id, i]));
-  const x = nodes.map((n) => anchor.get(n.group)!.x + (rng() - 0.5) * 120);
-  const y = nodes.map((n) => anchor.get(n.group)!.y + (rng() - 0.5) * 120);
+  const x = nodes.map((n) => anchor.get(n.group)!.x + (rng() - 0.5) * spread(n.group));
+  const y = nodes.map((n) => anchor.get(n.group)!.y + (rng() - 0.5) * spread(n.group));
   const vx = new Array<number>(nodes.length).fill(0);
   const vy = new Array<number>(nodes.length).fill(0);
   const links = edges
@@ -64,8 +74,9 @@ export function forceLayout(nodes: LayoutNode[], edges: LayoutEdge[], options: L
     }
     nodes.forEach((n, i) => {
       const p = anchor.get(n.group)!;
-      fx[i] += (p.x - x[i]) * groupPull - x[i] * 0.004;
-      fy[i] += (p.y - y[i]) * groupPull - y[i] * 0.004;
+      const k = pull.get(n.group)!;
+      fx[i] += (p.x - x[i]) * k - x[i] * 0.004;
+      fy[i] += (p.y - y[i]) * k - y[i] * 0.004;
       vx[i] = (vx[i] + fx[i] * alpha) * 0.55;
       vy[i] = (vy[i] + fy[i] * alpha) * 0.55;
       x[i] += vx[i];

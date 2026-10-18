@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import SliderField from "../../components/SliderField";
 import { Panel } from "../../components/layout";
 import { useI18n } from "../../i18n";
-import SeedControl from "./SeedControl";
+import SeedControl from "../../components/SeedControl";
 import type { PathGeometrySim } from "./usePathGeometry";
 
 type Props = { sim: PathGeometrySim; maxPaths?: number; children?: ReactNode };

@@ -10,7 +10,7 @@ import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
 import { useChartTooltip } from "./useChartTooltip";
 import ChartTooltip from "./ChartTooltip";
-import type { ChartDatum, LineChartProps } from "./chart.types";
+import type { ChartDatum, LineChartProps, PlotFrame } from "./chart.types";
 
 type Props = LineChartProps & { width: number; height: number };
 
@@ -39,6 +39,7 @@ export default function LineChartInner({
   valueFormat,
   xFormat,
   yFormat,
+  layer,
   curve = "smooth",
 }: Props) {
   const curveFactory = curve === "linear" ? curveLinear : curveMonotoneX;
@@ -73,6 +74,16 @@ export default function LineChartInner({
   );
 
   const tip = useChartTooltip(data, xKey, xScale, margin.left);
+  const frame: PlotFrame = {
+    x: (v) => xScale(v) ?? 0,
+    y: (v) => yScale(v) ?? 0,
+    xInvert: (px) => xScale.invert(px),
+    yInvert: (px) => yScale.invert(px),
+    width: innerW,
+    height: innerH,
+    left: margin.left,
+    top: margin.top,
+  };
   const px = (d: ChartDatum) => xScale(Number(d[xKey])) ?? 0;
   const pointsFor = (key: string) =>
     data.filter((d) => typeof d[key] === "number");
@@ -184,6 +195,7 @@ export default function LineChartInner({
             onTouchStart={tip.handleMove}
             onTouchEnd={tip.hideTooltip}
           />
+          {layer?.(frame)}
         </Group>
       </svg>
 

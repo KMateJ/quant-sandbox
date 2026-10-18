@@ -6,7 +6,7 @@ import { Panel } from "../../components/layout";
 import { StatCard } from "../../components/ui";
 import { useI18n } from "../../i18n";
 import GeometryCurveChart from "./GeometryCurveChart";
-import GuidedExperiments from "./GuidedExperiments";
+import GuidedExperiments from "../../components/GuidedExperiments";
 import GeometryPathChart from "./GeometryPathChart";
 import GeometrySimControls from "./GeometrySimControls";
 import TimeCursorControl from "./TimeCursorControl";

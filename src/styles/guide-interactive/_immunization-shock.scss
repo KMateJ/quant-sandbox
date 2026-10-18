@@ -1,1 +1,185 @@
 // Styles for the "immunization-shock" guide figure.
+
+.im-hint {
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.im-shock {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.im-shock-label,
+.im-row-label {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.im-track {
+  position: relative;
+  height: 10px;
+  margin: 22px 0 4px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.im-track-zero {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  border-left: 1px solid var(--border-hover, var(--border));
+  pointer-events: none;
+}
+
+.im-handle {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+  cursor: grab;
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+}
+
+.im-handle-value {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.im-track-scale {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.im-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.im-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.im-bar-track {
+  position: relative;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+}
+
+.im-bar {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  transition: width 0.12s ease;
+
+  &--assets {
+    background: var(--chart-1);
+  }
+
+  &--liability {
+    background: var(--chart-3);
+  }
+}
+
+.im-bar-value {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  color: var(--text);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.im-trace {
+  margin: var(--space-4) 0 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.im-trace-caption {
+  margin-bottom: var(--space-1);
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+
+.im-trace-zero {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.im-trace-all {
+  fill: none;
+  stroke: var(--muted);
+  stroke-dasharray: 3 4;
+  stroke-opacity: 0.6;
+  stroke-width: 1.5;
+}
+
+.im-trace-seen {
+  fill: none;
+  stroke: var(--primary);
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.im-trace-dot {
+  fill: var(--primary);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.im-trace-tick {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 520px) {
+  .im-shock,
+  .im-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .im-track-scale {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .im-bar {
+    transition: none;
+  }
+}

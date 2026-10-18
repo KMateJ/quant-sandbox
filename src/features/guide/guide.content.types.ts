@@ -50,7 +50,15 @@ export type GuideFigureId =
   | "drag-assets"
   | "duration-balance"
   | "galton-walk"
-  | "hedge-simulation";
+  | "hedge-simulation"
+  | "amortization-schedule"
+  | "multiples-peers"
+  | "utility-indifference"
+  | "performance-ranking"
+  | "immunization-shock"
+  | "callable-price-yield"
+  | "martingale-betting"
+  | "euler-convergence";
 
 /// One block of lesson text. Inline text supports `$tex$`, `**bold**` and `*italic*`.
 export type GuideBlock =

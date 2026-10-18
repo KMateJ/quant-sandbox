@@ -5,7 +5,7 @@ import { StatCard } from "../../components/ui";
 import { useI18n } from "../../i18n";
 import BrownianControls from "./BrownianControls";
 import BrownianWindowChart from "./BrownianWindowChart";
-import GuidedExperiments from "./GuidedExperiments";
+import GuidedExperiments from "../../components/GuidedExperiments";
 import IncrementFanChart from "./IncrementFanChart";
 import { difference } from "./brownianFundamentals.math";
 import { terminalSummary } from "./rescaledWalk.math";

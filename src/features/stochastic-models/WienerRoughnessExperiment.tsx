@@ -6,9 +6,9 @@ import { ChartContainer, Panel } from "../../components/layout";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { IntuitionTrigger } from "../../components/intuition";
 import { useI18n } from "../../i18n";
-import GuidedExperiments from "./GuidedExperiments";
+import GuidedExperiments from "../../components/GuidedExperiments";
 import RoughnessZoomCharts from "./RoughnessZoomCharts";
-import SeedControl from "./SeedControl";
+import SeedControl from "../../components/SeedControl";
 import { levyPath, sampleWindow } from "./wienerProperties.math";
 
 const MAX_ZOOM = 30;

@@ -40,6 +40,14 @@ import { exoticOptions } from "./exoticOptions";
 import { jumpDiffusion } from "./jumpDiffusion";
 import { creditRisk } from "./creditRisk";
 import { factorModels } from "./factorModels";
+import { annuities } from "./annuities";
+import { valuationMultiples } from "./valuationMultiples";
+import { riskAversion } from "./riskAversion";
+import { performanceMeasures } from "./performanceMeasures";
+import { immunization } from "./immunization";
+import { callableBonds } from "./callableBonds";
+import { martingales } from "./martingales";
+import { sdeSimulation } from "./sdeSimulation";
 
 /// Body text of every lesson, per language.
 export const guideContent: Record<GuideId, GuideLessonContent> = {
@@ -83,4 +91,12 @@ export const guideContent: Record<GuideId, GuideLessonContent> = {
   "jump-diffusion": jumpDiffusion,
   "credit-risk": creditRisk,
   "factor-models": factorModels,
+  annuities,
+  "valuation-multiples": valuationMultiples,
+  "risk-aversion": riskAversion,
+  "performance-measures": performanceMeasures,
+  immunization,
+  "callable-bonds": callableBonds,
+  martingales,
+  "sde-simulation": sdeSimulation,
 };

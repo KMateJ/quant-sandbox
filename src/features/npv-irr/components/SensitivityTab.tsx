@@ -83,6 +83,7 @@ export default function SensitivityTab({ lab }: SensitivityTabProps) {
               yAxis={lab.heatAxes.y}
               onApply={applyCell}
               formatAxis={formatAxis}
+              axisLabel={(axis) => varLabel[axis]}
               valueFormat={money}
             />
           </div>

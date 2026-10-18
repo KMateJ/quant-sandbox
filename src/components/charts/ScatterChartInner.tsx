@@ -68,10 +68,9 @@ export default function ScatterChartInner({
 
   // While dragging a marker, hold the axis domains fixed so the scale does not
   // jerk as the dragged values feed back into the domain bounds.
-  const [dragging, setDragging] = useState(false);
-  const frozen = useRef<{ x: [number, number]; y: [number, number] } | null>(null);
-  const activeX = dragging && frozen.current ? frozen.current.x : resolvedX;
-  const activeY = dragging && frozen.current ? frozen.current.y : resolvedY;
+  const [frozen, setFrozen] = useState<{ x: [number, number]; y: [number, number] } | null>(null);
+  const activeX = frozen?.x ?? resolvedX;
+  const activeY = frozen?.y ?? resolvedY;
 
   const xScale = useMemo(
     () => scaleLinear({ domain: activeX, range: [0, innerW] }),
@@ -101,13 +100,11 @@ export default function ScatterChartInner({
   const drag = useScatterDrag({
     svgRef, onDrag,
     onDragStart: (index) => {
-      frozen.current = { x: resolvedX, y: resolvedY };
-      setDragging(true);
+      setFrozen({ x: resolvedX, y: resolvedY });
       onDragStart?.(index);
     },
     onDragEnd: () => {
-      frozen.current = null;
-      setDragging(false);
+      setFrozen(null);
       onDragEnd?.();
     },
     toData,

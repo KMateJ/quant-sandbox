@@ -1,0 +1,33 @@
+// Shared playback controls (components/playback).
+
+.playback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.playback-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  .preset-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+// Shared lab controls (components/SeedControl, components/GuidedExperiments).
+.seed-resample-btn {
+  justify-self: start;
+}
+
+.guided-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}

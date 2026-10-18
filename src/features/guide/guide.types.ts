@@ -43,7 +43,15 @@ export type GuideId =
   | "exotic-options"
   | "jump-diffusion"
   | "credit-risk"
-  | "factor-models";
+  | "factor-models"
+  | "annuities"
+  | "valuation-multiples"
+  | "risk-aversion"
+  | "performance-measures"
+  | "immunization"
+  | "callable-bonds"
+  | "martingales"
+  | "sde-simulation";
 
 /// A single ordered lesson inside a track.
 export type GuideLessonMeta = {

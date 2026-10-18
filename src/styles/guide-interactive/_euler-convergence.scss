@@ -1,1 +1,139 @@
 // Styles for the "euler-convergence" guide figure.
+
+.ixeu-controls {
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.ixeu-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.ixeu-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: "";
+    width: 18px;
+    height: 0;
+    border-top: 2px solid var(--chart-1);
+  }
+
+  &--euler::before {
+    border-top-color: var(--chart-3);
+    border-top-width: 2.5px;
+  }
+}
+
+.ixeu-paths {
+  height: 240px;
+}
+
+.ixeu-svg {
+  display: block;
+  touch-action: pan-y;
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+.ixeu-exact {
+  fill: none;
+  stroke: var(--chart-1);
+  stroke-width: 1.6;
+}
+
+.ixeu-euler {
+  fill: none;
+  stroke: var(--chart-3);
+  stroke-width: 2.2;
+}
+
+.ixeu-node {
+  fill: var(--chart-3);
+  stroke: var(--surface);
+  stroke-width: 1.5;
+}
+
+.ixeu-exact-dot {
+  fill: var(--chart-1);
+  stroke: var(--surface);
+  stroke-width: 1.5;
+}
+
+.ixeu-at line {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.ixeu-at .ixeu-gap {
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+
+.ixeu-at-text {
+  min-height: 1.5em;
+  margin: var(--space-1) 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.ixeu-head {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ixeu-errors {
+  height: 170px;
+}
+
+.ixeu-ref {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.ixeu-ref-label {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ixeu-err {
+  circle {
+    fill: var(--chart-3);
+    opacity: 0.55;
+  }
+
+  text {
+    fill: var(--muted);
+    font-size: 10px;
+  }
+
+  &.is-current {
+    circle {
+      opacity: 1;
+      stroke: var(--text);
+      stroke-width: 1.5;
+    }
+
+    text {
+      fill: var(--text);
+      font-weight: 600;
+    }
+  }
+}

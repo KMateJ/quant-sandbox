@@ -17,6 +17,9 @@
     "test:guide-wave3": "node --test scripts/guide-wave3.test.mjs",
     "test:guide-graph": "node --test scripts/guide-graph.test.mjs",
     "test:guide-interactive": "node --test scripts/guide-interactive-*.test.mjs",
+    "test:drag-handles": "node --test scripts/drag-handles.test.mjs",
+    "test:url-state": "node --test scripts/url-state.test.mjs",
+    "test:lab-primitives": "node --test scripts/lab-primitives.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

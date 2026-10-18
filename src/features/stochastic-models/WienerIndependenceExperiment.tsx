@@ -6,9 +6,9 @@ import { ControlGroup, SegmentedControl, StatCard } from "../../components/ui";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { IntuitionTrigger } from "../../components/intuition";
 import { useI18n } from "../../i18n";
-import GuidedExperiments from "./GuidedExperiments";
+import GuidedExperiments from "../../components/GuidedExperiments";
 import IncrementDependenceCharts from "./IncrementDependenceCharts";
-import SeedControl from "./SeedControl";
+import SeedControl from "../../components/SeedControl";
 import { autocorrelation, cumulativePath, incrementSequence, lagPairs } from "./wienerProperties.math";
 import type { IncrementSource } from "./wienerProperties.types";
 

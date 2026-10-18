@@ -1,1 +1,95 @@
 // Styles for the "martingale-betting" guide figure.
+
+.ixmg-strategy {
+  margin-bottom: var(--space-3);
+}
+
+.ixmg-controls {
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.ixmg-round {
+  margin-left: auto;
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.ixmg-head {
+  margin: var(--space-2) 0 var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ixmg-chart {
+  height: 220px;
+}
+
+.ixmg-hist {
+  height: 170px;
+}
+
+.ixmg-empty {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  margin: 0;
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-align: center;
+  background: var(--surface-muted);
+  border-radius: var(--radius-sm);
+}
+
+.ixmg-path {
+  fill: none;
+  stroke: var(--chart-1);
+  stroke-width: 2;
+}
+
+.ixmg-now {
+  fill: var(--chart-1);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.ixmg-start {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.ixmg-mean {
+  stroke: var(--chart-3);
+  stroke-width: 2;
+}
+
+.ixmg-note {
+  fill: var(--muted);
+  font-size: 11px;
+
+  &--mean {
+    fill: var(--chart-3);
+    font-weight: 600;
+  }
+}
+
+.ixmg-bar {
+  fill: var(--chart-2);
+  opacity: 0.85;
+
+  &.behind {
+    fill: var(--chart-1);
+    opacity: 0.45;
+  }
+}
+
+@media (max-width: 480px) {
+  .ixmg-round {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}

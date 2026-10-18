@@ -1,3 +1,12 @@
+/// A fixed-coupon bond: face value, annual coupon rate, yield to maturity (annual), years to maturity, coupons per year.
+export type BondSpec = {
+  face: number;
+  couponRate: number;
+  ytm: number;
+  years: number;
+  freq: number;
+};
+
 /// Price of a fixed-coupon bond from its yield to maturity.
 /// `couponRate` and `ytm` are annual; `freq` is coupons per year; `years` is time to maturity.
 export function bondPrice(

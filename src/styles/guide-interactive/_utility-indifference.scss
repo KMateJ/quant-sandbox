@@ -1,1 +1,113 @@
 // Styles for the "utility-indifference" guide figure.
+
+.ui-hint {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.ui-chart {
+  height: 300px;
+  touch-action: none;
+}
+
+.ui-cal {
+  stroke: var(--text);
+  stroke-width: 2;
+}
+
+.ui-curve {
+  fill: none;
+  stroke-width: 2;
+
+  &--cur {
+    stroke: var(--chart-1);
+  }
+
+  &--opt {
+    stroke: var(--chart-3);
+    stroke-dasharray: 6 4;
+  }
+}
+
+.ui-dot {
+  fill: var(--muted);
+
+  &--p {
+    fill: var(--text);
+  }
+}
+
+.ui-opt {
+  fill: none;
+  stroke: var(--chart-3);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.ui-hit {
+  fill: transparent;
+  cursor: ew-resize;
+}
+
+.ui-handle {
+  fill: var(--chart-1);
+  stroke: var(--surface);
+  stroke-width: 2.5;
+  pointer-events: none;
+  transition: fill 0.15s ease;
+
+  &.is-optimal {
+    fill: var(--chart-3);
+  }
+
+  &:focus-visible {
+    outline: none;
+    stroke: var(--text);
+  }
+}
+
+.ui-label {
+  fill: var(--muted);
+  font-size: 11px;
+
+  &--opt {
+    fill: var(--text);
+    font-weight: 600;
+  }
+}
+
+.ui-axis-title {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ui-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: var(--text-sm);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.ui-key {
+  display: inline-block;
+  width: 20px;
+  border-top: 2px solid var(--text);
+
+  &--cur {
+    border-top-color: var(--chart-1);
+  }
+
+  &--opt {
+    border-top: 2px dashed var(--chart-3);
+  }
+}

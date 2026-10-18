@@ -51,6 +51,10 @@ import { guideWave3En, guideWave3Hu } from "./Language/GuideWave3";
 import { guideGraphEn, guideGraphHu } from "./Language/GuideGraph";
 import { guideInteractiveEn, guideInteractiveHu } from "./Language/GuideInteractive";
 import { guideInteractive2En, guideInteractive2Hu } from "./Language/GuideInteractive2";
+import { playbackEn, playbackHu } from "./Language/Playback";
+import { labControlsEn, labControlsHu } from "./Language/LabControls";
+import { bondInputsEn, bondInputsHu } from "./Language/BondInputs";
+import { labPrimitivesEn, labPrimitivesHu } from "./Language/LabPrimitives";
 
 export type Language = "hu" | "en";
 
@@ -98,6 +102,10 @@ export const translations = {
     ...guideGraphHu,
     ...guideInteractiveHu,
     ...guideInteractive2Hu,
+    ...playbackHu,
+    ...labControlsHu,
+    ...bondInputsHu,
+    ...labPrimitivesHu,
     ...brownianMotionHu,
     ...gbmHu,
     ...itoProcessHu,
@@ -144,6 +152,10 @@ export const translations = {
     ...guideGraphEn,
     ...guideInteractiveEn,
     ...guideInteractive2En,
+    ...playbackEn,
+    ...labControlsEn,
+    ...bondInputsEn,
+    ...labPrimitivesEn,
     ...brownianMotionEn,
     ...gbmEn,
     ...itoProcessEn,

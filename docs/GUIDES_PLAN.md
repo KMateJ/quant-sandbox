@@ -56,7 +56,9 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | 1 | returns-volatility | Returns and volatility | earlier | done | volatility-horizon |
 | 2 | diversification | Diversification and correlation | my-app-1b | review | two-asset-frontier |
 | 3 | efficient-frontier | The efficient frontier and the capital market line | my-app-1b | review | capital-market-line |
+| 3b | risk-aversion | Risk aversion and the optimal complete portfolio | my-app-6c | writing | utility-indifference |
 | 4 | capm | CAPM, beta and the security market line | my-app-1b | review | security-market-line |
+| 4b | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | writing | performance-ranking |
 | 4b | factor-models | Factor models and systematic risk | my-app-46 | done | factor-variance |
 | 5 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
 
@@ -66,9 +68,11 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 |---|---|---|---|---|---|
 | 1 | bond-pricing | Bond prices and yields | my-app-1b | review | price-yield |
 | 2 | duration-convexity | Duration and convexity | my-app-1b | review | duration-convexity |
+| 2b | immunization | Immunization and duration matching | my-app-6c | writing | immunization-shock |
 | 3 | yield-curve | Spot rates, forward rates and the yield curve | my-app-1b | review | spot-forward |
 | 4 | treasury-futures | Bond futures and the cheapest-to-deliver | my-app-6c | done | ctd-switch |
 | 5 | interest-rate-swaps | Interest rate swaps | my-app-6c | done | swap-rate |
+| 5b | callable-bonds | Callable bonds and negative convexity | my-app-6c | writing | callable-price-yield |
 | 6 | credit-risk | Credit risk: default probabilities and credit spreads | my-app-46 | done | credit-spread |
 
 ### Corporate finance
@@ -76,10 +80,12 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | interest-discounting | Interest, compounding and discounting | earlier | done | compounding |
+| 1b | annuities | Annuities, perpetuities and loan amortization | my-app-6c | writing | amortization-schedule |
 | 2 | npv-irr | Net present value and internal rate of return | my-app-6c | done | npv-profile |
 | 3 | wacc | The weighted average cost of capital | my-app-6c | done | (none) |
 | 4 | capital-structure | Capital structure and the Modigliani–Miller theorems | my-app-6c | done | wacc-leverage |
 | 5 | dcf-valuation | Discounted cash flow valuation | my-app-6c | done | dcf-terminal |
+| 5b | valuation-multiples | Relative valuation with multiples | my-app-6c | writing | multiples-peers |
 | 6 | real-options | Real options: the value of flexibility | my-app-46 | done | real-option-tree |
 
 ### Stochastic models
@@ -87,9 +93,11 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | random-walks | Random walks and Brownian motion | earlier | done | random-walk |
+| 1b | martingales | Conditional expectation and martingales | my-app-6c | writing | martingale-betting |
 | 2 | ito-lemma | Itô's lemma | my-app-6c | done | quadratic-variation |
 | 2b | change-of-measure | Change of measure and Girsanov's theorem | my-app-6c | done | girsanov-shift |
 | 3 | monte-carlo-pricing | Monte Carlo option pricing | my-app-6c | done | monte-carlo-convergence |
+| 3b | sde-simulation | Simulating SDEs: the Euler–Maruyama scheme | my-app-6c | writing | euler-convergence |
 | 4 | mean-reversion | Mean reversion: Ornstein–Uhlenbeck and Vasicek | my-app-46 | done | ou-paths |
 | 5 | jump-diffusion | Jumps and the Merton jump-diffusion model | my-app-46 | done | jump-density |
 
@@ -681,3 +689,60 @@ previews. Last run ({now}): 6 forward citations in total.
   `node --test scripts/guide-interactive-*.test.mjs` 23/23 pass (my-app-1b: the package.json script still needs that glob).
   Known, not from these files: Surface3D (drei Html labels) logs 9 "synchronously unmount a root" console errors, also on the
   Black–Scholes lab's 3D view; and the dev server's watcher sometimes serves a stale lesson file (touching it fixes it).
+- 20:0x my-app-6c (user: "there are many guides for derivatives, but not so many at everything else, look into extensions").
+  Derivatives has 16 lessons, the other four tracks 6 each. Batch 4 = 8 lessons, two per track, each with its own figure built
+  by me (new files only, same layout as the 19:5x interactive figures). Rows added above ("b" = inserted after that row).
+  Placeholders for all 8 lesson files, figure components, string files and scss partials exist now and typecheck; the string
+  files are already spread into GuideInteractive.ts and the partials @used by _guide-interactive.scss, so those need no wiring.
+  my-app-1b, please wire (shared files):
+  (1) GuideId + guideLessons, positions as in the tables, title/desc keys and labs:
+      annuities (corporate, after interest-discounting) guideAnnuitiesTitle/Desc ["tvm"];
+      valuation-multiples (corporate, after dcf-valuation) guideMultiplesTitle/Desc ["valuation"];
+      risk-aversion (portfolio, after efficient-frontier) guideRiskAversionTitle/Desc ["risk-return", "efficient-frontier"];
+      performance-measures (portfolio, after capm) guidePerformanceTitle/Desc ["capm", "risk-return"];
+      immunization (fixed-income, after duration-convexity) guideImmunizationTitle/Desc ["duration-convexity", "bond-pricing"];
+      callable-bonds (fixed-income, after interest-rate-swaps) guideCallableTitle/Desc ["bond-pricing", "binomial"];
+      martingales (stochastic, after random-walks) guideMartingalesTitle/Desc ["brownian-motion"];
+      sde-simulation (stochastic, after monte-carlo-pricing) guideSdeTitle/Desc ["gbm", "monte-carlo"].
+  (2) index.ts: id → export of the same camelCase file (annuities, valuationMultiples, riskAversion, performanceMeasures,
+      immunization, callableBonds, martingales, sdeSimulation).
+  (3) GuideFigureId + figures/index.ts → `./interactive/<Name>Figure`: amortization-schedule → AnnuitiesSchedule,
+      multiples-peers → MultiplesPeers, utility-indifference → UtilityIndifference, performance-ranking → PerformanceRanking,
+      immunization-shock → ImmunizationShock, callable-price-yield → CallablePriceYield, martingale-betting → MartingaleBetting,
+      euler-convergence → EulerConvergence.
+  (4) Titles/descs (Guide.ts), EN | HU:
+      annuities: "Annuities, perpetuities and loan amortization" | „Annuitások, örökjáradékok és hiteltörlesztés”;
+        "Present value of level payments, growing perpetuities, loan payments and the amortization schedule." |
+        „Egyenletes kifizetések jelenértéke, növekvő örökjáradék, hiteltörlesztő részlet és a törlesztési terv.”
+      valuation-multiples: "Relative valuation with multiples" | „Relatív értékelés szorzókkal”;
+        "P/E, EV/EBITDA and other multiples, choosing peers, and how multiples relate to DCF value." |
+        „P/E, EV/EBITDA és más szorzók, a társcégek kiválasztása, és hogyan kapcsolódnak a szorzók a DCF-értékhez.”
+      risk-aversion: "Risk aversion and the optimal complete portfolio" | „Kockázatkerülés és az optimális teljes portfólió”;
+        "Mean–variance utility, indifference curves, the risk-aversion coefficient and the best point on the capital allocation line." |
+        „Várható érték–variancia hasznosság, közömbösségi görbék, a kockázatkerülési együttható és a tőkeallokációs egyenes legjobb pontja.”
+      performance-measures: "Performance measures: Sharpe, Treynor, Jensen and information ratio" | „Teljesítménymutatók: Sharpe, Treynor, Jensen és információs ráta”;
+        "Risk-adjusted performance, which risk each measure charges for, and why the rankings can disagree." |
+        „Kockázattal korrigált teljesítmény, melyik mutató milyen kockázatért számol fel, és miért térhetnek el a rangsorok.”
+      immunization: "Immunization and duration matching" | „Immunizáció és durációillesztés”;
+        "Protecting a liability against rate moves by matching present value and duration, and why convexity and rebalancing matter." |
+        „Kötelezettség védelme kamatmozgások ellen jelenérték és duráció illesztésével, és miért számít a konvexitás és az újrasúlyozás.”
+      callable-bonds: "Callable bonds and negative convexity" | „Visszahívható kötvények és negatív konvexitás”;
+        "The issuer's call option, price compression near the call price, yield to call and negative convexity." |
+        „A kibocsátó visszahívási opciója, az ár összenyomódása a visszahívási ár közelében, a visszahívásig számított hozam és a negatív konvexitás.”
+      martingales: "Conditional expectation and martingales" | „Feltételes várható érték és martingálok”;
+        "Conditional expectation given the past, fair games, why no betting strategy beats a martingale, and discounted prices under Q." |
+        „Feltételes várható érték a múlt ismeretében, igazságos játékok, miért nem győzhető le egy martingál fogadási stratégiával, és a diszkontált árak Q alatt.”
+      sde-simulation: "Simulating SDEs: the Euler–Maruyama scheme" | „SDE-k szimulációja: az Euler–Maruyama-séma”;
+        "Discretising a stochastic differential equation, strong and weak error, step size, and checking against the exact GBM solution." |
+        „Sztochasztikus differenciálegyenlet diszkretizálása, erős és gyenge hiba, lépésköz, és összevetés a geometriai Brown-mozgás pontos megoldásával.”
+  Tests: per-figure `scripts/guide-interactive-<name>.test.mjs`, covered by the glob script.
+- 16:24 my-app-46 → my-app-6c: layout request (19:4x) done in guide.graph.layout.ts + useGuideGraph.ts. Each track now
+  gets an arc of the ellipse proportional to its size, big tracks are held less tightly (pull × √(mean/size)) and start
+  wider, and same-track citation springs are 1.4× longer. Measured (all 40 lessons): the derivatives cluster went from
+  229×247 to 287×295, mean pairwise distance 128 → 159, minimum 40 → 48; canvas use 81% × 88%; layout 23 ms; 6 graph
+  tests pass. Fit-to-view on your side takes care of the absolute scale.
+- 16:26 my-app-1b → my-app-6c: Batch 4 wired: 8 lessons (annuities, valuation-multiples, risk-aversion, performance-measures,
+  immunization, callable-bonds, martingales, sde-simulation) in GuideId/guideLessons at your positions, index.ts entries,
+  8 figure ids → ./interactive/*, and EN/HU titles and descriptions in Guide.ts. tsc, eslint and build pass (89 pages, 48 lessons). The
+  test:guide-interactive glob was already done earlier (6 files, 23 tests). NOTE: my earlier Log times (19:xx/20:00)
+  were wrong; from now on I use the real clock.

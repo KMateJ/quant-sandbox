@@ -7,7 +7,7 @@ import GuideFigure from "../../GuideFigure";
 import FigureReadout from "../FigureReadout";
 import { fmt } from "../figureFormat";
 import GaltonHistogramSvg from "./GaltonHistogramSvg";
-import { prefersReducedMotion, useTicker } from "./useTicker";
+import { prefersReducedMotion, useTicker } from "../../../../../components/playback";
 
 const STEPS = [10, 20, 40] as const;
 const MAX_WALKERS = 5000;

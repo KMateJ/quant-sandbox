@@ -1,1 +1,144 @@
 // Styles for the "amortization-schedule" guide figure.
+
+.ixan-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ixan-control-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ixan-hint {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.ixan-bar {
+  cursor: pointer;
+  outline: none;
+
+  &:hover .ixan-hit,
+  &:focus-visible .ixan-hit {
+    fill: var(--surface-muted);
+  }
+
+  &.is-selected .ixan-hit {
+    fill: var(--surface-muted);
+  }
+
+  &.is-selected .ixan-interest,
+  &.is-selected .ixan-principal {
+    stroke: var(--text);
+    stroke-width: 1.5;
+  }
+}
+
+.ixan-hit {
+  fill: transparent;
+}
+
+.ixan-interest {
+  fill: var(--chart-4);
+}
+
+.ixan-principal {
+  fill: var(--chart-1);
+}
+
+.ixan-balance {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+}
+
+.ixan-year {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ixan-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.ixan-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+
+  &--interest {
+    background: var(--chart-4);
+  }
+
+  &--principal {
+    background: var(--chart-1);
+  }
+
+  &--balance {
+    height: 0;
+    border-top: 2px dashed var(--text);
+    border-radius: 0;
+  }
+}
+
+.ixan-details {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-size: var(--text-sm);
+}
+
+.ixan-details-title {
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ixan-details-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+}
+
+@media (max-width: 520px) {
+  .ixan-details-grid {
+    grid-template-columns: 1fr;
+
+    dd {
+      margin-bottom: var(--space-2);
+    }
+  }
+}

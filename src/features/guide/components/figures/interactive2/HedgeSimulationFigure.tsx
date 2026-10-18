@@ -7,7 +7,7 @@ import { HEDGE_SETUP, hedgeErrorSpread, hedgePath } from "../../../guide.interac
 import GuideFigure from "../../GuideFigure";
 import FigureReadout from "../FigureReadout";
 import { fmt } from "../figureFormat";
-import { prefersReducedMotion, useTicker } from "./useTicker";
+import { PlaybackControls, usePlayback } from "../../../../../components/playback";
 
 const EVERY = [1, 5, 21] as const;
 
@@ -16,29 +16,20 @@ export default function HedgeSimulationFigure() {
   const { t } = useI18n();
   const [every, setEvery] = useState<number>(5);
   const [seed, setSeed] = useState(1);
-  const [shown, setShown] = useState(HEDGE_SETUP.days);
-  const [running, setRunning] = useState(false);
+  const playback = usePlayback({ steps: HEDGE_SETUP.days, durationMs: 5000 });
+  const shown = playback.step;
   const path = useMemo(() => hedgePath(HEDGE_SETUP, every, makeRng(seed)), [every, seed]);
   const spread = useMemo(() => hedgeErrorSpread(HEDGE_SETUP, every, 200, 3), [every]);
   const visible = path.map((row) => (row.day <= shown ? row : { day: row.day }));
   const last = path[Math.min(shown, HEDGE_SETUP.days)];
-  useTicker(running, 50, () => {
-    if (shown >= HEDGE_SETUP.days) return false;
-    setShown((d) => d + 1);
-  }, () => setRunning(false));
-  const play = () => {
-    if (prefersReducedMotion()) return setShown(HEDGE_SETUP.days);
-    setShown(0);
-    setRunning(true);
-  };
 
   return (
     <GuideFigure title={t("gi2HedgeTitle")} labId="delta-hedging">
       <div className="gf-toolbar">
         <SegmentedControl<number> ariaLabel={t("gi2Rebalance")} value={every} onChange={setEvery} options={EVERY.map((v) => ({ value: v, label: t("gi2EveryDays", { k: v }) }))} />
-        <button type="button" className="preset-btn" onClick={play}>{t("gi2Play")}</button>
         <button type="button" className="preset-btn" onClick={() => setSeed((s) => s + 1)}>{t("gfNewPaths")}</button>
       </div>
+      <PlaybackControls playback={playback} steps={HEDGE_SETUP.days} label={t("gi2DayLabel")} />
       <div className="gf-chart" role="img" aria-label={t("gi2HedgeAria", { k: every })}>
         <LineChart
           data={visible}

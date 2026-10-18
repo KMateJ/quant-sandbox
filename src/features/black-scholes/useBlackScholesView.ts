@@ -117,6 +117,10 @@ export function useBlackScholesView() {
   const [strike, setStrike] = useState(() =>
     parseNumber(searchParams.get("k"), 100, 20, 200)
   );
+  // Current spot: a draggable marker on the 2D chart.
+  const [spot, setSpot] = useState(() =>
+    parseNumber(searchParams.get("s"), 100, 10, 200, 1)
+  );
   const [rate, setRate] = useState(() =>
     parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3)
   );
@@ -141,6 +145,7 @@ export function useBlackScholesView() {
   );
   useEffect(() => {
     setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
+    setSpot(parseNumber(searchParams.get("s"), 100, 10, 200, 1));
     setRate(parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
     setVolatility(parseNumber(searchParams.get("sigma"), 0.2, 0.01, 1, 2));
     setMaxMaturity(parseNumber(searchParams.get("tmax"), 5, 0.25, 20, 2));
@@ -153,6 +158,7 @@ export function useBlackScholesView() {
   useEffect(() => {
     const next = new URLSearchParams();
     next.set("k", formatNumber(strike));
+    next.set("s", formatNumber(spot, 1));
     next.set("r", formatNumber(rate, 3));
     next.set("sigma", formatNumber(volatility, 2));
     next.set("tmax", formatNumber(maxMaturity, 2));
@@ -167,6 +173,7 @@ export function useBlackScholesView() {
     }
   }, [
     strike,
+    spot,
     rate,
     volatility,
     maxMaturity,
@@ -184,14 +191,19 @@ export function useBlackScholesView() {
   );
 
   const yDomain = useMemo<[number, number]>(() => {
-    if (metric === "price") return [0, 175];
+    // The price scale follows the curves (high σ or long maturities used to clip at a fixed 175).
+    if (metric === "price") {
+      const top = Math.max(...maturities.map((T) => evaluateMetric("price", optionType, 200, strike, T, rate, volatility)),
+        ...maturities.map((T) => evaluateMetric("price", optionType, 10, strike, T, rate, volatility)));
+      return [0, Math.max(20, Math.ceil((top * 1.1) / 10) * 10)];
+    }
     if (metric === "delta") return optionType === "put" ? [-1, 0] : [0, 1];
     if (metric === "gamma") return [0, 0.12];
     if (metric === "vega") return [0, 100];
     if (metric === "theta") return optionType === "put" ? [-25, 15] : [-30, 10];
     if (metric === "rho") return optionType === "put" ? [-250, 0] : [0, 250];
     return [0, 200];
-  }, [metric, optionType]);
+  }, [metric, optionType, maturities, strike, rate, volatility]);
 
   const chartData = useMemo<ChartRow[]>(() => {
     const sMin = 10;
@@ -326,5 +338,5 @@ export function useBlackScholesView() {
   ];
 
   
-  return { t, language, isMobile, strike, rate, volatility, maxMaturity, curveCount, controlsOpen, setControlsOpen, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle, view3d, setView3d, surface, metricLabel };
+  return { t, language, isMobile, strike, setStrike, spot, setSpot, rate, volatility, maxMaturity, curveCount, controlsOpen, setControlsOpen, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle, view3d, setView3d, surface, metricLabel };
 }

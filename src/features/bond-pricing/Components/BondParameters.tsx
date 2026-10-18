@@ -1,82 +1,41 @@
-import NumberInput from "../../../components/NumberInput";
+import BondInputs from "../../../components/BondInputs";
 import SliderField from "../../../components/SliderField";
 import { useI18n } from "../../../i18n";
-import { useId } from "react";
-import { IntuitionTrigger } from "../../../components/intuition";
+import type { BondSpec } from "../../../lib/finance/bond";
 
 type BondParametersProps = {
-  face: number;
-  coupon: number;
-  years: number;
-  freq: number;
-  ytm: number;
+  bond: BondSpec;
   maxYtm: number;
-  onFace: (v: number) => void;
-  onCoupon: (v: number) => void;
-  onYears: (v: number) => void;
-  onFreq: (v: number) => void;
-  onYtm: (v: number) => void;
+  onChange: (patch: Partial<BondSpec>) => void;
 };
 
-/// Compact precise controls: numeric inputs + a frequency select + a YTM slider.
-export default function BondParameters({
-  face,
-  coupon,
-  years,
-  freq,
-  ytm,
-  maxYtm,
-  onFace,
-  onCoupon,
-  onYears,
-  onFreq,
-  onYtm,
-}: BondParametersProps) {
-  const { t } = useI18n();
-  const frequencyId = useId();
-  const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
-  const pct0 = (v: number) => `${(v * 100).toFixed(0)}%`;
+const MIN_YTM = 0.001;
+const pct = (v: number, digits = 2) => `${(v * 100).toFixed(digits)}%`;
 
-  const min = 0.001;
+/// The shared bond block plus a yield slider with a "par" mark at the coupon rate.
+export default function BondParameters({ bond, maxYtm, onChange }: BondParametersProps) {
+  const { t } = useI18n();
   const marks = [
-    { value: min, label: pct0(min) },
-    ...(coupon > min && coupon < maxYtm
-      ? [{ value: coupon, label: `${t("bondYtmParMark")} ${pct0(coupon)}` }]
+    { value: MIN_YTM, label: pct(MIN_YTM, 0) },
+    ...(bond.couponRate > MIN_YTM && bond.couponRate < maxYtm
+      ? [{ value: bond.couponRate, label: `${t("bondYtmParMark")} ${pct(bond.couponRate, 0)}` }]
       : []),
-    { value: maxYtm, label: pct0(maxYtm) },
+    { value: maxYtm, label: pct(maxYtm, 0) },
   ];
 
   return (
     <div className="bond-params">
-      <div className="num-grid">
-        <NumberInput sectionId="face-value" label={t("bondFaceLabel")} value={face} onChange={onFace} min={1} step={1} />
-        <NumberInput sectionId="coupon-rate" label={t("bondCouponLabel")} value={coupon} onChange={onCoupon} min={0} max={0.3} step={0.0025} percent />
-        <NumberInput sectionId="maturity" label={t("bondMaturityLabel")} value={years} onChange={onYears} min={1} max={30} step={1} />
-        <div className="num-field intuition-reveal">
-          <span className="num-label"><label htmlFor={frequencyId}>{t("bondFrequencyLabel")}</label><IntuitionTrigger sectionId="payment-frequency" /></span>
-          <select
-            id={frequencyId}
-            className="bond-select"
-            value={freq}
-            onChange={(e) => onFreq(Number(e.target.value))}
-          >
-            <option value={1}>{t("bondFreqAnnual")}</option>
-            <option value={2}>{t("bondFreqSemiannual")}</option>
-            <option value={4}>{t("bondFreqQuarterly")}</option>
-          </select>
-        </div>
-      </div>
-
+      <BondInputs value={bond} onChange={onChange} />
       <div className="bond-ytm-slider">
         <SliderField
           sectionId="ytm"
           label={t("bondYtmLabel")}
-          min={min}
+          min={MIN_YTM}
           max={maxYtm}
           step={0.0005}
-          value={ytm}
-          onChange={onYtm}
-          formatValue={pct}
+          value={bond.ytm}
+          onChange={(ytm) => onChange({ ytm })}
+          formatValue={(v) => pct(v)}
           marks={marks}
         />
       </div>

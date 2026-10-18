@@ -1,1 +1,161 @@
 // Styles for the "performance-ranking" guide figure.
+
+.pr-hint {
+  margin: 0 0 var(--space-2);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.pr-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+
+  @media (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pr-table-wrap {
+  overflow-x: auto;
+}
+
+.pr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 6px 8px;
+    text-align: right;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th[scope="row"],
+  thead th:nth-child(2) {
+    text-align: left;
+  }
+
+  thead th {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  td.is-sorted {
+    color: var(--text);
+    font-weight: 600;
+    background: var(--surface-muted);
+  }
+}
+
+.pr-caption {
+  caption-side: bottom;
+  padding-top: var(--space-1);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  text-align: left;
+}
+
+.pr-sort {
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  cursor: pointer;
+
+  &:hover,
+  &.is-active {
+    color: var(--text);
+  }
+
+  &.is-active {
+    font-weight: 600;
+    border-bottom-style: solid;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.pr-rank {
+  color: var(--primary);
+  font-weight: 700;
+  text-align: center;
+}
+
+.pr-row {
+  position: relative;
+  outline: none;
+
+  &.is-hover,
+  &:focus-visible {
+    background: var(--surface-muted);
+  }
+
+  &.is-market {
+    color: var(--muted);
+  }
+}
+
+.pr-scatter {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.pr-grid {
+  stroke: var(--border);
+  stroke-dasharray: 3 3;
+}
+
+.pr-tick,
+.pr-axis,
+.pr-legend {
+  fill: var(--muted);
+  font-size: 10px;
+}
+
+.pr-ref {
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.pr-measure {
+  stroke: var(--chart-3);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 3;
+}
+
+.pr-point {
+  cursor: default;
+
+  circle {
+    fill: var(--chart-1);
+    stroke: var(--surface);
+    stroke-width: 2;
+    transition: r 0.15s ease;
+  }
+
+  text {
+    fill: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &.is-market circle {
+    fill: var(--muted);
+  }
+
+  &.is-hover circle {
+    fill: var(--chart-3);
+  }
+}

@@ -6,8 +6,8 @@ import { ChartContainer, Panel } from "../../components/layout";
 import { ControlGroup, SegmentedControl, StatCard } from "../../components/ui";
 import { useMediaQuery } from "../../components/useMediaQuery";
 import { useI18n } from "../../i18n";
-import GuidedExperiments from "./GuidedExperiments";
-import SeedControl from "./SeedControl";
+import GuidedExperiments from "../../components/GuidedExperiments";
+import SeedControl from "../../components/SeedControl";
 import { levyCloud } from "./wienerProperties.math";
 
 const PATHS = 120;

@@ -325,20 +325,6 @@
   border-radius: var(--radius-sm);
 }
 
-.npv-heat-tip {
-  position: absolute;
-  pointer-events: none;
-  padding: 4px 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xs);
-  font-size: var(--text-xs);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  box-shadow: var(--shadow);
-  z-index: 2;
-}
 // #endregion
 
 // #region Monte Carlo / Real options

@@ -29,6 +29,13 @@ export const blackScholesHu = {
   blackScholesAxisSpot: "S (árfolyam)",
   blackScholesAxisMaturity: "T (évek)",
   blackScholesSurfaceHint: "Húzd a forgatáshoz · görgess a nagyításhoz",
+  blackScholesSpotHandle: "Spot S",
+  blackScholesStrikeHandle: "Kötési ár K",
+  blackScholesReadoutTitle: "S = {{s}} pontban",
+  blackScholesReadoutMaturity: "Lejárat T",
+  blackScholesReadoutValue: "Érték",
+  blackScholesReadoutSlope: "Meredekség ∂/∂S",
+  blackScholesTangentHint: "Húzd az S-t vagy a K-t a grafikonon (vagy fókuszálj rájuk és használd a nyilakat). A szaggatott egyenes a T ≈ {{t}} görbe érintője S-nél; a meredeksége {{greek}}.",
 };
 
 export const blackScholesEn = {
@@ -62,4 +69,11 @@ export const blackScholesEn = {
   blackScholesAxisSpot: "S (spot)",
   blackScholesAxisMaturity: "T (years)",
   blackScholesSurfaceHint: "Drag to rotate · scroll to zoom",
+  blackScholesSpotHandle: "Spot S",
+  blackScholesStrikeHandle: "Strike K",
+  blackScholesReadoutTitle: "At S = {{s}}",
+  blackScholesReadoutMaturity: "Maturity T",
+  blackScholesReadoutValue: "Value",
+  blackScholesReadoutSlope: "Slope ∂/∂S",
+  blackScholesTangentHint: "Drag S or K on the chart (or focus them and use the arrow keys). The dashed line is the tangent to the T ≈ {{t}} curve at S; its slope is {{greek}}.",
 };

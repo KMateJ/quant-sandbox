@@ -1,3 +1,4 @@
+import type { BondSpec } from "../../lib/finance/bond";
 /// A point on the price–yield curve: yield to maturity and the resulting bond price.
 export type PriceYieldPoint = {
   ytm: number;
@@ -21,13 +22,7 @@ export type BrokenAxis = {
 };
 
 /// Full parameter set describing a fixed-coupon bond.
-export type BondInputs = {
-  face: number;
-  couponRate: number;
-  ytm: number;
-  years: number;
-  freq: number;
-};
+export type BondInputs = BondSpec;
 
 /// One scheduled payment: its nominal cash flow, discount factor and present value.
 export type CashFlowRow = {

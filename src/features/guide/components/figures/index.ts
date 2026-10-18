@@ -39,6 +39,14 @@ import ExoticPricesFigure from "./ExoticPricesFigure";
 import JumpDensityFigure from "./JumpDensityFigure";
 import CreditSpreadFigure from "./CreditSpreadFigure";
 import FactorVarianceFigure from "./FactorVarianceFigure";
+import EulerConvergenceFigure from "./interactive/EulerConvergenceFigure";
+import MartingaleBettingFigure from "./interactive/MartingaleBettingFigure";
+import CallablePriceYieldFigure from "./interactive/CallablePriceYieldFigure";
+import ImmunizationShockFigure from "./interactive/ImmunizationShockFigure";
+import PerformanceRankingFigure from "./interactive/PerformanceRankingFigure";
+import UtilityIndifferenceFigure from "./interactive/UtilityIndifferenceFigure";
+import MultiplesPeersFigure from "./interactive/MultiplesPeersFigure";
+import AnnuitiesScheduleFigure from "./interactive/AnnuitiesScheduleFigure";
 import CashflowBuilderFigure from "./interactive/CashflowBuilderFigure";
 import AmericanTreeFigure from "./interactive/AmericanTreeFigure";
 import McHistogramFigure from "./interactive/McHistogramFigure";
@@ -101,4 +109,12 @@ export const guideFigures: Record<GuideFigureId, ComponentType> = {
   "duration-balance": DurationBalanceFigure,
   "galton-walk": GaltonWalkFigure,
   "hedge-simulation": HedgeSimulationFigure,
+  "amortization-schedule": AnnuitiesScheduleFigure,
+  "multiples-peers": MultiplesPeersFigure,
+  "utility-indifference": UtilityIndifferenceFigure,
+  "performance-ranking": PerformanceRankingFigure,
+  "immunization-shock": ImmunizationShockFigure,
+  "callable-price-yield": CallablePriceYieldFigure,
+  "martingale-betting": MartingaleBettingFigure,
+  "euler-convergence": EulerConvergenceFigure,
 };
