@@ -55,6 +55,11 @@ test("the matcher finds exact quoted titles only, in both quote styles, and neve
   assert.deepEqual(hu.map((c) => c.id), ["delta-hedging"]);
 });
 
+test("the app's Hungarian title tables (guideTitles.hu.ts) cover every lesson title", async () => {
+  const { guideTitleTablesHu } = await import(await load(new URL("Language/guideTitles.hu.ts", src)));
+  for (const l of guideLessons) assert.equal(guideTitleTablesHu[l.titleKey], tables.hu[l.titleKey], `${l.id}: ${l.titleKey}`);
+});
+
 test("every lesson has a title in both languages, and the graph connects all of them", () => {
   for (const l of guideLessons) for (const lang of ["en", "hu"]) assert.ok(sources.titleOf(l, lang), `${l.id} ${lang}`);
   const g = graph.buildGuideGraph(sources);

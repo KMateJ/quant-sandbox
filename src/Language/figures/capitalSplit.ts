@@ -1,26 +1,5 @@
 // Strings for the "capital-split" guide figure. Keys are prefixed ixCs to stay unique.
-
-export const capitalSplitHu = {
-  ixCsTitle: "A vállalatérték felosztása hitelre és saját tőkére (MM adóval)",
-  ixCsTaxes: "Társasági adó",
-  ixCsNoTax: "Nincs",
-  ixCsUnlevered: "Tőkeáttétel nélkül",
-  ixCsLevered: "Tőkeáttétellel",
-  ixCsDebt: "Hitel D",
-  ixCsEquity: "Saját tőke E",
-  ixCsShield: "Adópajzs tD",
-  ixCsVuMark: "V_U = 100",
-  ixCsHandle: "A hitel és a saját tőke határa",
-  ixCsHandleText: "Hitelarány {{dv}}, hitel {{debt}}",
-  ixCsHint: "Húzd a határvonalat, vagy fókuszálj rá és használd a nyílbillentyűket.",
-  ixCsCostEquity: "Saját tőke költsége r_E",
-  ixCsCostDebt: "Adózás utáni hitelköltség",
-  ixCsRuMark: "r_U",
-  ixCsDebtRatio: "Hitelarány D/V",
-  ixCsLeveredValue: "Vállalatérték V_L",
-  ixCsAria:
-    "Két vízszintes sáv: a tőkeáttétel nélküli vállalat értéke, és alatta a tőkeáttételes vállalaté hitelre, saját tőkére és adópajzsra bontva; alatta a tőkeköltségek.",
-};
+import type { capitalSplitHu } from "./capitalSplit.hu";
 
 export const capitalSplitEn: Record<keyof typeof capitalSplitHu, string> = {
   ixCsTitle: "Firm value split into debt and equity (MM with taxes)",

@@ -1,22 +1,5 @@
 // Strings for the "immunization-shock" guide figure. Keys are prefixed ixIm to stay unique.
-
-export const immunizationShockHu = {
-  ixImTitle: "Immunizáció: hozamsokk az eszközökön és a kötelezettségen",
-  ixImPortfolio: "Portfólió",
-  ixImMatched: "Durációillesztett",
-  ixImShortOnly: "Csak a rövid kötvény",
-  ixImLongOnly: "Csak a hosszú kötvény",
-  ixImHint: "Húzd a sokk jelölőjét, vagy használd a nyílbillentyűket.",
-  ixImShock: "Hozamsokk",
-  ixImShockAria: "Párhuzamos hozamsokk bázispontban",
-  ixImShockText: "{{bp}} bázispont, hozam {{y}}",
-  ixImAssets: "Eszközök jelenértéke",
-  ixImLiability: "Kötelezettség jelenértéke",
-  ixImSurplus: "Többlet",
-  ixImDurations: "Duráció: eszközök / kötelezettség",
-  ixImTrace: "Többlet a hozamsokk függvényében (a bejárt rész kiemelve)",
-  ixImTraceAria: "A többlet görbéje a −300 és +300 bázispont közötti sokkokra",
-};
+import type { immunizationShockHu } from "./immunizationShock.hu";
 
 export const immunizationShockEn: Record<keyof typeof immunizationShockHu, string> = {
   ixImTitle: "Immunization: a yield shock on assets and liability",

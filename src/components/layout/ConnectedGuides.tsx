@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
-import { guideLessons, guidePath } from "../../features/guide/guide.meta";
-import type { GuideLessonMeta } from "../../features/guide/guide.types";
+import { guidePath, relatedLessons } from "../../features/guide/guide.meta";
 import ModuleIcon from "./ModuleIcon";
 
 /// Secondary sidebar section: guides relevant to the active module.
-export default function ConnectedGuides({ ids }: { ids: string[] }) {
+export default function ConnectedGuides({ moduleId, ids }: { moduleId: string; ids?: string[] }) {
   const { t } = useI18n();
-  const guides = ids
-    .map((id) => guideLessons.find((g) => g.id === id))
-    .filter((g): g is GuideLessonMeta => Boolean(g));
+  const guides = relatedLessons(moduleId, ids);
 
   if (guides.length === 0) return null;
 

@@ -1,10 +1,5 @@
 // Shared lab controls: random seed, resample, "try this" prompts.
-
-export const labControlsHu = {
-  labSeed: "Véletlenmag",
-  labResample: "Újramintázás",
-  labTryTitle: "Próbáld ki",
-};
+import type { labControlsHu } from "./LabControls.hu";
 
 export const labControlsEn: Record<keyof typeof labControlsHu, string> = {
   labSeed: "Random seed",

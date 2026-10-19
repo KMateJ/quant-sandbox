@@ -1,34 +1,5 @@
 // Strings for the "performance-ranking" guide figure. Keys are prefixed ixPr to stay unique.
-
-export const performanceRankingHu = {
-  ixPrTitle: "Négy alap rangsora különböző mutatók szerint",
-  ixPrHint: "Kattints egy mutató fejlécére a rangsoroláshoz; vidd az egeret egy sorra vagy pontra.",
-  ixPrTableCaption: "Négy kitalált alap és a piaci index egy évre",
-  ixPrFund: "Alap",
-  ixPrRank: "Hely",
-  ixPrMu: "Hozam",
-  ixPrSigma: "σ",
-  ixPrBeta: "β",
-  ixPrSharpe: "Sharpe",
-  ixPrTreynor: "Treynor",
-  ixPrAlpha: "Alfa",
-  ixPrInfo: "Inf. ráta",
-  ixPrSortBy: "Rangsorolás {{measure}} szerint",
-  ixPrFundName: "{{id}} alap",
-  ixPrMarket: "Piac (M)",
-  ixPrScatterAria: "Az alapok szórásdiagramja a választott mutatóhoz illő tengelyekkel",
-  ixPrAxisSigma: "szórás σ",
-  ixPrAxisBeta: "béta β",
-  ixPrAxisResidual: "egyedi kockázat σ(ε)",
-  ixPrAxisMu: "várható hozam",
-  ixPrAxisAlpha: "alfa α",
-  ixPrLineCml: "tőkepiaci egyenes",
-  ixPrLineSml: "értékpapír-piaci egyenes",
-  ixPrLineInfo: "meredekség = információs ráta",
-  ixPrLeader: "Első a választott mutató szerint",
-  ixPrDisagree: "Sharpe és Treynor szerint más helyen",
-  ixPrDisagreeValue: "{{n}} / {{total}} alap",
-};
+import type { performanceRankingHu } from "./performanceRanking.hu";
 
 export const performanceRankingEn: Record<keyof typeof performanceRankingHu, string> = {
   ixPrTitle: "Ranking four funds by different measures",

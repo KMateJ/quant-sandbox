@@ -1,0 +1,15 @@
+export const cashflowBuilderHu = {
+  ixCfTitle: "Pénzáramok húzással",
+  ixCfAria: "Egy projekt 0–6. évi pénzáramai oszlopokként; a halványabb oszlopok a jelenértékeket mutatják",
+  ixCfHint: "Húzd az oszlopokat fel vagy le (vagy jelöld ki, és használd a nyílbillentyűket).",
+  ixCfRate: "Diszkontráta r",
+  ixCfReset: "Visszaállítás",
+  ixCfYear: "{{year}}. év",
+  ixCfBarAria: "Pénzáram a(z) {{year}}. évben",
+  ixCfLegendFlow: "Pénzáram",
+  ixCfLegendPv: "Jelenérték r mellett",
+  ixCfNpv: "NPV r mellett",
+  ixCfIrr: "IRR",
+  ixCfSeveral: "több IRR lehetséges",
+  ixCfSum: "Diszkontálatlan összeg",
+};

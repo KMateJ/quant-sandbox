@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import i18n from "i18next";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
@@ -9,13 +10,18 @@ import App from "./App.tsx";
 import AppProviders from "./AppProviders";
 import "./styles/main.scss";
 import "katex/dist/katex.min.css";
-import { PRERENDER_LANGUAGE, savedLanguage } from "./languageStorage";
+import { loadLanguage } from "./languageLoader";
+import { languageFromPath, languagePrefix } from "./languageRoutes";
 
 const root = document.getElementById("root")!;
+// The URL is the source of truth for the language; its table must be in before hydration.
+const language = languageFromPath(location.pathname);
+await loadLanguage(language);
+await i18n.changeLanguage(language);
 const app = (
   <StrictMode>
-    <BrowserRouter>
-      <AppProviders>
+    <BrowserRouter basename={languagePrefix(language) || undefined}>
+      <AppProviders language={language}>
         <App />
         <Analytics />
       </AppProviders>
@@ -23,11 +29,9 @@ const app = (
   </StrictMode>
 );
 
-// Production pages arrive pre-rendered in English (see seo.plugin.ts): hydrate them when the reader also reads English.
-// In another language the markup can't match (lazy modules hydrate after any switch), so render fresh instead of
-// letting React discard it with error #418; crawlers and the first paint still get the pre-rendered HTML.
-const language = savedLanguage() ?? PRERENDER_LANGUAGE;
-if (root.hasChildNodes() && language === PRERENDER_LANGUAGE) hydrateRoot(root, app);
+// Production pages arrive pre-rendered in the URL's language (seo.plugin.ts), so the markup matches. The one
+// exception is 404.html (English) served for an unknown `/hu/...` URL: render that fresh instead of hydrating.
+if (root.hasChildNodes() && document.documentElement.lang === language) hydrateRoot(root, app);
 else {
   root.replaceChildren();
   createRoot(root).render(app);

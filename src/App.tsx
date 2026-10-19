@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import NotFound from "./components/layout/NotFound";
 import AppShell from "./components/layout/AppShell";
 import { RouteSeo } from "./seo";
 import { modules, redirects } from "./modules/registry";
@@ -25,7 +26,7 @@ export default function App() {
                 element={
                   <IntuitionProvider key={m.id} document={m.intuition}>
                     <m.Component />
-                    {m.about && <ModuleAboutSection about={m.about} path={m.path} />}
+                    {m.about && <ModuleAboutSection about={m.about} path={m.path} moduleId={m.id} relatedGuides={m.relatedGuides} />}
                   </IntuitionProvider>
                 }
               />
@@ -33,7 +34,7 @@ export default function App() {
             {redirects.map((r) => (
               <Route key={r.from} path={r.from} element={<Navigate to={r.to} replace />} />
             ))}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </AppShell>

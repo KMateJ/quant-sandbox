@@ -8,27 +8,19 @@ type GuideLinkProps = {
   className?: string;
 };
 
+// Always a router <Link>, even in a new tab, so the href carries the language prefix (router basename).
 export default function GuideLink({
   to,
   children,
   newTab = true,
   className,
 }: GuideLinkProps) {
-  if (newTab) {
-    return (
-      <a
-        href={to}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
-        {children}
-      </a>
-    );
-  }
-
   return (
-    <Link to={to} className={className}>
+    <Link
+      to={to}
+      className={className}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </Link>
   );

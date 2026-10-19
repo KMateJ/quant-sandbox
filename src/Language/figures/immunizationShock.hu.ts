@@ -1,0 +1,17 @@
+export const immunizationShockHu = {
+  ixImTitle: "Immunizáció: hozamsokk az eszközökön és a kötelezettségen",
+  ixImPortfolio: "Portfólió",
+  ixImMatched: "Durációillesztett",
+  ixImShortOnly: "Csak a rövid kötvény",
+  ixImLongOnly: "Csak a hosszú kötvény",
+  ixImHint: "Húzd a sokk jelölőjét, vagy használd a nyílbillentyűket.",
+  ixImShock: "Hozamsokk",
+  ixImShockAria: "Párhuzamos hozamsokk bázispontban",
+  ixImShockText: "{{bp}} bázispont, hozam {{y}}",
+  ixImAssets: "Eszközök jelenértéke",
+  ixImLiability: "Kötelezettség jelenértéke",
+  ixImSurplus: "Többlet",
+  ixImDurations: "Duráció: eszközök / kötelezettség",
+  ixImTrace: "Többlet a hozamsokk függvényében (a bejárt rész kiemelve)",
+  ixImTraceAria: "A többlet görbéje a −300 és +300 bázispont közötti sokkokra",
+};

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
-import { translations, useI18n } from "../../../../i18n";
+import { useI18n } from "../../../../i18n";
+import { en, type TranslationKey } from "../../../../Language/index.en";
+import { guideTitleTablesHu } from "../../../../Language/guideTitles.hu";
 import { CATEGORY_ACCENT, modules } from "../../../../modules/registry";
 import { guideContent } from "../../../../Language/guides";
 import { guideLessons, guidePath } from "../../guide.meta";
@@ -7,11 +9,14 @@ import { buildGuideGraph, learningPath, type GraphEdge, type GraphNode, type Gui
 import { forceLayout, type LayoutEdge, type Point } from "../../guide.graph.layout";
 import type { GuideTrackId } from "../../guide.types";
 
+// The graph indexes citations in both languages; only the Hungarian lesson titles are needed for that.
+const TABLES: Record<"en" | "hu", Partial<Record<TranslationKey, string>>> = { en, hu: guideTitleTablesHu };
+
 /// The whole curriculum graph; built once per page load (pure, a few milliseconds).
 export const GUIDE_GRAPH: GuideGraph = buildGuideGraph({
   lessons: guideLessons,
   content: guideContent,
-  titleOf: (lesson, lang) => translations[lang][lesson.titleKey],
+  titleOf: (lesson, lang) => TABLES[lang][lesson.titleKey] ?? "",
   moduleIdForPath: (path) => modules.find((m) => m.path === path.split(/[?#]/)[0])?.id,
 });
 

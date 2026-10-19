@@ -43,7 +43,8 @@ export interface ModuleDef {
   icon?: string;
   category?: ModuleCategory; // home has none (landing page)
   status: ModuleStatus;
-  seo: { title: string; description: string };
+  /// Search-result title and description, as keys into the Seo tables (EN and HU).
+  seo: { titleKey: TranslationKey; descKey: TranslationKey };
   /// Searchable intro and FAQ shown below the workspace.
   about?: ModuleAbout;
   Component: LazyExoticComponent<ComponentType>;
@@ -116,11 +117,7 @@ export const modules: ModuleDef[] = [
     navKey: "navHome",
     status: "live",
     end: true,
-    seo: {
-      title: "Interactive Quant Finance Visualizations & Simulators",
-      description:
-        "Free interactive tools for quantitative finance: option payoffs, Black–Scholes Greeks, binomial trees, portfolio optimization, bonds, yield curves and stochastic calculus.",
-    },
+    seo: { titleKey: "seoTitleHome", descKey: "seoDescHome" },
     Component: lazy(() => import("../features/home/HomeView").then((m) => ({ default: m.HomeView }))),
   },
   {
@@ -130,11 +127,7 @@ export const modules: ModuleDef[] = [
     navKey: "navPayoff",
     category: "derivatives",
     status: "live",
-    seo: {
-      title: "Option Payoff Diagram & Strategy Builder",
-      description:
-        "Build option strategies and see payoff and profit diagrams instantly: calls, puts, covered calls, spreads, straddles, strangles, butterflies and synthetic forwards.",
-    },
+    seo: { titleKey: "seoTitlePayoff", descKey: "seoDescPayoff" },
     about: moduleAbout("Payoff"),
     relatedGuides: ["instruments", "strategies", "no-arbitrage", "put-call-parity"],
     Component: lazy(() => import("../features/payoff-lab/PayofView")),
@@ -146,11 +139,7 @@ export const modules: ModuleDef[] = [
     navKey: "navBinomial",
     category: "derivatives",
     status: "live",
-    seo: {
-      title: "Binomial Option Pricing Tree Calculator",
-      description:
-        "Price options on an interactive binomial tree: risk-neutral probabilities, backward induction and the replicating portfolio at every node.",
-    },
+    seo: { titleKey: "seoTitleBinomial", descKey: "seoDescBinomial" },
     about: moduleAbout("Binomial"),
     relatedGuides: ["one-step-binomial", "risk-neutral", "multi-step-trees"],
     Component: lazy(() => import("../features/binomial/BinomialView")),
@@ -162,11 +151,7 @@ export const modules: ModuleDef[] = [
     navKey: "navBlackScholes",
     category: "derivatives",
     status: "live",
-    seo: {
-      title: "Black–Scholes Calculator & Option Greeks Visualizer",
-      description:
-        "Price European calls and puts with the Black–Scholes formula and visualize delta, gamma, vega and theta across stock prices and maturities, in 2D and 3D.",
-    },
+    seo: { titleKey: "seoTitleBlackScholes", descKey: "seoDescBlackScholes" },
     about: moduleAbout("BlackScholes"),
     relatedGuides: ["toward-black-scholes", "delta-hedging", "put-call-parity"],
     Component: lazy(() => import("../features/black-scholes/BlackScholesView")),
@@ -178,11 +163,7 @@ export const modules: ModuleDef[] = [
     navKey: "navHeston",
     category: "derivatives",
     status: "live",
-    seo: {
-      title: "Heston Stochastic Volatility Model Simulator",
-      description:
-        "Simulate the Heston model: mean-reverting stochastic variance, vol-of-vol and correlation, with sample paths and Monte Carlo option pricing.",
-    },
+    seo: { titleKey: "seoTitleHeston", descKey: "seoDescHeston" },
     about: moduleAbout("Heston"),
     relatedGuides: ["toward-black-scholes", "gbm"],
     Component: lazy(() => import("../features/heston/HestonView")),
@@ -193,11 +174,7 @@ export const modules: ModuleDef[] = [
     navKey: "navDeltaHedging",
     category: "derivatives",
     status: "beta",
-    seo: {
-      title: "Delta Hedging Simulator for Options",
-      description:
-        "Simulate discrete delta hedging of a call option: a replicating portfolio tracks the option value, rebalanced along a simulated stock path, with the residual hedge error.",
-    },
+    seo: { titleKey: "seoTitleDeltaHedging", descKey: "seoDescDeltaHedging" },
     about: moduleAbout("DeltaHedging"),
     relatedGuides: ["delta-hedging", "multi-step-trees"],
     Component: lazy(() => import("../features/delta-hedging/DeltaHedgingView")),
@@ -209,12 +186,8 @@ export const modules: ModuleDef[] = [
     navKey: "navBondPricing",
     category: "fixed-income",
     status: "beta",
-    seo: {
-      title: "Bond Pricing Calculator & Price–Yield Curve",
-      description:
-        "Value a bond from its cash flows: discounting to present value, price, duration, convexity and a draggable price–yield curve.",
-    },
-    about: moduleAbout("BondPricing"),
+    seo: { titleKey: "seoTitleBondPricing", descKey: "seoDescBondPricing" },
+    about: moduleAbout("BondPricing", 4),
     relatedGuides: ["bond-pricing", "duration-convexity"],
     Component: lazy(() => import("../features/bond-pricing/BondPricingView")),
   },
@@ -225,12 +198,8 @@ export const modules: ModuleDef[] = [
     navKey: "navYieldCurve",
     category: "fixed-income",
     status: "beta",
-    seo: {
-      title: "Yield Curve Bootstrapping, Spot & Forward Rates",
-      description:
-        "Shape a par yield curve by level, slope and curvature, bootstrap the spot curve and read off forward rates interactively.",
-    },
-    about: moduleAbout("YieldCurve"),
+    seo: { titleKey: "seoTitleYieldCurve", descKey: "seoDescYieldCurve" },
+    about: moduleAbout("YieldCurve", 4),
     relatedGuides: ["yield-curve", "bond-pricing"],
     Component: lazy(() => import("../features/yield-curve/YieldCurveView")),
   },
@@ -241,12 +210,8 @@ export const modules: ModuleDef[] = [
     navKey: "navDurationConvexity",
     category: "fixed-income",
     status: "beta",
-    seo: {
-      title: "Bond Duration & Convexity Approximation",
-      description:
-        "Compare a bond's exact price–yield curve with its duration and duration-plus-convexity approximations, and see where each one breaks down.",
-    },
-    about: moduleAbout("DurationConvexity"),
+    seo: { titleKey: "seoTitleDurationConvexity", descKey: "seoDescDurationConvexity" },
+    about: moduleAbout("DurationConvexity", 4),
     relatedGuides: ["duration-convexity", "bond-pricing"],
     Component: lazy(() => import("../features/duration-convexity/DurationConvexityView")),
   },
@@ -257,12 +222,8 @@ export const modules: ModuleDef[] = [
     navKey: "navTreasuryFutures",
     category: "fixed-income",
     status: "beta",
-    seo: {
-      title: "Treasury Futures: Conversion Factors & Cheapest-to-Deliver",
-      description:
-        "Explore Treasury bond futures: conversion factors, invoice prices, deliverable cash flows and cheapest-to-deliver switching as yields move.",
-    },
-    about: moduleAbout("TreasuryFutures"),
+    seo: { titleKey: "seoTitleTreasuryFutures", descKey: "seoDescTreasuryFutures" },
+    about: moduleAbout("TreasuryFutures", 4),
     relatedGuides: ["yield-curve", "duration-convexity"],
     Component: lazy(() => import("../features/treasury-futures/TreasuryFuturesView")),
   },
@@ -272,12 +233,8 @@ export const modules: ModuleDef[] = [
     navKey: "navRiskReturn",
     category: "portfolio",
     status: "beta",
-    seo: {
-      title: "Capital Allocation Line & Sharpe Ratio Visualizer",
-      description:
-        "Combine a risky asset with the risk-free rate: expected return, volatility, the Sharpe ratio and leverage along the capital allocation line.",
-    },
-    about: moduleAbout("RiskReturn"),
+    seo: { titleKey: "seoTitleRiskReturn", descKey: "seoDescRiskReturn" },
+    about: moduleAbout("RiskReturn", 4),
     relatedGuides: ["returns-volatility", "diversification"],
     Component: lazy(() => import("../features/risk-return/RiskReturnView")),
   },
@@ -287,12 +244,8 @@ export const modules: ModuleDef[] = [
     navKey: "navCapm",
     category: "portfolio",
     status: "beta",
-    seo: {
-      title: "CAPM Calculator & Security Market Line",
-      description:
-        "Interactive Capital Asset Pricing Model: beta, the market risk premium, the security market line and Jensen's alpha for individual assets.",
-    },
-    about: moduleAbout("Capm"),
+    seo: { titleKey: "seoTitleCapm", descKey: "seoDescCapm" },
+    about: moduleAbout("Capm", 4),
     relatedGuides: ["capm", "efficient-frontier"],
     Component: lazy(() => import("../features/capm/CapmView")),
   },
@@ -302,12 +255,8 @@ export const modules: ModuleDef[] = [
     navKey: "navPortfolioLab",
     category: "portfolio",
     status: "beta",
-    seo: {
-      title: "Two-Asset Portfolio: Diversification & Correlation",
-      description:
-        "See how correlation drives diversification: expected return, volatility and the minimum-variance portfolio of two assets on an interactive frontier.",
-    },
-    about: moduleAbout("PortfolioLab"),
+    seo: { titleKey: "seoTitlePortfolioLab", descKey: "seoDescPortfolioLab" },
+    about: moduleAbout("PortfolioLab", 4),
     relatedGuides: ["diversification", "efficient-frontier"],
     Component: lazy(() => import("../features/portfolio-lab/PortfolioLabView")),
   },
@@ -318,12 +267,8 @@ export const modules: ModuleDef[] = [
     navKey: "navEfficientFrontier",
     category: "portfolio",
     status: "beta",
-    seo: {
-      title: "Efficient Frontier & Markowitz Portfolio Optimization",
-      description:
-        "Markowitz mean–variance optimization: the efficient frontier, minimum-variance and maximum-Sharpe (tangency) portfolios, target return or volatility, and the cost of constraints.",
-    },
-    about: moduleAbout("EfficientFrontier"),
+    seo: { titleKey: "seoTitleEfficientFrontier", descKey: "seoDescEfficientFrontier" },
+    about: moduleAbout("EfficientFrontier", 4),
     relatedGuides: ["efficient-frontier", "diversification", "capm"],
     Component: lazy(() => import("../features/efficient-frontier/PortfolioOptimizationView")),
   },
@@ -333,12 +278,8 @@ export const modules: ModuleDef[] = [
     navKey: "navNpvIrr",
     category: "corporate",
     status: "beta",
-    seo: {
-      title: "NPV & IRR Calculator with NPV Profile",
-      description:
-        "Capital budgeting made visual: net present value, internal rate of return, profitability index and the NPV profile across discount rates.",
-    },
-    about: moduleAbout("NpvIrr"),
+    seo: { titleKey: "seoTitleNpvIrr", descKey: "seoDescNpvIrr" },
+    about: moduleAbout("NpvIrr", 4),
     relatedGuides: ["npv-irr", "interest-discounting"],
     Component: lazy(() => import("../features/npv-irr/NpvIrrView")),
   },
@@ -348,12 +289,8 @@ export const modules: ModuleDef[] = [
     navKey: "navValuation",
     category: "corporate",
     status: "beta",
-    seo: {
-      title: "DCF Valuation Model: Free Cash Flow & Terminal Value",
-      description:
-        "Build a discounted cash flow valuation: free cash flow projection, terminal value, discounting at WACC and enterprise value.",
-    },
-    about: moduleAbout("Valuation"),
+    seo: { titleKey: "seoTitleValuation", descKey: "seoDescValuation" },
+    about: moduleAbout("Valuation", 4),
     relatedGuides: ["dcf-valuation", "wacc"],
     Component: lazy(() => import("../features/valuation/ValuationView")),
   },
@@ -363,12 +300,8 @@ export const modules: ModuleDef[] = [
     navKey: "navTvm",
     category: "corporate",
     status: "beta",
-    seo: {
-      title: "Time Value of Money & Compound Interest Calculator",
-      description:
-        "Compound growth of a principal and regular contributions over time, splitting the final balance into interest earned and money paid in.",
-    },
-    about: moduleAbout("Tvm"),
+    seo: { titleKey: "seoTitleTvm", descKey: "seoDescTvm" },
+    about: moduleAbout("Tvm", 4),
     relatedGuides: ["interest-discounting", "npv-irr"],
     Component: lazy(() => import("../features/tvm/TvmView")),
   },
@@ -378,12 +311,8 @@ export const modules: ModuleDef[] = [
     navKey: "navWacc",
     category: "corporate",
     status: "beta",
-    seo: {
-      title: "WACC Calculator: Weighted Average Cost of Capital",
-      description:
-        "Compute the weighted average cost of capital: cost of equity, after-tax cost of debt, the tax shield and how leverage changes WACC.",
-    },
-    about: moduleAbout("Wacc"),
+    seo: { titleKey: "seoTitleWacc", descKey: "seoDescWacc" },
+    about: moduleAbout("Wacc", 4),
     relatedGuides: ["wacc", "capital-structure"],
     Component: lazy(() => import("../features/wacc/WaccView")),
   },
@@ -393,12 +322,8 @@ export const modules: ModuleDef[] = [
     navKey: "navCapitalStructure",
     category: "corporate",
     status: "beta",
-    seo: {
-      title: "Modigliani–Miller Capital Structure Visualizer",
-      description:
-        "Modigliani–Miller with and without taxes: levered cost of equity, WACC and the interest tax shield as leverage changes.",
-    },
-    about: moduleAbout("CapitalStructure"),
+    seo: { titleKey: "seoTitleCapitalStructure", descKey: "seoDescCapitalStructure" },
+    about: moduleAbout("CapitalStructure", 4),
     relatedGuides: ["capital-structure", "wacc"],
     Component: lazy(() => import("../features/capital-structure/CapitalStructureView")),
   },
@@ -410,12 +335,8 @@ export const modules: ModuleDef[] = [
     status: "beta",
     intuition: stochasticModelsIntuition,
     subNav: lessonNavItems(),
-    seo: {
-      title: "Stochastic Calculus Course: Random Walks to Brownian Motion",
-      description:
-        "Interactive stochastic calculus lessons: random walks, the central limit theorem, the Wiener process, the reflection principle and first passage times, learned by experiment.",
-    },
-    about: moduleAbout("StochasticModels"),
+    seo: { titleKey: "seoTitleStochasticModels", descKey: "seoDescStochasticModels" },
+    about: moduleAbout("StochasticModels", 4),
     Component: lazy(() => import("../features/stochastic-models/StochasticModelsView")),
   },
   {
@@ -424,12 +345,8 @@ export const modules: ModuleDef[] = [
     navKey: "navBrownianMotion",
     category: "stochastic",
     status: "beta",
-    seo: {
-      title: "Brownian Motion Simulator with Drift & Volatility",
-      description:
-        "Simulate arithmetic Brownian motion: drift, volatility and reproducible seeded sample paths, with the mean and spread over time.",
-    },
-    about: moduleAbout("BrownianMotion"),
+    seo: { titleKey: "seoTitleBrownianMotion", descKey: "seoDescBrownianMotion" },
+    about: moduleAbout("BrownianMotion", 4),
     relatedGuides: ["random-walks", "ito-lemma"],
     Component: lazy(() => import("../features/brownian-motion/BrownianMotionView")),
   },
@@ -439,12 +356,8 @@ export const modules: ModuleDef[] = [
     navKey: "navGbm",
     category: "stochastic",
     status: "beta",
-    seo: {
-      title: "Geometric Brownian Motion (GBM) Simulator",
-      description:
-        "Simulate geometric Brownian motion, the stock price model behind Black–Scholes: drift, volatility, sample paths and the theoretical expected value.",
-    },
-    about: moduleAbout("Gbm"),
+    seo: { titleKey: "seoTitleGbm", descKey: "seoDescGbm" },
+    about: moduleAbout("Gbm", 4),
     relatedGuides: ["gbm", "returns-volatility"],
     Component: lazy(() => import("../features/gbm/GbmView")),
   },
@@ -454,12 +367,8 @@ export const modules: ModuleDef[] = [
     navKey: "navItoProcess",
     category: "stochastic",
     status: "beta",
-    seo: {
-      title: "Itô's Lemma Visualized: the −½σ² Drift Correction",
-      description:
-        "See Itô's lemma at work on log prices: why the log of geometric Brownian motion drifts at μ − ½σ² instead of μ.",
-    },
-    about: moduleAbout("ItoProcess"),
+    seo: { titleKey: "seoTitleItoProcess", descKey: "seoDescItoProcess" },
+    about: moduleAbout("ItoProcess", 4),
     relatedGuides: ["ito-lemma", "random-walks"],
     Component: lazy(() => import("../features/ito-process/ItoProcessView")),
   },
@@ -469,40 +378,16 @@ export const modules: ModuleDef[] = [
     navKey: "navMonteCarlo",
     category: "stochastic",
     status: "beta",
-    seo: {
-      title: "Monte Carlo Option Pricing Simulator",
-      description:
-        "Price a European option by Monte Carlo: simulate terminal stock prices and watch the estimate and its confidence interval converge to Black–Scholes.",
-    },
-    about: moduleAbout("MonteCarlo"),
+    seo: { titleKey: "seoTitleMonteCarlo", descKey: "seoDescMonteCarlo" },
+    about: moduleAbout("MonteCarlo", 4),
     relatedGuides: ["monte-carlo-pricing", "gbm"],
     Component: lazy(() => import("../features/monte-carlo/MonteCarloView")),
   },
-  guideModule("derivatives", {
-    title: "Option Pricing Course: From Payoffs to Black–Scholes and Heston",
-    description:
-      "Free step-by-step option pricing lessons: payoffs, no-arbitrage, binomial trees, delta hedging, the Greeks, Black–Scholes, implied volatility and Heston.",
-  }),
-  guideModule("portfolio", {
-    title: "Portfolio Theory Course: Diversification, Efficient Frontier & CAPM",
-    description:
-      "Free step-by-step lessons on returns and volatility, diversification and correlation, the efficient frontier, the Sharpe ratio, CAPM and beta, and Value at Risk.",
-  }),
-  guideModule("fixed-income", {
-    title: "Fixed Income Course: Bond Pricing, Yield Curves & Duration",
-    description:
-      "Free step-by-step lessons on bond prices and yields, duration and convexity, spot and forward rates, Treasury futures and interest rate swaps.",
-  }),
-  guideModule("corporate", {
-    title: "Corporate Finance Course: NPV, IRR, WACC & DCF Valuation",
-    description:
-      "Free step-by-step lessons on compounding and discounting, NPV and IRR, the cost of capital, Modigliani–Miller capital structure and DCF valuation.",
-  }),
-  guideModule("stochastic", {
-    title: "Stochastic Calculus for Finance: Brownian Motion, Itô & Monte Carlo",
-    description:
-      "Free step-by-step lessons on random walks and Brownian motion, Itô's lemma, change of measure, Monte Carlo option pricing and mean-reverting processes.",
-  }),
+  guideModule("derivatives", { titleKey: "seoTitleGuideDerivatives", descKey: "seoDescGuideDerivatives" }),
+  guideModule("portfolio", { titleKey: "seoTitleGuidePortfolio", descKey: "seoDescGuidePortfolio" }),
+  guideModule("fixed-income", { titleKey: "seoTitleGuideFixedIncome", descKey: "seoDescGuideFixedIncome" }),
+  guideModule("corporate", { titleKey: "seoTitleGuideCorporate", descKey: "seoDescGuideCorporate" }),
+  guideModule("stochastic", { titleKey: "seoTitleGuideStochastic", descKey: "seoDescGuideStochastic" }),
   {
     id: "guide-graph",
     path: "/guide/graph",
@@ -510,11 +395,7 @@ export const modules: ModuleDef[] = [
     icon: "guide",
     category: "guides",
     status: "live",
-    seo: {
-      title: "Knowledge graph of the quant finance guides",
-      description:
-        "Interactive map of every guide lesson and lab: which lessons build on which, by track, with links to each lesson.",
-    },
+    seo: { titleKey: "seoTitleGuideGraph", descKey: "seoDescGuideGraph" },
     Component: lazy(() => import("../features/guide/components/graph/GuideGraphPage")),
   },
 ];

@@ -1,36 +1,5 @@
 // Guide track strings: lesson titles, descriptions and figure labels.
-
-export const guideCorporateHu = {
-  guideNpvIrrTitle: "Nettó jelenérték és belső megtérülési ráta",
-  guideNpvIrrDesc: "Projekt-pénzáramok, NPV, az NPV-profil, IRR, jövedelmezőségi index, és ahol az IRR félrevezet.",
-  guideWaccTitle: "Súlyozott átlagos tőkeköltség",
-  guideWaccDesc: "A saját tőke költsége, az adózás utáni hitelköltség, a kamatadópajzs és a piaci értékű súlyok.",
-  guideCapitalStructureTitle: "Tőkeszerkezet és a Modigliani–Miller-tételek",
-  guideCapitalStructureDesc: "Az MM I. és II. tétele adók nélkül, a kamatadópajzs, a tőkeáttételes saját tőke költsége és a WACC adóval.",
-  guideDcfTitle: "Diszkontált pénzáram alapú értékelés",
-  guideDcfDesc: "Szabad pénzáram, vállalatérték, Gordon-féle maradványérték és a saját tőke értéke.",
-  gfFieldCashflow: "Éves pénzáram C",
-  gfFieldDiscountRate: "Diszkontráta r",
-  gfNpvTitle: "NPV-profil",
-  gfNpvAria: "A projekt nettó jelenértéke a diszkontráta függvényében; ahol nullát metsz, ott van az IRR",
-  gfNpvAtR: "NPV r mellett",
-  gfUndiscountedSum: "Diszkontálatlan összeg",
-  gfFieldRU: "Tőkeáttétel nélküli tőkeköltség r_U",
-  gfFieldRD: "Hitelköltség r_D",
-  gfFieldTax: "Társasági adókulcs t",
-  gfFieldDebtRatio: "Adósságarány D/V",
-  gfWaccTitle: "Tőkeköltségek és tőkeáttétel (MM adóval)",
-  gfWaccAria: "A saját tőke költsége, az adózás utáni hitelköltség és a WACC az adósságarány függvényében",
-  gfCostOfEquity: "Saját tőke költsége r_E",
-  gfAfterTaxDebt: "Adózás utáni hitelköltség",
-  gfFieldGrowth: "Örökös növekedés g",
-  gfDcfTitle: "DCF-érték: előrejelzési évek és maradványérték",
-  gfDcfAria: "Az 1–5. év jelenértéke, a maradványérték jelenértéke és az összes érték a növekedési ráta függvényében",
-  gfPvExplicit: "1–5. év jelenértéke",
-  gfPvTerminal: "Maradványérték jelenértéke",
-  gfTotalValue: "Összes érték",
-  gfTerminalShare: "Maradványérték aránya",
-};
+import type { guideCorporateHu } from "./GuideCorporate.hu";
 
 export const guideCorporateEn: Record<keyof typeof guideCorporateHu, string> = {
   guideNpvIrrTitle: "Net present value and internal rate of return",

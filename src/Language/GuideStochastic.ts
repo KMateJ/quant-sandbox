@@ -1,34 +1,5 @@
 // Guide track strings: lesson titles, descriptions and figure labels.
-
-export const guideStochasticHu = {
-  guideItoTitle: "Az Itô-lemma",
-  guideItoDesc: "Kvadratikus variáció, láncszabály Brown-mozgásra és a logaritmikus ár −½σ² driftje.",
-  guideMonteCarloTitle: "Monte Carlo-opcióárazás",
-  guideMonteCarloDesc: "Opcióárak becslése szimulációval: standard hiba, konfidenciaintervallum és konvergencia a Black–Scholes-árhoz.",
-  gfQvTitle: "Kvadratikus variáció",
-  gfQvAria: "A Σ(ΔW)² futó összege négy Brown-pályára {{n}} lépéssel, a t egyenessel összevetve",
-  gfQvMean: "Σ(ΔW)² átlaga t = 1-ben ({{count}} pálya)",
-  gfQvSd: "Σ(ΔW)² szórása",
-  gfTotalVariation: "Σ|ΔW| átlaga",
-  gfMcTitle: "Monte Carlo-becslés konvergenciája",
-  gfMcAria: "A call ár futó Monte Carlo-becslése 95%-os sávval és a Black–Scholes-árral",
-  gfNewSample: "Új minta",
-  gfBand95: "±1,96 · SE",
-  gfMcEstimate: "Monte Carlo-becslés",
-  gfMcEstimateAt: "Becslés, n = {{n}}",
-  gfStandardError: "Standard hiba",
-  gfError: "Eltérés",
-  gfGirsanovTitle: "A log-hozam eloszlása P és Q alatt",
-  gfGirsanovAria: "Az ln(S_T/S₀) sűrűsége a valós és a kockázatsemleges mérték alatt, valamint az átsúlyozott P-minta",
-  gfDensityP: "Sűrűség P alatt",
-  gfDensityQ: "Sűrűség Q alatt",
-  gfReweighted: "P-minta dQ/dP-vel átsúlyozva",
-  gfMeanUnderP: "Várható érték P alatt",
-  gfMeanUnderQ: "Várható érték Q alatt",
-  gfReweightedMean: "Átsúlyozott minta átlaga",
-  guideMeasureTitle: "Mértékcsere és a Girsanov-tétel",
-  guideMeasureDesc: "Valószínűségek átsúlyozása sűrűséggel, ekvivalens mértékek, a Girsanov-tétel és a kockázat piaci ára.",
-};
+import type { guideStochasticHu } from "./GuideStochastic.hu";
 
 export const guideStochasticEn: Record<keyof typeof guideStochasticHu, string> = {
   guideItoTitle: "Itô's lemma",

@@ -60,9 +60,7 @@ export default function Sidebar({ category }: { category: ModuleCategory }) {
           })}
         </nav>
 
-        {activeModule?.relatedGuides?.length ? (
-          <ConnectedGuides ids={activeModule.relatedGuides} />
-        ) : null}
+        {activeModule && <ConnectedGuides moduleId={activeModule.id} ids={activeModule.relatedGuides} />}
       </div>
     </aside>
   );

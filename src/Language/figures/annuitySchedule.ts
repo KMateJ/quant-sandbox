@@ -1,26 +1,5 @@
 // Strings for the "amortization-schedule" guide figure. Keys are prefixed ixAn to stay unique.
-
-export const annuityScheduleHu = {
-  ixAnTitle: "Törlesztési terv: kamat és tőke évről évre",
-  ixAnTerm: "Futamidő",
-  ixAnTermOption: "{{n}} év",
-  ixAnRate: "Kamatláb",
-  ixAnHint: "Kattints egy évre (vagy válaszd ki a Tab billentyűvel, majd Enter), és alatta megjelenik a törlesztési terv adott sora.",
-  ixAnAria: "Évenkénti törlesztőrészletek kamat- és tőkerészre bontva, a fennálló tartozással",
-  ixAnBarAria: "{{year}}. év: kamat {{interest}}, tőke {{principal}}",
-  ixAnInterest: "Kamat",
-  ixAnPrincipal: "Tőketörlesztés",
-  ixAnBalance: "Fennálló tartozás (év végén)",
-  ixAnYear: "{{year}}. év",
-  ixAnOpening: "Nyitó tartozás",
-  ixAnPayment: "Részlet",
-  ixAnClosing: "Záró tartozás",
-  ixAnInterestLine: "Kamat = {{rate}} × {{opening}} = {{interest}}",
-  ixAnPrincipalLine: "Tőke = {{payment}} − {{interest}} = {{principal}}",
-  ixAnClosingLine: "Záró tartozás = {{opening}} − {{principal}} = {{closing}}",
-  ixAnTotalInterest: "Összes kifizetett kamat",
-  ixAnFirstShare: "Az első részlet kamathányada",
-};
+import type { annuityScheduleHu } from "./annuitySchedule.hu";
 
 export const annuityScheduleEn: Record<keyof typeof annuityScheduleHu, string> = {
   ixAnTitle: "Amortization schedule: interest and principal year by year",

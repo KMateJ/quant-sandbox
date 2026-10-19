@@ -135,3 +135,10 @@ export const guideRedirects = (): { from: string; to: string }[] => [
   { from: GUIDE_PATH, to: guideTrackPath(guideTracks[0].id) },
   ...guideLessons.map((l) => ({ from: `${GUIDE_PATH}/${l.id}`, to: guidePath(l.id) })),
 ];
+
+/// Lessons connected to a lab: its `relatedGuides` first, then lessons that list the lab in `labs`, without duplicates.
+export function relatedLessons(moduleId: string, relatedGuides: string[] = []): GuideLessonMeta[] {
+  const listed = relatedGuides.map((id) => guideLessons.find((l) => l.id === id)).filter((l): l is GuideLessonMeta => Boolean(l));
+  const linked = guideLessons.filter((l) => l.labs.includes(moduleId));
+  return [...new Set([...listed, ...linked])];
+}

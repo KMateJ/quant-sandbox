@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useI18n } from "./i18n";
 import { BASE_URL, SITE_NAME, seoPages } from "./seo.routes";
+import { localizedPath } from "./languageRoutes";
 
 type SeoProps = {
   title: string;
@@ -76,12 +77,13 @@ export function Seo({ title, description, path = "/" }: SeoProps) {
   return null;
 }
 
-/// Head tags for the current route, looked up in the shared page list (modules and lessons).
+/// Head tags for the current route, looked up in the shared page list (modules and lessons). The router
+/// pathname has no language prefix; the canonical gets it back.
 export function RouteSeo() {
   const { pathname } = useLocation();
   const { t, language } = useI18n();
   const page = useMemo(
-    () => seoPages(t, language === "en").find((p) => p.path === pathname),
+    () => seoPages(t, language).find((p) => p.path === localizedPath(pathname, language)),
     [t, language, pathname]
   );
   return page ? <Seo title={page.title} description={page.description} path={page.path} /> : null;

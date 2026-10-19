@@ -1,0 +1,15 @@
+export const diffusionHu = {
+  diffusionKappaLabel: "κ (diffúzió)",
+  diffusionNLabel: "n (hullámszám)",
+  diffusionTMinLabel: "t_min",
+  diffusionTMaxLabel: "t_max",
+  diffusionCurveCountLabel: "Görbék száma",
+  diffusionCurveCountUnit: "db",
+  diffusionTimeRange: "Időtartomány",
+  diffusionMaxAmplitude: "Max amplitúdó skála",
+  diffusionCurvesShort: "görbék",
+  diffusionChartTitle: "Diffúziós egyenlet",
+  diffusionTooltipX: "x",
+  diffusionExplanationTitle: "Intuíció",
+  diffusionExplanationSubtitle: "Mit látunk a diffúziós egyenletnél?",
+};

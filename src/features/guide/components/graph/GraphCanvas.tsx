@@ -1,5 +1,7 @@
 import { useMemo, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
+import { useI18n } from "../../../../i18n";
+import { localizedPath } from "../../../../languageRoutes";
 import { edgeKey, type GraphEdge, type GraphNode } from "../../guide.graph";
 import { placeLabels, type Point } from "../../guide.graph.layout";
 import GraphClusters from "./GraphClusters";
@@ -39,6 +41,7 @@ type Props = {
 /// SVG force graph: nodes are real links; hover/focus highlights a node's neighbourhood.
 export default function GraphCanvas({ nodes, edges, positions, width, height, label, isRead, active, onActive, matches, ariaLabel, restLabels = 8, labelNeighbours = true, nodeScale = 1, path, onSelect, chrome = false }: Props) {
   const navigate = useNavigate();
+  const { language } = useI18n();
   const radius = (n: GraphNode) => nodeRadius(n) * nodeScale;
   // Fit the laid-out graph into the canvas, leaving room for labels below and beside the outer nodes.
   const home = useMemo(() => {
@@ -92,7 +95,8 @@ export default function GraphCanvas({ nodes, edges, positions, width, height, la
             return (
               <a
                 key={n.id}
-                href={nodeHref(n)}
+                // A plain SVG link skips the router basename, so the language prefix is added here; clicks use navigate().
+                href={localizedPath(nodeHref(n), language)}
                 className={`gg-node gg-node--${n.kind}${dim(n.id)}${matches.has(n.id) ? " is-match" : ""}${isRead(n) ? " is-read" : ""}${n.id === target ? " is-target" : ""}`}
                 style={{ "--gg-color": nodeColor(n), "--i": Math.min(i, 40) } as CSSProperties}
                 aria-label={label(n)}

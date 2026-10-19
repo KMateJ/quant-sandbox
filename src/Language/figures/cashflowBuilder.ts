@@ -1,20 +1,5 @@
 // Strings for the "cashflow-builder" guide figure. Keys are prefixed ixCf to stay unique.
-
-export const cashflowBuilderHu = {
-  ixCfTitle: "Pénzáramok húzással",
-  ixCfAria: "Egy projekt 0–6. évi pénzáramai oszlopokként; a halványabb oszlopok a jelenértékeket mutatják",
-  ixCfHint: "Húzd az oszlopokat fel vagy le (vagy jelöld ki, és használd a nyílbillentyűket).",
-  ixCfRate: "Diszkontráta r",
-  ixCfReset: "Visszaállítás",
-  ixCfYear: "{{year}}. év",
-  ixCfBarAria: "Pénzáram a(z) {{year}}. évben",
-  ixCfLegendFlow: "Pénzáram",
-  ixCfLegendPv: "Jelenérték r mellett",
-  ixCfNpv: "NPV r mellett",
-  ixCfIrr: "IRR",
-  ixCfSeveral: "több IRR lehetséges",
-  ixCfSum: "Diszkontálatlan összeg",
-};
+import type { cashflowBuilderHu } from "./cashflowBuilder.hu";
 
 export const cashflowBuilderEn: Record<keyof typeof cashflowBuilderHu, string> = {
   ixCfTitle: "Drag the cash flows",

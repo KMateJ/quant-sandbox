@@ -1,12 +1,5 @@
 // Shared playback controls (play / pause / step / speed) used by labs and guide figures.
-
-export const playbackHu = {
-  pbPlay: "▶ Lejátszás",
-  pbPause: "❚❚ Szünet",
-  pbStepBack: "Egy lépés vissza",
-  pbStepForward: "Egy lépés előre",
-  pbSpeed: "Sebesség",
-};
+import type { playbackHu } from "./Playback.hu";
 
 export const playbackEn: Record<keyof typeof playbackHu, string> = {
   pbPlay: "▶ Play",

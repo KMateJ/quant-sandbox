@@ -1,11 +1,19 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { createServer, type Plugin } from "vite";
+import { notFoundHead, pageHtml, redirectStub, seoHead } from "./seo/html.ts";
+import { canDateFromGit, gitLastModified, pageSources } from "./seo/lastmod.ts";
+import { sitemap } from "./seo/sitemap.ts";
+import { writeMarkdown } from "./seo/markdown.ts";
+import { ogIcon, ogImagePath, writeOgImages } from "./seo/ogImages.ts";
+import { LANGUAGES, localizedPath, stripLanguage } from "./src/languageRoutes.ts";
+import type { Alternate, MarkdownModule, OgModule, SchemaModule, SeoPage, SeoRedirect, SeoSite } from "./seo/types.ts";
 
-type SeoLink = { path: string; title: string };
-type SeoPage = { path: string; title: string; description: string; parent?: SeoLink; lessons?: SeoLink[] };
-type SeoModule = { englishSeoPages: () => SeoPage[]; BASE_URL: string; SITE_NAME: string };
 type RenderModule = { renderPage: (url: string) => Promise<string> };
+type RegistryModule = { redirects: SeoRedirect[] };
+
+// `SEO_ALLOW_EMPTY=1` ships pages whose pre-render failed instead of failing the build (local debugging only).
+const ALLOW_EMPTY = process.env.SEO_ALLOW_EMPTY === "1";
 
 const RENDER_TIMEOUT_MS = 20_000;
 
@@ -32,120 +40,7 @@ function cjsInterop(root: string): Plugin {
   };
 }
 
-const escape = (value: string) =>
-  value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-// Head tags that differ per page; stripped from the template and written fresh.
-const PER_PAGE_TAGS = [
-  /<title>[\s\S]*?<\/title>\s*/,
-  /<meta\s+name="description"[\s\S]*?\/>\s*/,
-  /<link\s+rel="canonical"[^>]*>\s*/,
-  /<meta\s+property="og:(title|description|url)"[\s\S]*?\/>\s*/g,
-  /<meta\s+name="twitter:(title|description)"[\s\S]*?\/>\s*/g,
-];
-
-/// schema.org description of the page: the site on the home page, a learning resource
-/// (with breadcrumbs) for lessons, and a web application for every tool.
-function structuredData(page: SeoPage, site: SeoModule): object[] {
-  const url = (path: string) => new URL(path, site.BASE_URL).toString();
-  if (page.path === "/") {
-    return [{ "@context": "https://schema.org", "@type": "WebSite", name: site.SITE_NAME, url: url("/"), description: page.description }];
-  }
-  const provider = { "@type": "Organization", name: site.SITE_NAME, url: url("/") };
-  if (page.lessons) {
-    return [
-      {
-        "@context": "https://schema.org",
-        "@type": "Course",
-        name: page.title,
-        description: page.description,
-        url: url(page.path),
-        inLanguage: "en",
-        isAccessibleForFree: true,
-        provider,
-        hasPart: page.lessons.map((l) => ({ "@type": "LearningResource", name: l.title, url: url(l.path) })),
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: site.SITE_NAME, item: url("/") },
-          { "@type": "ListItem", position: 2, name: page.title, item: url(page.path) },
-        ],
-      },
-    ];
-  }
-  if (page.parent) {
-    return [
-      {
-        "@context": "https://schema.org",
-        "@type": "LearningResource",
-        name: page.title,
-        description: page.description,
-        url: url(page.path),
-        learningResourceType: "Interactive lesson",
-        inLanguage: "en",
-        isAccessibleForFree: true,
-        provider,
-        isPartOf: { "@type": "Course", name: page.parent.title, url: url(page.parent.path) },
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: site.SITE_NAME, item: url("/") },
-          { "@type": "ListItem", position: 2, name: page.parent.title, item: url(page.parent.path) },
-          { "@type": "ListItem", position: 3, name: page.title, item: url(page.path) },
-        ],
-      },
-    ];
-  }
-  return [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: page.title,
-      description: page.description,
-      url: url(page.path),
-      applicationCategory: "EducationalApplication",
-      operatingSystem: "Any",
-      isAccessibleForFree: true,
-    },
-  ];
-}
-
-function pageHtml(template: string, page: SeoPage, site: SeoModule, body: string): string {
-  const title = escape(`${page.title} | ${site.SITE_NAME}`);
-  const description = escape(page.description);
-  const url = escape(new URL(page.path, site.BASE_URL).toString());
-  // `<` is escaped so page text can never close the script element early.
-  const jsonLd = structuredData(page, site).map(
-    (data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`
-  );
-  const head = [
-    `<title>${title}</title>`,
-    `<meta name="description" content="${description}" />`,
-    `<link rel="canonical" href="${url}" />`,
-    `<meta property="og:title" content="${title}" />`,
-    `<meta property="og:description" content="${description}" />`,
-    `<meta property="og:url" content="${url}" />`,
-    `<meta name="twitter:title" content="${title}" />`,
-    `<meta name="twitter:description" content="${description}" />`,
-    ...jsonLd,
-  ].join("\n    ");
-  const stripped = PER_PAGE_TAGS.reduce((html, pattern) => html.replace(pattern, ""), template);
-  return stripped
-    .replace(/\s*<\/head>/, `\n    ${head}\n  </head>`)
-    .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
-}
-
-function sitemap(pages: SeoPage[], baseUrl: string): string {
-  const today = new Date().toISOString().slice(0, 10);
-  const urls = pages.map((p) => `  <url>\n    <loc>${escape(new URL(p.path, baseUrl).toString())}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`);
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
-}
-
-/// Pre-renders one route; a failure or timeout leaves the page with tags only, never breaks the build.
+/// Pre-renders one route; a failure or timeout returns "", which fails the build unless `SEO_ALLOW_EMPTY=1`.
 async function renderBody(render: RenderModule, path: string): Promise<string> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<never>((_, reject) => {
@@ -159,6 +54,26 @@ async function renderBody(render: RenderModule, path: string): Promise<string> {
   } finally {
     clearTimeout(timer);
   }
+}
+
+/// `hreflang` links for every page that exists in all languages (keyed by page path); the default
+/// language also answers `x-default`. A page missing in some language gets none.
+function languageAlternates(versions: { language: string; pages: SeoPage[] }[], site: SeoSite): Map<string, Alternate[]> {
+  const byBase = new Map<string, { language: string; path: string }[]>();
+  for (const { language, pages } of versions) {
+    for (const { path } of pages) byBase.set(stripLanguage(path), [...(byBase.get(stripLanguage(path)) ?? []), { language, path }]);
+  }
+  const url = (path: string) => new URL(path, site.BASE_URL).toString();
+  const result = new Map<string, Alternate[]>();
+  for (const group of byBase.values()) {
+    if (group.length < versions.length) continue;
+    const links = [
+      ...group.map((v) => ({ hreflang: v.language, url: url(v.path) })),
+      { hreflang: "x-default", url: url(group[0].path) },
+    ];
+    for (const v of group) result.set(v.path, links);
+  }
+  return result;
 }
 
 /// After the client build, writes `<route>.html` for every page in the app's SEO page list —
@@ -189,27 +104,88 @@ export function seoPages(): Plugin {
         ssr: { noExternal: Object.keys(CJS_NAMED_EXPORTS) },
       });
       try {
-        const site = (await server.ssrLoadModule("/src/seo.routes.ts")) as SeoModule;
+        const site = (await server.ssrLoadModule("/src/seo.routes.ts")) as SeoSite;
+        const { structuredData } = (await server.ssrLoadModule("/src/seo.schema.ts")) as SchemaModule;
+        const { allMarkdown } = (await server.ssrLoadModule("/src/seo.markdown.ts")) as MarkdownModule;
+        const { ogTextsFor } = (await server.ssrLoadModule("/src/seo.og.ts")) as OgModule;
+        const { redirects } = (await server.ssrLoadModule("/src/modules/registry.ts")) as RegistryModule;
+        const { notFoundEn } = await server.ssrLoadModule("/src/Language/NotFound.ts");
         const render = await server.ssrLoadModule("/src/entry-prerender.tsx").then(
           (mod) => mod as RenderModule,
           (error: Error) => {
+            if (!ALLOW_EMPTY) throw new Error(`seo: the app could not be loaded for pre-rendering: ${error.message}`);
             console.warn(`seo: pre-rendering disabled, the app could not be loaded: ${error.message}`);
             return { renderPage: async () => "" } satisfies RenderModule;
           }
         );
-        const pages = site.englishSeoPages();
+        const pagesByLanguage = await Promise.all(LANGUAGES.map(async (language) => ({ language, pages: await site.seoPagesFor(language) })));
+        const pages = pagesByLanguage.flatMap((l) => l.pages);
+        const alternates = languageAlternates(pagesByLanguage, site);
+        const markdown = await allMarkdown();
+        const twins = new Set(markdown.pages.map((p) => p.path));
+        // Git date per page; undefined in a shallow clone or when no source file is known.
+        const dated = canDateFromGit(root);
+        const modified = new Map(
+          pages.map((p) => {
+            const sources = dated ? pageSources(root, stripLanguage(p.path)) : [];
+            return [p.path, sources.length ? gitLastModified(root, sources) : undefined];
+          })
+        );
         const template = await readFile(join(outDir, "index.html"), "utf8");
-        let rendered = 0;
+        // `/x/y` → `x/y.html`, served at the extensionless path by Vercel's `cleanUrls`.
+        const write = async (path: string, html: string) => {
+          const file = join(outDir, path === "/" ? "index.html" : `${path}.html`);
+          await mkdir(dirname(file), { recursive: true });
+          await writeFile(file, html);
+        };
+        const empty: string[] = [];
+        // One at a time: the pre-renderer switches the shared i18next language per page.
         for (const page of pages) {
           const body = await renderBody(render, page.path);
-          if (body) rendered++;
-          // `/x/y` → `x/y.html`, served at the extensionless path by Vercel's `cleanUrls`.
-          const file = join(outDir, page.path === "/" ? "index.html" : `${page.path}.html`);
-          await mkdir(dirname(file), { recursive: true });
-          await writeFile(file, pageHtml(template, page, site, body));
+          if (!body) empty.push(page.path);
+          const jsonLd = structuredData(page, site, { dateModified: modified.get(page.path) });
+          const head = seoHead(page, site, jsonLd, twins.has(page.path), alternates.get(page.path));
+          await write(page.path, pageHtml(template, head, body, page.language));
         }
-        await writeFile(join(outDir, "sitemap.xml"), sitemap(pages, site.BASE_URL));
-        console.log(`seo: wrote ${pages.length} pages (${rendered} pre-rendered) and sitemap.xml`);
+        // Any unknown path hits the `*` route, which renders <NotFound>.
+        const notFoundBody = await renderBody(render, "/__not-found");
+        if (!notFoundBody) empty.push("/404");
+        await write("/404", pageHtml(template, notFoundHead(site, notFoundEn.notFoundTitle), notFoundBody));
+        if (empty.length && !ALLOW_EMPTY) throw new Error(`seo: these pages pre-rendered empty: ${empty.join(", ")}`);
+
+        const pagePaths = new Set(pages.map((p) => p.path));
+        const stubs = LANGUAGES.flatMap((language) =>
+          redirects.map((r) => ({ from: localizedPath(r.from, language), to: localizedPath(r.to, language) }))
+        ).filter((r) => !pagePaths.has(r.from));
+        for (const redirect of stubs) await write(redirect.from, redirectStub(redirect, site));
+
+        const today = new Date().toISOString().slice(0, 10);
+        const entries = pages.map((p) => ({
+          url: new URL(p.path, site.BASE_URL).toString(),
+          lastmod: dated ? modified.get(p.path) || today : undefined,
+          alternates: alternates.get(p.path),
+        }));
+        await writeFile(join(outDir, "sitemap.xml"), sitemap(entries));
+        await writeMarkdown(outDir, markdown);
+
+        // Preview images: `og/<path>.png` per page, plus `og.png` (path "") as the site-wide fallback.
+        const icon = await ogIcon(root);
+        const cards = (
+          await Promise.all(
+            LANGUAGES.map(async (language, i) => {
+              const og = await ogTextsFor(language);
+              // The site-wide fallback card (path "") is written once, from the first language.
+              return og.cards
+                .filter(({ path }) => i === 0 || path)
+                .map(({ path, ...text }) => ({
+                  file: path ? ogImagePath(path).slice(1) : "og.png",
+                  card: { ...text, site: site.SITE_NAME, tagline: og.tagline, icon },
+                }));
+            })
+          )
+        ).flat();
+        await writeOgImages(cards, { root, outDir });
+        console.log(`seo: wrote ${pages.length} pages, 404.html, ${stubs.length} redirect stubs, sitemap.xml, ${twins.size} Markdown twins, llms.txt and llms-full.txt`);
       } finally {
         await server.close();
       }

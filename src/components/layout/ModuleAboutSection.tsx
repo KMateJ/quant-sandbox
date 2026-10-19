@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { ModuleAbout } from "../../modules/moduleAbout";
+import ModuleRelatedLessons from "./ModuleRelatedLessons";
 
-type Props = { about: ModuleAbout; path: string };
+type Props = { about: ModuleAbout; path: string; moduleId: string; relatedGuides?: string[] };
 
-/// Compact intro and FAQ below a module's workspace. Answers sit in <details>, so the text is
-/// on the page for readers and search engines without crowding the tool. Hidden on sub-pages.
-export default function ModuleAboutSection({ about, path }: Props) {
+/// Compact intro and FAQ below a module's workspace, then the lessons behind it. Answers sit in
+/// <details>, so the text is on the page for readers and search engines without crowding the tool.
+/// Hidden on sub-pages.
+export default function ModuleAboutSection({ about, path, moduleId, relatedGuides }: Props) {
   const { t } = useI18n();
   const { pathname } = useLocation();
   if (pathname !== path) return null;
@@ -24,6 +26,7 @@ export default function ModuleAboutSection({ about, path }: Props) {
           </details>
         ))}
       </div>
+      <ModuleRelatedLessons moduleId={moduleId} ids={relatedGuides} />
     </section>
   );
 }

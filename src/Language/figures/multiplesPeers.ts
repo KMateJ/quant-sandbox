@@ -1,26 +1,5 @@
 // Strings for the "multiples-peers" guide figure. Keys are prefixed ixMp to stay unique.
-
-export const multiplesPeersHu = {
-  ixMpTitle: "Társcégek szorzói és a célvállalat értéke",
-  ixMpHint: "Húzd vízszintesen a célvállalatot (vagy a nyílbillentyűkkel) a várt növekedés beállításához. Egy társcégre kattintva kiveheted az illesztésből, vagy visszateheted.",
-  ixMpAria: "Társcégek EV/EBITDA szorzója a várt növekedés függvényében, regressziós egyenessel és a húzható célvállalattal",
-  ixMpGrowth: "Várt növekedés",
-  ixMpMultiple: "EV/EBITDA",
-  ixMpTargetLabel: "Célvállalat",
-  ixMpTargetAria: "A célvállalat várt növekedése",
-  ixMpPeerAria: "{{id}} társcég: növekedés {{growth}}, EV/EBITDA {{multiple}}, {{state}}",
-  ixMpIncluded: "benne van az illesztésben",
-  ixMpExcluded: "kivéve az illesztésből",
-  ixMpLegendIncluded: "Társcég az illesztésben",
-  ixMpLegendExcluded: "Kivett társcég",
-  ixMpLegendLine: "Regressziós egyenes",
-  ixMpReset: "Minden társcég vissza",
-  ixMpMedian: "Társcégek mediánja",
-  ixMpLineMultiple: "Szorzó az egyenesen",
-  ixMpEv: "Implikált vállalatérték",
-  ixMpEquity: "Implikált saját tőke",
-  ixMpNote: "EBITDA 50, nettó adósság 120 (millió). Az implikált vállalatérték a szorzó × EBITDA, a saját tőke ebből a nettó adósság levonásával adódik.",
-};
+import type { multiplesPeersHu } from "./multiplesPeers.hu";
 
 export const multiplesPeersEn: Record<keyof typeof multiplesPeersHu, string> = {
   ixMpTitle: "Peer multiples and the value of a target",

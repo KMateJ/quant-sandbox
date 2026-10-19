@@ -1,27 +1,5 @@
 // Strings for the "utility-indifference" guide figure. Keys are prefixed ixUi to stay unique.
-
-export const utilityIndifferenceHu = {
-  ixUiTitle: "Közömbösségi görbék a tőkeallokációs egyenesen",
-  ixUiAria: "A tőkeallokációs egyenes a szórás–várható hozam síkon, egy húzható portfólióval és a rajta átmenő közömbösségi görbével",
-  ixUiRiskAversion: "Kockázatkerülés A",
-  ixUiHint: "Húzd a pontot az egyenes mentén (vagy használd a nyílbillentyűket).",
-  ixUiHandle: "Súly a P kockázatos portfólióban",
-  ixUiHandleText: "y = {{y}}, várható hozam {{mu}}, szórás {{sigma}}",
-  ixUiWeight: "Súly P-ben, y",
-  ixUiMu: "Várható hozam",
-  ixUiSigma: "Szórás",
-  ixUiUtility: "Hasznosság U",
-  ixUiCe: "Biztos egyenérték",
-  ixUiOptimal: "Optimális súly y*",
-  ixUiAtOptimum: "optimum",
-  ixUiRiskFree: "kockázatmentes",
-  ixUiRisky: "P",
-  ixUiLegendCal: "tőkeallokációs egyenes",
-  ixUiLegendCurrent: "közömbösségi görbe a választott pontban",
-  ixUiLegendOptimal: "közömbösségi görbe az optimumban",
-  ixUiAxisSigma: "szórás σ",
-  ixUiAxisMu: "várható hozam μ",
-};
+import type { utilityIndifferenceHu } from "./utilityIndifference.hu";
 
 export const utilityIndifferenceEn: Record<keyof typeof utilityIndifferenceHu, string> = {
   ixUiTitle: "Indifference curves on the capital allocation line",

@@ -1,30 +1,5 @@
 // Strings for the "martingale-betting" guide figure. Keys are prefixed ixMg to stay unique.
-
-export const martingaleBettingHu = {
-  ixMgTitle: "Fogadási stratégiák egy igazságos érmejátékban",
-  ixMgStrategyAria: "Fogadási stratégia",
-  ixMgConstant: "Állandó tét: 1",
-  ixMgDoubling: "Duplázás vesztés után",
-  ixMgFraction: "A vagyon 5%-a",
-  ixMgControlsAria: "Játék vezérlése",
-  ixMgFlip: "Egy dobás",
-  ixMgPlay100: "100 kör",
-  ixMgCrowd: "1000 játékos szimulálása",
-  ixMgReset: "Újrakezdés",
-  ixMgPathHead: "Egy játékos vagyona körről körre",
-  ixMgPathAria: "Egy játékos vagyonának lépcsős grafikonja a lejátszott körök függvényében",
-  ixMgRound: "{{n}}. kör",
-  ixMgStart: "kezdő vagyon",
-  ixMgHistHead: "1000 játékos végső vagyona 100 kör után",
-  ixMgHistAria: "Hisztogram 1000 játékos végső vagyonáról, az átlaggal és a kezdő vagyonnal jelölve",
-  ixMgHistEmpty: "Nyomd meg az „1000 játékos szimulálása” gombot, hogy lásd, hogyan oszlik el a végső vagyon.",
-  ixMgMean: "átlag",
-  ixMgWealth: "Vagyon most",
-  ixMgNextStake: "Következő tét",
-  ixMgCrowdMean: "Átlagos végső vagyon",
-  ixMgAhead: "Nyereségben végzett",
-  ixMgWorst: "Legrosszabb kimenet",
-};
+import type { martingaleBettingHu } from "./martingaleBetting.hu";
 
 export const martingaleBettingEn: Record<keyof typeof martingaleBettingHu, string> = {
   ixMgTitle: "Betting strategies in a fair coin game",
