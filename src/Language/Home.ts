@@ -138,15 +138,16 @@ export const homeEn = {
     devUpcoming: "Coming next",
     devFuture: "Planned modules",
 
+    devItemNewLessons: "Nine new guide lessons — options on other underlyings, portfolio constraints and estimation error, key-rate durations, real rates and inflation, project risk, dividend policy, the law of large numbers and correlated Brownian motions",
+    devItemGuideChecks: "Every lesson now has a worked example and self-check questions, collected at the end of each track with a review queue",
+    devItemGuidesUi: "Redesigned guides — progress per track, prerequisites and follow-ups on every lesson, the knowledge graph, and search across labs and lessons (Ctrl K)",
+    devItemStudioLinks: "Stochastic Learning Studio chapters link to the guide lessons that carry their theory",
     devItemFixedIncomeLabs: "Fixed income labs — predict-the-change rounds, yield-curve shocks and bootstrapping, immunization and Treasury futures",
-    devItemGuides: "Guides — 64 lessons in five tracks, with interactive figures and a knowledge graph",
-    devItemLabs: "Hands-on labs for portfolio, corporate finance and stochastic models — drag, predict and compare",
-    devItemSharing: "Share links with your inputs, English and Hungarian versions",
 
     devItemSwapLab: "Interest rate swap lab",
     devItemCallableLab: "Callable bond lab — negative convexity in action",
     devItemLabUpgrades: "Interactive upgrades for the derivatives labs — payoff sketching, backward induction, hedging game",
-    devItemGuideChecks: "Self-check questions at the end of each guide track",
+    devItemStudioChapters: "Stochastic Learning Studio — interactive lessons on Brownian transformations, quadratic variation and the Brownian bridge",
 
     devItemCredit: "Credit risk and real options labs",
     devItemPDE: "Numerical methods for solving PDEs",

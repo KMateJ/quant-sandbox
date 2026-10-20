@@ -137,15 +137,16 @@ export const homeHu = {
     devUpcoming: "Következő lépések",
     devFuture: "Későbbi modulok",
 
+    devItemNewLessons: "Kilenc új útmutató-lecke — opciók más alaptermékekre, portfóliókorlátok és becslési hiba, kulcskamat-durációk, reálkamat és infláció, projektkockázat, osztalékpolitika, a nagy számok törvénye és korrelált Brown-mozgások",
+    devItemGuideChecks: "Minden leckében kidolgozott példa és ellenőrző kérdések, a tematikák végén összegyűjtve, ismétlési sorral",
+    devItemGuidesUi: "Megújult útmutatók — haladás tematikánként, előismeretek és folytatás minden leckénél, tudásgráf, keresés a laborok és leckék között (Ctrl K)",
+    devItemStudioLinks: "A sztochasztikus tanulóstúdió fejezetei az elméletüket tárgyaló útmutató-leckékre mutatnak",
     devItemFixedIncomeLabs: "Fix kamatozású laborok — becslős körök, hozamgörbe-sokkok és bootstrap, immunizáció és Treasury futures",
-    devItemGuides: "Útmutatók — 64 lecke öt tematikában, interaktív ábrákkal és tudásgráffal",
-    devItemLabs: "Gyakorlati laborok portfólió, vállalati pénzügy és sztochasztikus modellek témában — húzás, becslés, összehasonlítás",
-    devItemSharing: "Megoszható linkek a beállításokkal, magyar és angol verzió",
 
     devItemSwapLab: "Kamatswap labor",
     devItemCallableLab: "Visszahívható kötvény labor — a negatív konvexitás működés közben",
     devItemLabUpgrades: "Interaktív bővítések a derivatíva laborokhoz — payoff-rajzolás, visszafelé indukció, fedezési játék",
-    devItemGuideChecks: "Ellenőrző kérdések az útmutató tematikák végén",
+    devItemStudioChapters: "Sztochasztikus tanulóstúdió — interaktív leckék a Brown-mozgás transzformációiról, a kvadratikus variációról és a Brown-hídról",
 
     devItemCredit: "Hitelkockázat és reálopció laborok",
     devItemPDE: "Numerikus módszerek PDE-k megoldására",
