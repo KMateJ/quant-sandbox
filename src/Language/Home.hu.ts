@@ -138,7 +138,7 @@ export const homeHu = {
     devFuture: "Későbbi modulok",
 
     devItemFixedIncomeLabs: "Fix kamatozású laborok — becslős körök, hozamgörbe-sokkok és bootstrap, immunizáció és Treasury futures",
-    devItemGuides: "Útmutatók — 48 lecke öt tematikában, interaktív ábrákkal és tudásgráffal",
+    devItemGuides: "Útmutatók — 64 lecke öt tematikában, interaktív ábrákkal és tudásgráffal",
     devItemLabs: "Gyakorlati laborok portfólió, vállalati pénzügy és sztochasztikus modellek témában — húzás, becslés, összehasonlítás",
     devItemSharing: "Megoszható linkek a beállításokkal, magyar és angol verzió",
 

@@ -58,6 +58,33 @@ export const randomWalks: GuideLessonContent = {
     p("A single walk says little; many walks show the distribution. In the figure each walker takes $n$ steps of $\\pm 1$ and drops into the bin of its endpoint. Press Play, or add walkers by hand, and watch the histogram fill the normal curve with variance $n$. The sample variance settles near $n$ whatever $n$ you choose, and doubling $n$ makes the spread grow by $\\sqrt{2}$, not by 2."),
     figure("galton-walk"),
 
+    {
+      kind: "check",
+      id: "random-walks/variance-100",
+      prompt: "A symmetric walk takes 100 independent steps of $\\pm 1$. What is the variance of its position $W_{100}$?",
+      answer: { type: "number", value: 100, tolerance: 0.5 },
+      explain: "Each step has variance 1 and independent variances add, so $\\operatorname{Var}(W_{100}) = 100$; the standard deviation is 10.",
+    },
+
+    {
+      kind: "check",
+      id: "random-walks/brownian-scaling",
+      prompt: "The interval $[0, 1]$ is split into $n$ steps of length $1/n$. Which step size gives a walk that converges to Brownian motion as $n \\to \\infty$?",
+      answer: { type: "choice", options: ["$\\pm 1$","$\\pm 1/n$","$\\pm\\sqrt{1/n}$","$\\pm n$"], correct: 2 },
+      explain: "With steps $\\pm\\sqrt{\\Delta t}$ the variance at time $t$ is $(t/\\Delta t)\\,\\Delta t = t$ for every $n$. Steps of $\\pm 1$ make the variance blow up, steps of $\\pm 1/n$ make it vanish.",
+    },
+
+    {
+      kind: "worked",
+      title: "The distribution of a four-step walk",
+      steps: [
+        { text: "Paths ending at $W_4 = 2$ need three up-steps and one down-step; count the orderings.", tex: "\\binom{4}{3}", result: { value: 4, tolerance: 0 } },
+        { text: "Each path has probability $(1/2)^4$.", tex: "\\Pr(W_4 = 2) = 4 \\cdot (1/2)^4", result: { value: 0.25, tolerance: 0.001 } },
+        { text: "The mean is zero, since every step has mean zero.", tex: "\\mathbb{E}[W_4] = 0", result: { value: 0, tolerance: 0.001 } },
+        { text: "The variance is the number of steps.", tex: "\\operatorname{Var}(W_4) = 4 \\cdot 1", result: { value: 4, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "A coin-flip walk of $n$ independent $\\pm 1$ steps has mean 0 and variance $n$, so its spread grows like $\\sqrt{n}$.",
@@ -124,6 +151,33 @@ export const randomWalks: GuideLessonContent = {
     h("Végpontok és a haranggörbe"),
     p("Egyetlen bolyongás keveset árul el, sok bolyongás viszont kirajzolja az eloszlást. Az ábrán minden bolyongó $n$ darab $\\pm 1$-es lépést tesz, majd a végpontjának megfelelő oszlopba esik. Nyomd meg a Lejátszás gombot, vagy adj hozzá bolyongókat kézzel, és figyeld, ahogy a hisztogram kitölti az $n$ varianciájú normális görbét. A mintavariancia bármely $n$ mellett $n$ közelébe áll be, és $n$ duplázásakor a szóródás $\\sqrt{2}$-szeresére nő, nem kétszeresére."),
     figure("galton-walk"),
+
+    {
+      kind: "check",
+      id: "random-walks/variance-100",
+      prompt: "Egy szimmetrikus bolyongás 100 független, $\\pm 1$-es lépést tesz. Mennyi a $W_{100}$ pozíció varianciája?",
+      answer: { type: "number", value: 100, tolerance: 0.5 },
+      explain: "Minden lépés varianciája 1, és független tagok varianciái összeadódnak, így $\\operatorname{Var}(W_{100}) = 100$; a szórás 10.",
+    },
+
+    {
+      kind: "check",
+      id: "random-walks/brownian-scaling",
+      prompt: "A $[0, 1]$ intervallumot $n$ darab $1/n$ hosszú lépésre osztjuk. Melyik lépésméret mellett tart a bolyongás a Brown-mozgáshoz, ha $n \\to \\infty$?",
+      answer: { type: "choice", options: ["$\\pm 1$","$\\pm 1/n$","$\\pm\\sqrt{1/n}$","$\\pm n$"], correct: 2 },
+      explain: "$\\pm\\sqrt{\\Delta t}$ lépésekkel a $t$ időpontbeli variancia minden $n$-re $(t/\\Delta t)\\,\\Delta t = t$. $\\pm 1$-es lépésekkel a variancia elszáll, $\\pm 1/n$-esekkel eltűnik.",
+    },
+
+    {
+      kind: "worked",
+      title: "Egy négylépéses bolyongás eloszlása",
+      steps: [
+        { text: "A $W_4 = 2$-ben végződő pályákhoz három felfelé és egy lefelé lépés kell; számold meg a sorrendeket.", tex: "\\binom{4}{3}", result: { value: 4, tolerance: 0 } },
+        { text: "Minden pálya valószínűsége $(1/2)^4$.", tex: "\\Pr(W_4 = 2) = 4 \\cdot (1/2)^4", result: { value: 0.25, tolerance: 0.001 } },
+        { text: "A várható érték nulla, mert minden lépés várható értéke nulla.", tex: "\\mathbb{E}[W_4] = 0", result: { value: 0, tolerance: 0.001 } },
+        { text: "A variancia a lépések száma.", tex: "\\operatorname{Var}(W_4) = 4 \\cdot 1", result: { value: 4, tolerance: 0.001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

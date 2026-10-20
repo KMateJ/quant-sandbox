@@ -42,6 +42,7 @@ import { guideStochasticHu } from "./GuideStochastic.hu";
 import { guideStochasticTheoryHu } from "./GuideStochasticTheory.hu";
 import { guideWave2Hu } from "./GuideWave2.hu";
 import { guideWave3Hu } from "./GuideWave3.hu";
+import { guideWave4Hu } from "./GuideWave4.hu";
 import { guideGraphHu } from "./GuideGraph.hu";
 import { guideInteractiveHu } from "./GuideInteractive.hu";
 import { guideInteractive2Hu } from "./GuideInteractive2.hu";
@@ -84,6 +85,7 @@ export const hu = {
   ...guideStochasticTheoryHu,
   ...guideWave2Hu,
   ...guideWave3Hu,
+  ...guideWave4Hu,
   ...guideGraphHu,
   ...guideInteractiveHu,
   ...guideInteractive2Hu,

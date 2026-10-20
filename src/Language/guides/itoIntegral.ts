@@ -92,6 +92,16 @@ export const itoIntegral: GuideLessonContent = {
       explain: "A trading position is set before the price change it earns, which is left-point evaluation. The Stratonovich integral exists but evaluates the integrand inside the interval, and it is the Stratonovich integral, not the Itô integral, that follows the ordinary chain rule. For $H = W$ the two differ by $t/2$.",
     },
 
+    {
+      kind: "worked",
+      title: "Moments of the integral of W against itself",
+      steps: [
+        { text: "An Itô integral of an adapted integrand has mean zero.", tex: "\\mathbb{E}\\Big[\\int_0^2 W_t\\,dW_t\\Big] = 0", result: { value: 0, tolerance: 0.001 } },
+        { text: "The Itô isometry turns the variance into an ordinary integral, $\\int_0^T t\\,dt = T^2/2$, here with $T = 2$.", tex: "\\operatorname{Var}\\Big(\\int_0^2 W_t\\,dW_t\\Big) = \\int_0^2 \\mathbb{E}[W_t^2]\\,dt = \\frac{2^2}{2}", result: { value: 2, tolerance: 0.001 } },
+        { text: "On a path that ends at $W_2 = 1.5$, the closed form gives the value of the integral.", tex: "\\int_0^2 W_t\\,dW_t = \\frac{W_2^2 - 2}{2} = \\frac{2.25 - 2}{2}", result: { value: 0.125, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "Brownian paths have infinite variation, so $\\int H\\,dW$ cannot be defined path by path; the value of the sums depends on the evaluation point.",
@@ -192,6 +202,16 @@ export const itoIntegral: GuideLessonContent = {
         correct: 1,
       },
       explain: "A kereskedési pozíciót az általa megkeresett árváltozás előtt rögzítjük, ez bal végponti kiértékelés. A Stratonovich-integrál létezik, de az intervallum belsejében értékel ki, és nem az Itô-, hanem a Stratonovich-integrál követi a szokásos láncszabályt. $H = W$ esetén a kettő $t/2$-vel tér el.",
+    },
+
+    {
+      kind: "worked",
+      title: "W önmagára vett integráljának momentumai",
+      steps: [
+        { text: "Adaptált integrandus Itô-integráljának várható értéke nulla.", tex: "\\mathbb{E}\\Big[\\int_0^2 W_t\\,dW_t\\Big] = 0", result: { value: 0, tolerance: 0.001 } },
+        { text: "Az Itô-izometria a varianciát közönséges integrállá alakítja, $\\int_0^T t\\,dt = T^2/2$, itt $T = 2$-vel.", tex: "\\operatorname{Var}\\Big(\\int_0^2 W_t\\,dW_t\\Big) = \\int_0^2 \\mathbb{E}[W_t^2]\\,dt = \\frac{2^2}{2}", result: { value: 2, tolerance: 0.001 } },
+        { text: "Egy $W_2 = 1{,}5$-ben végződő pályán a zárt alak megadja az integrál értékét.", tex: "\\int_0^2 W_t\\,dW_t = \\frac{W_2^2 - 2}{2} = \\frac{2{,}25 - 2}{2}", result: { value: 0.125, tolerance: 0.001 } },
+      ],
     },
 
     h("Összefoglalás"),

@@ -57,6 +57,7 @@ export const stochasticModelsHu = {
   stochPrevLesson: "Előző",
   stochNextLessonNav: "Következő",
   stochPlanned: "Tervezett",
+  stochTheoryHeading: "Elmélet az útmutatókban",
   stochStandalone: "Önálló labor",
   stochBrownianStandalone: "Brown-mozgás labor megnyitása",
   stochItoStandalone: "Itô-folyamat labor megnyitása",

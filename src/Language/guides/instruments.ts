@@ -32,6 +32,13 @@ export const instruments: GuideLessonContent = {
     p("The figure plots the payoff at maturity against $S_T$. Switch between call, put and forward, and move the strike $K$. Note that the forward line crosses zero exactly at $K$, while each option payoff has a kink at $K$ and is flat at zero on one side of it."),
     figure("payoff"),
     note("Forward payoff $S_T - K$, call payoff $(S_T - K)^+$, put payoff $(K - S_T)^+$. A forward is an obligation; an option is a right, which is why an option has a price today."),
+    {
+      kind: "check",
+      id: "instruments/long-put-payoff",
+      prompt: "You hold a European put with strike $K = 100$. At maturity the stock is at $S_T = 85$. What is the payoff?",
+      answer: { type: "number", value: 15, tolerance: 0.01 },
+      explain: "The put pays $(K - S_T)^+ = (100 - 85)^+ = 15$: you sell for 100 a share worth 85.",
+    },
 
     h("Payoff and profit"),
     p("Because an option payoff is never negative, the right has value, and the buyer pays the seller a **premium** when the contract is signed. We write $C_0$ for the price of a call today and $P_0$ for the price of a put. The payoff ignores this cost. The **profit** of the long position subtracts it:"),
@@ -41,6 +48,24 @@ export const instruments: GuideLessonContent = {
     p("For a put with $K = 100$ and premium 4, the payoff at $S_T = 90$ is 10 and the profit is 6. The break-even level is $K - P_0 = 96$."),
     p("For the short side, the profit is the premium received minus the payoff. The seller of a call earns at most the premium and has unlimited potential loss; the seller of a put loses at most $K - P_0$."),
     p("A forward has no premium, so for a forward the payoff and the profit coincide. With $K = 100$ and $S_T = 112$ the long side gains 12 and the short side loses 12."),
+    {
+      kind: "worked",
+      title: "Profit of a long call across final prices",
+      steps: [
+        { text: "A call with $K = 100$ costs 4.2. At $S_T = 90$ it expires worthless, so the loss is the premium.", tex: "(90 - 100)^+ - 4.2", result: { value: -4.2, tolerance: 0.01 } },
+        { text: "At $S_T = 100$ the payoff is still zero.", tex: "(100 - 100)^+ - 4.2", result: { value: -4.2, tolerance: 0.01 } },
+        { text: "At $S_T = 110$ the payoff of 10 more than covers the premium.", tex: "(110 - 100)^+ - 4.2", result: { value: 5.8, tolerance: 0.01 } },
+        { text: "At $S_T = 120$ every extra unit of $S_T$ adds one unit of profit.", tex: "(120 - 100)^+ - 4.2", result: { value: 15.8, tolerance: 0.01 } },
+        { text: "The break-even level is the strike plus the premium.", tex: "K + C_0", result: { value: 104.2, tolerance: 0.01 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "instruments/unlimited-loss",
+      prompt: "Which of these positions has an unlimited potential loss at maturity?",
+      answer: { type: "choice", options: ["Long call", "Long put", "Short call", "Short put"], correct: 2 },
+      explain: "The short call pays $(S_T - K)^+$, which grows without bound as $S_T$ rises. A short put loses at most $K - P_0$; long options lose at most their premium.",
+    },
 
     h("Summary"),
     list(
@@ -84,6 +109,13 @@ export const instruments: GuideLessonContent = {
     p("Az ábra a lejáratkori kifizetést mutatja $S_T$ függvényében. Válts a call, a put és a határidős ügylet között, és mozgasd a $K$ kötési árat. Figyeld meg, hogy a határidős egyenes pontosan $K$-ban metszi a nullát, míg mindkét opció kifizetésének $K$-ban töréspontja van, és az egyik oldalon nullán marad."),
     figure("payoff"),
     note("Határidős kifizetés $S_T - K$, call kifizetés $(S_T - K)^+$, put kifizetés $(K - S_T)^+$. A határidős ügylet kötelezettség, az opció jog, ezért az opciónak ma ára van."),
+    {
+      kind: "check",
+      id: "instruments/long-put-payoff",
+      prompt: "Egy $K = 100$ kötési árú európai put van nálad. Lejáratkor a részvény $S_T = 85$. Mennyi a kifizetés?",
+      answer: { type: "number", value: 15, tolerance: 0.01 },
+      explain: "A put $(K - S_T)^+ = (100 - 85)^+ = 15$-öt fizet: 100-ért adsz el egy 85-öt érő részvényt.",
+    },
 
     h("Kifizetés és nyereség"),
     p("Mivel az opció kifizetése sosem negatív, a jognak értéke van: a vevő a szerződéskötéskor **opciós díjat** (prémiumot) fizet az eladónak. A call mai árát $C_0$, a putét $P_0$ jelöli. A kifizetés ezt a költséget nem tartalmazza; a hosszú pozíció **nyeresége** levonja:"),
@@ -93,6 +125,24 @@ export const instruments: GuideLessonContent = {
     p("Egy $K = 100$ kötési árú, 4-es díjú put kifizetése $S_T = 90$ mellett 10, a nyereség 6. A fedezeti pont $K - P_0 = 96$."),
     p("A rövid oldal nyeresége a kapott díj mínusz a kifizetés. A call eladója legfeljebb a díjat keresheti meg, vesztesége viszont korlátlan lehet; a put eladója legfeljebb $K - P_0$-t veszíthet."),
     p("A határidős ügyletnek nincs díja, így ott a kifizetés és a nyereség megegyezik. $K = 100$ és $S_T = 112$ mellett a hosszú fél 12-t nyer, a rövid fél 12-t veszít."),
+    {
+      kind: "worked",
+      title: "Egy hosszú call nyeresége különböző záróárak mellett",
+      steps: [
+        { text: "Egy $K = 100$ kötési árú call ára 4,2. $S_T = 90$ mellett értéktelenül jár le, a veszteség a díj.", tex: "(90 - 100)^+ - 4{,}2", result: { value: -4.2, tolerance: 0.01 } },
+        { text: "$S_T = 100$ mellett a kifizetés még mindig nulla.", tex: "(100 - 100)^+ - 4{,}2", result: { value: -4.2, tolerance: 0.01 } },
+        { text: "$S_T = 110$ mellett a 10-es kifizetés már bőven fedezi a díjat.", tex: "(110 - 100)^+ - 4{,}2", result: { value: 5.8, tolerance: 0.01 } },
+        { text: "$S_T = 120$ mellett $S_T$ minden további egysége egy egység nyereséget hoz.", tex: "(120 - 100)^+ - 4{,}2", result: { value: 15.8, tolerance: 0.01 } },
+        { text: "A fedezeti pont a kötési ár plusz a díj.", tex: "K + C_0", result: { value: 104.2, tolerance: 0.01 } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "instruments/unlimited-loss",
+      prompt: "Az alábbi pozíciók közül melyiknek korlátlan a lehetséges vesztesége lejáratkor?",
+      answer: { type: "choice", options: ["Hosszú call", "Hosszú put", "Rövid call", "Rövid put"], correct: 2 },
+      explain: "A rövid call $(S_T - K)^+$-t fizet, ami $S_T$ emelkedésével korlát nélkül nő. A rövid put legfeljebb $K - P_0$-t veszít, a hosszú opciók legfeljebb a díjukat.",
+    },
 
     h("Összefoglalás"),
     list(

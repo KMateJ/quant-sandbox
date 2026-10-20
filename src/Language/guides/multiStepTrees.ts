@@ -16,11 +16,25 @@ export const multiStepTrees: GuideLessonContent = {
     p("An up move followed by a down move gives $S_0ud$, and a down move followed by an up move gives $S_0du$, the same number. Paths that contain the same number of up moves end at the same node. Such a tree is called **recombining**. After $i$ steps there are only $i+1$ distinct prices,"),
     eq("S_{i,j} = S_0\\,u^{j}\\,d^{\\,i-j}, \\qquad j = 0, 1, \\dots, i,"),
     p("where $j$ counts the up moves. The whole tree has $(n+1)(n+2)/2$ nodes, while the number of paths is $2^n$. For $n = 100$ that is 5151 nodes instead of about $1.3 \\cdot 10^{30}$ paths, which is what makes trees practical."),
+    {
+      kind: "check",
+      id: "multi-step-trees/terminal-nodes",
+      prompt: "A recombining binomial tree has $n$ steps. How many distinct stock prices are there at maturity?",
+      answer: { type: "choice", options: ["$n + 1$", "$2n$", "$2^n$", "$(n+1)(n+2)/2$"], correct: 0 },
+      explain: "A terminal node is fixed by the number of up moves $j = 0, 1, \\dots, n$, so there are $n + 1$ of them. $2^n$ counts paths, and $(n+1)(n+2)/2$ counts all nodes of the tree.",
+    },
 
     h("Choosing $u$ and $d$"),
     p("The factors $u$ and $d$ should make the tree's stock behave like a stock with annual volatility $\\sigma$. The Cox–Ross–Rubinstein (CRR) choice is"),
     eq("u = e^{\\sigma\\sqrt{\\Delta t}}, \\qquad d = \\frac{1}{u} = e^{-\\sigma\\sqrt{\\Delta t}}."),
     p("Each step changes the log price by $\\pm\\sigma\\sqrt{\\Delta t}$. This is the scaled coin-flip walk from \"Random walks and Brownian motion\": over $n$ steps the variance of the log price change is close to $n\\,\\sigma^2\\Delta t = \\sigma^2 T$, which matches the square-root-of-time rule. Because $d = 1/u$, an up move and a down move cancel, so the tree is centred on $S_0$ in log terms."),
+    {
+      kind: "check",
+      id: "multi-step-trees/crr-up-factor",
+      prompt: "With volatility $\\sigma = 20\\%$ and quarterly steps, $\\Delta t = 0.25$, what is the CRR up factor $u$?",
+      answer: { type: "number", value: 1.1052, tolerance: 0.0005 },
+      explain: "$u = e^{\\sigma\\sqrt{\\Delta t}} = e^{0.2 \\cdot 0.5} = e^{0.1} \\approx 1.1052$, and $d = 1/u \\approx 0.9048$.",
+    },
 
     h("Backward induction"),
     p("At maturity the option value at each node is its payoff. For a call, $C_{n,j} = (S_{n,j} - K)^+$. One step earlier, each node together with its two successors is a one-step model, so its value is the discounted risk-neutral average of the two successor values:"),
@@ -39,6 +53,16 @@ export const multiStepTrees: GuideLessonContent = {
       "Root: $C_0 = \\dfrac{0.5539\\cdot 17.66}{1.0253} \\approx 9.54$.",
     ),
     p("The Black–Scholes price for the same inputs, derived in a later lesson, is about 10.45. Two steps give a rough answer; more steps get closer."),
+    {
+      kind: "worked",
+      title: "The same two-step tree for a put",
+      steps: [
+        { text: "Same inputs, now a put with $K = 100$. Use $u \\approx 1.1519$, $d = 1/u$ and $q \\approx 0.5539$ from above. Only the lowest terminal node pays:", tex: "P_{2,0} = (100 - 100d^2)^+", result: { value: 24.64, tolerance: 0.01 } },
+        { text: "Step 1, lower node: both successors are weighted, but only the down successor pays.", tex: "P_{1,0} = \\frac{0.5539 \\cdot 0 + 0.4461 \\cdot 24.64}{1.0253}", result: { value: 10.72, tolerance: 0.01 } },
+        { text: "Step 1, upper node: both successors are worth zero, so $P_{1,1} = 0$. Root:", tex: "P_0 = \\frac{0.5539 \\cdot 0 + 0.4461 \\cdot 10.72}{1.0253}", result: { value: 4.66, tolerance: 0.01 } },
+        { text: "Check with put–call parity, using the tree call price 9.54:", tex: "C_0 - (S_0 - Ke^{-rT}) = 9.54 - 4.88", result: { value: 4.66, tolerance: 0.01 } },
+      ],
+    },
 
     h("The distribution of the terminal price"),
     p("Under $\\mathbb{Q}$ each step is an independent up move with probability $q$, so the number of up moves $j$ by maturity has a binomial distribution. The probability of ending at node $j$ is the number of paths to it times the probability of each path:"),
@@ -78,11 +102,25 @@ export const multiStepTrees: GuideLessonContent = {
     p("Egy felfelé, majd egy lefelé lépés $S_0ud$-t ad, egy lefelé, majd egy felfelé lépés $S_0du$-t, ami ugyanaz a szám. Az ugyanannyi felfelé lépést tartalmazó utak ugyanabban a csomópontban végződnek. Az ilyen fát **rekombináló** fának nevezzük. $i$ lépés után csak $i+1$ különböző ár van,"),
     eq("S_{i,j} = S_0\\,u^{j}\\,d^{\\,i-j}, \\qquad j = 0, 1, \\dots, i,"),
     p("ahol $j$ a felfelé lépések száma. A teljes fának $(n+1)(n+2)/2$ csomópontja van, míg az utak száma $2^n$. $n = 100$ esetén ez 5151 csomópont a nagyjából $1{,}3 \\cdot 10^{30}$ út helyett; ettől használható a gyakorlatban a fa."),
+    {
+      kind: "check",
+      id: "multi-step-trees/terminal-nodes",
+      prompt: "Egy rekombináló binomiális fának $n$ lépése van. Hány különböző részvényár van lejáratkor?",
+      answer: { type: "choice", options: ["$n + 1$", "$2n$", "$2^n$", "$(n+1)(n+2)/2$"], correct: 0 },
+      explain: "Egy lejárati csomópontot a felfelé lépések $j = 0, 1, \\dots, n$ száma határoz meg, így $n + 1$ van belőlük. $2^n$ az utak száma, $(n+1)(n+2)/2$ pedig a fa összes csomópontjáé.",
+    },
 
     h("Az $u$ és $d$ megválasztása"),
     p("Az $u$ és $d$ szorzókat úgy kell megválasztani, hogy a fában mozgó részvény úgy viselkedjen, mint egy $\\sigma$ éves volatilitású részvény. A Cox–Ross–Rubinstein (CRR) választás"),
     eq("u = e^{\\sigma\\sqrt{\\Delta t}}, \\qquad d = \\frac{1}{u} = e^{-\\sigma\\sqrt{\\Delta t}}."),
     p("Minden lépés $\\pm\\sigma\\sqrt{\\Delta t}$-vel változtatja a logaritmikus árat. Ez a „Véletlen bolyongás és Brown-mozgás” lecke skálázott pénzfeldobásos bolyongása: $n$ lépés alatt a logaritmikus árváltozás varianciája közel $n\\,\\sigma^2\\Delta t = \\sigma^2 T$, ami megfelel a négyzetgyökös időszabálynak. Mivel $d = 1/u$, egy felfelé és egy lefelé lépés kioltja egymást, így a fa logaritmikus skálán $S_0$ körül szimmetrikus."),
+    {
+      kind: "check",
+      id: "multi-step-trees/crr-up-factor",
+      prompt: "$\\sigma = 20\\%$ volatilitás és negyedéves lépések ($\\Delta t = 0{,}25$) mellett mennyi a CRR felfelé szorzó, $u$?",
+      answer: { type: "number", value: 1.1052, tolerance: 0.0005 },
+      explain: "$u = e^{\\sigma\\sqrt{\\Delta t}} = e^{0{,}2 \\cdot 0{,}5} = e^{0{,}1} \\approx 1{,}1052$, és $d = 1/u \\approx 0{,}9048$.",
+    },
 
     h("Visszafelé indukció"),
     p("Lejáratkor az opció értéke minden csomópontban a kifizetése; callnál $C_{n,j} = (S_{n,j} - K)^+$. Egy lépéssel korábban minden csomópont a két utódjával együtt egy egylépéses modell, így értéke a két utódérték diszkontált kockázatsemleges átlaga:"),
@@ -101,6 +139,16 @@ export const multiStepTrees: GuideLessonContent = {
       "Gyökér: $C_0 = \\dfrac{0{,}5539\\cdot 17{,}66}{1{,}0253} \\approx 9{,}54$.",
     ),
     p("Ugyanezekkel a bemenetekkel a Black–Scholes-ár, amelyet egy későbbi lecke vezet le, körülbelül 10,45. Két lépés durva közelítést ad; több lépéssel közelebb kerülünk."),
+    {
+      kind: "worked",
+      title: "Ugyanez a kétlépéses fa egy putra",
+      steps: [
+        { text: "Ugyanazok a bemenetek, most egy $K = 100$ kötési árú put. A fenti $u \\approx 1{,}1519$, $d = 1/u$ és $q \\approx 0{,}5539$ értékekkel csak a legalsó lejárati csomópont fizet:", tex: "P_{2,0} = (100 - 100d^2)^+", result: { value: 24.64, tolerance: 0.01 } },
+        { text: "1. lépés, alsó csomópont: mindkét utódot súlyozzuk, de csak a lefelé utód fizet.", tex: "P_{1,0} = \\frac{0{,}5539 \\cdot 0 + 0{,}4461 \\cdot 24{,}64}{1{,}0253}", result: { value: 10.72, tolerance: 0.01 } },
+        { text: "1. lépés, felső csomópont: mindkét utód nulla értékű, így $P_{1,1} = 0$. A gyökér:", tex: "P_0 = \\frac{0{,}5539 \\cdot 0 + 0{,}4461 \\cdot 10{,}72}{1{,}0253}", result: { value: 4.66, tolerance: 0.01 } },
+        { text: "Ellenőrzés put–call paritással, a fás 9,54-es call árral:", tex: "C_0 - (S_0 - Ke^{-rT}) = 9{,}54 - 4{,}88", result: { value: 4.66, tolerance: 0.01 } },
+      ],
+    },
 
     h("A lejárati ár eloszlása"),
     p("$\\mathbb{Q}$ alatt minden lépés egymástól függetlenül $q$ valószínűséggel felfelé lépés, így a lejáratig megtett felfelé lépések $j$ száma binomiális eloszlású. A $j$ csomópontba érkezés valószínűsége az odavezető utak száma szorozva egy út valószínűségével:"),

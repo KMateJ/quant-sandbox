@@ -26,6 +26,13 @@ export const gbm: GuideLessonContent = {
     p("Taking logarithms, the log return over $[0, T]$ is"),
     eq("\\ln\\frac{S_T}{S_0} = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) T + \\sigma W_T \\sim N\\!\\left( \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) T,\\; \\sigma^2 T \\right)."),
     p("So the log price is a Brownian motion with a constant drift. A random variable whose logarithm is normal is called **log-normal**. Since $S_T$ is $S_0$ times an exponential, it is always positive: GBM fixes the first defect of the naive model."),
+    {
+      kind: "check",
+      id: "gbm/log-distribution",
+      prompt: "Under geometric Brownian motion, how is $\\ln S_T$ distributed?",
+      answer: { type: "choice", options: ["Normal", "Log-normal", "Uniform", "Exponential"], correct: 0 },
+      explain: "$\\ln S_T = \\ln S_0 + (\\mu - \\tfrac12\\sigma^2)T + \\sigma W_T$ is a constant plus a normal variable, so it is normal. It is $S_T$ itself that is log-normal.",
+    },
 
     h("The volatility correction"),
     p("The drift of the log price is $\\mu - \\tfrac{1}{2}\\sigma^2$, not $\\mu$. The correction comes from a property of the normal distribution. If $Z \\sim N(m, s^2)$, then"),
@@ -40,6 +47,23 @@ export const gbm: GuideLessonContent = {
     eq("\\text{mean} = S_0\\, e^{\\mu T}, \\qquad \\text{median} = S_0\\, e^{(\\mu - \\frac{1}{2}\\sigma^2) T}."),
     p("The mean lies above the median: the log-normal distribution is skewed to the right, with a long tail of large outcomes pulling the average up. A typical path ends near the median, below the mean."),
     p("Example: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$, $T = 1$. The mean is $100\\,e^{0.08} \\approx 108.33$, the median $100\\,e^{0.06} \\approx 106.18$. The log return is $N(0.06,\\, 0.2^2)$, so the probability that the stock ends below 100 is $N(-0.06/0.2) = N(-0.3) \\approx 38\\%$, even though the expected return is positive. A 95% range for $S_T$ is $100\\,e^{0.06 \\pm 1.96 \\cdot 0.2}$, about 71.7 to 157.1, which is not symmetric around the median."),
+    {
+      kind: "check",
+      id: "gbm/median",
+      prompt: "A stock follows GBM with $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. What is the median of $S_T$ at $T = 1$?",
+      answer: { type: "number", value: 106.18, tolerance: 0.01 },
+      explain: "The median is $S_0e^{(\\mu - \\frac12\\sigma^2)T} = 100\\,e^{0.08 - 0.02} = 100\\,e^{0.06} \\approx 106.18$, below the mean $100\\,e^{0.08} \\approx 108.33$.",
+    },
+    {
+      kind: "worked",
+      title: "Mean, median and a 95% range over two years",
+      steps: [
+        { text: "Take $S_0 = 50$, $\\mu = 10\\%$, $\\sigma = 30\\%$ and $T = 2$. The mean grows at $\\mu$:", tex: "S_0\\,e^{\\mu T} = 50\\,e^{0.2}", result: { value: 61.07, tolerance: 0.01 } },
+        { text: "The log return has mean $(\\mu - \\tfrac12\\sigma^2)T = 0.11$ and standard deviation $\\sigma\\sqrt{T} \\approx 0.4243$. The median is", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T} = 50\\,e^{0.11}", result: { value: 55.81, tolerance: 0.01 } },
+        { text: "Lower end of the 95% range:", tex: "50\\,e^{0.11 - 1.96 \\cdot 0.4243}", result: { value: 24.3, tolerance: 0.02 } },
+        { text: "Upper end of the 95% range, much further from the median than the lower end:", tex: "50\\,e^{0.11 + 1.96 \\cdot 0.4243}", result: { value: 128.2, tolerance: 0.05 } },
+      ],
+    },
     p("The figure simulates 20 paths over one year from $S_0 = 100$, each built from many small log-normal steps, and draws the mean curve $S_0e^{\\mu t}$ and the median curve $S_0e^{(\\mu - \\sigma^2/2)t}$. Raise $\\sigma$ and note that the paths fan out, the median falls further below the mean, and more paths end below their start. Press \"New paths\" to draw a fresh sample."),
     figure("gbm-paths"),
 
@@ -86,6 +110,13 @@ export const gbm: GuideLessonContent = {
     p("Logaritmust véve a $[0, T]$ időszak loghozama"),
     eq("\\ln\\frac{S_T}{S_0} = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) T + \\sigma W_T \\sim N\\!\\left( \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) T,\\; \\sigma^2 T \\right)."),
     p("A logaritmikus ár tehát állandó driftű Brown-mozgás. Azt a valószínűségi változót, amelynek logaritmusa normális, **lognormális** eloszlásúnak nevezzük. Mivel $S_T$ az $S_0$ és egy exponenciális szorzata, mindig pozitív: a GBM kijavítja a naiv modell első hibáját."),
+    {
+      kind: "check",
+      id: "gbm/log-distribution",
+      prompt: "Geometriai Brown-mozgás esetén milyen eloszlású $\\ln S_T$?",
+      answer: { type: "choice", options: ["Normális", "Lognormális", "Egyenletes", "Exponenciális"], correct: 0 },
+      explain: "$\\ln S_T = \\ln S_0 + (\\mu - \\tfrac12\\sigma^2)T + \\sigma W_T$ egy konstans és egy normális változó összege, tehát normális. Maga $S_T$ a lognormális.",
+    },
 
     h("A volatilitás-korrekció"),
     p("A logaritmikus ár driftje $\\mu - \\tfrac{1}{2}\\sigma^2$, nem $\\mu$. A korrekció a normális eloszlás egy tulajdonságából jön. Ha $Z \\sim N(m, s^2)$, akkor"),
@@ -100,6 +131,23 @@ export const gbm: GuideLessonContent = {
     eq("\\text{várható érték} = S_0\\, e^{\\mu T}, \\qquad \\text{medián} = S_0\\, e^{(\\mu - \\frac{1}{2}\\sigma^2) T}."),
     p("A várható érték a medián fölött van: a lognormális eloszlás jobbra ferde, a nagy kimenetelek hosszú farka felhúzza az átlagot. Egy tipikus pálya a medián közelében végez, a várható érték alatt."),
     p("Példa: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$, $T = 1$. A várható érték $100\\,e^{0{,}08} \\approx 108{,}33$, a medián $100\\,e^{0{,}06} \\approx 106{,}18$. A loghozam $N(0{,}06;\\, 0{,}2^2)$ eloszlású, így annak valószínűsége, hogy a részvény 100 alatt zár, $N(-0{,}06/0{,}2) = N(-0{,}3) \\approx 38\\%$, noha a várható hozam pozitív. $S_T$ 95%-os tartománya $100\\,e^{0{,}06 \\pm 1{,}96 \\cdot 0{,}2}$, nagyjából 71,7 és 157,1 között, ami nem szimmetrikus a medián körül."),
+    {
+      kind: "check",
+      id: "gbm/median",
+      prompt: "Egy részvény GBM-et követ, $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. Mennyi $S_T$ mediánja $T = 1$-nél?",
+      answer: { type: "number", value: 106.18, tolerance: 0.01 },
+      explain: "A medián $S_0e^{(\\mu - \\frac12\\sigma^2)T} = 100\\,e^{0{,}08 - 0{,}02} = 100\\,e^{0{,}06} \\approx 106{,}18$, a $100\\,e^{0{,}08} \\approx 108{,}33$ várható érték alatt.",
+    },
+    {
+      kind: "worked",
+      title: "Várható érték, medián és 95%-os tartomány két évre",
+      steps: [
+        { text: "Legyen $S_0 = 50$, $\\mu = 10\\%$, $\\sigma = 30\\%$ és $T = 2$. A várható érték $\\mu$ ütemben nő:", tex: "S_0\\,e^{\\mu T} = 50\\,e^{0{,}2}", result: { value: 61.07, tolerance: 0.01 } },
+        { text: "A loghozam várható értéke $(\\mu - \\tfrac12\\sigma^2)T = 0{,}11$, szórása $\\sigma\\sqrt{T} \\approx 0{,}4243$. A medián", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T} = 50\\,e^{0{,}11}", result: { value: 55.81, tolerance: 0.01 } },
+        { text: "A 95%-os tartomány alsó vége:", tex: "50\\,e^{0{,}11 - 1{,}96 \\cdot 0{,}4243}", result: { value: 24.3, tolerance: 0.02 } },
+        { text: "A 95%-os tartomány felső vége, sokkal messzebb a mediántól, mint az alsó:", tex: "50\\,e^{0{,}11 + 1{,}96 \\cdot 0{,}4243}", result: { value: 128.2, tolerance: 0.05 } },
+      ],
+    },
     p("Az ábra 20 pályát szimulál egy évre $S_0 = 100$-ból, mindegyiket sok kis lognormális lépésből, és felrajzolja az $S_0e^{\\mu t}$ várhatóérték-görbét és az $S_0e^{(\\mu - \\sigma^2/2)t}$ mediángörbét. Növeld $\\sigma$-t: a pályák szétterülnek, a medián egyre jobban a várható érték alá kerül, és több pálya végez a kiinduló érték alatt. Az „Új pályák” gombbal új mintát húzhatsz."),
     figure("gbm-paths"),
 

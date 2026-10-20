@@ -23,6 +23,13 @@ export const greeks: GuideLessonContent = {
     h("Theta and rho"),
     p("Theta is the change in value per unit of calendar time, with everything else fixed. It is quoted per year, and dividing by 365 gives the change per day. For a long call $\\Theta < 0$: as maturity approaches, there is less time for the stock to move in the holder's favour, and the value decays towards the payoff. This is **time decay**. A deep in-the-money put can have positive theta, because waiting brings the strike payment closer and its discounted value rises."),
     p("Rho is the change in value when $r$ changes, quoted per percentage point like vega. A call has $\\rho > 0$: the holder pays $K$ only at maturity, and a higher rate lowers the present value $Ke^{-r(T-t)}$ of that payment. A put has $\\rho < 0$ for the same reason. For short-dated equity options rho is usually the least important Greek."),
+    {
+      kind: "check",
+      id: "greeks/theta-sign",
+      prompt: "You hold an at-the-money European call. If nothing else changes, what happens to its value as one day passes?",
+      answer: { type: "choice", options: ["It falls: theta is negative", "It rises: theta is positive", "It stays the same: theta is zero", "It depends on the sign of gamma"], correct: 0 },
+      explain: "A long call loses time value as maturity approaches, so $\\Theta < 0$. At the money the decay is fastest, because that is where the value sits furthest above the payoff.",
+    },
 
     h("The Taylor expansion of the option value"),
     p("Over a short interval $dt$ the inputs change by $dS$, $d\\sigma$ and $dr$. Expanding $V$ to second order in $S$ and first order in the other inputs gives"),
@@ -49,6 +56,23 @@ export const greeks: GuideLessonContent = {
     ),
     p("Check the relation: $\\tfrac{1}{2}\\sigma^2 S^2 \\Gamma = \\tfrac{1}{2} \\cdot 0.0625 \\cdot 10\\,000 \\cdot 0.02198 \\approx 6.87$, $rS\\Delta \\approx 2.95$ and $rV \\approx 0.41$, so $-9.41 + 6.87 + 2.95 - 0.41 = 0$."),
     p("Now let one day pass while the stock rises to 102 and volatility rises to 26%. The expansion predicts $0.591 \\cdot 2 + \\tfrac{1}{2} \\cdot 0.0220 \\cdot 4 - 0.0258 + 0.275 \\approx 1.475$; repricing with the formula gives a change of 1.470. For the delta-hedged position (with $\\sigma$ unchanged) the break-even daily move is $\\sigma S \\sqrt{1/365} \\approx 1.31$. A move of 2 gives $\\tfrac{1}{2} \\cdot 0.0220 \\cdot (4 - 1.71) \\approx 0.025$ per option; a move smaller than 1.31 gives a loss."),
+    {
+      kind: "check",
+      id: "greeks/vega-per-point",
+      prompt: "For the call above ($S = K = 100$, $T - t = 0.5$, $r = 5\\%$, $\\sigma = 25\\%$), by how much does the value change, to first order, when $\\sigma$ rises by one percentage point?",
+      answer: { type: "number", value: 0.275, tolerance: 0.002 },
+      explain: "Vega is $\\mathcal{V} = S\\varphi(d_1)\\sqrt{T - t} \\approx 27.47$ per unit of $\\sigma$. One point is $d\\sigma = 0.01$, so the change is about $0.275$.",
+    },
+    {
+      kind: "worked",
+      title: "One Greek at a time, against exact repricing",
+      steps: [
+        { text: "Same call, value 8.26. Volatility alone goes from 25% to 26%; vega predicts", tex: "\\mathcal{V}\\,d\\sigma = 27.47 \\cdot 0.01", result: { value: 0.2747, tolerance: 0.0005 } },
+        { text: "Repricing at $\\sigma = 26\\%$ gives almost the same change, because the price is nearly linear in $\\sigma$ at the money:", tex: "V(26\\%) - V(25\\%)", result: { value: 0.2748, tolerance: 0.0005 } },
+        { text: "Now only one day passes, with $S$ and $\\sigma$ fixed. Theta predicts", tex: "\\Theta\\,dt = -9.41 / 365", result: { value: -0.0258, tolerance: 0.0002 } },
+        { text: "Repricing with $T - t = 0.5 - 1/365$:", tex: "V(0.5 - \\tfrac{1}{365}) - V(0.5)", result: { value: -0.0258, tolerance: 0.0002 } },
+      ],
+    },
 
     h("The Greeks across stock prices"),
     p("The figure plots one Greek of the call at a time against the stock price $S$ from 40 to 160, with $K = 100$ and $r = 5\\%$ fixed. A switch selects delta, gamma, vega or theta, and sliders set the time to maturity $T$ (0.05 to 2 years) and the volatility $\\sigma$. The readouts at $S = 100$ show delta, gamma, vega, theta and the value of $\\Theta + \\tfrac{1}{2}\\sigma^2 S^2 \\Gamma + rS\\Delta - rV$, which stays at zero for every setting. Select gamma and shrink $T$: the peak at the strike grows sharply (from about 0.010 at $T = 2$ to 0.071 at $T = 0.05$ with $\\sigma = 25\\%$) while theta at the strike falls from $-9.41$ to about $-24.8$ per year. Then select vega and note that it is largest near the strike and grows with $T$."),
@@ -62,7 +86,7 @@ export const greeks: GuideLessonContent = {
       "To second order, $dV \\approx \\Delta\\,dS + \\tfrac{1}{2}\\Gamma(dS)^2 + \\Theta\\,dt + \\mathcal{V}\\,d\\sigma$.",
       "A delta-hedged option earns $\\tfrac{1}{2}\\Gamma((dS)^2 - \\sigma^2S^2dt)$; requiring it to earn the risk-free rate gives $\\Theta + \\tfrac{1}{2}\\sigma^2S^2\\Gamma + rS\\Delta - rV = 0$.",
     ),
-    note("The next lesson, \"Implied volatility and the volatility smile\", turns the question around: given a market price, which $\\sigma$ does the formula need, and why does that number depend on the strike."),
+    note("A later lesson, \"Implied volatility and the volatility smile\", turns the question around: given a market price, which $\\sigma$ does the formula need, and why does that number depend on the strike."),
     lab("/black-scholes", "Explore the Greek surfaces across stock price and maturity in the Black–Scholes lab"),
   ],
 
@@ -87,6 +111,13 @@ export const greeks: GuideLessonContent = {
     h("Théta és rhó"),
     p("A théta az értékváltozás egységnyi naptári idő alatt, minden mást rögzítve. Évre vetítve adják meg; 365-tel osztva a napi változást kapjuk. Vett callnál $\\Theta < 0$: a lejárat közeledtével kevesebb idő marad arra, hogy a részvény a tulajdonos javára mozduljon, és az érték a kifizetés felé kopik. Ez az **időbeli értékvesztés**. Mélyen pénzen belüli put thétája pozitív is lehet, mert a várakozással a kötési ár megkapása közelebb kerül, és diszkontált értéke nő."),
     p("A rhó az értékváltozás, ha $r$ változik; a vegához hasonlóan százalékpontra vetítve adják meg. Callnál $\\rho > 0$: a tulajdonos csak lejáratkor fizeti ki $K$-t, és magasabb kamat mellett ennek $Ke^{-r(T-t)}$ jelenértéke kisebb. Ugyanezért a put rhója negatív. Rövid lejáratú részvényopcióknál a rhó általában a legkevésbé fontos görög."),
+    {
+      kind: "check",
+      id: "greeks/theta-sign",
+      prompt: "Egy at-the-money európai call van nálad. Ha semmi más nem változik, mi történik az értékével egy nap alatt?",
+      answer: { type: "choice", options: ["Csökken: a théta negatív", "Nő: a théta pozitív", "Változatlan: a théta nulla", "A gamma előjelétől függ"], correct: 0 },
+      explain: "A hosszú call a lejárat közeledtével elveszíti időértékét, így $\\Theta < 0$. A pénznél a leggyorsabb az értékvesztés, mert ott van az érték a legmesszebb a kifizetés fölött.",
+    },
 
     h("Az opció értékének Taylor-sora"),
     p("Egy rövid $dt$ időszak alatt a bemenetek $dS$-sel, $d\\sigma$-val és $dr$-rel változnak. $V$-t $S$-ben másodrendig, a többi bemenetben elsőrendig kifejtve:"),
@@ -113,6 +144,23 @@ export const greeks: GuideLessonContent = {
     ),
     p("Ellenőrizzük az összefüggést: $\\tfrac{1}{2}\\sigma^2 S^2 \\Gamma = \\tfrac{1}{2} \\cdot 0{,}0625 \\cdot 10\\,000 \\cdot 0{,}02198 \\approx 6{,}87$, $rS\\Delta \\approx 2{,}95$ és $rV \\approx 0{,}41$, így $-9{,}41 + 6{,}87 + 2{,}95 - 0{,}41 = 0$."),
     p("Teljen el egy nap, miközben a részvény 102-re, a volatilitás 26%-ra emelkedik. A Taylor-sor $0{,}591 \\cdot 2 + \\tfrac{1}{2} \\cdot 0{,}0220 \\cdot 4 - 0{,}0258 + 0{,}275 \\approx 1{,}475$ változást jósol; a képlettel újraárazva a változás 1,470. A delta-fedezett pozíció (változatlan $\\sigma$ mellett) napi nullszaldós elmozdulása $\\sigma S \\sqrt{1/365} \\approx 1{,}31$. Egy 2 egységnyi mozgás opciónként $\\tfrac{1}{2} \\cdot 0{,}0220 \\cdot (4 - 1{,}71) \\approx 0{,}025$ nyereséget hoz; 1,31-nél kisebb mozgás veszteséget."),
+    {
+      kind: "check",
+      id: "greeks/vega-per-point",
+      prompt: "A fenti callnál ($S = K = 100$, $T - t = 0{,}5$, $r = 5\\%$, $\\sigma = 25\\%$) elsőrendben mennyit változik az érték, ha $\\sigma$ egy százalékponttal nő?",
+      answer: { type: "number", value: 0.275, tolerance: 0.002 },
+      explain: "A vega $\\mathcal{V} = S\\varphi(d_1)\\sqrt{T - t} \\approx 27{,}47$ $\\sigma$ egységére. Egy százalékpont $d\\sigma = 0{,}01$, így a változás kb. $0{,}275$.",
+    },
+    {
+      kind: "worked",
+      title: "Egyszerre egy görög betű, a pontos újraárazással összevetve",
+      steps: [
+        { text: "Ugyanez a call, értéke 8,26. Csak a volatilitás nő 25%-ról 26%-ra; a vega ezt jósolja:", tex: "\\mathcal{V}\\,d\\sigma = 27{,}47 \\cdot 0{,}01", result: { value: 0.2747, tolerance: 0.0005 } },
+        { text: "$\\sigma = 26\\%$-on újraárazva szinte ugyanennyi a változás, mert a pénznél az ár $\\sigma$-ban közel lineáris:", tex: "V(26\\%) - V(25\\%)", result: { value: 0.2748, tolerance: 0.0005 } },
+        { text: "Most csak egy nap telik el, $S$ és $\\sigma$ rögzített. A théta ezt jósolja:", tex: "\\Theta\\,dt = -9{,}41 / 365", result: { value: -0.0258, tolerance: 0.0002 } },
+        { text: "Újraárazás $T - t = 0{,}5 - 1/365$ mellett:", tex: "V(0{,}5 - \\tfrac{1}{365}) - V(0{,}5)", result: { value: -0.0258, tolerance: 0.0002 } },
+      ],
+    },
 
     h("A görögök a részvényár függvényében"),
     p("Az ábra a call egy-egy görögjét mutatja a részvényár függvényében, $S$ 40 és 160 között, rögzített $K = 100$ és $r = 5\\%$ mellett. Egy kapcsolóval választható a delta, a gamma, a vega vagy a théta, a csúszkák a lejáratig hátralévő $T$ időt (0,05 és 2 év között) és a $\\sigma$ volatilitást állítják. A kijelzők $S = 100$-nál mutatják a deltát, a gammát, a vegát, a thétát és a $\\Theta + \\tfrac{1}{2}\\sigma^2 S^2 \\Gamma + rS\\Delta - rV$ kifejezés értékét, amely minden beállításnál nulla marad. Válaszd a gammát, és csökkentsd $T$-t: a kötési árnál lévő csúcs erősen megnő (25%-os $\\sigma$ mellett $T = 2$-nél kb. 0,010, $T = 0{,}05$-nél 0,071), a théta a kötési árnál pedig $-9{,}41$-ről kb. $-24{,}8$-ra csökken évente. Ezután válaszd a vegát, és figyeld meg, hogy a kötési ár közelében a legnagyobb, és $T$-vel nő."),
@@ -126,7 +174,7 @@ export const greeks: GuideLessonContent = {
       "Másodrendig $dV \\approx \\Delta\\,dS + \\tfrac{1}{2}\\Gamma(dS)^2 + \\Theta\\,dt + \\mathcal{V}\\,d\\sigma$.",
       "A delta-fedezett opció eredménye $\\tfrac{1}{2}\\Gamma((dS)^2 - \\sigma^2S^2dt)$; abból a követelményből, hogy a kockázatmentes kamatot hozza, $\\Theta + \\tfrac{1}{2}\\sigma^2S^2\\Gamma + rS\\Delta - rV = 0$ adódik.",
     ),
-    note("A következő lecke, az „Implikált volatilitás és a volatilitás-mosoly”, megfordítja a kérdést: adott piaci árhoz milyen $\\sigma$ kell a képletbe, és miért függ ez a szám a kötési ártól."),
+    note("Egy későbbi lecke, az „Implikált volatilitás és a volatilitás-mosoly”, megfordítja a kérdést: adott piaci árhoz milyen $\\sigma$ kell a képletbe, és miért függ ez a szám a kötési ártól."),
     lab("/black-scholes", "Vizsgáld a görögök felületeit a részvényár és a lejárat függvényében a Black–Scholes laborban"),
   ],
 };

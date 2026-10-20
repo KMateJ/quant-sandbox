@@ -41,6 +41,15 @@ import { jumpDiffusion } from "./jumpDiffusion";
 import { creditRisk } from "./creditRisk";
 import { factorModels } from "./factorModels";
 import { annuities } from "./annuities";
+import { optionsOnOtherUnderlyings } from "./optionsOnOtherUnderlyings";
+import { portfolioConstraints } from "./portfolioConstraints";
+import { inputEstimation } from "./inputEstimation";
+import { curveRisk } from "./curveRisk";
+import { realRatesInflation } from "./realRatesInflation";
+import { capitalBudgetingRisk } from "./capitalBudgetingRisk";
+import { dividendPolicy } from "./dividendPolicy";
+import { lawOfLargeNumbersClt } from "./lawOfLargeNumbersClt";
+import { correlatedBrownianMotions } from "./correlatedBrownianMotions";
 import { valuationMultiples } from "./valuationMultiples";
 import { riskAversion } from "./riskAversion";
 import { performanceMeasures } from "./performanceMeasures";
@@ -113,4 +122,13 @@ export const guideContent: Record<GuideId, GuideLessonContent> = {
   "brownian-bridge": brownianBridge,
   "ito-integral": itoIntegral,
   "feynman-kac": feynmanKac,
+  "options-on-other-underlyings": optionsOnOtherUnderlyings,
+  "portfolio-constraints": portfolioConstraints,
+  "input-estimation": inputEstimation,
+  "curve-risk": curveRisk,
+  "real-rates-inflation": realRatesInflation,
+  "capital-budgeting-risk": capitalBudgetingRisk,
+  "dividend-policy": dividendPolicy,
+  "law-of-large-numbers-clt": lawOfLargeNumbersClt,
+  "correlated-brownian-motions": correlatedBrownianMotions,
 };

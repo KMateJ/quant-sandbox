@@ -90,7 +90,7 @@ export const immunization: GuideLessonContent = {
       "Durations drift as yields move, so the position must be rebalanced.",
     ),
     note("The next lesson, \"Spot rates, forward rates and the yield curve\", drops the flat curve and lets yields differ by maturity, which is what immunization against parallel shifts leaves exposed."),
-    lab("/duration-convexity", "Compare durations and convexities of bonds in the Duration & Convexity lab"),
+    lab("/immunization", "Try it in the Immunization Lab"),
   ],
 
   hu: [
@@ -181,6 +181,6 @@ export const immunization: GuideLessonContent = {
       "A hozamok mozgásával a durációk elcsúsznak, ezért a pozíciót újra kell súlyozni.",
     ),
     note("A következő lecke, az „Azonnali kamatok, forward kamatok és a hozamgörbe”, elhagyja a lapos görbét, és lejáratonként eltérő hozamokat enged meg; éppen ez az, ami ellen a párhuzamos eltolódásra épülő immunizáció nem véd."),
-    lab("/duration-convexity", "Hasonlítsd össze kötvények durációját és konvexitását a Duráció és konvexitás laborban"),
+    lab("/immunization", "Próbáld ki az Immunizációs laborban"),
   ],
 };

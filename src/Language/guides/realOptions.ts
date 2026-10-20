@@ -68,6 +68,16 @@ export const realOptions: GuideLessonContent = {
       "Year 0: waiting $0.9512\\,(0.4421 \\cdot 39.16 + 0.5579 \\cdot 5.30) \\approx 19.28$ against $-5$ now, so wait.",
     ),
     p("The expanded NPV is 19.28. A project that the static rule rejects is a valuable opportunity, provided the firm keeps the right to wait. All of its 19.28 is value of flexibility."),
+    {
+      kind: "worked",
+      title: "The tree inputs and the expanded NPV",
+      steps: [
+        { text: "Up factor for one-year steps with $\\sigma = 30\\%$.", tex: "u = e^{0.3}", result: { value: 1.3499, tolerance: 0.0001 } },
+        { text: "Down factor, the reciprocal.", tex: "d = 1/u", result: { value: 0.7408, tolerance: 0.0001 } },
+        { text: "Risk-neutral probability, with the growth of $V$ lowered by the forgone yield $\\delta = 4\\%$.", tex: "q = \\frac{e^{0.05 - 0.04} - d}{u - d}", result: { value: 0.4421, tolerance: 0.0002 } },
+        { text: "Backward induction from year 3, keeping the larger of investing and waiting at every node, gives the value at the root.", tex: "F_0 = \\max\\big(V_0 - I,\\; e^{-r}[q\\,F_{\\text{up}} + (1-q)\\,F_{\\text{down}}]\\big)", result: { value: 19.28, tolerance: 0.01 } },
+      ],
+    },
 
     p("The figure uses the same setting: $V_0 = 100$, $r = 5\\%$ and a 3-step tree over $T = 3$ years. Sliders set the investment cost $I$ (60 to 140), the volatility $\\sigma$ (10% to 60%) and the forgone cash-flow yield $\\delta$ (0% to 10%). The chart plots the static NPV $V_0 - I$ and the expanded NPV against $I$ from 60 to 140, with a vertical line at the chosen $I$. The readouts show the static NPV, the expanded NPV, the value of flexibility (expanded NPV minus $\\max(V_0 - I, 0)$) and today's decision. Set $\\delta = 0$ and note that the expanded NPV stays above the static NPV for every $I$, so waiting always has value. Raise $\\delta$ and lower $I$ to find the region where investing now is optimal. Raise $\\sigma$ and watch the expanded NPV curve lift away from the static line."),
     figure("real-option-tree"),
@@ -158,6 +168,16 @@ export const realOptions: GuideLessonContent = {
       "0. év: a várakozás $0{,}9512\\,(0{,}4421 \\cdot 39{,}16 + 0{,}5579 \\cdot 5{,}30) \\approx 19{,}28$, a mostani beruházás $-5$, tehát várunk.",
     ),
     p("A kiterjesztett NPV 19,28. Az a projekt, amelyet a statikus szabály elvet, értékes lehetőség, feltéve, hogy a vállalat megtartja a várakozás jogát. A teljes 19,28 a rugalmasság értéke."),
+    {
+      kind: "worked",
+      title: "A fa bemenetei és a kiterjesztett NPV",
+      steps: [
+        { text: "Az emelkedési tényező egyéves lépésekre, $\\sigma = 30\\%$ mellett.", tex: "u = e^{0{,}3}", result: { value: 1.3499, tolerance: 0.0001 } },
+        { text: "A csökkenési tényező, ennek reciproka.", tex: "d = 1/u", result: { value: 0.7408, tolerance: 0.0001 } },
+        { text: "A kockázatsemleges valószínűség; $V$ növekedését a $\\delta = 4\\%$-os elmaradó hozam csökkenti.", tex: "q = \\frac{e^{0{,}05 - 0{,}04} - d}{u - d}", result: { value: 0.4421, tolerance: 0.0002 } },
+        { text: "A 3. évtől visszafelé haladva, minden csúcsban a beruházás és a várakozás közül a nagyobbat megtartva, megkapjuk a gyökér értékét.", tex: "F_0 = \\max\\big(V_0 - I,\\; e^{-r}[q\\,F_{\\text{fel}} + (1-q)\\,F_{\\text{le}}]\\big)", result: { value: 19.28, tolerance: 0.01 } },
+      ],
+    },
 
     p("Az ábra ugyanezt a helyzetet mutatja: $V_0 = 100$, $r = 5\\%$, háromlépéses fa $T = 3$ évre. A csúszkák az $I$ beruházási költséget (60 és 140 között), a $\\sigma$ volatilitást (10% és 60% között) és az elmaradó pénzáramok $\\delta$ hozamát (0% és 10% között) állítják. A grafikon a $V_0 - I$ statikus NPV-t és a kiterjesztett NPV-t mutatja $I$ függvényében 60 és 140 között, a választott $I$-nél függőleges vonallal. A kijelzők a statikus NPV-t, a kiterjesztett NPV-t, a rugalmasság értékét (a kiterjesztett NPV mínusz $\\max(V_0 - I, 0)$) és a mai döntést mutatják. Állítsd $\\delta$-t nullára, és figyeld meg, hogy a kiterjesztett NPV minden $I$ mellett a statikus fölött marad, vagyis a várakozásnak mindig van értéke. Növeld $\\delta$-t és csökkentsd $I$-t, hogy megtaláld azt a tartományt, ahol az azonnali beruházás az optimális. Növeld $\\sigma$-t, és nézd, hogyan emelkedik el a kiterjesztett NPV görbéje a statikus egyenestől."),
     figure("real-option-tree"),

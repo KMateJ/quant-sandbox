@@ -26,7 +26,7 @@ Labs favour interaction over sliders-and-a-line-chart: draggable chart handles, 
 
 ### Guides
 
-48 lessons in five tracks (derivatives, portfolio, fixed income, corporate finance, stochastic models). Each lesson is written from the ground up, with interactive figures and KaTeX maths, and lessons are linked to their labs. A knowledge graph shows how the lessons depend on each other.
+64 lessons in five tracks (derivatives, portfolio, fixed income, corporate finance, stochastic models). Each lesson is written from the ground up, with interactive figures and KaTeX maths, and lessons are linked to their labs. A knowledge graph shows how the lessons depend on each other.
 
 ---
 

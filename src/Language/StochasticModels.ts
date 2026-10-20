@@ -50,6 +50,7 @@ export const stochasticModelsEn = {
   stochJourneySde: "SDEs",
   stochJourneyApplications: "Applications",
   stochStartLesson: "Open",
+  stochTheoryHeading: "Theory in the guides",
   stochStructuredPlanned: "Structured lessons planned; the standalone lab is available meanwhile.",
   stochChapterPlannedNote: "This chapter is still in development.",
   stochBackToCurriculum: "Back to curriculum",

@@ -92,6 +92,16 @@ export const feynmanKac: GuideLessonContent = {
     h("Two ways to compute one number"),
     p("Feynman–Kac gives two routes to the same price. The **Monte Carlo** route simulates many paths of $X$ under $\\mathbb{Q}$, averages the discounted payoffs and reports a standard error that falls like $1/\\sqrt{N}$ in the number of paths, whatever the dimension of $X$. The **PDE** route discretises $x$ and $t$ on a grid and steps the equation backwards from $u(T, \\cdot) = g$ with finite differences; one solve gives $u$ at every grid point, and the Greeks come from differences of neighbouring values, but the grid grows exponentially with the dimension of $X$. In practice PDE methods dominate for one to three state variables and Monte Carlo for more. Any difference between the two answers is numerical error, sampling error on one side and grid error on the other, not a difference in the model."),
 
+    {
+      kind: "worked",
+      title: "The square payoff at x = 1",
+      steps: [
+        { text: "With $\\sigma = 1$ and $\\tau = 0.5$, the Gaussian kernel has variance $\\sigma^2\\tau$.", tex: "\\mathbb{E}[(\\sigma W_\\tau)^2] = \\sigma^2\\tau", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "Expand $(x + \\sigma W_\\tau)^2$; the cross term has mean zero.", tex: "u(\\tau, 1) = 1^2 + 2 \\cdot 1 \\cdot 0 + 0.5", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "The figure's Monte Carlo readout at $x = 1$ should sit within one standard error of this: the payoff variance is 2.5, over 2000 draws.", tex: "\\sqrt{2.5}/\\sqrt{2000}", result: { value: 0.0354, tolerance: 0.0001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "A diffusion $dX = \\mu(X)\\,ds + \\sigma(X)\\,dW$ has generator $\\mathcal{L}f = \\mu f' + \\tfrac12\\sigma^2 f''$, computed from Itô's lemma.",
@@ -193,6 +203,16 @@ export const feynmanKac: GuideLessonContent = {
 
     h("Egy szám két kiszámítási módja"),
     p("A Feynman–Kac-tétel két utat ad ugyanahhoz az árhoz. A **Monte Carlo**-út sok $X$-pályát szimulál $\\mathbb{Q}$ alatt, átlagolja a diszkontált kifizetéseket, és olyan standard hibát ad, amely a pályák $N$ számában $1/\\sqrt{N}$ ütemben csökken, $X$ dimenziójától függetlenül. A **PDE**-út rácsra bontja $x$-et és $t$-t, és véges differenciákkal $u(T, \\cdot) = g$-ből visszafelé lépteti az egyenletet; egyetlen megoldás minden rácspontban megadja $u$-t, a görögök pedig a szomszédos értékek különbségeiből jönnek, a rács viszont $X$ dimenziójával exponenciálisan nő. A gyakorlatban egy-három állapotváltozóig a PDE-módszerek, fölötte a Monte Carlo dominál. A két válasz közötti bármilyen eltérés numerikus hiba, az egyik oldalon mintavételi, a másikon rácshiba, nem a modell különbsége."),
+
+    {
+      kind: "worked",
+      title: "A négyzetes kifizetés x = 1-ben",
+      steps: [
+        { text: "$\\sigma = 1$ és $\\tau = 0{,}5$ mellett a Gauss-mag varianciája $\\sigma^2\\tau$.", tex: "\\mathbb{E}[(\\sigma W_\\tau)^2] = \\sigma^2\\tau", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "Bontsd ki az $(x + \\sigma W_\\tau)^2$ négyzetet; a vegyes tag várható értéke nulla.", tex: "u(\\tau, 1) = 1^2 + 2 \\cdot 1 \\cdot 0 + 0{,}5", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "Az ábra Monte Carlo-kijelzője $x = 1$-ben ettől legfeljebb egy-két standard hibányira tér el: a kifizetés varianciája 2,5, a húzások száma 2000.", tex: "\\sqrt{2{,}5}/\\sqrt{2000}", result: { value: 0.0354, tolerance: 0.0001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

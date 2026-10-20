@@ -53,6 +53,13 @@ export const blackScholes: GuideLessonContent = {
     ),
     p("The last point is the continuous version of the tree result $C = \\Delta S + B$, with $\\Delta = N(d_1)$ and $B = -Ke^{-rT}N(d_2)$. Differentiating the formula also produces terms from $d_1$ and $d_2$ depending on $S_0$, but they cancel exactly."),
     note("$C_0 = S_0N(d_1) - Ke^{-rT}N(d_2)$, with $d_2 = d_1 - \\sigma\\sqrt{T}$. $N(d_2)$ is the risk-neutral exercise probability and $N(d_1)$ is the delta."),
+    {
+      kind: "check",
+      id: "toward-black-scholes/meaning-nd2",
+      prompt: "In the Black–Scholes formula, what does $N(d_2)$ measure?",
+      answer: { type: "choice", options: ["The risk-neutral probability that the call finishes in the money", "The real-world probability that the call finishes in the money", "The call's delta", "The discount factor $e^{-rT}$"], correct: 0 },
+      explain: "$N(d_2) = \\mathbb{Q}(S_T > K)$, a probability under $\\mathbb{Q}$, not under the real measure. The delta is $N(d_1)$.",
+    },
 
     h("The put"),
     p("Put–call parity $C_0 - P_0 = S_0 - Ke^{-rT}$ holds in any arbitrage-free model, so it holds here. Solving for $P_0$ and using $1 - N(x) = N(-x)$:"),
@@ -63,6 +70,24 @@ export const blackScholes: GuideLessonContent = {
     p("Take $S_0 = 100$, $K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$. Then"),
     eq("d_1 = \\frac{\\ln 1 + (0.05 + 0.02)}{0.2} = 0.35, \\qquad d_2 = 0.35 - 0.2 = 0.15."),
     p("From normal tables $N(0.35) \\approx 0.6368$ and $N(0.15) \\approx 0.5596$. The discount factor is $e^{-0.05} \\approx 0.9512$. So $C_0 \\approx 100 \\cdot 0.6368 - 95.12 \\cdot 0.5596 \\approx 10.45$, and by parity $P_0 \\approx 10.45 - (100 - 95.12) \\approx 5.57$. The call has delta 0.637 and a 56% risk-neutral chance of being exercised."),
+    {
+      kind: "check",
+      id: "toward-black-scholes/atm-call",
+      prompt: "Price a European call with $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ and $T = 1$.",
+      answer: { type: "number", value: 10.45, tolerance: 0.02 },
+      explain: "$d_1 = 0.35$, $d_2 = 0.15$, so $C_0 = 100\\,N(0.35) - 100\\,e^{-0.05}N(0.15) \\approx 63.68 - 53.23 = 10.45$.",
+    },
+    {
+      kind: "worked",
+      title: "An in-the-money call over six months",
+      steps: [
+        { text: "Take $S_0 = 110$, $K = 100$, $r = 5\\%$, $\\sigma = 25\\%$ and $T = 0.5$, so $\\sigma\\sqrt{T} \\approx 0.1768$.", tex: "d_1 = \\frac{\\ln 1.1 + (0.05 + 0.03125) \\cdot 0.5}{0.1768}", result: { value: 0.769, tolerance: 0.001 } },
+        { text: "Subtract $\\sigma\\sqrt{T}$:", tex: "d_2 = d_1 - \\sigma\\sqrt{T}", result: { value: 0.5922, tolerance: 0.001 } },
+        { text: "The delta:", tex: "N(d_1)", result: { value: 0.779, tolerance: 0.001 } },
+        { text: "The risk-neutral probability of exercise:", tex: "N(d_2)", result: { value: 0.7231, tolerance: 0.001 } },
+        { text: "The price, with $Ke^{-rT} = 100\\,e^{-0.025} \\approx 97.53$:", tex: "C_0 = 110 \\cdot 0.779 - 97.53 \\cdot 0.7231", result: { value: 15.17, tolerance: 0.02 } },
+      ],
+    },
 
     h("How the price depends on the inputs"),
     list(
@@ -140,6 +165,13 @@ export const blackScholes: GuideLessonContent = {
     ),
     p("Az utolsó pont a fás $C = \\Delta S + B$ eredmény folytonos változata, $\\Delta = N(d_1)$ és $B = -Ke^{-rT}N(d_2)$ mellett. A képlet deriválásakor $d_1$ és $d_2$ $S_0$-függéséből további tagok is keletkeznek, de ezek pontosan kiejtik egymást."),
     note("$C_0 = S_0N(d_1) - Ke^{-rT}N(d_2)$, ahol $d_2 = d_1 - \\sigma\\sqrt{T}$. $N(d_2)$ a kockázatsemleges lehívási valószínűség, $N(d_1)$ a delta."),
+    {
+      kind: "check",
+      id: "toward-black-scholes/meaning-nd2",
+      prompt: "Mit mér $N(d_2)$ a Black–Scholes-képletben?",
+      answer: { type: "choice", options: ["Annak kockázatsemleges valószínűségét, hogy a call pénzben zár", "Annak valós valószínűségét, hogy a call pénzben zár", "A call deltáját", "Az $e^{-rT}$ diszkontfaktort"], correct: 0 },
+      explain: "$N(d_2) = \\mathbb{Q}(S_T > K)$, vagyis $\\mathbb{Q}$ szerinti valószínűség, nem a valós mérték szerinti. A delta $N(d_1)$.",
+    },
 
     h("Az eladási opció"),
     p("A $C_0 - P_0 = S_0 - Ke^{-rT}$ put–call paritás minden arbitrázsmentes modellben teljesül, így itt is. $P_0$-ra megoldva és $1 - N(x) = N(-x)$-et használva:"),
@@ -150,6 +182,24 @@ export const blackScholes: GuideLessonContent = {
     p("Legyen $S_0 = 100$, $K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$. Ekkor"),
     eq("d_1 = \\frac{\\ln 1 + (0{,}05 + 0{,}02)}{0{,}2} = 0{,}35, \\qquad d_2 = 0{,}35 - 0{,}2 = 0{,}15."),
     p("Normális táblázatból $N(0{,}35) \\approx 0{,}6368$ és $N(0{,}15) \\approx 0{,}5596$. A diszkontfaktor $e^{-0{,}05} \\approx 0{,}9512$. Így $C_0 \\approx 100 \\cdot 0{,}6368 - 95{,}12 \\cdot 0{,}5596 \\approx 10{,}45$, a paritásból pedig $P_0 \\approx 10{,}45 - (100 - 95{,}12) \\approx 5{,}57$. A call deltája 0,637, és 56% a kockázatsemleges esélye a lehívásnak."),
+    {
+      kind: "check",
+      id: "toward-black-scholes/atm-call",
+      prompt: "Árazz be egy európai callt: $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$.",
+      answer: { type: "number", value: 10.45, tolerance: 0.02 },
+      explain: "$d_1 = 0{,}35$, $d_2 = 0{,}15$, így $C_0 = 100\\,N(0{,}35) - 100\\,e^{-0{,}05}N(0{,}15) \\approx 63{,}68 - 53{,}23 = 10{,}45$.",
+    },
+    {
+      kind: "worked",
+      title: "Egy pénzben lévő call fél évre",
+      steps: [
+        { text: "Legyen $S_0 = 110$, $K = 100$, $r = 5\\%$, $\\sigma = 25\\%$ és $T = 0{,}5$, így $\\sigma\\sqrt{T} \\approx 0{,}1768$.", tex: "d_1 = \\frac{\\ln 1{,}1 + (0{,}05 + 0{,}03125) \\cdot 0{,}5}{0{,}1768}", result: { value: 0.769, tolerance: 0.001 } },
+        { text: "Vonjuk le $\\sigma\\sqrt{T}$-t:", tex: "d_2 = d_1 - \\sigma\\sqrt{T}", result: { value: 0.5922, tolerance: 0.001 } },
+        { text: "A delta:", tex: "N(d_1)", result: { value: 0.779, tolerance: 0.001 } },
+        { text: "A lehívás kockázatsemleges valószínűsége:", tex: "N(d_2)", result: { value: 0.7231, tolerance: 0.001 } },
+        { text: "Az ár, $Ke^{-rT} = 100\\,e^{-0{,}025} \\approx 97{,}53$ mellett:", tex: "C_0 = 110 \\cdot 0{,}779 - 97{,}53 \\cdot 0{,}7231", result: { value: 15.17, tolerance: 0.02 } },
+      ],
+    },
 
     h("Az ár függése a bemenetektől"),
     list(

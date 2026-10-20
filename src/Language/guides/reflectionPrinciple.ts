@@ -88,6 +88,17 @@ export const reflectionPrinciple: GuideLessonContent = {
       explain: "With $a = 1$, $x = 0$: $\\mathbb{P}(M_1 \\ge 1,\\ W_1 \\le 0) = \\mathbb{P}(W_1 \\ge 2a - x) = \\mathbb{P}(W_1 \\ge 2) = 1 - \\Phi(2) \\approx 0.0228$.",
     },
 
+    {
+      kind: "worked",
+      title: "Hitting the level 1",
+      steps: [
+        { text: "The standard normal CDF at 1.", tex: "\\Phi(1)", result: { value: 0.8413, tolerance: 0.0001 } },
+        { text: "By the reflection principle the maximum up to $t = 1$ reaches 1 with twice the probability that $W_1$ ends above 1.", tex: "\\mathbb{P}\\big(\\max_{t \\le 1} W_t \\ge 1\\big) = 2\\big(1 - \\Phi(1)\\big)", result: { value: 0.3173, tolerance: 0.0001 } },
+        { text: "$\\{\\tau_1 \\le 1\\}$ is the same event as $\\{\\max_{t \\le 1} W_t \\ge 1\\}$, so it has the same probability.", tex: "\\mathbb{P}(\\tau_1 \\le 1) = 2\\big(1 - \\Phi(1/\\sqrt{1})\\big)", result: { value: 0.3173, tolerance: 0.0001 } },
+        { text: "With four times as long to wait, the argument of $\\Phi$ halves.", tex: "\\mathbb{P}(\\tau_1 \\le 4) = 2\\big(1 - \\Phi(1/\\sqrt{4})\\big)", result: { value: 0.6171, tolerance: 0.0001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "$\\tau_a = \\inf\\{t : W_t = a\\}$ is a stopping time and $\\{\\tau_a \\le t\\} = \\{M_t \\ge a\\}$.",
@@ -183,6 +194,17 @@ export const reflectionPrinciple: GuideLessonContent = {
       prompt: "Számítsd ki $\\mathbb{P}(M_1 \\ge 1,\\ W_1 \\le 0)$ értékét.",
       answer: { type: "number", value: 0.0228, tolerance: 0.0005 },
       explain: "$a = 1$, $x = 0$ mellett $\\mathbb{P}(M_1 \\ge 1,\\ W_1 \\le 0) = \\mathbb{P}(W_1 \\ge 2a - x) = \\mathbb{P}(W_1 \\ge 2) = 1 - \\Phi(2) \\approx 0{,}0228$.",
+    },
+
+    {
+      kind: "worked",
+      title: "Az 1-es szint elérése",
+      steps: [
+        { text: "A standard normális eloszlásfüggvény értéke 1-ben.", tex: "\\Phi(1)", result: { value: 0.8413, tolerance: 0.0001 } },
+        { text: "A tükrözési elv szerint a $t = 1$-ig vett maximum kétszer akkora valószínűséggel éri el az 1-et, mint amekkorával $W_1$ 1 fölött végez.", tex: "\\mathbb{P}\\big(\\max_{t \\le 1} W_t \\ge 1\\big) = 2\\big(1 - \\Phi(1)\\big)", result: { value: 0.3173, tolerance: 0.0001 } },
+        { text: "$\\{\\tau_1 \\le 1\\}$ ugyanaz az esemény, mint $\\{\\max_{t \\le 1} W_t \\ge 1\\}$, tehát a valószínűsége is ugyanannyi.", tex: "\\mathbb{P}(\\tau_1 \\le 1) = 2\\big(1 - \\Phi(1/\\sqrt{1})\\big)", result: { value: 0.3173, tolerance: 0.0001 } },
+        { text: "Négyszer annyi idővel $\\Phi$ argumentuma a felére csökken.", tex: "\\mathbb{P}(\\tau_1 \\le 4) = 2\\big(1 - \\Phi(1/\\sqrt{4})\\big)", result: { value: 0.6171, tolerance: 0.0001 } },
+      ],
     },
 
     h("Összefoglalás"),

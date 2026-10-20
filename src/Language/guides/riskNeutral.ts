@@ -25,10 +25,24 @@ export const riskNeutral: GuideLessonContent = {
     eq("C_0 = \\frac{1}{1+r}\\,\\mathbb{E}^{\\mathbb{Q}}[X],"),
     p("where $X$ is the payoff at time 1. The same formula holds for any payoff, because the derivation never used the shape of the call. If the no-arbitrage condition fails, $q$ falls outside $(0,1)$ and the formula has no meaning, which matches the fact that such a market has no consistent prices at all."),
     note("**Risk-neutral pricing.** With $q = \\frac{(1+r)-d}{u-d}$, the arbitrage-free price of any payoff $X$ is $\\frac{1}{1+r}\\mathbb{E}^{\\mathbb{Q}}[X]$: the expected payoff under $\\mathbb{Q}$, discounted at the risk-free rate."),
+    {
+      kind: "check",
+      id: "risk-neutral/q-value",
+      prompt: "In a one-step model $u = 1.1$, $d = 0.9$ and the simple rate for the period is $r = 2\\%$. What is the risk-neutral probability $q$ of the up move?",
+      answer: { type: "number", value: 0.6, tolerance: 0.005 },
+      explain: "$q = ((1+r) - d)/(u - d) = (1.02 - 0.9)/(1.1 - 0.9) = 0.12/0.2 = 0.6$.",
+    },
 
     h("The real probability $p$ does not enter"),
     p("The formula for $q$ contains only $u$, $d$ and $r$. The real probability $p$ is absent. Two investors who disagree about how likely the up move is still agree on the option price, as long as they agree on $S_0$, $u$, $d$ and $r$. The reason is the replication argument: the portfolio matches the payoff in every state, so how often each state occurs is irrelevant."),
     p("The real probability already acts through the stock price. A market that thinks the up move is very likely will bid $S_0$ up, and $S_0$ is an input. Given $S_0$, however, the option adds no further dependence on $p$."),
+    {
+      kind: "check",
+      id: "risk-neutral/depends-on-p",
+      prompt: "Two traders agree on $S_0$, $u$, $d$ and $r$ but disagree about the real probability $p$ of the up move. Do they get different option prices?",
+      answer: { type: "choice", options: ["No: $q$ uses only $u$, $d$ and $r$", "Yes: the trader with the higher $p$ gets a higher call price", "Yes, unless $p = 0.5$", "Only for puts"], correct: 0 },
+      explain: "The replicating portfolio matches the payoff in both states, so how often each state occurs never enters. Given $S_0$, the price does not depend on $p$.",
+    },
 
     h("Worked example"),
     p("Use the numbers from the previous lesson: $S_0 = 100$, $u = 1.2$, $d = 0.9$, $r = 2\\%$, $K = 100$, so $C_u = 20$ and $C_d = 0$."),
@@ -36,6 +50,16 @@ export const riskNeutral: GuideLessonContent = {
     p("This is the same 7.84 that the replicating portfolio gave. Now suppose the real probability of the up move is $p = 0.6$. Discounting the expected payoff under $\\mathbb{P}$ at the risk-free rate gives the **naive price**"),
     eq("\\frac{1}{1.02}\\,\\mathbb{E}^{\\mathbb{P}}[X] = \\frac{0.6\\cdot 20}{1.02} \\approx 11.76."),
     p("If the call traded at 11.76, you could sell it, build the replicating portfolio for 7.84 and keep 3.92 with no risk. So the naive price is wrong, and the error comes from discounting a risky payoff at the risk-free rate."),
+    {
+      kind: "worked",
+      title: "A put priced two ways",
+      steps: [
+        { text: "Same tree, now a put with $K = 100$: $P_u = (100 - 120)^+ = 0$ and $P_d = (100 - 90)^+ = 10$. With $q = 0.4$, the risk-neutral price is", tex: "P_0 = \\frac{0.4 \\cdot 0 + 0.6 \\cdot 10}{1.02}", result: { value: 5.88, tolerance: 0.01 } },
+        { text: "Replication: the share position is negative, a short sale.", tex: "\\Delta = \\frac{0 - 10}{120 - 90}", result: { value: -0.3333, tolerance: 0.001 } },
+        { text: "The bond position is a deposit.", tex: "B = \\frac{10 - (-\\tfrac{1}{3}) \\cdot 90}{1.02}", result: { value: 39.22, tolerance: 0.01 } },
+        { text: "The cost of the portfolio is the same price.", tex: "\\Delta S_0 + B = -33.33 + 39.22", result: { value: 5.88, tolerance: 0.01 } },
+      ],
+    },
 
     h("The stock earns $r$ under $\\mathbb{Q}$"),
     p("Apply the pricing formula to the stock itself, whose payoff is $uS_0$ or $dS_0$:"),
@@ -89,10 +113,24 @@ export const riskNeutral: GuideLessonContent = {
     eq("C_0 = \\frac{1}{1+r}\\,\\mathbb{E}^{\\mathbb{Q}}[X],"),
     p("ahol $X$ az 1. időpontbeli kifizetés. Ugyanez a képlet bármely kifizetésre érvényes, mert a levezetés sehol nem használta ki a call alakját. Ha az arbitrázsmentességi feltétel sérül, $q$ kiesik a $(0,1)$ intervallumból, és a képletnek nincs értelme; ez összhangban van azzal, hogy egy ilyen piacon egyáltalán nincsenek konzisztens árak."),
     note("**Kockázatsemleges árazás.** Ha $q = \\frac{(1+r)-d}{u-d}$, bármely $X$ kifizetés arbitrázsmentes ára $\\frac{1}{1+r}\\mathbb{E}^{\\mathbb{Q}}[X]$: a $\\mathbb{Q}$ szerinti várható kifizetés, a kockázatmentes kamattal diszkontálva."),
+    {
+      kind: "check",
+      id: "risk-neutral/q-value",
+      prompt: "Egy egylépéses modellben $u = 1{,}1$, $d = 0{,}9$, a periódusra vonatkozó egyszerű kamatláb $r = 2\\%$. Mennyi a felfelé lépés $q$ kockázatsemleges valószínűsége?",
+      answer: { type: "number", value: 0.6, tolerance: 0.005 },
+      explain: "$q = ((1+r) - d)/(u - d) = (1{,}02 - 0{,}9)/(1{,}1 - 0{,}9) = 0{,}12/0{,}2 = 0{,}6$.",
+    },
 
     h("A valós $p$ valószínűség nem szerepel"),
     p("A $q$ képletében csak $u$, $d$ és $r$ szerepel, a valós $p$ valószínűség nem. Két befektető, akik nem értenek egyet abban, mennyire valószínű a felfelé lépés, mégis ugyanazt az opcióárat kapja, ha $S_0$-ban, $u$-ban, $d$-ben és $r$-ben egyetértenek. Ennek oka a replikációs érv: a portfólió minden állapotban reprodukálja a kifizetést, így közömbös, milyen gyakran következnek be az egyes állapotok."),
     p("A valós valószínűség a részvényáron keresztül már hat. Ha a piac nagyon valószínűnek tartja a felfelé lépést, felveri $S_0$-t, és $S_0$ bemenő adat. Adott $S_0$ mellett viszont az opció ára már nem függ tovább $p$-től."),
+    {
+      kind: "check",
+      id: "risk-neutral/depends-on-p",
+      prompt: "Két kereskedő egyetért $S_0$-ban, $u$-ban, $d$-ben és $r$-ben, de a felfelé lépés valós $p$ valószínűségében nem. Különböző opcióárat kapnak?",
+      answer: { type: "choice", options: ["Nem: $q$ csak $u$-tól, $d$-től és $r$-től függ", "Igen: a nagyobb $p$-t feltételező magasabb call árat kap", "Igen, hacsak nem $p = 0{,}5$", "Csak putoknál"], correct: 0 },
+      explain: "A replikáló portfólió mindkét állapotban reprodukálja a kifizetést, így az, hogy melyik állapot milyen gyakori, sehol nem jelenik meg. Adott $S_0$ mellett az ár nem függ $p$-től.",
+    },
 
     h("Kidolgozott példa"),
     p("Használjuk az előző lecke számait: $S_0 = 100$, $u = 1{,}2$, $d = 0{,}9$, $r = 2\\%$, $K = 100$, így $C_u = 20$ és $C_d = 0$."),
@@ -100,6 +138,16 @@ export const riskNeutral: GuideLessonContent = {
     p("Ez ugyanaz a 7,84, amelyet a replikáló portfólió adott. Tegyük fel most, hogy a felfelé lépés valós valószínűsége $p = 0{,}6$. Ha a $\\mathbb{P}$ szerinti várható kifizetést a kockázatmentes kamattal diszkontáljuk, a **naiv árat** kapjuk:"),
     eq("\\frac{1}{1{,}02}\\,\\mathbb{E}^{\\mathbb{P}}[X] = \\frac{0{,}6\\cdot 20}{1{,}02} \\approx 11{,}76."),
     p("Ha a call 11,76-on kereskedne, eladhatnánk, 7,84-ért felépíthetnénk a replikáló portfóliót, és kockázat nélkül megtarthatnánk 3,92-t. A naiv ár tehát hibás, és a hiba abból ered, hogy egy kockázatos kifizetést a kockázatmentes kamattal diszkontáltunk."),
+    {
+      kind: "worked",
+      title: "Egy put árazása kétféleképpen",
+      steps: [
+        { text: "Ugyanaz a fa, most egy $K = 100$ kötési árú put: $P_u = (100 - 120)^+ = 0$ és $P_d = (100 - 90)^+ = 10$. $q = 0{,}4$ mellett a kockázatsemleges ár", tex: "P_0 = \\frac{0{,}4 \\cdot 0 + 0{,}6 \\cdot 10}{1{,}02}", result: { value: 5.88, tolerance: 0.01 } },
+        { text: "Replikálás: a részvénypozíció negatív, vagyis shortolás.", tex: "\\Delta = \\frac{0 - 10}{120 - 90}", result: { value: -0.3333, tolerance: 0.001 } },
+        { text: "A kötvénypozíció betét.", tex: "B = \\frac{10 - (-\\tfrac{1}{3}) \\cdot 90}{1{,}02}", result: { value: 39.22, tolerance: 0.01 } },
+        { text: "A portfólió költsége ugyanez az ár.", tex: "\\Delta S_0 + B = -33{,}33 + 39{,}22", result: { value: 5.88, tolerance: 0.01 } },
+      ],
+    },
 
     h("A részvény hozama $\\mathbb{Q}$ alatt $r$"),
     p("Alkalmazzuk az árazási képletet magára a részvényre, amelynek kifizetése $uS_0$ vagy $dS_0$:"),

@@ -94,7 +94,7 @@ export const capitalStructure: GuideLessonContent = {
       "With corporate taxes and perpetual debt, $V_L = V_U + tD$, $r_E = r_U + (r_U - r_D)(1 - t)\\,D/E$ and $\\text{WACC} = r_U(1 - t\\,D/V)$.",
       "Costs of financial distress, which the model leaves out, limit how much debt is worth taking on.",
     ),
-    note("The next lesson, \"Discounted cash flow valuation\", uses the WACC to value an entire firm from its free cash flows."),
+    note("A later lesson, \"Discounted cash flow valuation\", uses the WACC to value an entire firm from its free cash flows."),
     lab("/capital-structure", "See how leverage moves the cost of equity, the WACC and firm value in the Capital Structure lab"),
   ],
 
@@ -190,7 +190,7 @@ export const capitalStructure: GuideLessonContent = {
       "Társasági adóval és örökjáradék jellegű hitellel $V_L = V_U + tD$, $r_E = r_U + (r_U - r_D)(1 - t)\\,D/E$ és $\\text{WACC} = r_U(1 - t\\,D/V)$.",
       "A modellből kimaradó pénzügyi nehézségi költségek korlátozzák, mennyi hitelt érdemes felvenni.",
     ),
-    note("A következő lecke, „Diszkontált pénzáram alapú értékelés”, a WACC segítségével egy egész vállalatot értékel a szabad pénzáramaiból."),
+    note("Egy későbbi lecke, „Diszkontált pénzáram alapú értékelés”, a WACC segítségével egy egész vállalatot értékel a szabad pénzáramaiból."),
     lab("/capital-structure", "Nézd meg, hogyan mozgatja a tőkeáttétel a saját tőke költségét, a WACC-t és a vállalat értékét a Tőkeszerkezet laborban"),
   ],
 };

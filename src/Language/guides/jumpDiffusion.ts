@@ -64,6 +64,33 @@ export const jumpDiffusion: GuideLessonContent = {
     h("Hedging and incompleteness"),
     p("In the Black–Scholes setting a position of $\\Delta$ shares, rebalanced continuously, removes all risk from an option. With jumps this fails. When a jump occurs, the option changes by $C(S e^J) - C(S)$, which is not linear in the random jump size $e^J - 1$. A stock position can offset the change for one jump size but not for all of them, and rebalancing cannot react to an instantaneous jump. Some risk remains, and the market with only the stock and the bond is **incomplete**: the option price is no longer fixed by replication but depends on how the market prices jump risk."),
 
+    {
+      kind: "check",
+      id: "jump-diffusion/expected-jumps",
+      prompt: "Jumps arrive as a Poisson process with intensity $\\lambda = 2$ per year. How many jumps do you expect in one year?",
+      answer: { type: "number", value: 2, tolerance: 0.01 },
+      explain: "$\\mathbb{E}[N_t] = \\lambda t = 2 \\times 1 = 2$; the variance of the count is also 2.",
+    },
+
+    {
+      kind: "check",
+      id: "jump-diffusion/kurtosis",
+      prompt: "Adding normal log-jumps to geometric Brownian motion changes the excess kurtosis of the log return how?",
+      answer: { type: "choice", options: ["It raises it above zero.","It lowers it below zero.","It leaves it at zero.","Its sign depends on $\\mu_J$."], correct: 0 },
+      explain: "The fourth cumulant $\\lambda T(\\mu_J^4 + 6\\mu_J^2\\sigma_J^2 + 3\\sigma_J^4)$ is positive whatever the sign of $\\mu_J$, so the tails are fatter than the normal's. The sign of $\\mu_J$ sets the skew, not the kurtosis.",
+    },
+
+    {
+      kind: "worked",
+      title: "Splitting the variance between diffusion and jumps",
+      steps: [
+        { text: "Diffusion variance over one year with $\\sigma = 15\\%$.", tex: "\\sigma^2 T = 0.15^2", result: { value: 0.0225, tolerance: 0.0001 } },
+        { text: "Jump variance with the figure's defaults $\\lambda = 0.5$, $\\mu_J = -10\\%$, $\\sigma_J = 15\\%$.", tex: "\\lambda T(\\mu_J^2 + \\sigma_J^2) = 0.5\\,(0.01 + 0.0225)", result: { value: 0.01625, tolerance: 0.00001 } },
+        { text: "Total variance of the log return.", tex: "0.0225 + 0.01625", result: { value: 0.03875, tolerance: 0.00001 } },
+        { text: "Share of the variance from the diffusion.", tex: "0.0225 / 0.03875", result: { value: 0.5806, tolerance: 0.0001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "The Poisson process $N_t$ counts events with intensity $\\lambda$: $\\Pr(N_t = n) = e^{-\\lambda t}(\\lambda t)^n/n!$, mean and variance $\\lambda t$, independent increments.",
@@ -136,6 +163,33 @@ export const jumpDiffusion: GuideLessonContent = {
 
     h("Fedezés és nem teljes piac"),
     p("A Black–Scholes-modellben a folyamatosan újrasúlyozott $\\Delta$ darab részvény minden kockázatot eltávolít egy opcióból. Ugrásokkal ez nem működik. Ugráskor az opció értéke $C(S e^J) - C(S)$-sel változik, ami nem lineáris a véletlen $e^J - 1$ ugrásméretben. Egy részvénypozíció egyetlen ugrásméretre ki tudja egyenlíteni az opció változását, de egyszerre mindegyikre nem, és a folyamatos újrasúlyozás sem segít, mert az ugrás egy pillanat alatt zajlik le. Marad kockázat, és a csak részvényből és kötvényből álló piac **nem teljes**: az opció árát már nem a replikáció határozza meg, hanem az, hogyan árazza a piac az ugráskockázatot."),
+
+    {
+      kind: "check",
+      id: "jump-diffusion/expected-jumps",
+      prompt: "Az ugrások évi $\\lambda = 2$ intenzitású Poisson-folyamat szerint érkeznek. Hány ugrás várható egy év alatt?",
+      answer: { type: "number", value: 2, tolerance: 0.01 },
+      explain: "$\\mathbb{E}[N_t] = \\lambda t = 2 \\times 1 = 2$; a darabszám varianciája szintén 2.",
+    },
+
+    {
+      kind: "check",
+      id: "jump-diffusion/kurtosis",
+      prompt: "Hogyan változtatja meg a log-hozam többletcsúcsosságát, ha normális log-ugrásokat adunk a geometriai Brown-mozgáshoz?",
+      answer: { type: "choice", options: ["Nulla fölé emeli.","Nulla alá csökkenti.","Nullán hagyja.","Az előjele $\\mu_J$-től függ."], correct: 0 },
+      explain: "A negyedik kumuláns, $\\lambda T(\\mu_J^4 + 6\\mu_J^2\\sigma_J^2 + 3\\sigma_J^4)$, $\\mu_J$ előjelétől függetlenül pozitív, így a farkak vastagabbak a normálisénál. $\\mu_J$ előjele a ferdeséget határozza meg, nem a csúcsosságot.",
+    },
+
+    {
+      kind: "worked",
+      title: "A variancia felosztása diffúzió és ugrások között",
+      steps: [
+        { text: "A diffúziós variancia egy évre $\\sigma = 15\\%$ mellett.", tex: "\\sigma^2 T = 0{,}15^2", result: { value: 0.0225, tolerance: 0.0001 } },
+        { text: "Az ugrásvariancia az ábra alapértékeivel: $\\lambda = 0{,}5$, $\\mu_J = -10\\%$, $\\sigma_J = 15\\%$.", tex: "\\lambda T(\\mu_J^2 + \\sigma_J^2) = 0{,}5\\,(0{,}01 + 0{,}0225)", result: { value: 0.01625, tolerance: 0.00001 } },
+        { text: "A log-hozam teljes varianciája.", tex: "0{,}0225 + 0{,}01625", result: { value: 0.03875, tolerance: 0.00001 } },
+        { text: "A variancia diffúzióból származó hányada.", tex: "0{,}0225 / 0{,}03875", result: { value: 0.5806, tolerance: 0.0001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

@@ -24,6 +24,13 @@ export const deltaHedging: GuideLessonContent = {
     eq("d\\Pi \\approx \\Delta\\,dS - \\Delta\\,dS = 0."),
     p("A position with zero first-order sensitivity to the stock is called **delta-neutral**. This is the replicating portfolio of the tree lessons read the other way round: instead of building the option from stock and bond, you cancel the option's stock exposure with stock."),
     note("Delta $\\Delta = \\partial C/\\partial S$ is the number of shares that replicates the option locally. Holding $C - \\Delta S$ removes exposure to small stock moves."),
+    {
+      kind: "check",
+      id: "delta-hedging/hedge-shares",
+      prompt: "A dealer has sold 100 calls, each with delta $\\Delta = 0.6$. How many shares must she buy to be delta-neutral?",
+      answer: { type: "number", value: 60, tolerance: 0.01 },
+      explain: "The short calls have a total delta of $-100 \\cdot 0.6 = -60$, so buying 60 shares brings the position to zero delta.",
+    },
 
     h("Gamma and the hedge error"),
     p("The cancellation above is only first-order. A Taylor expansion of $C$ in $S$, ignoring the passage of time over the short interval, gives"),
@@ -31,12 +38,30 @@ export const deltaHedging: GuideLessonContent = {
     p("**Gamma** $\\Gamma$ is the curvature of the value curve: how fast delta itself changes when $S$ moves. Substituting into the hedged portfolio, the linear terms cancel and what remains is"),
     eq("d\\Pi \\approx \\tfrac{1}{2}\\,\\Gamma\\,(dS)^2."),
     p("For a long call $\\Gamma > 0$, so the hedged position gains a little on any large move, up or down. The error grows with the square of the move: double the move and the error is four times larger. Gamma is largest for options near the money and close to maturity, where the value curve bends most sharply."),
+    {
+      kind: "check",
+      id: "delta-hedging/gamma-sign",
+      prompt: "What is the sign of gamma for a long call?",
+      answer: { type: "choice", options: ["Positive", "Negative", "Zero", "Positive below the strike, negative above it"], correct: 0 },
+      explain: "The value curve of a call is convex in $S$, so its second derivative $\\Gamma$ is positive everywhere. The delta-hedged long call therefore gains on large moves either way.",
+    },
     p("The figure plots the call value against $S$ (with $K = 100$, $r = 5\\%$) together with the tangent line at the current price $S_0$; the tangent's slope is $\\Delta$. The dashed line is the payoff at maturity. The vertical gap between curve and tangent is exactly the hedge error; the readouts show it for a move of 10 up and 10 down. Move $S_0$ and watch $\\Delta$ run from near 0 to near 1; shorten $T$ or lower $\\sigma$ and note that the curve hugs the payoff more tightly, the bend at $K$ sharpens and $\\Gamma$ near the strike rises."),
     figure("delta-tangent"),
 
     h("A worked example"),
     p("Take $S_0 = 100$, $K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$. The call is worth about 10.45, with $\\Delta \\approx 0.637$ and $\\Gamma \\approx 0.0188$. A dealer who sold 100 calls hedges by buying about 63.7 shares."),
     p("If the stock jumps to 110, the tangent predicts a call value of $10.45 + 0.637 \\cdot 10 \\approx 16.82$, while the true value is about 17.66. The gap is about 0.84 per call. For a drop to 90 the gap is about 1.01. The gamma estimate gives $\\tfrac{1}{2} \\cdot 0.0188 \\cdot 10^2 \\approx 0.94$, between the two. For a move of only 1 the error is about 0.009, a hundred times smaller, as the square law predicts."),
+    {
+      kind: "worked",
+      title: "One rebalancing step after a move to 102",
+      steps: [
+        { text: "Start from the same call ($S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$), held long and hedged by shorting $\\Delta = N(d_1)$ shares:", tex: "\\Delta = N(0.35)", result: { value: 0.6368, tolerance: 0.0005 } },
+        { text: "Gamma at the same point:", tex: "\\Gamma = \\frac{\\varphi(d_1)}{S_0\\,\\sigma\\sqrt{T}}", result: { value: 0.01876, tolerance: 0.0001 } },
+        { text: "The stock jumps to 102. The gamma term predicts the gain of the hedged position:", tex: "\\tfrac{1}{2}\\,\\Gamma\\,(dS)^2 = \\tfrac{1}{2} \\cdot 0.01876 \\cdot 2^2", result: { value: 0.0375, tolerance: 0.0005 } },
+        { text: "Repricing the call exactly at 102 and subtracting the stock leg gives nearly the same:", tex: "C(102) - C(100) - \\Delta \\cdot 2", result: { value: 0.0368, tolerance: 0.0005 } },
+        { text: "The new delta is higher, so the hedge must be rebalanced by shorting more shares:", tex: "N\\!\\left(\\frac{\\ln 1.02 + 0.07}{0.2}\\right)", result: { value: 0.6733, tolerance: 0.0005 } },
+      ],
+    },
 
     h("Rebalancing"),
     p("Delta changes whenever $S$ or $t$ changes, so a hedge set up today is only correct today. Keeping the position delta-neutral means **rebalancing**: recomputing $\\Delta$ and adjusting the share holding at regular intervals. In the tree this happens at every node, which is exactly what backward induction prescribes."),
@@ -79,6 +104,13 @@ export const deltaHedging: GuideLessonContent = {
     eq("d\\Pi \\approx \\Delta\\,dS - \\Delta\\,dS = 0."),
     p("Azt a pozíciót, amelynek elsőrendű érzékenysége a részvényárra nulla, **delta-semlegesnek** nevezzük. Ez a fás leckék replikáló portfóliója fordított irányból nézve: ahelyett, hogy részvényből és kötvényből rakjuk össze az opciót, az opció részvénykitettségét részvénnyel semlegesítjük."),
     note("A $\\Delta = \\partial C/\\partial S$ delta az a részvényszám, amely lokálisan replikálja az opciót. A $C - \\Delta S$ pozíció érzéketlen a kis részvényár-mozgásokra."),
+    {
+      kind: "check",
+      id: "delta-hedging/hedge-shares",
+      prompt: "Egy árjegyző 100 callt adott el, mindegyik deltája $\\Delta = 0{,}6$. Hány részvényt kell vennie, hogy delta-semleges legyen?",
+      answer: { type: "number", value: 60, tolerance: 0.01 },
+      explain: "Az eladott callok együttes deltája $-100 \\cdot 0{,}6 = -60$, így 60 részvény megvételével a pozíció deltája nulla lesz.",
+    },
 
     h("Gamma és a fedezési hiba"),
     p("A fenti kioltás csak elsőrendben pontos. $C$ Taylor-sora $S$ szerint, a rövid időszak alatti időmúlást elhanyagolva:"),
@@ -86,12 +118,30 @@ export const deltaHedging: GuideLessonContent = {
     p("A **gamma** ($\\Gamma$) az értékgörbe görbülete: azt méri, milyen gyorsan változik maga a delta, ha $S$ elmozdul. A fedezett portfólióba helyettesítve a lineáris tagok kiesnek, és ez marad:"),
     eq("d\\Pi \\approx \\tfrac{1}{2}\\,\\Gamma\\,(dS)^2."),
     p("Vételi opció tulajdonosánál $\\Gamma > 0$, így a fedezett pozíció minden nagy mozgáson nyer egy keveset, akár felfelé, akár lefelé. A hiba a mozgás négyzetével nő: kétszer akkora mozgásnál négyszer akkora. A gamma a pénz körüli, lejárathoz közeli opcióknál a legnagyobb, ahol az értékgörbe a legélesebben hajlik."),
+    {
+      kind: "check",
+      id: "delta-hedging/gamma-sign",
+      prompt: "Milyen előjelű egy hosszú call gammája?",
+      answer: { type: "choice", options: ["Pozitív", "Negatív", "Nulla", "A kötési ár alatt pozitív, fölötte negatív"], correct: 0 },
+      explain: "A call értékgörbéje $S$-ben konvex, így a második deriváltja, $\\Gamma$, mindenhol pozitív. A delta-fedezett hosszú call ezért bármelyik irányú nagy mozgáson nyer.",
+    },
     p("Az ábra a vételi opció értékét mutatja $S$ függvényében ($K = 100$, $r = 5\\%$), a mai $S_0$ árhoz húzott érintővel együtt; az érintő meredeksége $\\Delta$. A szaggatott vonal a lejáratkori kifizetés. A görbe és az érintő közti függőleges távolság éppen a fedezési hiba; a kijelzők ezt 10 egységnyi emelkedésre és esésre mutatják. Mozgasd $S_0$-t, és figyeld, ahogy $\\Delta$ közel 0-ról közel 1-re nő; csökkentsd $T$-t vagy $\\sigma$-t, és látni fogod, hogy a görbe szorosabban simul a kifizetéshez, a $K$-nál lévő törés élesebb lesz, és a kötési ár körül nő $\\Gamma$."),
     figure("delta-tangent"),
 
     h("Számpélda"),
     p("Legyen $S_0 = 100$, $K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$. A vételi opció értéke kb. 10,45, $\\Delta \\approx 0{,}637$ és $\\Gamma \\approx 0{,}0188$. Egy árjegyző, aki 100 callt adott el, nagyjából 63,7 részvény megvételével fedez."),
     p("Ha a részvény 110-re ugrik, az érintő $10{,}45 + 0{,}637 \\cdot 10 \\approx 16{,}82$ opcióértéket jósol, a valódi érték viszont kb. 17,66. A különbség opciónként kb. 0,84. 90-re eséskor a különbség kb. 1,01. A gammából adódó becslés $\\tfrac{1}{2} \\cdot 0{,}0188 \\cdot 10^2 \\approx 0{,}94$, a kettő között. Mindössze 1 egységnyi mozgásnál a hiba kb. 0,009, százszor kisebb, ahogy a négyzetes szabály mondja."),
+    {
+      kind: "worked",
+      title: "Egy újrasúlyozási lépés a 102-re ugrás után",
+      steps: [
+        { text: "Induljunk ugyanabból a callból ($S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$), amelyet hosszan tartunk, és $\\Delta = N(d_1)$ részvény shortolásával fedezünk:", tex: "\\Delta = N(0{,}35)", result: { value: 0.6368, tolerance: 0.0005 } },
+        { text: "A gamma ugyanitt:", tex: "\\Gamma = \\frac{\\varphi(d_1)}{S_0\\,\\sigma\\sqrt{T}}", result: { value: 0.01876, tolerance: 0.0001 } },
+        { text: "A részvény 102-re ugrik. A gammatag megjósolja a fedezett pozíció nyereségét:", tex: "\\tfrac{1}{2}\\,\\Gamma\\,(dS)^2 = \\tfrac{1}{2} \\cdot 0{,}01876 \\cdot 2^2", result: { value: 0.0375, tolerance: 0.0005 } },
+        { text: "Ha a callt 102-nél pontosan újraárazzuk, és levonjuk a részvényláb változását, majdnem ugyanezt kapjuk:", tex: "C(102) - C(100) - \\Delta \\cdot 2", result: { value: 0.0368, tolerance: 0.0005 } },
+        { text: "Az új delta nagyobb, ezért az újrasúlyozáskor további részvényeket kell shortolni:", tex: "N\\!\\left(\\frac{\\ln 1{,}02 + 0{,}07}{0{,}2}\\right)", result: { value: 0.6733, tolerance: 0.0005 } },
+      ],
+    },
 
     h("Újrasúlyozás"),
     p("A delta változik, valahányszor $S$ vagy $t$ változik, ezért a ma beállított fedezés csak ma pontos. A delta-semlegesség fenntartása **újrasúlyozást** igényel: rendszeres időközönként újraszámoljuk $\\Delta$-t, és igazítjuk a részvényállományt. A fában ez minden csomópontban megtörténik, pontosan ezt írja elő a visszafelé indukció."),

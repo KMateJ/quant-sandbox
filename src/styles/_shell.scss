@@ -1,3 +1,5 @@
+@use "breakpoints" as *;
+
 // #region Shell layout
 .app-shell {
   display: flex;
@@ -622,17 +624,49 @@ $side-open: 0.26s;
 }
 // #endregion
 
-@media (max-width: 640px) {
+// Category links and the controls no longer fit one row below tablet width: the menu takes over.
+@include below-tablet {
   .cat-tabs {
-    display: none;
-  }
-
-  .sidebar {
     display: none;
   }
 
   .nav-toggle {
     display: inline-flex;
+  }
+}
+
+@include phone {
+  .sidebar {
+    display: none;
+  }
+
+  .topnav-inner {
+    gap: var(--space-3);
+  }
+
+  .topnav-controls {
+    gap: 4px;
+  }
+
+  .brand {
+    font-size: 19px;
+  }
+}
+
+@include tiny {
+  .topnav-inner {
+    gap: var(--space-2);
+    padding: 0 12px;
+  }
+
+  .topnav-controls {
+    gap: 2px;
+  }
+
+  .brand {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 // #endregion

@@ -23,6 +23,13 @@ export const diversification: GuideLessonContent = {
     p("Take two assets A and B with weights $w_A = 1 - w$ and $w_B = w$. The variance of a sum of two random variables is the sum of the variances plus twice the covariance, and constants come out squared:"),
     eq("\\sigma_p^2 = \\operatorname{Var}(w_A R_A + w_B R_B) = w_A^2\\sigma_A^2 + w_B^2\\sigma_B^2 + 2\\,w_A w_B\\,\\rho\\,\\sigma_A\\sigma_B."),
     p("The first two terms are the risk each asset brings on its own. The third term is where correlation enters. Everything else being equal, a lower $\\rho$ gives a lower portfolio variance."),
+    {
+      kind: "check",
+      id: "diversification/fifty-fifty-volatility",
+      prompt: "Two assets have $\\sigma_1 = 20\\%$ and $\\sigma_2 = 30\\%$ with correlation $\\rho = 0.2$. What is the volatility of a 50/50 portfolio, in percent?",
+      answer: { type: "number", value: 19.62, tolerance: 0.05, unit: "%" },
+      explain: "$\\sigma_p^2 = 0.25 \\times 0.04 + 0.25 \\times 0.09 + 2 \\times 0.25 \\times 0.2 \\times 0.2 \\times 0.3 = 0.0385$, so $\\sigma_p \\approx 19.62\\%$, below the 25% average of the two volatilities.",
+    },
 
     h("Three cases of correlation"),
     p("With $\\rho = 1$ the expression is a perfect square:"),
@@ -32,6 +39,22 @@ export const diversification: GuideLessonContent = {
     eq("\\sigma_p < w_A\\sigma_A + w_B\\sigma_B \\qquad (0 < w < 1)."),
     p("The portfolio is less risky than the average of its parts, while its expected return is still the average. This gap is the benefit of **diversification**."),
     p("With $\\rho = -1$ the expression is again a square, $\\sigma_p = |w_A\\sigma_A - w_B\\sigma_B|$, and it is zero when $w_A\\sigma_A = w_B\\sigma_B$, that is at $w_B = \\sigma_A/(\\sigma_A + \\sigma_B)$. Two perfectly opposite assets can be combined into a riskless portfolio. A fair picture is an umbrella seller and an ice-cream seller on the same beach: whatever the weather, one of them has a good day."),
+    {
+      kind: "worked",
+      title: "One 50/50 portfolio under three correlations",
+      steps: [
+        { text: "Take $\\sigma_A = 15\\%$, $\\sigma_B = 30\\%$ and equal weights. With $\\rho = 1$ the volatility is the weighted average.", tex: "\\sigma_p = 0.5 \\times 15\\% + 0.5 \\times 30\\%", result: { value: 22.5, tolerance: 0.01, unit: "%" } },
+        { text: "With $\\rho = 0$ the cross term vanishes and only the two own-risk terms remain.", tex: "\\sigma_p = \\sqrt{0.25 \\times 0.0225 + 0.25 \\times 0.09}", result: { value: 16.77, tolerance: 0.01, unit: "%" } },
+        { text: "With $\\rho = -1$ the volatility is the absolute difference. It is not zero here, because equal weights do not satisfy $w_A\\sigma_A = w_B\\sigma_B$.", tex: "\\sigma_p = |0.5 \\times 15\\% - 0.5 \\times 30\\%|", result: { value: 7.5, tolerance: 0.01, unit: "%" } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "diversification/riskless-correlation",
+      prompt: "For which correlation can two risky assets, held without short sales, be combined into a portfolio with zero volatility?",
+      answer: { type: "choice", options: ["$\\rho = 1$", "$\\rho = 0$", "$\\rho = -0.5$", "$\\rho = -1$"], correct: 3 },
+      explain: "Only at $\\rho = -1$ is the variance a perfect square, $\\sigma_p = |w_A\\sigma_A - w_B\\sigma_B|$, which is zero at $w_B = \\sigma_A/(\\sigma_A + \\sigma_B)$. For any $\\rho > -1$ some risk is left at every weight.",
+    },
 
     h("The minimum-variance portfolio"),
     p("Among all mixes of A and B there is one with the smallest variance. Write $\\sigma_p^2$ as a function of $w = w_B$ and set its derivative to zero:"),
@@ -96,6 +119,13 @@ export const diversification: GuideLessonContent = {
     p("Vegyünk két eszközt, A-t és B-t, $w_A = 1 - w$ és $w_B = w$ súlyokkal. Két valószínűségi változó összegének varianciája a varianciák összege plusz a kovariancia kétszerese, a konstans szorzók pedig négyzetesen jönnek ki:"),
     eq("\\sigma_p^2 = \\operatorname{Var}(w_A R_A + w_B R_B) = w_A^2\\sigma_A^2 + w_B^2\\sigma_B^2 + 2\\,w_A w_B\\,\\rho\\,\\sigma_A\\sigma_B."),
     p("Az első két tag az egyes eszközök saját kockázata. A harmadik tagban jelenik meg a korreláció. Minden mást rögzítve kisebb $\\rho$ kisebb portfólióvarianciát ad."),
+    {
+      kind: "check",
+      id: "diversification/fifty-fifty-volatility",
+      prompt: "Két eszközre $\\sigma_1 = 20\\%$ és $\\sigma_2 = 30\\%$, a korreláció $\\rho = 0{,}2$. Mekkora egy 50/50-es portfólió volatilitása, százalékban?",
+      answer: { type: "number", value: 19.62, tolerance: 0.05, unit: "%" },
+      explain: "$\\sigma_p^2 = 0{,}25 \\times 0{,}04 + 0{,}25 \\times 0{,}09 + 2 \\times 0{,}25 \\times 0{,}2 \\times 0{,}2 \\times 0{,}3 = 0{,}0385$, így $\\sigma_p \\approx 19{,}62\\%$, a két volatilitás 25%-os átlaga alatt.",
+    },
 
     h("A korreláció három esete"),
     p("$\\rho = 1$ esetén a kifejezés teljes négyzet:"),
@@ -105,6 +135,22 @@ export const diversification: GuideLessonContent = {
     eq("\\sigma_p < w_A\\sigma_A + w_B\\sigma_B \\qquad (0 < w < 1)."),
     p("A portfólió kevésbé kockázatos, mint a részei átlaga, a várható hozama viszont továbbra is az átlag. Ez a különbség a **diverzifikáció** haszna."),
     p("$\\rho = -1$ esetén a kifejezés ismét négyzet, $\\sigma_p = |w_A\\sigma_A - w_B\\sigma_B|$, és ez nulla, ha $w_A\\sigma_A = w_B\\sigma_B$, vagyis $w_B = \\sigma_A/(\\sigma_A + \\sigma_B)$ mellett. Két tökéletesen ellentétes eszközből kockázatmentes portfólió rakható össze. Jó kép erre egy esernyőárus és egy fagylaltos ugyanazon a strandon: bármilyen is az idő, egyiküknek jó napja van."),
+    {
+      kind: "worked",
+      title: "Egy 50/50-es portfólió három korrelációval",
+      steps: [
+        { text: "Legyen $\\sigma_A = 15\\%$, $\\sigma_B = 30\\%$, a súlyok egyenlők. $\\rho = 1$ mellett a volatilitás a súlyozott átlag.", tex: "\\sigma_p = 0{,}5 \\times 15\\% + 0{,}5 \\times 30\\%", result: { value: 22.5, tolerance: 0.01, unit: "%" } },
+        { text: "$\\rho = 0$ mellett a vegyes tag eltűnik, csak a két saját kockázati tag marad.", tex: "\\sigma_p = \\sqrt{0{,}25 \\times 0{,}0225 + 0{,}25 \\times 0{,}09}", result: { value: 16.77, tolerance: 0.01, unit: "%" } },
+        { text: "$\\rho = -1$ mellett a volatilitás a különbség abszolút értéke. Itt nem nulla, mert egyenlő súlyokkal nem teljesül $w_A\\sigma_A = w_B\\sigma_B$.", tex: "\\sigma_p = |0{,}5 \\times 15\\% - 0{,}5 \\times 30\\%|", result: { value: 7.5, tolerance: 0.01, unit: "%" } },
+      ],
+    },
+    {
+      kind: "check",
+      id: "diversification/riskless-correlation",
+      prompt: "Milyen korreláció mellett lehet két kockázatos eszközből, short eladás nélkül, nulla volatilitású portfóliót összerakni?",
+      answer: { type: "choice", options: ["$\\rho = 1$", "$\\rho = 0$", "$\\rho = -0{,}5$", "$\\rho = -1$"], correct: 3 },
+      explain: "Csak $\\rho = -1$ mellett teljes négyzet a variancia, $\\sigma_p = |w_A\\sigma_A - w_B\\sigma_B|$, ami $w_B = \\sigma_A/(\\sigma_A + \\sigma_B)$-nél nulla. Bármely $\\rho > -1$ esetén minden súlynál marad valamennyi kockázat.",
+    },
 
     h("A minimális varianciájú portfólió"),
     p("A és B összes keveréke közül van egy, amelynek a legkisebb a varianciája. Írjuk fel $\\sigma_p^2$-et $w = w_B$ függvényeként, és tegyük a deriváltját nullával egyenlővé:"),

@@ -15,6 +15,16 @@ export const bondPricing: GuideLessonContent = {
     p("The coupons form an annuity, so the sum has a closed form:"),
     eq("P = cF\\,\\frac{1 - (1+y)^{-T}}{y} + \\frac{F}{(1+y)^T}."),
     p("Each term is a payment times a discount factor $1/(1+y)^t$. The further away a payment is, the more it is shrunk."),
+    {
+      kind: "worked",
+      title: "Pricing a 3-year bond one cash flow at a time",
+      steps: [
+        { text: "A 3-year bond with a 4% coupon pays 4, 4 and 104. At $y = 5\\%$, discount the first coupon by one year.", tex: "\\frac{4}{1.05}", result: { value: 3.81, tolerance: 0.01 } },
+        { text: "The second coupon is discounted by two years.", tex: "\\frac{4}{1.05^2}", result: { value: 3.63, tolerance: 0.01 } },
+        { text: "The last coupon and the face value arrive together after three years.", tex: "\\frac{104}{1.05^3}", result: { value: 89.84, tolerance: 0.01 } },
+        { text: "The price is the sum of the three present values.", tex: "P = 3.81 + 3.63 + 89.84", result: { value: 97.28, tolerance: 0.01 } },
+      ],
+    },
 
     h("Yield to maturity"),
     p("In the market the direction is reversed: the price $P$ is observed, and $y$ is unknown. The **yield to maturity** (YTM) is the single rate $y$ that makes the present value of the cash flows equal to the market price. In the language of investment appraisal it is the **internal rate of return** of buying the bond at $P$ and holding it to maturity."),
@@ -31,6 +41,20 @@ export const bondPricing: GuideLessonContent = {
       "**Premium**: if $c > y$, the bond pays more than the market rate, and buyers pay more than $F$ for it.",
       "**Discount**: if $c < y$, the coupons are too low, and the bond sells below $F$ so that the gain from the price rising to $F$ at maturity makes up the shortfall.",
     ),
+    {
+      kind: "check",
+      id: "bond-pricing/three-year-price",
+      prompt: "A 3-year bond with face value 100 pays a 5% annual coupon. What is its price at a yield of 6%?",
+      answer: { type: "number", value: 97.33, tolerance: 0.02 },
+      explain: "$P = 5/1.06 + 5/1.06^2 + 105/1.06^3 \\approx 4.72 + 4.45 + 88.16 = 97.33$.",
+    },
+    {
+      kind: "check",
+      id: "bond-pricing/coupon-below-yield",
+      prompt: "A bond's coupon rate is below its yield to maturity. Where does its price stand relative to the face value?",
+      answer: { type: "choice", options: ["Above the face value", "At the face value", "Below the face value", "It depends on the maturity"], correct: 2 },
+      explain: "With $c < y$ the coupons pay less than the market demands, so the bond trades at a discount; the rise to $F$ by maturity makes up the difference.",
+    },
 
     h("Zero-coupon bonds"),
     p("A **zero-coupon bond** has $c = 0$: it pays only $F$ at $T$. Its price is a single discounted amount,"),
@@ -74,6 +98,16 @@ export const bondPricing: GuideLessonContent = {
     p("A kuponok annuitást alkotnak, így az összegnek zárt alakja van:"),
     eq("P = cF\\,\\frac{1 - (1+y)^{-T}}{y} + \\frac{F}{(1+y)^T}."),
     p("Minden tag egy kifizetés szorozva az $1/(1+y)^t$ diszkontfaktorral. Minél távolabbi egy kifizetés, annál jobban zsugorodik."),
+    {
+      kind: "worked",
+      title: "Egy hároméves kötvény árazása pénzáramlásonként",
+      steps: [
+        { text: "Egy hároméves, 4%-os kuponú kötvény 4-et, 4-et és 104-et fizet. $y = 5\\%$ mellett az első kupont egy évvel diszkontáljuk.", tex: "\\frac{4}{1{,}05}", result: { value: 3.81, tolerance: 0.01 } },
+        { text: "A második kupont két évvel.", tex: "\\frac{4}{1{,}05^2}", result: { value: 3.63, tolerance: 0.01 } },
+        { text: "Az utolsó kupon és a névérték együtt érkezik, három év múlva.", tex: "\\frac{104}{1{,}05^3}", result: { value: 89.84, tolerance: 0.01 } },
+        { text: "Az ár a három jelenérték összege.", tex: "P = 3{,}81 + 3{,}63 + 89{,}84", result: { value: 97.28, tolerance: 0.01 } },
+      ],
+    },
 
     h("Lejáratig számított hozam"),
     p("A piacon fordított az irány: az árat látjuk, $y$ az ismeretlen. A **lejáratig számított hozam** (YTM) az az egyetlen $y$ ráta, amellyel a pénzáramlások jelenértéke éppen a piaci árat adja. A beruházás-értékelés nyelvén ez annak a **belső megtérülési rátája** (IRR), hogy a kötvényt $P$-n megvesszük és lejáratig tartjuk."),
@@ -90,6 +124,20 @@ export const bondPricing: GuideLessonContent = {
       "**Prémiummal**: ha $c > y$, a kötvény többet fizet a piaci rátánál, ezért a vevők $F$-nél többet adnak érte.",
       "**Diszkonttal**: ha $c < y$, a kupon túl alacsony, ezért a kötvény $F$ alatt forog, hogy a lejáratig $F$-ig emelkedő ár pótolja a hiányt.",
     ),
+    {
+      kind: "check",
+      id: "bond-pricing/three-year-price",
+      prompt: "Egy hároméves, 100-as névértékű kötvény évi 5%-os kupont fizet. Mennyi az ára 6%-os hozam mellett?",
+      answer: { type: "number", value: 97.33, tolerance: 0.02 },
+      explain: "$P = 5/1{,}06 + 5/1{,}06^2 + 105/1{,}06^3 \\approx 4{,}72 + 4{,}45 + 88{,}16 = 97{,}33$.",
+    },
+    {
+      kind: "check",
+      id: "bond-pricing/coupon-below-yield",
+      prompt: "Egy kötvény kuponrátája a lejáratig számított hozama alatt van. Hol áll az ára a névértékhez képest?",
+      answer: { type: "choice", options: ["A névérték fölött", "Pontosan a névértéken", "A névérték alatt", "A lejárattól függ"], correct: 2 },
+      explain: "$c < y$ esetén a kuponok kevesebbet fizetnek, mint amit a piac elvár, ezért a kötvény diszkonton forog; a lejáratig $F$-ig emelkedő ár pótolja a különbséget.",
+    },
 
     h("Elemi (zérókuponos) kötvények"),
     p("A **zérókuponos kötvény** kuponrátája $c = 0$: csak $T$-ben fizet $F$-et. Ára egyetlen diszkontált összeg,"),

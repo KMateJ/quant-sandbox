@@ -28,6 +28,23 @@ export const putCallParity: GuideLessonContent = {
     p("Now suppose a dealer offers the call at 11 while the put is still at 5.57. Then $C_0 - P_0 = 5.43 > 4.88$, so portfolio A is too expensive relative to B. Sell A and buy B: sell the call, buy the put, buy the share and borrow $95.12$. The cash flow today is"),
     eq("11 - 5.57 - 100 + 95.12 \\approx 0.55,"),
     p("and at $T$ the positions cancel exactly: the short call and long put together pay $-(S_T - K)$, the share and the loan pay $S_T - K$. The 0.55 is kept without risk."),
+    {
+      kind: "check",
+      id: "put-call-parity/put-from-call",
+      prompt: "A European call with $K = 100$ and $T = 1$ costs 7.2. The stock is at $S_0 = 100$ and $r = 5\\%$. What must the put with the same strike and maturity cost?",
+      answer: { type: "number", value: 2.32, tolerance: 0.01 },
+      explain: "$P_0 = C_0 - S_0 + Ke^{-rT} = 7.2 - 100 + 100\\,e^{-0.05} \\approx 7.2 - 4.88 = 2.32$.",
+    },
+    {
+      kind: "worked",
+      title: "Checking parity with the synthetic forward",
+      steps: [
+        { text: "Portfolio B borrows the discounted strike, so that $K$ is owed at $T$.", tex: "K\\,e^{-rT} = 100\\,e^{-0.05}", result: { value: 95.12, tolerance: 0.01 } },
+        { text: "B costs one share minus that loan.", tex: "S_0 - K\\,e^{-rT}", result: { value: 4.88, tolerance: 0.01 } },
+        { text: "Portfolio A, long the call at 10.45 and short the put at 5.57, costs", tex: "C_0 - P_0 = 10.45 - 5.57", result: { value: 4.88, tolerance: 0.01 } },
+        { text: "Both pay $S_T - K$ at $T$. At $S_T = 120$, for example, each pays", tex: "(120 - 100)^+ - (100 - 120)^+", result: { value: 20, tolerance: 0.01 } },
+      ],
+    },
     p("The figure fixes $S_0 = 100$ and $r = 5\\%$ and lets you move $K$, $\\sigma$ and $T$. The chart overlays the payoff of a long call plus a short put on the forward payoff $S_T - K$; the two lines coincide for every strike. The readouts give the Black–Scholes prices $C_0$ and $P_0$, their difference, and $S_0 - Ke^{-rT}$. Change $\\sigma$ and note that $C_0$ and $P_0$ both move while $C_0 - P_0$ does not; it changes only with $K$ and $T$."),
     figure("put-call-parity"),
 
@@ -35,6 +52,13 @@ export const putCallParity: GuideLessonContent = {
     p("Parity is **model-free**: it holds whatever the distribution of $S_T$, because the argument never uses probabilities. It links the two prices, so knowing one gives the other. A desk that prices calls also prices puts, and the put price follows from the call price by $P_0 = C_0 - S_0 + Ke^{-rT}$."),
     p("Parity does not tell you the level of either price. It fixes the difference $C_0 - P_0$, while the volatility of the stock determines how large both are. Finding that level needs a model of the stock price, which starts in \"The one-step binomial model\"."),
     p("The result relies on its assumptions. With dividends, the stock leg must be reduced by the present value of the dividends. For American options, early exercise breaks the exact equality and leaves only inequalities."),
+    {
+      kind: "check",
+      id: "put-call-parity/european-only",
+      prompt: "For which options does the exact equality $C_0 - P_0 = S_0 - Ke^{-rT}$ hold?",
+      answer: { type: "choice", options: ["European options on a non-dividend-paying stock", "American options on a non-dividend-paying stock", "Any options, whatever the exercise style", "Only at-the-money options"], correct: 0 },
+      explain: "The argument holds both portfolios to $T$. Early exercise of American options breaks that, and leaves only inequalities; dividends change the stock leg.",
+    },
 
     h("Simple no-arbitrage bounds"),
     p("The same reasoning bounds the call price without a model. For the upper bound, a call never pays more than the stock, since $(S_T - K)^+ \\le S_T$ for $K \\ge 0$. A portfolio that always pays less cannot cost more, so $C_0 \\le S_0$."),
@@ -79,6 +103,23 @@ export const putCallParity: GuideLessonContent = {
     p("Tegyük fel, hogy egy árjegyző 11-ért kínálja a callt, a put ára pedig továbbra is 5,57. Ekkor $C_0 - P_0 = 5{,}43 > 4{,}88$, vagyis az A portfólió drága B-hez képest. Adjuk el A-t és vegyük meg B-t: eladjuk a callt, megvesszük a putot, megvesszük a részvényt és felveszünk $95{,}12$ hitelt. A mai pénzáramlás"),
     eq("11 - 5{,}57 - 100 + 95{,}12 \\approx 0{,}55,"),
     p("$T$-ben pedig a pozíciók pontosan kioltják egymást: az eladott call és a megvett put együtt $-(S_T - K)$-t fizet, a részvény és a hitel $S_T - K$-t. A 0,55 kockázat nélkül nálunk marad."),
+    {
+      kind: "check",
+      id: "put-call-parity/put-from-call",
+      prompt: "Egy $K = 100$ kötési árú, $T = 1$ lejáratú európai call ára 7,2. A részvény $S_0 = 100$, $r = 5\\%$. Mennyibe kell kerülnie az azonos kötési árú és lejáratú putnak?",
+      answer: { type: "number", value: 2.32, tolerance: 0.01 },
+      explain: "$P_0 = C_0 - S_0 + Ke^{-rT} = 7{,}2 - 100 + 100\\,e^{-0{,}05} \\approx 7{,}2 - 4{,}88 = 2{,}32$.",
+    },
+    {
+      kind: "worked",
+      title: "A paritás ellenőrzése a szintetikus határidős ügylettel",
+      steps: [
+        { text: "A B portfólió a diszkontált kötési árat veszi fel hitelként, így $T$-ben $K$ a tartozás.", tex: "K\\,e^{-rT} = 100\\,e^{-0{,}05}", result: { value: 95.12, tolerance: 0.01 } },
+        { text: "B ára egy részvény mínusz ez a hitel.", tex: "S_0 - K\\,e^{-rT}", result: { value: 4.88, tolerance: 0.01 } },
+        { text: "Az A portfólió, a 10,45-ös hosszú call és az 5,57-es rövid put ára", tex: "C_0 - P_0 = 10{,}45 - 5{,}57", result: { value: 4.88, tolerance: 0.01 } },
+        { text: "$T$-ben mindkettő $S_T - K$-t fizet. Például $S_T = 120$ mellett mindkettő ennyit:", tex: "(120 - 100)^+ - (100 - 120)^+", result: { value: 20, tolerance: 0.01 } },
+      ],
+    },
     p("Az ábra rögzíti az $S_0 = 100$ és $r = 5\\%$ értékeket, és $K$, $\\sigma$, $T$ állítható. A grafikon egy hosszú call és egy rövid put együttes kifizetését rajzolja rá az $S_T - K$ határidős kifizetésre; a két vonal minden kötési árnál egybeesik. A kijelzők a $C_0$ és $P_0$ Black–Scholes-árat, a különbségüket és $S_0 - Ke^{-rT}$-t mutatják. Változtasd $\\sigma$-t, és figyeld meg, hogy $C_0$ és $P_0$ is mozog, $C_0 - P_0$ viszont nem; az csak $K$-val és $T$-vel változik."),
     figure("put-call-parity"),
 
@@ -86,6 +127,13 @@ export const putCallParity: GuideLessonContent = {
     p("A paritás **modellfüggetlen**: $S_T$ eloszlásától függetlenül érvényes, mert az érvelés sehol sem használ valószínűségeket. Összeköti a két árat, így az egyikből megkapjuk a másikat. Aki callokat áraz, az putokat is áraz: a put ára $P_0 = C_0 - S_0 + Ke^{-rT}$."),
     p("Azt viszont nem mondja meg, mekkora bármelyik ár. A $C_0 - P_0$ különbséget rögzíti, de hogy mindkettő mekkora, azt a részvény volatilitása határozza meg. Ehhez már modell kell a részvényárra, amely „Az egylépéses binomiális modell” leckében kezdődik."),
     p("Az eredmény a feltevéseire épül. Osztalék esetén a részvénylábat csökkenteni kell az osztalékok jelenértékével. Amerikai opcióknál a korai lehívás lehetősége megszünteti a pontos egyenlőséget, és csak egyenlőtlenségek maradnak."),
+    {
+      kind: "check",
+      id: "put-call-parity/european-only",
+      prompt: "Mely opciókra érvényes pontosan a $C_0 - P_0 = S_0 - Ke^{-rT}$ egyenlőség?",
+      answer: { type: "choice", options: ["Osztalékot nem fizető részvényre szóló európai opciókra", "Osztalékot nem fizető részvényre szóló amerikai opciókra", "Bármilyen opcióra, lehívási módtól függetlenül", "Csak at-the-money opciókra"], correct: 0 },
+      explain: "Az érvelés mindkét portfóliót $T$-ig tartja. Az amerikai opciók korai lehívása ezt megtöri, és csak egyenlőtlenségek maradnak; az osztalék a részvénylábat változtatja meg.",
+    },
 
     h("Egyszerű arbitrázsmentes korlátok"),
     p("Ugyanez a gondolatmenet modell nélkül is korlátozza a call árát. Felső korlát: a call sosem fizet többet a részvénynél, hiszen $K \\ge 0$ esetén $(S_T - K)^+ \\le S_T$. Ami mindig kevesebbet fizet, az nem kerülhet többe, tehát $C_0 \\le S_0$."),

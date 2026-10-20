@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
+import ChapterGuides from "./ChapterGuides";
 import { lessonPath, type StochChapter } from "./stochasticModels.curriculum";
 
 export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
@@ -56,6 +57,8 @@ export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
         </ul>
       )}
 
+      {chapter.guides?.length ? <ChapterGuides ids={chapter.guides} /> : null}
+
       {chapter.standalone && (
         <Link className="stoch-standalone-link" to={chapter.standalone.route}>
           {t(chapter.standalone.labelKey)}
@@ -63,7 +66,7 @@ export default function ChapterCard({ chapter }: { chapter: StochChapter }) {
         </Link>
       )}
 
-      {chapter.lessons.length === 0 && (
+      {chapter.lessons.length === 0 && !chapter.guides?.length && (
         <p className="stoch-chapter-foot">
           {chapter.standalone ? t("stochStructuredPlanned") : t("stochChapterPlannedNote")}
         </p>

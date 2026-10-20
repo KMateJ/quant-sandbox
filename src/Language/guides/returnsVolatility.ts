@@ -21,6 +21,13 @@ export const returnsVolatility: GuideLessonContent = {
     p("It is the rate that, compounded continuously over the period, turns $S_{t-1}$ into $S_t$, exactly as in \"Interest, compounding and discounting\": $S_t = S_{t-1}e^{r_t}$. Because a logarithm turns products into sums, log returns over consecutive periods add up:"),
     eq("\\ln\\frac{S_n}{S_0} = \\ln\\frac{S_1}{S_0} + \\ln\\frac{S_2}{S_1} + \\cdots + \\ln\\frac{S_n}{S_{n-1}} = r_1 + r_2 + \\cdots + r_n."),
     p("In the example above, $\\ln 1.1 \\approx 0.0953$ and $\\ln 0.9 \\approx -0.1054$. Their sum is $-0.0101 = \\ln 0.99$, which correctly reports the 1% loss. For small moves the two kinds of return are nearly equal, since $\\ln(1+R) \\approx R$ when $R$ is close to zero."),
+    {
+      kind: "check",
+      id: "returns-volatility/log-of-a-halving",
+      prompt: "A stock falls from 100 to 50. How do its simple and log returns compare?",
+      answer: { type: "choice", options: ["Both are $-50\\%$", "The log return is more negative", "The simple return is more negative", "The log return is $+69.3\\%$"], correct: 1 },
+      explain: "The simple return is $50/100 - 1 = -50\\%$, the log return $\\ln 0.5 \\approx -69.3\\%$. For large falls the logarithm runs further below zero than $R$ does.",
+    },
     p("From here on, \"return\" means log return. Additivity is what makes the scaling rules below so simple."),
 
     h("Mean and standard deviation"),
@@ -40,6 +47,23 @@ export const returnsVolatility: GuideLessonContent = {
     p("The variance adds because the returns are independent. Taking the square root gives the **square-root-of-time rule**:"),
     eq("\\operatorname{sd}(\\text{return over } T) = \\sigma\\sqrt{T}."),
     p("The mean grows in proportion to $T$, the standard deviation only in proportion to $\\sqrt{T}$. With about 252 trading days a year, a daily standard deviation of $1.2\\%$ corresponds to an annual volatility of $1.2\\% \\times \\sqrt{252} \\approx 19.0\\%$. In the other direction, $\\sigma = 20\\%$ per year means $20\\% / \\sqrt{12} \\approx 5.8\\%$ per month."),
+    {
+      kind: "check",
+      id: "returns-volatility/annualise-daily",
+      prompt: "A stock's daily log returns have a standard deviation of 1.2%. With 252 trading days a year, what is its annual volatility, in percent?",
+      answer: { type: "number", value: 19.05, tolerance: 0.05, unit: "%" },
+      explain: "$\\sigma = 1.2\\% \\times \\sqrt{252} \\approx 1.2\\% \\times 15.875 \\approx 19.05\\%$. The standard deviation scales with the square root of time, not with time.",
+    },
+    {
+      kind: "worked",
+      title: "From four monthly returns to an annual mean and volatility",
+      steps: [
+        { text: "Four monthly log returns are $1\\%$, $-2\\%$, $3\\%$ and $2\\%$. Their mean is the sum divided by four.", tex: "\\bar r = \\tfrac{1}{4}(1 - 2 + 3 + 2)\\%", result: { value: 1, tolerance: 0.01, unit: "%" } },
+        { text: "The deviations from the mean are $0$, $-3$, $2$ and $1$; their squares add up to 14. Divide by $n - 1 = 3$ and take the root.", tex: "s = \\sqrt{14/3}\\,\\%", result: { value: 2.16, tolerance: 0.01, unit: "%" } },
+        { text: "The mean grows in proportion to time: twelve months a year.", tex: "\\mu = 12\\,\\bar r", result: { value: 12, tolerance: 0.01, unit: "%" } },
+        { text: "The standard deviation grows with the square root of time.", tex: "\\sigma = \\sqrt{12}\\,s", result: { value: 7.48, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("The normal distribution as a first model"),
     p("A simple first model assumes that the log return over $T$ years is **normally distributed**:"),
@@ -80,6 +104,13 @@ export const returnsVolatility: GuideLessonContent = {
     p("Ez az a ráta, amely az időszak alatt folytonosan kamatozva $S_{t-1}$-ből $S_t$-t csinál, pontosan úgy, mint a „Kamat, kamatozás és diszkontálás” leckében: $S_t = S_{t-1}e^{r_t}$. Mivel a logaritmus a szorzatot összeggé alakítja, az egymást követő időszakok loghozamai összeadódnak:"),
     eq("\\ln\\frac{S_n}{S_0} = \\ln\\frac{S_1}{S_0} + \\ln\\frac{S_2}{S_1} + \\cdots + \\ln\\frac{S_n}{S_{n-1}} = r_1 + r_2 + \\cdots + r_n."),
     p("A fenti példában $\\ln 1{,}1 \\approx 0{,}0953$ és $\\ln 0{,}9 \\approx -0{,}1054$. Összegük $-0{,}0101 = \\ln 0{,}99$, ami helyesen mutatja az 1%-os veszteséget. Kis elmozdulásoknál a kétféle hozam szinte egyenlő, mert nullához közeli $R$ esetén $\\ln(1+R) \\approx R$."),
+    {
+      kind: "check",
+      id: "returns-volatility/log-of-a-halving",
+      prompt: "Egy részvény 100-ról 50-re esik. Hogyan viszonyul egymáshoz az egyszerű hozama és a loghozama?",
+      answer: { type: "choice", options: ["Mindkettő $-50\\%$", "A loghozam negatívabb", "Az egyszerű hozam negatívabb", "A loghozam $+69{,}3\\%$"], correct: 1 },
+      explain: "Az egyszerű hozam $50/100 - 1 = -50\\%$, a loghozam $\\ln 0{,}5 \\approx -69{,}3\\%$. Nagy eséseknél a logaritmus messzebbre megy nulla alá, mint $R$.",
+    },
     p("Innentől a „hozam” loghozamot jelent. Az összeadhatóság miatt lesznek az alábbi skálázási szabályok ilyen egyszerűek."),
 
     h("Várható érték és szórás"),
@@ -99,6 +130,23 @@ export const returnsVolatility: GuideLessonContent = {
     p("A varianciák a függetlenség miatt adódnak össze. Gyököt vonva kapjuk a **négyzetgyökös időszabályt**:"),
     eq("\\operatorname{sd}(T \\text{ alatti hozam}) = \\sigma\\sqrt{T}."),
     p("A várható érték $T$-vel arányosan nő, a szórás csak $\\sqrt{T}$-vel arányosan. Évi kb. 252 kereskedési nappal számolva az $1{,}2\\%$-os napi szórás $1{,}2\\% \\times \\sqrt{252} \\approx 19{,}0\\%$-os éves volatilitásnak felel meg. Visszafelé: évi $\\sigma = 20\\%$ havonta $20\\% / \\sqrt{12} \\approx 5{,}8\\%$-ot jelent."),
+    {
+      kind: "check",
+      id: "returns-volatility/annualise-daily",
+      prompt: "Egy részvény napi loghozamainak szórása 1,2%. Évi 252 kereskedési nappal számolva mekkora az éves volatilitása, százalékban?",
+      answer: { type: "number", value: 19.05, tolerance: 0.05, unit: "%" },
+      explain: "$\\sigma = 1{,}2\\% \\times \\sqrt{252} \\approx 1{,}2\\% \\times 15{,}875 \\approx 19{,}05\\%$. A szórás az idő négyzetgyökével arányos, nem az idővel.",
+    },
+    {
+      kind: "worked",
+      title: "Négy havi hozamból éves várható érték és volatilitás",
+      steps: [
+        { text: "Négy havi loghozam: $1\\%$, $-2\\%$, $3\\%$ és $2\\%$. Az átlaguk az összegük negyede.", tex: "\\bar r = \\tfrac{1}{4}(1 - 2 + 3 + 2)\\%", result: { value: 1, tolerance: 0.01, unit: "%" } },
+        { text: "Az átlagtól vett eltérések $0$, $-3$, $2$ és $1$; négyzetösszegük 14. Osszuk el $n - 1 = 3$-mal, és vonjunk gyököt.", tex: "s = \\sqrt{14/3}\\,\\%", result: { value: 2.16, tolerance: 0.01, unit: "%" } },
+        { text: "A várható érték az idővel arányosan nő: egy évben tizenkét hónap van.", tex: "\\mu = 12\\,\\bar r", result: { value: 12, tolerance: 0.01, unit: "%" } },
+        { text: "A szórás az idő négyzetgyökével nő.", tex: "\\sigma = \\sqrt{12}\\,s", result: { value: 7.48, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("A normális eloszlás mint első modell"),
     p("Egyszerű első modellként feltesszük, hogy a $T$ év alatti loghozam **normális eloszlású**:"),

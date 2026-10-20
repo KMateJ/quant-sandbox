@@ -16,6 +16,13 @@ export const impliedVolatility: GuideLessonContent = {
     eq("\\max\\left(S_0 - Ke^{-rT},\\, 0\\right) < C_0 < S_0."),
     p("A continuous, strictly increasing function that sweeps the whole interval between the bounds hits every price inside it exactly once. A quoted price inside the bounds therefore pins down one and only one $\\sigma$. A price outside the bounds is an arbitrage, and no volatility can explain it."),
     note("The **implied volatility** of an option is the unique $\\sigma$ for which the Black–Scholes price equals the market price. It exists whenever the price lies strictly between the no-arbitrage bounds."),
+    {
+      kind: "check",
+      id: "implied-volatility/above-model-price",
+      prompt: "A call trades above the Black–Scholes price computed with $\\sigma = 20\\%$. What can you say about its implied volatility?",
+      answer: { type: "choice", options: ["It is above 20%", "It is below 20%", "It is exactly 20%", "Nothing without knowing the real drift"], correct: 0 },
+      explain: "The price is strictly increasing in $\\sigma$ (vega is positive), so a higher price needs a higher volatility.",
+    },
 
     h("Solving for the volatility"),
     p("There is no closed-form inverse of the formula, so the implied volatility is found numerically. Two methods are standard."),
@@ -35,6 +42,22 @@ export const impliedVolatility: GuideLessonContent = {
     p("Newton from $\\sigma_0 = 20\\%$ is quicker. Vega there is $\\mathcal{V} \\approx 37.52$ (price per unit of $\\sigma$, so about 0.375 per volatility point):"),
     eq("\\sigma_1 = 0.20 - \\frac{10.4506 - 12}{37.52} \\approx 0.2413, \\qquad C(\\sigma_1) \\approx 12.0066."),
     p("A second step, with $\\mathcal{V} \\approx 37.81$, moves $\\sigma$ by $-0.0066/37.81 \\approx -0.0002$ and lands on $\\sigma \\approx 24.11\\%$, correct to four digits. The market is pricing this option as if the stock had an annual volatility of 24.11%."),
+    {
+      kind: "check",
+      id: "implied-volatility/quote-nine",
+      prompt: "Same option ($S_0 = K = 100$, $T = 1$, $r = 5\\%$), but now the quoted call price is 9.00. What is its implied volatility, in percent?",
+      answer: { type: "number", value: 16.11, tolerance: 0.1, unit: "%" },
+      explain: "At 20% the price is 10.45, too high, and at 10% it is about 6.80, too low. The first bisection step prices 15% at 8.59, too low, so the answer lies in $[15\\%, 20\\%]$; continuing gives about 16.11%.",
+    },
+    {
+      kind: "worked",
+      title: "Two Newton steps for a quote of 9.00",
+      steps: [
+        { text: "Start from $\\sigma_0 = 20\\%$, where the price is 10.4506 and vega is 37.52. The first step, in percent:", tex: "\\sigma_1 = 0.20 - \\frac{10.4506 - 9}{37.52}", result: { value: 16.13, tolerance: 0.02, unit: "%" } },
+        { text: "Price at $\\sigma_1$, now only slightly above the quote:", tex: "C(\\sigma_1)", result: { value: 9.01, tolerance: 0.01 } },
+        { text: "Second step, with vega $\\approx 36.96$ at $\\sigma_1$:", tex: "\\sigma_2 = \\sigma_1 - \\frac{C(\\sigma_1) - 9}{36.96}", result: { value: 16.11, tolerance: 0.02, unit: "%" } },
+      ],
+    },
     p("The figure shows the same construction. Spot $S_0 = 100$ and $r = 5\\%$ are fixed; sliders set the quoted call price, the strike $K$ and the maturity $T$. The curve is the Black–Scholes call price against $\\sigma$ from 1% to 100%, the horizontal line is the quoted price, and the vertical line marks where they cross: the implied volatility. The readouts show the implied volatility, vega at that volatility, and the lower and upper no-arbitrage bounds. Raise the quoted price and watch the crossing move right, so implied volatility rises. Then push the price below the lower bound: the horizontal line no longer meets the curve and the implied volatility readout shows a dash."),
     figure("implied-vol"),
 
@@ -78,6 +101,13 @@ export const impliedVolatility: GuideLessonContent = {
     eq("\\max\\left(S_0 - Ke^{-rT},\\, 0\\right) < C_0 < S_0."),
     p("Egy folytonos, szigorúan növő függvény, amely a két korlát közötti teljes intervallumot bejárja, minden közbülső értéket pontosan egyszer vesz fel. A korlátok közé eső jegyzett ár tehát egyetlen $\\sigma$-t határoz meg. A korlátokon kívüli ár arbitrázst jelent, és semmilyen volatilitás nem magyarázza."),
     note("Egy opció **implikált volatilitása** az az egyetlen $\\sigma$, amelyre a Black–Scholes-ár megegyezik a piaci árral. Akkor létezik, ha az ár szigorúan az arbitrázsmentes korlátok közé esik."),
+    {
+      kind: "check",
+      id: "implied-volatility/above-model-price",
+      prompt: "Egy call a $\\sigma = 20\\%$-kal számolt Black–Scholes-ár fölött kereskedik. Mit mondhatsz az implikált volatilitásáról?",
+      answer: { type: "choice", options: ["20% fölött van", "20% alatt van", "Pontosan 20%", "A valós drift ismerete nélkül semmit"], correct: 0 },
+      explain: "Az ár $\\sigma$-ban szigorúan nő (a vega pozitív), így magasabb árhoz magasabb volatilitás kell.",
+    },
 
     h("A volatilitás kiszámítása"),
     p("A képletnek nincs zárt alakú inverze, ezért az implikált volatilitást numerikusan keressük. Két módszer a szokásos."),
@@ -97,6 +127,22 @@ export const impliedVolatility: GuideLessonContent = {
     p("A Newton-módszer $\\sigma_0 = 20\\%$-ból gyorsabb. Itt a vega $\\mathcal{V} \\approx 37{,}52$ (ár egységnyi $\\sigma$-ra, vagyis volatilitáspontonként kb. 0,375):"),
     eq("\\sigma_1 = 0{,}20 - \\frac{10{,}4506 - 12}{37{,}52} \\approx 0{,}2413, \\qquad C(\\sigma_1) \\approx 12{,}0066."),
     p("A második lépés $\\mathcal{V} \\approx 37{,}81$ mellett $-0{,}0066/37{,}81 \\approx -0{,}0002$-vel mozdítja $\\sigma$-t, és $\\sigma \\approx 24{,}11\\%$-nál áll meg, négy jegyre pontosan. A piac tehát úgy árazza ezt az opciót, mintha a részvény éves volatilitása 24,11% lenne."),
+    {
+      kind: "check",
+      id: "implied-volatility/quote-nine",
+      prompt: "Ugyanez az opció ($S_0 = K = 100$, $T = 1$, $r = 5\\%$), de most a jegyzett call-ár 9,00. Mennyi az implikált volatilitása százalékban?",
+      answer: { type: "number", value: 16.11, tolerance: 0.1, unit: "%" },
+      explain: "20%-on az ár 10,45, túl magas, 10%-on kb. 6,80, túl alacsony. Az első felezési lépés 15%-on 8,59-et ad, túl alacsony, így a válasz a $[15\\%, 20\\%]$ intervallumban van; folytatva kb. 16,11% adódik.",
+    },
+    {
+      kind: "worked",
+      title: "Két Newton-lépés a 9,00-es jegyzésre",
+      steps: [
+        { text: "Induljunk $\\sigma_0 = 20\\%$-ból, ahol az ár 10,4506, a vega 37,52. Az első lépés százalékban:", tex: "\\sigma_1 = 0{,}20 - \\frac{10{,}4506 - 9}{37{,}52}", result: { value: 16.13, tolerance: 0.02, unit: "%" } },
+        { text: "Az ár $\\sigma_1$-nél már csak kicsivel van a jegyzés fölött:", tex: "C(\\sigma_1)", result: { value: 9.01, tolerance: 0.01 } },
+        { text: "Második lépés, $\\sigma_1$-nél $\\approx 36{,}96$ vegával:", tex: "\\sigma_2 = \\sigma_1 - \\frac{C(\\sigma_1) - 9}{36{,}96}", result: { value: 16.11, tolerance: 0.02, unit: "%" } },
+      ],
+    },
     p("Az ábra ugyanezt a szerkesztést mutatja. Az $S_0 = 100$ árfolyam és az $r = 5\\%$ kamat rögzített; csúszkákkal állítható a jegyzett call-ár, a $K$ kötési ár és a $T$ lejárat. A görbe a Black–Scholes call-ár $\\sigma$ függvényében 1% és 100% között, a vízszintes vonal a jegyzett ár, a függőleges vonal pedig a metszéspontot jelöli: ez az implikált volatilitás. A kijelzők az implikált volatilitást, az ott vett vegát, valamint az alsó és felső arbitrázsmentes korlátot mutatják. Emeld a jegyzett árat: a metszéspont jobbra csúszik, az implikált volatilitás nő. Utána vidd az árat az alsó korlát alá: a vízszintes vonal már nem metszi a görbét, és az implikált volatilitás helyén gondolatjel áll."),
     figure("implied-vol"),
 

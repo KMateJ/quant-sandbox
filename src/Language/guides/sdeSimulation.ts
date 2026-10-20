@@ -68,7 +68,7 @@ export const sdeSimulation: GuideLessonContent = {
       "Coarse and fine grids must use the same Brownian path to be compared: coarse increments are sums of fine ones.",
       "When a transformation gives constant coefficients, as $\\ln S$ does for geometric Brownian motion, simulate that variable instead: the steps become exact.",
     ),
-    note("The next lesson, \"Mean reversion: Ornstein–Uhlenbeck and Vasicek\", studies a process whose drift pulls it back towards a long-run level, and simulates it with exactly this kind of step."),
+    note("A later lesson, \"Mean reversion: Ornstein–Uhlenbeck and Vasicek\", studies a process whose drift pulls it back towards a long-run level, and simulates it with exactly this kind of step."),
     lab("/gbm", "Simulate geometric Brownian motion paths in the GBM lab"),
   ],
 
@@ -138,7 +138,7 @@ export const sdeSimulation: GuideLessonContent = {
       "A durva és a finom rács csak ugyanazon a Brown-pályán hasonlítható össze: a durva növekmények a finomak összegei.",
       "Ha egy átalakítás állandó együtthatókat ad, ahogy $\\ln S$ a geometriai Brown-mozgásnál, azt a változót szimuláljuk: a lépések pontossá válnak.",
     ),
-    note("A következő lecke, az „Átlaghoz való visszahúzás: Ornstein–Uhlenbeck és Vasicek”, egy olyan folyamatot vizsgál, amelynek driftje egy hosszú távú szint felé húzza vissza, és pontosan ilyen lépésekkel szimulálja."),
+    note("Egy későbbi lecke, az „Átlaghoz való visszahúzás: Ornstein–Uhlenbeck és Vasicek”, egy olyan folyamatot vizsgál, amelynek driftje egy hosszú távú szint felé húzza vissza, és pontosan ilyen lépésekkel szimulálja."),
     lab("/gbm", "Szimuláljunk geometriai Brown-mozgás pályákat a GBM laborban"),
   ],
 };

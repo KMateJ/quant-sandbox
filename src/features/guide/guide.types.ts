@@ -58,7 +58,16 @@ export type GuideId =
   | "reflection-principle"
   | "brownian-bridge"
   | "ito-integral"
-  | "feynman-kac";
+  | "feynman-kac"
+  | "options-on-other-underlyings"
+  | "portfolio-constraints"
+  | "input-estimation"
+  | "curve-risk"
+  | "real-rates-inflation"
+  | "capital-budgeting-risk"
+  | "dividend-policy"
+  | "law-of-large-numbers-clt"
+  | "correlated-brownian-motions";
 
 /// A single ordered lesson inside a track.
 export type GuideLessonMeta = {

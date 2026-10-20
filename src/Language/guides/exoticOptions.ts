@@ -15,12 +15,35 @@ export const exoticOptions: GuideLessonContent = {
     eq("D_0 = e^{-rT}\\,\\mathbb{Q}(S_T > K) = e^{-rT} N(d_2), \\qquad d_2 = \\frac{\\ln(S_0/K) + (r - \\tfrac12\\sigma^2)T}{\\sigma\\sqrt{T}}."),
     p("With $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ and $T = 1$, $d_2 = 0.03/0.2 = 0.15$, $N(d_2) \\approx 0.5596$ and $D_0 \\approx 0.5323$. The digital is still a European payoff. It is the limit of a tight call spread from \"Combining positions\": long $1/h$ calls struck at $K$ and short $1/h$ calls struck at $K + h$, with $h \\to 0$."),
     p("Its delta shows why digitals are hard to hedge. Differentiating $D_0$ with respect to $S_0$ gives $\\Delta = e^{-rT}\\varphi(d_2)/(S_0\\sigma\\sqrt{T})$, where $\\varphi$ is the standard normal density. At the money the factor $1/\\sqrt{T}$ makes it blow up as expiry approaches: about $0.019$ with one year left, $0.069$ with one month and $0.381$ with one day. Near expiry the hedge must swing between holding almost nothing and holding a large position as the price crosses $K$."),
+    {
+      kind: "check",
+      id: "exotic-options/digital-price",
+      prompt: "A cash-or-nothing call pays 1 if $S_T > K$. With $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ and $T = 1$, what is it worth today?",
+      answer: { type: "number", value: 0.5323, tolerance: 0.002 },
+      explain: "$d_2 = 0.15$ and $N(0.15) \\approx 0.5596$, so $D_0 = e^{-0.05} \\cdot 0.5596 \\approx 0.5323$.",
+    },
+    {
+      kind: "worked",
+      title: "An out-of-the-money digital call",
+      steps: [
+        { text: "Same market, strike raised to $K = 110$:", tex: "d_2 = \\frac{\\ln(100/110) + (0.05 - 0.02) \\cdot 1}{0.2}", result: { value: -0.3266, tolerance: 0.001 } },
+        { text: "Risk-neutral probability of finishing above 110:", tex: "N(d_2)", result: { value: 0.372, tolerance: 0.001 } },
+        { text: "Discount the expected payment of 1:", tex: "D_0 = e^{-0.05} \\cdot 0.372", result: { value: 0.3539, tolerance: 0.001 } },
+      ],
+    },
 
     h("Barrier options"),
     p("A **barrier option** is a vanilla option that is switched off or on when the price touches a level $B$. A **knock-out** option dies, paying nothing, if the barrier is touched before $T$; a **knock-in** option comes to life only if it is touched. The most common example is the **up-and-out call** with $B > K$. Writing $M_T$ for the maximum of the path up to $T$, its payoff is"),
     eq("X = (S_T - K)^+\\,\\mathbf{1}\\{M_T < B\\}."),
     p("The payoff is never larger than the vanilla payoff, so the up-and-out call is cheaper than the vanilla. It loses exactly the paths that matter most to a call holder: those that rise far. As $B$ falls toward $K$ its value goes to zero, because a path that finishes above $K \\ge B$ must have touched $B$. As $B$ rises the barrier is touched less often and the price approaches the vanilla price."),
     p("Volatility acts in two directions. Higher $\\sigma$ makes large final payoffs more likely, which raises the vanilla price, but it also makes touching $B$ more likely. With a barrier close to the spot the second effect wins, and the up-and-out call can get cheaper as $\\sigma$ rises."),
+    {
+      kind: "check",
+      id: "exotic-options/up-and-out-cheaper",
+      prompt: "Compare an up-and-out call (barrier $B > K$) with the vanilla call with the same $K$ and $T$.",
+      answer: { type: "choice", options: ["The up-and-out call is worth less", "The up-and-out call is worth more", "They are worth the same", "It depends on whether $B$ is touched"], correct: 0 },
+      explain: "On every path the barrier payoff is at most the vanilla payoff, and on paths that touch $B$ it is zero while the vanilla may pay. So its price is lower, by the value of the up-and-in call.",
+    },
 
     h("In–out parity"),
     p("Hold an up-and-in call and an up-and-out call with the same $K$, $B$ and $T$. On every path exactly one of them is alive, and the live one pays $(S_T - K)^+$. Together they pay the vanilla payoff on every path, so by the law of one price"),
@@ -83,12 +106,35 @@ export const exoticOptions: GuideLessonContent = {
     eq("D_0 = e^{-rT}\\,\\mathbb{Q}(S_T > K) = e^{-rT} N(d_2), \\qquad d_2 = \\frac{\\ln(S_0/K) + (r - \\tfrac12\\sigma^2)T}{\\sigma\\sqrt{T}}."),
     p("$S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ és $T = 1$ mellett $d_2 = 0{,}03/0{,}2 = 0{,}15$, $N(d_2) \\approx 0{,}5596$ és $D_0 \\approx 0{,}5323$. A digitális opció még európai kifizetés: a „Pozíciók kombinálása” lecke szűk call-spreadjének határesete, ahol $1/h$ darab $K$ kötési árú callt veszünk és $1/h$ darab $K + h$ kötési árú callt eladunk, $h \\to 0$ mellett."),
     p("A deltája mutatja, miért nehéz fedezni. $D_0$-t $S_0$ szerint deriválva $\\Delta = e^{-rT}\\varphi(d_2)/(S_0\\sigma\\sqrt{T})$, ahol $\\varphi$ a standard normális sűrűségfüggvény. Az $1/\\sqrt{T}$ tényező miatt a pénzen lévő opció deltája a lejárat közeledtével felrobban: egy évvel a lejárat előtt kb. $0{,}019$, egy hónappal előtte $0{,}069$, egy nappal előtte $0{,}381$. A lejárat közelében a fedezőpozíciónak szinte semmiből nagy pozícióba kell átlendülnie, ahogy az ár átlépi $K$-t."),
+    {
+      kind: "check",
+      id: "exotic-options/digital-price",
+      prompt: "Egy készpénz-vagy-semmi call 1-et fizet, ha $S_T > K$. $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ és $T = 1$ mellett mennyit ér ma?",
+      answer: { type: "number", value: 0.5323, tolerance: 0.002 },
+      explain: "$d_2 = 0{,}15$ és $N(0{,}15) \\approx 0{,}5596$, így $D_0 = e^{-0{,}05} \\cdot 0{,}5596 \\approx 0{,}5323$.",
+    },
+    {
+      kind: "worked",
+      title: "Egy pénzen kívüli digitális call",
+      steps: [
+        { text: "Ugyanaz a piac, a kötési ár $K = 110$-re nő:", tex: "d_2 = \\frac{\\ln(100/110) + (0{,}05 - 0{,}02) \\cdot 1}{0{,}2}", result: { value: -0.3266, tolerance: 0.001 } },
+        { text: "Annak kockázatsemleges valószínűsége, hogy az ár 110 fölött zár:", tex: "N(d_2)", result: { value: 0.372, tolerance: 0.001 } },
+        { text: "Diszkontáljuk az 1-es kifizetés várható értékét:", tex: "D_0 = e^{-0{,}05} \\cdot 0{,}372", result: { value: 0.3539, tolerance: 0.001 } },
+      ],
+    },
 
     h("Korlátos opciók"),
     p("A **korlátos opció** olyan egyszerű opció, amely kikapcsol vagy bekapcsol, ha az árfolyam eléri a $B$ szintet. A **kiütéses** (knock-out) opció megszűnik és semmit sem fizet, ha az árfolyam $T$ előtt eléri a korlátot; a **beütéses** (knock-in) opció csak akkor lép életbe, ha eléri. A leggyakoribb példa a $B > K$ korlátú **felső kiütéses vételi opció** (up-and-out call). Jelölje $M_T$ az út maximumát $T$-ig; ekkor a kifizetés"),
     eq("X = (S_T - K)^+\\,\\mathbf{1}\\{M_T < B\\}."),
     p("Ez a kifizetés sosem nagyobb az egyszerű callénál, ezért a felső kiütéses call olcsóbb. Éppen azokat az utakat veszíti el, amelyek a call tulajdonosának a legtöbbet érnék: a nagyot emelkedőket. Ha $B$ a $K$ felé csökken, az értéke nullához tart, hiszen egy $K \\ge B$ fölött záró útnak érintenie kellett $B$-t. Ha $B$ nő, a korlátot egyre ritkábban érik el, és az ár az egyszerű call árához közelít."),
     p("A volatilitás két irányba hat. Nagyobb $\\sigma$ mellett valószínűbbek a nagy végső kifizetések, ez emeli az egyszerű call árát, de valószínűbb az is, hogy az út eléri $B$-t. Ha a korlát közel van az azonnali árfolyamhoz, a második hatás erősebb, és a felső kiütéses call $\\sigma$ növelésével olcsóbbá válhat."),
+    {
+      kind: "check",
+      id: "exotic-options/up-and-out-cheaper",
+      prompt: "Hasonlíts össze egy felső kiütéses callt ($B > K$ korláttal) az azonos $K$ kötési árú és $T$ lejáratú egyszerű callal.",
+      answer: { type: "choice", options: ["A felső kiütéses call kevesebbet ér", "A felső kiütéses call többet ér", "Ugyanannyit érnek", "Attól függ, eléri-e az ár $B$-t"], correct: 0 },
+      explain: "Minden pályán a korlátos kifizetés legfeljebb akkora, mint az egyszerű, és a $B$-t elérő pályákon nulla, miközben az egyszerű call fizethet. Ezért olcsóbb, éppen a felső bekapcsolódó call értékével.",
+    },
 
     h("Be–ki paritás"),
     p("Tartsunk egy felső beütéses és egy felső kiütéses callt ugyanazzal a $K$, $B$ és $T$ paraméterrel. Minden úton pontosan az egyik él, és az élő $(S_T - K)^+$-t fizet. Együtt tehát minden úton az egyszerű call kifizetését adják, így az egy ár törvénye szerint"),

@@ -79,6 +79,16 @@ export const filtrations: GuideLessonContent = {
     eq("\\{\\tau_a \\le t\\} = \\Big\\{\\max_{s \\le t} W_s \\ge a\\Big\\} = \\bigcap_{n=1}^{\\infty} \\; \\bigcup_{s \\in (\\mathbb{Q} \\cap [0,t]) \\cup \\{t\\}} \\Big\\{W_s > a - \\tfrac1n\\Big\\},"),
     p("which uses only countably many times $s \\le t$ and so lies in $\\mathcal{F}^W_t$. For hitting times of open sets, and for many other constructions, one needs a slightly enlarged filtration satisfying the **usual conditions**: it is right-continuous, $\\mathcal{F}_t = \\bigcap_{s > t} \\mathcal{F}_s$, and $\\mathcal{F}_0$ contains all $\\mathbb{P}$-null sets. Later lessons assume these without further comment."),
 
+    {
+      kind: "worked",
+      title: "Conditioning on the first of two coin tosses",
+      steps: [
+        { text: "Two fair tosses, $X$ = number of heads, $\\mathcal{F}_1 = \\sigma(\\xi_1)$. If the first toss is H, one head is in and the second adds $\\tfrac12$ on average.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 1 + \\tfrac12 \\quad \\text{on } \\{\\xi_1 = H\\}", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "If the first toss is T, only the second toss can add a head.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 0 + \\tfrac12 \\quad \\text{on } \\{\\xi_1 = T\\}", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "Average the two branches with their probabilities $\\tfrac12$: the tower property gives back $\\mathbb{E}[X]$.", tex: "\\mathbb{E}\\big[\\mathbb{E}[X \\mid \\mathcal{F}_1]\\big] = \\tfrac12(1.5) + \\tfrac12(0.5)", result: { value: 1, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "A filtration $(\\mathcal{F}_t)$ is an increasing family of σ-algebras; $\\mathcal{F}_t$ is the information at time $t$, and the natural filtration $\\sigma(X_s : s \\le t)$ is the history of $X$.",
@@ -166,6 +176,16 @@ export const filtrations: GuideLessonContent = {
     p("A $W$ Brown-mozgás természetes filtrációja $\\mathcal{F}^W_t = \\sigma(W_s : s \\le t)$. $W$ adaptált hozzá, és a független növekmények miatt minden jövőbeli $W_u - W_t$ növekmény ($u > t$) független $\\mathcal{F}^W_t$-től. Az $a > 0$ szint $\\tau_a = \\inf\\{t \\ge 0 : W_t = a\\}$ első elérési ideje megállási idő. Mivel a pályák folytonosak és $0 < a$-ból indulnak,"),
     eq("\\{\\tau_a \\le t\\} = \\Big\\{\\max_{s \\le t} W_s \\ge a\\Big\\} = \\bigcap_{n=1}^{\\infty} \\; \\bigcup_{s \\in (\\mathbb{Q} \\cap [0,t]) \\cup \\{t\\}} \\Big\\{W_s > a - \\tfrac1n\\Big\\},"),
     p("ami csak megszámlálhatóan sok $s \\le t$ időpontot használ, így $\\mathcal{F}^W_t$-ben van. Nyílt halmazok elérési idejéhez és sok más konstrukcióhoz egy kissé bővített, a **szokásos feltételeket** teljesítő filtráció kell: jobbról folytonos, $\\mathcal{F}_t = \\bigcap_{s > t} \\mathcal{F}_s$, és $\\mathcal{F}_0$ tartalmazza az összes $\\mathbb{P}$-nullmértékű halmazt. A későbbi leckék ezt külön említés nélkül feltételezik."),
+
+    {
+      kind: "worked",
+      title: "Feltételezés két pénzfeldobás közül az elsőre",
+      steps: [
+        { text: "Két szabályos dobás, $X$ = a fejek száma, $\\mathcal{F}_1 = \\sigma(\\xi_1)$. Ha az első dobás H (fej), egy fej már megvan, a második átlagosan $\\tfrac12$-et ad hozzá.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 1 + \\tfrac12 \\quad \\text{ha } \\xi_1 = H", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "Ha az első dobás T (írás), csak a második hozhat fejet.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 0 + \\tfrac12 \\quad \\text{ha } \\xi_1 = T", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "Átlagold a két ágat a $\\tfrac12$ valószínűségükkel: a toronyszabály visszaadja $\\mathbb{E}[X]$-et.", tex: "\\mathbb{E}\\big[\\mathbb{E}[X \\mid \\mathcal{F}_1]\\big] = \\tfrac12(1{,}5) + \\tfrac12(0{,}5)", result: { value: 1, tolerance: 0.001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

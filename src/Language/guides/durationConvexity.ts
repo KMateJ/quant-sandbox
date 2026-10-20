@@ -22,6 +22,13 @@ export const durationConvexity: GuideLessonContent = {
     eq("\\frac{\\Delta P}{P} \\approx -D_{mod}\\,\\Delta y."),
     p("A bond with $D_{mod} = 7.7$ loses about 7.7% of its value when its yield rises by one percentage point. Geometrically, this approximation replaces the price–yield curve by its tangent at the current yield, exactly as delta replaced the option value curve by its tangent in \"Delta and hedging\"."),
     note("Modified duration $D_{mod} = D/(1+y)$ is the percentage price change per unit change in yield: $\\Delta P/P \\approx -D_{mod}\\,\\Delta y$."),
+    {
+      kind: "check",
+      id: "duration-convexity/modified-from-macaulay",
+      prompt: "A bond has a Macaulay duration of 4.2 years and a yield of 5% with annual compounding. What is its modified duration?",
+      answer: { type: "number", value: 4, tolerance: 0.01 },
+      explain: "$D_{mod} = D/(1+y) = 4.2/1.05 = 4.0$. A one-point rise in yield lowers the price by about 4%.",
+    },
 
     h("Dollar duration"),
     p("Portfolio managers often need the change in money rather than in percent. The **dollar duration** is $D_{mod}\\,P$, the price change per unit of yield; divided by 10 000 it gives the change per basis point (0.01%), often called DV01. Dollar durations add across positions, which is how a bond portfolio's interest-rate exposure is aggregated and hedged."),
@@ -34,11 +41,28 @@ export const durationConvexity: GuideLessonContent = {
     p("A second-order Taylor expansion then gives"),
     eq("\\frac{\\Delta P}{P} \\approx -D_{mod}\\,\\Delta y + \\tfrac{1}{2}\\,C\\,(\\Delta y)^2."),
     p("This mirrors the gamma term $\\tfrac{1}{2}\\Gamma(dS)^2$ of the delta hedge. Because $C > 0$ and $(\\Delta y)^2 \\ge 0$, the correction is always positive: when yields fall the bond gains more than duration predicts, and when they rise it loses less. Between two bonds with the same price and duration, the holder prefers the one with higher convexity, and in markets that extra protection is usually paid for with a slightly lower yield. Convexity grows roughly with the square of maturity, so it matters most for long bonds and large yield moves."),
+    {
+      kind: "check",
+      id: "duration-convexity/convexity-sign",
+      prompt: "Yields move by a large amount, up or down. Compared with the duration-only estimate, where is the true price of a plain fixed-rate bond?",
+      answer: { type: "choice", options: ["Always higher", "Always lower", "Higher when yields fall, lower when they rise", "Exactly equal"], correct: 0 },
+      explain: "The convexity term $\\tfrac{1}{2}C(\\Delta y)^2$ is positive for either sign of $\\Delta y$, so the true price lies above the tangent: the bond gains more than predicted when yields fall and loses less when they rise.",
+    },
 
     h("A worked example"),
     p("Take $c = 5\\%$, $T = 10$, $y_0 = 5\\%$. The bond trades at par, $P_0 = 100$. Summing the weighted payment times gives"),
     eq("D \\approx 8.108, \\qquad D_{mod} = \\frac{8.108}{1.05} \\approx 7.722, \\qquad C \\approx 75.0."),
-    p("The dollar duration is about 772, so one basis point moves the price by about 0.077. Now shift the yield by one percentage point:"),
+    p("The dollar duration is about 772, so one basis point moves the price by about 0.077."),
+    {
+      kind: "worked",
+      title: "A 100 basis point rise, with and without convexity",
+      steps: [
+        { text: "Duration alone: the relative price change is minus modified duration times $\\Delta y = 0.01$.", tex: "-D_{mod}\\,\\Delta y = -7.722 \\times 0.01", result: { value: -7.72, tolerance: 0.01, unit: "%" } },
+        { text: "The convexity correction is half the convexity times the squared yield change.", tex: "\\tfrac{1}{2}\\,C\\,(\\Delta y)^2 = \\tfrac{1}{2} \\times 75.0 \\times 0.0001", result: { value: 0.375, tolerance: 0.001, unit: "%" } },
+        { text: "Adding the two gives the second-order estimate, close to the true change of $-7.36\\%$.", tex: "\\frac{\\Delta P}{P} \\approx -7.722\\% + 0.375\\%", result: { value: -7.35, tolerance: 0.01, unit: "%" } },
+      ],
+    },
+    p("Now shift the yield by one percentage point in both directions:"),
     list(
       "$\\Delta y = +1\\%$: the true price is 92.64, a change of $-7.36$. Duration alone predicts $-7.72$; adding convexity, $100\\,(-0.07722 + \\tfrac{1}{2}\\cdot 75.0 \\cdot 0.0001) \\approx -7.35$.",
       "$\\Delta y = -1\\%$: the true price is 108.11, a change of $+8.11$. Duration alone predicts $+7.72$; with convexity, $+8.10$.",
@@ -82,6 +106,13 @@ export const durationConvexity: GuideLessonContent = {
     eq("\\frac{\\Delta P}{P} \\approx -D_{mod}\\,\\Delta y."),
     p("Egy $D_{mod} = 7{,}7$ módosított durációjú kötvény értéke kb. 7,7%-kal csökken, ha a hozama egy százalékponttal nő. Geometriailag ez a közelítés az ár–hozam görbét a mai hozamnál húzott érintőjével helyettesíti, pontosan úgy, ahogy a „Delta és fedezés” leckében a delta az opció értékgörbéjét helyettesítette az érintőjével."),
     note("A $D_{mod} = D/(1+y)$ módosított duráció az egységnyi hozamváltozásra jutó százalékos árváltozás: $\\Delta P/P \\approx -D_{mod}\\,\\Delta y$."),
+    {
+      kind: "check",
+      id: "duration-convexity/modified-from-macaulay",
+      prompt: "Egy kötvény Macaulay-durációja 4,2 év, hozama évi 5% éves kamatozással. Mekkora a módosított durációja?",
+      answer: { type: "number", value: 4, tolerance: 0.01 },
+      explain: "$D_{mod} = D/(1+y) = 4{,}2/1{,}05 = 4{,}0$. Egy százalékpontos hozamemelkedés kb. 4%-kal csökkenti az árat.",
+    },
 
     h("Pénzben mért duráció"),
     p("A portfóliókezelőknek gyakran nem százalékos, hanem pénzben mért változás kell. A **pénzben mért duráció** (dollar duration) $D_{mod}\\,P$, az egységnyi hozamváltozásra jutó árváltozás; 10 000-rel osztva a bázispontonkénti (0,01%) változást adja, ennek szokásos neve DV01. A pénzben mért durációk pozíciók között összeadódnak, így ezekkel összesíthető és fedezhető egy kötvényportfólió kamatkockázata."),
@@ -94,11 +125,28 @@ export const durationConvexity: GuideLessonContent = {
     p("A másodrendű Taylor-közelítés ekkor"),
     eq("\\frac{\\Delta P}{P} \\approx -D_{mod}\\,\\Delta y + \\tfrac{1}{2}\\,C\\,(\\Delta y)^2."),
     p("Ez a delta-fedezés $\\tfrac{1}{2}\\Gamma(dS)^2$ gammatagjának megfelelője. Mivel $C > 0$ és $(\\Delta y)^2 \\ge 0$, a korrekció mindig pozitív: ha a hozamok esnek, a kötvény többet nyer, mint amit a duráció jósol, ha emelkednek, kevesebbet veszít. Két azonos árú és durációjú kötvény közül a tulajdonos a nagyobb konvexitásút választja, és a piacon ezt a többletvédelmet általában valamivel alacsonyabb hozammal fizetik meg. A konvexitás nagyjából a lejárat négyzetével nő, ezért hosszú kötvényeknél és nagy hozammozgásoknál számít igazán."),
+    {
+      kind: "check",
+      id: "duration-convexity/convexity-sign",
+      prompt: "A hozamok nagyot mozdulnak, felfelé vagy lefelé. A csak durációs becsléshez képest hol van egy egyszerű fix kamatozású kötvény valódi ára?",
+      answer: { type: "choice", options: ["Mindig fölötte", "Mindig alatta", "Hozamesésnél fölötte, hozamemelkedésnél alatta", "Pontosan egyenlő vele"], correct: 0 },
+      explain: "Az $\\tfrac{1}{2}C(\\Delta y)^2$ konvexitási tag $\\Delta y$ bármely előjelénél pozitív, ezért a valódi ár az érintő fölött van: hozamesésnél a kötvény többet nyer, hozamemelkedésnél kevesebbet veszít, mint a becslés.",
+    },
 
     h("Számpélda"),
     p("Legyen $c = 5\\%$, $T = 10$, $y_0 = 5\\%$. A kötvény névértéken forog, $P_0 = 100$. A súlyozott kifizetési időket összegezve"),
     eq("D \\approx 8{,}108, \\qquad D_{mod} = \\frac{8{,}108}{1{,}05} \\approx 7{,}722, \\qquad C \\approx 75{,}0."),
-    p("A pénzben mért duráció kb. 772, így egy bázispont kb. 0,077-tel mozdítja az árat. Most toljuk el a hozamot egy százalékponttal:"),
+    p("A pénzben mért duráció kb. 772, így egy bázispont kb. 0,077-tel mozdítja az árat."),
+    {
+      kind: "worked",
+      title: "100 bázispontos emelkedés konvexitással és anélkül",
+      steps: [
+        { text: "Csak durációval: a relatív árváltozás a módosított duráció ellentettje szorozva a $\\Delta y = 0{,}01$ hozamváltozással.", tex: "-D_{mod}\\,\\Delta y = -7{,}722 \\times 0{,}01", result: { value: -7.72, tolerance: 0.01, unit: "%" } },
+        { text: "A konvexitási korrekció a konvexitás fele szorozva a hozamváltozás négyzetével.", tex: "\\tfrac{1}{2}\\,C\\,(\\Delta y)^2 = \\tfrac{1}{2} \\times 75{,}0 \\times 0{,}0001", result: { value: 0.375, tolerance: 0.001, unit: "%" } },
+        { text: "A kettő összege a másodrendű becslés, amely közel van a valódi $-7{,}36\\%$-os változáshoz.", tex: "\\frac{\\Delta P}{P} \\approx -7{,}722\\% + 0{,}375\\%", result: { value: -7.35, tolerance: 0.01, unit: "%" } },
+      ],
+    },
+    p("Most toljuk el a hozamot egy százalékponttal mindkét irányba:"),
     list(
       "$\\Delta y = +1\\%$: a valódi ár 92,64, a változás $-7{,}36$. A duráció egyedül $-7{,}72$-t jósol; konvexitással $100\\,(-0{,}07722 + \\tfrac{1}{2}\\cdot 75{,}0 \\cdot 0{,}0001) \\approx -7{,}35$.",
       "$\\Delta y = -1\\%$: a valódi ár 108,11, a változás $+8{,}11$. A duráció egyedül $+7{,}72$-t jósol; konvexitással $+8{,}10$.",

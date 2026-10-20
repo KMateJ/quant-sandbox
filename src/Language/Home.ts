@@ -139,7 +139,7 @@ export const homeEn = {
     devFuture: "Planned modules",
 
     devItemFixedIncomeLabs: "Fixed income labs — predict-the-change rounds, yield-curve shocks and bootstrapping, immunization and Treasury futures",
-    devItemGuides: "Guides — 48 lessons in five tracks, with interactive figures and a knowledge graph",
+    devItemGuides: "Guides — 64 lessons in five tracks, with interactive figures and a knowledge graph",
     devItemLabs: "Hands-on labs for portfolio, corporate finance and stochastic models — drag, predict and compare",
     devItemSharing: "Share links with your inputs, English and Hungarian versions",
 

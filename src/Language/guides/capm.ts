@@ -47,6 +47,13 @@ export const capm: GuideLessonContent = {
     p("Let $r_f = 3\\%$, $\\mathbb{E}[R_m] = 8\\%$ and $\\beta = 1.3$. The market risk premium is $8\\% - 3\\% = 5\\%$. The required return of the asset is"),
     eq("\\mathbb{E}[R_i] = 3\\% + 1.3 \\times 5\\% = 9.5\\%,"),
     p("so its risk premium is $6.5\\%$. An asset with $\\beta = 0.5$ would require only $5.5\\%$, however volatile it is on its own."),
+    {
+      kind: "check",
+      id: "capm/required-return",
+      prompt: "An asset has $\\beta = 1.3$. The risk-free rate is 2% and the market is expected to return 8%. What expected return does the CAPM require, in percent?",
+      answer: { type: "number", value: 9.8, tolerance: 0.01, unit: "%" },
+      explain: "$\\mathbb{E}[R_i] = 2\\% + 1.3 \\times (8\\% - 2\\%) = 2\\% + 7.8\\% = 9.8\\%$.",
+    },
     p("The figure plots expected return against beta from 0 to 2. The SML starts at $r_f$ for $\\beta = 0$ and passes through the market at $\\beta = 1$; a second marker shows the asset. Raise $\\mathbb{E}[R_m]$ and note that the line becomes steeper around the fixed point $(0, r_f)$. Move $\\beta$ and note that the asset slides along the line. The readouts give the market risk premium, the required return of the asset and its risk premium."),
     figure("security-market-line"),
     p("The SML and the CML are different lines. The CML has volatility on the horizontal axis and holds only for efficient portfolios. The SML has beta on the horizontal axis and holds for every asset and every portfolio."),
@@ -55,9 +62,24 @@ export const capm: GuideLessonContent = {
     p("The **alpha** of an asset is the gap between the expected return one actually forecasts and the return the SML requires:"),
     eq("\\alpha_i = \\mathbb{E}[R_i] - \\big(r_f + \\beta_i(\\mathbb{E}[R_m] - r_f)\\big)."),
     p("If an analyst expects 11% from the asset above, its alpha is $11\\% - 9.5\\% = 1.5\\%$: it plots above the SML and looks cheap for its risk. In the CAPM world such a gap cannot last. Investors would buy the asset, its price would rise and its expected return would fall until $\\alpha = 0$. A measured alpha is therefore either a mispricing, a reward for a risk the CAPM leaves out, or estimation noise."),
+    {
+      kind: "check",
+      id: "capm/positive-alpha",
+      prompt: "An analyst's forecast puts an asset above the security market line, so its alpha is positive. In the CAPM, what does that say about the asset?",
+      answer: { type: "choice", options: ["It is overvalued for its risk", "It is undervalued for its risk", "Its beta is too high", "It carries no systematic risk"], correct: 1 },
+      explain: "A positive alpha means the forecast return exceeds what the SML requires for its beta, so the asset looks cheap. Buying pressure would raise its price until $\\alpha = 0$.",
+    },
 
     h("Estimating beta"),
     p("In practice beta is estimated by an ordinary least-squares regression of the asset's excess returns on the excess returns of a broad index, typically 60 monthly observations or 2 years of weekly ones. The regression slope is the sample covariance divided by the sample variance of the index. Example: if the sample covariance of monthly returns is $0.0018$ and the monthly index variance is $0.0016$, then $\\hat\\beta = 0.0018/0.0016 = 1.125$. The intercept estimates alpha."),
+    {
+      kind: "worked",
+      title: "From a sample covariance to a required return",
+      steps: [
+        { text: "The regression slope is the sample covariance with the index divided by the index variance.", tex: "\\hat\\beta = \\frac{0.0018}{0.0016}", result: { value: 1.125, tolerance: 0.001 } },
+        { text: "With $r_f = 3\\%$ and $\\mathbb{E}[R_m] = 8\\%$ the market risk premium is 5%, and the SML gives the required return.", tex: "\\mathbb{E}[R_i] = 3\\% + 1.125 \\times 5\\%", result: { value: 8.625, tolerance: 0.01, unit: "%" } },
+      ],
+    },
     p("Such estimates are noisy, they change as the firm's business and leverage change, and they depend on the index and the return frequency. Practitioners often shrink raw estimates towards 1 for these reasons."),
 
     h("Limitations"),
@@ -125,6 +147,13 @@ export const capm: GuideLessonContent = {
     p("Legyen $r_f = 3\\%$, $\\mathbb{E}[R_m] = 8\\%$ és $\\beta = 1{,}3$. A piaci kockázati prémium $8\\% - 3\\% = 5\\%$. Az eszköz elvárt hozama"),
     eq("\\mathbb{E}[R_i] = 3\\% + 1{,}3 \\times 5\\% = 9{,}5\\%,"),
     p("a kockázati prémiuma tehát $6{,}5\\%$. Egy $\\beta = 0{,}5$-ös eszköztől csak $5{,}5\\%$ volna elvárható, akármilyen volatilis is önmagában."),
+    {
+      kind: "check",
+      id: "capm/required-return",
+      prompt: "Egy eszköz bétája $\\beta = 1{,}3$. A kockázatmentes kamatláb 2%, a piac várható hozama 8%. Mekkora hozamot követel meg a CAPM, százalékban?",
+      answer: { type: "number", value: 9.8, tolerance: 0.01, unit: "%" },
+      explain: "$\\mathbb{E}[R_i] = 2\\% + 1{,}3 \\times (8\\% - 2\\%) = 2\\% + 7{,}8\\% = 9{,}8\\%$.",
+    },
     p("Az ábra a várható hozamot mutatja a béta függvényében 0 és 2 között. Az SML $\\beta = 0$-nál $r_f$-ből indul, és $\\beta = 1$-nél átmegy a piacon; egy második jelölő mutatja az eszközt. Növeld az $\\mathbb{E}[R_m]$-et, és figyeld meg, hogy az egyenes a rögzített $(0, r_f)$ pont körül meredekebbé válik. Mozgasd a $\\beta$-t, és figyeld meg, hogy az eszköz az egyenes mentén csúszik. A kijelzők a piaci kockázati prémiumot, az eszköz elvárt hozamát és kockázati prémiumát mutatják."),
     figure("security-market-line"),
     p("Az SML és a CML két különböző egyenes. A CML vízszintes tengelyén a volatilitás áll, és csak hatékony portfóliókra érvényes. Az SML vízszintes tengelyén a béta áll, és minden eszközre és portfólióra érvényes."),
@@ -133,9 +162,24 @@ export const capm: GuideLessonContent = {
     p("Egy eszköz **alfája** a ténylegesen előre jelzett várható hozam és az SML által megkövetelt hozam különbsége:"),
     eq("\\alpha_i = \\mathbb{E}[R_i] - \\big(r_f + \\beta_i(\\mathbb{E}[R_m] - r_f)\\big)."),
     p("Ha egy elemző 11%-ot vár a fenti eszköztől, az alfája $11\\% - 9{,}5\\% = 1{,}5\\%$: az SML felett helyezkedik el, és a kockázatához képest olcsónak tűnik. A CAPM világában ez a különbség nem maradhat fenn. A befektetők megvennék az eszközt, az ára emelkedne, a várható hozama pedig csökkenne, amíg $\\alpha = 0$ nem lesz. Egy mért alfa tehát vagy félreárazás, vagy a CAPM-ből kimaradó kockázatért járó jutalom, vagy becslési zaj."),
+    {
+      kind: "check",
+      id: "capm/positive-alpha",
+      prompt: "Egy elemző előrejelzése szerint egy eszköz az értékpapír-piaci egyenes felett van, tehát pozitív az alfája. Mit mond ez a CAPM szerint az eszközről?",
+      answer: { type: "choice", options: ["A kockázatához képest túlárazott", "A kockázatához képest alulárazott", "Túl magas a bétája", "Nincs szisztematikus kockázata"], correct: 1 },
+      explain: "A pozitív alfa azt jelenti, hogy az előre jelzett hozam több, mint amit az SML a bétájához megkövetel, vagyis az eszköz olcsónak tűnik. A vásárlások addig emelnék az árát, amíg $\\alpha = 0$ nem lesz.",
+    },
 
     h("A béta becslése"),
     p("A gyakorlatban a bétát legkisebb négyzetes regresszióval becsülik: az eszköz többlethozamait egy széles index többlethozamaira regresszálják, jellemzően 60 havi vagy 2 évnyi heti megfigyelésből. A regressziós meredekség a mintabeli kovariancia osztva az index mintabeli varianciájával. Példa: ha a havi hozamok mintabeli kovarianciája $0{,}0018$, az index havi varianciája $0{,}0016$, akkor $\\hat\\beta = 0{,}0018/0{,}0016 = 1{,}125$. A tengelymetszet az alfát becsli."),
+    {
+      kind: "worked",
+      title: "A mintabeli kovarianciától az elvárt hozamig",
+      steps: [
+        { text: "A regressziós meredekség az indexszel vett mintabeli kovariancia osztva az index varianciájával.", tex: "\\hat\\beta = \\frac{0{,}0018}{0{,}0016}", result: { value: 1.125, tolerance: 0.001 } },
+        { text: "$r_f = 3\\%$ és $\\mathbb{E}[R_m] = 8\\%$ mellett a piaci kockázati prémium 5%, az SML pedig megadja az elvárt hozamot.", tex: "\\mathbb{E}[R_i] = 3\\% + 1{,}125 \\times 5\\%", result: { value: 8.625, tolerance: 0.01, unit: "%" } },
+      ],
+    },
     p("Ezek a becslések zajosak, változnak a vállalat tevékenységével és tőkeáttételével, és függenek az indextől és a hozamok gyakoriságától. Emiatt a gyakorlatban a nyers becsléseket gyakran 1 felé húzzák."),
 
     h("Korlátok"),

@@ -42,6 +42,7 @@ import { guideStochasticEn } from "./GuideStochastic";
 import { guideStochasticTheoryEn } from "./GuideStochasticTheory";
 import { guideWave2En } from "./GuideWave2";
 import { guideWave3En } from "./GuideWave3";
+import { guideWave4En } from "./GuideWave4";
 import { guideGraphEn } from "./GuideGraph";
 import { guideInteractiveEn } from "./GuideInteractive";
 import { guideInteractive2En } from "./GuideInteractive2";
@@ -83,6 +84,7 @@ export const en = {
   ...guideStochasticTheoryEn,
   ...guideWave2En,
   ...guideWave3En,
+  ...guideWave4En,
   ...guideGraphEn,
   ...guideInteractiveEn,
   ...guideInteractive2En,

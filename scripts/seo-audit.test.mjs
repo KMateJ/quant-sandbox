@@ -60,7 +60,9 @@ const KNOWN = {
     "/guide/portfolio/performance-measures", "/guide/fixed-income", "/guide/fixed-income/yield-curve",
     "/guide/fixed-income/credit-risk", "/guide/corporate", "/guide/stochastic",
     // Hungarian-only: the translated lesson titles run longer.
-    "/hu/guide/derivatives/static-replication", "/hu/guide/stochastic/mean-reversion", "/hu/guide/stochastic/probability-spaces"],
+    "/hu/guide/derivatives/static-replication", "/hu/guide/stochastic/mean-reversion", "/hu/guide/stochastic/probability-spaces",
+    "/hu/guide/derivatives/options-on-other-underlyings", "/hu/guide/portfolio/portfolio-constraints", "/hu/guide/fixed-income/curve-risk",
+    "/hu/guide/corporate/capital-budgeting-risk", "/hu/guide/corporate/dividend-policy", "/hu/guide/stochastic/law-of-large-numbers-clt"],
   description: ["/", "/payoff", "/delta-hedging", "/efficient-frontier", "/stochastic-models", "/guide/portfolio"],
 };
 

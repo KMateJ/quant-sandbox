@@ -1,5 +1,6 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../../i18n";
+import type { GuideId } from "../guide/guide.types";
 
 type LessonComponent = LazyExoticComponent<ComponentType>;
 
@@ -27,6 +28,8 @@ export interface StochChapter {
   lessons: StochLesson[];
   /// Chapters already realised as a standalone lab link to it.
   standalone?: { route: string; labelKey: TranslationKey };
+  /// Guide lessons that carry the theory for this chapter.
+  guides?: GuideId[];
   planned?: boolean;
 }
 
@@ -35,6 +38,7 @@ export const curriculum: StochChapter[] = [
     number: 1,
     titleKey: "stochChapter1",
     descKey: "stochChapter1Desc",
+    guides: ["random-walks", "law-of-large-numbers-clt"],
     lessons: [
       {
         id: "random-walk",
@@ -82,6 +86,7 @@ export const curriculum: StochChapter[] = [
     number: 2,
     titleKey: "stochChapter2",
     descKey: "stochChapter2Desc",
+    guides: ["brownian-properties", "brownian-bridge"],
     lessons: [
       {
         id: "wiener-process",
@@ -138,6 +143,7 @@ export const curriculum: StochChapter[] = [
     number: 3,
     titleKey: "stochChapter3",
     descKey: "stochChapter3Desc",
+    guides: ["reflection-principle"],
     lessons: [
       {
         id: "running-max",
@@ -185,6 +191,7 @@ export const curriculum: StochChapter[] = [
     number: 4,
     titleKey: "stochChapter4",
     descKey: "stochChapter4Desc",
+    guides: ["ito-integral", "ito-lemma"],
     lessons: [],
     standalone: { route: "/ito-process", labelKey: "stochItoStandalone" },
   },
@@ -192,6 +199,7 @@ export const curriculum: StochChapter[] = [
     number: 5,
     titleKey: "stochChapter5",
     descKey: "stochChapter5Desc",
+    guides: ["sde-simulation", "correlated-brownian-motions", "mean-reversion", "jump-diffusion"],
     lessons: [],
     standalone: { route: "/gbm", labelKey: "stochGbmStandalone" },
   },
@@ -199,13 +207,14 @@ export const curriculum: StochChapter[] = [
     number: 6,
     titleKey: "stochChapter6",
     descKey: "stochChapter6Desc",
+    guides: ["probability-spaces", "filtrations", "martingales", "change-of-measure"],
     lessons: [],
-    planned: true,
   },
   {
     number: 7,
     titleKey: "stochChapter7",
     descKey: "stochChapter7Desc",
+    guides: ["monte-carlo-pricing", "feynman-kac"],
     lessons: [],
     standalone: { route: "/monte-carlo", labelKey: "stochMonteCarloStandalone" },
   },

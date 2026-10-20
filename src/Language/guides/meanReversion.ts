@@ -80,6 +80,16 @@ export const meanReversion: GuideLessonContent = {
     p("As $T$ grows the yield tends to $\\theta - \\sigma^2/(2\\kappa^2)$, here $3.98\\%$. If $r_0$ is below this level the model produces a rising curve, if above an inverted (falling) curve, and for $r_0$ just above it a slightly humped one that rises briefly before falling. The lesson \"Spot rates, forward rates and the yield curve\" describes these shapes as observed in the market; the Vasicek model can produce only these few, which is why practitioners often fit richer curves directly. The Yield Curve lab shows such market curves."),
     p("The main drawback is that a normal short rate can become negative with positive probability. The Cox–Ingersoll–Ross (CIR) model avoids this by making the volatility proportional to $\\sqrt{r_t}$."),
 
+    {
+      kind: "worked",
+      title: "The OU distribution after one year",
+      steps: [
+        { text: "With $\\kappa = 0.5$, $\\theta = 4\\%$, $X_0 = 8\\%$, the expected level after one year (in %).", tex: "\\theta + (X_0 - \\theta)e^{-\\kappa} = 4 + 4e^{-0.5}", result: { value: 6.43, tolerance: 0.01 } },
+        { text: "Standard deviation after one year with $\\sigma = 1\\%$ (in %).", tex: "\\sigma\\sqrt{\\frac{1 - e^{-2\\kappa}}{2\\kappa}} = 1 \\cdot \\sqrt{1 - e^{-1}}", result: { value: 0.795, tolerance: 0.001 } },
+        { text: "Half-life of the expected gap, in years.", tex: "t_{1/2} = \\ln 2/\\kappa", result: { value: 1.386, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "The Ornstein–Uhlenbeck process $dX = \\kappa(\\theta - X)\\,dt + \\sigma\\,dW$ is pulled towards the long-run level $\\theta$ with speed $\\kappa$; the expected gap halves every $\\ln 2/\\kappa$.",
@@ -167,6 +177,16 @@ export const meanReversion: GuideLessonContent = {
     p("A fenti példában $r_0 = 8\\%$ és $T = 5$ mellett: $B(5) = (1 - e^{-2{,}5})/0{,}5 \\approx 1{,}836$, $A(5) \\approx 0{,}8815$, így $P(0,5) \\approx 0{,}8815\\,e^{-1{,}836 \\cdot 0{,}08} \\approx 0{,}7611$, az 5 éves hozam pedig $-\\ln(0{,}7611)/5 \\approx 5{,}46\\%$. A hozam $r_0$ és $\\theta$ közé esik, mert a piac a kamat 4% felé való visszatérésére számít."),
     p("$T$ növelésével a hozam $\\theta - \\sigma^2/(2\\kappa^2)$-hez tart, itt $3{,}98\\%$-hoz. Ha $r_0$ ez alatt van, a modell emelkedő görbét ad, ha fölötte, akkor fordított (csökkenő) görbét, közvetlenül fölötte pedig enyhén púpos, előbb kissé emelkedő, majd csökkenő görbét. Az „Azonnali kamatok, forward kamatok és a hozamgörbe” lecke ezeket az alakokat a piacon megfigyelhető formában mutatja be; a Vasicek-modell csak ezt a néhány alakot tudja előállítani, ezért a gyakorlatban a görbét gyakran közvetlenül, rugalmasabb függvénnyel illesztik. Ilyen piaci görbéket a Hozamgörbe labor mutat."),
     p("A modell fő hátránya, hogy a normális eloszlású rövid kamat pozitív valószínűséggel negatívvá válhat. A Cox–Ingersoll–Ross- (CIR-) modell ezt úgy kerüli el, hogy a volatilitást $\\sqrt{r_t}$-vel arányosnak veszi."),
+
+    {
+      kind: "worked",
+      title: "Az OU-eloszlás egy év után",
+      steps: [
+        { text: "$\\kappa = 0{,}5$, $\\theta = 4\\%$, $X_0 = 8\\%$ mellett a várható szint egy év után (%-ban).", tex: "\\theta + (X_0 - \\theta)e^{-\\kappa} = 4 + 4e^{-0{,}5}", result: { value: 6.43, tolerance: 0.01 } },
+        { text: "A szórás egy év után $\\sigma = 1\\%$ mellett (%-ban).", tex: "\\sigma\\sqrt{\\frac{1 - e^{-2\\kappa}}{2\\kappa}} = 1 \\cdot \\sqrt{1 - e^{-1}}", result: { value: 0.795, tolerance: 0.001 } },
+        { text: "A várható eltérés felezési ideje, években.", tex: "t_{1/2} = \\ln 2/\\kappa", result: { value: 1.386, tolerance: 0.001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

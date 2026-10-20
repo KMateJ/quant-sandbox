@@ -88,6 +88,17 @@ export const brownianProperties: GuideLessonContent = {
     p("The time-shift invariance states the **Markov property**: for every fixed $s \\ge 0$, the process $(W_{s+t} - W_s)_{t \\ge 0}$ is a Brownian motion independent of $\\mathcal{F}_s$. Equivalently, for bounded measurable $f$, $\\mathbb{E}[f(W_{s+t}) \\mid \\mathcal{F}_s] = g(W_s)$ with $g(x) = \\mathbb{E}[f(x + W_t)]$: the forecast depends on the past only through the present value."),
     p("The **strong Markov property** (Hunt, 1956) allows the fixed time $s$ to be replaced by a stopping time $\\tau$: on $\\{\\tau < \\infty\\}$, the process $(W_{\\tau+t} - W_\\tau)_{t \\ge 0}$ is a Brownian motion independent of $\\mathcal{F}_\\tau$. Think of it as a restart rule: whenever you stop using only the information available so far, what happens next is a fresh Brownian motion. A random time that looks into the future, such as the time of the maximum on $[0, 1]$, does not have this property. The next lesson uses the strong Markov property at the first time the path reaches a level."),
 
+    {
+      kind: "worked",
+      title: "Covariance, increments and scaling at two times",
+      steps: [
+        { text: "Covariance of $W_s$ and $W_t$ for $s = 0.5$, $t = 2$.", tex: "\\operatorname{Cov}(W_{0.5}, W_2) = \\min(0.5, 2)", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "The increment over $[0.5, 2]$ has variance equal to the elapsed time.", tex: "\\operatorname{Var}(W_2 - W_{0.5}) = 2 - 0.5", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "The same from the covariance: $\\operatorname{Var}(W_2) + \\operatorname{Var}(W_{0.5}) - 2\\operatorname{Cov}$.", tex: "2 + 0.5 - 2(0.5)", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "Scaling with $c = 2$: $\\tfrac1c W_{c^2 t}$ at $t = 0.5$ has the variance of $W_{0.5}$.", tex: "\\operatorname{Var}\\big(\\tfrac12 W_{2}\\big) = \\tfrac14 \\cdot 2", result: { value: 0.5, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "Brownian motion: $W_0 = 0$, independent increments, $W_t - W_s \\sim N(0, t-s)$, continuous paths; equivalently, a continuous centred Gaussian process with $\\operatorname{Cov}(W_s, W_t) = \\min(s,t)$.",
@@ -184,6 +195,17 @@ export const brownianProperties: GuideLessonContent = {
     h("Markov- és erős Markov-tulajdonság"),
     p("Az időeltolási invariancia a **Markov-tulajdonságot** fejezi ki: minden rögzített $s \\ge 0$ esetén a $(W_{s+t} - W_s)_{t \\ge 0}$ folyamat $\\mathcal{F}_s$-től független Brown-mozgás. Ezzel ekvivalens, hogy korlátos, mérhető $f$ esetén $\\mathbb{E}[f(W_{s+t}) \\mid \\mathcal{F}_s] = g(W_s)$, ahol $g(x) = \\mathbb{E}[f(x + W_t)]$: az előrejelzés a múlttól csak a jelenlegi értéken keresztül függ."),
     p("Az **erős Markov-tulajdonság** (Hunt, 1956) szerint a rögzített $s$ időpont helyére $\\tau$ megállási idő is írható: a $\\{\\tau < \\infty\\}$ eseményen a $(W_{\\tau+t} - W_\\tau)_{t \\ge 0}$ folyamat $\\mathcal{F}_\\tau$-tól független Brown-mozgás. Gondolj rá újraindítási szabályként: ha csak az addig elérhető információ alapján állsz meg, ami ezután jön, az egy friss Brown-mozgás. A jövőbe tekintő véletlen időpontra, például a $[0, 1]$-en vett maximum időpontjára ez nem igaz. A következő lecke az erős Markov-tulajdonságot abban az időpontban használja, amikor a pálya először elér egy szintet."),
+
+    {
+      kind: "worked",
+      title: "Kovariancia, növekmények és skálázás két időpontban",
+      steps: [
+        { text: "$W_s$ és $W_t$ kovarianciája $s = 0{,}5$, $t = 2$ mellett.", tex: "\\operatorname{Cov}(W_{0{,}5}, W_2) = \\min(0{,}5;\\ 2)", result: { value: 0.5, tolerance: 0.001 } },
+        { text: "A $[0{,}5;\\ 2]$ szakasz növekményének varianciája az eltelt idő.", tex: "\\operatorname{Var}(W_2 - W_{0{,}5}) = 2 - 0{,}5", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "Ugyanez a kovarianciából: $\\operatorname{Var}(W_2) + \\operatorname{Var}(W_{0{,}5}) - 2\\operatorname{Cov}$.", tex: "2 + 0{,}5 - 2(0{,}5)", result: { value: 1.5, tolerance: 0.001 } },
+        { text: "Skálázás $c = 2$-vel: $\\tfrac1c W_{c^2 t}$ varianciája $t = 0{,}5$-nél ugyanannyi, mint $W_{0{,}5}$-é.", tex: "\\operatorname{Var}\\big(\\tfrac12 W_{2}\\big) = \\tfrac14 \\cdot 2", result: { value: 0.5, tolerance: 0.001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

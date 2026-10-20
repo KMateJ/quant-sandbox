@@ -32,6 +32,20 @@ export const oneStepBinomial: GuideLessonContent = {
     p("$\\Delta$ is the change in option value divided by the change in stock price across the two states. Substituting back into the down-state equation gives the bond position:"),
     eq("B = \\frac{C_d - \\Delta\\,dS_0}{1+r} = \\frac{uC_d - dC_u}{(u-d)(1+r)}."),
     p("For a call, $C_u \\ge C_d$, so $0 \\le \\Delta \\le 1$, and $B \\le 0$: the replicating portfolio holds part of a share financed partly by borrowing."),
+    {
+      kind: "check",
+      id: "one-step-binomial/delta",
+      prompt: "In a one-step model $S_0 = 100$, $u = 1.2$ and $d = 0.8$. How many shares $\\Delta$ replicate a call with $K = 100$?",
+      answer: { type: "number", value: 0.5, tolerance: 0.005 },
+      explain: "$C_u = 20$ and $C_d = 0$, so $\\Delta = (20 - 0)/(120 - 80) = 0.5$.",
+    },
+    {
+      kind: "check",
+      id: "one-step-binomial/bond-sign",
+      prompt: "In the portfolio that replicates a call, what is the bond position $B$?",
+      answer: { type: "choice", options: ["Negative: part of the shares is bought with borrowed money", "Positive: cash is lent at $r$", "Zero: the shares alone replicate the call", "It depends on the real probability of the up move"], correct: 0 },
+      explain: "For a call $B = (uC_d - dC_u)/((u-d)(1+r)) \\le 0$, because $C_d$ is small compared with $C_u$. The portfolio is a fraction of a share financed partly by a loan.",
+    },
 
     h("Price equals the cost of replication"),
     p("The portfolio and the call have the same value in both states at time 1. If they had different prices today, you could buy the cheaper one, sell the dearer one, and keep the difference with no risk at time 1. That is an arbitrage, so the law of one price forces"),
@@ -49,6 +63,16 @@ export const oneStepBinomial: GuideLessonContent = {
     ),
     p("Check: in the up state the portfolio is worth $\\tfrac{2}{3}\\cdot 120 - 60 = 20$, in the down state $\\tfrac{2}{3}\\cdot 90 - 60 = 0$. The loan repayment is $58.82 \\cdot 1.02 = 60$ in both states. The portfolio matches the call exactly."),
     p("If the call traded at 9, you would sell it, spend 7.84 building the portfolio and keep 1.16 today. At time 1 the portfolio pays exactly what you owe on the call, whichever state occurs."),
+    {
+      kind: "worked",
+      title: "Replicating a call with $u = 1.2$ and $d = 0.8$",
+      steps: [
+        { text: "Take $S_0 = 100$, $u = 1.2$, $d = 0.8$, $r = 2\\%$ and $K = 100$, so $C_u = 20$ and $C_d = 0$. The share position is", tex: "\\Delta = \\frac{20 - 0}{120 - 80}", result: { value: 0.5, tolerance: 0.005 } },
+        { text: "The bond position, from the down-state equation, is a loan:", tex: "B = \\frac{0 - 0.5 \\cdot 80}{1.02}", result: { value: -39.22, tolerance: 0.01 } },
+        { text: "The call costs what the portfolio costs.", tex: "C_0 = 0.5 \\cdot 100 - 39.22", result: { value: 10.78, tolerance: 0.01 } },
+        { text: "Check the up state: half a share worth 60, minus the loan repayment of 40.", tex: "0.5 \\cdot 120 - 39.22 \\cdot 1.02", result: { value: 20, tolerance: 0.01 } },
+      ],
+    },
 
     h("Exploring the tree"),
     p("The figure draws the one-step tree with the stock price and the call value at each node, and reports $\\Delta$, $B$ and the call price. Change $u$, $d$, $r$ and $K$. Raising $K$ shrinks $C_u$ and so lowers both $\\Delta$ and the price; widening the gap between $u$ and $d$ raises the price. Move $r$, $u$ or $d$ so that $1+r$ leaves the interval $(d, u)$ and the figure warns that the no-arbitrage condition fails. The readout $q$ is the subject of the next lesson."),
@@ -95,6 +119,20 @@ export const oneStepBinomial: GuideLessonContent = {
     p("$\\Delta$ tehát az opció értékének változása osztva a részvényár változásával a két állapot között. A lefelé állapot egyenletébe visszahelyettesítve megkapjuk a kötvénypozíciót:"),
     eq("B = \\frac{C_d - \\Delta\\,dS_0}{1+r} = \\frac{uC_d - dC_u}{(u-d)(1+r)}."),
     p("Callnál $C_u \\ge C_d$, ezért $0 \\le \\Delta \\le 1$ és $B \\le 0$: a replikáló portfólió egy részvény töredékét tartja, részben hitelből finanszírozva."),
+    {
+      kind: "check",
+      id: "one-step-binomial/delta",
+      prompt: "Egy egylépéses modellben $S_0 = 100$, $u = 1{,}2$ és $d = 0{,}8$. Hány részvény ($\\Delta$) replikál egy $K = 100$ kötési árú callt?",
+      answer: { type: "number", value: 0.5, tolerance: 0.005 },
+      explain: "$C_u = 20$ és $C_d = 0$, így $\\Delta = (20 - 0)/(120 - 80) = 0{,}5$.",
+    },
+    {
+      kind: "check",
+      id: "one-step-binomial/bond-sign",
+      prompt: "A callt replikáló portfólióban milyen a $B$ kötvénypozíció?",
+      answer: { type: "choice", options: ["Negatív: a részvények egy részét hitelből vesszük", "Pozitív: pénzt helyezünk el $r$ kamaton", "Nulla: a részvények egyedül replikálják a callt", "A felfelé lépés valós valószínűségétől függ"], correct: 0 },
+      explain: "Callnál $B = (uC_d - dC_u)/((u-d)(1+r)) \\le 0$, mert $C_d$ kicsi $C_u$-hoz képest. A portfólió egy részvény töredéke, részben hitelből finanszírozva.",
+    },
 
     h("Az ár a replikáció költsége"),
     p("A portfólió és a call az 1. időpontban mindkét állapotban ugyanannyit ér. Ha ma eltérne az áruk, megvehetnénk az olcsóbbat, eladhatnánk a drágábbat, és kockázat nélkül megtarthatnánk a különbséget. Ez arbitrázs, ezért az egy ár törvénye kikényszeríti, hogy"),
@@ -112,6 +150,16 @@ export const oneStepBinomial: GuideLessonContent = {
     ),
     p("Ellenőrzés: felfelé állapotban a portfólió értéke $\\tfrac{2}{3}\\cdot 120 - 60 = 20$, lefelé $\\tfrac{2}{3}\\cdot 90 - 60 = 0$. A hitel visszafizetése mindkét állapotban $58{,}82 \\cdot 1{,}02 = 60$. A portfólió kifizetése tehát pontosan megegyezik a calléval."),
     p("Ha a call 9-en kereskedne, eladnánk, 7,84-ért felépítenénk a portfóliót, és ma megtartanánk 1,16-ot. Az 1. időpontban a portfólió pontosan annyit fizet, amennyivel a call miatt tartozunk, bármelyik állapot következik be."),
+    {
+      kind: "worked",
+      title: "Egy call replikálása $u = 1{,}2$ és $d = 0{,}8$ mellett",
+      steps: [
+        { text: "Legyen $S_0 = 100$, $u = 1{,}2$, $d = 0{,}8$, $r = 2\\%$ és $K = 100$, így $C_u = 20$ és $C_d = 0$. A részvénypozíció", tex: "\\Delta = \\frac{20 - 0}{120 - 80}", result: { value: 0.5, tolerance: 0.005 } },
+        { text: "A kötvénypozíció a lefelé állapot egyenletéből: ez hitel.", tex: "B = \\frac{0 - 0{,}5 \\cdot 80}{1{,}02}", result: { value: -39.22, tolerance: 0.01 } },
+        { text: "A call annyiba kerül, mint a portfólió.", tex: "C_0 = 0{,}5 \\cdot 100 - 39{,}22", result: { value: 10.78, tolerance: 0.01 } },
+        { text: "Ellenőrzés felfelé állapotban: fél részvény 60-at ér, ebből levonjuk a 40-es hiteltörlesztést.", tex: "0{,}5 \\cdot 120 - 39{,}22 \\cdot 1{,}02", result: { value: 20, tolerance: 0.01 } },
+      ],
+    },
 
     h("A fa vizsgálata"),
     p("Az ábra felrajzolja az egylépéses fát, minden csúcsban a részvényárral és a call értékével, és kiírja $\\Delta$-t, $B$-t és a call árát. Változtasd $u$-t, $d$-t, $r$-t és $K$-t. A $K$ növelése csökkenti $C_u$-t, így $\\Delta$-t és az árat is; ha $u$ és $d$ távolabb kerül egymástól, nő az ár. Ha $r$, $u$ vagy $d$ mozgatásával $1+r$ kikerül a $(d, u)$ intervallumból, az ábra jelzi, hogy az arbitrázsmentességi feltétel sérül. A kiírt $q$ értékkel a következő lecke foglalkozik."),

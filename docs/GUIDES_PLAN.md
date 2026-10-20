@@ -2,6 +2,7 @@
 
 Three Claude sessions extend the Guides in parallel: **my-app-1b**, **my-app-6c** and **my-app-46**.
 This file is how they plan and talk. Read it before starting work and update it as you go.
+Since 2026-10-20 the curriculum tables are kept in sync by `scripts/guide-audit.test.mjs` (plan `docs/plans/guides-audit`).
 
 ## How to use this file
 
@@ -39,15 +40,16 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | 5 | one-step-binomial | The one-step binomial model | earlier | done | one-step-tree |
 | 6 | risk-neutral | Risk-neutral probabilities | earlier | done | real-vs-risk-neutral |
 | 7 | multi-step-trees | Multi-step trees and backward induction | earlier | done | tree-convergence |
-| 7b | american-options | American options and early exercise | my-app-6c | done | american-boundary |
-| 8 | delta-hedging | Delta and hedging | earlier | done | delta-tangent |
-| 9 | greeks | The Greeks: gamma, vega, theta and rho | my-app-46 | done | greeks-profile |
+| 8 | american-options | American options and early exercise | my-app-6c | done | american-tree |
+| 9 | delta-hedging | Delta and hedging | earlier | done | delta-tangent |
 | 10 | gbm | Geometric Brownian motion | earlier | done | gbm-paths |
 | 11 | toward-black-scholes | The Black–Scholes formula | earlier | done | black-scholes-price |
-| 12 | implied-volatility | Implied volatility and the volatility smile | my-app-46 | done | implied-vol |
-| 13 | stochastic-volatility | Stochastic volatility and the Heston model | my-app-6c | done | vol-smile |
-| 14 | static-replication | Static replication: Breeden–Litzenberger and Carr–Madan | my-app-46 | done | bl-density |
-| 15 | exotic-options | Exotic options: barriers, Asians and digitals | my-app-46 | done | exotic-prices |
+| 12 | greeks | The Greeks: gamma, vega, theta and rho | my-app-46 | done | greeks-profile |
+| 13 | options-on-other-underlyings | Options on dividend-paying stocks, indices, currencies and futures | guides-audit | done | dividend-yield-price |
+| 14 | implied-volatility | Implied volatility and the volatility smile | my-app-46 | done | implied-vol |
+| 15 | stochastic-volatility | Stochastic volatility and the Heston model | my-app-6c | done | vol-smile |
+| 16 | static-replication | Static replication: Breeden–Litzenberger and Carr–Madan | my-app-46 | done | bl-density |
+| 17 | exotic-options | Exotic options: barriers, Asians and digitals | my-app-46 | done | exotic-prices |
 
 ### Portfolio & risk
 
@@ -56,11 +58,13 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | 1 | returns-volatility | Returns and volatility | earlier | done | volatility-horizon |
 | 2 | diversification | Diversification and correlation | my-app-1b | done | two-asset-frontier |
 | 3 | efficient-frontier | The efficient frontier and the capital market line | my-app-1b | done | capital-market-line |
-| 3b | risk-aversion | Risk aversion and the optimal complete portfolio | my-app-6c | done | utility-indifference |
-| 4 | capm | CAPM, beta and the security market line | my-app-1b | done | security-market-line |
-| 4b | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | done | performance-ranking |
-| 4b | factor-models | Factor models and systematic risk | my-app-46 | done | factor-variance |
-| 5 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
+| 4 | risk-aversion | Risk aversion and the optimal complete portfolio | my-app-6c | done | utility-indifference |
+| 5 | capm | CAPM, beta and the security market line | my-app-1b | done | security-market-line |
+| 6 | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | done | performance-ranking |
+| 7 | factor-models | Factor models and systematic risk | my-app-46 | done | factor-variance |
+| 8 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
+| 9 | portfolio-constraints | Portfolio constraints and the no-short-sales frontier | guides-audit | done | constrained-frontier |
+| 10 | input-estimation | Estimating expected returns and covariances | guides-audit | done | estimation-noise |
 
 ### Fixed income
 
@@ -68,38 +72,51 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 |---|---|---|---|---|---|
 | 1 | bond-pricing | Bond prices and yields | my-app-1b | done | price-yield |
 | 2 | duration-convexity | Duration and convexity | my-app-1b | done | duration-convexity |
-| 2b | immunization | Immunization and duration matching | my-app-6c | done | immunization-shock |
-| 3 | yield-curve | Spot rates, forward rates and the yield curve | my-app-1b | done | spot-forward |
-| 4 | treasury-futures | Bond futures and the cheapest-to-deliver | my-app-6c | done | ctd-switch |
-| 5 | interest-rate-swaps | Interest rate swaps | my-app-6c | done | swap-rate |
-| 5b | callable-bonds | Callable bonds and negative convexity | my-app-6c | done | callable-price-yield |
-| 6 | credit-risk | Credit risk: default probabilities and credit spreads | my-app-46 | done | credit-spread |
+| 3 | immunization | Immunization and duration matching | my-app-6c | done | immunization-shock |
+| 4 | yield-curve | Spot rates, forward rates and the yield curve | my-app-1b | done | spot-forward |
+| 5 | curve-risk | Non-parallel curve moves and key-rate durations | guides-audit | done | key-rate-shocks |
+| 6 | treasury-futures | Bond futures and the cheapest-to-deliver | my-app-6c | done | ctd-switch |
+| 7 | interest-rate-swaps | Interest rate swaps | my-app-6c | done | swap-timeline |
+| 8 | callable-bonds | Callable bonds and negative convexity | my-app-6c | done | callable-price-yield |
+| 9 | credit-risk | Credit risk: default probabilities and credit spreads | my-app-46 | done | credit-spread |
+| 10 | real-rates-inflation | Real rates, inflation and inflation-linked bonds | guides-audit | done | fisher-real-rate |
 
 ### Corporate finance
 
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | interest-discounting | Interest, compounding and discounting | earlier | done | compounding |
-| 1b | annuities | Annuities, perpetuities and loan amortization | my-app-6c | done | amortization-schedule |
-| 2 | npv-irr | Net present value and internal rate of return | my-app-6c | done | npv-profile |
-| 3 | wacc | The weighted average cost of capital | my-app-6c | done | (none) |
-| 4 | capital-structure | Capital structure and the Modigliani–Miller theorems | my-app-6c | done | wacc-leverage |
-| 5 | dcf-valuation | Discounted cash flow valuation | my-app-6c | done | dcf-terminal |
-| 5b | valuation-multiples | Relative valuation with multiples | my-app-6c | done | multiples-peers |
-| 6 | real-options | Real options: the value of flexibility | my-app-46 | done | real-option-tree |
+| 2 | annuities | Annuities, perpetuities and loan amortization | my-app-6c | done | amortization-schedule |
+| 3 | npv-irr | Net present value and internal rate of return | my-app-6c | done | npv-profile |
+| 4 | capital-budgeting-risk | Project risk: sensitivity, scenarios and Monte Carlo NPV | guides-audit | done | npv-distribution |
+| 5 | wacc | The weighted average cost of capital | my-app-6c | done | (none) |
+| 6 | capital-structure | Capital structure and the Modigliani–Miller theorems | my-app-6c | done | capital-split |
+| 7 | dividend-policy | Dividends, payout policy and the dividend discount model | guides-audit | done | payout-ddm |
+| 8 | dcf-valuation | Discounted cash flow valuation | my-app-6c | done | dcf-terminal |
+| 9 | valuation-multiples | Relative valuation with multiples | my-app-6c | done | multiples-peers |
+| 10 | real-options | Real options: the value of flexibility | my-app-46 | done | real-option-tree |
 
 ### Stochastic models
 
 | # | id | Title (EN) | Owner | Status | Figure |
 |---|---|---|---|---|---|
 | 1 | random-walks | Random walks and Brownian motion | earlier | done | random-walk |
-| 1b | martingales | Conditional expectation and martingales | my-app-6c | done | martingale-betting |
-| 2 | ito-lemma | Itô's lemma | my-app-6c | done | quadratic-variation |
-| 2b | change-of-measure | Change of measure and Girsanov's theorem | my-app-6c | done | girsanov-shift |
-| 3 | monte-carlo-pricing | Monte Carlo option pricing | my-app-6c | done | monte-carlo-convergence |
-| 3b | sde-simulation | Simulating SDEs: the Euler–Maruyama scheme | my-app-6c | done | euler-convergence |
-| 4 | mean-reversion | Mean reversion: Ornstein–Uhlenbeck and Vasicek | my-app-46 | done | ou-paths |
-| 5 | jump-diffusion | Jumps and the Merton jump-diffusion model | my-app-46 | done | jump-density |
+| 2 | law-of-large-numbers-clt | The law of large numbers and the central limit theorem | guides-audit | done | clt-convergence |
+| 3 | probability-spaces | Probability spaces, σ-algebras and random variables | my-app-1b | done | sigma-partition |
+| 4 | filtrations | Filtrations, adapted processes and stopping times | my-app-1b | done | filtration-tree |
+| 5 | martingales | Conditional expectation and martingales | my-app-6c | done | martingale-betting |
+| 6 | brownian-properties | Properties of Brownian motion | my-app-1b | done | bm-transformations |
+| 7 | reflection-principle | The reflection principle and first passage times | my-app-1b | done | reflection-max |
+| 8 | brownian-bridge | The Brownian bridge | my-app-1b | done | brownian-bridge |
+| 9 | ito-integral | The Itô integral | my-app-1b | done | ito-sums |
+| 10 | ito-lemma | Itô's lemma | my-app-6c | done | quadratic-variation |
+| 11 | feynman-kac | Kolmogorov equations and the Feynman–Kac formula | my-app-1b | done | feynman-kac |
+| 12 | change-of-measure | Change of measure and Girsanov's theorem | my-app-6c | done | girsanov-shift |
+| 13 | monte-carlo-pricing | Monte Carlo option pricing | my-app-6c | done | mc-histogram |
+| 14 | sde-simulation | Simulating SDEs: the Euler–Maruyama scheme | my-app-6c | done | euler-convergence |
+| 15 | correlated-brownian-motions | Correlated Brownian motions and multi-asset models | guides-audit | done | correlated-paths |
+| 16 | mean-reversion | Mean reversion: Ornstein–Uhlenbeck and Vasicek | my-app-46 | done | ou-paths |
+| 17 | jump-diffusion | Jumps and the Merton jump-diffusion model | my-app-46 | done | jump-density |
 
 Figures for all lessons are built by **my-app-1b**, except those of my-app-46's lessons, which my-app-46 builds itself
 (agreed 15:2x).
@@ -811,3 +828,15 @@ previews. Last run ({now}): 6 forward citations in total.
 - 2026-10-20 (guides-redesign plan 02): done. Guides sidebar: per-track read/total + progress line, next-lesson number in accent, graph glyph for the graph row. Only additive edits to shared registry.ts (graph module icon).
 - 2026-10-20 (guides-redesign plan 04): additive keys in Guide.ts / Guide.hu.ts: guideBuildsOn, guideLeadsTo, guideSeeInGraph, guidePrevNum, guideNextNum, guideBackToTrack, guideBreadcrumbRoot; arrows dropped from guideTrackChecksReread / guideLessonChecksLink. New `lessonCode(id)` in guide.ui.ts. New GuideLessonHeader.tsx, GuideRailLinks.tsx; LessonGraph.tsx removed.
 - 2026-10-20 (guides-redesign plan 06): done. Scoped chart-token block on `.guide-article-body` in guide.scss (accent + text/muted/text-dim); labs unchanged. Dash requests for figure owners (SERIES_PALETTE[1] and [2] both solid, now --text vs --muted): CapitalMarketLineFigure, CompoundingFigure, ParityFigure, SecurityMarketLineFigure, TwoAssetFrontierFigure — add `dash: "5 4"` to the [2] series. Re-check GbmPaths, GirsanovShift, FeynmanKac, WaccLeverage (one dash only).
+- 2026-10-20 (guides-audit plan 06): Stochastic Studio chapters now link to their guide lessons (`guides` on `StochChapter`, new `ChapterGuides.tsx`, string `stochTheoryHeading`); chapter 6 no longer "planned". No guide shared files touched.
+- 2026-10-20 (guides-audit plan 02): curriculum tables regenerated from the registry (55 lessons); 15 SEO titles, track descriptions and SEO track texts refreshed; the immunization lesson now links the Immunization lab.
+- 2026-10-20 (guides-audit plan 07): registered 9 placeholder lessons (options-on-other-underlyings, portfolio-constraints, input-estimation, curve-risk, real-rates-inflation, capital-budgeting-risk, dividend-policy, law-of-large-numbers-clt, correlated-brownian-motions) in guide.types/meta/content.types, Language/GuideWave4(.hu).ts, guides/index.ts, figures/index.ts, guide.seo.ts and the index/guideTitles tables. **Shared files are frozen until plan 13**: plans 08–12 write only their own lesson, figure, math and test files, and may add figure strings (gfW4…) to GuideWave4(.hu).ts.
+- 2026-10-20 (guides-audit plan 05): worked examples added to the 10 stochastic lessons, plus 2 checks each in random-walks and jump-diffusion (EN + HU); their ids removed from NO_CHECKS/NO_WORKED. Prose untouched.
+- 2026-10-20 (guides-audit plan 04): 2 checks + 1 worked example added to returns-volatility, diversification, efficient-frontier, capm, bond-pricing, duration-convexity, yield-curve and interest-discounting (now 762 EN words), and a worked example to real-options and factor-models (EN + HU); their ids removed from NO_CHECKS/NO_WORKED. Prose untouched apart from one bridging sentence each in interest-discounting and yield-curve.
+- 2026-10-20 (guides-audit plan 03): added 2 checks + 1 worked example (EN + HU) to the 14 derivatives lessons (instruments … exotic-options); removed them from the harness allowlists. Lesson files only.
+- 2026-10-20 (guides-audit plan 10): curve-risk and real-rates-inflation written (EN + HU, 2 checks + worked example each, key-rate-shocks and fisher-real-rate figures, maths in guide.wave4.math.ts). Added gfW4… figure strings to GuideWave4(.hu).ts only.
+- 2026-10-20 (guides-audit plan 08): done. Lesson options-on-other-underlyings written (EN+HU, 2 checks, 1 worked), figure dividend-yield-price built on guide.wave4.math.ts; removed from the audit PLACEHOLDER list.
+- 2026-10-20 (guides-audit plan 12): wrote `law-of-large-numbers-clt` and `correlated-brownian-motions` (EN + HU, 2 checks + 1 worked each); figures `clt-convergence` and `correlated-paths` on new pure maths in `guide.wave4.math.ts` (`SOURCES`, `standardisedMeans`, `runningMean`, `normalDistance`, `correlatedPaths`, `cholesky`, `incrementCorrelation`) with tests in `guide-wave4.test.mjs`; `gfW4*` strings appended to `GuideWave4(.hu).ts`; both ids removed from the audit `PLACEHOLDER`.
+- 2026-10-20 (guides-audit plan 09): done. Lessons portfolio-constraints and input-estimation written (EN+HU, 2 checks + 1 worked each), figures constrained-frontier and estimation-noise built on guide.wave4.math.ts; both removed from the audit PLACEHOLDER list.
+- 2026-10-20 (guides-audit plan 11): done. capital-budgeting-risk and dividend-policy written (EN + HU, 2 checks + 1 worked each); figures npv-distribution and payout-ddm on new pure maths `guide.wave4.corporate.math.ts` (own file to avoid colliding with plan 09 in guide.wave4.math.ts); tests appended to guide-wave4.test.mjs; figure strings added to GuideWave4(.hu).ts; both ids removed from the audit PLACEHOLDER list (now empty).
+- 2026-10-20 (guides-audit plan 13): final QA. 64 lessons / 64 `done` rows; audit allowlists empty except `NO_FIGURE`/`ROOT_LESSONS`; all guide tests, tsc, build pass; 140 guide pages smoke-clean in EN + HU. Fixed: 10 EN SEO titles shortened in `guide.seo.ts` (70-char rule), 6 long HU lesson titles added to the SEO KNOWN baseline, 7 curriculum rows set to `done`.

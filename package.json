@@ -28,6 +28,8 @@
     "test:sketch": "node --test scripts/sketch.test.mjs",
     "test:labs": "node --test scripts/lab-*.test.mjs",
     "test:portfolio-labs": "node --test scripts/risk-return.test.mjs scripts/capm-lab.test.mjs scripts/portfolio-lab.test.mjs scripts/efficient-frontier.test.mjs",
+    "test:guide-wave4": "node --test scripts/guide-wave4.test.mjs",
+    "test:guide-audit": "node --test scripts/guide-audit.test.mjs",
     "test:guide-checks": "node --test scripts/guide-checks.test.mjs",
     "test:guide-markdown": "node --test scripts/guide-markdown.test.mjs",
     "audit:layout": "node scripts/layout-audit.mjs",

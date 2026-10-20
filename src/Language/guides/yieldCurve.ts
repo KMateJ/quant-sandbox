@@ -26,6 +26,15 @@ export const yieldCurve: GuideLessonContent = {
       "The 2-year bond pays 5 at year 1 and 105 at year 2. The first payment is already priced by step 1: $101.00 = 5 \\cdot 0.9700 + 105\\,P(0,2)$, so $P(0,2) = 96.15/105 \\approx 0.9157$ and $r(2) = -\\tfrac{1}{2}\\ln 0.9157 \\approx 4.40\\%$.",
     ),
     p("With more bonds the procedure continues the same way: at each maturity only one discount factor is unknown. With these two spot rates a 2-year bond with a 6% coupon must cost $6 \\cdot 0.9700 + 106 \\cdot 0.9157 \\approx 102.89$; any other price would let you build it more cheaply from the two quoted bonds. Its yield to maturity (annual compounding) is about 4.46%, a blend of the two spot rates."),
+    p("Bonds that trade at par are a common starting point, because their coupon rate is the par yield quoted for that maturity."),
+    {
+      kind: "worked",
+      title: "Bootstrapping the 2-year spot rate from a par bond",
+      steps: [
+        { text: "Keep $P(0,1) = 0.9700$ from above. A 2-year bond with a 4.5% annual coupon trades at par, 100, and pays 4.5 and 104.5. Solve for the unknown discount factor.", tex: "P(0,2) = \\frac{100 - 4.5 \\times 0.9700}{104.5}", result: { value: 0.9152, tolerance: 0.0002 } },
+        { text: "Convert it into a continuously compounded spot rate.", tex: "r(2) = -\\tfrac{1}{2}\\ln P(0,2)", result: { value: 4.43, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("Forward rates"),
     p("A **forward rate** $f(t_1, t_2)$ is the rate, fixed today, for borrowing or lending between two future dates $t_1 < t_2$. No arbitrage pins it down from the spot curve. Compare two ways of investing 1 from today until $t_2$:"),
@@ -37,11 +46,25 @@ export const yieldCurve: GuideLessonContent = {
     eq("f(t_1, t_2) = \\frac{r_2 t_2 - r_1 t_1}{t_2 - t_1}."),
     note("The forward rate between $t_1$ and $t_2$ is the rate that makes rolling over at $t_1$ equivalent to investing until $t_2$ at once: $f(t_1,t_2) = (r_2t_2 - r_1t_1)/(t_2 - t_1)$."),
     p("In the bootstrapping example, $f(1,2) = 2 \\cdot 4.40\\% - 3.05\\% \\approx 5.76\\%$. Check: $e^{0.0305}e^{0.0576} \\approx e^{2 \\cdot 0.0440} \\approx 1.092$."),
+    {
+      kind: "check",
+      id: "yield-curve/one-year-forward",
+      prompt: "The continuously compounded spot rates are $r(1) = 3\\%$ and $r(2) = 4\\%$. What is the forward rate $f(1,2)$, in percent?",
+      answer: { type: "number", value: 5, tolerance: 0.01, unit: "%" },
+      explain: "$f(1,2) = (2 \\times 4\\% - 1 \\times 3\\%)/(2 - 1) = 5\\%$. Two years at 4% equal one year at 3% followed by one year at 5%.",
+    },
 
     h("The instantaneous forward curve"),
     p("Let $t_2$ shrink towards $t_1 = t$. The numerator is the change in $r(t)\\,t$, so the limit is a derivative, the **instantaneous forward rate**:"),
     eq("f(t) = \\frac{d}{dt}\\big(r(t)\\,t\\big) = r(t) + t\\,r'(t)."),
     p("This explains how the two curves sit relative to each other. Where the spot curve rises ($r'(t) > 0$), the forward curve lies **above** it; where the spot curve falls, the forward curve lies below; where the spot curve is flat, the two coincide. A fair picture is a running average: the spot rate $r(t)$ is the average of the forward rates from 0 to $t$, so it only goes up when the new rate being added is above the current average."),
+    {
+      kind: "check",
+      id: "yield-curve/forward-above-spot",
+      prompt: "Over a range of maturities the instantaneous forward curve lies above the spot curve. What is the spot curve doing there?",
+      answer: { type: "choice", options: ["Rising", "Falling", "Flat", "It cannot be told from the forwards"], correct: 0 },
+      explain: "$f(t) = r(t) + t\\,r'(t)$, so $f(t) > r(t)$ exactly when $r'(t) > 0$: the spot rate, a running average of the forwards, rises when the new forward is above it.",
+    },
 
     h("Shapes of the yield curve"),
     list(
@@ -87,6 +110,15 @@ export const yieldCurve: GuideLessonContent = {
       "A kétéves kötvény az első évben 5-öt, a másodikban 105-öt fizet. Az első kifizetést az 1. lépés már beárazta: $101{,}00 = 5 \\cdot 0{,}9700 + 105\\,P(0,2)$, így $P(0,2) = 96{,}15/105 \\approx 0{,}9157$ és $r(2) = -\\tfrac{1}{2}\\ln 0{,}9157 \\approx 4{,}40\\%$.",
     ),
     p("Több kötvénnyel az eljárás ugyanígy folytatódik: minden lejáratnál csak egy diszkontfaktor ismeretlen. E két azonnali kamatlábbal egy 6%-os kuponú kétéves kötvény ára csak $6 \\cdot 0{,}9700 + 106 \\cdot 0{,}9157 \\approx 102{,}89$ lehet; bármely más árnál olcsóbban össze lehetne rakni a két jegyzett kötvényből. Lejáratig számított hozama (éves kamatozással) kb. 4,46%, a két azonnali kamatláb keveréke."),
+    p("Gyakori kiindulópont a névértéken forgó kötvény, mert a kuponrátája éppen az adott lejáratra jegyzett névértékhozam (par hozam)."),
+    {
+      kind: "worked",
+      title: "A kétéves azonnali kamatláb kinyerése névértéken forgó kötvényből",
+      steps: [
+        { text: "Maradjunk a fenti $P(0,1) = 0{,}9700$-nál. Egy kétéves, évi 4,5%-os kuponú kötvény névértéken, 100-on forog, és 4,5-et, majd 104,5-öt fizet. Oldjuk meg az ismeretlen diszkontfaktorra.", tex: "P(0,2) = \\frac{100 - 4{,}5 \\times 0{,}9700}{104{,}5}", result: { value: 0.9152, tolerance: 0.0002 } },
+        { text: "Váltsuk át folytonos kamatozású azonnali kamatlábra.", tex: "r(2) = -\\tfrac{1}{2}\\ln P(0,2)", result: { value: 4.43, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("Forward kamatlábak"),
     p("Az $f(t_1, t_2)$ **forward kamatláb** az a ma rögzített kamat, amelyen két jövőbeli időpont, $t_1 < t_2$ között lehet hitelt felvenni vagy nyújtani. Az arbitrázsmentesség az azonnali görbéből meghatározza. Vessünk össze két módot arra, hogy 1-et mától $t_2$-ig befektessünk:"),
@@ -98,11 +130,25 @@ export const yieldCurve: GuideLessonContent = {
     eq("f(t_1, t_2) = \\frac{r_2 t_2 - r_1 t_1}{t_2 - t_1}."),
     note("A $t_1$ és $t_2$ közötti forward kamatláb az a ráta, amellyel a $t_1$-beli újrabefektetés egyenértékű azzal, hogy egyből $t_2$-ig fektetünk be: $f(t_1,t_2) = (r_2t_2 - r_1t_1)/(t_2 - t_1)$."),
     p("A bootstrapping példájában $f(1,2) = 2 \\cdot 4{,}40\\% - 3{,}05\\% \\approx 5{,}76\\%$. Ellenőrzés: $e^{0{,}0305}e^{0{,}0576} \\approx e^{2 \\cdot 0{,}0440} \\approx 1{,}092$."),
+    {
+      kind: "check",
+      id: "yield-curve/one-year-forward",
+      prompt: "A folytonos kamatozású azonnali kamatlábak $r(1) = 3\\%$ és $r(2) = 4\\%$. Mekkora az $f(1,2)$ forward kamatláb, százalékban?",
+      answer: { type: "number", value: 5, tolerance: 0.01, unit: "%" },
+      explain: "$f(1,2) = (2 \\times 4\\% - 1 \\times 3\\%)/(2 - 1) = 5\\%$. Két év 4%-on ugyanannyi, mint egy év 3%-on, majd egy év 5%-on.",
+    },
 
     h("A pillanatnyi forward görbe"),
     p("Közelítsen $t_2$ a $t_1 = t$ időponthoz. A számláló $r(t)\\,t$ megváltozása, így a határérték derivált, a **pillanatnyi forward kamatláb**:"),
     eq("f(t) = \\frac{d}{dt}\\big(r(t)\\,t\\big) = r(t) + t\\,r'(t)."),
     p("Ebből látszik, hogyan helyezkedik el egymáshoz képest a két görbe. Ahol az azonnali görbe emelkedik ($r'(t) > 0$), ott a forward görbe **fölötte** halad; ahol csökken, ott alatta; ahol vízszintes, ott egybeesnek. Jó kép erre egy futó átlag: az $r(t)$ azonnali kamatláb a 0 és $t$ közötti forward kamatlábak átlaga, ezért csak akkor nő, ha az újonnan hozzávett ráta az addigi átlag fölött van."),
+    {
+      kind: "check",
+      id: "yield-curve/forward-above-spot",
+      prompt: "Egy lejárati tartományban a pillanatnyi forward görbe az azonnali görbe fölött halad. Mit csinál ott az azonnali görbe?",
+      answer: { type: "choice", options: ["Emelkedik", "Csökken", "Vízszintes", "A forwardokból nem állapítható meg"], correct: 0 },
+      explain: "$f(t) = r(t) + t\\,r'(t)$, így $f(t) > r(t)$ pontosan akkor, ha $r'(t) > 0$: az azonnali kamatláb, a forwardok futó átlaga, akkor nő, ha az új forward fölötte van.",
+    },
 
     h("A hozamgörbe alakjai"),
     list(

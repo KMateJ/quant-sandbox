@@ -59,6 +59,16 @@ export const factorModels: GuideLessonContent = {
     p("The fraction of variance explained by the index is"),
     eq("R^2 = \\frac{\\beta^2\\sigma_M^2}{\\beta^2\\sigma_M^2 + \\sigma_\\varepsilon^2},"),
     p("the same $R^2$ that a regression of the stock on the index reports. For a single stock it equals $\\rho^2$, the squared correlation with the index, as in the CAPM lesson. For a typical single stock $R^2$ is well below one half; for a portfolio of 20 or more stocks it is usually close to one."),
+    {
+      kind: "worked",
+      title: "Splitting one stock's variance",
+      steps: [
+        { text: "A stock has $\\beta = 1.2$ against an index with $\\sigma_M = 20\\%$. Its systematic variance is", tex: "\\beta^2\\sigma_M^2 = 1.44 \\times 0.04", result: { value: 0.0576, tolerance: 0.0001 } },
+        { text: "Its specific volatility is $\\sigma_\\varepsilon = 25\\%$, so the specific variance is", tex: "\\sigma_\\varepsilon^2 = 0.25^2", result: { value: 0.0625, tolerance: 0.0001 } },
+        { text: "The total variance is the sum, because the two parts are uncorrelated.", tex: "\\sigma^2 = 0.0576 + 0.0625", result: { value: 0.1201, tolerance: 0.0001 } },
+        { text: "The systematic share is the $R^2$ of the stock.", tex: "R^2 = \\frac{0.0576}{0.1201}", result: { value: 47.96, tolerance: 0.05, unit: "%" } },
+      ],
+    },
 
     h("Estimating the index model"),
     p("The parameters come from the regression already used to estimate beta in \"CAPM, beta and the security market line\": regress the stock's returns on the index returns over, say, 60 months. The slope is $\\hat\\beta_i$, the intercept is $\\hat\\alpha_i$, and the standard deviation of the residuals estimates $\\sigma_{\\varepsilon,i}$. That lesson used excess returns; with a constant $r_f$ the slope is the same and only the intercept changes. The sample variance of the index gives $\\sigma_M$."),
@@ -149,6 +159,16 @@ export const factorModels: GuideLessonContent = {
     p("Az index által magyarázott varianciahányad"),
     eq("R^2 = \\frac{\\beta^2\\sigma_M^2}{\\beta^2\\sigma_M^2 + \\sigma_\\varepsilon^2},"),
     p("ugyanaz az $R^2$, amelyet a részvény indexre futtatott regressziója mutat. Egyetlen részvénynél ez $\\rho^2$, az indexszel vett korreláció négyzete, ahogy a CAPM-leckében. Egy tipikus részvénynél az $R^2$ jóval 0,5 alatt van; egy legalább 20 részvényből álló portfólióé rendszerint egyhez közeli."),
+    {
+      kind: "worked",
+      title: "Egy részvény varianciájának felbontása",
+      steps: [
+        { text: "Egy részvény bétája $\\beta = 1{,}2$ egy $\\sigma_M = 20\\%$-os indexhez képest. A szisztematikus varianciája", tex: "\\beta^2\\sigma_M^2 = 1{,}44 \\times 0{,}04", result: { value: 0.0576, tolerance: 0.0001 } },
+        { text: "Az egyedi volatilitása $\\sigma_\\varepsilon = 25\\%$, így az egyedi variancia", tex: "\\sigma_\\varepsilon^2 = 0{,}25^2", result: { value: 0.0625, tolerance: 0.0001 } },
+        { text: "A teljes variancia a kettő összege, mert a két rész korrelálatlan.", tex: "\\sigma^2 = 0{,}0576 + 0{,}0625", result: { value: 0.1201, tolerance: 0.0001 } },
+        { text: "A szisztematikus hányad a részvény $R^2$-e.", tex: "R^2 = \\frac{0{,}0576}{0{,}1201}", result: { value: 47.96, tolerance: 0.05, unit: "%" } },
+      ],
+    },
 
     h("Az indexmodell becslése"),
     p("A paraméterek abból a regresszióból adódnak, amellyel a „CAPM, béta és az értékpapír-piaci egyenes” című lecke a bétát becsülte: regresszáljuk a részvény hozamait az index hozamaira, mondjuk 60 hónapon át. A meredekség $\\hat\\beta_i$, a tengelymetszet $\\hat\\alpha_i$, a reziduumok szórása pedig $\\sigma_{\\varepsilon,i}$ becslése. Az a lecke többlethozamokkal dolgozott; állandó $r_f$ mellett a meredekség ugyanaz, csak a tengelymetszet változik. Az index mintabeli varianciájából kapjuk $\\sigma_M$-et."),

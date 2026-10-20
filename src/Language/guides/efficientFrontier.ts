@@ -32,6 +32,20 @@ export const efficientFrontier: GuideLessonContent = {
     p("Write $e_i = \\mu_i - r_f$ for the excess returns. Maximising $\\text{SR}$ over the weights (setting the derivative with respect to $w_B$ to zero) gives weights proportional to"),
     eq("w_A \\propto \\sigma_B^2\\, e_A - \\sigma_{AB}\\, e_B, \\qquad w_B \\propto \\sigma_A^2\\, e_B - \\sigma_{AB}\\, e_A,"),
     p("scaled so that they add up to one. With $N$ assets the same result reads $w \\propto \\Sigma^{-1}(\\mu - r_f\\mathbf{1})$, where $\\Sigma$ is the covariance matrix."),
+    {
+      kind: "check",
+      id: "efficient-frontier/sharpe-ratio",
+      prompt: "A portfolio has $\\mu = 9\\%$ and $\\sigma = 15\\%$, and the risk-free rate is $r_f = 2\\%$. What is its Sharpe ratio?",
+      answer: { type: "number", value: 0.467, tolerance: 0.002 },
+      explain: "$\\text{SR} = (9\\% - 2\\%)/15\\% = 7/15 \\approx 0.467$.",
+    },
+    {
+      kind: "check",
+      id: "efficient-frontier/tangency-maximises",
+      prompt: "Which quantity does the tangency portfolio maximise among all risky portfolios?",
+      answer: { type: "choice", options: ["The expected return", "The Sharpe ratio", "The volatility", "The weight in the riskier asset"], correct: 1 },
+      explain: "The tangency portfolio is where the steepest line from $(0, r_f)$ touches the frontier, so it has the largest slope $(\\mu_P - r_f)/\\sigma_P$, the Sharpe ratio.",
+    },
 
     h("Worked example"),
     p("Take the assets above with $r_f = 2\\%$, so $e_A = 0.04$ and $e_B = 0.10$:"),
@@ -50,6 +64,15 @@ export const efficientFrontier: GuideLessonContent = {
     h("Two-fund separation"),
     p("Every efficient choice is therefore a mix of two funds: the risk-free asset and the tangency portfolio. Investors differ only in the proportion $y$, not in the composition of their risky holdings. This result is called **two-fund separation**. Think of a kitchen that serves one soup in different portion sizes, topped up with water to taste: the recipe is the same for everyone."),
     p("At the numbers above, a cautious investor who accepts $\\sigma = 10\\%$ holds $y = 10/16.55 \\approx 0.604$ in T and $0.396$ in the risk-free asset, for $\\mu \\approx 5.91\\%$. Without the risk-free asset this volatility would not be reachable at all, since the minimum is 14.34%. A bolder investor who accepts $\\sigma = 20\\%$ holds $y \\approx 1.208$, borrowing about 20.8% of the capital at $r_f$, for $\\mu \\approx 9.82\\%$. Both hold A and B in the same ratio of 58.8 to 41.2."),
+    {
+      kind: "worked",
+      title: "The cautious investor's point on the capital market line",
+      steps: [
+        { text: "The slope of the CML is the Sharpe ratio of the tangency portfolio.", tex: "\\text{SR}_T = \\frac{8.47\\% - 2\\%}{16.55\\%}", result: { value: 0.391, tolerance: 0.002 } },
+        { text: "A target volatility of 10% fixes the share held in T.", tex: "y = \\frac{10\\%}{16.55\\%}", result: { value: 0.604, tolerance: 0.002 } },
+        { text: "The expected return is read off the CML at $\\sigma = 10\\%$.", tex: "\\mu = r_f + \\text{SR}_T \\times 10\\%", result: { value: 5.91, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("Summary"),
     list(
@@ -93,6 +116,20 @@ export const efficientFrontier: GuideLessonContent = {
     p("Jelölje $e_i = \\mu_i - r_f$ a többlethozamokat. A Sharpe-rátát a súlyok szerint maximalizálva (a $w_B$ szerinti deriváltat nullával egyenlővé téve) a súlyok arányosak lesznek ezekkel:"),
     eq("w_A \\propto \\sigma_B^2\\, e_A - \\sigma_{AB}\\, e_B, \\qquad w_B \\propto \\sigma_A^2\\, e_B - \\sigma_{AB}\\, e_A,"),
     p("úgy skálázva, hogy összegük egy legyen. $N$ eszközre ugyanez $w \\propto \\Sigma^{-1}(\\mu - r_f\\mathbf{1})$ alakú, ahol $\\Sigma$ a kovarianciamátrix."),
+    {
+      kind: "check",
+      id: "efficient-frontier/sharpe-ratio",
+      prompt: "Egy portfólióra $\\mu = 9\\%$ és $\\sigma = 15\\%$, a kockázatmentes kamatláb $r_f = 2\\%$. Mekkora a Sharpe-rátája?",
+      answer: { type: "number", value: 0.467, tolerance: 0.002 },
+      explain: "$\\text{SR} = (9\\% - 2\\%)/15\\% = 7/15 \\approx 0{,}467$.",
+    },
+    {
+      kind: "check",
+      id: "efficient-frontier/tangency-maximises",
+      prompt: "Melyik mennyiséget maximalizálja az érintési portfólió az összes kockázatos portfólió közül?",
+      answer: { type: "choice", options: ["A várható hozamot", "A Sharpe-rátát", "A volatilitást", "A kockázatosabb eszköz súlyát"], correct: 1 },
+      explain: "Az érintési portfólió ott van, ahol a $(0, r_f)$ pontból húzott legmeredekebb egyenes érinti a frontot, így neki a legnagyobb a $(\\mu_P - r_f)/\\sigma_P$ meredeksége, vagyis a Sharpe-rátája.",
+    },
 
     h("Számpélda"),
     p("Vegyük a fenti eszközöket $r_f = 2\\%$ mellett, így $e_A = 0{,}04$ és $e_B = 0{,}10$:"),
@@ -111,6 +148,15 @@ export const efficientFrontier: GuideLessonContent = {
     h("Kétalapos szétválasztás"),
     p("Minden hatékony választás tehát két alap keveréke: a kockázatmentes eszközé és az érintési portfólióé. A befektetők csak az $y$ arányban különböznek, a kockázatos részük összetételében nem. Ez a **kétalapos szétválasztás** (two-fund separation) tétele. Gondolj egy konyhára, amely egyféle levest szolgál fel különböző adagokban, ízlés szerint vízzel hígítva: a recept mindenkinek ugyanaz."),
     p("A fenti számokkal egy óvatos befektető, aki $\\sigma = 10\\%$-ot vállal, $y = 10/16{,}55 \\approx 0{,}604$ részt tart T-ben és $0{,}396$ részt a kockázatmentes eszközben, $\\mu \\approx 5{,}91\\%$ várható hozammal. Kockázatmentes eszköz nélkül ez a volatilitás el sem érhető, hiszen a minimum 14,34%. Egy bátrabb befektető, aki $\\sigma = 20\\%$-ot vállal, $y \\approx 1{,}208$-at tart, vagyis tőkéje kb. 20,8%-át $r_f$ kamatra hitelből fedezi, és $\\mu \\approx 9{,}82\\%$-ot vár. Mindketten 58,8 : 41,2 arányban tartják A-t és B-t."),
+    {
+      kind: "worked",
+      title: "Az óvatos befektető pontja a tőkepiaci egyenesen",
+      steps: [
+        { text: "A CML meredeksége az érintési portfólió Sharpe-rátája.", tex: "\\text{SR}_T = \\frac{8{,}47\\% - 2\\%}{16{,}55\\%}", result: { value: 0.391, tolerance: 0.002 } },
+        { text: "A 10%-os célvolatilitás meghatározza a T-ben tartott hányadot.", tex: "y = \\frac{10\\%}{16{,}55\\%}", result: { value: 0.604, tolerance: 0.002 } },
+        { text: "A várható hozamot a CML-ről olvassuk le $\\sigma = 10\\%$-nál.", tex: "\\mu = r_f + \\text{SR}_T \\times 10\\%", result: { value: 5.91, tolerance: 0.01, unit: "%" } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

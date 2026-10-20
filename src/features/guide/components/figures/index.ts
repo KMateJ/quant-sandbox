@@ -1,4 +1,13 @@
 import type { ComponentType } from "react";
+import DividendYieldPriceFigure from "./wave4/DividendYieldPriceFigure";
+import ConstrainedFrontierFigure from "./wave4/ConstrainedFrontierFigure";
+import EstimationNoiseFigure from "./wave4/EstimationNoiseFigure";
+import KeyRateShocksFigure from "./wave4/KeyRateShocksFigure";
+import FisherRealRateFigure from "./wave4/FisherRealRateFigure";
+import NpvDistributionFigure from "./wave4/NpvDistributionFigure";
+import PayoutDdmFigure from "./wave4/PayoutDdmFigure";
+import CltConvergenceFigure from "./wave4/CltConvergenceFigure";
+import CorrelatedPathsFigure from "./wave4/CorrelatedPathsFigure";
 import type { GuideFigureId } from "../../guide.content.types";
 import BlackScholesPriceFigure from "./BlackScholesPriceFigure";
 import CompoundingFigure from "./CompoundingFigure";
@@ -131,4 +140,13 @@ export const guideFigures: Record<GuideFigureId, ComponentType> = {
   "brownian-bridge": BrownianBridgeFigure,
   "ito-sums": ItoSumsFigure,
   "feynman-kac": FeynmanKacFigure,
+  "dividend-yield-price": DividendYieldPriceFigure,
+  "constrained-frontier": ConstrainedFrontierFigure,
+  "estimation-noise": EstimationNoiseFigure,
+  "key-rate-shocks": KeyRateShocksFigure,
+  "fisher-real-rate": FisherRealRateFigure,
+  "npv-distribution": NpvDistributionFigure,
+  "payout-ddm": PayoutDdmFigure,
+  "clt-convergence": CltConvergenceFigure,
+  "correlated-paths": CorrelatedPathsFigure,
 };

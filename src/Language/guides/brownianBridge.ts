@@ -64,6 +64,16 @@ export const brownianBridge: GuideLessonContent = {
       "**Interpolation:** conditioning a Gaussian process on observed values is the same operation that underlies Gaussian-process regression and spline smoothing.",
     ),
 
+    {
+      kind: "worked",
+      title: "The bridge from 0 to 1 at a quarter of the way",
+      steps: [
+        { text: "With $T = 1$ and endpoint $b = 1$, the mean at $t = 0.25$ is the straight line from 0 to $b$.", tex: "\\mathbb{E}[X_{0.25}] = b\\,\\frac{t}{T} = 1 \\cdot 0.25", result: { value: 0.25, tolerance: 0.001 } },
+        { text: "The variance does not depend on $b$.", tex: "\\operatorname{Var}(X_{0.25}) = \\frac{t(T - t)}{T} = 0.25 \\cdot 0.75", result: { value: 0.1875, tolerance: 0.0001 } },
+        { text: "Its square root is the standard deviation, smaller than the $\\sqrt{0.25} = 0.5$ of free Brownian motion.", tex: "\\sqrt{0.1875}", result: { value: 0.433, tolerance: 0.001 } },
+      ],
+    },
+
     h("Summary"),
     list(
       "The Brownian bridge from 0 to $b$ is $B_t = W_t - t\\,W_1 + t\\,b$, with $B_0 = 0$ and $B_1 = b$.",
@@ -135,6 +145,16 @@ export const brownianBridge: GuideLessonContent = {
       "**Statisztika:** az empirikus eloszlásfüggvény, centrálva és skálázva, Brown-hídhoz konvergál; a Kolmogorov–Szmirnov-próba statisztikája a $|B^0|$ maximuma.",
       "**Interpoláció:** egy Gauss-folyamat megfigyelt értékekre való feltételezése ugyanaz a művelet, amely a Gauss-folyamat-regresszió és a spline-simítás mögött áll.",
     ),
+
+    {
+      kind: "worked",
+      title: "A 0-ból 1-be tartó híd az út negyedénél",
+      steps: [
+        { text: "$T = 1$ és $b = 1$ végpont mellett a $t = 0{,}25$-beli várható érték a 0-t és $b$-t összekötő egyenesen van.", tex: "\\mathbb{E}[X_{0{,}25}] = b\\,\\frac{t}{T} = 1 \\cdot 0{,}25", result: { value: 0.25, tolerance: 0.001 } },
+        { text: "A variancia nem függ $b$-től.", tex: "\\operatorname{Var}(X_{0{,}25}) = \\frac{t(T - t)}{T} = 0{,}25 \\cdot 0{,}75", result: { value: 0.1875, tolerance: 0.0001 } },
+        { text: "A gyöke a szórás, kisebb, mint a szabad Brown-mozgás $\\sqrt{0{,}25} = 0{,}5$-e.", tex: "\\sqrt{0{,}1875}", result: { value: 0.433, tolerance: 0.001 } },
+      ],
+    },
 
     h("Összefoglalás"),
     list(

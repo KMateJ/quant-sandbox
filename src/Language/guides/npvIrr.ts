@@ -78,7 +78,7 @@ export const npvIrr: GuideLessonContent = {
       "The profitability index is the present value of the inflows per unit invested; $\\text{PI} > 1$ exactly when $\\text{NPV} > 0$.",
       "For ranking exclusive projects and for cash flows that change sign several times, trust the NPV over the IRR.",
     ),
-    note("The next lesson, \"The weighted average cost of capital\", estimates the discount rate $r$ that every NPV calculation needs."),
+    note("A later lesson, \"The weighted average cost of capital\", estimates the discount rate $r$ that every NPV calculation needs."),
     lab("/npv-irr", "Build project cash flows and explore NPV, IRR and the NPV profile in the NPV & IRR lab"),
   ],
 
@@ -158,7 +158,7 @@ export const npvIrr: GuideLessonContent = {
       "A jövedelmezőségi index a beáramlások befektetett egységre jutó jelenértéke; $\\text{PI} > 1$ pontosan akkor, ha $\\text{NPV} > 0$.",
       "Kizáró projektek rangsorolásánál és többször előjelet váltó pénzáramoknál az NPV-re hagyatkozzunk, ne az IRR-re.",
     ),
-    note("A következő lecke, „Súlyozott átlagos tőkeköltség”, azt az $r$ diszkontrátát becsli meg, amelyre minden NPV-számításnak szüksége van."),
+    note("Egy későbbi lecke, „Súlyozott átlagos tőkeköltség”, azt az $r$ diszkontrátát becsli meg, amelyre minden NPV-számításnak szüksége van."),
     lab("/npv-irr", "Építs projekt-pénzáramokat, és vizsgáld az NPV-t, az IRR-t és az NPV-profilt az NPV és IRR laborban"),
   ],
 };

@@ -65,7 +65,16 @@ export type GuideFigureId =
   | "reflection-max"
   | "brownian-bridge"
   | "ito-sums"
-  | "feynman-kac";
+  | "feynman-kac"
+  | "dividend-yield-price"
+  | "constrained-frontier"
+  | "estimation-noise"
+  | "key-rate-shocks"
+  | "fisher-real-rate"
+  | "npv-distribution"
+  | "payout-ddm"
+  | "clt-convergence"
+  | "correlated-paths";
 
 /// One block of lesson text. Inline text supports `$tex$`, `**bold**` and `*italic*`.
 export type GuideBlock =
