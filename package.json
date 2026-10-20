@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "test:intuition": "node --test scripts/intuition.test.mjs",
     "test:yield-curve": "node --test scripts/yield-curve.test.mjs",
+    "test:immunization-lab": "node --test scripts/immunization-lab.test.mjs",
     "test:treasury-futures": "node --test scripts/treasury-futures.test.mjs",
     "test:clt": "node --test scripts/clt.test.mjs",
     "test:payoff-replication": "node --test scripts/payoff-replication.test.mjs",
@@ -26,10 +27,12 @@
     "test:portfolio-labs": "node --test scripts/risk-return.test.mjs scripts/capm-lab.test.mjs scripts/portfolio-lab.test.mjs scripts/efficient-frontier.test.mjs",
     "test:guide-checks": "node --test scripts/guide-checks.test.mjs",
     "test:guide-markdown": "node --test scripts/guide-markdown.test.mjs",
+    "audit:layout": "node scripts/layout-audit.mjs",
     "test:seo": "node --test scripts/seo-audit.test.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "test:seo-schema": "node --test scripts/seo-schema.test.mjs",
     "test:language-routes": "node --test scripts/language-routes.test.mjs",
+    "test:chart-layout": "node --test scripts/chart-layout.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

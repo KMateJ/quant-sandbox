@@ -23,6 +23,7 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
   const { t } = useI18n();
   const label = t(m.navKey);
   const statusKey = STATUS_KEY[m.status];
+  const status = statusKey ? t(statusKey) : undefined;
   const hasChildren = Boolean(m.subNav?.length);
   const childrenId = `side-children-${m.id}`;
 
@@ -41,14 +42,16 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
         aria-current={active ? "page" : undefined}
         aria-expanded={hasChildren ? open : undefined}
         aria-controls={hasChildren ? childrenId : undefined}
-        title={label}
+        title={status ? `${label} (${status})` : label}
         onClick={onRowClick}
       >
         <span className="side-icon" aria-hidden="true">
           <ModuleIcon id={m.icon ?? m.id} />
         </span>
         <span className="side-label">{label}</span>
-        {statusKey ? <span className="side-badge">{t(statusKey)}</span> : null}
+        {/* Beta is a dot so the name keeps its room; "planned" stays a text badge. */}
+        {m.status === "beta" ? <span className="side-status-dot" role="img" aria-label={status} /> : null}
+        {m.status === "planned" ? <span className="side-badge">{status}</span> : null}
       </NavLink>
       {hasChildren && (
         <button

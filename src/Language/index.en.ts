@@ -33,6 +33,7 @@ import { deltaHedgingEn } from "./DeltaHedging";
 import { intuitionEn } from "./Intuition";
 import { legacyIntuitionEn } from "./LegacyIntuition";
 import { treasuryFuturesEn } from "./TreasuryFutures";
+import { immunizationEn } from "./Immunization";
 import { guideEn } from "./Guide";
 import { guidePortfolioEn } from "./GuidePortfolio";
 import { guideFixedIncomeEn } from "./GuideFixedIncome";
@@ -73,6 +74,7 @@ export const en = {
   ...yieldCurveEn,
   ...durationConvexityEn,
   ...treasuryFuturesEn,
+  ...immunizationEn,
   ...guideEn,
   ...guidePortfolioEn,
   ...guideFixedIncomeEn,

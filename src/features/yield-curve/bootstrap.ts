@@ -1,32 +1,6 @@
 import type { ScatterSeries } from "../../components/charts";
 import type { TermPoint } from "./yieldCurve.types";
-import { dfFromZero } from "./yieldCurve.math";
 import { YC_COLORS } from "./curveChartUtils";
-
-/// Interpolated zero rate at maturity `tau` from a solved term structure (flat ends).
-function zeroAt(term: TermPoint[], tau: number): number {
-  if (!term.length) return 0;
-  if (tau <= term[0].t) return term[0].zero;
-  const last = term[term.length - 1];
-  if (tau >= last.t) return last.zero;
-  for (let i = 1; i < term.length; i++) {
-    if (tau <= term[i].t) {
-      const a = term[i - 1];
-      const b = term[i];
-      const w = (tau - a.t) / (b.t - a.t);
-      return a.zero + w * (b.zero - a.zero);
-    }
-  }
-  return last.zero;
-}
-
-/// Sum of discount factors at the integer coupon dates strictly before maturity `T`,
-/// i.e. the "known earlier discount factors" used to solve the next one.
-export function couponDfSum(term: TermPoint[], T: number): number {
-  let sum = 0;
-  for (let k = 1; k < T; k++) sum += dfFromZero(zeroAt(term, k), k);
-  return sum;
-}
 
 /// Instrument label for a maturity: money-market deposit vs coupon bond.
 export function instrumentKind(t: number): "deposit" | "bond" {

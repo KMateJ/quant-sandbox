@@ -1,3 +1,5 @@
+import { macaulay, matchWeights, pricePerFace } from "../../lib/finance/immunization";
+
 /// A single liability funded by a short and a long coupon bond, all priced at a flat annually compounded yield.
 export const IMMUNIZATION = {
   liability: 1_000_000,
@@ -14,16 +16,12 @@ export type Portfolio = "matched" | "short" | "long";
 
 /// Price of a bond with face 100 and annual coupons at yield `y`.
 export function bondPrice({ coupon, years }: BondSpec, y: number): number {
-  let p = 0;
-  for (let t = 1; t <= years; t++) p += (coupon * 100) / (1 + y) ** t;
-  return p + 100 / (1 + y) ** years;
+  return 100 * pricePerFace(coupon, years, y);
 }
 
 /// Macaulay duration of the same bond, in years.
-export function bondDuration(bond: BondSpec, y: number): number {
-  let s = 0;
-  for (let t = 1; t <= bond.years; t++) s += (t * (bond.coupon * 100 + (t === bond.years ? 100 : 0))) / (1 + y) ** t;
-  return s / bondPrice(bond, y);
+export function bondDuration({ coupon, years }: BondSpec, y: number): number {
+  return macaulay(coupon, years, y);
 }
 
 /// Present value of the liability at yield `y`.
@@ -32,9 +30,7 @@ export const liabilityValue = (y: number) => IMMUNIZATION.liability / (1 + y) **
 /// Share of the initial money placed in the short bond so that the asset duration equals the liability's.
 export function matchedShortWeight(): number {
   const { yield0, short, long, liabilityYears } = IMMUNIZATION;
-  const dS = bondDuration(short, yield0);
-  const dL = bondDuration(long, yield0);
-  return (dL - liabilityYears) / (dL - dS);
+  return matchWeights([bondDuration(short, yield0), bondDuration(long, yield0)], liabilityYears)[0];
 }
 
 /// Face amounts held in each bond, fixed at the start: the initial value equals the liability's PV at `yield0`.

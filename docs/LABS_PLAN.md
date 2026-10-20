@@ -570,3 +570,8 @@ Settled from what each session last accepted (Log 16:2x–16:3x):
   handles in PathEnsemble, McExoticPaths and BarrierPanel). The clean fix is to set pointer-events back to auto on the layer's
   children in PathCloudChartInner, or inside DragHandles itself (my-app-46). Verified mouse drags now work on /brownian-motion
   (level + barrier) and /gbm (level).
+- 00:00 fixed-income-labs 01: scripts/layout-audit.mjs (+ cdp-smoke.mjs, npm run audit:layout) done; FI baseline 43/96 failing recorded in the plan Findings.
+- 00:00 fixed-income-labs 06: yield curve animated shocks (+ history, predict round), bootstrap playback with KaTeX equation, URL tab/preset/custom quotes; fixed steepen sign, bootstrap equation mismatch, usePlayback negative first step.
+- 00:00 fixed-income-labs 07: new /immunization lab (rounds game, seeded shocks, surplus attribution waterfall, benchmarks); immunisation math promoted to src/lib/finance/immunization.ts.
+
+- 00:00 fixed-income-labs 02: width-aware ticks (ChartAxes, thinTicks), opt-in label collision placer, FI breakpoint mixins, sidebar beta dot; FI audit: 0 svg-text collisions/clips at all widths; open: topnav overflow 700-768, HU bond tab strip, yield-curve left-border (plan 03).

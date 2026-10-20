@@ -13,6 +13,7 @@ export function useYieldCurve() {
   const [selected, setSelected] = useState(5);
   const [before, setBefore] = useState<CurveNode[]>(nodes);
   const [error, setError] = useState(false);
+  const [version, setVersion] = useState(0);
   const current = useRef(nodes);
   const edit = useRef<{ before: CurveNode[]; captured: boolean } | null>(null);
 
@@ -47,6 +48,7 @@ export function useYieldCurve() {
     current.current = next;
     setNodes(next);
     setPreset(nextPreset);
+    setVersion((v) => v + 1);
   }, []);
 
   const setRate = useCallback((index: number, rate: number) => {
@@ -70,6 +72,12 @@ export function useYieldCurve() {
     setPreset(id);
   }, [commit, endEdit]);
 
+  /// Replaces the curve (e.g. from the URL) as one change; invalid or identical curves are ignored.
+  const load = useCallback((next: CurveNode[], nextPreset: PresetId | "custom") => {
+    endEdit();
+    commit(next, nextPreset);
+  }, [commit, endEdit]);
+
   const reset = useCallback(() => {
     endEdit();
     const initial = presetNodes("normal");
@@ -77,12 +85,15 @@ export function useYieldCurve() {
     setNodes(initial);
     setBefore(initial);
     setPreset("normal");
+    setVersion((v) => v + 1);
     setSelected(5);
     setError(false);
   }, [endEdit]);
 
   return {
     nodes,
+    /// Bumps on every committed change, so a URL writer can skip the initial render.
+    version,
     preset,
     term,
     beforeTerm,
@@ -93,6 +104,7 @@ export function useYieldCurve() {
     setAllRates,
     sketchRates,
     applyPreset,
+    load,
     beginEdit,
     endEdit,
     reset,

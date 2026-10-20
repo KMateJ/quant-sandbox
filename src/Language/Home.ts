@@ -127,8 +127,6 @@ export const homeEn = {
     languageHu: "Hungarian",
     languageEn: "English",
 
-    devItemGuides: "Guides — narrative write-ups on important topics",
-
     devTitle: "Development",
     devSubtitle: "Recent updates and upcoming features",
 
@@ -136,16 +134,18 @@ export const homeEn = {
     devUpcoming: "Coming next",
     devFuture: "Planned modules",
 
-    devItemUrlParams:
-      "URL parameterization — share links with your current inputs",
+    devItemFixedIncomeLabs: "Fixed income labs — predict-the-change rounds, yield-curve shocks and bootstrapping, immunization and Treasury futures",
+    devItemGuides: "Guides — 48 lessons in five tracks, with interactive figures and a knowledge graph",
+    devItemLabs: "Hands-on labs for portfolio, corporate finance and stochastic models — drag, predict and compare",
+    devItemSharing: "Share links with your inputs, English and Hungarian versions",
 
-    devItemLanguage:
-      "Language selection — English and Hungarian versions are now available",
+    devItemSwapLab: "Interest rate swap lab",
+    devItemCallableLab: "Callable bond lab — negative convexity in action",
+    devItemLabUpgrades: "Interactive upgrades for the derivatives labs — payoff sketching, backward induction, hedging game",
+    devItemGuideChecks: "Self-check questions at the end of each guide track",
 
-    devItemHeston: "Heston model",
-    devItemMonteCarlo: "Monte Carlo simulations and visualizations",
+    devItemCredit: "Credit risk and real options labs",
     devItemPDE: "Numerical methods for solving PDEs",
-
     devItemMacro: "Macroeconomics",
     devItemMicro: "Microeconomics",
     devItemAnalysis: "Analysis",

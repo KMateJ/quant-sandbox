@@ -37,6 +37,8 @@ export const seoEn = {
     seoDescDurationConvexity: "Compare a bond's exact price–yield curve with its duration and duration-plus-convexity approximations, and see where each one breaks down.",
     seoTitleTreasuryFutures: "Treasury Futures: Conversion Factors & Cheapest-to-Deliver",
     seoDescTreasuryFutures: "Explore Treasury bond futures: conversion factors, invoice prices, deliverable cash flows and cheapest-to-deliver switching as yields move.",
+    seoTitleImmunization: "Bond Immunization: Match Duration to a Liability",
+    seoDescImmunization: "Play a bond immunization game: match present value and duration to a liability, rebalance through rate shocks and see why the surplus moved.",
     seoTitleRiskReturn: "Capital Allocation Line & Sharpe Ratio Visualizer",
     seoDescRiskReturn: "Combine a risky asset with the risk-free rate: expected return, volatility, the Sharpe ratio and leverage along the capital allocation line.",
     seoTitleCapm: "CAPM Calculator & Security Market Line",

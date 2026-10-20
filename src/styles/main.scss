@@ -23,6 +23,7 @@
 @use "bond";
 @use "yieldcurve";
 @use "./treasury-futures";
+@use "immunization";
 @use "npv";
 @use "stochastic-models";
 @use "surface3d";

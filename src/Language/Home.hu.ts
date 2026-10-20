@@ -126,27 +126,25 @@ export const homeHu = {
     languageHu: "Magyar",
     languageEn: "Angol",
 
-    devItemGuides: "Útmutatók — oktató jellegű írások a fontosabb témákban",  
-
-
-
     devTitle: "Fejlesztések",
     devSubtitle: "Frissítések és tervezett funkciók",
-    
+
     devRecent: "Nemrég elkészült",
     devUpcoming: "Következő lépések",
     devFuture: "Későbbi modulok",
-    
-    devItemUrlParams:
-      "URL paraméterezés — a beállítások linkben megoszthatók",
-    
-    devItemLanguage:
-      "Nyelvválasztás — már elérhető magyar és angol verzió",
-    
-    devItemHeston: "Heston modell",
-    devItemMonteCarlo: "Monte Carlo szimulációk és vizualizációk",
+
+    devItemFixedIncomeLabs: "Fix kamatozású laborok — becslős körök, hozamgörbe-sokkok és bootstrap, immunizáció és Treasury futures",
+    devItemGuides: "Útmutatók — 48 lecke öt tematikában, interaktív ábrákkal és tudásgráffal",
+    devItemLabs: "Gyakorlati laborok portfólió, vállalati pénzügy és sztochasztikus modellek témában — húzás, becslés, összehasonlítás",
+    devItemSharing: "Megoszható linkek a beállításokkal, magyar és angol verzió",
+
+    devItemSwapLab: "Kamatswap labor",
+    devItemCallableLab: "Visszahívható kötvény labor — a negatív konvexitás működés közben",
+    devItemLabUpgrades: "Interaktív bővítések a derivatíva laborokhoz — payoff-rajzolás, visszafelé indukció, fedezési játék",
+    devItemGuideChecks: "Ellenőrző kérdések az útmutató tematikák végén",
+
+    devItemCredit: "Hitelkockázat és reálopció laborok",
     devItemPDE: "Numerikus módszerek PDE-k megoldására",
-    
     devItemMacro: "Makroökonómia",
     devItemMicro: "Mikroökonómia",
     devItemAnalysis: "Analízis",

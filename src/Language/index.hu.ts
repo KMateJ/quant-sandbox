@@ -33,6 +33,7 @@ import { deltaHedgingHu } from "./DeltaHedging.hu";
 import { intuitionHu } from "./Intuition.hu";
 import { legacyIntuitionHu } from "./LegacyIntuition.hu";
 import { treasuryFuturesHu } from "./TreasuryFutures.hu";
+import { immunizationHu } from "./Immunization.hu";
 import { guideHu } from "./Guide.hu";
 import { guidePortfolioHu } from "./GuidePortfolio.hu";
 import { guideFixedIncomeHu } from "./GuideFixedIncome.hu";
@@ -74,6 +75,7 @@ export const hu = {
   ...yieldCurveHu,
   ...durationConvexityHu,
   ...treasuryFuturesHu,
+  ...immunizationHu,
   ...guideHu,
   ...guidePortfolioHu,
   ...guideFixedIncomeHu,

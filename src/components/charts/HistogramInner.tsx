@@ -5,6 +5,7 @@ import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
 import { binDensity } from "../../lib/stats";
 import { CHART_COLORS, chartMargin } from "./chart.theme";
+import { edgeAnchor, tickCount } from "./ticks.logic";
 import type { BinRange, HistogramProps } from "./histogram.types";
 
 type Props = Omit<HistogramProps, "height"> & { width: number; height: number };
@@ -86,7 +87,7 @@ export default function HistogramInner({ bins, normalize = "count", density, tin
             onPointerDown={onDown} onPointerMove={onMove} onPointerUp={() => setAnchor(null)} onPointerCancel={() => setAnchor(null)} />
         )}
         <AxisLeft scale={y} numTicks={4} tickFormat={(v) => (yFormat ? yFormat(Number(v)) : String(v))} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tick, textAnchor: "end", dx: -4, dy: 3 })} />
-        <AxisBottom top={h} scale={x} numTicks={width < 480 ? 5 : 8} tickFormat={(v) => (xFormat ? xFormat(Number(v)) : String(v))} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={() => ({ ...tick, textAnchor: "middle" })} />
+        <AxisBottom top={h} scale={x} numTicks={tickCount(w, 48, 2, 8)} tickFormat={(v) => (xFormat ? xFormat(Number(v)) : String(v))} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickLabelProps={(v) => ({ ...tick, textAnchor: edgeAnchor(x(Number(v)) ?? 0, w) })} />
       </Group>
     </svg>
   );

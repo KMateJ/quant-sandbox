@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { estimateTextWidth } from "../../../components/charts/labels.logic";
+import { thinTicks } from "../../../components/charts/ticks.logic";
 import DraggableBar from "../../../components/charts/DraggableBar";
 import { useI18n } from "../../../i18n";
 import type { CashFlowRow } from "../bondPricing.types";
@@ -44,13 +46,15 @@ export default function TimelineChart({ rows, width, height, split, maxFlow, onF
   const slotW = innerW / n;
   const barW = Math.min(slotW * 0.55, 26);
   const cx = (i: number) => M.left + slotW * (i + 0.5);
-  const labelEvery = Math.ceil(n / 10);
   const tick = (v: number) => (v < 10 ? v.toFixed(1) : v.toFixed(0));
   const x0 = M.left;
   const x1 = width - M.right;
   // Slider coordinates are relative to the plot top; bars past the top are drawn at the top.
   const sliderY = (v: number) => Math.min(innerH, Math.max(0, axis.y(v) - M.top));
 
+  // Label as many periods as fit side by side, always including the last.
+  const timeLabels = rows.map((r) => r.time.toFixed(r.time < 10 ? 1 : 0));
+  const labelled = new Set(thinTicks(rows.map((_, i) => cx(i)), timeLabels.map((l) => estimateTextWidth(l, 11)), 6));
   const yTicks = axis.hasBreak ? [0, couponMax, totalMax] : [0, totalMax / 2, totalMax];
   const active = hover != null ? rows[hover] : null;
 
@@ -92,9 +96,9 @@ export default function TimelineChart({ rows, width, height, split, maxFlow, onF
               <g pointerEvents="none">
                 <TimelineBar row={r} x={cx(i) - barW / 2} cx={cx(i)} barW={barW} axis={axis} isHover={hover === i} />
               </g>
-              {(i % labelEvery === 0 || i === n - 1) && (
+              {labelled.has(i) && (
                 <text x={cx(i)} y={base + 16} textAnchor="middle" fontSize={11} fill="var(--muted)" pointerEvents="none">
-                  {r.time.toFixed(r.time < 10 ? 1 : 0)}
+                  {timeLabels[i]}
                 </text>
               )}
             </g>

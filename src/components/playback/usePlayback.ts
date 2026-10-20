@@ -30,7 +30,8 @@ export function usePlayback({ steps, initial = steps, durationMs = 4000, loop = 
     const from = stepRef.current >= steps ? 0 : stepRef.current;
     const start = performance.now() - (from / steps) * sweep;
     let frame = requestAnimationFrame(function tick(now) {
-      const raw = Math.round(((now - start) / sweep) * steps);
+      // The first frame's timestamp can precede `performance.now()` above, so clamp at 0.
+      const raw = Math.max(0, Math.round(((now - start) / sweep) * steps));
       const next = loop ? raw % (steps + 1) : Math.min(steps, raw);
       setStepState(next);
       if (!loop && next >= steps) setPlaying(false);

@@ -9,6 +9,8 @@ import { MATURITY_LABELS } from "../presets";
 import { factorContribution, scenarioDelta } from "../yieldCurve.math";
 import { pct2, YC_COLORS } from "../curveChartUtils";
 import MaturityChart from "./MaturityChart";
+import ShockPlayer from "./ShockPlayer";
+import ShockPredict from "./ShockPredict";
 
 type Props = { model: YieldCurveModel };
 
@@ -90,6 +92,8 @@ export default function FactorsView({ model }: Props) {
             <MaturityChart labels={MATURITY_LABELS} series={series} yDomain={yDomain} yFormat={pct2} yLabel={t("ycYieldAxis")} />
           </div>
         </ChartContainer>
+        <ShockPlayer model={model} />
+        <ShockPredict model={model} />
       </div>
     </div>
   );

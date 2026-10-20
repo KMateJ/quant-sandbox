@@ -2,7 +2,9 @@ import { useId, useMemo, useRef, useState } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Line as SvgLine } from "@visx/shape";
-import { AxisBottom, AxisLeft } from "@visx/axis";
+import ChartAxes from "./ChartAxes";
+import ScatterAnnotations from "./ScatterAnnotations";
+import { tickCount } from "./ticks.logic";
 import { GridRows, GridColumns } from "@visx/grid";
 import { curveLinear } from "@visx/curve";
 import { useTooltip } from "@visx/tooltip";
@@ -32,6 +34,7 @@ export default function ScatterChartInner({
   referenceLines = [],
   bands = [],
   annotations = [],
+  avoidLabelCollisions = false,
   isMobile = false,
   legend = true,
   legendHeight = LEGEND_HEIGHT,
@@ -46,13 +49,13 @@ export default function ScatterChartInner({
   onPlotClick,
   layer,
   xTickValues,
-  yNumTicks = 7,
+  yNumTicks,
 }: Props) {
   const base = chartMargin(isMobile);
   const margin = {
     ...base,
     bottom: base.bottom + (xLabel ? 16 : 0),
-    left: base.left + (yLabel ? 14 : 0),
+    left: base.left + (yLabel ? 26 : 0),
   };
   const svgHeight = height - (legend ? legendHeight : 0);
   const innerW = Math.max(0, width - margin.left - margin.right);
@@ -150,7 +153,7 @@ export default function ScatterChartInner({
             ) : null
           )}
 
-          <GridRows scale={yScale} numTicks={yNumTicks} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
+          <GridRows scale={yScale} numTicks={yNumTicks ?? tickCount(innerH, 28, 2, 7)} width={innerW} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
           <GridColumns scale={xScale} height={innerH} stroke={CHART_COLORS.grid} strokeDasharray="3 3" />
 
           {onPlotClick && (
@@ -221,31 +224,12 @@ export default function ScatterChartInner({
               ))
             )}
 
-          {annotations.map((a, i) => (
-            <text
-              key={`ann-${i}`}
-              x={xScale(a.x) + (a.dx ?? 0)}
-              y={yScale(a.y) + (a.dy ?? 0)}
-              textAnchor={a.anchor ?? "start"}
-              fill={a.color ?? CHART_COLORS.tooltipText}
-              fontSize={a.fontSize ?? (isMobile ? 10 : 12)}
-              fontWeight={a.fontWeight ?? 600}
-              transform={
-                a.rotate
-                  ? `rotate(${a.rotate} ${xScale(a.x) + (a.dx ?? 0)} ${yScale(a.y) + (a.dy ?? 0)})`
-                  : undefined
-              }
-              style={{ pointerEvents: "none" }}
-            >
-              {a.text}
-            </text>
-          ))}
+          <ScatterAnnotations annotations={annotations} series={series} x={(v) => xScale(v) ?? 0} y={(v) => yScale(v) ?? 0} width={innerW} height={innerH} isMobile={isMobile} avoidCollisions={avoidLabelCollisions} />
 
-          <AxisBottom top={innerH} scale={xScale} tickValues={xTickValues} numTicks={isMobile ? 5 : 8} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtX(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })} />
-          <AxisLeft scale={yScale} numTicks={yNumTicks} stroke={CHART_COLORS.axis} tickStroke={CHART_COLORS.axis} tickFormat={(v) => fmtY(Number(v))} tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })} />
+          <ChartAxes xScale={xScale} yScale={yScale} innerW={innerW} innerH={innerH} isMobile={isMobile} xFormat={fmtX} yFormat={fmtY} xTickValues={xTickValues} yNumTicks={yNumTicks} />
 
           {xLabel && (
-            <text x={innerW / 2} y={innerH + margin.bottom - 2} textAnchor="middle" fill={CHART_COLORS.axis} fontSize={isMobile ? 11 : 12}>
+            <text x={innerW / 2} y={innerH + margin.bottom - 6} textAnchor="middle" fill={CHART_COLORS.axis} fontSize={isMobile ? 11 : 12}>
               {xLabel}
             </text>
           )}

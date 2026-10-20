@@ -220,4 +220,13 @@ export const moduleAboutEn = {
   aboutGuideA1: "Start with instruments and no-arbitrage, then risk-neutral pricing and delta hedging; together they lead to the Black–Scholes formula.",
   aboutGuideQ2: "Who are the guides for?",
   aboutGuideA2: "Students of financial and insurance mathematics and anyone who wants intuition behind derivatives pricing, not just the formulas.",
+  aboutImmunizationIntro: "Immunization funds a known future liability with bonds so that interest-rate moves do not open a funding gap. Match the present value and the duration of the assets to the liability, and the surplus barely reacts to a parallel shift in yields. Over the years the match drifts as time passes and the curve moves, so you rebalance, at a cost. This lab plays that as a game: each round brings a seeded rate shock, and you see why the surplus moved.",
+  aboutImmunizationQ1: "What is immunization?",
+  aboutImmunizationA1: "A strategy that holds assets whose present value and duration equal those of a liability. A small parallel move in yields then changes assets and liability by about the same amount, so the surplus stays near zero.",
+  aboutImmunizationQ2: "Why does the portfolio need rebalancing?",
+  aboutImmunizationA2: "Duration changes with time and with yields, and the liability's duration shrinks by a year every year while a bond's duration shrinks more slowly. The match therefore drifts, and the portfolio has to be reset to stay immunized.",
+  aboutImmunizationQ3: "What does convexity add?",
+  aboutImmunizationA3: "Duration matching covers small moves. For larger moves the second-order term matters: assets with more convexity than the liability gain more when yields fall than they lose when yields rise, so the surplus tends to be positive after large shifts.",
+  aboutImmunizationQ4: "What is a twist, and why does it hurt?",
+  aboutImmunizationA4: "A twist moves long and short yields in opposite directions. Duration matching assumes a parallel shift, so a twist can leave a gap even in a perfectly matched portfolio.",
 };

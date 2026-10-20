@@ -37,6 +37,8 @@ export const seoHu = {
     seoDescDurationConvexity: "Hasonlítsd össze a kötvény pontos ár–hozam görbéjét a duráció- és a duráció+konvexitás-közelítéssel, és lásd, hol romlik el mindkettő.",
     seoTitleTreasuryFutures: "Állampapír-határidős: átváltási tényező, legolcsóbb kötvény",
     seoDescTreasuryFutures: "Fedezd fel az állampapír-határidős ügyleteket: átváltási tényezők, számlázási árak, szállítható pénzáramlások, és a legolcsóbban szállítható kötvény váltása.",
+    seoTitleImmunization: "Immunizáció: duration-illesztés kötvényekkel",
+    seoDescImmunization: "Játssz kötvény-immunizációs játékot: illeszd a jelenértéket és a durationt a kötelezettséghez, súlyozz át hozamsokkok közben, és lásd, miért mozdult a többlet.",
     seoTitleRiskReturn: "Tőkeallokációs egyenes és Sharpe-mutató",
     seoDescRiskReturn: "Kombinálj kockázatos eszközt a kockázatmentes kamatlábbal: várható hozam, volatilitás, Sharpe-mutató és tőkeáttétel a tőkeallokációs egyenesen.",
     seoTitleCapm: "CAPM-kalkulátor és értékpapír-piaci egyenes",

@@ -129,6 +129,7 @@ $side-open: 0.26s;
 // Text fades rather than popping; it trails the width so it never shows clipped mid-slide.
 .side-label,
 .side-badge,
+.side-status-dot,
 .side-section-label {
   transition: opacity 0.18s ease 0.08s;
 }
@@ -136,6 +137,7 @@ $side-open: 0.26s;
 .sidebar:not(.pinned):not(:hover):not(:focus-within) {
   .side-label,
   .side-badge,
+  .side-status-dot,
   .side-section-label {
     opacity: 0;
     transition-delay: 0s;
@@ -313,6 +315,15 @@ $side-open: 0.26s;
   background: var(--info-bg);
   border: 1px solid var(--info-border);
   border-radius: var(--radius-xs);
+}
+
+// Beta marker: a small dot after the name (the status itself is in the row's title and aria-label).
+.side-status-dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--info-title);
 }
 
 // A module row with children: the chevron sits over the row's right end.

@@ -31,3 +31,8 @@ export function presetNodes(id: PresetId): CurveNode[] {
 }
 
 export const PRESET_IDS: PresetId[] = ["normal", "flat", "inverted", "humped"];
+
+/// The preset whose quotes `nodes` match exactly, else "custom".
+export function presetFor(nodes: CurveNode[]): PresetId | "custom" {
+  return PRESET_IDS.find((id) => presetNodes(id).every((n, i) => Math.abs(n.rate - nodes[i].rate) < 1e-9)) ?? "custom";
+}

@@ -228,6 +228,17 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/treasury-futures/TreasuryFuturesView")),
   },
   {
+    id: "immunization",
+    path: "/immunization",
+    navKey: "navImmunization",
+    category: "fixed-income",
+    status: "beta",
+    seo: { titleKey: "seoTitleImmunization", descKey: "seoDescImmunization" },
+    about: moduleAbout("Immunization", 4),
+    relatedGuides: ["immunization", "duration-convexity"],
+    Component: lazy(() => import("../features/immunization/ImmunizationView")),
+  },
+  {
     id: "risk-return",
     path: "/risk-return",
     navKey: "navRiskReturn",

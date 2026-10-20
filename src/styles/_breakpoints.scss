@@ -1,0 +1,36 @@
+// One breakpoint scale. The JS side mirrors the phone value in `useMediaQuery("(max-width: 640px)")`.
+$bp-phone: 640px;
+$bp-tablet: 900px;
+$bp-desktop: 1100px;
+// Two-column labs (controls + chart beside a result panel) run out of room between desktop and here.
+$bp-wide: 1200px;
+
+@mixin phone {
+  @media (max-width: $bp-phone) {
+    @content;
+  }
+}
+
+@mixin below-tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin below-desktop {
+  @media (max-width: $bp-desktop) {
+    @content;
+  }
+}
+
+@mixin below-wide {
+  @media (max-width: $bp-wide) {
+    @content;
+  }
+}
+
+@mixin tiny {
+  @media (max-width: 360px) {
+    @content;
+  }
+}

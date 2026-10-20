@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, Area, Line as SvgLine } from "@visx/shape";
-import { AxisBottom, AxisLeft } from "@visx/axis";
 import { GridRows, GridColumns } from "@visx/grid";
 import { LinearGradient } from "@visx/gradient";
 import { curveLinear, curveMonotoneX } from "@visx/curve";
@@ -10,6 +9,7 @@ import { extent } from "@visx/vendor/d3-array";
 import { CHART_COLORS, LEGEND_HEIGHT, chartMargin } from "./chart.theme";
 import { useChartTooltip } from "./useChartTooltip";
 import ChartTooltip from "./ChartTooltip";
+import ChartAxes from "./ChartAxes";
 import type { ChartDatum, LineChartProps, PlotFrame } from "./chart.types";
 
 type Props = LineChartProps & { width: number; height: number; legendHeight?: number };
@@ -158,23 +158,7 @@ export default function LineChartInner({
             </Group>
           ))}
 
-          <AxisBottom
-            top={innerH}
-            scale={xScale}
-            numTicks={isMobile ? 5 : 8}
-            tickFormat={xFormat && ((v) => xFormat(Number(v)))}
-            stroke={CHART_COLORS.axis}
-            tickStroke={CHART_COLORS.axis}
-            tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "middle" })}
-          />
-          <AxisLeft
-            scale={yScale}
-            numTicks={7}
-            tickFormat={yFormat && ((v) => yFormat(Number(v)))}
-            stroke={CHART_COLORS.axis}
-            tickStroke={CHART_COLORS.axis}
-            tickLabelProps={() => ({ fill: CHART_COLORS.axis, fontSize: isMobile ? 11 : 12, textAnchor: "end", dx: "-0.25em", dy: "0.25em" })}
-          />
+          <ChartAxes xScale={xScale} yScale={yScale} innerW={innerW} innerH={innerH} isMobile={isMobile} xFormat={xFormat} yFormat={yFormat} />
 
           {tip.tooltipData && (
             <SvgLine

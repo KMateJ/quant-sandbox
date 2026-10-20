@@ -71,6 +71,7 @@ export default function SensitivityChart({ model, lines }: Props) {
       yDomain={yDomain}
       referenceLines={referenceLines}
       annotations={annotations}
+      avoidLabelCollisions
       isMobile={isMobile}
       xLabel={t("dcChartXLabel")}
       yLabel={t("dcChartYLabel")}

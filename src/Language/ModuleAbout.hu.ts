@@ -220,4 +220,13 @@ export const moduleAboutHu: Record<keyof typeof moduleAboutEn, string> = {
   aboutGuideA1: "Kezdd az instrumentumokkal és az arbitrázsmentességgel, majd jöhet a kockázatsemleges árazás és a delta-fedezés; együtt vezetnek el a Black–Scholes-képlethez.",
   aboutGuideQ2: "Kiknek szólnak az útmutatók?",
   aboutGuideA2: "Biztosítási és pénzügyi matematikát tanuló hallgatóknak, és mindenkinek, aki a származtatott termékek árazása mögötti intuíciót is keresi, nem csak a képleteket.",
+  aboutImmunizationIntro: "Az immunizáció egy ismert jövőbeli kötelezettséget kötvényekkel fedez úgy, hogy a hozammozgások ne nyissanak finanszírozási rést. Ha az eszközök jelenértéke és durationje megegyezik a kötelezettségével, a többlet alig reagál a hozamok párhuzamos eltolódására. Az évek során az illeszkedés elcsúszik az idő múlásától és a görbe mozgásától, ezért átsúlyozol, ami pénzbe kerül. A labor ezt játékként adja: minden kör egy véletlenmaggal számolt hozamsokkot hoz, és látod, miért mozdult a többlet.",
+  aboutImmunizationQ1: "Mi az immunizáció?",
+  aboutImmunizationA1: "Olyan stratégia, amelyben az eszközök jelenértéke és durationje egyezik a kötelezettségével. A hozamok kis párhuzamos mozgása így nagyjából ugyanannyit változtat az eszközökön és a kötelezettségen, így a többlet nulla közelében marad.",
+  aboutImmunizationQ2: "Miért kell átsúlyozni a portfóliót?",
+  aboutImmunizationA2: "A duration az idővel és a hozamokkal változik, a kötelezettség durationje évente egy évvel rövidül, a kötvényé lassabban. Az illeszkedés ezért elcsúszik, és a portfóliót vissza kell állítani.",
+  aboutImmunizationQ3: "Mit ad hozzá a konvexitás?",
+  aboutImmunizationA3: "A duration-illesztés kis mozgásokat fed. Nagyobbaknál a másodrendű tag számít: a kötelezettségnél konvexebb eszközök többet nyernek a hozamesésen, mint amennyit a hozamemelkedésen vesztenek, így nagy eltolódások után a többlet általában pozitív.",
+  aboutImmunizationQ4: "Mi a csavarás, és miért árt?",
+  aboutImmunizationA4: "A csavarás a hosszú és a rövid hozamokat ellentétes irányba mozgatja. A duration-illesztés párhuzamos eltolódást feltételez, így a csavarás a tökéletesen illesztett portfólióban is rést hagyhat.",
 };

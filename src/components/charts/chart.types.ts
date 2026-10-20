@@ -163,6 +163,8 @@ export type ScatterChartProps = {
   referenceLines?: ChartReferenceLine[];
   bands?: ScatterBand[];
   annotations?: ScatterAnnotation[];
+  /// Nudge or hide annotations that would sit on a curve or another label (off by default).
+  avoidLabelCollisions?: boolean;
   isMobile?: boolean;
   legend?: boolean;
   xFormat?: (value: number) => string;

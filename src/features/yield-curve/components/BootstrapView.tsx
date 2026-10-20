@@ -1,12 +1,13 @@
-import { useState } from "react";
 import { ChartContainer, Panel } from "../../../components/layout";
+import { PlaybackControls, usePlayback } from "../../../components/playback";
 import { DataTable, type DataColumn } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
 import type { YieldCurveModel } from "../useYieldCurve";
 import type { TermPoint } from "../yieldCurve.types";
 import { MATURITY_LABELS } from "../presets";
-import { pct2, df4 } from "../curveChartUtils";
-import { buildBootstrapSeries, couponDfSum, instrumentKind } from "../bootstrap";
+import { pct2 } from "../curveChartUtils";
+import { buildBootstrapSeries, instrumentKind } from "../bootstrap";
+import BootstrapEquation from "./BootstrapEquation";
 import MaturityChart from "./MaturityChart";
 
 type Props = { model: YieldCurveModel };
@@ -14,14 +15,12 @@ type Props = { model: YieldCurveModel };
 export default function BootstrapView({ model }: Props) {
   const { t } = useI18n();
   const { term, nodes } = model;
-  const [step, setStep] = useState(3);
-  const p = term[step];
+  const last = term.length - 1;
+  const playback = usePlayback({ steps: last, initial: 3, durationMs: 8000 });
+  const step = playback.step;
 
   const vals = term.flatMap((d) => [d.par, d.zero]);
   const yDomain: [number, number] = [Math.min(0, ...vals), Math.max(...vals) * 1.12];
-
-  const sumPrev = p ? couponDfSum(term, p.t) : 0;
-  const isDeposit = p ? instrumentKind(p.t) === "deposit" : true;
 
   const columns: DataColumn<TermPoint & { index: number }>[] = [
     { key: "kind", header: t("ycColInstrument"), render: (r) => t(`ycKind_${instrumentKind(r.t)}`) },
@@ -32,7 +31,7 @@ export default function BootstrapView({ model }: Props) {
         <span className="yc-rate-input">
           <input type="number" step={0.05}
             value={Number((nodes[r.index].rate * 100).toFixed(4))}
-            onFocus={() => setStep(r.index)}
+            onFocus={() => playback.setStep(r.index)}
             onChange={(e) => {
               const raw = Number(e.target.value);
               if (!Number.isNaN(raw)) model.setRate(r.index, raw / 100);
@@ -55,20 +54,14 @@ export default function BootstrapView({ model }: Props) {
       </Panel>
 
       <div className="module-main">
-        <ChartContainer
-          title={t("ycBootstrapChart")}
-          actions={
-            <div className="yc-stepper">
-              <button type="button" disabled={step === 0} onClick={() => setStep((s) => s - 1)}>
-                {t("ycPrev")}
-              </button>
-              <span>{t("ycStep")} {step + 1}/{term.length} · {p?.label}</span>
-              <button type="button" disabled={step === term.length - 1} onClick={() => setStep((s) => s + 1)}>
-                {t("ycNext")}
-              </button>
-            </div>
-          }
-        >
+        <ChartContainer title={t("ycBootstrapChart")}>
+          <PlaybackControls
+            playback={playback}
+            steps={last}
+            label={t("ycColMaturity")}
+            formatStep={(k) => `${term[k]?.label ?? ""} (${k + 1}/${term.length})`}
+            showStepButtons
+          />
           <div className="chart-wrap">
             <MaturityChart
               labels={MATURITY_LABELS}
@@ -77,32 +70,11 @@ export default function BootstrapView({ model }: Props) {
               yFormat={pct2}
               yLabel={t("ycYieldAxis")}
               selectedIndex={step}
-              onSelectIndex={setStep}
+              onSelectIndex={playback.setStep}
             />
           </div>
         </ChartContainer>
-
-        {p && (
-          <div className="yc-formula">
-            <div className="yc-formula-title">
-              {t("ycSolveFor")} {p.label} ({t(`ycKind_${instrumentKind(p.t)}`)})
-            </div>
-            {isDeposit ? (
-              <>
-                <code>DF({p.label}) = 1 / (1 + {pct2(p.par)})^{p.t} = {df4(p.df)}</code>
-                <code>z({p.label}) = DF^(-1/{p.t}) - 1 = {pct2(p.zero)}</code>
-              </>
-            ) : (
-              <>
-                <code>
-                  DF({p.label}) = (1 - {pct2(p.par)} · {df4(sumPrev)}) / (1 + {pct2(p.par)}) = {df4(p.df)}
-                </code>
-                <code>z({p.label}) = DF({p.label})^(-1/{p.t}) - 1 = {pct2(p.zero)}</code>
-                <p className="yc-formula-note">{t("ycBootstrapNote")}</p>
-              </>
-            )}
-          </div>
-        )}
+        <BootstrapEquation term={term} step={step} />
       </div>
     </div>
   );

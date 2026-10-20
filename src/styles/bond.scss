@@ -1,3 +1,5 @@
+@use "breakpoints" as *;
+
 // Bond Lab — cash-flow timeline, PV breakdown and price–yield explorer.
 
 .bond-params {
@@ -114,7 +116,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@include below-tablet {
   .bond-metrics-grid {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-3);

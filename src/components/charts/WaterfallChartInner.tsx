@@ -2,6 +2,7 @@ import { AxisLeft } from "@visx/axis";
 import { Group } from "@visx/group";
 import { scaleBand, scaleLinear } from "@visx/scale";
 import { CHART_COLORS, chartMargin } from "./chart.theme";
+import { tickCount } from "./ticks.logic";
 import { waterfallBars, waterfallDomain, type WaterfallProps } from "./waterfall.logic";
 
 type Props = Omit<WaterfallProps, "height"> & { width: number; height: number };
@@ -60,7 +61,7 @@ export default function WaterfallChartInner({ steps, ariaLabel, valueFormat = (v
         })}
         <AxisLeft
           scale={y}
-          numTicks={5}
+          numTicks={tickCount(h, 28, 2, 5)}
           stroke={CHART_COLORS.axis}
           tickStroke={CHART_COLORS.axis}
           tickFormat={(v) => valueFormat(Number(v))}
