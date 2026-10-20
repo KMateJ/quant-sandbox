@@ -47,7 +47,7 @@ export default function NotFoundArt() {
       <circle className="not-found-pulse" cx="380" cy="120" r="10" fill="var(--primary)" />
       <circle cx="380" cy="120" r="6.5" fill="var(--primary)" stroke="var(--surface)" strokeWidth="2.5" />
 
-      <g fill="var(--muted)" fontSize="15" fontStyle="italic" fontFamily="'Source Serif 4 Variable', Georgia, serif">
+      <g fill="var(--muted)" fontSize="15" fontStyle="italic" fontFamily="var(--font-serif)">
         <text x="40" y="282">t</text>
         <text x="380" y="282" textAnchor="middle">t = now</text>
         <text x="768" y="282" textAnchor="end">T</text>

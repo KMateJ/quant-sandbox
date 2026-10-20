@@ -43,4 +43,13 @@ export const guideGraphHu = {
   ggOpenLab: "Labor megnyitása",
   ggClear: "Kijelölés törlése",
   ggSelectHint: "Kattints egy leckére: megmutatja, milyen sorrendben érdemes elolvasni, ami a megértéséhez kell.",
+  ggEyebrow: "Útmutatók · {{lessons}} lecke · {{labs}} labor",
+  ggLede: "Válassz egy leckét, és látod mindazt, amire épül, olvasási sorrendben.",
+  ggReadFirst: "Először olvasd",
+  ggDirectlyBefore: "Közvetlenül előtte",
+  ggTwoBack: "Két lépéssel korábban",
+  ggFoundations: "Alapok",
+  ggLeadsTo: "Ide vezet",
+  ggNothingBefore: "Semmi. Ez egy kiindulópont.",
+  ggSummary: "{{n}}. lecke / {{total}} · előtte olvasandó: {{count}} · témakörök: {{tracks}}",
 };

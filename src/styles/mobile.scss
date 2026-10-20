@@ -96,7 +96,6 @@
     backdrop-filter: blur(var(--topbar-blur));
     border-top: 1px solid var(--border);
     padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
     transition: transform var(--transition-base);
   }
 
@@ -108,7 +107,7 @@
     width: 40px;
     height: 4px;
     margin: 0 auto 10px;
-    border-radius: 999px;
+    border-radius: var(--radius-xs);
     background: var(--border);
   }
 
@@ -135,7 +134,7 @@
     border: 1px solid var(--border);
     background: var(--surface-soft);
     color: var(--text);
-    border-radius: 12px;
+    border-radius: var(--radius-xs);
     transition: var(--transition-fast);
   }
 

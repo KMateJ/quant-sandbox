@@ -6,12 +6,14 @@ import MobileNav from "./MobileNav";
 import SiteFooter from "./SiteFooter";
 import { useActiveModule } from "./useActiveModule";
 import { useStickyFit } from "./useStickyFit";
+import { useRecordLastLab } from "./useLastLab";
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { activeCategory } = useActiveModule();
   const { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
   useStickyFit();
+  useRecordLastLab();
 
   useEffect(() => {
     setNavOpen(false);

@@ -18,6 +18,8 @@ export function useActiveIndicator(container: RefObject<HTMLElement | null>, sel
     place();
     const observer = new ResizeObserver(place);
     observer.observe(root);
+    // Rows above the active one grow and shrink as sections expand, without resizing the container.
+    for (const child of root.children) observer.observe(child);
     return () => observer.disconnect();
   }, [container, selector, key]);
 }

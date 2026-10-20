@@ -2,24 +2,24 @@ import { createHash } from "node:crypto";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { OG_FONT_SUBSETS, ogLayout, type OgCard } from "./ogLayout.ts";
+import { OG_FONTS, ogLayout, type OgCard } from "./ogLayout.ts";
 import { ogColors } from "./theme.ts";
 
 // Bump when ogLayout or the fonts change, so cached PNGs are re-rendered.
-const LAYOUT_VERSION = 2;
+const LAYOUT_VERSION = 4;
 
-const FONT_FILES = ([400, 700] as const).flatMap((weight) =>
-  OG_FONT_SUBSETS.map((subset) => ({ name: `Inter ${subset}`, weight, file: `inter-${subset}-${weight}-normal.woff` }))
+const FONT_FILES = Object.values(OG_FONTS).flatMap(({ pkg, subsets }) =>
+  subsets.map((subset) => ({ name: `${pkg} ${subset}`, pkg, file: `${pkg}-${subset}-400-normal.woff` }))
 );
 
-/// Static .woff Inter files (Satori can't read woff2), one family per subset so glyph fallback reaches latin-ext and greek.
+/// Static .woff files (Satori can't read woff2), one family per subset so glyph fallback reaches latin-ext and Greek.
 const loadFonts = (root: string) =>
   Promise.all(
-    FONT_FILES.map(async ({ name, weight, file }) => ({
+    FONT_FILES.map(async ({ name, pkg, file }) => ({
       name,
-      weight,
+      weight: 400 as const,
       style: "normal" as const,
-      data: await readFile(join(root, "node_modules/@fontsource/inter/files", file)),
+      data: await readFile(join(root, "node_modules/@fontsource", pkg, "files", file)),
     }))
   );
 

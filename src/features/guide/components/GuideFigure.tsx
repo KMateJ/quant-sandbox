@@ -21,7 +21,7 @@ export default function GuideFigure({ title, labId, children }: GuideFigureProps
         <span className="guide-figure-title">{title}</span>
         {lab && (
           <Link className="guide-figure-lab" to={lab.path}>
-            {t("guideFigureOpenLab", { lab: t(lab.navKey) })} →
+            {t("guideFigureOpenLab", { lab: t(lab.navKey) })}
           </Link>
         )}
       </figcaption>

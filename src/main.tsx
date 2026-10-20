@@ -3,16 +3,20 @@ import i18n from "i18next";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/source-serif-4/opsz.css";
-import "@fontsource-variable/source-serif-4/opsz-italic.css";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
 import App from "./App.tsx";
 import AppProviders from "./AppProviders";
 import "./styles/main.scss";
 import "katex/dist/katex.min.css";
 import { loadLanguage } from "./languageLoader";
 import { languageFromPath, languagePrefix } from "./languageRoutes";
+import { applyStoredPalettes } from "./components/settings/paletteStore";
 
+// Saved palette goes in before React renders, so the page never flashes the default colours.
+applyStoredPalettes();
 const root = document.getElementById("root")!;
 // The URL is the source of truth for the language; its table must be in before hydration.
 const language = languageFromPath(location.pathname);

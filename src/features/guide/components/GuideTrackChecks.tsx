@@ -25,9 +25,12 @@ export default function GuideTrackChecks({ track }: { track: GuideTrackMeta }) {
   const lessons = track.lessons.filter((id) => checks.some((c) => c.lessonId === id));
 
   return (
-    <section className="guide-track-checks" aria-labelledby="track-checks-title">
-      <h2 id="track-checks-title" className="guide-track-checks-title">{t("guideCheckLabel")}</h2>
-      <p className="guide-track-checks-intro">{t("guideTrackChecksIntro")}</p>
+    <section id="checks" className="guide-track-checks" aria-labelledby="track-checks-title">
+      <div className="guide-section-head">
+        <h2 id="track-checks-title" className="guide-section-title">{t("guideCheckLabel")}</h2>
+        <p className="guide-section-note">{t("guideTrackChecksIntro")}</p>
+      </div>
+      <div className="guide-track-checks-list">
       {lessons.map((lessonId) => {
         const lesson = guideLessons.find((l) => l.id === lessonId)!;
         const own = checks.filter((c) => c.lessonId === lessonId);
@@ -35,11 +38,13 @@ export default function GuideTrackChecks({ track }: { track: GuideTrackMeta }) {
         return (
           <details key={lessonId} id={checksAnchor(lessonId)} className="guide-track-checks-group" open={openId === checksAnchor(lessonId)}>
             <summary>
+              <span className="guide-row-num">{String(track.lessons.indexOf(lessonId) + 1).padStart(2, "0")}</span>
               <span className="guide-track-checks-lesson">{t(lesson.titleKey)}</span>
               <span className="guide-track-checks-count">
                 {t("guideTrackChecksCount", { n: own.length })}
                 {dueHere > 0 && ` · ${t("guideTrackChecksDue", { n: dueHere })}`}
               </span>
+              <span className="guide-track-checks-sign" aria-hidden="true" />
             </summary>
             <Link className="guide-track-checks-reread" to={guidePath(lessonId)}>{t("guideTrackChecksReread")}</Link>
             {own.map(({ block }) => (
@@ -48,6 +53,7 @@ export default function GuideTrackChecks({ track }: { track: GuideTrackMeta }) {
           </details>
         );
       })}
+      </div>
     </section>
   );
 }

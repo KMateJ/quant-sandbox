@@ -33,7 +33,7 @@ function applyThemeToDocument(theme: ResolvedTheme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<ThemeMode>("system");
+  const [theme, setTheme] = useState<ThemeMode>("dark");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
 
   useEffect(() => {

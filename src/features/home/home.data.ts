@@ -1,0 +1,15 @@
+import { CATEGORY_ORDER, modulesInCategory, type ModuleCategory } from "../../modules/registry";
+import { guideLessons, guidePath, guideTrackById, trackLessons } from "../guide/guide.meta";
+
+export type LabCategory = Exclude<ModuleCategory, "guides">;
+
+/// Areas shown as lab sections, in registry order (guides have their own section).
+export const LAB_CATEGORIES = CATEGORY_ORDER.filter((c): c is LabCategory => c !== "guides");
+
+export const LAB_COUNT = LAB_CATEGORIES.reduce((n, c) => n + modulesInCategory(c).length, 0);
+export const LESSON_COUNT = guideLessons.length;
+
+const firstLesson = trackLessons(guideTrackById("derivatives"))[0];
+
+/// Where a first-time reader begins: the first lesson of the derivatives track.
+export const START_LESSON = { path: guidePath(firstLesson.id), titleKey: firstLesson.titleKey };

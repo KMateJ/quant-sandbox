@@ -15,14 +15,14 @@
     color: var(--text);
     background: var(--surface-soft);
     border: 1px solid var(--border);
-    border-radius: 5px;
+    border-radius: var(--radius-xs);
   }
   .tf-bond {
     min-width: 0;
     margin: 0;
     padding: 10px;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
   }
   .tf-bond legend { padding: 0 5px; color: var(--primary, #38bdf8); font-size: 12px; font-weight: 650; }
   .tf-input-grid { display: grid; gap: 10px; }
@@ -32,7 +32,7 @@
     color: var(--muted);
     background: transparent;
     border: 1px solid var(--border);
-    border-radius: 5px;
+    border-radius: var(--radius-xs);
     cursor: pointer;
   }
   .tf-add { color: var(--primary, #38bdf8); }
@@ -49,7 +49,7 @@
   .tf-chart-wrap { width: 100%; height: 330px; }
   .tf-cashflow-chart { width: 100%; height: 230px; margin: 2px 0 10px; }
   .tf-chart-wrap path, .tf-cashflow-chart circle { transition: all 180ms ease; }
-  .tf-scenario input[type="date"] { min-height: 34px; padding: 5px 8px; color: var(--text); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 5px; }
+  .tf-scenario input[type="date"] { min-height: 34px; padding: 5px 8px; color: var(--text); background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-xs); }
   .tf-explanation, .tf-note { margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
   .tf-error { color: #fb923c; font-size: 12px; }
   .tf-table-scroll { overflow-x: auto; }

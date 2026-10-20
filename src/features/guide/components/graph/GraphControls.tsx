@@ -1,9 +1,10 @@
 import type { CSSProperties } from "react";
 import { useI18n } from "../../../../i18n";
 import { Tabs } from "../../../../components/ui";
-import { CATEGORY_ACCENT, CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
+import { CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
 import { guideTracks } from "../../guide.meta";
 import type { GuideTrackId } from "../../guide.types";
+import { trackColor } from "../../guide.ui";
 
 export type GraphView = "graph" | "list";
 
@@ -32,7 +33,7 @@ export default function GraphControls({ tracks, onToggleTrack, showLabs, onShowL
             aria-pressed={tracks.has(tr.id)}
             onClick={() => onToggleTrack(tr.id)}
           >
-            <span className="gg-dot" style={{ "--dot": CATEGORY_ACCENT[tr.id] } as CSSProperties} aria-hidden="true" />
+            <span className="gg-dot" style={{ "--dot": trackColor(tr.id) } as CSSProperties} aria-hidden="true" />
             {t(CATEGORY_LABEL_KEYS[tr.id])}
           </button>
         ))}

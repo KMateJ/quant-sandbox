@@ -26,17 +26,19 @@
   font-size: var(--text-sm);
   color: var(--muted);
   background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast);
 
   &.on {
     color: var(--text);
+    border-bottom-color: var(--text);
   }
 
   &:hover {
-    border-color: var(--border);
+    color: var(--text);
   }
 
   // Off: a hollow ring in the track colour, so the state reads without colour fill alone.
@@ -71,7 +73,7 @@
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xs);
   font: inherit;
   font-size: var(--text-sm);
 }
@@ -92,7 +94,7 @@
 
 .gg-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-columns: minmax(0, 1fr) 340px;
   gap: var(--space-3);
   align-items: start;
 }
@@ -102,7 +104,7 @@
   padding: var(--space-2);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-card-strong, 12px);
+  border-radius: var(--radius-xs);
 }
 
 .gg-canvas-wrap {
@@ -207,13 +209,13 @@
 }
 
 .gg-cluster {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.75;
+  opacity: 0.85;
   paint-order: stroke;
-  stroke: var(--surface);
+  stroke: var(--bg);
   stroke-width: 4px;
   pointer-events: none;
 }
@@ -229,7 +231,7 @@
   font-size: 10.5px;
   fill: var(--text);
   paint-order: stroke;
-  stroke: var(--surface);
+  stroke: var(--bg);
   stroke-width: 3px;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -251,8 +253,9 @@
   transition: opacity 0.2s ease;
 
   circle {
-    fill: var(--gg-color);
-    stroke: var(--surface);
+    fill: var(--bg);
+    stroke: var(--gg-color);
+    stroke-opacity: 0.75;
     stroke-width: 1.5;
     transition: r 0.2s ease, stroke 0.2s ease;
   }
@@ -272,9 +275,16 @@
     stroke-width: 1.5;
   }
 
+  &.on-path circle:not(.gg-read-ring) {
+    fill: var(--gg-color);
+    stroke-opacity: 1;
+  }
+
   &.is-target circle:not(.gg-read-ring) {
+    fill: var(--gg-color);
     stroke: var(--text);
-    stroke-width: 3;
+    stroke-opacity: 1;
+    stroke-width: 2.5;
   }
 
   &.is-match circle {
@@ -364,7 +374,7 @@
   padding: var(--space-3);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-card-strong, 12px);
+  border-radius: var(--radius-xs);
   font-size: var(--text-sm);
 
   h3 {
@@ -483,15 +493,15 @@
 
 // Learning path: lit edges are drawn stronger, nodes carry their step number.
 .gg-edge.is-path {
-  stroke: var(--primary);
-  stroke-opacity: 0.85;
+  stroke: var(--text);
+  stroke-opacity: 0.95;
   stroke-width: 1.8;
 }
 
 .gg-step {
   font-size: 9px;
   font-weight: 700;
-  fill: #fff;
+  fill: var(--bg);
   pointer-events: none;
 }
 
@@ -510,7 +520,7 @@
   font-size: var(--text-sm);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-card-strong, 12px);
+  border-radius: var(--radius-xs);
 
   h3 {
     margin: 0;
@@ -573,8 +583,8 @@
   font-weight: 700;
   line-height: 20px;
   text-align: center;
-  color: #fff;
-  border-radius: var(--radius-sm);
+  color: var(--bg);
+  border-radius: var(--radius-xs);
 }
 
 .gg-path-open {
@@ -588,13 +598,13 @@
   padding: 6px 12px;
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--primary-contrast, #fff);
-  background: var(--primary);
-  border-radius: var(--radius-sm);
+  color: var(--bg);
+  background: var(--text);
+  border-radius: var(--radius-xs);
   text-decoration: none;
 
   &:hover {
-    filter: brightness(1.08);
+    background: var(--text-sub);
   }
 }
 
@@ -613,5 +623,152 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+// Page header, panel hierarchy and levelled prerequisites.
+.gg-header {
+  padding: var(--space-7) 0 var(--space-3);
+
+  h1 {
+    margin: var(--space-2) 0;
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+}
+
+.gg-lede {
+  max-width: 620px;
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-sub);
+}
+
+.gg-eyebrow,
+.gg-code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.gg-code {
+  text-transform: none;
+  color: var(--text-dim);
+}
+
+.gg-details {
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-color: var(--rule);
+
+  h3 {
+    margin: var(--space-3) 0 0;
+    padding-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--text);
+    border-top: 1px solid var(--rule);
+  }
+
+  li button {
+    padding: 0;
+    font: inherit;
+    text-align: left;
+    color: var(--text);
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  li.is-read button {
+    color: var(--muted);
+  }
+}
+
+.gg-details-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.gg-details-open {
+  align-self: flex-start;
+  margin: var(--space-1) 0 0;
+}
+
+.gg-levels {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.gg-level {
+  h4 {
+    margin: 0 0 var(--space-1);
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  ul {
+    gap: 6px;
+  }
+
+  &--2 {
+    padding-left: 14px;
+
+    h4,
+    li button {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+  }
+
+  &--3 {
+    padding-left: 28px;
+
+    h4,
+    li button {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+  }
+}
+
+.gg-stage,
+.gg-details,
+.gg-path {
+  border-color: var(--rule);
+}
+
+// Rail mini graph: square frame; the hovered lesson's title wraps below instead of clipping in the SVG.
+.gg-local .gg-canvas {
+  border-color: var(--rule);
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+}
+
+.gg-local-caption {
+  min-height: 2.7em;
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--text);
+  overflow-wrap: anywhere;
+
+  &.is-hover {
+    color: var(--text-sub);
   }
 }

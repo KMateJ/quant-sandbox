@@ -2,6 +2,8 @@ import type { MouseEvent } from "react";
 import { NavLink } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import type { ModuleDef, ModuleStatus } from "../../modules/registry";
+import GuideSideProgress from "../../features/guide/components/GuideSideProgress";
+import { useTrackProgress } from "../../features/guide/useTrackProgress";
 import ModuleIcon from "./ModuleIcon";
 import SideSubNav from "./SideSubNav";
 
@@ -26,6 +28,7 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
   const status = statusKey ? t(statusKey) : undefined;
   const hasChildren = Boolean(m.subNav?.length);
   const childrenId = `side-children-${m.id}`;
+  const progress = useTrackProgress(m.id);
 
   const onRowClick = (event: MouseEvent) => {
     if (!hasChildren || !active) return;
@@ -34,7 +37,7 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
   };
 
   return (
-    <div className={hasChildren ? "side-node has-children" : "side-node"}>
+    <div className={["side-node", hasChildren && "has-children", m.category === "guides" && "is-guide"].filter(Boolean).join(" ")}>
       <NavLink
         to={m.path}
         end={m.end}
@@ -50,6 +53,7 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
         </span>
         <span className="side-label">{label}</span>
         {/* Beta is a dot so the name keeps its room; "planned" stays a text badge. */}
+        {progress && <GuideSideProgress read={progress.read} total={progress.total} />}
         {m.status === "beta" ? <span className="side-status-dot" role="img" aria-label={status} /> : null}
         {m.status === "planned" ? <span className="side-badge">{status}</span> : null}
       </NavLink>
@@ -70,7 +74,7 @@ export default function SideModuleRow({ module: m, active, open, onToggle }: Pro
       {hasChildren && (
         <div id={childrenId} className={open ? "side-collapse open" : "side-collapse"} inert={!open}>
           <div className="side-collapse-inner">
-            <SideSubNav items={m.subNav!} />
+            <SideSubNav items={m.subNav!} numberClass={progress ? (id) => (id === progress.nextId ? "next" : undefined) : undefined} />
           </div>
         </div>
       )}

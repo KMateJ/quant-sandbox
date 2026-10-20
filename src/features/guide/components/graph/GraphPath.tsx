@@ -37,13 +37,13 @@ export default function GraphPath({ target, steps, direct, label, isRead, onClea
             <span className="gg-path-text">
               <Link to={nodeHref(n)}>{label(n)}</Link>
               {direct.has(n.id) && <span className="gg-muted"> · {t("ggPathDirect")}</span>}
-              {isRead(n) && <span className="gg-muted"> · ✓ {t("ggRead")}</span>}
+              {isRead(n) && <span className="gg-muted"> · {t("ggRead")}</span>}
             </span>
           </li>
         ))}
       </ol>
       <Link className="gg-path-open" to={nodeHref(target)}>
-        {t(target.kind === "lesson" ? "ggOpenLesson" : "ggOpenLab")} →
+        {t(target.kind === "lesson" ? "ggOpenLesson" : "ggOpenLab")}
       </Link>
     </section>
   );

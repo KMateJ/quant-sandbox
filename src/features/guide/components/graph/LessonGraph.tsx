@@ -7,9 +7,10 @@ import GraphCanvas from "./GraphCanvas";
 import { GUIDE_GRAPH, layoutGraph, useNodeLabel } from "./useGuideGraph";
 
 const WIDTH = 240;
-const HEIGHT = 200;
+const HEIGHT = 180;
 
-/// Local graph for the lesson rail: this lesson and the lessons directly connected to it.
+/// Local graph for the lesson rail: this lesson and its direct neighbours. The rail is too narrow for
+/// SVG labels, so the hovered lesson's title is shown as wrapping text under the canvas instead.
 export default function LessonGraph({ lessonId }: { lessonId: GuideId }) {
   const { t } = useI18n();
   const label = useNodeLabel();
@@ -21,13 +22,12 @@ export default function LessonGraph({ lessonId }: { lessonId: GuideId }) {
       nodes: GUIDE_GRAPH.nodes.filter((n) => n.kind === "lesson"),
       edges: GUIDE_GRAPH.edges.filter((e) => e.kind !== "practice"),
     };
-    // The rail is narrow: the lesson and its direct neighbours only.
     const hood = neighbourhood(lessonsOnly, centre, 1);
-    const nodes = hood.nodes;
-    const ids = new Set(nodes.map((n) => n.id));
+    const ids = new Set(hood.nodes.map((n) => n.id));
     const edges = hood.edges.filter((e) => ids.has(e.source) && ids.has(e.target));
-    return { nodes, edges, positions: layoutGraph(nodes, edges, WIDTH, HEIGHT, 3), distance: hood.distance };
+    return { nodes: hood.nodes, edges, positions: layoutGraph(hood.nodes, edges, WIDTH, HEIGHT, 3) };
   }, [centre]);
+  const shown = local.nodes.find((n) => n.id === (active ?? centre));
 
   return (
     <div className="gg-local">
@@ -40,15 +40,15 @@ export default function LessonGraph({ lessonId }: { lessonId: GuideId }) {
         height={HEIGHT}
         label={label}
         isRead={() => false}
-        active={active ?? centre}
+        active={active}
         onActive={setActive}
         matches={new Set([centre])}
         ariaLabel={t("ggAria")}
-        restLabels={0}
-        labelNeighbours={false}
+        showLabels={false}
         nodeScale={0.6}
       />
-      <Link className="gg-local-link" to={`/guide/graph?focus=${lessonId}`}>{t("ggOpenGraph")} →</Link>
+      <p className={active && active !== centre ? "gg-local-caption is-hover" : "gg-local-caption"}>{shown ? label(shown) : ""}</p>
+      <Link className="gg-local-link" to={`/guide/graph?focus=${lessonId}`}>{t("ggOpenGraph")}</Link>
     </div>
   );
 }

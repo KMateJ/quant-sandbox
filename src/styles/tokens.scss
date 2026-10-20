@@ -1,8 +1,9 @@
 :root {
   color-scheme: dark;
-  --font-sans: 'Inter Variable', Inter, system-ui, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Geist Variable', Geist, system-ui, Arial, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
+  --font-display: var(--font-serif);
 
   --text-xs: 0.78rem;
   --text-sm: 0.82rem;
@@ -22,15 +23,15 @@
   --transition-base: 0.25s ease;
 
   --radius-pill: 999px;
-  --radius-code: 6px;
-  --radius-card-soft: 14px;
-  --radius-card-strong: 18px;
-  --radius-control: 12px;
-  --radius-control-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-sm: 6px;
-  --radius-xs: 4px;
+  --radius-code: 2px;
+  --radius-card-soft: 2px;
+  --radius-card-strong: 2px;
+  --radius-control: 2px;
+  --radius-control-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-sm: 2px;
+  --radius-xs: 2px;
 
   --control-height: 36px;
   --control-height-sm: 32px;
@@ -42,7 +43,7 @@
   --z-drawer: 50;
   --z-tooltip: 60;
 
-  --topnav-height: 48px;
+  --topnav-height: 60px;
   --sidebar-rail: 56px;
   --sidebar-width: 220px;
   --shell-pad: 20px;
@@ -53,25 +54,26 @@
   --info-text: #93c5fd;
 }
 
+// Palette "Graphite" (dark) / "Porcelain" (light). Alternatives live in src/lib/palettes.ts (Settings) and docs/plans/home-redesign/01-tokens-fonts.md.
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #0b1220;
-  --surface: #162033;
-  --surface-soft: #24324a;
-  --surface-muted: #1d2940;
+  --bg: #111214;
+  --surface: #17181b;
+  --surface-soft: #1f2023;
+  --surface-muted: #151618;
 
-  --text: #f8fafc;
-  --text-inverse: #ffffff;
-  --muted: #9fb0c9;
+  --text: #e8e8e6;
+  --text-inverse: #111214;
+  --muted: #9a9b9c;
   --code-text: #e2e8f0;
 
-  --border: #465975;
-  --border-hover: #b8c5d9;
+  --border: #32353a;
+  --border-hover: #484a4f;
 
-  --primary: #3b82f6;
-  --primary-strong: #2563eb;
+  --primary: #a8b8d8;
+  --primary-strong: #919fbb;
 
   --positive: #22c55e;
   --negative: #ef4444;
@@ -104,29 +106,43 @@
   --success-title: #22c55e;
   --success-text: #86efac;
 
-  --topbar-bg: rgba(11, 18, 32, 0.88);
+  --topbar-bg: #111214;
+  --backdrop: rgba(0, 0, 0, 0.55);
 
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --shadow: none;
+
+  --rule: #26282c;
+  --rule-strong: #32353a;
+  --text-sub: #b9baba;
+  --text-dim: #6a6b6c;
+  --accent: #a8b8d8;
+
+  // Guide track hues (knowledge graph only).
+  --track-derivatives: #5fb98a;
+  --track-portfolio: #6f9cf0;
+  --track-fixed-income: #d9a74a;
+  --track-corporate: #d27aa3;
+  --track-stochastic: #a98ae0;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #eef3fb;
+  --bg: #f5f7fb;
   --surface: #ffffff;
-  --surface-soft: #e9eff8;
-  --surface-muted: #dde7f4;
+  --surface-soft: #eaeef6;
+  --surface-muted: #e4e9f2;
 
-  --text: #132033;
-  --text-inverse: #ffffff;
-  --muted: #5f728d;
+  --text: #0f1b33;
+  --text-inverse: #f5f7fb;
+  --muted: #5a6782;
   --code-text: #1e3a5f;
 
-  --border: #bfd0e6;
-  --border-hover: #7f98b8;
+  --border: #c3cbdb;
+  --border-hover: #b9c3d6;
 
-  --primary: #2563eb;
-  --primary-strong: #1d4ed8;
+  --primary: #1f55d1;
+  --primary-strong: #1a47b0;
 
   --positive: #16a34a;
   --negative: #dc2626;
@@ -158,7 +174,21 @@
   --success-title: #15803d;
   --success-text: #166534;
 
-  --topbar-bg: rgba(255, 255, 255, 0.85);
+  --topbar-bg: #f5f7fb;
+  --backdrop: rgba(15, 27, 51, 0.25);
 
-  --shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+  --shadow: none;
+
+  --rule: #d6dce8;
+  --rule-strong: #c3cbdb;
+  --text-sub: #42506b;
+  --text-dim: #7a869e;
+  --accent: #1f55d1;
+
+  // Guide track hues (knowledge graph only).
+  --track-derivatives: #2f8a5c;
+  --track-portfolio: #2f62c8;
+  --track-fixed-income: #a8761c;
+  --track-corporate: #b04c7c;
+  --track-stochastic: #7452b8;
 }

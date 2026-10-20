@@ -2,12 +2,13 @@ import { useMemo } from "react";
 import { useI18n } from "../../../../i18n";
 import { en, type TranslationKey } from "../../../../Language/index.en";
 import { guideTitleTablesHu } from "../../../../Language/guideTitles.hu";
-import { CATEGORY_ACCENT, modules } from "../../../../modules/registry";
+import { modules } from "../../../../modules/registry";
 import { guideContent } from "../../../../Language/guides";
 import { guideLessons, guidePath } from "../../guide.meta";
 import { buildGuideGraph, learningPath, type GraphEdge, type GraphNode, type GuideGraph } from "../../guide.graph";
 import { forceLayout, type LayoutEdge, type Point } from "../../guide.graph.layout";
 import type { GuideTrackId } from "../../guide.types";
+import { trackColor } from "../../guide.ui";
 
 // The graph indexes citations in both languages; only the Hungarian lesson titles are needed for that.
 const TABLES: Record<"en" | "hu", Partial<Record<TranslationKey, string>>> = { en, hu: guideTitleTablesHu };
@@ -28,7 +29,7 @@ const EDGE_SHAPE: Record<GraphEdge["kind"], Pick<LayoutEdge, "length" | "strengt
 
 /// Disc size follows PageRank (area roughly proportional to rank), so foundational lessons stand out.
 export const nodeRadius = (n: GraphNode) => (n.kind === "lab" ? 4 + Math.sqrt(n.rank) * 1.5 : 5 + Math.sqrt(n.rank) * 4.5);
-export const nodeColor = (n: GraphNode) => (n.kind === "lesson" ? CATEGORY_ACCENT[n.track] : "var(--muted)");
+export const nodeColor = (n: GraphNode) => (n.kind === "lesson" ? trackColor(n.track) : "var(--muted)");
 export const nodeHref = (n: GraphNode) =>
   n.kind === "lesson" ? guidePath(n.lessonId) : modules.find((m) => m.id === n.moduleId)?.path ?? "/";
 
@@ -81,8 +82,9 @@ export function neighbourIds(edges: GraphEdge[], id: string | null): Set<string>
   return out;
 }
 
-const CURRICULUM_ORDER = new Map(GUIDE_GRAPH.nodes.map((n, i) => [n.id, i]));
-const NODE_BY_ID = new Map(GUIDE_GRAPH.nodes.map((n) => [n.id, n]));
+/// Curriculum position of every node, used to order reading paths.
+export const CURRICULUM_ORDER = new Map(GUIDE_GRAPH.nodes.map((n, i) => [n.id, i]));
+export const NODE_BY_ID = new Map(GUIDE_GRAPH.nodes.map((n) => [n.id, n]));
 
 /// The reading path to `selected` over the whole curriculum (not just the visible tracks), with numbered steps.
 export function useLearningPath(selected: string | null) {

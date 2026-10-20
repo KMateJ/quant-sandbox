@@ -32,6 +32,8 @@ type Props = {
   nodeScale?: number;
   /// A selected learning path: step number per node and the edges it uses. Shown when nothing is hovered.
   path?: { steps: ReadonlyMap<string, number>; edges: ReadonlySet<string> } | null;
+  /// Draw SVG node labels (off in the narrow rail graph, which captions the hovered node instead).
+  showLabels?: boolean;
   /// Click selects instead of navigating (the global page); without it, clicks open the node.
   onSelect?: (id: string) => void;
   /// The full page shows zoom buttons and a faint name over each track's cluster.
@@ -39,7 +41,7 @@ type Props = {
 };
 
 /// SVG force graph: nodes are real links; hover/focus highlights a node's neighbourhood.
-export default function GraphCanvas({ nodes, edges, positions, width, height, label, isRead, active, onActive, matches, ariaLabel, restLabels = 8, labelNeighbours = true, nodeScale = 1, path, onSelect, chrome = false }: Props) {
+export default function GraphCanvas({ nodes, edges, positions, width, height, label, isRead, active, onActive, matches, ariaLabel, restLabels = 8, labelNeighbours = true, nodeScale = 1, showLabels = true, path, onSelect, chrome = false }: Props) {
   const navigate = useNavigate();
   const { language } = useI18n();
   const radius = (n: GraphNode) => nodeRadius(n) * nodeScale;
@@ -71,7 +73,7 @@ export default function GraphCanvas({ nodes, edges, positions, width, height, la
   const at = (id: string) => moved[id] ?? positions.get(id) ?? { x: 0, y: 0 };
   const toScreen = (p: Point) => ({ x: p.x * zoom + panX, y: p.y * zoom + panY });
   // Labels are placed in screen space so the overlap check matches what is drawn.
-  const labels = placeLabels(
+  const labels = !showLabels ? new Map<string, never>() : placeLabels(
     nodes.filter((n) => n.kind === "lesson" || n.id === active).map((n) => {
       const s = toScreen(at(n.id));
       return { id: n.id, x: s.x, y: s.y + (radius(n) + 11) * Math.min(zoom, 1.4), text: label(n), priority: priority(n) };
@@ -97,7 +99,7 @@ export default function GraphCanvas({ nodes, edges, positions, width, height, la
                 key={n.id}
                 // A plain SVG link skips the router basename, so the language prefix is added here; clicks use navigate().
                 href={localizedPath(nodeHref(n), language)}
-                className={`gg-node gg-node--${n.kind}${dim(n.id)}${matches.has(n.id) ? " is-match" : ""}${isRead(n) ? " is-read" : ""}${n.id === target ? " is-target" : ""}`}
+                className={`gg-node gg-node--${n.kind}${dim(n.id)}${matches.has(n.id) ? " is-match" : ""}${isRead(n) ? " is-read" : ""}${n.id === target ? " is-target" : ""}${showPath?.steps.has(n.id) ? " on-path" : ""}`}
                 style={{ "--gg-color": nodeColor(n), "--i": Math.min(i, 40) } as CSSProperties}
                 aria-label={label(n)}
                 onPointerEnter={() => onActive(n.id)}

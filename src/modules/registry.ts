@@ -52,6 +52,8 @@ export interface ModuleDef {
   relatedGuides?: string[];
   intuition?: IntuitionDocument;
   subNav?: ModuleSubNavItem[];
+  /// Shown as the large tile of its area on the home page.
+  homeFeatured?: boolean;
 }
 
 export const CATEGORY_ORDER: ModuleCategory[] = [
@@ -146,6 +148,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "black-scholes",
+    homeFeatured: true,
     intuition: blackScholesIntuition,
     path: "/black-scholes",
     navKey: "navBlackScholes",
@@ -193,6 +196,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "yield-curve",
+    homeFeatured: true,
     intuition: yieldCurveIntuition,
     path: "/yield-curve",
     navKey: "navYieldCurve",
@@ -273,6 +277,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "efficient-frontier",
+    homeFeatured: true,
     intuition: frontierIntuition,
     path: "/efficient-frontier",
     navKey: "navEfficientFrontier",
@@ -296,6 +301,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "valuation",
+    homeFeatured: true,
     path: "/valuation",
     navKey: "navValuation",
     category: "corporate",
@@ -340,6 +346,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "stochastic-models",
+    homeFeatured: true,
     path: STUDIO_PATH,
     navKey: "navStochasticStudio",
     category: "stochastic",
@@ -403,7 +410,7 @@ export const modules: ModuleDef[] = [
     id: "guide-graph",
     path: "/guide/graph",
     navKey: "navGuideGraph",
-    icon: "guide",
+    icon: "graph",
     category: "guides",
     status: "live",
     seo: { titleKey: "seoTitleGuideGraph", descKey: "seoDescGuideGraph" },

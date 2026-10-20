@@ -6,7 +6,7 @@ import { revealInScroller } from "./useActiveIndicator";
 
 /// Nested links under the active sidebar module (e.g. studio lessons, guide lessons).
 /// Rows fade in one after another on open; the current one is kept in view as the route changes.
-export default function SideSubNav({ items }: { items: ModuleSubNavItem[] }) {
+export default function SideSubNav({ items, numberClass }: { items: ModuleSubNavItem[]; numberClass?: (itemId: string) => string | undefined }) {
   const { t } = useI18n();
   const { pathname } = useLocation();
   const ref = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ export default function SideSubNav({ items }: { items: ModuleSubNavItem[] }) {
             title={label}
             style={{ "--i": Math.min(index, 12) } as CSSProperties}
           >
-            {item.prefix ? <span className="side-sub-number">{item.prefix}</span> : null}
+            {item.prefix ? <span className={["side-sub-number", numberClass?.(item.id)].filter(Boolean).join(" ")}>{item.prefix}</span> : null}
             <span className="side-sub-label">{label}</span>
           </Link>
         );

@@ -8,13 +8,14 @@ import { useMarkReadAtEnd } from "../useGuideProgress";
 import { useGuideToc } from "../useGuideToc";
 import { checksAnchor, collectChecks } from "../guide.check.logic";
 import GuideBlocks from "./GuideBlocks";
+import GuideLessonHeader from "./GuideLessonHeader";
 import GuideLessonNav from "./GuideLessonNav";
 import GuideRail from "./GuideRail";
 
 /// A single lesson: reading column with series context, plus a contents / labs rail.
 export default function GuideLessonPage({ location }: { location: GuideLessonLocation }) {
   const { t, language } = useI18n();
-  const { lesson, track, index, previous, next } = location;
+  const { lesson, track, previous, next } = location;
   const bodyRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLElement>(null);
   const checkCount = collectChecks([lesson.id], guideContent, language).length;
@@ -29,19 +30,7 @@ export default function GuideLessonPage({ location }: { location: GuideLessonLoc
     <div className="page-shell">
       <div className="page-content guide-lesson">
         <article className="guide-article">
-          <header className="guide-lesson-head">
-            <nav className="guide-breadcrumb" aria-label={t("guideBreadcrumbLabel")}>
-              <span>{t("navGuide")}</span>
-              <span aria-hidden="true">/</span>
-              <Link to={guideTrackPath(track.id)}>{t(track.titleKey)}</Link>
-            </nav>
-            <h1 className="guide-lesson-title">{t(lesson.titleKey)}</h1>
-            <p className="guide-lesson-meta">
-              {t("guideLessonOf", { current: index + 1, total: track.lessons.length })}
-              <span aria-hidden="true"> · </span>
-              {t("guideMinRead", { min: toc.minutes })}
-            </p>
-          </header>
+          <GuideLessonHeader location={location} minutes={toc.minutes} />
 
           <div ref={bodyRef} className="guide-article-body">
             <GuideBlocks blocks={guideContent[lesson.id][language]} lessonId={lesson.id} />

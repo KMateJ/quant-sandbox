@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { PageHeader } from "../../../../components/layout";
 import { useMediaQuery } from "../../../../components/useMediaQuery";
 import { useI18n } from "../../../../i18n";
 import { guideTracks } from "../../guide.meta";
@@ -12,10 +11,12 @@ import GraphDetails from "./GraphDetails";
 import GraphLegend from "./GraphLegend";
 import GraphList from "./GraphList";
 import GraphPath from "./GraphPath";
-import { useFilteredGraph, useLearningPath, useNodeLabel } from "./useGuideGraph";
+import { GUIDE_GRAPH, useFilteredGraph, useLearningPath, useNodeLabel } from "./useGuideGraph";
 
 const WIDTH = 960;
 const HEIGHT = 640;
+const LESSON_COUNT = GUIDE_GRAPH.nodes.filter((n) => n.kind === "lesson").length;
+const LAB_COUNT = GUIDE_GRAPH.nodes.length - LESSON_COUNT;
 const ALL_TRACKS = new Set(guideTracks.map((t) => t.id));
 
 /// Obsidian-style map of the guides: lessons by track, the lessons they build on, and the labs that practise them.
@@ -78,7 +79,11 @@ export default function GuideGraphPage() {
   return (
     <div className="page-shell">
       <div className="page-content gg-page">
-        <PageHeader title={t("ggTitle")} description={t("ggDesc")} />
+        <header className="gg-header">
+          <p className="gg-eyebrow">{t("ggEyebrow", { lessons: LESSON_COUNT, labs: LAB_COUNT })}</p>
+          <h1>{t("ggTitle")}</h1>
+          <p className="gg-lede">{t("ggLede")}</p>
+        </header>
         <GraphControls
           tracks={tracks}
           onToggleTrack={toggleTrack}
@@ -112,8 +117,12 @@ export default function GuideGraphPage() {
               <p className="gg-hint">{t("ggHint")}</p>
             </div>
             <div className="gg-side">
-              {pathPanel}
-              <GraphDetails node={active ? byId.get(active) ?? null : path ? path.target : null} edges={edges} byId={byId} label={label} />
+              <GraphDetails
+                node={active ? byId.get(active) ?? null : path ? path.target : null}
+                label={label}
+                isRead={(n) => n.kind === "lesson" && isRead(n.lessonId)}
+                onSelect={select}
+              />
             </div>
           </div>
         ) : (

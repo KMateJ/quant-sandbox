@@ -1,8 +1,9 @@
 import { useI18n } from "../../../../i18n";
-import { CATEGORY_ACCENT, CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
+import { CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
 import type { GraphNode } from "../../guide.graph";
 import type { Point } from "../../guide.graph.layout";
 import type { GuideTrackId } from "../../guide.types";
+import { trackColor } from "../../guide.ui";
 
 type Props = { nodes: GraphNode[]; at: (id: string) => Point };
 
@@ -19,7 +20,7 @@ export default function GraphClusters({ nodes, at }: Props) {
   return (
     <g className="gg-clusters" aria-hidden="true">
       {[...clusters].map(([track, c]) => (
-        <text key={track} x={c.x / c.n} y={c.top - 22} textAnchor="middle" className="gg-cluster" style={{ fill: CATEGORY_ACCENT[track] }}>
+        <text key={track} x={c.x / c.n} y={c.top - 22} textAnchor="middle" className="gg-cluster" style={{ fill: trackColor(track) }}>
           {t(CATEGORY_LABEL_KEYS[track])}
         </text>
       ))}

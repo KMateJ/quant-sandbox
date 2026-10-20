@@ -15,11 +15,11 @@ export default function Sidebar({ category }: { category: ModuleCategory }) {
   const { pathname } = useLocation();
   const { activeModule } = useActiveModule();
   const { pinned, toggle } = useSidebarPin();
-  // Explicit open/closed choices per module; without one, only the active module is open.
+  // Explicit open/closed choices per module; without one, the active module is open (a guide track only on one of its lessons).
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const treeRef = useRef<HTMLElement>(null);
   const items = modulesInCategory(category);
-  useActiveIndicator(treeRef, ".side-row.active", `${category}:${pathname}:${pinned}`);
+  useActiveIndicator(treeRef, ".side-row.active", `${category}:${pathname}:${pinned}:${JSON.stringify(expanded)}`);
 
   const pinLabel = pinned ? t("navCollapseSidebar") : t("navExpandSidebar");
 
@@ -47,7 +47,7 @@ export default function Sidebar({ category }: { category: ModuleCategory }) {
           <span className="side-indicator" aria-hidden="true" />
           {items.map((m) => {
             const active = m.id === activeModule?.id;
-            const open = expanded[m.id] ?? active;
+            const open = expanded[m.id] ?? (active && (m.category !== "guides" || pathname !== m.path));
             return (
               <SideModuleRow
                 key={m.id}

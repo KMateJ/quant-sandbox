@@ -5,6 +5,7 @@
 @use "layout";
 @use "shell";
 @use "primitives";
+@use "home";
 @use "playback";
 @use "lab-primitives";
 @use "tvm";
@@ -27,3 +28,5 @@
 @use "npv";
 @use "stochastic-models";
 @use "surface3d";
+@use "search";
+@use "settings";

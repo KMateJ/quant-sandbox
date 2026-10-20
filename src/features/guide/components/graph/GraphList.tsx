@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../../../i18n";
-import { CATEGORY_ACCENT, CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
+import { CATEGORY_LABEL_KEYS } from "../../../../modules/registry";
 import { guideLessons, guidePath, guideTracks } from "../../guide.meta";
 import { lessonNodeId, type GraphEdge, type GraphNode } from "../../guide.graph";
 import type { GuideTrackId } from "../../guide.types";
+import { trackColor } from "../../guide.ui";
 
 type Props = {
   tracks: ReadonlySet<GuideTrackId>;
@@ -23,7 +24,7 @@ export default function GraphList({ tracks, edges, byId, label, matches }: Props
     <div className="gg-list">
       {guideTracks.filter((tr) => tracks.has(tr.id)).map((track) => (
         <section key={track.id} className="gg-list-track">
-          <h2 style={{ color: CATEGORY_ACCENT[track.id] }}>{t(CATEGORY_LABEL_KEYS[track.id])}</h2>
+          <h2 style={{ color: trackColor(track.id) }}>{t(CATEGORY_LABEL_KEYS[track.id])}</h2>
           <ol>
             {guideLessons.filter((l) => l.track === track.id).map((lesson) => {
               const id = lessonNodeId(lesson.id);

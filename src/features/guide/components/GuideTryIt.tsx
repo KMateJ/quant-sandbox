@@ -17,7 +17,6 @@ export default function GuideTryIt({ to, label, children }: GuideTryItProps) {
       <span className="guide-tryit-label">{label ?? t("guideTryIt")}</span>
       <GuideLink to={to} className="guide-tryit-link">
         {children}
-        <span aria-hidden="true"> →</span>
       </GuideLink>
     </aside>
   );

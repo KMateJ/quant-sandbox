@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export type OgColors = { bg: string; surface: string; text: string; muted: string; primary: string; border: string };
+export type OgColors = { bg: string; surface: string; text: string; muted: string; primary: string; border: string; rule: string; accent: string };
 
-const NAMES: (keyof OgColors)[] = ["bg", "surface", "text", "muted", "primary", "border"];
+const NAMES: (keyof OgColors)[] = ["bg", "surface", "text", "muted", "primary", "border", "rule", "accent"];
 
 /// Dark-theme colours read from src/styles/tokens.scss, so OG images match the app.
 export async function ogColors(root: string): Promise<OgColors> {

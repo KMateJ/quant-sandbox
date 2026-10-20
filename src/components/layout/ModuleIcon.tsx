@@ -125,6 +125,14 @@ const ICONS: Record<string, ReactNode> = {
       <rect x="5" y="13" width="14" height="7" rx="1.5" />
     </>
   ),
+  graph: (
+    <>
+      <circle cx="6" cy="17" r="1.8" />
+      <circle cx="12" cy="7" r="1.8" />
+      <circle cx="18" cy="16" r="1.8" />
+      <path d="M7.2 15.4 10.8 8.6M13.4 8.4 16.9 14.4" />
+    </>
+  ),
   guide: (
     <>
       <path d="M12 6c-1.6-1-4-1.6-6-1.6-1 0-2 .1-3 .4v12c1-.3 2-.4 3-.4 2 0 4.4.6 6 1.6" />

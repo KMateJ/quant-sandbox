@@ -7,6 +7,8 @@ import {
 } from "../../modules/registry";
 import ThemeToggle from "../ui/ThemeToggle";
 import LanguageMenu from "../ui/LanguageMenu";
+import SearchButton from "./SearchButton";
+import SettingsButton from "../settings/SettingsButton";
 import { useActiveModule } from "./useActiveModule";
 
 type Props = {
@@ -43,8 +45,10 @@ export default function TopNavigation({ navOpen, onToggleNav }: Props) {
         </nav>
 
         <div className="topnav-controls">
+          <SearchButton />
           <ThemeToggle />
           <LanguageMenu />
+          <SettingsButton />
           <button
             type="button"
             className="nav-toggle"

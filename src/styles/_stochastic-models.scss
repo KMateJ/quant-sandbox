@@ -458,7 +458,7 @@ a.stoch-lesson-item.is-available:hover {
   gap: 2px;
   padding: 10px 12px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   background: color-mix(in srgb, var(--chart-empirical) var(--strength, 0%), transparent);
   transition: background 120ms ease;
 }

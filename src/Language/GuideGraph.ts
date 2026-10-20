@@ -46,4 +46,13 @@ export const guideGraphEn: Record<keyof typeof guideGraphHu, string> = {
   ggOpenLab: "Open lab",
   ggClear: "Clear selection",
   ggSelectHint: "Click a lesson to see what to read first, in order, to understand it.",
+  ggEyebrow: "Guides · {{lessons}} lessons · {{labs}} labs",
+  ggLede: "Pick a lesson to see everything it builds on, in the order to read it.",
+  ggReadFirst: "Read first",
+  ggDirectlyBefore: "Directly before",
+  ggTwoBack: "Two steps back",
+  ggFoundations: "Foundations",
+  ggLeadsTo: "Leads to",
+  ggNothingBefore: "Nothing. This is a starting point.",
+  ggSummary: "Lesson {{n}} of {{total}} · lessons before it: {{count}} · tracks: {{tracks}}",
 };
