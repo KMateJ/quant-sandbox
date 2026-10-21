@@ -96,3 +96,18 @@ export type BinomialTreeResult = {
   yieldToMaturity?: number;
   steps: number;
 };
+
+export type BinomialUrlState = {
+  mode: TreeMode;
+  s0: number;
+  k: number;
+  u: number;
+  d: number;
+  r: number;
+  q: number;
+  h: number;
+  steps: number;
+  type: OptionKind;
+  primary: boolean;
+  secondary: boolean;
+};

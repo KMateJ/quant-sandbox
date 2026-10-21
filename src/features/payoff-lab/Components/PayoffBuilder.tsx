@@ -9,10 +9,8 @@ type Positions = { legs: StrategyLeg[]; groups: PositionGroup[] };
 
 type PayoffBuilderProps = Positions & {
   mode: ViewMode;
-  controlsOpen: boolean;
   selectedPreset: PresetKey | null;
   showComponents: boolean;
-  onToggleControls: () => void;
   onModeChange: (mode: ViewMode) => void;
   onPresetChange: (preset: PresetKey | null) => void;
   onShowComponentsChange: (value: boolean) => void;
@@ -24,10 +22,8 @@ export default function PayoffBuilder({
   legs,
   groups,
   mode,
-  controlsOpen,
   selectedPreset,
   showComponents,
-  onToggleControls,
   onModeChange,
   onPresetChange,
   onShowComponentsChange,
@@ -42,15 +38,7 @@ export default function PayoffBuilder({
   );
 
   return (
-    <SectionCard
-      className="payoff-builder-card"
-      title=""
-      headerLeft={
-        <button type="button" className="toggle-button" onClick={onToggleControls}>
-          {controlsOpen ? "-" : "+"}
-        </button>
-      }
-    >
+    <SectionCard className="payoff-builder-card" title="">
       <div className="metric-switch">
         {toggle(mode === "payoff", t("payoffBuilderShowPayoff"), () => onModeChange("payoff"))}
         {toggle(mode === "profit", t("payoffBuilderShowProfit"), () => onModeChange("profit"))}
@@ -66,29 +54,14 @@ export default function PayoffBuilder({
         }}
       />
 
-      {controlsOpen ? (
-        <LegList
-          legs={legs}
-          groups={groups}
-          onChange={(next) => {
-            onPresetChange(null);
-            onChange(next);
-          }}
-        />
-      ) : (
-        <div className="param-summary">
-          <div>
-            {legs.length} {t("payoffCollapsedLegCount")}
-            {groups.length > 0 && ` · ${t("payoffPositionCount", { n: groups.length })}`}
-          </div>
-          <div>{mode === "payoff" ? t("payoffBuilderShowPayoff") : t("payoffBuilderShowProfit")}</div>
-          <div>
-            {showComponents
-              ? t("payoffCollapsedComponentsVisible")
-              : t("payoffCollapsedComponentsHidden")}
-          </div>
-        </div>
-      )}
+      <LegList
+        legs={legs}
+        groups={groups}
+        onChange={(next) => {
+          onPresetChange(null);
+          onChange(next);
+        }}
+      />
     </SectionCard>
   );
 }

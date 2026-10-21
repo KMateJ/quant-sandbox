@@ -1,3 +1,5 @@
+import type { MetricKey, OptionType } from "./blackScholes.types";
+
 export function normalPdf(x: number): number {
   return Math.exp((-x * x) / 2) / Math.sqrt(2 * Math.PI);
 }
@@ -167,14 +169,12 @@ export function blackScholesPutRho(
   return -K * T * Math.exp(-r * T) * normalCdf(-d2);
 }
 
-export type BsMetric = "price" | "delta" | "gamma" | "vega" | "theta" | "rho";
-export type BsOptionType = "call" | "put";
 
 /// Dispatches a single Black–Scholes metric for the given option type so the
 /// 2D curves and the 3D surface evaluate the exact same function.
 export function evaluateMetric(
-  metric: BsMetric,
-  optionType: BsOptionType,
+  metric: MetricKey,
+  optionType: OptionType,
   S: number,
   K: number,
   T: number,
@@ -234,8 +234,8 @@ function linspace(min: number, max: number, count: number): number[] {
 
 /// Samples a metric over a (spot × maturity) grid for 3D surface rendering.
 export function buildMetricSurface(
-  metric: BsMetric,
-  optionType: BsOptionType,
+  metric: MetricKey,
+  optionType: OptionType,
   range: SurfaceRange,
   K: number,
   r: number,
@@ -274,4 +274,29 @@ export function makeMaturities(
     const ratio = i / (count - 1);
     return Number((start + ratio * (maxMaturity - start)).toFixed(2));
   });
+}
+const FIXED_FRAMES: Record<MetricKey, { call: [number, number]; put: [number, number] }> = {
+  price: { call: [0, 175], put: [0, 175] },
+  delta: { call: [0, 1], put: [-1, 0] },
+  gamma: { call: [0, 0.12], put: [0, 0.12] },
+  vega: { call: [0, 100], put: [0, 100] },
+  theta: { call: [-30, 10], put: [-25, 15] },
+  rho: { call: [0, 250], put: [-250, 0] },
+};
+
+/// y-axis frame for a metric: the fixed teaching frame widened to the data when curves would clip.
+export function metricFrame(metric: MetricKey, optionType: OptionType, values: number[]): [number, number] {
+  const [fixedMin, fixedMax] = FIXED_FRAMES[metric][optionType];
+  let dataMin = Infinity;
+  let dataMax = -Infinity;
+  for (const v of values) {
+    if (!Number.isFinite(v)) continue;
+    if (v < dataMin) dataMin = v;
+    if (v > dataMax) dataMax = v;
+  }
+  if (dataMin > dataMax) return [fixedMin, fixedMax];
+  const pad = (dataMax - dataMin) * 0.04;
+  const min = metric === "price" ? 0 : Math.min(fixedMin, dataMin < fixedMin ? dataMin - pad : dataMin);
+  const max = Math.max(fixedMax, dataMax > fixedMax ? dataMax + pad : dataMax);
+  return [min, max];
 }

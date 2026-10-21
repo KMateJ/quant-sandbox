@@ -4,7 +4,6 @@ export const binomialEn = {
     binomialR0Label: "r₀ (initial short rate)",
     binomialQLabel: "q (up pricing weight)",
     binomialHLabel: "h (log step size)",
-    binomialToggleControls: "Show/hide parameters",
     binomialToggleRates: "Rates",
     binomialToggleBonds: "Bond values",
     binomialRateTreeTitle: "Binomial rate tree",
@@ -27,6 +26,8 @@ export const binomialEn = {
     intuitionBinomialRateStepTitle: "Rate-tree log step size: h",
     intuitionBinomialRateStepSummary: "Each rate move multiplies the short rate by exp(h) or exp(−h).",
     intuitionBinomialRateStepBody: "h is not a percentage-point rate change. h = 0.18 gives factors of about 1.197 and 0.835 applied to the node's short rate. Larger h spreads the rate branches further apart while q stays fixed. Bond prices respond through different discounting at later nodes. If r₀ = 0, multiplication leaves every rate at zero regardless of h. This h is not a Heston time step.",
+    binomialRiskNeutralProb: "q (risk-neutral)",
+    binomialShowLabel: "Show on nodes",
     binomialToggleStocks: "Stock prices",
     binomialToggleValues: "Option values",
 

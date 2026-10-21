@@ -1,6 +1,7 @@
 import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import { LineChart, type ChartSeries } from "../../../components/charts";
+import { LineChart, SERIES_ROLE, type ChartSeries } from "../../../components/charts";
+import { CHART_COLORS } from "../../../components/charts/chart.theme";
 import { Tabs, type TabItem } from "../../../components/ui";
 import type { HestonVolSurfaceData, SmilePoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
@@ -17,14 +18,13 @@ type Props = {
   surface: HestonVolSurfaceData | null;
 };
 
-const series: ChartSeries[] = [
-  { key: "bsIv", label: "BS implied vol", color: "#3b82f6" },
-  { key: "hestonIv", label: "Heston implied vol", color: "#f59e0b" },
-];
-
 export default function HestonSmileChart({ data, strikeRatio, vol3d, setVol3d, surface }: Props) {
   const { t } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const series: ChartSeries[] = [
+    { key: "bsIv", label: t("hestonSeriesBsIv"), color: SERIES_ROLE.reference },
+    { key: "hestonIv", label: t("hestonSeriesHestonIv"), color: SERIES_ROLE.candidate },
+  ];
 
   const minIv =
     data.length > 0 ? Math.min(...data.map((d) => Math.min(d.bsIv, d.hestonIv))) : 0;
@@ -64,7 +64,7 @@ export default function HestonSmileChart({ data, strikeRatio, vol3d, setVol3d, s
             xKey="moneyness"
             series={series}
             yDomain={[yMin, yMax]}
-            referenceLines={[{ axis: "x", value: strikeRatio, color: "#94a3b8", dash: "4 4" }]}
+            referenceLines={[{ axis: "x", value: strikeRatio, color: CHART_COLORS.axis, dash: "4 4" }]}
             isMobile={isMobile}
             legend={false}
             tooltipLabel={(x) => `K / S₀ = ${x}`}

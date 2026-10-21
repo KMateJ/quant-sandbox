@@ -1,19 +1,11 @@
 import { useMemo } from "react";
 import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import { LineChart, type ChartSeries } from "../../../components/charts";
+import { LineChart, SERIES_PALETTE, type ChartSeries } from "../../../components/charts";
+import { CHART_COLORS } from "../../../components/charts/chart.theme";
 import type { HestonPathPoint } from "../heston.types";
 import { useI18n } from "../../../i18n";
 import { IntuitionTrigger } from "../../../components/intuition";
-
-const lineColors = [
-  "#1d4ed8",
-  "#059669",
-  "#d97706",
-  "#dc2626",
-  "#7c3aed",
-  "#0891b2",
-];
 
 type Props = {
   data: HestonPathPoint[];
@@ -34,7 +26,7 @@ export default function HestonVarianceChart({
       pathKeys.map((key, index) => ({
         key,
         label: key,
-        color: lineColors[index % lineColors.length],
+        color: SERIES_PALETTE[index % SERIES_PALETTE.length],
         strokeWidth: 2,
       })),
     [pathKeys]
@@ -51,7 +43,7 @@ export default function HestonVarianceChart({
           xKey="t"
           series={series}
           referenceLines={[
-            { axis: "y", value: theta, color: "#94a3b8", dash: "4 4" },
+            { axis: "y", value: theta, color: CHART_COLORS.axis, dash: "4 4" },
           ]}
           isMobile={isMobile}
           legend={false}

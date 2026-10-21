@@ -1,86 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { blackScholesCall, blackScholesPut, makeMaturities, evaluateMetric, buildMetricSurface, type MetricSurface } from "./blackScholes.math";
+import { useMemo } from "react";
+import { blackScholesCall, blackScholesPut, makeMaturities, evaluateMetric, buildMetricSurface, metricFrame, type MetricSurface } from "./blackScholes.math";
+import type { MetricKey, OptionType } from "./blackScholes.types";
+import { BLACK_SCHOLES_URL } from "./blackScholes.url";
 import { type SliderDescriptor } from "../../components/SliderDock";
 import { useMediaQuery } from "../../components/useMediaQuery";
-import { type ChartSeries } from "../../components/charts";
+import { useUrlState } from "../../components/useUrlState";
+import { type ChartSeries, SERIES_PALETTE } from "../../components/charts";
 import { useI18n } from "../../i18n";
-
 
 type ChartRow = {
   S: number;
   [key: string]: number;
 };
-
-
-const lineColors = [
-  "#1d4ed8",
-  "#059669",
-  "#d97706",
-  "#dc2626",
-  "#7c3aed",
-  "#0891b2",
-];
-
-
-type MetricKey = "price" | "delta" | "gamma" | "vega" | "theta" | "rho";
-
-type OptionType = "call" | "put";
-
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-
-function parseNumber(
-  value: string | null,
-  fallback: number,
-  min: number,
-  max: number,
-  decimals?: number
-) {
-  if (value == null || value.trim() === "") return fallback;
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) return fallback;
-  const clamped = clamp(parsed, min, max);
-  if (decimals == null) return clamped;
-  return Number(clamped.toFixed(decimals));
-}
-
-
-function parseMetric(value: string | null): MetricKey {
-  if (
-    value === "price" ||
-    value === "delta" ||
-    value === "gamma" ||
-    value === "vega" ||
-    value === "theta" ||
-    value === "rho"
-  ) {
-    return value;
-  }
-
-  return "price";
-}
-
-
-function parseOptionType(value: string | null): OptionType {
-  return value === "put" ? "put" : "call";
-}
-
-
-function parseView3d(value: string | null): boolean {
-  return value === "3d";
-}
-
-
-function formatNumber(value: number, decimals?: number) {
-  if (decimals == null) return String(value);
-  return String(Number(value.toFixed(decimals)));
-}
-
-
 function getMetricTitle(
   metric: MetricKey,
   optionType: OptionType,
@@ -111,88 +42,17 @@ function getMetricTitle(
 export function useBlackScholesView() {
   const { t, language } = useI18n();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryString = searchParams.toString();
-
-  const [strike, setStrike] = useState(() =>
-    parseNumber(searchParams.get("k"), 100, 20, 200)
-  );
-  const [rate, setRate] = useState(() =>
-    parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3)
-  );
-  const [volatility, setVolatility] = useState(() =>
-    parseNumber(searchParams.get("sigma"), 0.2, 0.01, 1, 2)
-  );
-  const [maxMaturity, setMaxMaturity] = useState(() =>
-    parseNumber(searchParams.get("tmax"), 5, 0.25, 20, 2)
-  );
-  const [curveCount, setCurveCount] = useState(() =>
-    parseNumber(searchParams.get("curves"), 5, 2, 6)
-  );
-  const [controlsOpen, setControlsOpen] = useState(true);
-  const [metric, setMetric] = useState<MetricKey>(() =>
-    parseMetric(searchParams.get("metric"))
-  );
-  const [optionType, setOptionType] = useState<OptionType>(() =>
-    parseOptionType(searchParams.get("type"))
-  );
-  const [view3d, setView3d] = useState<boolean>(() =>
-    parseView3d(searchParams.get("view"))
-  );
-  useEffect(() => {
-    setStrike(parseNumber(searchParams.get("k"), 100, 20, 200));
-    setRate(parseNumber(searchParams.get("r"), 0.05, 0, 0.2, 3));
-    setVolatility(parseNumber(searchParams.get("sigma"), 0.2, 0.01, 1, 2));
-    setMaxMaturity(parseNumber(searchParams.get("tmax"), 5, 0.25, 20, 2));
-    setCurveCount(parseNumber(searchParams.get("curves"), 5, 2, 6));
-    setMetric(parseMetric(searchParams.get("metric")));
-    setOptionType(parseOptionType(searchParams.get("type")));
-    setView3d(parseView3d(searchParams.get("view")));
-  }, [queryString, searchParams]);
-
-  useEffect(() => {
-    const next = new URLSearchParams();
-    next.set("k", formatNumber(strike));
-    next.set("r", formatNumber(rate, 3));
-    next.set("sigma", formatNumber(volatility, 2));
-    next.set("tmax", formatNumber(maxMaturity, 2));
-    next.set("curves", formatNumber(curveCount));
-    next.set("metric", metric);
-    next.set("type", optionType);
-    next.set("view", view3d ? "3d" : "2d");
-
-    const nextString = next.toString();
-    if (nextString !== queryString) {
-      setSearchParams(next, { replace: true });
-    }
-  }, [
-    strike,
-    rate,
-    volatility,
-    maxMaturity,
-    curveCount,
-    metric,
-    optionType,
-    view3d,
-    queryString,
-    setSearchParams,
-  ]);
+  const [s, set] = useUrlState(BLACK_SCHOLES_URL);
+  const { k: strike, r: rate, sigma: volatility, tmax: maxMaturity, curves: curveCount, metric, type: optionType } = s;
+  const view3d = s.view === "3d";
+  const setMetric = (v: MetricKey) => set({ metric: v });
+  const setOptionType = (v: OptionType) => set({ type: v });
+  const setView3d = (v: boolean) => set({ view: v ? "3d" : "2d" });
 
   const maturities = useMemo(
     () => makeMaturities(maxMaturity, curveCount),
     [maxMaturity, curveCount]
   );
-
-  const yDomain = useMemo<[number, number]>(() => {
-    if (metric === "price") return [0, 175];
-    if (metric === "delta") return optionType === "put" ? [-1, 0] : [0, 1];
-    if (metric === "gamma") return [0, 0.12];
-    if (metric === "vega") return [0, 100];
-    if (metric === "theta") return optionType === "put" ? [-25, 15] : [-30, 10];
-    if (metric === "rho") return optionType === "put" ? [-250, 0] : [0, 250];
-    return [0, 200];
-  }, [metric, optionType]);
-
   const chartData = useMemo<ChartRow[]>(() => {
     const sMin = 10;
     const sMax = 200;
@@ -215,6 +75,10 @@ export function useBlackScholesView() {
     });
   }, [maturities, strike, rate, volatility, metric, optionType]);
 
+  const yDomain = useMemo(
+    () => metricFrame(metric, optionType, chartData.flatMap((row) => maturities.map((T) => row[`T=${T}`]))),
+    [chartData, maturities, metric, optionType]
+  );
   const atmPrice = useMemo(() => {
     const value =
       optionType === "call"
@@ -229,7 +93,7 @@ export function useBlackScholesView() {
       maturities.map((T, index) => ({
         key: `T=${T}`,
         label: `T=${T}`,
-        color: lineColors[index % lineColors.length],
+        color: SERIES_PALETTE[index % SERIES_PALETTE.length],
         strokeWidth: 2.5,
       })),
     [maturities]
@@ -265,7 +129,7 @@ export function useBlackScholesView() {
       max: 200,
       step: 1,
       format: (v) => String(v),
-      onChange: setStrike,
+      onChange: (v) => set({ k: v }),
     },
     {
       key: "r",
@@ -277,7 +141,7 @@ export function useBlackScholesView() {
       max: 0.2,
       step: 0.005,
       format: (v) => v.toFixed(3),
-      onChange: setRate,
+      onChange: (v) => set({ r: v }),
     },
     {
       key: "sigma",
@@ -289,7 +153,7 @@ export function useBlackScholesView() {
       max: 1,
       step: 0.01,
       format: (v) => v.toFixed(2),
-      onChange: setVolatility,
+      onChange: (v) => set({ sigma: v }),
     },
     {
       key: "tmax",
@@ -301,7 +165,7 @@ export function useBlackScholesView() {
       max: 20,
       step: 0.25,
       format: (v) => v.toFixed(2),
-      onChange: setMaxMaturity,
+      onChange: (v) => set({ tmax: v }),
     },
     {
       key: "curves",
@@ -312,7 +176,7 @@ export function useBlackScholesView() {
       max: 6,
       step: 1,
       format: (v) => String(v),
-      onChange: setCurveCount,
+      onChange: (v) => set({ curves: v }),
     },
   ];
 
@@ -326,5 +190,5 @@ export function useBlackScholesView() {
   ];
 
   
-  return { t, language, isMobile, strike, rate, volatility, maxMaturity, curveCount, controlsOpen, setControlsOpen, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle, view3d, setView3d, surface, metricLabel };
+  return { t, language, isMobile, strike, rate, volatility, maxMaturity, curveCount, metric, setMetric, optionType, setOptionType, maturities, yDomain, chartData, atmPrice, chartSeries, tooltipDigits, sliders, metricOptions, getMetricTitle, view3d, setView3d, surface, metricLabel };
 }

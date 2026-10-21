@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { LineChart } from "../../components/charts";
+import { CHART_COLORS } from "../../components/charts/chart.theme";
 import type { useBlackScholesView } from "./useBlackScholesView";
 
 const Surface3D = lazy(() => import("../../components/charts/surface3d/Surface3D"));
@@ -48,7 +49,7 @@ export default function BlackScholesChart({
           series={chartSeries}
           xDomain={[10, 200]}
           yDomain={yDomain}
-          referenceLines={[{ axis: "x", value: strike, color: "#94a3b8", dash: "4 4" }]}
+          referenceLines={[{ axis: "x", value: strike, color: CHART_COLORS.axis, dash: "4 4" }]}
           isMobile={isMobile}
           tooltipLabel={(x) => `${t("blackScholesTooltipStock")} = ${x}`}
           valueFormat={(v) => v.toFixed(tooltipDigits)}

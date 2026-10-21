@@ -24,8 +24,8 @@ export default function HestonGreeksSummary({ data }: Props) {
             <thead>
               <tr>
                 <th>{t("hestonGreek")}</th>
-                <th>Black–Scholes</th>
-                <th>Heston (MC)</th>
+                <th>{t("hestonSeriesBs")}</th>
+                <th>{t("hestonSeriesHestonMc")}</th>
                 <th>{t("hestonDifference")}</th>
               </tr>
             </thead>

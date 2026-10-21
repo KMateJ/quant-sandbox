@@ -25,7 +25,6 @@ export function usePayoffView() {
   const setLegs = (next: StrategyLeg[]) => setPositions((prev) => ({ ...prev, legs: next }));
   const setGroups = (next: PositionGroup[]) => setPositions((prev) => ({ ...prev, groups: next }));
   const [mode, setMode] = useState<ViewMode>(initialState.mode);
-  const [controlsOpen, setControlsOpen] = useState(true);
   const [showComponents, setShowComponents] = useState(initialState.showComponents);
   const [selectedPreset, setSelectedPreset] = useState<PresetKey | null>(
     initialState.selectedPreset
@@ -84,7 +83,7 @@ export function usePayoffView() {
 
   return {
     isMobile, legs, setLegs, groups, setGroups, setPositions, effectiveLegs, components, mode, setMode,
-    controlsOpen, setControlsOpen, showComponents, setShowComponents, selectedPreset, setSelectedPreset,
+    showComponents, setShowComponents, selectedPreset, setSelectedPreset,
     xDomain, syntheticMatches, primarySyntheticMatch, chartData, strikes,
   };
 }

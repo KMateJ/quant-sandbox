@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import SectionCard from "../../../../components/SectionCard";
 import { useMediaQuery } from "../../../../components/useMediaQuery";
 import { ScatterChart, SERIES_PALETTE, type ScatterSeries } from "../../../../components/charts";
+import { CHART_COLORS } from "../../../../components/charts/chart.theme";
 import { IntuitionTrigger } from "../../../../components/intuition";
 import { useI18n } from "../../../../i18n";
 import { payoffYDomain } from "../replication.math";
@@ -32,8 +33,8 @@ export default function ReplicationChart({ model }: { model: ReplicationModel })
 
   const referenceLines = useMemo(() => [
     ...strikeLines(selected),
-    { axis: "x" as const, value: market.spot, color: "#94a3b8", dash: "4 4" },
-    { axis: "y" as const, value: 0, color: "#64748b", dash: "4 4" },
+    { axis: "x" as const, value: market.spot, color: CHART_COLORS.axis, dash: "4 4" },
+    { axis: "y" as const, value: 0, color: CHART_COLORS.axis, dash: "4 4" },
   ], [selected, market.spot]);
 
   return (

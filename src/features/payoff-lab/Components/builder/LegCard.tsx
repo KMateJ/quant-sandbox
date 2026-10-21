@@ -16,7 +16,7 @@ type Props = {
 
 /// Editor for one leg: selection checkbox, instrument, direction, quantity and type-specific fields.
 export default function LegCard({ leg, number, selected, onToggleSelect, onUpdate, onRemove }: Props) {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
 
   return (
     <div className={selected ? "payoff-leg-card payoff-leg-card--selected" : "payoff-leg-card"}>
@@ -38,11 +38,11 @@ export default function LegCard({ leg, number, selected, onToggleSelect, onUpdat
             value={leg.type}
             onChange={(e) => onUpdate(ensureDefaults(e.target.value as InstrumentType, leg))}
           >
-            <optgroup label="Vanilla">
+            <optgroup label={t("payoffGroupVanilla")}>
               {VANILLA_TYPES.map((o) => <option key={o.value} value={o.value}>{t(o.label)}</option>)}
             </optgroup>
-            <optgroup label={language === "hu" ? "Exotikusak" : "Exotics"}>
-              {EXOTIC_TYPES.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            <optgroup label={t("payoffGroupExotic")}>
+              {EXOTIC_TYPES.map((o) => <option key={o.value} value={o.value}>{t(o.label)}</option>)}
             </optgroup>
           </select>
         </label>

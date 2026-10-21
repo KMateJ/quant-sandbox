@@ -53,6 +53,7 @@ if (paths.some((p) => /^[A-Za-z]:[\\/]/.test(p))) { console.error("Paths were re
 
 // #region measurement (runs inside the page)
 const MEASURE = `(() => {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   const CAP = 10;
   const out = {};
   const counts = {};
@@ -91,6 +92,21 @@ const MEASURE = `(() => {
     }
     return false;
   };
+  const inFixed = (el) => {
+    for (let n = el; n && n !== document.body; n = n.parentElement) { const pos = css(n).position; if (pos === "fixed" || (pos === "sticky" && n.matches("header, nav, [class*=topbar], [class*=top-bar]"))) return true; }
+    return false;
+  };
+  // Rect clipped away by an overflow ancestor (sticky side panels scroll internally).
+  const clippedOut = (el) => {
+    const r = rectOf(el);
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      const o = css(p);
+      if (!/(auto|scroll|hidden|clip)/.test(o.overflowY + o.overflowX)) continue;
+      const b = p.getBoundingClientRect();
+      if (r.bottom <= b.top + 1 || r.top >= b.bottom - 1 || r.right <= b.left + 1 || r.left >= b.right - 1) return true;
+    }
+    return false;
+  };
   const vw = document.documentElement.clientWidth;
 
   // overflow
@@ -122,7 +138,7 @@ const MEASURE = `(() => {
     if (!visible(el)) return false;
     const isControl = el.matches("button, input:not([type=hidden]), select, textarea");
     const leafText = el.children.length === 0 && el.textContent.trim().length > 0;
-    return (isControl || leafText) && sized(rectOf(el));
+    return (isControl || leafText) && sized(rectOf(el)) && !clippedOut(el);
   });
   const wrapperOf = (el) => el.closest("label, [class*=value], [class*=unit]");
   // Per-line rects: a wrapped inline element's bounding box would overlap its neighbours falsely.
@@ -136,7 +152,7 @@ const MEASURE = `(() => {
       if (!la.some((ra) => lines(b).some((rb) => hit(ra, rb)))) continue;
       const wa = wrapperOf(a), wb = wrapperOf(b);
       if (wa && wa === wb) continue; // unit sitting inside its input by design
-      if (css(a).position === "fixed" || css(b).position === "fixed") continue;
+      if (inFixed(a) || inFixed(b)) continue;
       add("overlap", desc(a) + " x " + desc(b));
     }
   }
@@ -179,7 +195,7 @@ const profile = mkdtempSync(join(tmpdir(), "layout-audit-"));
 const browser = spawn(exe, ["--headless=new", `--remote-debugging-port=${opts.port}`, `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
 mkdirSync(opts.out, { recursive: true });
 
-const FAILING = new Set(["overflow", "offscreen", "overlap", "svg-text-collision", "svg-text-clipped", "text-clipped", "left-border-accent"]);
+const FAILING = new Set(["theme", "overflow", "offscreen", "overlap", "svg-text-collision", "svg-text-clipped", "text-clipped", "left-border-accent"]);
 let runs = 0, failing = 0;
 
 try {
@@ -224,6 +240,13 @@ try {
         for (let step = 0; step < steps.length; step++) {
           if (steps[step]) { await evaluate(steps[step]); await wait(600); }
           const m = await evaluate(MEASURE);
+          let applied;
+          for (let t = 0; t < 10; t++) {
+            applied = await evaluate("document.documentElement.dataset.theme");
+            if (applied === theme) break;
+            await wait(200);
+          }
+          if (applied !== theme) { m.counts.theme = 1; m.samples.theme = [`expected ${theme}, got ${applied}`]; }
           const bad = Object.keys(m.counts).filter((k) => FAILING.has(k) || (k === "tap-target" && opts.strict));
           runs++;
           if (bad.length) failing++;
@@ -231,7 +254,7 @@ try {
           const height = Math.min(6000, Math.max(900, m.height));
           await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 700 });
           const shot = await send("Page.captureScreenshot", { format: "png" });
-          const name = `${theme}-${width}${path.replace(/\//g, "_")}${step ? `-s${step}` : ""}.png`;
+          const name = `${theme}-${width}${path.replace(/[\/?=&]/g, "_")}${step ? `-s${step}` : ""}.png`;
           writeFileSync(join(opts.out, name), Buffer.from(shot.result.data, "base64"));
           await send("Emulation.setDeviceMetricsOverride", { width, height: 900, deviceScaleFactor: 1, mobile: width < 700 });
         }

@@ -1,7 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
-import { binomialIntuition, blackScholesIntuition, bondIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
+import { binomialIntuition, blackScholesIntuition, bondIntuition, deltaHedgingIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
 import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
 import { STUDIO_PATH, lessonNavItems } from "../features/stochastic-models/stochasticModels.curriculum";
 import { moduleAbout, type ModuleAbout } from "./moduleAbout";
@@ -173,6 +173,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "delta-hedging",
+    intuition: deltaHedgingIntuition,
     path: "/delta-hedging",
     navKey: "navDeltaHedging",
     category: "derivatives",

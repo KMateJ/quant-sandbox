@@ -575,3 +575,5 @@ Settled from what each session last accepted (Log 16:2x–16:3x):
 - 00:00 fixed-income-labs 07: new /immunization lab (rounds game, seeded shocks, surplus attribution waterfall, benchmarks); immunisation math promoted to src/lib/finance/immunization.ts.
 
 - 00:00 fixed-income-labs 02: width-aware ticks (ChartAxes, thinTicks), opt-in label collision placer, FI breakpoint mixins, sidebar beta dot; FI audit: 0 svg-text collisions/clips at all widths; open: topnav overflow 700-768, HU bond tab strip, yield-curve left-border (plan 03).
+- 13:05 derivatives-polish (owner session): delta-hedging lab rebuilt (daily grid, rebalance frequency, delta held vs continuous, hedge-error path, 200-path frequency study, URL state); plans 02/05 skip the folder.
+- 12:36 derivatives-polish 01: audit ignores clipped/fixed content, scrolls to top, asserts theme; ThemeProvider reads storage before writing

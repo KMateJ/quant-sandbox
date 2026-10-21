@@ -4,7 +4,6 @@ export const binomialHu = {
     binomialR0Label: "r₀ (kezdeti rövid kamat)",
     binomialQLabel: "q (emelkedés árazási súlya)",
     binomialHLabel: "h (log-lépésköz)",
-    binomialToggleControls: "Paraméterek megjelenítése/elrejtése",
     binomialToggleRates: "Kamatok",
     binomialToggleBonds: "Kötvényértékek",
     binomialRateTreeTitle: "Binomiális kamatlábfa",
@@ -27,6 +26,8 @@ export const binomialHu = {
     intuitionBinomialRateStepTitle: "A kamatfa log-lépésköze: h",
     intuitionBinomialRateStepSummary: "A kamat lépésenként exp(h)-val vagy exp(−h)-val szorzódik.",
     intuitionBinomialRateStepBody: "h nem százalékpontos kamatváltozás. h = 0,18 körülbelül 1,197 és 0,835 szorzót ad a csomópont rövid kamatára. Nagyobb h szélesebb kamatelágazást okoz, q változatlan marad. A kötvény ára a későbbi csomópontok eltérő diszkontálásán keresztül reagál. Ha r₀ = 0, a szorzás miatt minden kamat nulla marad, h értékétől függetlenül. Ez a h nem a Heston időlépése.",
+    binomialRiskNeutralProb: "q (kockázatsemleges)",
+    binomialShowLabel: "Csomópontokon",
     binomialToggleStocks: "Részvényárak",
     binomialToggleValues: "Opcióértékek",
 

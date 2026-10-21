@@ -15,6 +15,8 @@ type ControlDefinition = {
   sectionId: string;
 };
 
+const simulationKeys = new Set(["steps", "paths", "pSteps", "pPaths"]);
+
 const controls: readonly ControlDefinition[] = [
   { key: "S0", field: "S0", setter: "setS0", symbol: "S₀", labelKey: "hestonSpot", min: 20, max: 200, step: 1, decimals: 0, sectionId: "spot-strike" },
   { key: "K", field: "strike", setter: "setStrike", symbol: "K", labelKey: "hestonStrike", min: 20, max: 200, step: 1, decimals: 0, sectionId: "spot-strike" },
@@ -31,13 +33,13 @@ const controls: readonly ControlDefinition[] = [
   { key: "pPaths", field: "pricingPaths", setter: "setPricingPaths", symbol: "pPaths", labelKey: "hestonPricingPaths", min: 100, max: 2000, step: 100, decimals: 0, sectionId: "pricing-paths" },
 ];
 
-/// One parameter definition drives both desktop fields and the mobile dock.
+/// Model sliders and simulation-quality sliders, each in display order.
 export function createHestonSliders(
   values: HestonControlsState,
   setters: HestonControlsSetters,
   t: (key: TranslationKey) => string,
-): SliderDescriptor[] {
-  return controls.map(({ field, setter, labelKey, decimals, ...control }) => ({
+): { model: SliderDescriptor[]; simulation: SliderDescriptor[] } {
+  const build = ({ field, setter, labelKey, decimals, ...control }: ControlDefinition): SliderDescriptor => ({
     ...control,
     name: t(labelKey),
     value: values[field],
@@ -45,5 +47,9 @@ export function createHestonSliders(
     format: (value) => control.key === "T"
       ? `${value.toFixed(decimals)} ${t("hestonYears")}`
       : value.toFixed(decimals),
-  }));
+  });
+  return {
+    model: controls.filter((c) => !simulationKeys.has(c.key)).map(build),
+    simulation: controls.filter((c) => simulationKeys.has(c.key)).map(build),
+  };
 }

@@ -14,7 +14,7 @@
 @media (max-width: 640px) {
   /* Clearance so the fixed dock never covers the last card. */
   .view-main--docked {
-    padding-bottom: 172px;
+    padding-bottom: 158px;
   }
 
   /* Put the chart/tree ahead of the summary on phones. */
@@ -275,7 +275,7 @@
 
   /* Extra clearance for the taller 3-row payoff dock. */
   .view-main--dock-tall {
-    padding-bottom: 244px;
+    padding-bottom: 204px;
   }
 
   /* Leg editing moves into the fixed dock; keep preset + mode in the card. */
@@ -333,7 +333,8 @@
 
 /* Short viewports: shrink the chart so it clears the dock when snapped. */
 @media (max-width: 640px) and (max-height: 720px) {
-  .chart-wrap {
+  .chart-wrap,
+  .payoff-chart-card .chart-wrap {
     height: clamp(240px, 42vh, 360px);
   }
 

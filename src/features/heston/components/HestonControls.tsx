@@ -7,32 +7,37 @@ import type { HestonControlsState } from "../heston.types";
 
 type Props = {
   values: HestonControlsState;
-  sliders: SliderDescriptor[];
+  sliders: { model: SliderDescriptor[]; simulation: SliderDescriptor[] };
   feller: number;
 };
+
+const renderSlider = (slider: SliderDescriptor) => (
+  <SliderField
+    key={slider.key}
+    label={slider.name}
+    sectionId={slider.sectionId}
+    min={slider.min}
+    max={slider.max}
+    step={slider.step}
+    value={slider.value}
+    onChange={slider.onChange}
+    formatValue={slider.format}
+  />
+);
 
 /// Sidebar controls: model parameters plus derived reference readouts.
 export default function HestonControls({ values, sliders, feller }: Props) {
   const { t } = useI18n();
   return (
     <>
-      <ControlGroup label={t("hestonControlsParams")}>
-        <div className="controls-grid">
-          {sliders.map((slider) => (
-            <SliderField
-              key={slider.key}
-              label={slider.name}
-              sectionId={slider.sectionId}
-              min={slider.min}
-              max={slider.max}
-              step={slider.step}
-              value={slider.value}
-              onChange={slider.onChange}
-              formatValue={slider.format}
-            />
-          ))}
-        </div>
+      <ControlGroup label={t("hestonControlsModel")}>
+        <div className="controls-grid">{sliders.model.map(renderSlider)}</div>
       </ControlGroup>
+
+      <details className="control-disclosure">
+        <summary className="control-disclosure-summary">{t("hestonControlsSimulation")}</summary>
+        <div className="controls-grid">{sliders.simulation.map(renderSlider)}</div>
+      </details>
 
       <ControlGroup label={t("hestonControlsReference")}>
         <div className="stats-grid">

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 /// Sticky, independently scrolling control columns (every layout variant).
 const STICKY_SELECTOR = ".workspace.cols-sidebar > .panel:first-child, .view-controls, .stoch-sidebar";
@@ -8,7 +8,7 @@ const BOTTOM_GAP = 16;
 /// A static `100vh - offset` overflows while the column still sits below the page
 /// header, hiding its bottom until the page scrolls; this tracks the real position.
 export function useStickyFit(): void {
-  useEffect(() => {
+  useLayoutEffect(() => {
     let frame = 0;
     const fit = () => {
       frame = 0;
@@ -26,11 +26,13 @@ export function useStickyFit(): void {
       if (!frame) frame = requestAnimationFrame(fit);
     };
 
-    const resize = new ResizeObserver(schedule);
+    // Fit synchronously on layout changes (observer callbacks run before paint): a lazily
+    // mounted column would otherwise paint one frame at the CSS fallback height.
+    const resize = new ResizeObserver(fit);
     resize.observe(document.body);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    schedule();
+    fit();
     return () => {
       cancelAnimationFrame(frame);
       resize.disconnect();

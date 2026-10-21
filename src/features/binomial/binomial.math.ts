@@ -17,9 +17,9 @@ function payoff(stockPrice: number, strike: number, optionKind: "call" | "put") 
 
 function createLayout(safeSteps: number) {
   const hGap = 150;
-  const vGap = 54;
+  const vGap = 62;
   const nodeWidth = 92;
-  const nodeHeight = 48;
+  const nodeHeight = 56;
   const leftPad = 44;
   // Center the lattice: top node sits at `vMargin`, so the spread never clips.
   const vMargin = 28;

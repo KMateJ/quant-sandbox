@@ -55,21 +55,27 @@ export const LEG_FIELDS: Record<InstrumentType, LegFieldSpec[]> = {
   ],
 };
 
-export const VANILLA_TYPES: { value: InstrumentType; label: TranslationKey }[] = [
-  { value: "call", label: "payoffTypeCall" },
-  { value: "put", label: "payoffTypePut" },
-  { value: "stock", label: "payoffTypeStock" },
-  { value: "forward", label: "payoffTypeForward" },
-  { value: "cash", label: "payoffTypeCash" },
-];
+/// Label key per instrument; the single source for every instrument picker.
+export const INSTRUMENT_LABEL_KEYS: Record<InstrumentType, TranslationKey> = {
+  call: "payoffTypeCall",
+  put: "payoffTypePut",
+  stock: "payoffTypeStock",
+  forward: "payoffTypeForward",
+  cash: "payoffTypeCash",
+  "digital-call": "payoffTypeDigitalCall",
+  "digital-put": "payoffTypeDigitalPut",
+  "asset-call": "payoffTypeAssetCall",
+  "asset-put": "payoffTypeAssetPut",
+  "gap-call": "payoffTypeGapCall",
+  "gap-put": "payoffTypeGapPut",
+  "double-digital": "payoffTypeDoubleDigital",
+  supershare: "payoffTypeSupershare",
+};
 
-export const EXOTIC_TYPES: { value: InstrumentType; label: string }[] = [
-  { value: "digital-call", label: "Digital Call" },
-  { value: "digital-put", label: "Digital Put" },
-  { value: "asset-call", label: "Asset-or-Nothing Call" },
-  { value: "asset-put", label: "Asset-or-Nothing Put" },
-  { value: "gap-call", label: "Gap Call" },
-  { value: "gap-put", label: "Gap Put" },
-  { value: "double-digital", label: "Double Digital" },
-  { value: "supershare", label: "Supershare" },
-];
+const option = (value: InstrumentType) => ({ value, label: INSTRUMENT_LABEL_KEYS[value] });
+
+export const VANILLA_TYPES = (["call", "put", "stock", "forward", "cash"] as const).map(option);
+
+export const EXOTIC_TYPES = (
+  ["digital-call", "digital-put", "asset-call", "asset-put", "gap-call", "gap-put", "double-digital", "supershare"] as const
+).map(option);

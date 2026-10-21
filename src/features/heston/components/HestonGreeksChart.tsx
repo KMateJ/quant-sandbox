@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { ChartContainer } from "../../../components/layout";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import { LineChart, type ChartSeries } from "../../../components/charts";
+import { LineChart, SERIES_ROLE, type ChartSeries } from "../../../components/charts";
+import { CHART_COLORS } from "../../../components/charts/chart.theme";
 import { Tabs, type TabItem } from "../../../components/ui";
 import { useI18n } from "../../../i18n";
 import type { GreekKey, HestonGreekProfilePoint, HestonGreeksSurfaceData } from "../heston.types";
@@ -33,11 +34,11 @@ export default function HestonGreeksChart({ data, strike, greeks3d, setGreeks3d,
   const series = useMemo<ChartSeries[]>(() => {
     const list: ChartSeries[] = [];
     if (showBs)
-      list.push({ key: bsKey, label: "Black–Scholes", color: "#3b82f6", strokeWidth: 2 });
+      list.push({ key: bsKey, label: t("hestonSeriesBs"), color: SERIES_ROLE.reference, strokeWidth: 2 });
     if (showHeston)
-      list.push({ key: hestonKey, label: "Heston (MC)", color: "#f59e0b", strokeWidth: 2 });
+      list.push({ key: hestonKey, label: t("hestonSeriesHestonMc"), color: SERIES_ROLE.candidate, strokeWidth: 2 });
     return list;
-  }, [showBs, showHeston, bsKey, hestonKey]);
+  }, [showBs, showHeston, bsKey, hestonKey, t]);
 
   const metricTabs: TabItem[] = HESTON_GREEKS.map((m) => ({ id: m.key, label: t(m.labelKey) }));
   const viewTabs: TabItem<ViewMode>[] = [
@@ -76,8 +77,8 @@ export default function HestonGreeksChart({ data, strike, greeks3d, setGreeks3d,
               aria-pressed={showBs}
               onClick={() => setShowBs((v) => !v)}
             >
-              <span className="series-toggle-dot" style={{ background: "#3b82f6" }} />
-              Black–Scholes
+              <span className="series-toggle-dot" style={{ background: SERIES_ROLE.reference }} />
+              {t("hestonSeriesBs")}
             </button>
             <button
               type="button"
@@ -85,8 +86,8 @@ export default function HestonGreeksChart({ data, strike, greeks3d, setGreeks3d,
               aria-pressed={showHeston}
               onClick={() => setShowHeston((v) => !v)}
             >
-              <span className="series-toggle-dot" style={{ background: "#f59e0b" }} />
-              Heston
+              <span className="series-toggle-dot" style={{ background: SERIES_ROLE.candidate }} />
+              {t("hestonSeriesHeston")}
             </button>
           </div>
         )}
@@ -100,7 +101,7 @@ export default function HestonGreeksChart({ data, strike, greeks3d, setGreeks3d,
             data={data}
             xKey="S"
             series={series}
-            referenceLines={[{ axis: "x", value: strike, color: "#94a3b8", dash: "4 4" }]}
+            referenceLines={[{ axis: "x", value: strike, color: CHART_COLORS.axis, dash: "4 4" }]}
             isMobile={isMobile}
             legend={false}
             tooltipLabel={(x) => `S = ${x}`}

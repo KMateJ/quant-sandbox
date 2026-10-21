@@ -7,7 +7,7 @@ import { usePayoffView } from "./usePayoffView";
 /// Leg-by-leg strategy builder: controls, payoff/profit chart and synthetic detection.
 export default function StrategyLab() {
   const model = usePayoffView();
-  const { isMobile, legs, setLegs, groups, setPositions, effectiveLegs, components, mode, setMode, controlsOpen, setControlsOpen, showComponents, setShowComponents, selectedPreset, setSelectedPreset, xDomain, syntheticMatches, primarySyntheticMatch, chartData, strikes } = model;
+  const { isMobile, legs, setLegs, groups, setPositions, effectiveLegs, components, mode, setMode, showComponents, setShowComponents, selectedPreset, setSelectedPreset, xDomain, syntheticMatches, primarySyntheticMatch, chartData, strikes } = model;
   return (
     <div className="view-layout">
       <div className="view-controls">
@@ -15,10 +15,8 @@ export default function StrategyLab() {
           legs={legs}
           groups={groups}
           mode={mode}
-          controlsOpen={controlsOpen}
           selectedPreset={selectedPreset}
           showComponents={showComponents}
-          onToggleControls={() => setControlsOpen((prev) => !prev)}
           onModeChange={setMode}
           onPresetChange={setSelectedPreset}
           onShowComponentsChange={setShowComponents}

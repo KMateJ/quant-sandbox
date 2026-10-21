@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 import SectionCard from "../../../components/SectionCard";
 import { useMediaQuery } from "../../../components/useMediaQuery";
-import { LineChart, type ChartReferenceLine, type ChartSeries } from "../../../components/charts";
+import { LineChart, SERIES_PALETTE, SERIES_ROLE, type ChartReferenceLine, type ChartSeries } from "../../../components/charts";
 import type { ChartComponent, PayoffChartPoint, ViewMode } from "../payoff.types";
 import { getYAxisDomain } from "../payoff.math";
+import { CHART_COLORS } from "../../../components/charts/chart.theme";
 import { useI18n } from "../../../i18n";
 import { IntuitionTrigger } from "../../../components/intuition";
 
@@ -17,16 +18,6 @@ type PayoffChartProps = {
   syntheticOverlayActive: boolean;
   syntheticOverlayLabel: string | null;
 };
-
-const lineColors = [
-  "#60a5fa",
-  "#fbbf24",
-  "#34d399",
-  "#f472b6",
-  "#a78bfa",
-  "#f87171",
-  "#22d3ee",
-];
 
 export default function PayoffChart({
   chartData,
@@ -48,10 +39,10 @@ export default function PayoffChart({
         key: "total",
         intuitionSectionId: "payoff-profit",
         label: t("payoffChartTotal"),
-        color: "#60a5fa",
+        color: SERIES_PALETTE[0],
         strokeWidth: 3,
         area: mode === "profit",
-        areaColor: "#ef4444",
+        areaColor: "var(--negative)",
       },
     ];
 
@@ -60,7 +51,7 @@ export default function PayoffChart({
       list.push({
         key: component.key,
         label: component.label,
-        color: lineColors[(index + 1) % lineColors.length],
+        color: SERIES_PALETTE[(index + 1) % SERIES_PALETTE.length],
         strokeWidth: isPosition ? 2.5 : 2,
         dash: isPosition ? undefined : "6 4",
       });
@@ -70,8 +61,8 @@ export default function PayoffChart({
       list.push({
         key: "syntheticOverlay",
         intuitionSectionId: "synthetic-strategies",
-        label: syntheticOverlayLabel ?? "Synthetic Overlay",
-        color: "#fbbf24",
+        label: syntheticOverlayLabel ?? t("payoffChartSyntheticFallback"),
+        color: SERIES_ROLE.candidate,
         strokeWidth: 2.5,
         dash: "3 3",
       });
@@ -90,13 +81,13 @@ export default function PayoffChart({
     const lines: ChartReferenceLine[] = strikes.map((strike) => ({
       axis: "x",
       value: strike,
-      color: "#94a3b8",
+      color: CHART_COLORS.axis,
       dash: "4 4",
     }));
     lines.push({
       axis: "y",
       value: 0,
-      color: mode === "profit" ? "#ef4444" : "#64748b",
+      color: mode === "profit" ? "var(--negative)" : CHART_COLORS.axis,
       width: mode === "profit" ? 2.5 : 1.5,
       dash: mode === "profit" ? undefined : "4 4",
     });
@@ -104,7 +95,7 @@ export default function PayoffChart({
   }, [strikes, mode]);
 
   return (
-    <SectionCard className="chart-card" title={t("payoffChartTitle")} headerRight={<IntuitionTrigger sectionId="instruments" />}>
+    <SectionCard className="chart-card payoff-chart-card" title={t("payoffChartTitle")} headerRight={<IntuitionTrigger sectionId="instruments" />}>
       <div className="chart-wrap">
         <LineChart
           data={chartData}

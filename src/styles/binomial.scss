@@ -10,14 +10,22 @@
 
 .binomial-svg-wrap svg {
   min-width: min(760px, 100%);
-  height: 520px;
+  height: clamp(420px, 56vh, 640px);
   display: block;
 }
+
+.bn-edge { stroke: var(--rule-strong); }
+.bn-edge-label { fill: var(--muted); }
+.bn-node { fill: var(--surface-soft); stroke: var(--border); }
+.bn-node-step { fill: var(--text); }
+.bn-node-primary { fill: var(--chart-1); }
+.bn-node-secondary { fill: var(--chart-3); }
+
+.binomial-display-card { margin-top: var(--space-5); }
 
 .stats-grid.binomial-summary-grid {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  grid-auto-rows: minmax(128px, auto);
   align-items: stretch;
 }
 
@@ -51,7 +59,7 @@
   align-items: flex-start;
   gap: 6px;
   padding: 12px 14px;
-  border-radius: 14px;
+  border-radius: var(--radius-xs);
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
@@ -97,9 +105,9 @@
   align-items: center;
   gap: 4px;
   padding: 16px;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--primary) 12%, var(--surface-soft));
-  border: 1px solid color-mix(in srgb, var(--primary) 34%, var(--border));
+  border-radius: var(--radius-xs);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
 }
 
 .summary-hero-label {
@@ -131,7 +139,7 @@
   gap: 5px;
   min-height: 62px;
   padding: 10px 8px;
-  border-radius: 12px;
+  border-radius: var(--radius-xs);
   background: var(--surface-soft);
   border: 1px solid var(--border);
 }
@@ -150,7 +158,7 @@
 
 .summary-replication {
   padding: 12px 14px;
-  border-radius: 14px;
+  border-radius: var(--radius-xs);
   background: var(--surface-soft);
   border: 1px solid var(--border);
 }
@@ -173,7 +181,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: var(--radius-xs);
   background: var(--surface);
   border: 1px solid var(--border);
 }

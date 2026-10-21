@@ -3,6 +3,7 @@ import { InlineMath } from "react-katex";
 import SectionCard from "../../../../components/SectionCard";
 import { useMediaQuery } from "../../../../components/useMediaQuery";
 import { LineChart, SERIES_PALETTE, type ChartSeries } from "../../../../components/charts";
+import { CHART_COLORS } from "../../../../components/charts/chart.theme";
 import { IntuitionTrigger } from "../../../../components/intuition";
 import { useI18n } from "../../../../i18n";
 import type { ReplicationModel } from "../useReplication";
@@ -42,7 +43,7 @@ export default function DensityChart({ model }: { model: ReplicationModel }) {
           xKey="S"
           series={series}
           xDomain={[0, xMax]}
-          referenceLines={[{ axis: "x", value: market.spot, color: "#94a3b8", dash: "4 4" }]}
+          referenceLines={[{ axis: "x", value: market.spot, color: CHART_COLORS.axis, dash: "4 4" }]}
           isMobile={isMobile}
           tooltipLabel={(x) => `K = ${x.toFixed(1)}`}
           valueFormat={(v) => v.toFixed(5)}

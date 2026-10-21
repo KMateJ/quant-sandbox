@@ -32,16 +32,15 @@ function applyThemeToDocument(theme: ResolvedTheme) {
   document.documentElement.style.colorScheme = theme;
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<ThemeMode>("dark");
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
+const readSavedTheme = (): ThemeMode => {
+  if (typeof window === "undefined") return "dark";
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved === "dark" || saved === "light" || saved === "system" ? saved : "dark";
+};
 
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "dark" || saved === "light" || saved === "system") {
-      setTheme(saved);
-    }
-  }, []);
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<ThemeMode>(readSavedTheme);
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");

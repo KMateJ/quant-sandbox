@@ -14,7 +14,7 @@ export default function BinomialSummary({ tree }: Props) {
   const priceSection = isRates ? "short-rate-tree" : "spot-strike";
   const priceLabel = t(isRates ? "binomialBondPrice" : "binomialPrice");
   const metrics = [
-    { key: "q", label: "q", value: tree.q.toFixed(4), sectionId: isRates ? "rate-probability" : "risk-neutral-probability" },
+    { key: "q", label: t("binomialRiskNeutralProb"), value: tree.q.toFixed(4), sectionId: isRates ? "rate-probability" : "risk-neutral-probability" },
     { key: "discount", label: t("binomialDiscountFactor"), value: tree.discount.toFixed(4), sectionId: "discounting" },
     { key: "steps", label: t("binomialSteps"), value: String(tree.steps), sectionId: "tree-horizon" },
   ];

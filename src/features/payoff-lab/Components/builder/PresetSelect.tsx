@@ -9,7 +9,7 @@ type Props = {
 
 /// Dropdown of example strategies grouped by family; "custom" means hand-built legs.
 export default function PresetSelect({ selectedPreset, onClear, onApply }: Props) {
-  const { language, t } = useI18n();
+  const { t } = useI18n();
   return (
     <div className="payoff-preset-bar">
       <label className="payoff-field">
@@ -59,7 +59,7 @@ export default function PresetSelect({ selectedPreset, onClear, onApply }: Props
             </option>
           </optgroup>
 
-          <optgroup label={language === "hu" ? "Exotikusak" : "Exotics"}>
+          <optgroup label={t("payoffGroupExotic")}>
             <option value="digital-call">Digital Call</option>
             <option value="digital-put">Digital Put</option>
             <option value="asset-call">Asset-or-Nothing Call</option>

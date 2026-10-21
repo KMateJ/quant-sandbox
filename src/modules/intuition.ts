@@ -137,3 +137,19 @@ export const diffusionIntuition: IntuitionDocument = {
     { id: "negative-time", titleKey: "intuitionBackwardTitle", summaryKey: "intuitionBackwardSummary", bodyKey: "intuitionBackwardBody" },
   ],
 };
+
+export const deltaHedgingIntuition: IntuitionDocument = {
+  titleKey: "navDeltaHedging",
+  sections: [
+    { id: "replication", titleKey: "intuitionHedgeReplicationTitle", summaryKey: "intuitionHedgeReplicationSummary", bodyKey: "intuitionHedgeReplicationBody", formula: "\\Pi_t=\\Delta_t S_t+B_t,\\qquad B_0=C_0-\\Delta_0 S_0" },
+    { id: "rebalancing", titleKey: "intuitionHedgeRebalancingTitle", summaryKey: "intuitionHedgeRebalancingSummary", bodyKey: "intuitionHedgeRebalancingBody", formula: "\\operatorname{sd}(\\text{error})\\;\\propto\\;1/\\sqrt{N}" },
+    { id: "hedge-error", titleKey: "intuitionHedgeErrorTitle", summaryKey: "intuitionHedgeErrorSummary", bodyKey: "intuitionHedgeErrorBody", formula: "\\text{residual}\\approx\\tfrac12\\,\\Gamma\\,[(\\Delta S)^2-\\sigma^2S^2\\,\\Delta t]" },
+    { id: "spot-strike", titleKey: "intuitionHedgeMoneynessTitle", summaryKey: "intuitionHedgeMoneynessSummary", bodyKey: "intuitionHedgeMoneynessBody" },
+    { id: "maturity", titleKey: "intuitionHedgeMaturityTitle", summaryKey: "intuitionHedgeMaturitySummary", bodyKey: "intuitionHedgeMaturityBody" },
+    { id: "rate", titleKey: "intuitionHedgeRateTitle", summaryKey: "intuitionHedgeRateSummary", bodyKey: "intuitionHedgeRateBody" },
+    { id: "volatility", titleKey: "intuitionHedgeVolTitle", summaryKey: "intuitionHedgeVolSummary", bodyKey: "intuitionHedgeVolBody" },
+    { id: "random-path", titleKey: "intuitionHedgeSeedTitle", summaryKey: "intuitionHedgeSeedSummary", bodyKey: "intuitionHedgeSeedBody" },
+    { id: "frequency-study", titleKey: "intuitionHedgeStudyTitle", summaryKey: "intuitionHedgeStudySummary", bodyKey: "intuitionHedgeStudyBody" },
+    ...optionGreeks.filter((section) => section.id === "delta" || section.id === "gamma" || section.id === "theta"),
+  ],
+};

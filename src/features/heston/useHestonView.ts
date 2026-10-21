@@ -89,7 +89,6 @@ export function useHestonView() {
     parseNumber(searchParams.get("pricingPaths"), 250, 50, 2000)
   );
 
-  const [controlsOpen, setControlsOpen] = useState(true);
 
   const [priceComparisonData, setPriceComparisonData] = useState<
     PriceComparisonPoint[]
@@ -464,5 +463,5 @@ export function useHestonView() {
   const sliders = createHestonSliders(currentControls, controlSetters, t);
 
   
-  return { isMobile, S0, strike, theta, controlsOpen, setControlsOpen, priceComparisonData, smileData, greeksData, greeksProfileData, greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders, tab, setTab };
+  return { isMobile, S0, strike, theta, priceComparisonData, smileData, greeksData, greeksProfileData, greeks3d, setGreeks3d, greeksSurface, vol3d, setVol3d, volSurface, stockPathData, variancePathData, currentControls, pathsParams, feller, pathKeys, sliders, tab, setTab };
 }

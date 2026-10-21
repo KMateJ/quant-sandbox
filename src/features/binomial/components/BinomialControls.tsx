@@ -10,27 +10,19 @@ type Props = {
   mode: TreeMode;
   sliders: SliderDescriptor[];
   optionKind: OptionKind;
-  controlsOpen: boolean;
-  onToggleControls: () => void;
   onModeChange: (value: TreeMode) => void;
   onOptionKindChange: (value: OptionKind) => void;
 };
 
 export default function BinomialControls({
-  mode, sliders, optionKind, controlsOpen, onToggleControls, onModeChange, onOptionKindChange,
+  mode, sliders, optionKind, onModeChange, onOptionKindChange,
 }: Props) {
   const { t } = useI18n();
   const isRates = mode === "rates";
   return (
     <SectionCard
       title=""
-      className="binomial-controls"
-      headerLeft={
-        <button type="button" className="toggle-button" aria-label={t("binomialToggleControls")} aria-expanded={controlsOpen} onClick={onToggleControls}>
-          {controlsOpen ? "-" : "+"}
-        </button>
-      }
-    >
+      className="binomial-controls">
       <div className="metric-switch intuition-reveal">
         {(["equity", "rates"] as const).map((value) => (
           <button
@@ -61,33 +53,24 @@ export default function BinomialControls({
           <IntuitionTrigger sectionId="spot-strike" />
         </div>
       )}
-      {controlsOpen ? (
-        <>
-          <div className="controls-grid">
-            {sliders.map((slider) => {
-              const props = {
-                label: slider.name, sectionId: slider.sectionId,
-                min: slider.min, max: slider.max, step: slider.step,
-                value: slider.value, onChange: slider.onChange,
-              };
-              return slider.key === "steps"
-                ? <NumberStepper key={slider.key} {...props} formatValue={(value) => `${value} ${t("binomialStepsUnit")}`} />
-                : <SliderField key={slider.key} {...props} formatValue={slider.format} />;
-            })}
-          </div>
-          <div className="stats-row">
-            <div className="stat-card intuition-reveal">
-              <div className="stat-title">{t("binomialPeriodLength")} <IntuitionTrigger sectionId="tree-horizon" /></div>
-              <div className="stat-value">{t("binomialPeriodValue")}</div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="param-summary">
-          {sliders.map((slider) => <div key={slider.key}>{slider.symbol} = {slider.format(slider.value)}</div>)}
-          <div>{t(isRates ? "binomialModeRates" : optionKind === "call" ? "binomialOptionCall" : "binomialOptionPut")}</div>
+      <div className="controls-grid">
+        {sliders.map((slider) => {
+          const props = {
+            label: slider.name, sectionId: slider.sectionId,
+            min: slider.min, max: slider.max, step: slider.step,
+            value: slider.value, onChange: slider.onChange,
+          };
+          return slider.key === "steps"
+            ? <NumberStepper key={slider.key} {...props} formatValue={(value) => `${value} ${t("binomialStepsUnit")}`} />
+            : <SliderField key={slider.key} {...props} formatValue={slider.format} />;
+        })}
+      </div>
+      <div className="stats-row">
+        <div className="stat-card intuition-reveal">
+          <div className="stat-title">{t("binomialPeriodLength")} <IntuitionTrigger sectionId="tree-horizon" /></div>
+          <div className="stat-value">{t("binomialPeriodValue")}</div>
         </div>
-      )}
+      </div>
     </SectionCard>
   );
 }

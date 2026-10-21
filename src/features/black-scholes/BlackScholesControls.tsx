@@ -1,8 +1,7 @@
 import SliderField from "../../components/SliderField";
 import { Tabs, ControlGroup, type TabItem } from "../../components/ui";
 import type { useBlackScholesView } from "./useBlackScholesView";
-
-type OptionType = "call" | "put";
+import type { OptionType } from "./blackScholes.types";
 
 /// Sidebar controls: option type, model parameters and reference readouts.
 export default function BlackScholesControls({
@@ -10,14 +9,12 @@ export default function BlackScholesControls({
 }: {
   model: ReturnType<typeof useBlackScholesView>;
 }) {
-  const { t, language, optionType, setOptionType, sliders, atmPrice, maturities } = model;
+  const { t, optionType, setOptionType, sliders, atmPrice, maturities } = model;
 
   const optionTabs: TabItem[] = [
     { id: "call", label: t("blackScholesOptionCall") },
     { id: "put", label: t("blackScholesOptionPut") },
   ];
-
-  const years = language === "hu" ? "év" : "years";
 
   return (
     <>
@@ -45,9 +42,9 @@ export default function BlackScholesControls({
             sectionId={slider.sectionId}
             formatValue={(v) =>
               slider.key === "tmax"
-                ? `${v.toFixed(2)} ${years}`
+                ? `${v.toFixed(2)} ${t("blackScholesYears")}`
                 : slider.key === "curves"
-                  ? `${v.toFixed(0)} ${language === "hu" ? "db" : "curves"}`
+                  ? `${v.toFixed(0)} ${t("blackScholesCurvesUnit")}`
                   : slider.format(v)
             }
           />
@@ -65,7 +62,7 @@ export default function BlackScholesControls({
           <div className="stat-card">
             <div className="stat-title">{t("blackScholesMaturityRange")}</div>
             <div className="stat-value">
-              {maturities[0]?.toFixed(2)} → {maturities[maturities.length - 1]?.toFixed(2)} {years}
+              {maturities[0]?.toFixed(2)} → {maturities[maturities.length - 1]?.toFixed(2)} {t("blackScholesYears")}
             </div>
           </div>
         </div>

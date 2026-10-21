@@ -6,9 +6,10 @@ import { useI18n } from "../../i18n";
 import { PageHeader } from "../../components/layout";
 import { useBinomialView } from "./useBinomialView";
 import { IntuitionTrigger } from "../../components/intuition";
+import ControlGroup from "../../components/ui/ControlGroup";
 export default function BinomialView() {
   const model = useBinomialView();
-  const { isMobile, mode, setMode, sliders, optionKind, setOptionKind, controlsOpen, setControlsOpen, showPrimaryMetric, setShowPrimaryMetric, showSecondaryMetric, setShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel } = model;
+  const { isMobile, mode, setMode, sliders, optionKind, setOptionKind, showPrimaryMetric, toggleShowPrimaryMetric, showSecondaryMetric, toggleShowSecondaryMetric, tree, primaryToggleLabel, secondaryToggleLabel } = model;
   const { t: translate } = useI18n();
   return (<div className="intuition-on-demand">
     <PageHeader title={translate("navBinomial")} />
@@ -19,29 +20,31 @@ export default function BinomialView() {
             mode={mode}
             sliders={sliders}
             optionKind={optionKind}
-            controlsOpen={controlsOpen}
-            onToggleControls={() => setControlsOpen((prev) => !prev)}
             onModeChange={setMode}
             onOptionKindChange={setOptionKind}
           />
-          <div className="card" style={{ marginTop: 20 }}>
+          <div className="card binomial-display-card">
+            <ControlGroup label={translate("binomialShowLabel")}>
             <div className="metric-switch intuition-reveal">
               <button
                 type="button"
+                aria-pressed={showPrimaryMetric}
                 className={showPrimaryMetric ? "metric-button active" : "metric-button"}
-                onClick={() => setShowPrimaryMetric((prev) => !prev)}
+                onClick={toggleShowPrimaryMetric}
               >
                 {primaryToggleLabel}
               </button>
               <button
                 type="button"
+                aria-pressed={showSecondaryMetric}
                 className={showSecondaryMetric ? "metric-button active" : "metric-button"}
-                onClick={() => setShowSecondaryMetric((prev) => !prev)}
+                onClick={toggleShowSecondaryMetric}
               >
                 {secondaryToggleLabel}
               </button>
               <IntuitionTrigger sectionId={mode === "rates" ? "short-rate-tree" : "replication"} />
             </div>
+            </ControlGroup>
           </div>
         </div>
       ) : null}
@@ -56,8 +59,8 @@ export default function BinomialView() {
           secondaryToggleLabel={secondaryToggleLabel}
           onModeChange={setMode}
           onOptionKindChange={setOptionKind}
-          onTogglePrimaryMetric={() => setShowPrimaryMetric((prev) => !prev)}
-          onToggleSecondaryMetric={() => setShowSecondaryMetric((prev) => !prev)}
+          onTogglePrimaryMetric={toggleShowPrimaryMetric}
+          onToggleSecondaryMetric={toggleShowSecondaryMetric}
         />
         <BinomialSummary tree={tree} />
       </div>

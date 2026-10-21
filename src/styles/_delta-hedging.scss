@@ -1,0 +1,88 @@
+/* =========================================================
+   Delta hedging lab
+========================================================= */
+
+.dh-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.dh-chart {
+  width: 100%;
+  min-width: 0;
+  height: clamp(220px, 32vh, 320px);
+}
+
+.dh-chart--wide {
+  height: clamp(220px, 30vh, 300px);
+}
+
+.dh-caption {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.dh-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dh-metrics .stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.dh-pos { color: var(--positive); }
+.dh-neg { color: var(--negative); }
+
+.dh-study {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.dh-study-hist,
+.dh-study-table {
+  min-width: 0;
+}
+
+.dh-row-current {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.dh-why-list {
+  margin: 0 0 var(--space-3);
+  padding-left: 1.25em;
+  display: grid;
+  gap: var(--space-2);
+  line-height: 1.55;
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.dh-why .katex-display {
+  margin: var(--space-3) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media (max-width: 1100px) {
+  .dh-pair,
+  .dh-study {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dh-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dh-chart,
+  .dh-chart--wide {
+    height: clamp(200px, 40vh, 280px);
+  }
+}
