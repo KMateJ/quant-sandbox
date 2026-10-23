@@ -73,10 +73,10 @@ export const optionsOnOtherUnderlyings: GuideLessonContent = {
     p("Tegyük fel, hogy a részvény az árának folytonos $q$ hányadát fizeti osztalékként. Egy részvény $T$ ideig tartása ekkor az osztalékot is hozza, amelyet a részvénybe visszaforgatva egy részvényből lejáratkor $e^{qT}$ részvény lesz. Hogy pontosan egy részvénnyel zárjunk, ma csak $e^{-qT}$ részvénnyel kell replikálni. A modellben tehát a még várható osztalékokkal csökkentett ár számít, $S_0 e^{-qT}$, és a képlet a régi, ezzel a behelyettesítéssel:"),
     eq("c = S_0 e^{-qT} N(d_1) - K e^{-rT} N(d_2), \\qquad p = K e^{-rT} N(-d_2) - S_0 e^{-qT} N(-d_1),"),
     eq("d_1 = \\frac{\\ln(S_0/K) + (r - q + \\tfrac12\\sigma^2)\\,T}{\\sigma\\sqrt T}, \\qquad d_2 = d_1 - \\sigma\\sqrt T."),
-    p("Csak két dolog változott: a spotot $q$-val diszkontáljuk, és $d_1$ driftje $r - q$ lett $r$ helyett. Magasabb hozam olcsóbbá teszi a vételi és drágábbá az eladási opciót, mert az osztalék alacsonyabban hagyja a részvényt lejáratkor. $q = 0$ esetén pontosan az eredeti képletet kapjuk vissza."),
+    p("Csak két dolog változott: a spotot $q$-val diszkontáljuk, és $d_1$ driftje $r - q$ lett $r$ helyett. Magasabb hozam olcsóbbá teszi a callt és drágábbá a putot, mert az osztalék alacsonyabban hagyja a részvényt lejáratkor. $q = 0$ esetén pontosan az eredeti képletet kapjuk vissza."),
 
     h("A forward ár mint közös szál"),
-    p("A részvény $T$ időpontra szóló forward ára $F = S_0 e^{(r-q)T}$, ahogy az „Arbitrázs és a határidős ár” leckében, levonva az osztalékjövedelmet. Ha az $S_0 e^{-qT} = F e^{-rT}$ összefüggést behelyettesítjük a vételi opció képletébe, a hozam eltűnik a képletből:"),
+    p("A részvény $T$ időpontra szóló forward ára $F = S_0 e^{(r-q)T}$, ahogy az „Arbitrázs és a határidős ár” leckében, levonva az osztalékjövedelmet. Ha az $S_0 e^{-qT} = F e^{-rT}$ összefüggést behelyettesítjük a call képletébe, a hozam eltűnik a képletből:"),
     eq("c = e^{-rT}\\,\\bigl[\\,F\\,N(d_1) - K\\,N(d_2)\\,\\bigr], \\qquad d_1 = \\frac{\\ln(F/K) + \\tfrac12\\sigma^2 T}{\\sigma\\sqrt T}."),
     p("Ez az egyetlen képlet áll az alábbi esetek mögött. Az opció az alaptermékről csak a forward árat, a kötési árat és a volatilitást „látja”; alaptermékenként csak az változik, hogyan áll össze $F$ a mai árból."),
 
@@ -84,21 +84,21 @@ export const optionsOnOtherUnderlyings: GuideLessonContent = {
     p("A tőzsdeindex sok összetevő osztalékát fizeti, amelyek együtt viszonylag egyenletes folyamot adnak. Ezt folytonos $q$ hozamként kezelni a szokásos közelítés, és a fenti képlet érvényes, ahol $S_0$ az index szintje. Egyetlen, néhány nagy osztalékot fizető részvény más eset: gyakori megoldás, hogy $S_0$ helyére a lejáratig esedékes osztalékok jelenértékével csökkentett árat írjuk, és a szokásos képletet használjuk (escrowed-dividend módszer). Ezt itt nem vezetjük le."),
 
     h("Devizaopciók: Garman–Kohlhagen"),
-    p("Az árfolyamot belföldi pénznemben fejezzük ki egy egység külföldi pénzre, a belföldi kamatláb $r_d$, a külföldi $r_f$. A külföldi pénz birtokosa a külföldi kamatot keresi, ami pontosan az osztalékhozam szerepét tölti be: $q = r_f$. A határidős árfolyam $F = S_0 e^{(r_d - r_f)T}$, a fedezett kamatparitás, a vételi opció pedig $e^{-r_d T}[F N(d_1) - K N(d_2)]$. Ez a Garman–Kohlhagen-képlet."),
+    p("Az árfolyamot belföldi pénznemben fejezzük ki egy egység külföldi pénzre, a belföldi kamatláb $r_d$, a külföldi $r_f$. A külföldi pénz birtokosa a külföldi kamatot keresi, ami pontosan az osztalékhozam szerepét tölti be: $q = r_f$. A határidős árfolyam $F = S_0 e^{(r_d - r_f)T}$, a fedezett kamatparitás, a call pedig $e^{-r_d T}[F N(d_1) - K N(d_2)]$. Ez a Garman–Kohlhagen-képlet."),
 
     h("Határidős ügyletre szóló opciók: Black-76"),
-    p("A határidős ügylet megkötéséhez nem kell befektetés, ezért tartása sem hoz jövedelmet, sem finanszírozást nem igényel. Úgy viselkedik, mint egy olyan részvény, amelynek hozama a kamatlábbal egyenlő, $q = r$, így $F e^{-rT}$ áll $S_0 e^{-qT}$ helyén, és a kamatláb kiesik $d_1$-ből. Ha $F$ a határidős ár, a vételi opció ismét $e^{-rT}[F N(d_1) - K N(d_2)]$; ez a Black-76-képlet, amelyet széles körben használnak árutermékekre, kamatfutures-ekre, és forward hozamokkal capekre és swaptionökre. Magukról a határidős ügyletekről lásd a „Kötvényfutures és a legolcsóbban szállítható kötvény” leckét."),
-    p("Az ábra 100-as kötési árú és 100-as spotú részvényt használ, 20%-os volatilitással és egyéves lejárattal. Az alapbeállításnál (kamat 5%, osztalékhozam 3%) a vételi opció 8,65-be kerül a hozam nélküli 10,45-tel szemben, az eladási opció 6,73, a forward pedig 102,02. Emeld a hozamot, és nézd, hogyan süllyed a vételi opció görbéje a kifizetési vonal felé; nullán a két görbe egybeesik."),
+    p("A határidős ügylet megkötéséhez nem kell befektetés, ezért tartása sem hoz jövedelmet, sem finanszírozást nem igényel. Úgy viselkedik, mint egy olyan részvény, amelynek hozama a kamatlábbal egyenlő, $q = r$, így $F e^{-rT}$ áll $S_0 e^{-qT}$ helyén, és a kamatláb kiesik $d_1$-ből. Ha $F$ a határidős ár, a call ismét $e^{-rT}[F N(d_1) - K N(d_2)]$; ez a Black-76-képlet, amelyet széles körben használnak árutermékekre, kamatfuturesekre, és forward hozamokkal capekre és swaptionökre. Magukról a határidős ügyletekről lásd a „Kötvényfutures és a legolcsóbban szállítható kötvény” leckét."),
+    p("Az ábra 100-as kötési árú és 100-as spotú részvényt használ, 20%-os volatilitással és egyéves lejárattal. Az alapbeállításnál (kamat 5%, osztalékhozam 3%) a call 8,65-be kerül a hozam nélküli 10,45-tel szemben, a put 6,73, a forward pedig 102,02. Emeld a hozamot, és nézd, hogyan süllyed a call görbéje a kifizetési vonal felé; nullán a két görbe egybeesik."),
     figure("dividend-yield-price"),
 
     h("Put–call paritás hozammal"),
-    p("A „Put–call paritás” leckéből ismert összefüggés ugyanezzel a behelyettesítéssel érvényes marad: egy vételi mínusz egy eladási opció egy forward, mai pénzben értékelve,"),
+    p("A „Put–call paritás” leckéből ismert összefüggés ugyanezzel a behelyettesítéssel érvényes marad: egy call mínusz egy put egy forward, mai pénzben értékelve,"),
     eq("c - p = S_0 e^{-qT} - K e^{-rT}."),
-    p("Ugyanazon alaptermékre, kötési árra és lejáratra szóló vételi és eladási opció ezért ugyanazt mondja a hozamról."),
+    p("Ugyanazon alaptermékre, kötési árra és lejáratra szóló call és put ezért ugyanazt mondja a hozamról."),
     {
       kind: "check",
       id: "options-on-other-underlyings/put-from-call",
-      prompt: "Egy 50-es árú részvény folytonos 2%-os osztalékhozamot fizet; a kockázatmentes kamatláb 4%. Egy 50-es kötési árú, féléves európai vételi opció ára 4,41. Mennyi az ugyanilyen kötési árú és lejáratú eladási opció ára?",
+      prompt: "Egy 50-es árú részvény folytonos 2%-os osztalékhozamot fizet; a kockázatmentes kamatláb 4%. Egy 50-es kötési árú, féléves európai call ára 4,41. Mennyi az ugyanilyen kötési árú és lejáratú put ára?",
       answer: { type: "number", value: 3.92, tolerance: 0.02 },
       explain: "A paritásból $p = c - S_0 e^{-qT} + K e^{-rT} = 4{,}41 - 50e^{-0{,}01} + 50e^{-0{,}02} = 4{,}41 - 49{,}50 + 49{,}01 \\approx 3{,}92$.",
     },
@@ -111,12 +111,12 @@ export const optionsOnOtherUnderlyings: GuideLessonContent = {
     },
     {
       kind: "worked",
-      title: "Garman–Kohlhagen vételi opció az EUR/USD árfolyamra",
+      title: "Garman–Kohlhagen-call az EUR/USD árfolyamra",
       steps: [
         { text: "Határidős árfolyam (spot 1,10, dollárkamat 5%, eurókamat 3%, egy év).", tex: "F = S_0\\,e^{(r_d - r_f)T}", result: { value: 1.1222, tolerance: 0.0005 } },
         { text: "1,10-es kötési árral és 10%-os volatilitással az első normális argumentum.", tex: "d_1 = \\frac{\\ln(F/K) + \\tfrac12\\sigma^2 T}{\\sigma\\sqrt T}", result: { value: 0.25, tolerance: 0.002 } },
         { text: "A második argumentum.", tex: "d_2 = d_1 - \\sigma\\sqrt T", result: { value: 0.15, tolerance: 0.002 } },
-        { text: "$N(d_1) = 0{,}5987$ és $N(d_2) = 0{,}5596$ mellett a vételi opció ára dollárban, egy euróra vetítve.", tex: "c = e^{-r_d T}\\,[F\\,N(d_1) - K\\,N(d_2)]", result: { value: 0.0536, tolerance: 0.0004 } },
+        { text: "$N(d_1) = 0{,}5987$ és $N(d_2) = 0{,}5596$ mellett a call ára dollárban, egy euróra vetítve.", tex: "c = e^{-r_d T}\\,[F\\,N(d_1) - K\\,N(d_2)]", result: { value: 0.0536, tolerance: 0.0004 } },
       ],
     },
 
@@ -128,6 +128,6 @@ export const optionsOnOtherUnderlyings: GuideLessonContent = {
       "A put–call paritás $c - p = S_0 e^{-qT} - K e^{-rT}$ alakot ölt.",
     ),
     note("Egy későbbi lecke, az „Implikált volatilitás és a volatilitás-mosoly”, megfordítja a kérdést: adott piaci árhoz milyen $\\sigma$ kell a képletbe."),
-    lab("/black-scholes", "Áraz vételi és eladási opciókat a Black–Scholes laborban"),
+    lab("/black-scholes", "Árazz callokat és putokat a Black–Scholes laborban"),
   ],
 };

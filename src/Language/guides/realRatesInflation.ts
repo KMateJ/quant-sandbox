@@ -24,7 +24,7 @@ export const realRatesInflation: GuideLessonContent = {
 
     h("Discounting real cash flows"),
     p("Both ways of describing a payment are equivalent, provided they are not mixed. **Real cash flows are discounted at the real rate, nominal cash flows at the nominal rate.** A payment that is 100 in today's purchasing power in $t$ years is $100\\,(1+\\pi)^t$ in money; discounting that at $(1+i)^t = (1+r)^t(1+\\pi)^t$ gives $100/(1+r)^t$, the same value as discounting the real amount at $r$."),
-    p("The classic error is to discount real flows at a nominal rate (or nominal flows at a real rate). The result understates the value of the first by the factor $(1+\\pi)^t$ and overstates the second by the same factor. Over 10 years at 3% inflation the factor $1.03^{10} pprox 1.34$ makes the last payment's value wrong by 34%."),
+    p("The classic error is to discount real flows at a nominal rate (or nominal flows at a real rate). The result understates the value of the first by the factor $(1+\\pi)^t$ and overstates the second by the same factor. Over 10 years at 3% inflation the factor $1.03^{10} \\approx 1.34$ makes the last payment's value wrong by 34%."),
 
     h("Inflation-linked bonds"),
     p("An **inflation-linked bond**, or linker, fixes its payments in real terms. Its principal is scaled by the price index, and the coupon is a fixed real rate applied to that scaled principal. With an index factor $(1+\\pi)^t$, a real coupon rate $c$ and face value 100, the nominal payment at time $t$ is"),
@@ -101,7 +101,7 @@ export const realRatesInflation: GuideLessonContent = {
 
     h("Reál pénzáramok diszkontálása"),
     p("A kifizetés két leírása egyenértékű, ha nem keverjük őket. **A reál pénzáramokat a reálkamattal, a nominálisakat a nominális kamattal diszkontáljuk.** Egy kifizetés, amely $t$ év múlva mai vásárlóerőben 100, pénzben $100\\,(1+\\pi)^t$; ezt $(1+i)^t = (1+r)^t(1+\\pi)^t$-vel diszkontálva $100/(1+r)^t$-t kapunk, ugyanazt, mint a reál összeget $r$-rel diszkontálva."),
-    p("A klasszikus hiba a reál pénzáramokat nominális kamattal (vagy a nominálisakat reálkamattal) diszkontálni. Az eredmény az elsőt $(1+\\pi)^t$-szeresével alulbecsüli, a másodikat ugyanennyivel felülbecsüli. 10 év alatt, 3% inflációnál az $1{,}03^{10} pprox 1{,}34$ szorzó az utolsó kifizetés értékét 34%-kal téveszti el."),
+    p("A klasszikus hiba a reál pénzáramokat nominális kamattal (vagy a nominálisakat reálkamattal) diszkontálni. Az eredmény az elsőt $(1+\\pi)^t$-szeresével alulbecsüli, a másodikat ugyanennyivel felülbecsüli. 10 év alatt, 3% inflációnál az $1{,}03^{10} \\approx 1{,}34$ szorzó az utolsó kifizetés értékét 34%-kal téveszti el."),
 
     h("Inflációkövető kötvények"),
     p("Az **inflációkövető kötvény** a kifizetéseit reálértékben rögzíti. A tőkéjét az árindex skálázza, a kupon pedig egy fix reálkamat erre a skálázott tőkére. $(1+\\pi)^t$ indexszorzóval, $c$ reálkupon-kamattal és 100-as névértékkel a nominális kifizetés a $t$ időpontban"),
@@ -115,7 +115,7 @@ export const realRatesInflation: GuideLessonContent = {
     h("Kiegyenlítő infláció"),
     p("A piac mindkét típusú kötvényt árazza. Az azonos lejáratú kötvények $i$ nominális és $r$ reálhozama közötti különbség az az infláció, amelynél a befektető közömbös, a **kiegyenlítő (breakeven) inflációs ráta**:"),
     eq("\\pi_{\\text{BE}} = \\frac{1+i}{1+r} - 1 \\approx i - r."),
-    p("Ha a nominális kötvény hozama 4,03%, az inflációkövetőé 1%, a kiegyenlítő infláció $1{,}0403/1{,}01 - 1 = 3{,}00\\%$. Ha a tényleges infláció magasabb, az inflációkövető volt a jobb tétel, ha alacsonyabb, a nominális kötvény. A kiegyenlítő infláció nem tiszta előrejelzés. A hitelfelárhoz hasonlóan piaci ár, amely kockázati kompenzációt is tartalmaz (inflációs bizonytalanság, likviditási különbségek), ezért eltérhet attól, amit a befektetők várnak."),
+    p("Ha a nominális kötvény hozama 4,03%, az inflációkövetőé 1%, a kiegyenlítő infláció $1{,}0403/1{,}01 - 1 = 3{,}00\\%$. Ha a tényleges infláció magasabb, az inflációkövető volt a jobb választás, ha alacsonyabb, a nominális kötvény. A kiegyenlítő infláció nem tiszta előrejelzés. A hitelfelárhoz hasonlóan piaci ár, amely kockázati kompenzációt is tartalmaz (inflációs bizonytalanság, likviditási különbségek), ezért eltérhet attól, amit a befektetők várnak."),
     {
       kind: "check",
       id: "real-rates-inflation/who-benefits",
@@ -154,6 +154,6 @@ export const realRatesInflation: GuideLessonContent = {
       "Az inflációkövető kötvény reálértéke rögzített: tőkéje és kuponjai követik az árindexet, és a reál pénzáramok reálkamattal diszkontálásával árazzuk.",
       "A kiegyenlítő infláció, a nominális és a reálhozam különbsége, piaci ár, amely kockázati prémiumot is tartalmaz.",
     ),
-    lab("/bond-pricing", "Nyisd meg a Kötvény labort, és áraz kötvényt különböző hozamokon"),
+    lab("/bond-pricing", "Nyisd meg a Kötvény labort, és árazz kötvényeket különböző hozamokon"),
   ],
 };

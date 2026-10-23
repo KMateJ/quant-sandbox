@@ -120,8 +120,8 @@ export const capitalBudgetingRisk: GuideLessonContent = {
       explain: "Az érzékenységvizsgálat egyszerre egy bemenetet mozgat, a többit az alapesetben hagyja, így minden NPV-változás annak a bemenetnek tulajdonítható. A bemenetek együttes mozgatása a forgatókönyv-elemzés, a véletlen húzás a Monte Carlo-szimuláció.",
     },
 
-    h("Fedezeti pont elemzés"),
-    p("Az érzékenység azt kérdezi, mennyit mozdul az NPV; a **fedezeti pont elemzés** azt, hogy meddig mozdulhat egy bemenet, mielőtt az NPV nullára csökken. Mivel itt az NPV lineáris az eladott mennyiségben, a fedezeti pont kézzel is megkapható: a projektnek $1000 / 3{,}9927 = 250{,}46$ éves pénzáram kell, tehát"),
+    h("Fedezetipont-elemzés"),
+    p("Az érzékenység azt kérdezi, mennyit mozdul az NPV; a **fedezetipont-elemzés** azt, hogy meddig mozdulhat egy bemenet, mielőtt az NPV nullára csökken. Mivel itt az NPV lineáris az eladott mennyiségben, a fedezeti pont kézzel is megkapható: a projektnek $1000 / 3{,}9927 = 250{,}46$ éves pénzáram kell, tehát"),
     eq("Q^{*}\\,(15 - 8) - 200 = 250{,}46 \\quad\\Rightarrow\\quad Q^{*} = \\frac{450{,}46}{7} = 64{,}35."),
     p("Az eladások több mint egyharmadával csökkenhetnek, mielőtt a projekt értéket rombol. Ugyanígy a fedezeti ár 12,50 (17%-kal az alap alatt), a fedezeti egységköltség 10,50 (31%-kal felette). A nemlineárisan belépő bemenetekre, például a diszkontrátára, a fedezeti pontot numerikusan keressük; a rátára ez éppen az IRR. Ha a fedezeti pont közel van az alapértékhez, az figyelmeztetés: egy mérsékelt előrejelzési hiba is megfordítja a döntést."),
     {
@@ -143,16 +143,16 @@ export const capitalBudgetingRisk: GuideLessonContent = {
     note("A szimuláció csak annyira jó, amennyire a bemeneti eloszlásai. Itt a mennyiséget és az árat egymástól függetlenül húzzuk; a gyakorlatban gyakran korrelálnak (a magas ár csökkentheti az eladásokat), és ennek elhanyagolása túl szélessé vagy túl szűkké teheti a szóródást."),
 
     h("Mit kezdjünk az eloszlással"),
-    p("A szimulált NPV átlaga továbbra is az a szám, amelyet nullával vetünk össze, ha a vállalat diverzifikált, és az $r$ ráta már beárazza a projekt kockázatát. Ha $r$-rel diszkontálunk, majd a szóródásért még egyszer büntetünk, a kockázatot kétszer számoljuk. Az eloszlás olyan információt ad, amit az átlag nem: a **veszteség valószínűségét**, egy rossz kimenet méretét (az 5. percentilis, ugyanaz a gondolat, mint a kockáztatott érték) és azt, hogy mely bemenetek hajtják a lefelé mutató kockázatot. Ez gyakorlati döntéseket irányít: érdemes-e próbaüzemmel tanulni a keresletről a teljes beruházás előtt, érdemes-e fix áras szerződéssel kiiktatni az árkockázatot, és túléli-e egyáltalán a vállalat a rossz kimeneteket."),
-    p("E döntések némelyike maga is értékes: a várakozás, a bővítés vagy a kiszállás joga, miután a bizonytalanság feloldódik, annál többet ér, minél szélesebb az eloszlás. Erről szól a reálopciókról szóló lecke a pálya későbbi részén."),
+    p("A szimulált NPV átlaga továbbra is az a szám, amelyet nullával vetünk össze, ha a vállalat diverzifikált, és az $r$ ráta már beárazza a projekt kockázatát. Ha $r$-rel diszkontálunk, majd a szóródásért még egyszer büntetünk, a kockázatot kétszer számoljuk. Az eloszlás olyan információt ad, amit az átlag nem: a **veszteség valószínűségét**, egy rossz kimenet méretét (az 5. percentilis, ugyanaz a gondolat, mint a kockáztatott érték) és azt, hogy mely bemenetek okozzák a veszteségkockázatot. Ez gyakorlati döntéseket irányít: érdemes-e próbaüzemmel tanulni a keresletről a teljes beruházás előtt, érdemes-e fix áras szerződéssel kiiktatni az árkockázatot, és túléli-e egyáltalán a vállalat a rossz kimeneteket."),
+    p("E döntések némelyike maga is értékes: a várakozás, a bővítés vagy a kiszállás joga, miután a bizonytalanság feloldódik, annál többet ér, minél szélesebb az eloszlás. Erről szól a reálopciókról szóló lecke a pálya későbbi részében."),
 
     h("Összefoglalás"),
     list(
       "Egyetlen NPV elrejti, mennyire bizonytalanok a bemenetei; ugyanaz az NPV nagyon különböző kockázatot hordozhat.",
       "Az érzékenységvizsgálat egyszerre egy bemenetet mozgat (például ±10%-kal), és a bemeneteket az NPV-re gyakorolt hatásuk szerint rangsorolja.",
-      "A fedezeti pont elemzés megkeresi azt a bemeneti értéket, amelynél az NPV nulla; az alapprojektnél ez évi 64,35 egység.",
+      "A fedezetipont-elemzés megkeresi azt a bemeneti értéket, amelynél az NPV nulla; az alapprojektnél ez évi 64,35 egység.",
       "A forgatókönyv-elemzés több bemenetet együtt mozgat legjobb, alap- és legrosszabb esetbe.",
-      "A Monte Carlo-szimuláció a teljes NPV-eloszlást adja: az átlagát, a veszteség valószínűségét és a lefelé mutató percentiliseket.",
+      "A Monte Carlo-szimuláció a teljes NPV-eloszlást adja: az átlagát, a veszteség valószínűségét és az alsó percentiliseket.",
     ),
     lab("/npv-irr", "Nyisd meg az NPV és IRR labort, és futtass érzékenységeket és forgatókönyveket a saját pénzáramaidra"),
   ],

@@ -78,8 +78,8 @@ export const curveRisk: GuideLessonContent = {
     p("Vegyünk egy 5 éves kötvényt 4%-os éves kuponnal és 100-as névértékkel. Pénzáramai az 1–5. év végén 4, 4, 4, 4 és 104; mindegyiket a zérókamatával diszkontálva $P \\approx 100{,}57$. A lejáratig számított hozam az öt zérókamat egyetlen átlaga; az ár megállapításához mind az öt kell."),
 
     h("A görbemozgás alakjai"),
-    p("A görbék ritkán mozdulnak párhuzamosan. A történések nagy részét három egyszerű alak írja le. A **párhuzamos eltolás** minden kamatot ugyanannyival mozgat. A **meredekedés** (steepener) vagy **ellaposodás** (flattener) a meredekséget változtatja: meredekedéskor a rövid kamatok esnek a hosszúakhoz képest, ellaposodáskor emelkednek. A **pillangó** a görbületet változtatja: a görbe közepe a két vég ellen mozdul."),
-    p("Az ábra pontosan a hozamgörbe-labor alakjait használja. Egy $+50$ bázispontos meredekedés az 1 éves kamatot mintegy 38 bázisponttal, az 5 évest körülbelül 16-tal, a 30 évest 3 bázispont alatt csökkenti: a rövid vég mozog."),
+    p("A görbék ritkán mozdulnak párhuzamosan. A mozgások nagy részét három egyszerű alak írja le. A **párhuzamos eltolás** minden kamatot ugyanannyival mozgat. A **meredekedés** (steepener) vagy **ellaposodás** (flattener) a meredekséget változtatja: meredekedéskor a rövid kamatok esnek a hosszúakhoz képest, ellaposodáskor emelkednek. A **pillangó** a görbületet változtatja: a görbe közepe a két vég ellen mozdul."),
+    p("Az ábra pontosan a hozamgörbe-labor alakjait használja. Egy $+50$ bázispontos meredekedés az 1 éves kamatot mintegy 38 bázisponttal, az 5 évest körülbelül 16-tal, a 30 évest kevesebb mint 3 bázisponttal csökkenti: a rövid vég mozog."),
 
     h("Kulcskamat-durációk"),
     p("Egyetlen duráció nem mondja meg, a görbe melyik pontján van a kockázat. A **kulcskamat-duráció** igen. Válasszunk kulcslejáratokat, itt 2, 5, 10 és 30 évet. Minden kulcskamatot mozdítsunk el egy kis $\\Delta y$ értékkel, a szomszédos zérókamatok kövessék lineárisan, a szomszédos kulcslejáratnál nullára csökkenve, és jegyezzük fel a relatív árváltozást:"),
@@ -96,7 +96,7 @@ export const curveRisk: GuideLessonContent = {
     },
 
     h("Bullet és barbell"),
-    p("Két portfólió lehet azonos árú és azonos durációjú, mégis másképp viselkedhet. Hasonlítsuk össze az 5 éves kötvényt, a **bullet**-et egy **barbell**-lel, vagyis két zéró kuponos kötvénnyel, az egyik 2, a másik 30 év múlva jár le, úgy súlyozva, hogy ára és durációja egyezzen a bulletével. A barbell értékének körülbelül 91%-a a rövid, 9%-a a hosszú zéróban van."),
+    p("Két portfólió lehet azonos árú és azonos durációjú, mégis másképp viselkedhet. Hasonlítsuk össze az 5 éves kötvényt, a **bulletet** egy **barbellel**, vagyis két zérókuponos kötvénnyel, az egyik 2, a másik 30 év múlva jár le, úgy súlyozva, hogy ára és durációja egyezzen a bulletével. A barbell értékének körülbelül 91%-a a rövid, 9%-a a hosszú zéróban van."),
     p("Mindkettő durációja 4,46 év, tehát a „Duráció és konvexitás” nem tudja megkülönböztetni őket. A kulcskamat-durációk igen: a bullet 4,23 az 5 éves kulcsnál, a barbell 1,75 a 2 éves és 2,70 a 30 éves kulcsnál, köztük semmi. $+50$ bázispontos párhuzamos mozgásnál a bullet 2,20%-ot, a barbell 2,13%-ot veszít; a kis különbség a barbell nagyobb konvexitása, amit az „Immunizáció és durációillesztés” tárgyalt. $+50$ bázispontos meredekedésnél a bullet 0,74%-ot, a barbell csak 0,59%-ot nyer, ellaposodásnál a bullet 0,74%-ot veszít a barbell 0,58%-ával szemben. A pillangónál, amely a görbe közepét emeli, a bullet 0,59%-ot, a barbell 0,32%-ot veszít. Az egyetlen duráció elrejti ezeket a különbségeket, a kulcskamat-durációk megmagyarázzák őket."),
     figure("key-rate-shocks"),
     p("Az ábrán válassz alakot és méretet. A felső grafikon a zérógörbét mutatja a sokk előtt és után, az alsó a bullet és a barbell kulcskamat-durációit. A kijelzők az egyes portfóliók árváltozását és a bullet kulcskamat-durációinak összegét adják."),
@@ -109,12 +109,12 @@ export const curveRisk: GuideLessonContent = {
     },
 
     h("A számok használata"),
-    p("A kulcskamat-durációk lehetővé teszik, hogy a kockázatkezelő pontosan fogalmazza meg a nézetét. Aki a görbe meredekedésére számít, megválaszthatja, mely kulcskamatoknak legyen kitéve a portfólió. Fedezéskor olyan eszközöket választ, amelyek kulcskamat-durációi minden kulcspontban kioltják a portfólióét, nem csak az összeget illesztik. Az ára, hogy az eredmény a választott kulcspontoktól és a sokk kulcspontok közötti elosztásától függ, így a kulcskamat-durációk a görbe egy bizonyos felbontását írják le, nem természeti törvényt."),
+    p("A kulcskamat-durációk lehetővé teszik, hogy a kockázatkezelő pontosan fogalmazza meg a piaci várakozását. Aki a görbe meredekedésére számít, megválaszthatja, mely kulcskamatoknak legyen kitéve a portfólió. Fedezéskor olyan eszközöket választ, amelyek kulcskamat-durációi minden kulcspontban kioltják a portfólióét, nem csak az összeget illesztik. Ennek az ára, hogy az eredmény a választott kulcspontoktól és a sokk kulcspontok közötti elosztásától függ, így a kulcskamat-durációk a görbe egy bizonyos felbontását írják le, nem természeti törvényt."),
     {
       kind: "worked",
       title: "Az 5 éves kötvény árváltozása +50 bázispontos meredekedésben",
       steps: [
-        { text: "Áraz a 4, 4, 4, 4, 104 pénzáramokat a görbéről.", tex: "P = \\sum_t \\frac{CF_t}{(1+z_t)^t}", result: { value: 100.57, tolerance: 0.01 } },
+        { text: "A 4, 4, 4, 4, 104 pénzáramok árazása a görbéről.", tex: "P = \\sum_t \\frac{CF_t}{(1+z_t)^t}", result: { value: 100.57, tolerance: 0.01 } },
         { text: "A meredekedés ennyivel csökkenti a 2 éves zérókamatot (bázispontban).", tex: "\\Delta z_2", result: { value: -29.12, tolerance: 0.1 } },
         { text: "Ennyivel csökkenti az 5 éves zérókamatot (bázispontban).", tex: "\\Delta z_5", result: { value: -15.84, tolerance: 0.1 } },
         { text: "A kötvény kulcskamat-durációi a 2 és 5 éves pontnál.", tex: "\\text{KRD}_2,\\ \\text{KRD}_5 = 0{,}22,\\ 4{,}23" },

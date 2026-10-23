@@ -91,7 +91,7 @@ export const impliedVolatility: GuideLessonContent = {
     p("„A Black–Scholes-képlet” öt bemenetből opciós árat számol. Ez a lecke visszafelé használja a képletet: adottnak veszi a piaci árat, és azt kérdezi, milyen volatilitás adja ki. A válasz, az implikált volatilitás, a piacon az opciók jegyzésének módja, és ha kötési áronként és lejáratonként összevetjük, megmutatja, hol tér el a modell a piactól."),
 
     h("Az egyetlen nem megfigyelhető bemenet"),
-    p("Nézzük a $C_0 = S_0N(d_1) - Ke^{-rT}N(d_2)$ call-ár bemeneteit. Az $S_0$ részvényár látszik a képernyőn, a $K$ kötési ár és a $T$ lejárat a szerződésben szerepel, az $r$ kockázatmentes kamatláb pedig leolvasható a rövid lejáratú állampapírokról. A $\\sigma$ volatilitás más: azt írja le, mennyit mozog majd a részvény most és $T$ között, és ezt előre senki sem figyelheti meg. A múltbeli hozamokból becsült történeti volatilitás egy lehetséges tipp, de a kereskedőknek nem kell egyetérteniük benne."),
+    p("Nézzük a $C_0 = S_0N(d_1) - Ke^{-rT}N(d_2)$ call-ár bemeneteit. Az $S_0$ részvényár látszik a képernyőn, a $K$ kötési ár és a $T$ lejárat a szerződésben szerepel, az $r$ kockázatmentes kamatláb pedig leolvasható a rövid lejáratú állampapírokról. A $\\sigma$ volatilitás más: azt írja le, mennyit mozog majd a részvény most és $T$ között, és ezt előre senki sem figyelheti meg. A múltbeli hozamokból becsült történeti volatilitás egy lehetséges kiindulópont, de a kereskedőknek nem kell egyetérteniük benne."),
     p("A képlet ezért fordítva is olvasható. Ha a piacon már van ára az opciónak, az egyetlen szabad bemenet $\\sigma$, és erre megoldhatjuk az egyenletet."),
 
     h("Az ár mint a volatilitás függvénye"),
@@ -104,7 +104,7 @@ export const impliedVolatility: GuideLessonContent = {
     {
       kind: "check",
       id: "implied-volatility/above-model-price",
-      prompt: "Egy call a $\\sigma = 20\\%$-kal számolt Black–Scholes-ár fölött kereskedik. Mit mondhatsz az implikált volatilitásáról?",
+      prompt: "Egy call ára a $\\sigma = 20\\%$-kal számolt Black–Scholes-ár fölött van. Mit mondhatsz az implikált volatilitásáról?",
       answer: { type: "choice", options: ["20% fölött van", "20% alatt van", "Pontosan 20%", "A valós drift ismerete nélkül semmit"], correct: 0 },
       explain: "Az ár $\\sigma$-ban szigorúan nő (a vega pozitív), így magasabb árhoz magasabb volatilitás kell.",
     },
@@ -143,7 +143,7 @@ export const impliedVolatility: GuideLessonContent = {
         { text: "Második lépés, $\\sigma_1$-nél $\\approx 36{,}96$ vegával:", tex: "\\sigma_2 = \\sigma_1 - \\frac{C(\\sigma_1) - 9}{36{,}96}", result: { value: 16.11, tolerance: 0.02, unit: "%" } },
       ],
     },
-    p("Az ábra ugyanezt a szerkesztést mutatja. Az $S_0 = 100$ árfolyam és az $r = 5\\%$ kamat rögzített; csúszkákkal állítható a jegyzett call-ár, a $K$ kötési ár és a $T$ lejárat. A görbe a Black–Scholes call-ár $\\sigma$ függvényében 1% és 100% között, a vízszintes vonal a jegyzett ár, a függőleges vonal pedig a metszéspontot jelöli: ez az implikált volatilitás. A kijelzők az implikált volatilitást, az ott vett vegát, valamint az alsó és felső arbitrázsmentes korlátot mutatják. Emeld a jegyzett árat: a metszéspont jobbra csúszik, az implikált volatilitás nő. Utána vidd az árat az alsó korlát alá: a vízszintes vonal már nem metszi a görbét, és az implikált volatilitás helyén gondolatjel áll."),
+    p("Az ábra ugyanezt a keresést mutatja. Az $S_0 = 100$ árfolyam és az $r = 5\\%$ kamat rögzített; csúszkákkal állítható a jegyzett call-ár, a $K$ kötési ár és a $T$ lejárat. A görbe a Black–Scholes call-ár $\\sigma$ függvényében 1% és 100% között, a vízszintes vonal a jegyzett ár, a függőleges vonal pedig a metszéspontot jelöli: ez az implikált volatilitás. A kijelzők az implikált volatilitást, az ott vett vegát, valamint az alsó és felső arbitrázsmentes korlátot mutatják. Emeld a jegyzett árat: a metszéspont jobbra csúszik, az implikált volatilitás nő. Utána vidd az árat az alsó korlát alá: a vízszintes vonal már nem metszi a görbét, és az implikált volatilitás helyén gondolatjel áll."),
     figure("implied-vol"),
 
     h("Jegyzés volatilitásban"),
@@ -153,7 +153,7 @@ export const impliedVolatility: GuideLessonContent = {
     p("A példában a putnak $12{,}00 - (100 - 95{,}12) \\approx 7{,}12$-be kell kerülnie, és implikált volatilitása szintén 24,11%."),
 
     h("A volatilitás-mosoly és a ferdeség"),
-    p("Ha a Black–Scholes-modell helyes volna, a részvénynek egyetlen volatilitása lenne, és minden rá szóló opció ugyanazt az implikált volatilitást mutatná. A piaci adatok nem ilyenek. Rögzített lejárat mellett az implikált volatilitást a kötési ár függvényében ábrázolva görbét kapunk, nem vízszintes egyenest. Részvényindexeken a görbe lefelé lejt: az alacsony kötési árú opciók, különösen a pénzen kívüli putok implikált volatilitása jól láthatóan magasabb a pénzen lévőkénél, a magas kötési áraké pedig valamivel alacsonyabb. Ezt az alakot **ferdeségnek** (skew) nevezik. Más piacokon, például a devizapiacon, a görbe szimmetrikusabb, és mindkét oldalon emelkedik; innen ered a **volatilitás-mosoly** elnevezés."),
+    p("Ha a Black–Scholes-modell helyes volna, a részvénynek egyetlen volatilitása lenne, és minden rá szóló opció ugyanazt az implikált volatilitást mutatná. A piaci adatok nem ilyenek. Rögzített lejárat mellett az implikált volatilitást a kötési ár függvényében ábrázolva görbét kapunk, nem vízszintes egyenest. Részvényindexeken a görbe lefelé lejt: az alacsony kötési árú opciók, különösen a pénzen kívüli putok implikált volatilitása jól láthatóan magasabb a pénznél lévőkénél, a magas kötési áraké pedig valamivel alacsonyabb. Ezt az alakot **ferdeségnek** (skew) nevezik. Más piacokon, például a devizapiacon, a görbe szimmetrikusabb, és mindkét oldalon emelkedik; innen ered a **volatilitás-mosoly** elnevezés."),
     p("Rögzített kötési ár mellett az implikált volatilitás a lejárattal is változik; ez a volatilitás **lejárati szerkezete**. Nyugodt piacon a rövid lejáratú volatilitás jellemzően a hosszú lejáratú alatt van, egy éles esés után a sorrend gyakran megfordul. A két hatás együtt adja a kötési ár és a lejárat fölött kifeszülő implikált volatilitási felületet."),
 
     h("Mit mond a mosoly a modellről"),

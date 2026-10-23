@@ -6,8 +6,8 @@ export const guideWave2Hu = {
   guideStaticReplicationTitle: "Statikus replikáció: Breeden–Litzenberger és Carr–Madan",
   guideStaticReplicationDesc: "Kockázatsemleges sűrűség a call árakból, és tetszőleges kifizetés felépítése kötvényből, forwardból és opciókból.",
   guideRiskMeasuresTitle: "Kockáztatott érték (VaR) és várható veszteség (ES)",
-  guideRiskMeasuresDesc: "Veszteségkvantilisek, az azokon túli farok, normális és vastag farkú hozamok, és a négyzetgyökös időszabály.",
-  guideMeanReversionTitle: "Átlaghoz való visszahúzás: Ornstein–Uhlenbeck és Vasicek",
+  guideRiskMeasuresDesc: "Veszteségkvantilisek, az azokon túli farokrész, normális és vastag farkú hozamok, és a négyzetgyökös időszabály.",
+  guideMeanReversionTitle: "Átlaghoz visszahúzó folyamatok: Ornstein–Uhlenbeck és Vasicek",
   guideMeanReversionDesc: "Hosszú távú szinthez húzott folyamat, egzakt megoldása és stacionárius eloszlása, valamint a rövid kamat a Vasicek-modellben.",
 
   gfW2GreeksTitle: "Az opció görögjei a részvényár függvényében",

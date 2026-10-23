@@ -103,7 +103,7 @@ export const yieldCurve: GuideLessonContent = {
     p("Ha a görbe vízszintes, vagyis minden $t$-re $r(t) = r$, ez egyetlen rátával való diszkontálásra egyszerűsödik, és minden kötvény hozama ugyanaz. Egyébként a kötvény lejáratig számított hozama az az egy ráta, amely ezt az árat adja vissza: az azonnali kamatlábak pénzáramlásokkal súlyozott keveréke."),
 
     h("Rátakinyerés (bootstrapping)"),
-    p("Zérókuponos kötvény nem minden lejáratra létezik, ezért az azonnali kamatlábakat általában kuponos kötvények árából nyerjük ki, lejáratról lejáratra, a rövid végtől kezdve. Ennek neve **bootstrapping**. Éves kuponokkal ($F = 100$) dolgozunk, a diszkontfaktorokat oldjuk meg, amelyek nem függenek a kamatozási konvenciótól, és csak ezután váltjuk át őket folytonos kamatozású azonnali rátákra."),
+    p("Zérókuponos kötvény nem minden lejáratra létezik, ezért az azonnali kamatlábakat általában kuponos kötvények árából nyerjük ki, lejáratról lejáratra, a rövid végtől kezdve. Ennek neve **bootstrapping**. Éves kuponokkal ($F = 100$) dolgozunk, a diszkontfaktorokra oldjuk meg az egyenleteket, amelyek nem függenek a kamatozási konvenciótól, és csak ezután váltjuk át őket folytonos kamatozású azonnali rátákra."),
     p("Tegyük fel, hogy a piacon egy egyéves zérókuponos kötvény ára 97,00, egy kétéves, 5%-os éves kuponú kötvényé pedig 101,00."),
     steps(
       "Az egyéves zérókuponos kötvényből $P(0,1) = 97{,}00/100 = 0{,}9700$, így $r(1) = -\\ln 0{,}97 \\approx 3{,}05\\%$.",
@@ -141,13 +141,13 @@ export const yieldCurve: GuideLessonContent = {
     h("A pillanatnyi forward görbe"),
     p("Közelítsen $t_2$ a $t_1 = t$ időponthoz. A számláló $r(t)\\,t$ megváltozása, így a határérték derivált, a **pillanatnyi forward kamatláb**:"),
     eq("f(t) = \\frac{d}{dt}\\big(r(t)\\,t\\big) = r(t) + t\\,r'(t)."),
-    p("Ebből látszik, hogyan helyezkedik el egymáshoz képest a két görbe. Ahol az azonnali görbe emelkedik ($r'(t) > 0$), ott a forward görbe **fölötte** halad; ahol csökken, ott alatta; ahol vízszintes, ott egybeesnek. Jó kép erre egy futó átlag: az $r(t)$ azonnali kamatláb a 0 és $t$ közötti forward kamatlábak átlaga, ezért csak akkor nő, ha az újonnan hozzávett ráta az addigi átlag fölött van."),
+    p("Ebből látszik, hogyan helyezkedik el egymáshoz képest a két görbe. Ahol az azonnali görbe emelkedik ($r'(t) > 0$), ott a forward görbe **fölötte** halad; ahol csökken, ott alatta; ahol vízszintes, ott egybeesnek. Jó kép erre a kumulált átlag: az $r(t)$ azonnali kamatláb a 0 és $t$ közötti forward kamatlábak átlaga, ezért csak akkor nő, ha az újonnan hozzávett ráta az addigi átlag fölött van."),
     {
       kind: "check",
       id: "yield-curve/forward-above-spot",
-      prompt: "Egy lejárati tartományban a pillanatnyi forward görbe az azonnali görbe fölött halad. Mit csinál ott az azonnali görbe?",
+      prompt: "Egy lejárati tartományban a pillanatnyi forward görbe az azonnali görbe fölött halad. Hogyan viselkedik ott az azonnali görbe?",
       answer: { type: "choice", options: ["Emelkedik", "Csökken", "Vízszintes", "A forwardokból nem állapítható meg"], correct: 0 },
-      explain: "$f(t) = r(t) + t\\,r'(t)$, így $f(t) > r(t)$ pontosan akkor, ha $r'(t) > 0$: az azonnali kamatláb, a forwardok futó átlaga, akkor nő, ha az új forward fölötte van.",
+      explain: "$f(t) = r(t) + t\\,r'(t)$, így $f(t) > r(t)$ pontosan akkor, ha $r'(t) > 0$: az azonnali kamatláb, a forwardok kumulált átlaga, akkor nő, ha az új forward fölötte van.",
     },
 
     h("A hozamgörbe alakjai"),

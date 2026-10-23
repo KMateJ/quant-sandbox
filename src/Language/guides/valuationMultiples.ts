@@ -79,10 +79,10 @@ export const valuationMultiples: GuideLessonContent = {
     p("A „Diszkontált pénzáram alapú értékelés” egy vállalatot a saját előrejelzett pénzáramaiból értékel. A gyakorlatban az elemzők szinte mindig összevetik ezt az értéket egy másodikkal: azzal, amennyit hasonló vállalatokért a piac fizet. Ez a lecke a szorzókkal történő relatív értékelést mutatja be: hogyan kell egy szorzót helyesen alkalmazni, és hogyan kapcsolódik a szorzó az előző lecke diszkontálásához."),
 
     h("Mi a szorzó"),
-    p("A **szorzó** egy piaci érték osztva a vállalat méretének vagy teljesítményének valamely mérőszámával. Ha a hasonló vállalatok nagyjából a nyereségük 15-szörösén forognak, egy részvényenként 4 nyereséget termelő hasonló vállalat részvényenként nagyjából $15 \\times 4 = 60$-at érhet. A szorzó az egyik vállalat piaci árát olyan rátává alakítja, amely egy másik vállalatra is alkalmazható."),
+    p("A **szorzó** egy piaci érték osztva a vállalat méretének vagy teljesítményének valamely mérőszámával. Ha a hasonló vállalatok nagyjából a nyereségük 15-szörösén forognak, egy részvényenként 4 nyereséget termelő hasonló vállalat részvényenként nagyjából $15 \\times 4 = 60$-at érhet. A szorzó az egyik vállalat piaci árát olyan arányszámmá alakítja, amely egy másik vállalatra is alkalmazható."),
     p("A szokásos szorzók két családba tartoznak aszerint, hogy a számláló kinek a követelését méri:"),
     list(
-      "A **saját tőkére vonatkozó szorzók** számlálójában a részvények értéke áll: árfolyam/nyereség (P/E), árfolyam/saját tőke könyv szerinti értéke (P/B). A nevezőnek is a részvényeseké kell legyen: adózott eredmény, könyv szerinti saját tőke.",
+      "A **saját tőkére vonatkozó szorzók** számlálójában a részvények értéke áll: árfolyam/nyereség (P/E), árfolyam/saját tőke könyv szerinti értéke (P/B). A nevezőnek is a részvényesekhez kell tartoznia: adózott eredmény, könyv szerinti saját tőke.",
       "A **vállalatértékre vonatkozó szorzók** számlálójában a **vállalatérték** (enterprise value) áll, a teljes üzlet értéke minden befektető számára, $\\text{EV} = \\text{saját tőke értéke} + \\text{nettó adósság}$. A nevezőnek a hitelezőknek járó kifizetések előtt kell keletkeznie: EBITDA (kamat, adó és értékcsökkenés előtti eredmény), EBIT vagy árbevétel.",
     ),
     p("A két család összekeverése a leggyakoribb hiba. Az EBITDA-t a hitelezők és a részvényesek együtt kapják, ezért ha az árfolyamot EBITDA-val osztjuk, egy részt hasonlítunk az egészhez, és az eredmény attól függ, mennyi adóssága van a vállalatnak, nem attól, mennyire jól működik."),
@@ -102,7 +102,7 @@ export const valuationMultiples: GuideLessonContent = {
     h("A szorzótól az értékig"),
     p("Egy vállalatérték-szorzó alkalmazása vállalatértéket ad; a saját tőke értéke ebből a nettó adósság levonásával adódik, pontosan úgy, mint egy DCF-értékelés végén:"),
     eq("\\text{EV}_{\\text{cél}} = m \\cdot \\text{EBITDA}_{\\text{cél}}, \\qquad \\text{Saját tőke}_{\\text{cél}} = \\text{EV}_{\\text{cél}} - \\text{nettó adósság}."),
-    p("Példa: egy célvállalat EBITDA-ja 50, nettó adóssága 120 (millió). Az EBITDA tízszeresén értékelve $\\text{EV} = 500$, a saját tőke értéke pedig $500 - 120 = 380$. Ha az 500-at a saját tőke értékének vennénk, a teljes adósággal túlbecsülnénk."),
+    p("Példa: egy célvállalat EBITDA-ja 50, nettó adóssága 120 (millió). Az EBITDA tízszeresén értékelve $\\text{EV} = 500$, a saját tőke értéke pedig $500 - 120 = 380$. Ha az 500-at a saját tőke értékének vennénk, a teljes adóssággal túlbecsülnénk."),
     {
       kind: "check",
       id: "valuation-multiples/equity-from-ev",

@@ -102,7 +102,7 @@ export const diversification: GuideLessonContent = {
     p("A „Hozamok és volatilitás” című lecke egyetlen eszközt két számmal írt le: a $\\mu$ várható hozammal és a $\\sigma$ volatilitással. Ez a lecke több eszközt rak egy portfólióba. A portfólió várható hozama egyszerű átlag, a volatilitása viszont nem az: attól függ, hogyan mozognak együtt az eszközök, amit a korrelációjuk mér. Ebből fakad a diverzifikáció."),
 
     h("Portfóliósúlyok és portfólióhozam"),
-    p("Egy **portfólió** egy pénzösszeget oszt szét eszközök között. A $w_i$ **súly** az $i$-edik eszközbe fektetett pénz aránya, így a súlyok összege egy: $w_1 + \\cdots + w_N = 1$. Ebben a leckében minden súly 0 és 1 közé esik, vagyis short eladást (shortolást) nem engedünk meg."),
+    p("Egy **portfólió** egy pénzösszeget oszt szét eszközök között. A $w_i$ **súly** az $i$-edik eszközbe fektetett pénz aránya, így a súlyok összege egy: $w_1 + \\cdots + w_N = 1$. Ebben a leckében minden súly 0 és 1 közé esik, vagyis shortolást nem engedünk meg."),
     p("Hozamon itt az előző leckéből ismert egyperiódusos egyszerű hozamot értjük, $R = S_1/S_0 - 1$. Egyszerű hozamokkal a portfólió hozama pontosan az eszközhozamok súlyozott átlaga, hiszen a pénz minden része a saját tényezőjével nő:"),
     eq("R_p = w_1 R_1 + w_2 R_2 + \\cdots + w_N R_N."),
     p("A loghozamokra ez nem teljesül pontosan, ezért dolgozik a portfólióelmélet egyszerű hozamokkal. Összeg várható értéke a várható értékek összege, így a portfólió várható hozama ugyanez a súlyozott átlag:"),
@@ -147,7 +147,7 @@ export const diversification: GuideLessonContent = {
     {
       kind: "check",
       id: "diversification/riskless-correlation",
-      prompt: "Milyen korreláció mellett lehet két kockázatos eszközből, short eladás nélkül, nulla volatilitású portfóliót összerakni?",
+      prompt: "Milyen korreláció mellett lehet két kockázatos eszközből, shortolás nélkül, nulla volatilitású portfóliót összerakni?",
       answer: { type: "choice", options: ["$\\rho = 1$", "$\\rho = 0$", "$\\rho = -0{,}5$", "$\\rho = -1$"], correct: 3 },
       explain: "Csak $\\rho = -1$ mellett teljes négyzet a variancia, $\\sigma_p = |w_A\\sigma_A - w_B\\sigma_B|$, ami $w_B = \\sigma_A/(\\sigma_A + \\sigma_B)$-nél nulla. Bármely $\\rho > -1$ esetén minden súlynál marad valamennyi kockázat.",
     },
@@ -157,7 +157,7 @@ export const diversification: GuideLessonContent = {
     eq("\\frac{d\\sigma_p^2}{dw} = -2(1-w)\\sigma_A^2 + 2w\\sigma_B^2 + 2(1-2w)\\sigma_{AB} = 0."),
     p("A $w$-s tagokat összegyűjtve kapjuk a **minimális varianciájú súlyt**:"),
     eq("w_B^{*} = \\frac{\\sigma_A^2 - \\sigma_{AB}}{\\sigma_A^2 + \\sigma_B^2 - 2\\sigma_{AB}}, \\qquad w_A^{*} = 1 - w_B^{*}."),
-    p("Ha a képlet $[0, 1]$-en kívüli értéket ad, akkor short eladás nélkül a minimum a közelebbi végpontban van, vagyis egyetlen eszközben. Ez történik például $\\rho = 1$ mellett, ahol a legkevésbé kockázatos választás csak a kisebb volatilitású eszközt tartani. Az alábbi két eszköznél ez minden $\\rho > \\sigma_A/\\sigma_B = 0{,}5$ esetén így van."),
+    p("Ha a képlet $[0, 1]$-en kívüli értéket ad, akkor shortolás nélkül a minimum a közelebbi végpontban van, vagyis egyetlen eszközben. Ez történik például $\\rho = 1$ mellett, ahol a legkevésbé kockázatos választás csak a kisebb volatilitású eszközt tartani. Az alábbi két eszköznél ez minden $\\rho > \\sigma_A/\\sigma_B = 0{,}5$ esetén így van."),
 
     h("Számpélda"),
     p("Az A eszközre $\\mu_A = 6\\%$ és $\\sigma_A = 15\\%$, a B eszközre $\\mu_B = 12\\%$ és $\\sigma_B = 30\\%$, a korreláció $\\rho = 0{,}2$. A kovariancia $\\sigma_{AB} = 0{,}2 \\times 0{,}15 \\times 0{,}30 = 0{,}009$."),
@@ -166,7 +166,7 @@ export const diversification: GuideLessonContent = {
     p("A volatilitások súlyozott átlaga $22{,}5\\%$, vagyis a diverzifikáció kb. 4,4 százalékpontnyi volatilitást tüntet el anélkül, hogy a várható hozamból bármit feladnánk."),
     p("A minimális varianciájú súly"),
     eq("w_B^{*} = \\frac{0{,}0225 - 0{,}009}{0{,}0225 + 0{,}09 - 0{,}018} = \\frac{0{,}0135}{0{,}0945} \\approx 0{,}143."),
-    p("Ennek a portfóliónak $\\mu_p \\approx 6{,}86\\%$ és $\\sigma_p \\approx 14{,}34\\%$. Ha az A-hoz egy kevés kockázatosabb B-t keverünk, a volatilitás az A önmagában vett volatilitása *alá* csökken, miközben a várható hozam nő."),
+    p("Ennek a portfóliónak $\\mu_p \\approx 6{,}86\\%$ és $\\sigma_p \\approx 14{,}34\\%$. Ha az A-hoz egy kevés, kockázatosabb B-t keverünk, a volatilitás az A önmagában vett volatilitása *alá* csökken, miközben a várható hozam nő."),
     p("Az ábra A és B összes, 0 és 1 közötti súlyú keverékét mutatja a várható hozam és a volatilitás síkján, a választott korreláció mellett (vastag görbe). A szaggatott egyenes a $\\rho = 1$, a pontozott V alak a $\\rho = -1$ esete; jelölők mutatják A-t és B-t. Mozgasd a korreláció csúszkáját, és figyeld meg, hogy $\\rho$ csökkenésével a görbe egyre jobban balra hajlik, $\\rho = -1$-nél pedig eléri a függőleges tengelyt. A kijelzők a minimális varianciájú súlyt B-ben, a minimális volatilitást, az 50/50-es portfólió volatilitását és várható hozamát, valamint összehasonlításként a két volatilitás 22,5%-os átlagát mutatják. $\\rho = 0{,}5$ fölött a súly kijelzője negatívba fordul, a kijelzett minimális volatilitás pedig ilyenkor az A eszközé önmagában."),
     figure("two-asset-frontier"),
 
@@ -190,7 +190,7 @@ export const diversification: GuideLessonContent = {
       "A minimális varianciájú súly $w_B^{*} = (\\sigma_A^2 - \\sigma_{AB})/(\\sigma_A^2 + \\sigma_B^2 - 2\\sigma_{AB})$.",
       "Nagy, egyenlő súlyú portfólióban a variancia az átlagos kovarianciához tart: a szisztematikus kockázat nem diverzifikálható.",
     ),
-    note("A következő lecke („Hatékony front és tőkepiaci egyenes”) megengedi a short eladást, bevezet egy kockázatmentes eszközt, és azt vizsgálja, melyik portfóliót érdemes ezek közül ténylegesen választani."),
+    note("A következő lecke („Hatékony front és tőkepiaci egyenes”) megengedi a shortolást, bevezet egy kockázatmentes eszközt, és azt vizsgálja, melyik portfóliót érdemes ezek közül ténylegesen választani."),
     lab("/portfolio-lab", "Kombinálj eszközöket, és kövesd a portfólió volatilitásának változását a Portfólió laborban"),
   ],
 };

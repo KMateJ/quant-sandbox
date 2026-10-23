@@ -6,7 +6,7 @@ export const mcHistogramHu = {
   ixMcControlsAria: "Szimuláció vezérlése",
   ixMcHistAria: "A szimulált S_T végső árak hisztogramja; a K kötési ár fölötti oszlopokon fizet a call",
   ixMcStripAria: "A futó Monte Carlo-becslés 95%-os sávval és a Black–Scholes-ár",
-  ixMcEmpty: "Nyomja meg a +1 vagy az Indítás gombot az első húzáshoz.",
+  ixMcEmpty: "Nyomd meg a +1 vagy az Indítás gombot az első húzáshoz.",
   ixMcStrike: "K = {{k}}",
   ixMcPays: "itt fizet a call",
   ixMcLast: "utolsó húzás: S_T = {{s}}",

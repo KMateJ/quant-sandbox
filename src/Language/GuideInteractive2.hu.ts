@@ -21,10 +21,10 @@ export const guideInteractive2Hu = {
   gi2SampleVariance: "Mintavariancia",
 
   gi2HedgeTitle: "Delta-fedezés napról napra",
-  gi2HedgeAria: "Egy eladott call eredménye fedezve ({{k}} naponkénti újrasúlyozással) és fedezetlenül",
+  gi2HedgeAria: "Egy short call eredménye fedezve ({{k}} naponkénti újrasúlyozással) és fedezetlenül",
   gi2Rebalance: "Újrasúlyozás",
   gi2EveryDays: "{{k}} naponta",
-  gi2Naked: "Fedezetlen eladott call",
+  gi2Naked: "Fedezetlen short call",
   gi2Hedged: "Delta-fedezett",
   gi2Day: "{{d}}. nap",
   gi2DayLabel: "Nap",

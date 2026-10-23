@@ -111,7 +111,7 @@ export const reflectionPrinciple: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ez a lecke kiszámítja a Brown-mozgás futó maximumának eloszlását, valamint annak az időpontnak az eloszlását, amikor a folyamat először elér egy adott szintet. Az eszköz a tükrözési elv, amely a „A Brown-mozgás tulajdonságai” című lecke erős Markov-tulajdonságán és a „Filtrációk, adaptált folyamatok és megállási idők” című lecke megállásiidő-fogalmán alapul. Az eredmények pontos, zárt alakú képletek, és ezekre épül a korlátos (barrier) opciók árazása."),
+    p("Ez a lecke kiszámítja a Brown-mozgás futó maximumának eloszlását, valamint annak az időpontnak az eloszlását, amikor a folyamat először elér egy adott szintet. Az eszköz a tükrözési elv, amely „A Brown-mozgás tulajdonságai” című lecke erős Markov-tulajdonságán és a „Filtrációk, adaptált folyamatok és megállási idők” című lecke megállásiidő-fogalmán alapul. Az eredmények pontos, zárt alakú képletek, és ezekre épül a barrier opciók árazása."),
 
     h("Futó maximum és első elérési idő"),
     p("Legyen $W$ standard Brown-mozgás $(\\mathcal{F}^W_t)$ természetes filtrációval, és rögzítsünk egy $a > 0$ szintet. A **futó maximum** és az **első elérési idő**"),
@@ -186,7 +186,7 @@ export const reflectionPrinciple: GuideLessonContent = {
     p("$a$ és $x$ szerint deriválva kapjuk az együttes sűrűségfüggvényt:"),
     eq("f_{M_t, W_t}(m, w) = \\frac{2(2m - w)}{\\sqrt{2\\pi t^3}}\\,\\exp\\Big(-\\frac{(2m - w)^2}{2t}\\Big), \\qquad m \\ge 0,\\ w \\le m."),
     p("Például annak valószínűsége, hogy a pálya az 1-es időpontig eléri az 1-et, de legfeljebb 0-ban végez, $\\mathbb{P}(W_1 \\ge 2) = 1 - \\Phi(2) \\approx 0{,}0228$."),
-    p("A korlátos opciókhoz éppen erre az együttes eloszlásra van szükség. Egy felfelé kiütő (up-and-out) vételi opció csak akkor fizet $(S_T - K)^+$ összeget, ha az árfolyam a teljes $[0, T]$ időszakban a $H$ korlát alatt marad. A Black–Scholes-modellben a logárfolyam driftes Brown-mozgás, az opció ára pedig a kifizetés diszkontált integrálja a maximum és a végpont együttes sűrűségfüggvénye szerint, a fenti módon driftre korrigálva. A gyakorlatban használt zárt alakú korlátos opciós árak pontosan ebből a számításból származnak."),
+    p("A barrier opciókhoz éppen erre az együttes eloszlásra van szükség. Egy felfelé kiütő (up-and-out) call csak akkor fizet $(S_T - K)^+$ összeget, ha az árfolyam a teljes $[0, T]$ időszakban a $H$ korlát alatt marad. A Black–Scholes-modellben a logárfolyam driftes Brown-mozgás, az opció ára pedig a kifizetés diszkontált integrálja a maximum és a végpont együttes sűrűségfüggvénye szerint, a fenti módon driftre korrigálva. A gyakorlatban használt zárt alakú barrier opcióárak pontosan ebből a számításból származnak."),
 
     {
       kind: "check",
@@ -212,7 +212,7 @@ export const reflectionPrinciple: GuideLessonContent = {
       "$\\tau_a = \\inf\\{t : W_t = a\\}$ megállási idő, és $\\{\\tau_a \\le t\\} = \\{M_t \\ge a\\}$.",
       "A $\\tau_a$-beli erős Markov-tulajdonság miatt a $\\tau_a$ után tükrözött pálya is Brown-mozgás; ebből $\\mathbb{P}(M_t \\ge a) = 2(1 - \\Phi(a/\\sqrt{t}))$ és $M_t \\sim |W_t|$.",
       "$\\tau_a$ sűrűségfüggvénye az $a(2\\pi t^3)^{-1/2}e^{-a^2/(2t)}$ Lévy-sűrűség: majdnem biztosan véges, de várható értéke végtelen.",
-      "$x \\le a$ esetén $\\mathbb{P}(M_t \\ge a, W_t \\le x) = 1 - \\Phi((2a - x)/\\sqrt{t})$; ezzel az együttes eloszlással árazhatók a korlátos opciók.",
+      "$x \\le a$ esetén $\\mathbb{P}(M_t \\ge a, W_t \\le x) = 1 - \\Phi((2a - x)/\\sqrt{t})$; ezzel az együttes eloszlással árazhatók a barrier opciók.",
       "Diszkrét időrácson a szimulált maximum lefelé torzít, mert a rácspontok közötti átlépések kimaradnak.",
     ),
     lab("/stochastic-models/reflection", "Tükrözz szimulált pályákat egy szinten a Sztochasztikus modellek stúdióban"),

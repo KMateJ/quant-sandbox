@@ -122,7 +122,7 @@ export const riskNeutral: GuideLessonContent = {
     },
 
     h("A valós $p$ valószínűség nem szerepel"),
-    p("A $q$ képletében csak $u$, $d$ és $r$ szerepel, a valós $p$ valószínűség nem. Két befektető, akik nem értenek egyet abban, mennyire valószínű a felfelé lépés, mégis ugyanazt az opcióárat kapja, ha $S_0$-ban, $u$-ban, $d$-ben és $r$-ben egyetértenek. Ennek oka a replikációs érv: a portfólió minden állapotban reprodukálja a kifizetést, így közömbös, milyen gyakran következnek be az egyes állapotok."),
+    p("A $q$ képletében csak $u$, $d$ és $r$ szerepel, a valós $p$ valószínűség nem. Két befektető, akik nem értenek egyet abban, mennyire valószínű a felfelé lépés, mégis ugyanazt az opcióárat kapják, ha $S_0$-ban, $u$-ban, $d$-ben és $r$-ben egyetértenek. Ennek oka a replikációs érv: a portfólió minden állapotban reprodukálja a kifizetést, így közömbös, milyen gyakran következnek be az egyes állapotok."),
     p("A valós valószínűség a részvényáron keresztül már hat. Ha a piac nagyon valószínűnek tartja a felfelé lépést, felveri $S_0$-t, és $S_0$ bemenő adat. Adott $S_0$ mellett viszont az opció ára már nem függ tovább $p$-től."),
     {
       kind: "check",
@@ -137,7 +137,7 @@ export const riskNeutral: GuideLessonContent = {
     eq("q = \\frac{1{,}02 - 0{,}9}{1{,}2 - 0{,}9} = \\frac{0{,}12}{0{,}3} = 0{,}4, \\qquad C_0 = \\frac{0{,}4\\cdot 20 + 0{,}6\\cdot 0}{1{,}02} \\approx 7{,}84."),
     p("Ez ugyanaz a 7,84, amelyet a replikáló portfólió adott. Tegyük fel most, hogy a felfelé lépés valós valószínűsége $p = 0{,}6$. Ha a $\\mathbb{P}$ szerinti várható kifizetést a kockázatmentes kamattal diszkontáljuk, a **naiv árat** kapjuk:"),
     eq("\\frac{1}{1{,}02}\\,\\mathbb{E}^{\\mathbb{P}}[X] = \\frac{0{,}6\\cdot 20}{1{,}02} \\approx 11{,}76."),
-    p("Ha a call 11,76-on kereskedne, eladhatnánk, 7,84-ért felépíthetnénk a replikáló portfóliót, és kockázat nélkül megtarthatnánk 3,92-t. A naiv ár tehát hibás, és a hiba abból ered, hogy egy kockázatos kifizetést a kockázatmentes kamattal diszkontáltunk."),
+    p("Ha a call 11,76-on forogna, eladhatnánk, 7,84-ért felépíthetnénk a replikáló portfóliót, és kockázat nélkül megtarthatnánk 3,92-t. A naiv ár tehát hibás, és a hiba abból ered, hogy egy kockázatos kifizetést a kockázatmentes kamattal diszkontáltunk."),
     {
       kind: "worked",
       title: "Egy put árazása kétféleképpen",
@@ -155,7 +155,7 @@ export const riskNeutral: GuideLessonContent = {
     p("$\\mathbb{Q}$ alatt a részvény várható hozama a kockázatmentes kamatláb. Innen a név: $\\mathbb{Q}$ az a valószínűség, amely mellett egy kockázatsemleges befektető, aki a kockázatvállalásért nem vár többlethozamot, elfogadná a megfigyelt árakat. Másképp fogalmazva, a diszkontált részvényár várható értéke a mai ár,"),
     eq("\\mathbb{E}^{\\mathbb{Q}}\\left[\\frac{S_1}{1+r}\\right] = S_0,"),
     p("vagyis a diszkontált ár $\\mathbb{Q}$ alatt **martingál**: várható jövőbeli értéke a jelenlegi értéke."),
-    p("A valós valószínűség szerint a részvény általában többet hoz. A $p = 0{,}6$ példában a várható növekedési szorzó $0{,}6\\cdot 1{,}2 + 0{,}4\\cdot 0{,}9 = 1{,}08$, azaz 8% várható hozam, szemben a $\\mathbb{Q}$ szerinti 2%-kal. A 6% különbség a kockázati prémium. Képzeld el $\\mathbb{Q}$-t egy szándékosan átsúlyozott dobókockaként: a lapok ugyanazok, de a súlyokat úgy választjuk, hogy minden forgalmazott termék átlagosan pontosan $r$-et hozzon. Számítási eszköz, nem előrejelzés."),
+    p("A valós valószínűség szerint a részvény általában többet hoz. A $p = 0{,}6$ példában a várható növekedési szorzó $0{,}6\\cdot 1{,}2 + 0{,}4\\cdot 0{,}9 = 1{,}08$, azaz 8% várható hozam, szemben a $\\mathbb{Q}$ szerinti 2%-kal. A 6% különbség a kockázati prémium. Képzeld el $\\mathbb{Q}$-t egy szándékosan cinkelt dobókockaként: az oldalai ugyanazok, de a súlyokat úgy választjuk, hogy minden forgalmazott termék átlagosan pontosan $r$-et hozzon. Számítási eszköz, nem előrejelzés."),
 
     h("Naiv ár és arbitrázsmentes ár"),
     p("Az ábra rögzíti az $S_0 = 100$, $u = 1{,}2$, $d = 0{,}9$ és $K = 100$ értékeket, és két árat rajzol a valós $p$ valószínűség függvényében. A $\\frac{1}{1+r}\\mathbb{E}^{\\mathbb{P}}[X]$ naiv ár $p$-vel nő, az arbitrázsmentes ár vízszintes egyenes. A kettő ott metszi egymást, ahol $p = q$. Mozgasd $p$-t, és figyeld meg, hogy csak a naiv ár és a $\\mathbb{P}$ szerinti várható részvényhozam változik; aztán mozgasd $r$-et, és figyeld meg, hogy $q$ és az arbitrázsmentes ár változik, a $\\mathbb{Q}$ szerinti várható hozam pedig mindig $r$."),

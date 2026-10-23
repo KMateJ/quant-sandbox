@@ -87,7 +87,7 @@ export const strategies: GuideLessonContent = {
     p("Ez a lecke a „Határidős ügyletek, call és put opciók” lecke szerződéseiből portfóliókat épít. Egyetlen új tényre van szükség: a kifizetések összeadódnak, minden más ebből következik. A keret változatlan: osztalékot nem fizető részvényre szóló európai opciók, amelyek mind ugyanabban a $T$ időpontban járnak le."),
 
     h("A kifizetések összeadódnak"),
-    p("A **portfólió** egyszerre tartott pozíciók listája. Tegyük fel, hogy $n_1$ darabot tart egy $X_1 = f_1(S_T)$ kifizetésű szerződésből, $n_2$ darabot egy $X_2 = f_2(S_T)$ kifizetésűből, és így tovább. A pozitív $n_i$ hosszú, a negatív rövid pozíciót jelent. Lejáratkor minden szerződés a többitől függetlenül fizet, így a portfólió kifizetése"),
+    p("A **portfólió** egyszerre tartott pozíciók listája. Tegyük fel, hogy $n_1$ darabot tart egy $X_1 = f_1(S_T)$ kifizetésű szerződésből, $n_2$ darabot egy $X_2 = f_2(S_T)$ kifizetésűből, és így tovább. A pozitív $n_i$ long, a negatív short pozíciót jelent. Lejáratkor minden szerződés a többitől függetlenül fizet, így a portfólió kifizetése"),
     eq("X = n_1 f_1(S_T) + n_2 f_2(S_T) + \\dots + n_k f_k(S_T)."),
     p("Grafikusan: minden láb kifizetését felrajzoljuk $S_T$ függvényében, és a vonalakat függőlegesen összeadjuk. Minden call és put kifizetése két, a kötési árban összekapcsolódó egyenes szakaszból áll, ezért az összegük is egyenes szakaszokból áll, és a portfólióban szereplő minden kötési árnál törése lehet."),
     p("Az opciókon és magán a részvényen (kifizetése $S_T$) kívül egy **zérókuponos kötvényt** is használunk, amely $T$-ben 1-et fizet. Kifizetése a konstans 1, mai ára az $e^{-rT}$ diszkontfaktor. $K$ darab kötvény biztosan $K$-t fizet."),
@@ -105,7 +105,7 @@ export const strategies: GuideLessonContent = {
     {
       kind: "check",
       id: "strategies/bull-spread-max-profit",
-      prompt: "Veszel egy 100-as és 110-es kötési árú bull call spreadet 4 nettó díjért. Legfeljebb mekkora nyereséget hozhat lejáratkor?",
+      prompt: "Veszel egy 100/110-es kötési árú bull call spreadet 4 nettó díjért. Legfeljebb mekkora nyereséget hozhat lejáratkor?",
       answer: { type: "number", value: 6, tolerance: 0.01 },
       explain: "A kifizetés felső korlátja $K_2 - K_1 = 10$, ezt $S_T \\ge 110$ mellett éri el. A költséget levonva $10 - 4 = 6$.",
     },
@@ -126,7 +126,7 @@ export const strategies: GuideLessonContent = {
     h("Butterfly"),
     p("Egy egyenlő közű $K_1 < K_2 < K_3$ kötési árakkal felépített **butterfly** vesz egy $K_1$-es callt, elad két $K_2$-es callt, és vesz egy $K_3$-as callt:"),
     eq("X = (S_T - K_1)^+ - 2\\,(S_T - K_2)^+ + (S_T - K_3)^+."),
-    p("Olvassuk meredekségenként. $K_1$ alatt egyik opció sem fizet. $K_1$ és $K_2$ között csak az első call fizet, a meredekség $+1$. $K_2$ és $K_3$ között a meredekség $1 - 2 = -1$. $K_3$ fölött $1 - 2 + 1 = 0$, és a kifizetés visszatér nullára. Az eredmény egy sátor, amelynek csúcsa $K_2$-ben van, magassága $K_2 - K_1$. A 90, 100, 110 kötési áraknál a csúcs 10 az $S_T = 100$ pontban, $S_T = 95$-nél pedig a kifizetés 5."),
+    p("Nézzük szakaszonként a meredekséget. $K_1$ alatt egyik opció sem fizet. $K_1$ és $K_2$ között csak az első call fizet, a meredekség $+1$. $K_2$ és $K_3$ között a meredekség $1 - 2 = -1$. $K_3$ fölött $1 - 2 + 1 = 0$, és a kifizetés visszatér nullára. Az eredmény egy sátor, amelynek csúcsa $K_2$-ben van, magassága $K_2 - K_1$. A 90, 100, 110 kötési áraknál a csúcs 10 az $S_T = 100$ pontban, $S_T = 95$-nél pedig a kifizetés 5."),
     p("A butterfly csak akkor fizet, ha a részvény a középső kötési ár közelében zár, vagyis arra fogad, hogy az ár nem mozdul el sokat: a straddle ellentéte."),
     {
       kind: "worked",
@@ -143,14 +143,14 @@ export const strategies: GuideLessonContent = {
     h("A szintetikus határidős ügylet"),
     p("Vegyünk egy callt és adjunk el egy putot, mindkettőt $K$ kötési árral. Bármely $S_T$ mellett a két opció közül pontosan egy fizet:"),
     eq("(S_T - K)^+ - (K - S_T)^+ = S_T - K."),
-    p("Ha $S_T > K$, a call $S_T - K$-t fizet, a put értéktelen; ha $S_T < K$, a call értéktelen, az eladott put pedig $-(K - S_T) = S_T - K$-t fizet. Az összeg mindkét esetben egy $K$ szállítási árú hosszú határidős ügylet kifizetése. Ezt nevezzük **szintetikus határidős ügyletnek**; erre épül a „Put–call paritás” lecke."),
+    p("Ha $S_T > K$, a call $S_T - K$-t fizet, a put értéktelen; ha $S_T < K$, a call értéktelen, az eladott put pedig $-(K - S_T) = S_T - K$-t fizet. Az összeg mindkét esetben egy $K$ szállítási árú long határidős ügylet kifizetése. Ezt nevezzük **szintetikus határidős ügyletnek**; erre épül a „Put–call paritás” lecke."),
     p("Az ábra minden láb kifizetését vékony szaggatott vonallal, az összeget vastag vonallal mutatja. Válaszd ki egymás után az előre beállított stratégiákat, és ellenőrizd, hogy a vastag vonal a szaggatottak függőleges összege. A szintetikus határidős ügyletnél a két láb törése kioltja egymást, és az összeg egyetlen egyenes."),
     figure("strategy"),
 
     h("Tetszőleges szakaszonként lineáris kifizetés előállítása"),
     p("A példák általános szabályra utalnak. Vegyünk egy egyenes szakaszokból álló $f(S_T)$ kifizetést, amelynek $K_1 < K_2 < \\dots < K_m$ pontokban van törése. Legyen $f(0)$ az értéke nullában, $a_0$ a meredeksége közvetlenül nulla után, $c_i$ pedig a meredekség változása $K_i$-ben (utána mínusz előtte). Ekkor"),
     eq("f(S_T) = f(0) + a_0\\,S_T + \\sum_{i=1}^{m} c_i\\,(S_T - K_i)^+."),
-    p("Minden tag egy forgalmazott termék: $f(0)$ darab zérókuponos kötvény, $a_0$ darab részvény és $c_i$ darab $K_i$ kötési árú call (a negatív szám rövid pozíciót jelent). A butterfly az $f(0) = 0$, $a_0 = 0$, $c = (1, -2, 1)$ eset. Putokra elvben nincs szükség, bár gyakran rövidebb receptet adnak."),
+    p("Minden tag egy forgalmazott termék: $f(0)$ darab zérókuponos kötvény, $a_0$ darab részvény és $c_i$ darab $K_i$ kötési árú call (a negatív szám short pozíciót jelent). A butterfly az $f(0) = 0$, $a_0 = 0$, $c = (1, -2, 1)$ eset. Putokra elvben nincs szükség, bár gyakran rövidebb receptet adnak."),
     note("Az egyenes szakaszokból álló kifizetés pontosan előállítható kötvényekből, a részvényből és callokból, töréspontonként egy call-pozícióval. A meredekség változásai megadják, hány callt kell tartani az egyes kötési árakon."),
 
     h("Összefoglalás"),
@@ -158,7 +158,7 @@ export const strategies: GuideLessonContent = {
       "A portfólió kifizetése a lábak kifizetéseinek összege; a vonalak függőleges összeadásával rajzolható meg.",
       "A nyereség a teljes kifizetés mínusz a lábak $T$-re felkamatolt nettó költsége.",
       "A spreadek korlátozzák a nyereséget és a veszteséget; a straddle és a strangle nagy elmozdulásért fizet; a butterfly akkor, ha az ár a középső kötési ár közelében marad.",
-      "Egy hosszú call és egy rövid put azonos kötési árral $S_T - K$-t fizet, mint egy határidős ügylet.",
+      "Egy long call és egy short put azonos kötési árral $S_T - K$-t fizet, mint egy határidős ügylet.",
       "Bármely szakaszonként lineáris kifizetés felépíthető kötvényekből, a részvényből és callokból.",
     ),
     lab("/payoff", "Rakj össze többlábú stratégiákat, és nézd meg a kifizetésüket és nyereségüket a Kifizetés laborban"),

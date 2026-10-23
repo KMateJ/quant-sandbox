@@ -95,17 +95,17 @@ export const callableBonds: GuideLessonContent = {
   ],
 
   hu: [
-    p("A „Kötvényárak és hozamok” és a „Duráció és konvexitás” című lecke olyan kötvényeket árazott, amelyek pénzáramai előre rögzítettek. Sok vállalati és ügynökségi kötvény nem ilyen: a kibocsátó korábban visszafizetheti. Ez a lecke ezt a jogot a kibocsátó kezében lévő opcióként kezeli, megmutatja, hogyan korlátozza a kötvény árát, amikor a hozamok csökkennek, és megmagyarázza, miért lehet egy ilyen kötvény konvexitása negatív. Az opciókat a „Határidős ügyletek, call és put opciók” című lecke vezette be; itt csak annyi kell, hogy az opció jog, kötelezettség nélkül. Jelölés: $F = 100$ névérték, éves $c$ szelvény, éves kamatozású $y$ hozam, $P$ ár."),
+    p("A „Kötvényárak és hozamok” és a „Duráció és konvexitás” című lecke olyan kötvényeket árazott, amelyek pénzáramai előre rögzítettek. Sok vállalati és állami ügynökségi kötvény nem ilyen: a kibocsátó korábban visszafizetheti. Ez a lecke ezt a jogot a kibocsátó kezében lévő opcióként kezeli, megmutatja, hogyan korlátozza a kötvény árát, amikor a hozamok csökkennek, és megmagyarázza, miért lehet egy ilyen kötvény konvexitása negatív. Az opciókat a „Határidős ügyletek, call és put opciók” című lecke vezette be; itt csak annyi kell, hogy az opció jog, kötelezettség nélkül. Jelölés: $F = 100$ névérték, éves $c$ kupon, éves kamatozású $y$ hozam, $P$ ár."),
 
     h("A visszahívási jog"),
-    p("A **visszahívható kötvényt** a kibocsátó egy rögzített **visszahívási áron**, többnyire névértéken, visszavásárolhatja a tulajdonostól egy első visszahívási időponttól kezdve. Az ezt megelőző évek a **visszahívási védelem** időszaka. Vegyünk egy tízéves, 6%-os szelvényű kötvényt, amely 3 év után 100-on visszahívható. Ha a kibocsátó piaci hozama 4%-ra csökken, egy új hétéves kötvény évi 6% helyett 4%-ba kerülne neki. Ekkor 100-on visszahívja a régi kötvényt, és újrafinanszírozza magát. Ha a hozamok nőnek, megtartja az olcsó, 6%-os adósságot. A tulajdonos mindkét irányban a rosszabbik kimenetet kapja: alacsony újrabefektetési kamatot, ha visszahívják a kötvényt, és csökkenő árat, ha nem."),
+    p("A **visszahívható kötvényt** a kibocsátó egy rögzített **visszahívási áron**, többnyire névértéken, visszavásárolhatja a tulajdonostól egy első visszahívási időponttól kezdve. Az ezt megelőző évek a **visszahívási védelem** időszaka. Vegyünk egy tízéves, 6%-os kuponú kötvényt, amely 3 év után 100-on visszahívható. Ha a kibocsátó piaci hozama 4%-ra csökken, egy új hétéves kötvény évi 6% helyett 4%-ba kerülne neki. Ekkor 100-on visszahívja a régi kötvényt, és újrafinanszírozza magát. Ha a hozamok nőnek, megtartja az olcsó, 6%-os adósságot. A tulajdonos mindkét irányban a rosszabbik kimenetet kapja: alacsony újrabefektetési kamatot, ha visszahívják a kötvényt, és csökkenő árat, ha nem."),
 
-    h("A visszahívható kötvény mint fix kötvény mínusz egy vételi opció"),
-    p("A visszahívható kötvény tartása ugyanaz, mint egy azonos szelvényű és lejáratú **fix kötvény** tartása, miközben a tulajdonos eladott a kibocsátónak egy vételi opciót erre a kötvényre, a visszahívási árral mint kötési árral:"),
+    h("A visszahívható kötvény mint fix kötvény mínusz egy call opció"),
+    p("A visszahívható kötvény tartása ugyanaz, mint egy azonos kuponú és lejáratú, nem visszahívható **fix kötvény** tartása, miközben a tulajdonos eladott a kibocsátónak egy call opciót erre a kötvényre, a visszahívási árral mint kötési árral:"),
     eq("P_{\\text{visszahívható}} = P_{\\text{fix}} - C_{\\text{opció}}."),
     p("Az opciónak azért van értéke, mert a jövőbeli hozam bizonytalan. Egy kétállapotú szemléltetés: tegyük fel, hogy 3 év múlva a hozam vagy 4%, vagy 8%, mindkettő fél valószínűséggel, és a diszkontálás 5%-kal történik. A hátralévő hétéves kötvény ekkor $112{,}00$-t vagy $89{,}59$-et ér. Az alacsony hozamú állapotban a kibocsátó visszahívja és 100-at fizet, így $12{,}00$-t vesz el a tulajdonostól; a magas hozamú állapotban nem történik semmi. Ma az opció nagyjából ennyit ér:"),
     eq("C_{\\text{opció}} \\approx \\frac{\\tfrac{1}{2}\\,(112{,}00 - 100)}{1{,}05^{3}} \\approx 5{,}18."),
-    note("A visszahívható kötvény egy fix kötvény mínusz a kibocsátónak eladott vételi opció. A tulajdonos az opcióért alacsonyabb árat, azaz magasabb hozamot kap, mint egy hasonló fix kötvényen."),
+    note("A visszahívható kötvény egy fix kötvény mínusz a kibocsátónak eladott call opció. A tulajdonos az opcióért alacsonyabb árat, azaz magasabb hozamot kap, mint egy hasonló fix kötvényen."),
 
     p("Ismételjük meg a kétállapotú példát szélesebb tartománnyal: 3 év múlva a hozam 3% vagy 7%, ismét fele-fele valószínűséggel, 5%-os diszkontálással."),
     {
@@ -137,7 +137,7 @@ export const callableBonds: GuideLessonContent = {
     },
 
     h("Lejáratig, visszahívásig és legrosszabb esetre számított hozam"),
-    p("Egy visszahívható kötvénynek több természetes hozama van. A **lejáratig számított hozam** feltételezi, hogy a kötvényt soha nem hívják vissza. A **visszahívásig számított hozam** feltételezi, hogy az első visszahívási időpontban visszahívják: addig szelvényeket fizet, utána a visszahívási árat. A befektetők általában a **legrosszabb hozamot** jegyzik, a kettő közül az alacsonyabbat, mert a kibocsátó a számára olcsóbb, vagyis a tulajdonos számára rosszabb kimenetet választja."),
+    p("Egy visszahívható kötvénynek több természetes hozama van. A **lejáratig számított hozam** feltételezi, hogy a kötvényt soha nem hívják vissza. A **visszahívásig számított hozam** feltételezi, hogy az első visszahívási időpontban visszahívják: addig kuponokat fizet, utána a visszahívási árat. A befektetők általában a **legrosszabb hozamot** jegyzik, a kettő közül az alacsonyabbat, mert a kibocsátó a számára olcsóbb, vagyis a tulajdonos számára rosszabb kimenetet választja."),
 
     h("Számpélda"),
     p("A tízéves, 6%-os kötvény fix változata 5%-os piaci hozam mellett"),
@@ -145,7 +145,7 @@ export const callableBonds: GuideLessonContent = {
     p("Az opciót a kötvényre szóló opcióként értékeljük az első visszahívási időpontban: 3 év múlva a hozam bizonytalan (lognormális 5% körül, évi 20%-os volatilitással), a kibocsátó akkor hív vissza, ha a hátralévő hétéves kötvény 100-nál többet ér, és a kifizetést visszadiszkontáljuk. Így $C_{\\text{opció}} \\approx 7{,}13$, a visszahívható kötvény tehát nagyjából $100{,}59$-et ér. Ezen az áron:"),
     list(
       "lejáratig számított hozam: 5,92%;",
-      "visszahívásig számított hozam (3 évig szelvény, utána 100): 5,78%;",
+      "visszahívásig számított hozam (3 évig kupon, utána 100): 5,78%;",
       "legrosszabb hozam: 5,78%.",
     ),
     p("Az 5%-os piaci hozam és a visszahívható kötvény lejáratig számított hozama közötti 92 bázispont, illetve az árban mutatkozó 7,13 pont a tulajdonos ellentételezése a visszahívási jogért."),
@@ -153,8 +153,8 @@ export const callableBonds: GuideLessonContent = {
     h("Árkompresszió és negatív konvexitás"),
     p("Csökkenő hozamok mellett a fix kötvény ára tovább emelkedik. A visszahívható kötvényé sokkal kevésbé, mert a magasabb ár valószínűbbé teszi a visszahívást: az ára a visszahívási ár felé nyomódik össze. 5%-ról 4%-ra a fix kötvény $8{,}50$-et nyer, a visszahívható csak $4{,}09$-et. 5%-ról 6%-ra a fix kötvény $7{,}72$-t veszít, a visszahívható $4{,}75$-öt. A durációt és a konvexitást ezért a tényleges árfüggvényen mérjük, a hozamot egy kis $\\Delta y$-nal mindkét irányba eltolva:"),
     eq("D_{\\text{eff}} = \\frac{P_{-} - P_{+}}{2\\,P\\,\\Delta y}, \\qquad C_{\\text{eff}} = \\frac{P_{+} + P_{-} - 2P}{P\\,(\\Delta y)^2}."),
-    p("5%-on, $\\Delta y = 0{,}1\\%$-kal a visszahívható kötvény **effektív durációja** nagyjából 4,42, szemben a fix kötvény 7,52-es módosított durációjával, **effektív konvexitása** pedig nagyjából $-68$, szemben a $+72$-vel. A negatív konvexitás azt jelenti, hogy az árgörbe rossz irányba hajlik: a tulajdonos többet veszít a hozamok emelkedésén, mint amennyit ugyanakkora csökkenésen nyer. Ott jelentkezik, ahol a visszahívási jog értékes, a szelvénykamat körül és alatta. Magas hozamoknál a jog szinte semmit sem ér, és a visszahívható kötvény ismét úgy viselkedik, mint a fix."),
-    p("Hosszabb visszahívási védelem csökkenti az opció értékét: 5%-on 5 év védelemmel az opció 5,53-at ér és a kötvény 102,20-at; ha az első szelvényfizetéstől visszahívható, az opció 7,74-et ér és a kötvény 99,98-at. Ez a modell szándékosan egyszerű: csak az első visszahívási időpontban enged visszahívást. Egy teljes értékelés a védelmi időszak után minden időpontban megengedi a visszahívást, és a jövőbeli kamatlábak fáját építi fel, a „Többlépéses fák és visszafelé indukció” szellemében."),
+    p("5%-on, $\\Delta y = 0{,}1\\%$-kal a visszahívható kötvény **effektív durációja** nagyjából 4,42, szemben a fix kötvény 7,52-es módosított durációjával, **effektív konvexitása** pedig nagyjából $-68$, szemben a $+72$-vel. A negatív konvexitás azt jelenti, hogy az árgörbe rossz irányba hajlik: a tulajdonos többet veszít a hozamok emelkedésén, mint amennyit ugyanakkora csökkenésen nyer. Ott jelentkezik, ahol a visszahívási jog értékes, a kuponráta körül és alatta. Magas hozamoknál a jog szinte semmit sem ér, és a visszahívható kötvény ismét úgy viselkedik, mint a fix."),
+    p("Hosszabb visszahívási védelem csökkenti az opció értékét: 5%-on 5 év védelemmel az opció 5,53-at ér és a kötvény 102,20-at; ha az első kuponfizetéstől visszahívható, az opció 7,74-et ér és a kötvény 99,98-at. Ez a modell szándékosan egyszerű: csak az első visszahívási időpontban enged visszahívást. Egy teljes értékelés a védelmi időszak után minden időpontban megengedi a visszahívást, és a jövőbeli kamatlábak fáját építi fel, a „Többlépéses fák és visszafelé indukció” szellemében."),
     p("Az ábrán a fix kötvény ár–hozam görbéje a visszahívható kötvényé fölött fut, a kettő közötti sáv a visszahívási opció értéke. Húzd a pontot a hozamtengely mentén, vagy jelöld ki és használd a nyílbillentyűket. A szaggatott vonal az érintő az adott hozamnál, a pont fölötti felirat pedig megmondja, hogy ott a visszahívható görbe konvex vagy konkáv. A kijelzők mutatják a két árat, az opció értékét, a három hozamot, valamint az effektív durációt és konvexitást. Vidd a pontot 9%-ról 3%-ra, és figyeld, ahogy a sáv szélesedésével a felirat negatív konvexitásra vált. Ezután változtasd a visszahívási védelmet, és nézd, hogyan keskenyedik a sáv a védelem hosszabbodásával."),
     figure("callable-price-yield"),
 
@@ -178,9 +178,9 @@ export const callableBonds: GuideLessonContent = {
     h("Összefoglalás"),
     list(
       "A visszahívható kötvény feljogosítja a kibocsátót, hogy a védelmi időszak után a visszahívási áron visszafizesse.",
-      "Az ára a fix kötvény ára mínusz a kibocsátó vételi opciójának értéke; a tulajdonost magasabb hozam kárpótolja.",
-      "A legrosszabb hozam, a lejáratig és a visszahívásig számított hozam közül az alacsonyabb, az óvatos jegyzés.",
-      "A szelvénykamat körül és alatta az ár a visszahívási ár felé nyomódik össze: az effektív duráció csökken, a konvexitás negatívvá válik.",
+      "Az ára a fix kötvény ára mínusz a kibocsátó call opciójának értéke; a tulajdonost magasabb hozam kárpótolja.",
+      "A legrosszabb hozam, vagyis a lejáratig és a visszahívásig számított hozam közül az alacsonyabb, az óvatos jegyzési konvenció.",
+      "A kuponráta körül és alatta az ár a visszahívási ár felé nyomódik össze: az effektív duráció csökken, a konvexitás negatívvá válik.",
     ),
     note("A következő lecke, a „Hitelkockázat: csődvalószínűség és hitelfelár”, egy másik okot vizsgál, amiért egy kötvény kevesebbet fizethet az ígértnél: a kibocsátó esetleg egyáltalán nem fizet."),
     lab("/bond-pricing", "Árazz kötvényeket, és hasonlítsd össze az ár–hozam görbéiket a Kötvényárazás laborban"),

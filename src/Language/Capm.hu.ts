@@ -1,7 +1,7 @@
 export const capmHu = {
   capmTitle: "CAPM",
   capmDesc:
-    "A tőkepiaci árerazási modell: elvárt hozam a béta függvényében az értékpapír-piaci egyenes mentén.",
+    "A tőkepiaci árazási modell: elvárt hozam a béta függvényében az értékpapír-piaci egyenes mentén.",
   capmMetricsLabel: "Mutatók",
   capmAlphaHelp:
     "A Jensen-alfa a tényleges és a CAPM által elvárt hozam különbsége; pozitív érték felülteljesítést jelez.",

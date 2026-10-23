@@ -1,7 +1,7 @@
 export const bondPricingHu = {
   bondPricingTitle: "Kötvénylabor",
   bondPricingDesc:
-    "Állíts össze egy fix kamatozású kötvényt, és kövesd, ahogy a pénzáramok jelenértékké diszkontálódnak, árrá, durationné és konvexitássá — majd nézd meg, hogyan mozgatja az árat a hozam.",
+    "Állíts össze egy fix kamatozású kötvényt, és kövesd, ahogy a pénzáramok jelenértékké diszkontálódnak, árrá, durációvá és konvexitássá — majd nézd meg, hogyan mozgatja az árat a hozam.",
 
   bondTabCashflows: "Pénzáramok",
   bondTabPriceYield: "Ár–hozam",
@@ -16,7 +16,7 @@ export const bondPricingHu = {
 
   bondParamsTitle: "Paraméterek",
   bondFaceLabel: "Névérték",
-  bondCouponLabel: "Kamatláb",
+  bondCouponLabel: "Kuponráta",
   bondMaturityLabel: "Futamidő (év)",
   bondFrequencyLabel: "Kifiz. gyak.",
   bondYtmLabel: "Lejáratig számított hozam (YTM)",
@@ -25,19 +25,19 @@ export const bondPricingHu = {
   bondFreqQuarterly: "Negyedéves",
 
   bondTimelineTitle: "Pénzáramok → jelenértékek",
-  bondTimelineCoupon: "Kamat",
+  bondTimelineCoupon: "Kupon",
   bondTimelinePrincipal: "Tőke",
   bondTimelineCashflowLegend: "Jövőbeli pénzáram",
   bondTimelinePvLegend: "Jelenérték",
   bondTimelineAxisTime: "Idő (év)",
   bondDragHint: "Húzz függőlegesen egy oszlopot (vagy fókuszáld, és használd a nyilakat, Shift ×10) a pénzáramlás átírásához.",
-  bondCustomActive: "Saját pénzáramlás-sorozat: az ár, a duration és az ár–hozam görbe ebből számol.",
+  bondCustomActive: "Saját pénzáramlás-sorozat: az ár, a duráció és az ár–hozam görbe ebből számol.",
   bondResetToBond: "Vissza a kötvényhez",
   bondDragAria: "Pénzáramlások idővonala: minden oszlop egy csúszka",
   bondDragBarAria: "Pénzáramlás {{time}} évnél",
   bondTimelineSplitLabel: "Osztott skála",
   bondTimelineSplitHelp:
-    "A tőke jóval nagyobb a kamatoknál, ezért elnyomná őket. Az osztott skála külön sávban mutatja a kamatokat, így minden kifizetés látható marad.",
+    "A tőke jóval nagyobb a kuponoknál, ezért elnyomná őket. Az osztott skála külön sávban mutatja a kuponokat, így minden kifizetés látható marad.",
 
   bondHoverTime: "Idő",
   bondHoverCashflow: "Pénzáram",
@@ -57,14 +57,14 @@ export const bondPricingHu = {
   bondCleanPrice: "Nettó ár",
   bondMetricYtm: "YTM",
   bondMetricYield: "Hozam",
-  bondDuration: "Duration",
-  bondMacaulay: "Macaulay duration",
-  bondModified: "Módosított duration",
+  bondDuration: "Duráció",
+  bondMacaulay: "Macaulay-duráció",
+  bondModified: "Módosított duráció",
   bondMacaulayShort: "Macaulay",
   bondModifiedShort: "Módosított",
   bondConvexity: "Konvexitás",
   bondConvexityHelp:
-    "A duration a hozamváltozásra adott lineáris árváltozást becsli; a konvexitás a görbület másodrendű korrekciója.",
+    "A duráció a hozamváltozásra adott lineáris árváltozást becsli; a konvexitás a görbület másodrendű korrekciója.",
   bondStatePremium: "Prémium kötvény",
   bondStatePar: "Névértéken",
   bondStateDiscount: "Diszkont kötvény",
@@ -79,10 +79,10 @@ export const bondPricingHu = {
   bondPyDragHint: "Húzd a pontot a hozam változtatásához",
   bondPyCurve: "Ár–hozam görbe",
   bondPyOverlaysLabel: "Közelítések",
-  bondPyDuration: "Duration-közelítés",
-  bondPyConvexity: "Duration + konvexitás",
+  bondPyDuration: "Duráció-közelítés",
+  bondPyConvexity: "Duráció + konvexitás",
   bondYtmParMark: "Névérték",
   bondEduLead: "A hozam 1%-os emelkedése az árat kb.",
-  bondEduTail: "értékkel változtatja meg duration alapján.",
+  bondEduTail: "értékkel változtatja meg a duráció alapján.",
   bondEduConvexity: "A konvexitás korrigálja az ár–hozam kapcsolat görbületét.",
 };

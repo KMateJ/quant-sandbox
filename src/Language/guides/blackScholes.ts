@@ -115,7 +115,7 @@ export const blackScholes: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ez a lecke levezeti az európai vételi és eladási opció Black–Scholes-árát. Három korábbi eredményt rak össze: az árat mint diszkontált kockázatsemleges várható értéket („Kockázatsemleges valószínűségek”), a lognormális részvényárat $\\mathbb{Q}$ alatt („Geometriai Brown-mozgás”) és a put–call paritást („Put–call paritás”). Kapcsolódik a „Delta és fedezés” leckéhez is, mert a képlet explicit deltát ad."),
+    p("Ez a lecke levezeti az európai call és put Black–Scholes-árát. Három korábbi eredményt rak össze: az árat mint diszkontált kockázatsemleges várható értéket („Kockázatsemleges valószínűségek”), a lognormális részvényárat $\\mathbb{Q}$ alatt („Geometriai Brown-mozgás”) és a put–call paritást („Put–call paritás”). Kapcsolódik a „Delta és fedezés” leckéhez is, mert a képlet explicit deltát ad."),
 
     h("Feltevések"),
     p("A Black–Scholes-modell az alábbi feltevésekkel él. Mindegyik egyszerűsítés; az utolsó szakasz visszatér a legfontosabbakhoz."),
@@ -129,13 +129,13 @@ export const blackScholes: GuideLessonContent = {
     p("E feltevések mellett az opció folytonos delta-fedezéssel replikálható, így ára a replikáció költsége. Ahogy a fás leckékben, ez a költség a $\\mathbb{Q}$ kockázatsemleges mérték szerinti diszkontált várható kifizetés."),
 
     h("Az ár mint várható érték"),
-    p("$K$ kötési árú vételi opcióra a kifizetés $X = (S_T - K)^+$, így"),
+    p("$K$ kötési árú callra a kifizetés $X = (S_T - K)^+$, így"),
     eq("C_0 = e^{-rT}\\,\\mathbb{E}^{\\mathbb{Q}}\\left[(S_T - K)^+\\right]."),
     p("$\\mathbb{Q}$ alatt a részvény $r$ driftű GBM. A $W_T^{\\mathbb{Q}} = \\sqrt{T}\\,Z$ jelöléssel, ahol $Z \\sim N(0,1)$,"),
     eq("S_T = S_0 \\exp\\!\\left( \\left(r - \\tfrac{1}{2}\\sigma^2\\right)T + \\sigma\\sqrt{T}\\,Z \\right)."),
 
     h("A Black–Scholes-differenciálegyenlet"),
-    p("Ez a várható érték másként is levezethető — eredetileg Black és Scholes így érvelt. Tartsunk egy portfóliót, amely egy $V(S,t)$ értékű opcióra hosszú, és $\\Delta$ részvényre rövid. Itô-lemma szerint az opció értékének változása"),
+    p("Ez a várható érték másként is levezethető — eredetileg Black és Scholes így érvelt. Tartsunk egy portfóliót: long pozíció egy $V(S,t)$ értékű opcióban, short pozíció $\\Delta$ részvényben. Az Itô-lemma szerint az opció értékének változása"),
     eq("dV = \\left( \\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} \\right) dt + \\frac{\\partial V}{\\partial S}\\,dS."),
     p("A $\\Delta = \\partial V/\\partial S$ választással kiesik a véletlen $dS$ tag, így a fedezett $\\Pi = V - \\Delta S$ portfólió kockázatmentes, ezért $r$ ütemben kell kamatoznia. Hozamát $r\\Pi$-vel egyenlővé téve adódik a **Black–Scholes parciális differenciálegyenlet**:"),
     eq("\\frac{\\partial V}{\\partial t} + \\tfrac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + rS\\frac{\\partial V}{\\partial S} - rV = 0."),
@@ -173,7 +173,7 @@ export const blackScholes: GuideLessonContent = {
       explain: "$N(d_2) = \\mathbb{Q}(S_T > K)$, vagyis $\\mathbb{Q}$ szerinti valószínűség, nem a valós mérték szerinti. A delta $N(d_1)$.",
     },
 
-    h("Az eladási opció"),
+    h("A put ára"),
     p("A $C_0 - P_0 = S_0 - Ke^{-rT}$ put–call paritás minden arbitrázsmentes modellben teljesül, így itt is. $P_0$-ra megoldva és $1 - N(x) = N(-x)$-et használva:"),
     eq("P_0 = K e^{-rT} N(-d_2) - S_0\\,N(-d_1)."),
     p("A put deltája $N(d_1) - 1 = -N(-d_1)$, $-1$ és $0$ közé esik."),
@@ -181,7 +181,7 @@ export const blackScholes: GuideLessonContent = {
     h("Számpélda"),
     p("Legyen $S_0 = 100$, $K = 100$, $r = 5\\%$, $\\sigma = 20\\%$, $T = 1$. Ekkor"),
     eq("d_1 = \\frac{\\ln 1 + (0{,}05 + 0{,}02)}{0{,}2} = 0{,}35, \\qquad d_2 = 0{,}35 - 0{,}2 = 0{,}15."),
-    p("Normális táblázatból $N(0{,}35) \\approx 0{,}6368$ és $N(0{,}15) \\approx 0{,}5596$. A diszkontfaktor $e^{-0{,}05} \\approx 0{,}9512$. Így $C_0 \\approx 100 \\cdot 0{,}6368 - 95{,}12 \\cdot 0{,}5596 \\approx 10{,}45$, a paritásból pedig $P_0 \\approx 10{,}45 - (100 - 95{,}12) \\approx 5{,}57$. A call deltája 0,637, és 56% a kockázatsemleges esélye a lehívásnak."),
+    p("A standard normális eloszlás táblázatából $N(0{,}35) \\approx 0{,}6368$ és $N(0{,}15) \\approx 0{,}5596$. A diszkontfaktor $e^{-0{,}05} \\approx 0{,}9512$. Így $C_0 \\approx 100 \\cdot 0{,}6368 - 95{,}12 \\cdot 0{,}5596 \\approx 10{,}45$, a paritásból pedig $P_0 \\approx 10{,}45 - (100 - 95{,}12) \\approx 5{,}57$. A call deltája 0,637, és 56% a kockázatsemleges esélye a lehívásnak."),
     {
       kind: "check",
       id: "toward-black-scholes/atm-call",
@@ -223,6 +223,6 @@ export const blackScholes: GuideLessonContent = {
       "$N(d_2)$ a kockázatsemleges lehívási valószínűség, $N(d_1)$ a delta; a valódi $\\mu$ drift nem szerepel.",
       "Az árak $\\sigma$-val nőnek; a volatilitásmosoly mutatja, hogy egyetlen állandó $\\sigma$ nem illeszkedik a piachoz, ezzel foglalkozik a Heston-labor.",
     ),
-    lab("/black-scholes", "Vizsgáld az árakat és a görög betűket a Black–Scholes laborban"),
+    lab("/black-scholes", "Vizsgáld az árakat és a görögöket a Black–Scholes laborban"),
   ],
 };

@@ -137,7 +137,7 @@ export const riskMeasures: GuideLessonContent = {
     h("Skálázás az időtávval"),
     p("A volatilitást többnyire napi hozamokból becsüljük. Ahogy a „Hozamok és volatilitás” című lecke megmutatta, ha a napi hozamok függetlenek és azonos eloszlásúak, a varianciák napról napra összeadódnak, így $h$ napra"),
     eq("\\sigma_h = \\sigma_1\\sqrt{h}, \\qquad \\mu_h = \\mu_1 h."),
-    p("Rövid távon $\\mu$ elenyésző $\\sigma$-hoz képest, ezért gyakran nullának vesszük; ekkor a VaR és az ES $\\sqrt{h}$ szerint nő. A szabály három feltevésen áll: a különböző napok hozamai függetlenek, a volatilitás állandó, és a pozíció az időtáv alatt nem változik. A volatilitás csomósodása és az autokorreláció az első kettőt sérti, ezért a skálázott tíznapos szám csak közelítés."),
+    p("Rövid távon $\\mu$ elenyésző $\\sigma$-hoz képest, ezért gyakran nullának vesszük; ekkor a VaR és az ES $\\sqrt{h}$ szerint nő. A szabály három feltevésre épül: a különböző napok hozamai függetlenek, a volatilitás állandó, és a pozíció az időtáv alatt nem változik. A volatilitás csomósodása és az autokorreláció az első kettőt sérti, ezért a skálázott tíznapos szám csak közelítés."),
 
     h("Számpélda"),
     p("Egy $V = 1\\,000\\,000$ értékű pozíció napi volatilitása $\\sigma = 1{,}2\\%$, és $\\mu = 0$. Az alábbi lépések kiszámítják az egynapos 99%-os VaR-t és ES-t, valamint a tíznapos VaR-t."),

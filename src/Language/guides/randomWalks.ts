@@ -144,7 +144,7 @@ export const randomWalks: GuideLessonContent = {
     p("Ha belenagyítunk, a pálya nem simul ki, ahogy egy közönséges sima görbe tenné, hanem minden léptékben újabb hullámzás jelenik meg. A pályának egyetlen pontban sincs jól definiált meredeksége. Ezért nem alkalmazható közvetlenül a szokásos analízis a Brown-mozgásra, és ezért lesz szükség a későbbi leckékben egy korrekciós tagra."),
 
     h("Kapcsolat a négyzetgyökös időszabállyal"),
-    p("Kössük össze ezt a „Hozamok és volatilitás” leckével. Modellezzük a $[0, T]$ alatti loghozamot egy egyenes vonalú drift és egy skálázott Brown-mozgás összegeként:"),
+    p("Kössük össze ezt a „Hozamok és volatilitás” leckével. Modellezzük a $[0, T]$ alatti loghozamot egy lineáris drift és egy skálázott Brown-mozgás összegeként:"),
     eq("\\ln\\frac{S_T}{S_0} = \\mu T + \\sigma W_T."),
     p("Mivel $W_T \\sim N(0, T)$, a loghozam normális eloszlású $\\mu T$ várható értékkel és $\\sigma\\sqrt{T}$ szórással, pontosan úgy, mint a „Hozamok és volatilitás” lecke első modelljében. A szabályban szereplő $\\sqrt{T}$ nem más, mint a bolyongás $\\sqrt{t}$ burkológörbéje az ábrán."),
 

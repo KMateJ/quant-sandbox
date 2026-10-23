@@ -83,7 +83,7 @@ export const noArbitrage: GuideLessonContent = {
     p("Ez a lecke a határidős ügylet szállítási árát határozza meg anélkül, hogy bármilyen modellt feltételeznénk a jövőbeli részvényárra. Az érvelés egyetlen feltevésre épül, hogy a piacon nincs arbitrázs, valamint a „Kamat, kamatozás és diszkontálás” lecke diszkontfaktorára. Magát a határidős ügyletet a „Határidős ügyletek, call és put opciók” lecke definiálta."),
 
     h("Piaci feltevések"),
-    p("Idealizált piacon dolgozunk. Bárki vehet fel hitelt és helyezhet el pénzt ugyanazon az $r$ kockázatmentes (folytonos) kamatlábon. A részvény tetszőleges mennyiségben vehető és shortolható; a **fedezetlen eladás** (short) azt jelenti, hogy kölcsönveszünk egy részvényt, ma eladjuk, később visszavásároljuk és visszaadjuk. Nincsenek tranzakciós költségek, adók és osztalék, és a szerződő felek teljesítik a vállalásaikat."),
+    p("Idealizált piacon dolgozunk. Bárki vehet fel hitelt és helyezhet el pénzt ugyanazon az $r$ kockázatmentes (folytonos) kamatlábon. A részvény tetszőleges mennyiségben vehető és shortolható; a **shortolás** azt jelenti, hogy kölcsönveszünk egy részvényt, ma eladjuk, később visszavásároljuk és visszaadjuk. Nincsenek tranzakciós költségek, adók és osztalék, és a szerződő felek teljesítik a vállalásaikat."),
 
     h("Arbitrázs"),
     p("Az **arbitrázs** olyan kereskedési stratégia, amelynek felépítése semmibe sem kerül, soha nem veszít pénzt, és legalább néhány kimenetelben pozitív nyereséget hoz. Ezzel egyenértékű: olyan stratégia, amely ma pénzt hoz, és később soha nem kell fizetni miatta."),
@@ -94,9 +94,9 @@ export const noArbitrage: GuideLessonContent = {
     note("Az arbitrázsmentességből következik az egy ár törvénye: a $T$-ben azonos kifizetésű portfóliók ára ma is azonos. A replikáláson alapuló árazás újra és újra ezt a szabályt alkalmazza."),
 
     h("A cash-and-carry érvelés"),
-    p("A határidős ügylet arra kötelezi a hosszú felet, hogy $T$-ben $K$ szállítási áron megvegye a részvényt. A részvényhez $T$-ben másként is hozzájuthatunk: felveszünk $S_0$ hitelt, ma megvesszük a részvényt, és megtartjuk. Hasonlítsuk össze a két pozíciót:"),
+    p("A határidős ügylet arra kötelezi a long felet, hogy $T$-ben $K$ szállítási áron megvegye a részvényt. A részvényhez $T$-ben másként is hozzájuthatunk: felveszünk $S_0$ hitelt, ma megvesszük a részvényt, és megtartjuk. Hasonlítsuk össze a két pozíciót:"),
     list(
-      "**A portfólió:** hosszú határidős ügylet $K$ szállítási árral. Mai költség 0. $T$-ben: fizetünk $K$-t, megkapjuk a részvényt.",
+      "**A portfólió:** long határidős ügylet $K$ szállítási árral. Mai költség 0. $T$-ben: fizetünk $K$-t, megkapjuk a részvényt.",
       "**B portfólió:** veszünk egy részvényt $S_0$-ért, $S_0$ hitelből finanszírozva. Mai költség 0. $T$-ben: nálunk a részvény, a hitelt kamatostul, $S_0e^{rT}$ összegben visszafizetjük.",
     ),
     p("Mindkét portfólió ingyenes, és mindkettő egy részvénnyel zárul $T$-ben. Egyetlen különbség a $T$-ben fizetett pénz: A-ban $K$, B-ben $S_0e^{rT}$. Az egy ár törvénye miatt ennek a két összegnek egyenlőnek kell lennie. A **határidős ár** $F_0$ az a szállítási ár, amely mellett egy új határidős ügylet semmibe sem kerül:"),
@@ -131,18 +131,18 @@ export const noArbitrage: GuideLessonContent = {
       id: "no-arbitrage/which-trade",
       prompt: "Egy árjegyző $S_0e^{rT}$ fölötti határidős árat jegyez. Melyik ügylet rögzít kockázatmentes nyereséget?",
       answer: { type: "choice", options: ["Megveszed a határidős ügyletet és shortolod a részvényt", "Eladod a határidős ügyletet, hitelt veszel fel és megveszed a részvényt", "Megveszed a határidős ügyletet és a részvényt is", "Egyik sem: a jegyzés $S_T$ előrejelzése"], correct: 1 },
-      explain: "A határidős ügylet drága, ezért eladod, a hosszú oldalt pedig olcsón replikálod: felveszel $S_0$ hitelt és megveszed a részvényt. $T$-ben a nyereség $F^{\\text{q}} - S_0e^{rT}$, bármi is $S_T$.",
+      explain: "A határidős ügylet drága, ezért eladod, a long oldalt pedig olcsón replikálod: felveszel $S_0$ hitelt és megveszed a részvényt. $T$-ben a nyereség $F^{\\text{q}} - S_0e^{rT}$, bármi is $S_T$.",
     },
     p("Az ábra $S_0 = 100$-zal számol. Állítsd be $r$-t és $T$-t, majd told el a jegyzett határidős árat a fair értéktől. A kijelzők megnevezik a rést kihasználó stratégiát. A grafikon $S_T$ függvényében mutatja a részvény-plusz-hitel láb, a határidős láb és az összegük kifizetését. A két láb egymás tükörképe, így az összeg vízszintes: a nyereség nem függ $S_T$-től. Nullára csökken, amikor a jegyzés éppen $S_0e^{rT}$."),
     figure("forward-arbitrage"),
 
     h("Határidős ár és a határidős szerződés értéke"),
     p("Két mennyiséget könnyű összekeverni. A **határidős ár** $F_t$ az a szállítási ár, amely mellett egy $t$-ben kötött *új* határidős ügylet értéke nulla; a fenti érvelés szerint $F_t = S_te^{r(T-t)}$. Egy rögzített $K$ szállítási árú, *már meglévő* határidős ügylet **értéke** viszont a részvénnyel együtt mozog."),
-    p("Az értékét $t$-ben ugyanazzal a replikálással kapjuk. A hosszú határidős ügylet $T$-ben $S_T$ értékű részvényt ad $K$-ért cserébe. Ugyanezt fizeti, ha ma tartunk egy részvényt, és $T$-ben $K$-val tartozunk; a $T$-beli $K$ tartozás mai értéke $-Ke^{-r(T-t)}$. Tehát"),
+    p("Az értékét $t$-ben ugyanazzal a replikálással kapjuk. A long határidős ügylet $T$-ben $S_T$ értékű részvényt ad $K$-ért cserébe. Ugyanezt fizeti, ha ma tartunk egy részvényt, és $T$-ben $K$-val tartozunk; a $T$-beli $K$ tartozás mai értéke $-Ke^{-r(T-t)}$. Tehát"),
     eq("f_t = S_t - K\\,e^{-r(T-t)}."),
     p("Megkötéskor $K = F_0 = S_0e^{rT}$ és $f_0 = 0$, ahogy kell. Példa: egy egyéves határidős ügyletet $K = 105{,}13$ áron kötöttünk. Fél év múlva a részvény 110-en áll, így"),
     eq("f_{0{,}5} = 110 - 105{,}13\\,e^{-0{,}05\\cdot 0{,}5} \\approx 110 - 102{,}53 = 7{,}47."),
-    p("A hosszú fél szerződése 7,47-et ér, noha az új, féléves határidős ügyleteket már $110\\,e^{0{,}025} \\approx 112{,}78$ áron kötik, nem 105,13-on."),
+    p("A long fél szerződése 7,47-et ér, noha az új, féléves határidős ügyleteket már $110\\,e^{0{,}025} \\approx 112{,}78$ áron kötik, nem 105,13-on."),
 
     h("Összefoglalás"),
     list(

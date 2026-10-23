@@ -68,7 +68,7 @@ export const correlatedBrownianMotions: GuideLessonContent = {
   ],
 
   hu: [
-    p("Eddig mindig egyetlen Brown-mozgással dolgoztunk. A valódi modellek ritkán elégednek meg eggyel. A részvény és a volatilitása együtt mozog, egy kosáropció egyszerre több eszköztől függ, egy portfólió pedig éppen az a helyzet, amelyről a „Diverzifikáció és korreláció” szól. A lecke két, tetszőleges korrelációjú Brown-mozgást épít fel a „A Brown-mozgás tulajdonságai” leckében szereplő tulajdonságokból, megmutatja, hogyan terjed ki az eljárás sok eszközre, és kimondja az „Az Itô-lemma” szabályának kétdimenziós változatát. Azt is elmondja, hol jelenik meg a korreláció az árazási modellekben, és hogyan szimuláljuk az „SDE-k szimulációja: az Euler–Maruyama-séma” módszerével."),
+    p("Eddig mindig egyetlen Brown-mozgással dolgoztunk. A valódi modellek ritkán elégednek meg eggyel. A részvény és a volatilitása együtt mozog, egy kosáropció egyszerre több eszköztől függ, egy portfólió pedig éppen az a helyzet, amelyről a „Diverzifikáció és korreláció” szól. A lecke két, tetszőleges korrelációjú Brown-mozgást épít fel „A Brown-mozgás tulajdonságai” leckében szereplő tulajdonságokból, megmutatja, hogyan terjed ki az eljárás sok eszközre, és kimondja az „Az Itô-lemma” szabályának kétdimenziós változatát. Azt is elmondja, hol jelenik meg a korreláció az árazási modellekben, és hogyan szimuláljuk az „SDE-k szimulációja: az Euler–Maruyama-séma” módszerével."),
 
     h("Két Brown-mozgás ρ korrelációval"),
     p("Két standard Brown-mozgásnak, $W_1$-nek és $W_2$-nek $\\rho \\in [-1, 1]$ a **korrelációja**, ha a növekményeik korrelációja egy rövid $dt$ szakaszon $\\rho$. A kvadratikus variáció nyelvén ez egyetlen szabály a keresztszorzatra:"),
@@ -81,7 +81,7 @@ export const correlatedBrownianMotions: GuideLessonContent = {
     h("A Cholesky-felbontás"),
     p("A fenti konstrukció egy mátrixszorzat. Írjuk egy lépés független sokkjait $\\varepsilon = (\\varepsilon_1, \\varepsilon_2)$ standard normális vektorként, a korreláltakat pedig $Z = L\\,\\varepsilon$ alakban:"),
     eq("L = \\begin{pmatrix} 1 & 0 \\\\ \\rho & \\sqrt{1 - \\rho^2} \\end{pmatrix}, \\qquad L L^{\\top} = \\begin{pmatrix} 1 & \\rho \\\\ \\rho & 1 \\end{pmatrix}."),
-    p("Ez az $L$ a korrelációs mátrix **Cholesky-felbontása**. $n$ eszközre, $C$ korrelációs mátrixszal ugyanez a gondolat működik: keressünk olyan alsó háromszögmátrixot, amelyre $L L^{\\top} = C$, és legyen $Z = L\\,\\varepsilon$ független $\\varepsilon$-ra. Ilyen $L$ pontosan akkor létezik, ha $C$ **pozitív definit**, ami valódi megszorítás. A páronkénti korrelációk egymástól független megválasztása, például $\\rho_{12} = \\rho_{13} = 0{,}9$ és $\\rho_{23} = -0{,}9$, megbukhat rajta, és akkor semmilyen valószínűségi változó-rendszernek sincsenek ezek a korrelációi. Az algoritmus akkor jelzi a hibát, amikor nem pozitív szám négyzetgyökére lenne szükség; az ábra $\\sqrt{1 - \\rho^2}$ mutatója két eszköznél éppen ez a négyzetgyök, és $\\rho = \\pm 1$-nél eltűnik."),
+    p("Ez az $L$ a korrelációs mátrix **Cholesky-felbontása**. $n$ eszközre, $C$ korrelációs mátrixszal ugyanez a gondolat működik: keressünk olyan alsó háromszögmátrixot, amelyre $L L^{\\top} = C$, és legyen $Z = L\\,\\varepsilon$ független $\\varepsilon$-ra. Ilyen $L$ pontosan akkor létezik, ha $C$ **pozitív definit**, ami valódi megszorítás. A páronkénti korrelációk egymástól független megválasztása, például $\\rho_{12} = \\rho_{13} = 0{,}9$ és $\\rho_{23} = -0{,}9$, megbukhat rajta, és akkor semmilyen valószínűségi változó-rendszernek sincsenek ezek a korrelációi. Az algoritmus akkor jelzi a hibát, amikor nem pozitív szám négyzetgyökére lenne szükség; az ábra $\\sqrt{1 - \\rho^2}$ kijelzője két eszköznél éppen ez a négyzetgyök, és $\\rho = \\pm 1$-nél eltűnik."),
     {
       kind: "check",
       id: "correlated-brownian-motions/second-weight",
@@ -95,12 +95,12 @@ export const correlatedBrownianMotions: GuideLessonContent = {
     eq("df = f_t\\,dt + f_x\\,dX + f_y\\,dY + \\tfrac{1}{2} f_{xx}\\,\\sigma_1^2\\,dt + \\tfrac{1}{2} f_{yy}\\,\\sigma_2^2\\,dt + f_{xy}\\,\\rho\\,\\sigma_1 \\sigma_2\\,dt."),
     p("Az $f(x, y) = x\\,y$ függvénnyel ez a korrelált folyamatok **szorzatszabálya**:"),
     eq("d(XY) = X\\,dY + Y\\,dX + \\rho\\,\\sigma_1 \\sigma_2\\,dt."),
-    p("Magukra a Brown-mozgásokra ($X = W_1$, $Y = W_2$, $\\sigma_1 = \\sigma_2 = 1$) a pótlólagos tag $\\rho\\,dt$. A $W_1 W_2$ szorzat ezért nem martingál; a drifje $\\rho$, és a várható értéket véve $E[W_1(T)\\,W_2(T)] = \\rho\\,T$."),
+    p("Magukra a Brown-mozgásokra ($X = W_1$, $Y = W_2$, $\\sigma_1 = \\sigma_2 = 1$) a pótlólagos tag $\\rho\\,dt$. A $W_1 W_2$ szorzat ezért nem martingál; a driftje $\\rho$, és a várható értéket véve $E[W_1(T)\\,W_2(T)] = \\rho\\,T$."),
 
     h("Hol jelenik meg a korreláció"),
     p("A „Sztochasztikus volatilitás és a Heston-modell” leckében az árfolyamot és a varianciát $\\rho$ korrelációjú Brown-mozgások hajtják:"),
     eq("dS = \\mu S\\,dt + \\sqrt{v}\\,S\\,dW_1, \\qquad dv = \\kappa(\\theta - v)\\,dt + \\xi\\sqrt{v}\\,dW_2, \\qquad d\\langle W_1, W_2 \\rangle = \\rho\\,dt."),
-    p("A részvényindexek esnek, amikor a volatilitás nő, ezért a kalibrált $\\rho$ negatív, jellemzően $-0{,}5$ és $-0{,}9$ között. Ez a negatív előjel dönti ferdévé az implikált volatilitási mosolyt. A korreláció hajtja a **kosár- és különbözetopciókat** is, amelyek kifizetése több eszköztől függ: egy súlyozott összeg szórásnégyzetében ott vannak a $2\\,w_i w_j\\,\\rho_{ij}\\,\\sigma_i \\sigma_j$ tagok, pontosan úgy, mint a portfólió szórásnégyzetében. Egy kopula engedné, hogy a függőség eltérjen ettől a lineáris alaktól; itt nem lesz rá szükségünk."),
+    p("A részvényindexek esnek, amikor a volatilitás nő, ezért a kalibrált $\\rho$ negatív, jellemzően $-0{,}5$ és $-0{,}9$ között. Ez a negatív előjel ferdíti el az implikált volatilitási mosolyt. A korreláció hajtja a **kosár- és spread opciókat** is, amelyek kifizetése több eszköztől függ: egy súlyozott összeg szórásnégyzetében ott vannak a $2\\,w_i w_j\\,\\rho_{ij}\\,\\sigma_i \\sigma_j$ tagok, pontosan úgy, mint a portfólió szórásnégyzetében. Egy kopula azt is megengedné, hogy a függőség eltérjen ettől a lineáris alaktól; itt erre nem lesz szükségünk."),
 
     h("Korrelált eszközök szimulációja"),
     p("Az Euler-sémában csak a sokk változik. Minden lépésben húzzunk független standard normális $\\varepsilon_1, \\varepsilon_2$ értékeket, és a két független sokk helyett használjuk a $Z_1 = \\varepsilon_1$, $Z_2 = \\rho\\,\\varepsilon_1 + \\sqrt{1 - \\rho^2}\\,\\varepsilon_2$ párt. Minden más, a „Monte Carlo-opcióárazás” árazó átlagával együtt, ugyanaz marad."),
@@ -126,9 +126,9 @@ export const correlatedBrownianMotions: GuideLessonContent = {
       "Két Brown-mozgás korrelációja $\\rho$, ha $d\\langle W_1, W_2 \\rangle = \\rho\\,dt$; építsd őket $W_2 = \\rho W_1 + \\sqrt{1 - \\rho^2}\\,W_\\perp$ alakban.",
       "$n$ eszköznél a korrelált sokkok $Z = L\\varepsilon$, ahol $L L^{\\top} = C$ a Cholesky-felbontás, amely pontosan akkor létezik, ha $C$ pozitív definit.",
       "A kétdimenziós Itô-szabály az $f_{xy}\\,\\rho\\,\\sigma_1 \\sigma_2\\,dt$ keresztaggal bővül, ebből $d(XY) = X\\,dY + Y\\,dX + \\rho\\,\\sigma_1 \\sigma_2\\,dt$.",
-      "A korreláció hajtja a Heston-modell ferdeségét (részvényeknél $\\rho < 0$), valamint a kosár- és különbözetopciók árát.",
+      "A korreláció hajtja a Heston-modell ferdeségét (részvényeknél $\\rho < 0$), valamint a kosár- és spread opciók árát.",
     ),
-    note("A következő lecke, a „Átlaghoz való visszahúzás: Ornstein–Uhlenbeck és Vasicek”, visszatér az egydimenziós modellekhez, és egy hosszú távú szint felé húzó erőt ad hozzá."),
+    note("A következő lecke, az „Átlaghoz visszahúzó folyamatok: Ornstein–Uhlenbeck és Vasicek”, visszatér az egydimenziós modellekhez, és egy hosszú távú szint felé húzó erőt ad hozzá."),
     lab("/heston", "Nézd meg az ár–variancia korreláció hatását a Heston-laborban"),
   ],
 };

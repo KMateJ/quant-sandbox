@@ -7,7 +7,7 @@ export const hestonHu = {
 
   hestonVariancePathsTitle: "Heston variancia pályák",
   hestonVariancePathsSubtitle:
-    "A volatilitás külön folyamatként, mean reversion-nel",
+    "A volatilitás külön, átlaghoz visszahúzó folyamatként",
 
   hestonPriceComparisonTitle: "BS vs Heston ár",
   hestonPriceComparisonSubtitle:
@@ -15,16 +15,16 @@ export const hestonHu = {
 
   hestonSmileTitle: "Implikált volatilitási görbe",
   hestonSmileSubtitle:
-    "Black–Scholes vs Heston implied vol különböző strike-ok mellett",
+    "Black–Scholes vs Heston implikált vol különböző strike-ok mellett",
 
   // labels
-  hestonUpdatePaths: "Új szim.",
+  hestonUpdatePaths: "Új szimuláció",
   hestonUpdating: "Frissítés...",
 
   // stats
   hestonInitialVol: "Kezdeti vol",
   hestonLongRunVol: "Hosszú távú vol",
-  hestonFeller: "Feller feltétel",
+  hestonFeller: "Feller-feltétel",
   hestonSpot: "S₀ (kezdeti árfolyam)",
   hestonStrike: "K (kötési ár)",
   hestonRate: "r (kockázatmentes kamat)",
@@ -42,15 +42,15 @@ export const hestonHu = {
   hestonSeriesBs: "Black–Scholes",
   hestonSeriesHestonMc: "Heston (MC)",
   hestonSeriesHestonMcSmoothed: "Heston (MC, simított)",
-  hestonSeriesBsIv: "BS implicit vol",
-  hestonSeriesHestonIv: "Heston implicit vol",
+  hestonSeriesBsIv: "BS implikált vol",
+  hestonSeriesHestonIv: "Heston implikált vol",
   hestonSeriesHeston: "Heston",
   hestonToggleControls: "Paraméterek megjelenítése/elrejtése",
   hestonFellerSatisfied: "teljesül",
   hestonFellerViolated: "nem teljesül",
   hestonGreeksChartTitle: "Görögök az árfolyam mentén",
   hestonGreeksSummaryTitle: "Görögök: Heston vs Black–Scholes",
-  hestonGreeksSummarySubtitle: "Az aktuális S₀ és K mellett; Black–Scholes összehasonlítás σ = √v₀ értékkel",
+  hestonGreeksSummarySubtitle: "Az aktuális S₀ és K mellett; Black–Scholes-összehasonlítás σ = √v₀ értékkel",
   hestonGreek: "Görög",
   hestonDelta: "Delta",
   hestonGamma: "Gamma",
@@ -77,7 +77,7 @@ export const hestonHu = {
   hestonVolValueLabel: "Implikált vol",
   intuitionHestonSpotTitle: "Árfolyam, kötési ár és call érték",
   intuitionHestonSpotSummary: "Az S₀ a mai ár; a K a lejárati vétel szerződéses ára.",
-  intuitionHestonSpotBody: "A call lejáratkor max(S_T − K, 0)-t fizet. A nagyobb kezdeti árfolyam általában növeli, a nagyobb kötési ár csökkenti az értékét. A szaggatott K-vonal az árfolyampályákon és az ár-összehasonlításon a kötési árat jelöli. A mai ár a kockázatsemleges várható payoff diszkontált értéke. A Black–Scholes összehasonlítás σ = √v₀ konstans volatilitást használ; az eltérésben modellhatás és Monte Carlo hiba is lehet.",
+  intuitionHestonSpotBody: "A call lejáratkor max(S_T − K, 0)-t fizet. A nagyobb kezdeti árfolyam általában növeli, a nagyobb kötési ár csökkenti az értékét. A szaggatott K-vonal az árfolyampályákon és az ár-összehasonlításon a kötési árat jelöli. A mai ár a kockázatsemleges várható payoff diszkontált értéke. A Black–Scholes-összehasonlítás σ = √v₀ konstans volatilitást használ; az eltérésben modellhatás és Monte Carlo-hiba is lehet.",
   intuitionHestonMaturityTitle: "Futamidő: T",
   intuitionHestonMaturitySummary: "T a lejáratig hátralévő idő években.",
   intuitionHestonMaturityBody: "Hosszabb idő alatt az árfolyam és a variancia tovább fejlődik. A variancia visszahúzása is jobban érvényesülhet, így a hosszabb távú árazás nem csak v₀-tól függ. T mind a pályák időtengelyét, mind az opció lejáratát módosítja. Fix lépésszám mellett nagyobb T nagyobb időlépést jelent. A theta ezzel szemben az idő múlásának helyi árérzékenysége.",
@@ -88,8 +88,8 @@ export const hestonHu = {
   intuitionHestonVisualSummary: "A pályaszám csak az illusztrációt vezérli, nem az árazási mintát.",
   intuitionHestonVisualBody: "A párosított árfolyam- és varianciapályák ugyanazon szimulált kimeneteket mutatják. Több látható pálya több példát ad, de ezek nem előrejelzések és nem konfidenciasávok. Az árazás külön pályaszámot használ. A reprodukálható véletlen számok miatt változatlan paraméterek mellett az ábrák nem sorsolódnak újra minden megnyitáskor.",
   intuitionHestonSamplesTitle: "Árazási pályák és mintavételi hiba",
-  intuitionHestonSamplesSummary: "Több árazási pálya általában kisebb Monte Carlo zajt ad.",
+  intuitionHestonSamplesSummary: "Több árazási pálya általában kisebb Monte Carlo-zajt ad.",
   intuitionHestonSamplesBody: "A becsült call ár szimulált, diszkontált payoffok átlaga. Négyzetgyökös hibaskálázás mellett az átlag hibájának felezéséhez körülbelül négyszer annyi minta kell; itt antitetikus mintapárok is csökkentik a zajt. Több pálya növeli a számítási költséget, de nem javítja az időbeli felbontást. A görögök közös véletlen számokkal végzett véges differenciák; a gamma különösen zajos lehet. Sima smile nem bizonyít pontos árazást: a megjelenített smile simítást is használ.",
-  intuitionHestonVegaSummary: "Itt a vega a kezdeti √v₀ volatilitás érzékenysége.",
-  intuitionHestonVegaBody: "A számítás √v₀-t 0,01-gyel növeli és csökkenti, majd visszaalakítja v₀-vá. A kijelzett vega 1,0 decimális volatilitásváltozásra szól, nem közvetlenül egységnyi varianciaváltozásra; egy százalékponthoz szorozd 0,01-gyel. θ, κ, ξ és ρ változatlan marad. Ez a volatilitási kitettség egy része, nem a Heston összes varianciaparaméterének együttes érzékenysége. A Monte Carlo becslés zajos lehet.",
+  intuitionHestonVegaSummary: "Itt a vega a kezdeti √v₀ volatilitásra vett érzékenység.",
+  intuitionHestonVegaBody: "A számítás √v₀-t 0,01-gyel növeli és csökkenti, majd visszaalakítja v₀-vá. A kijelzett vega 1,0 decimális volatilitásváltozásra szól, nem közvetlenül egységnyi varianciaváltozásra; egy százalékponthoz szorozd 0,01-gyel. θ, κ, ξ és ρ változatlan marad. Ez a volatilitási kitettség egy része, nem a Heston összes varianciaparaméterének együttes érzékenysége. A Monte Carlo-becslés zajos lehet.",
 };

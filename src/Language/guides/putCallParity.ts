@@ -78,13 +78,13 @@ export const putCallParity: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ez a lecke pontos összefüggést vezet le egy európai vételi és egy európai eladási opció ára között. A „Pozíciók kombinálása” lecke szintetikus határidős ügyletét kapcsolja össze az „Arbitrázs és a határidős ár” lecke egy ár törvényével. A határidős árhoz hasonlóan az eredmény semmilyen modellt nem igényel a részvény mozgására."),
+    p("Ez a lecke pontos összefüggést vezet le egy európai call és egy európai put ára között. A „Pozíciók kombinálása” lecke szintetikus határidős ügyletét kapcsolja össze az „Arbitrázs és a határidős ár” lecke egy ár törvényével. A határidős árhoz hasonlóan az eredmény semmilyen modellt nem igényel a részvény mozgására."),
 
     h("A keret"),
     p("Vegyünk egy európai callt és egy európai putot ugyanarra az osztalékot nem fizető részvényre, azonos $K$ kötési árral és $T$ lejárattal. Mai áruk $C_0$ és $P_0$. A részvény ára $S_0$, a folytonos kockázatmentes kamatláb $r$, így egy $T$-ben $K$-t fizető zérókuponos kötvény ma $Ke^{-rT}$-be kerül. A piaci feltevések ugyanazok, mint az „Arbitrázs és a határidős ár” leckében: nincs tranzakciós költség, $r$ kamaton lehet hitelt felvenni és pénzt elhelyezni, a shortolás megengedett."),
 
     h("Két portfólió azonos kifizetéssel"),
-    p("A „Pozíciók kombinálása” lecke szerint egy hosszú call és egy rövid put azonos kötési árral"),
+    p("A „Pozíciók kombinálása” lecke szerint egy long call és egy short put azonos kötési árral"),
     eq("(S_T - K)^+ - (K - S_T)^+ = S_T - K"),
     p("összeget fizet $S_T$ bármely értéke mellett. Építsünk két portfóliót:"),
     list(
@@ -100,7 +100,7 @@ export const putCallParity: GuideLessonContent = {
     p("Legyen $S_0 = 100$, $K = 100$, $r = 5\\%$, $T = 1$. A jobb oldal"),
     eq("S_0 - K\\,e^{-rT} = 100 - 100\\,e^{-0{,}05} \\approx 100 - 95{,}12 = 4{,}88."),
     p("A Black–Scholes-képlet, amelyet „A Black–Scholes-képlet” lecke vezet le, $\\sigma = 20\\%$ volatilitás mellett $C_0 \\approx 10{,}45$ és $P_0 \\approx 5{,}57$ árat ad. A különbség $4{,}88$, ahogy a paritás előírja. Más volatilitásnál mindkét ár megváltozik, de ugyanannyival, így a különbségük 4,88 marad."),
-    p("Tegyük fel, hogy egy árjegyző 11-ért kínálja a callt, a put ára pedig továbbra is 5,57. Ekkor $C_0 - P_0 = 5{,}43 > 4{,}88$, vagyis az A portfólió drága B-hez képest. Adjuk el A-t és vegyük meg B-t: eladjuk a callt, megvesszük a putot, megvesszük a részvényt és felveszünk $95{,}12$ hitelt. A mai pénzáramlás"),
+    p("Tegyük fel, hogy egy árjegyző 11-ért kínálja a callt, a put ára pedig továbbra is 5,57. Ekkor $C_0 - P_0 = 5{,}43 > 4{,}88$, vagyis az A portfólió drága B-hez képest. Adjuk el A-t és vegyük meg B-t: eladjuk a callt, megvesszük a putot, megvesszük a részvényt és felveszünk $95{,}12$ hitelt. A mai pénzáram"),
     eq("11 - 5{,}57 - 100 + 95{,}12 \\approx 0{,}55,"),
     p("$T$-ben pedig a pozíciók pontosan kioltják egymást: az eladott call és a megvett put együtt $-(S_T - K)$-t fizet, a részvény és a hitel $S_T - K$-t. A 0,55 kockázat nélkül nálunk marad."),
     {
@@ -116,11 +116,11 @@ export const putCallParity: GuideLessonContent = {
       steps: [
         { text: "A B portfólió a diszkontált kötési árat veszi fel hitelként, így $T$-ben $K$ a tartozás.", tex: "K\\,e^{-rT} = 100\\,e^{-0{,}05}", result: { value: 95.12, tolerance: 0.01 } },
         { text: "B ára egy részvény mínusz ez a hitel.", tex: "S_0 - K\\,e^{-rT}", result: { value: 4.88, tolerance: 0.01 } },
-        { text: "Az A portfólió, a 10,45-ös hosszú call és az 5,57-es rövid put ára", tex: "C_0 - P_0 = 10{,}45 - 5{,}57", result: { value: 4.88, tolerance: 0.01 } },
+        { text: "Az A portfólió, a 10,45-ös long call és az 5,57-es short put ára", tex: "C_0 - P_0 = 10{,}45 - 5{,}57", result: { value: 4.88, tolerance: 0.01 } },
         { text: "$T$-ben mindkettő $S_T - K$-t fizet. Például $S_T = 120$ mellett mindkettő ennyit:", tex: "(120 - 100)^+ - (100 - 120)^+", result: { value: 20, tolerance: 0.01 } },
       ],
     },
-    p("Az ábra rögzíti az $S_0 = 100$ és $r = 5\\%$ értékeket, és $K$, $\\sigma$, $T$ állítható. A grafikon egy hosszú call és egy rövid put együttes kifizetését rajzolja rá az $S_T - K$ határidős kifizetésre; a két vonal minden kötési árnál egybeesik. A kijelzők a $C_0$ és $P_0$ Black–Scholes-árat, a különbségüket és $S_0 - Ke^{-rT}$-t mutatják. Változtasd $\\sigma$-t, és figyeld meg, hogy $C_0$ és $P_0$ is mozog, $C_0 - P_0$ viszont nem; az csak $K$-val és $T$-vel változik."),
+    p("Az ábra rögzíti az $S_0 = 100$ és $r = 5\\%$ értékeket, és $K$, $\\sigma$, $T$ állítható. A grafikon egy long call és egy short put együttes kifizetését rajzolja rá az $S_T - K$ határidős kifizetésre; a két vonal minden kötési árnál egybeesik. A kijelzők a $C_0$ és $P_0$ Black–Scholes-árat, a különbségüket és $S_0 - Ke^{-rT}$-t mutatják. Változtasd $\\sigma$-t, és figyeld meg, hogy $C_0$ és $P_0$ is mozog, $C_0 - P_0$ viszont nem; az csak $K$-val és $T$-vel változik."),
     figure("put-call-parity"),
 
     h("Mit mond meg a paritás, és mit nem"),
@@ -139,11 +139,11 @@ export const putCallParity: GuideLessonContent = {
     p("Ugyanez a gondolatmenet modell nélkül is korlátozza a call árát. Felső korlát: a call sosem fizet többet a részvénynél, hiszen $K \\ge 0$ esetén $(S_T - K)^+ \\le S_T$. Ami mindig kevesebbet fizet, az nem kerülhet többe, tehát $C_0 \\le S_0$."),
     p("Alsó korlát: a call kifizetése sosem negatív, így $C_0 \\ge 0$. Továbbá $(S_T - K)^+ \\ge S_T - K$, tehát a call legalább annyit ér, mint a határidős jellegű B portfólió, amely $S_0 - Ke^{-rT}$-be kerül. Együtt:"),
     eq("\\max\\left(S_0 - K\\,e^{-rT},\\,0\\right) \\le C_0 \\le S_0."),
-    p("Az alsó korlát a paritásból is adódik: mivel $P_0 \\ge 0$, $C_0 = P_0 + S_0 - Ke^{-rT} \\ge S_0 - Ke^{-rT}$. A példában a call ára 4,88 és 100 közé kell essen. Ezek a korlátok tágak: kizárják az abszurd árakat, a tényleges szintet azonban a modellre hagyják."),
+    p("Az alsó korlát a paritásból is adódik: mivel $P_0 \\ge 0$, $C_0 = P_0 + S_0 - Ke^{-rT} \\ge S_0 - Ke^{-rT}$. A példában a call ára 4,88 és 100 közé kell esnie. Ezek a korlátok tágak: kizárják az abszurd árakat, a tényleges szintet azonban a modellre hagyják."),
 
     h("Összefoglalás"),
     list(
-      "Egy hosszú call és egy rövid put azonos kötési árral és lejárattal $S_T - K$-t fizet, ugyanannyit, mint egy $Ke^{-rT}$ hitelből vett részvény.",
+      "Egy long call és egy short put azonos kötési árral és lejárattal $S_T - K$-t fizet, ugyanannyit, mint egy $Ke^{-rT}$ hitelből vett részvény.",
       "Az egy ár törvénye szerint $C_0 - P_0 = S_0 - Ke^{-rT}$.",
       "A paritás modellfüggetlen: összeköti a call és a put árát, de a szintjüket nem rögzíti.",
       "Modell nélkül a call ára csak korlátozható: $\\max(S_0 - Ke^{-rT}, 0) \\le C_0 \\le S_0$.",

@@ -33,7 +33,7 @@ export const pathGeometryHu = {
   pgLessonFirstPassage: "Első elérési idők",
   pgLessonFirstPassageDesc: "Brown-mozgás első elérési ideje: Lévy-sűrűség, nehéz farok és végtelen várható érték interaktív szimulációval.",
   pgLessonHitting: "Elérési valószínűségek",
-  pgLessonHittingDesc: "Korlátátlépési valószínűségek drifttel és diszkrét megfigyeléssel, a BGK-korrekcióval — a korlátos opciók alapja.",
+  pgLessonHittingDesc: "Korlátátlépési valószínűségek drifttel és diszkrét megfigyeléssel, a BGK-korrekcióval — a barrier opciók alapja.",
 
   pgPaths: "Szimulált pályák",
   pgMetrics: "Empirikus vs elméleti",
@@ -143,7 +143,7 @@ export const pathGeometryHu = {
   pgHitMathGirsanov: "A képlet a tükrözési elvből és egy mértékcseréből (Girsanov, 6. fejezet) jön: a drift egy e^(μW(t) − μ²t/2) súllyal újrasúlyozott driftmentes Brown-mozgás. Az e^(2μa) tag a tükrözött pályák súlya.",
   pgHitMathLimits: "Határesetek:",
   pgHitMathDiscrete: "Ha csak Δt lépésközzel figyeljük a pályát, a két megfigyelés közötti átlépések elvesznek. Broadie, Glasserman és Kou megmutatta, hogy ez első rendben egy eltolt korláttal egyenértékű:",
-  pgHitApplicationsTitle: "Pénzügyi alkalmazás: korlátos opciók",
+  pgHitApplicationsTitle: "Pénzügyi alkalmazás: barrier opciók",
   pgHitApplications: "Egy up-and-out opció értéktelenné válik, ha az alaptermék átlépi a korlátot. Árazásához pontosan ezek az elérési valószínűségek kellenek (log-árfolyamra, drifttel). A valós szerződések gyakran csak napi záróárakat figyelnek, ezért a folytonos képlet túlbecsüli a kiütés esélyét — a BGK-eltolás a piaci gyakorlatban használt korrekció.",
   pgHitNextConnection: "Következő fejezet: a kvadratikus variációtól a sztochasztikus integrálig — hogyan integráljunk egy ennyire érdes pálya szerint?",
   pgMaxTry1: "Tipp előre: t = 1-nél mekkora a futó maximum átlaga? Ellenőrizd az E[M(t)] kártyán.",

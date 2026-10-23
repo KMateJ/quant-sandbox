@@ -176,7 +176,7 @@ export const brownianProperties: GuideLessonContent = {
     list(
       "**Iterált logaritmus tétele** (Hincsin): $\\limsup_{t \\to \\infty} W_t / \\sqrt{2t\\ln\\ln t} = 1$. Időinverzióval $\\limsup_{t \\downarrow 0} W_t / \\sqrt{2t\\ln\\ln(1/t)} = 1$ is teljesül.",
       "**Rekurrencia**: az iterált logaritmus tételéből és a szimmetriából $\\limsup_{t\\to\\infty} W_t = +\\infty$ és $\\liminf_{t\\to\\infty} W_t = -\\infty$. A pályák folytonossága miatt $W$ minden $a \\in \\mathbb{R}$ szintet elér, mégpedig tetszőlegesen nagy időpontokban is. A $t = 0$ körüli változat szerint $W$ minden $[0, \\varepsilon]$ intervallumban végtelen sokszor visszatér 0-ba.",
-      "**Sehol sem differenciálhatóság** (Paley, Wiener és Zygmund, 1933): egy valószínűséggel a $t \\mapsto W_t$ függvény egyetlen $t$ pontban sem differenciálható. A skálázás megmutatja, miért: $(W_{t+h} - W_t)/h \\sim N(0, 1/h)$, így bármely $K$ korlátra $\\mathbb{P}(|(W_{t+h} - W_t)/h| \\le K) = \\mathbb{P}(|Z| \\le K\\sqrt{h}) \\to 0$, ha $h \\downarrow 0$.",
+      "**Sehol sem differenciálhatóság** (Paley, Wiener és Zygmund, 1933): 1 valószínűséggel a $t \\mapsto W_t$ függvény egyetlen $t$ pontban sem differenciálható. A skálázás megmutatja, miért: $(W_{t+h} - W_t)/h \\sim N(0, 1/h)$, így bármely $K$ korlátra $\\mathbb{P}(|(W_{t+h} - W_t)/h| \\le K) = \\mathbb{P}(|Z| \\le K\\sqrt{h}) \\to 0$, ha $h \\downarrow 0$.",
     ),
 
     h("Kvadratikus és teljes változás"),

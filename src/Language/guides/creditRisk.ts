@@ -103,7 +103,7 @@ export const creditRisk: GuideLessonContent = {
   ],
 
   hu: [
-    p("A pálya eddigi kötvényei mind pontosan azt fizették, amit ígértek. Egy vállalat azonban, szemben a saját devizájában eladósodó állammal, fizetésképtelenné válhat. Ez a lecke ezt a kockázatot egyetlen évre vetített számmal, a csődintenzitással modellezi, beárazza a csődbe menni képes zérókupon-kötvényt, és megmutatja, honnan ered a vállalati kötvények többlethozama, a hitelfelár. A „Kamat, kamatozás és diszkontálás” diszkontálására, a „Kötvényárak és hozamok” hozamaira és az „Azonnali kamatok, forward kamatok és a hozamgörbe” folytonos zérókupon-hozamaira épít, a végén pedig a hitel-nemteljesítési csereügyletet tárgyalja, amely a „Kamatcsereügyletek” szerződéseinek közeli rokona."),
+    p("A pálya eddigi kötvényei mind pontosan azt fizették, amit ígértek. Egy vállalat azonban, szemben a saját devizájában eladósodó állammal, fizetésképtelenné válhat. Ez a lecke ezt a kockázatot egyetlen évre vetített számmal, a csődintenzitással modellezi, beárazza a csődbe menni képes zérókupon-kötvényt, és megmutatja, honnan ered a vállalati kötvények többlethozama, a hitelfelár. A „Kamat, kamatozás és diszkontálás” diszkontálására, a „Kötvényárak és hozamok” hozamaira és az „Azonnali kamatok, forward kamatok és a hozamgörbe” folytonos zérókupon-hozamaira épít, a végén pedig a credit default swapot (CDS) tárgyalja, amely a „Kamatswapok” szerződéseinek közeli rokona."),
 
     h("Csőd és a csőd időpontja"),
     p("A kibocsátó **csődbe megy** (nem teljesít), ha elmulaszt egy esedékes fizetést. A csődöt egy véletlen **csődidőponttal**, $\\tau$-val írjuk le: ekkor válik a kibocsátó fizetésképtelenné. Ha $\\tau > T$, a kibocsátó $T$-ben még fizet, és a $T$-ben lejáró kötvényt teljes egészében visszafizeti. Ha $\\tau \\le T$, a kötvényt nem fizeti vissza teljesen."),
@@ -154,7 +154,7 @@ export const creditRisk: GuideLessonContent = {
       steps: [
         { text: "Túlélési valószínűség öt évre.", tex: "Q(5) = e^{-0{,}02 \\cdot 5} = e^{-0{,}1}", result: { value: 0.9048, tolerance: 0.0005 } },
         { text: "Csődvalószínűség az öt év alatt, százalékban.", tex: "1 - Q(5)", result: { value: 9.52, tolerance: 0.02, unit: "%" } },
-        { text: "Ár névértékegységenként: túléléskor 1, csődkor $R = 0{,}4$ a kifizetés lejáratkor; a diszkonttényező $e^{-0{,}15} \\approx 0{,}8607$, a kockázatmentes ár.", tex: "P_{\\text{kock}} = e^{-0{,}15}\\,\\big[Q(5) + (1 - Q(5)) \\cdot 0{,}4\\big]", result: { value: 0.8116, tolerance: 0.0005 } },
+        { text: "Ár névértékegységenként: túléléskor 1, csődkor $R = 0{,}4$ a kifizetés lejáratkor; a diszkontfaktor $e^{-0{,}15} \\approx 0{,}8607$, a kockázatmentes ár.", tex: "P_{\\text{kock}} = e^{-0{,}15}\\,\\big[Q(5) + (1 - Q(5)) \\cdot 0{,}4\\big]", result: { value: 0.8116, tolerance: 0.0005 } },
         { text: "A kockázatos zérókupon-kötvény folytonos hozama.", tex: "y = -\\ln P_{\\text{kock}}/5", result: { value: 4.176, tolerance: 0.005, unit: "%" } },
         { text: "Hitelfelár a 3%-os kockázatmentes kamat fölött; bázispontban körülbelül 118.", tex: "s(5) = y - r", result: { value: 1.176, tolerance: 0.005, unit: "%" } },
         { text: "A hitelháromszög, amely körülbelül 2,4 bázisponttal tér el a pontos felártól.", tex: "\\lambda(1 - R) = 0{,}02 \\cdot 0{,}6", result: { value: 1.2, tolerance: 0.005, unit: "%" } },
@@ -186,8 +186,8 @@ export const creditRisk: GuideLessonContent = {
       explain: "A felár a várható veszteségen felül kockázati prémiumot (a csődök rossz időkben halmozódnak) és likviditási prémiumot is tartalmaz. Ha a teljes felárat osztjuk $1 - R$-rel, a historikus csődgyakoriságnál nagyobb, kockázatsemleges $\\lambda$-t kapunk.",
     },
 
-    h("Hitel-nemteljesítési csereügyletek"),
-    p("A **hitel-nemteljesítési csereügylet** (credit default swap, CDS) egy referencia-kibocsátó csődje elleni biztosítás. A **védelem vevője** évente rögzített $s_{\\text{CDS}}$ díjat fizet egy névleges összeg után a lejáratig vagy a csődig, amelyik előbb bekövetkezik. Csőd esetén a **védelem eladója** névleges egységenként $1 - R$-et fizet. Ahogy a „Kamatcsereügyletek” swapjainál, a méltányos díj a két láb jelenértékét teszi egyenlővé. Folytonos díjfizetéssel, állandó $\\lambda$-val és $r$-rel, és ha a védelmet a csőd pillanatában fizetik ki:"),
+    h("Credit default swap (CDS)"),
+    p("A **credit default swap** (CDS) egy referencia-kibocsátó csődje elleni biztosítás. A **védelem vevője** évente rögzített $s_{\\text{CDS}}$ díjat fizet egy névleges összeg után a lejáratig vagy a csődig, amelyik előbb bekövetkezik. Csőd esetén a **védelem eladója** névleges egységenként $1 - R$-et fizet. Ahogy a „Kamatswapok” swapjainál, a méltányos díj a két láb jelenértékét teszi egyenlővé. Folytonos díjfizetéssel, állandó $\\lambda$-val és $r$-rel, és ha a védelmet a csőd pillanatában fizetik ki:"),
     eq("s_{\\text{CDS}}\\int_0^T e^{-(r+\\lambda)t}\\,dt = (1 - R)\\int_0^T \\lambda\\,e^{-(r+\\lambda)t}\\,dt \\quad\\Longrightarrow\\quad s_{\\text{CDS}} = \\lambda\\,(1 - R)."),
     p("Itt $e^{-\\lambda t}$ annak valószínűsége, hogy $t$-ben még fizetik a díjat, $\\lambda e^{-\\lambda t}\\,dt$ pedig annak, hogy a csőd a $[t, t + dt]$ intervallumba esik. Ebben a keretben a háromszög a CDS-re pontosan teljesül; a példa kötvényének 1,176%-os felára azért tér el kissé, mert ott a megtérülést lejáratkor fizetik, nem a csőd pillanatában. A gyakorlatban több lejáratra jegyzett CDS-díjakból lejáratonként, egymás után haladva (bootstrapping) építik fel a csődintenzitások lejárati szerkezetét, ahogy az azonnali kamatokat is a kötvényárakból nyertük ki."),
 

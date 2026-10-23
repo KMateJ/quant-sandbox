@@ -1,13 +1,13 @@
 export const hedgingDeskDemoStepsHu = {
   hdDemoWelcomeTitle: "Te vagy az árjegyző",
   hdDemoWelcomeBody:
-    "Egy ügyfél épp tíz ATM vételi opciót vett tőled. Tiéd a díj és a kockázat. A jobb felső óra a lejáratig hátralévő kereskedési napokat számolja.",
+    "Egy ügyfél épp tíz ATM callt vett tőled. Tiéd a prémium és a kockázat. A jobb felső óra a lejáratig hátralévő kereskedési napokat számolja.",
   hdDemoClientFillTitle: "A nyitó kötés",
   hdDemoClientFillBody:
-    "A naplóban minden esemény megjelenik. Az első sor az ügyfél kötése: tíz vételi opciót adtál el a vételi áron.",
+    "A naplóban minden esemény megjelenik. Az első sor az ügyfél kötése: tíz callt adtál el a bid áron.",
   hdDemoPositionsTitle: "Amit tartasz",
   hdDemoPositionsBody:
-    "Tíz kiírt vételi opció nagyjából ötszáz részvény short pozíciójaként viselkedik. Ez a kitettség a delta, részvényben mérve.",
+    "Tíz kiírt call nagyjából ötszáz részvényes short pozícióként viselkedik. Ez a kitettség a delta, részvényben mérve.",
   hdDemoRiskBandTitle: "A delta-sáv",
   hdDemoRiskBandBody:
     "A küldetés minden záráskor csak a sávon belül engedi a nettó deltát. Most messze kívül vagy rajta.",
@@ -19,10 +19,10 @@ export const hedgingDeskDemoStepsHu = {
     "A delta semlegesítéséhez részvényt veszel: a megbízás mutatja a várható árat, a fizetendő spreadet és a kötés utáni nettó deltát.",
   hdDemoFirstFillTitle: "Az első fedezés",
   hdDemoFirstFillBody:
-    "A vétel az eladási áron teljesül, így a költség azonnal látszik. Egy négyzet jelöli a kötést az árfolyamgrafikonon; a nettó delta most nulla közelében van.",
+    "A vétel az ask áron teljesül, így a költség azonnal látszik. Egy négyzet jelöli a kötést az árfolyamgrafikonon; a nettó delta most nulla közelében van.",
   hdDemoDayStepTitle: "Egy nappal később",
   hdDemoDayStepBody:
-    "Minden lépés egy nappal viszi előre a szimulált árat. A delta az árral és az idővel együtt mozdul, így a fedezés elkopik.",
+    "Minden lépés egy nappal viszi előre a szimulált árat. A delta az árral és az idővel együtt mozdul, így a fedezés elavul.",
   hdDemoDriftTitle: "Öt nap fedezés nélkül",
   hdDemoDriftBody:
     "Egy hétig magára hagyva a nettó delta egy záráskor kilépett a sávból: ez sávsértés, és az első célnál számít.",
@@ -40,11 +40,11 @@ export const hedgingDeskDemoStepsHu = {
     "Napi fedezéssel a könyv P&L-je végig nulla közelében marad, míg a fedezetlen vonal kileng. A kötések az út mentén gyűlnek.",
   hdDemoAttributionTitle: "Honnan jött a pénz",
   hdDemoAttributionBody:
-    "A kapott díj, a kifizetett elszámolás, a részvény P&L, a finanszírozás és a költségek adják ki a végeredményt.",
-  hdDemoPoliciesTitle: "Szabályok összevetve",
+    "A kapott prémium, a kifizetett elszámolás, a részvény P&L, a finanszírozás és a költségek adják ki a végeredményt.",
+  hdDemoPoliciesTitle: "Stratégiák összevetve",
   hdDemoPoliciesBody:
-    "Ugyanaz az út napi, heti, havi és fedezés nélküli szabállyal. A ritkább újrafedezés olcsóbb, de több sávsértéssel jár.",
+    "Ugyanaz a pálya napi, heti, havi és fedezés nélküli stratégiával. A ritkább újrafedezés olcsóbb, de több sávsértéssel jár.",
   hdDemoYourTurnTitle: "Rajtad a sor",
   hdDemoYourTurnBody:
-    "Vedd át a pultot és folytasd kézzel ezt a könyvet, nyisd meg a Küldetéseket egy új kezdéshez, vagy lépj ki a saját utadra.",
+    "Vedd át a desket, és folytasd kézzel ezt a könyvet, nyisd meg a Küldetéseket egy új kezdéshez, vagy lépj ki, és járd a saját pályádat.",
 };

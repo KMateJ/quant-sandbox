@@ -102,7 +102,7 @@ export const wacc: GuideLessonContent = {
     {
       kind: "check",
       id: "wacc/cost-of-equity",
-      prompt: "A kockázatmentes kamatláb 2%, a piaci kockázati prémium 5%, a vállalat saját tőkéjének bétája 1,2. Mekkora saját tőke költséget ad a CAPM?",
+      prompt: "A kockázatmentes kamatláb 2%, a piaci kockázati prémium 5%, a vállalat saját tőkéjének bétája 1,2. Mekkora lesz a saját tőke költsége a CAPM szerint?",
       answer: { type: "number", value: 8, tolerance: 0.05, unit: "%" },
       explain: "$r_E = r_f + \\beta_E\\,(\\mathbb{E}[R_m] - r_f) = 2\\% + 1{,}2 \\times 5\\% = 8\\%$. A béta a piaci kockázati prémiumot skálázza, nem a teljes piaci hozamot.",
     },
@@ -116,7 +116,7 @@ export const wacc: GuideLessonContent = {
     h("A súlyozott átlag"),
     p("A vállalatnak az eszközein összességében annyit kell keresnie, hogy mindkét csoportnak megadja az elvárt hozamot. Ha mindkét költséget a finanszírozásbeli arányával súlyozzuk, megkapjuk a **súlyozott átlagos tőkeköltséget** (WACC):"),
     eq("\\text{WACC} = \\frac{E}{V}\\,r_E + \\frac{D}{V}\\,r_D\\,(1 - t)."),
-    note("A WACC az a hozam, amelyet a vállalat eszközeinek adózás után el kell érniük ahhoz, hogy a részvényesek és a hitelezők is megkapják az elvárt hozamukat. Ez a diszkontráta a vállalattal azonos kockázatú projektekhez."),
+    note("A WACC az a hozam, amelyet a vállalat eszközeinek adózás után el kell érnie ahhoz, hogy a részvényesek és a hitelezők is megkapják az elvárt hozamukat. Ez a diszkontráta a vállalattal azonos kockázatú projektekhez."),
     p("Példa: $E = 600$ és $D = 400$, valamint $r_E = 12\\%$, $r_D = 6\\%$ és $t = 25\\%$."),
     {
       kind: "worked",

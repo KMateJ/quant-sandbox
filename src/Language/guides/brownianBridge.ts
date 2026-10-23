@@ -85,7 +85,7 @@ export const brownianBridge: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ez a lecke a mindkét végén rögzített Brown-mozgást vizsgálja: a **Brown-hidat**. A „A Brown-mozgás tulajdonságai” (a Gauss-jellemzés és a $\\min(s, t)$ kovariancia) és a „Feltételes várható érték és martingálok” (együttesen Gauss-eloszlású változók feltételezése) leckékre épít. A híd a megfelelő eszköz mindig, amikor a pálya értéke egy későbbi időpontban ismert: kitölti a szimulációt két megmintázott pont között, és megméri annak esélyét, hogy a pálya két rácspont között átlépett egy szintet — ez a „A tükrözési elv és az első elérési idők” leckében nyitva hagyott „rejtett átlépés”."),
+    p("Ez a lecke a mindkét végén rögzített Brown-mozgást vizsgálja: a **Brown-hidat**. „A Brown-mozgás tulajdonságai” (a Gauss-jellemzés és a $\\min(s, t)$ kovariancia) és a „Feltételes várható érték és martingálok” (együttesen Gauss-eloszlású változók kondicionálása) leckékre épít. A híd a megfelelő eszköz mindig, amikor a pálya értéke egy későbbi időpontban ismert: kitölti a szimulációt két megmintázott pont között, és megméri annak esélyét, hogy a pálya két rácspont között átlépett egy szintet — ez „A tükrözési elv és az első elérési idők” leckében nyitva hagyott „rejtett átlépés”."),
 
     h("Definíció és konstrukció"),
     p("Legyen $W$ standard Brown-mozgás. Egy $b$ célvégponthoz definiáljuk a $[0, 1]$-en értelmezett folyamatot"),
@@ -106,14 +106,14 @@ export const brownianBridge: GuideLessonContent = {
       explain: "$\\operatorname{Var}(B_t) = t(1 - t)$, így $t = 1/2$-ben $\\tfrac12 \\cdot \\tfrac12 = 1/4 = 0{,}25$, a parabola maximuma.",
     },
 
-    h("A híd mint feltételezett Brown-mozgás"),
-    p("A konstrukció nem véletlen: a híd pontosan a végpontjára **feltételezett** Brown-mozgás. A $(W_t, W_1)$ pár együttesen Gauss-eloszlású, $\\operatorname{Cov}(W_t, W_1) = t$ és $\\operatorname{Var}(W_1) = 1$. A Gauss-feltételezési formula adja"),
+    h("A híd mint kondicionált Brown-mozgás"),
+    p("A konstrukció nem véletlen: a híd pontosan a végpontjára **kondicionált** Brown-mozgás. A $(W_t, W_1)$ pár együttesen Gauss-eloszlású, $\\operatorname{Cov}(W_t, W_1) = t$ és $\\operatorname{Var}(W_1) = 1$. A Gauss-kondicionálási képlet szerint"),
     eq("\\mathbb{E}[W_t \\mid W_1 = b] = \\frac{\\operatorname{Cov}(W_t, W_1)}{\\operatorname{Var}(W_1)}\\,b = t\\,b, \\qquad \\operatorname{Var}(W_t \\mid W_1) = t - \\frac{t^2}{1} = t\\,(1 - t)."),
-    p("Ezek pontosan $B_t$ várható értéke és szórásnégyzete. A teljes kovariancia rövid számolása megerősíti, hogy az egész feltételezett folyamat, $(W_t \\mid W_1 = b)$, eloszlása megegyezik $B$-ével. Egy második tény teszi tisztává a felbontást: $B^0_t = W_t - t\\,W_1$ **független** $W_1$-től, mert együttesen Gauss-eloszlásúak és"),
+    p("Ezek pontosan $B_t$ várható értéke és szórásnégyzete. A teljes kovariancia rövid számolása megerősíti, hogy az egész kondicionált folyamat, $(W_t \\mid W_1 = b)$, eloszlása megegyezik $B$-ével. Egy második tény teszi teljessé a felbontást: $B^0_t = W_t - t\\,W_1$ **független** $W_1$-től, mert együttesen Gauss-eloszlásúak és"),
     eq("\\operatorname{Cov}(W_t - t\\,W_1,\\ W_1) = t - t \\cdot 1 = 0."),
     p("Így a Brown-mozgás két független részre bomlik — egy hídra, amely nem törődik a végponttal, és magára a végpontra:"),
     eq("W_t = B^0_t + t\\,W_1, \\qquad B^0 \\perp W_1."),
-    p("Egy finom rácson vett Brown-pálya szimulálásához tehát először meghúzható a végpont, $W_1 \\sim N(0, 1)$, majd a belső rész kitölthető egy független standard híddal. Ezt minden megmintázott időpontpár között megismételve kapjuk azt a rekurzív finomítást, amellyel egyre finomabb felbontású Brown-pályák állíthatók elő."),
+    p("Egy finom rácson vett Brown-pálya szimulálásához tehát először kisorsolható a végpont, $W_1 \\sim N(0, 1)$, majd a belső rész kitölthető egy független standard híddal. Ezt minden megmintázott időpontpár között megismételve kapjuk azt a rekurzív finomítást, amellyel egyre finomabb felbontású Brown-pályák állíthatók elő."),
     figure("brownian-bridge"),
 
     {
@@ -125,10 +125,10 @@ export const brownianBridge: GuideLessonContent = {
     },
 
     h("A rejtett átlépés valószínűsége"),
-    p("A tükrözési leckében láttuk, hogy a csak rácspontokban vett szimulált maximum nem veszi észre a pontok közötti átlépéseket. A híd pontosan megmondja, milyen gyakran fordul ez elő. Tegyük fel, hogy egy pályát egy $\\Delta$ hosszúságú intervallum végein figyelünk meg, $w_0$ és $w_1$ értékekkel. Ezekre feltételezve a közbenső pálya Brown-híd, és annak valószínűsége, hogy valahol belül felemelkedik egy $a \\ge \\max(w_0, w_1)$ szintre, a hídra alkalmazott tükrözési érveléssel"),
+    p("A tükrözési leckében láttuk, hogy a csak rácspontokban vett szimulált maximum nem veszi észre a pontok közötti átlépéseket. A híd pontosan megmondja, milyen gyakran fordul ez elő. Tegyük fel, hogy egy pályát egy $\\Delta$ hosszúságú intervallum végein figyelünk meg, $w_0$ és $w_1$ értékekkel. Ezekre kondicionálva a közbenső pálya Brown-híd, és annak valószínűsége, hogy valahol belül felemelkedik egy $a \\ge \\max(w_0, w_1)$ szintre, a hídra alkalmazott tükrözési érveléssel"),
     eq("\\mathbb{P}\\Big(\\max_{0 \\le t \\le \\Delta} X_t \\ge a \\ \\Big|\\ X_0 = w_0,\\ X_\\Delta = w_1\\Big) = \\exp\\!\\Big(-\\frac{2\\,(a - w_0)(a - w_1)}{\\Delta}\\Big)."),
     p("A $w_0 = w_1 = 0$ pontokban $[0, 1]$-en rögzített standard hídra ez $\\mathbb{P}(\\max B^0 \\ge a) = e^{-2a^2}$, ami sokkal gyorsabban cseng le, mint a feltétel nélküli $2(1 - \\Phi(a))$ farok, mert mindkét vég lefelé tartja a pályát. $a = 1$-nél az átlépés valószínűsége $e^{-2} \\approx 0{,}1353$."),
-    p("Ez a képlet a diszkréten figyelt korlátos (barrier) opciók **folytonossági (Broadie–Glasserman–Kou) korrekciójának** alapja: két megfigyelési időpont között az eszköz észrevétlenül átlépheti a korlátot, és minden intervallum túlélési valószínűségét $1 - e^{-2(a - w_0)(a - w_1)/\\Delta}$-val szorozva visszakapjuk a folytonosan figyelt árat egy durva rácsból. Egyúttal megadja a szimulált futó maximum lefelé torzítását is: a rácson éppen azok a kimaradt átlépések, amelyeket ez a valószínűség mér."),
+    p("Ez a képlet a diszkréten figyelt barrier opciók **folytonossági (Broadie–Glasserman–Kou) korrekciójának** alapja: két megfigyelési időpont között az eszköz észrevétlenül átlépheti a korlátot, és minden intervallum túlélési valószínűségét $1 - e^{-2(a - w_0)(a - w_1)/\\Delta}$-val szorozva visszakapjuk a folytonosan figyelt árat egy durva rácsból. Egyúttal megadja a szimulált futó maximum lefelé torzítását is: a rácson éppen azok a kimaradt átlépések, amelyeket ez a valószínűség mér."),
 
     {
       kind: "check",
@@ -141,9 +141,9 @@ export const brownianBridge: GuideLessonContent = {
     h("Hol jelenik meg a híd"),
     list(
       "**Pálya-szimuláció:** a $W_t = B^0_t + t\\,W_1$ felbontás kitölti a pályát ismert pontok között — ez a Brown-híd-mintavétel és a Monte Carlo varianciacsökkentés motorja.",
-      "**Korlátos opciók:** a rejtett átlépés képlete a diszkréten figyelt korlátokat a folytonos árukra korrigálja.",
+      "**Barrier opciók:** a rejtett átlépés képlete a diszkréten figyelt barrier opciók árát a folytonosan figyelt megfelelőjükre korrigálja.",
       "**Statisztika:** az empirikus eloszlásfüggvény, centrálva és skálázva, Brown-hídhoz konvergál; a Kolmogorov–Szmirnov-próba statisztikája a $|B^0|$ maximuma.",
-      "**Interpoláció:** egy Gauss-folyamat megfigyelt értékekre való feltételezése ugyanaz a művelet, amely a Gauss-folyamat-regresszió és a spline-simítás mögött áll.",
+      "**Interpoláció:** egy Gauss-folyamat megfigyelt értékekre való kondicionálása ugyanaz a művelet, amely a Gauss-folyamat-regresszió és a spline-simítás mögött áll.",
     ),
 
     {
@@ -160,7 +160,7 @@ export const brownianBridge: GuideLessonContent = {
     list(
       "A 0-tól $b$-ig futó Brown-híd $B_t = W_t - t\\,W_1 + t\\,b$, ahol $B_0 = 0$ és $B_1 = b$.",
       "Gauss-folyamat $t\\,b$ várható értékkel és $s(1 - t)$ kovarianciával ($s \\le t$); a $t(1 - t)$ szórásnégyzet a végeken nulla, a felezőpontban $1/4$.",
-      "A híd a $W_1 = b$-re feltételezett Brown-mozgás, és $B^0_t = W_t - t\\,W_1$ független $W_1$-től, ami a $W_t = B^0_t + t\\,W_1$ felbontást adja.",
+      "A híd a $W_1 = b$-re kondicionált Brown-mozgás, és $B^0_t = W_t - t\\,W_1$ független $W_1$-től, ami a $W_t = B^0_t + t\\,W_1$ felbontást adja.",
       "Egy $w_0, w_1$-re rögzített híd egy $\\Delta$ hosszúságú intervallumon $\\exp(-2(a - w_0)(a - w_1)/\\Delta)$ valószínűséggel lépi át az $a$ szintet; ez árazza és korrigálja a rácspontok közötti korlátátlépéseket.",
     ),
     lab("/brownian-motion", "Szimulálj rögzített végű pályákat, és figyeld, ahogy a szórás a végpontokban nullára esik a Brown-mozgás laborban"),

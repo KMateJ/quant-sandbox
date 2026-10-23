@@ -10,7 +10,7 @@ export const swapTimelineHu = {
   ixSwArrowAria: "{{leg}}, {{t}}. év: {{amount}}, jelenérték {{pv}}",
   ixSwYear: "{{t}}. év",
   ixSwYearShort: "{{t}} év",
-  ixSwHint: "Vigye az egeret egy kifizetésre, fókuszálja vagy koppintson rá, hogy lássa a diszkontálását.",
+  ixSwHint: "Vidd az egeret egy kifizetésre, fókuszáld vagy koppints rá, hogy lásd a diszkontálását.",
   ixSwAmount: "Összeg",
   ixSwDf: "Diszkontfaktor",
   ixSwPv: "Jelenérték",

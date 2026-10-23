@@ -71,7 +71,7 @@ export const lawOfLargeNumbersClt: GuideLessonContent = {
   ],
 
   hu: [
-    p("A kurzus szinte minden szimulációja átlagolással végződik. A Monte Carlo-ár diszkontált kifizetések átlaga, a mintabeli volatilitás négyzetes hozamok átlaga, és a „Véletlen bolyongás és Brown-mozgás” lecke Brown-mozgása is átskálázott érmefeldobás-összegek határértéke. Két tétel magyarázza, miért viselkednek olyan szépen az átlagok: a **nagy számok törvénye** szerint az átlag megnyugszik, a **centrális határeloszlás-tétel** pedig azt mondja meg, hogyan ingadozik az érték körül, amelyre megnyugszik. A lecke mindkettőt feltételeikkel együtt kimondja, az egyszerűbbet bizonyítja, egy ábrán pedig megmutatja, milyen gyorsan érvényesül a második. A „Hozamok és volatilitás” mintaátlagai és szórásnégyzetei az első átlagok, amelyekkel találkoztál."),
+    p("A kurzus szinte minden szimulációja átlagolással végződik. A Monte Carlo-ár diszkontált kifizetések átlaga, a mintabeli volatilitás négyzetes hozamok átlaga, és a „Véletlen bolyongás és Brown-mozgás” lecke Brown-mozgása is átskálázott érmefeldobás-összegek határértéke. Két tétel magyarázza, miért viselkednek olyan szépen az átlagok: a **nagy számok törvénye** szerint az átlag beáll egy értékre, a **centrális határeloszlás-tétel** pedig azt mondja meg, hogyan ingadozik ez az érték körül. A lecke mindkettőt feltételeikkel együtt kimondja, az egyszerűbbet bizonyítja, egy ábrán pedig megmutatja, milyen gyorsan érvényesül a második. A „Hozamok és volatilitás” mintaátlagai és szórásnégyzetei az első átlagok, amelyekkel találkoztál."),
 
     h("Független minták átlaga"),
     p("Legyenek $X_1, X_2, \\dots$ független, azonos eloszlású (i.i.d.) valószínűségi változók $\\mu$ várható értékkel és véges $\\sigma^2$ szórásnégyzettel. Az első $n$ **mintaátlaga** $\\bar X_n = (X_1 + \\cdots + X_n)/n$. A várható érték linearitása és az, hogy független változók szórásnégyzete összeadódik, két tényt ad, amelyre minden alább épül:"),
@@ -84,10 +84,10 @@ export const lawOfLargeNumbersClt: GuideLessonContent = {
     p("A Csebisev-korlát durva, de véges szórásnégyzeten kívül semmit sem igényel, és a csökkenő szórásnégyzet végzi el a munkát."),
 
     h("Az erős törvény"),
-    p("**Tétel (erős törvény).** Ha $E|X_i| < \\infty$, akkor $P(\\bar X_n \\to \\mu) = 1$. A „valószínűséggel 1”, vagy **majdnem biztosan**, azt jelenti, hogy azoknak a mintasorozatoknak a halmaza, amelyekre az átlagok nem nyugszanak meg, nulla valószínűségű. A gyenge törvény minden rögzített $n$-et külön kezel. Az erős törvény a futó átlagok teljes pályáját kezeli, ahogy $n$ nő, és egyetlen hosszú szimuláció erre támaszkodik. Véges szórásnégyzet sem kell hozzá, csak véges várható érték. Bizonyítás nélkül mondjuk ki."),
+    p("**Tétel (erős törvény).** Ha $E|X_i| < \\infty$, akkor $P(\\bar X_n \\to \\mu) = 1$. A „valószínűséggel 1”, vagy **majdnem biztosan**, azt jelenti, hogy azoknak a mintasorozatoknak a halmaza, amelyekre az átlagok nem állnak be, nulla valószínűségű. A gyenge törvény minden rögzített $n$-et külön kezel. Az erős törvény a futó átlagok teljes pályáját kezeli, ahogy $n$ nő, és egyetlen hosszú szimuláció erre támaszkodik. Véges szórásnégyzet sem kell hozzá, csak véges várható érték. Bizonyítás nélkül mondjuk ki."),
 
     h("A centrális határeloszlás-tétel"),
-    p("A törvények azt mondják meg, hová tart az átlag, azt nem, hogyan oszlik el e körül az érték körül. Az alak megismeréséhez standardizáljuk, hogy minden $n$-re 0 legyen a várható értéke és 1 a szórásnégyzete:"),
+    p("A törvények azt mondják meg, hová tart az átlag, azt nem, hogyan szóródik ez az érték körül. Az alak megismeréséhez standardizáljuk, hogy minden $n$-re 0 legyen a várható értéke és 1 a szórásnégyzete:"),
     eq("Z_n = \\frac{\\bar X_n - \\mu}{\\sigma/\\sqrt{n}} = \\frac{X_1 + \\cdots + X_n - n\\mu}{\\sigma\\sqrt{n}}."),
     p("**Tétel (centrális határeloszlás-tétel).** Ha az $X_i$ i.i.d. változók véges $\\mu$ várható értékkel és véges, pozitív $\\sigma^2$ szórásnégyzettel, akkor minden $z$-re"),
     eq("P(Z_n \\le z) \\to \\Phi(z) \\quad (n \\to \\infty),"),

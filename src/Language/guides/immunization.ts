@@ -94,15 +94,15 @@ export const immunization: GuideLessonContent = {
   ],
 
   hu: [
-    p("A „Duráció és konvexitás” című lecke azt mérte, mennyit mozdul egyetlen kötvény ára, ha megváltozik a hozama. Ez a lecke ebből a mérésből fedezést készít. Aki egy rögzített napon rögzített összeggel tartozik, olyan kötvényeket választhat, amelyek értéke együtt mozog a tartozás értékével, így a kamatlábak változása egyik oldalt sem sújtja jobban a másiknál. A jelölés ugyanaz, mint a „Kötvényárak és hozamok” című leckében: $F = 100$ névérték, éves szelvények, éves kamatozású hozamok, $D$ Macaulay-duráció és $C$ konvexitás. A hozamgörbe végig lapos, és párhuzamosan mozdul el."),
+    p("A „Duráció és konvexitás” című lecke azt mérte, mennyit mozdul egyetlen kötvény ára, ha megváltozik a hozama. Ez a lecke ebből a mérésből fedezést készít. Aki egy rögzített napon rögzített összeggel tartozik, olyan kötvényeket választhat, amelyek értéke együtt mozog a tartozás értékével, így a kamatlábak változása egyik oldalt sem sújtja jobban a másiknál. A jelölés ugyanaz, mint a „Kötvényárak és hozamok” című leckében: $F = 100$ névérték, éves kuponok, éves kamatozású hozamok, $D$ Macaulay-duráció és $C$ konvexitás. A hozamgörbe végig lapos, és párhuzamosan mozdul el."),
 
     h("Egy rögzített kötelezettség"),
     p("Egy nyugdíjpénztárnak pontosan 7 év múlva $L = 1\\,000\\,000$ összeget kell kifizetnie. Lapos, $y = 5\\%$-os hozam mellett ennek a **kötelezettségnek** a jelenértéke"),
     eq("PV_L = \\frac{L}{(1+y)^{7}} = \\frac{1\\,000\\,000}{1{,}05^{7}} \\approx 710\\,681."),
-    p("A kötelezettség egyetlen, szelvény nélküli kifizetés, így a durációja a lejárata, $D_L = 7$, a konvexitása pedig $C_L = 7 \\cdot 8/1{,}05^2 \\approx 50{,}79$. A pénztár ma pontosan $PV_L$ értékű kötvényt tart. A kötvények értéke és $PV_L$ különbsége a **többlet**; a cél az, hogy ez kamatmozgáskor se legyen negatív."),
+    p("A kötelezettség egyetlen, kupon nélküli kifizetés, így a durációja a lejárata, $D_L = 7$, a konvexitása pedig $C_L = 7 \\cdot 8/1{,}05^2 \\approx 50{,}79$. A pénztár ma pontosan $PV_L$ értékű kötvényt tart. A kötvények értéke és $PV_L$ különbsége a **többlet**; a cél az, hogy ez kamatmozgáskor se legyen negatív."),
 
     h("Árfolyamkockázat és újrabefektetési kockázat"),
-    p("A hozamok emelkedése két dolgot tesz egy $H$ évig tartott kötvényportfólióval. A kötvények piaci értéke azonnal csökken (**árfolyamkockázat**), viszont minden $H$ előtt kapott szelvényt a magasabb kamaton lehet újra befektetni (az **újrabefektetési kockázat** itt a tulajdonos javára dolgozik). A hozamok csökkenése fordított hatású. A ma $P(y)$ értékű portfólió értéke a $H$ időpontban $V_H = P(y)\\,(1+y)^{H}$, és ennek hozamérzékenysége"),
+    p("A hozamok emelkedése két dolgot tesz egy $H$ évig tartott kötvényportfólióval. A kötvények piaci értéke azonnal csökken (**árfolyamkockázat**), viszont minden $H$ előtt kapott kupont a magasabb kamaton lehet újra befektetni (az **újrabefektetési kockázat** itt a tulajdonos javára dolgozik). A hozamok csökkenése fordított hatású. A ma $P(y)$ értékű portfólió értéke a $H$ időpontban $V_H = P(y)\\,(1+y)^{H}$, és ennek hozamérzékenysége"),
     eq("\\frac{d \\ln V_H}{dy} = \\frac{P'(y)}{P(y)} + \\frac{H}{1+y} = \\frac{H - D}{1+y},"),
     p("ahol felhasználtuk az előző lecke $P'/P = -D/(1+y)$ összefüggését. Ha a tartási idő megegyezik a durációval, $H = D$, a két hatás elsőrendben kioltja egymást: egy kis párhuzamos eltolódás nem változtat a horizontbeli értéken."),
 
@@ -122,7 +122,7 @@ export const immunization: GuideLessonContent = {
     },
 
     h("Számpélda"),
-    p("Vegyünk egy kétéves és egy tizenkét éves, egyaránt 5%-os szelvényű kötvényt; $y = 5\\%$ mellett mindkettő névértéken forog. A durációk $D_S \\approx 1{,}952$ és $D_{Lg} \\approx 9{,}306$, így"),
+    p("Vegyünk egy kétéves és egy tizenkét éves, egyaránt 5%-os kuponú kötvényt; $y = 5\\%$ mellett mindkettő névértéken forog. A durációk $D_S \\approx 1{,}952$ és $D_{Lg} \\approx 9{,}306$, így"),
     eq("w = \\frac{9{,}306 - 7}{9{,}306 - 1{,}952} \\approx 0{,}3136."),
     p("A pénztár 222 888 értékben vesz a kétéves és 487 793 értékben a tizenkét éves kötvényből, összesen 710 681 értékben, és az eszközök durációja pontosan 7. Most toljuk el az összes hozamot ugyanannyival, és árazzunk újra mindent:"),
     list(
@@ -168,13 +168,13 @@ export const immunization: GuideLessonContent = {
     },
 
     h("Újrasúlyozás"),
-    p("Az immunizált pozíció magától nem marad immunizált. Ha a hozamok nem változnak, minden duráció évente egy évvel rövidül, és az illesztés megmarad. Ha viszont a hozamok elmozdulnak, a két kötvény durációja eltérő mértékben változik, a kötelezettségé pedig nem: 1%-os emelkedés után az eszközök durációja 6,796, 1%-os csökkenés után 7,205, miközben $D_L = 7$ mindkét esetben. A pénztárnak újra ki kell számolnia $w$-t, és vissza kell kereskednie a célhoz; a gyakorlatban ezt időszakonként teszi, nem folyamatosan."),
+    p("Az immunizált pozíció magától nem marad immunizált. Ha a hozamok nem változnak, minden duráció évente egy évvel rövidül, és az illesztés megmarad. Ha viszont a hozamok elmozdulnak, a két kötvény durációja eltérő mértékben változik, a kötelezettségé pedig nem: 1%-os emelkedés után az eszközök durációja 6,796, 1%-os csökkenés után 7,205, miközben $D_L = 7$ mindkét esetben. A pénztárnak újra ki kell számolnia $w$-t, és kereskedéssel vissza kell állítania a célsúlyt; a gyakorlatban ezt időszakonként teszi, nem folyamatosan."),
     p("Az ábrán a portfólió a kezdetben rögzített névértékeket tartja. Húzd a sokk jelölőjét a sávon, vagy használd a nyílbillentyűket, és told el az összes hozamot legfeljebb 300 bázisponttal bármelyik irányba. A két sáv az eszközök és a kötelezettség jelenértékét mutatja, a kijelzők a többletet és a két durációt. Alatta a kis grafikon a többletet ábrázolja a sokk függvényében; a már bejárt szakaszok kiemelve látszanak. Durációillesztett portfóliónál a görbe lapos U alakú, és sosem megy nulla alá. Válts a „Csak a rövid kötvény” vagy a „Csak a hosszú kötvény” beállításra, és ugyanaz a húzás az egyik oldalon hiányt nyit."),
     figure("immunization-shock"),
 
     h("Összefoglalás"),
     list(
-      "Egy rögzített kötelezettség szelvény nélküli kifizetés: a durációja a lejárata.",
+      "Egy rögzített kötelezettség kupon nélküli kifizetés: a durációja a lejárata.",
       "A durációval egyenlő horizonton az árfolyamkockázat és az újrabefektetési kockázat elsőrendben kioltja egymást.",
       "Az immunizáció a jelenértéket és a durációt illeszti; két kötvénnyel a súly a $w\\,D_S + (1-w)\\,D_{Lg} = D_L$ egyenletből adódik.",
       "Ha az eszközök konvexitása legalább akkora, mint a kötelezettségé, a kis párhuzamos eltolódások nemnegatív többletet hagynak; a nem párhuzamos mozgások ellen nem véd.",

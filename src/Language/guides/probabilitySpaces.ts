@@ -112,7 +112,7 @@ export const probabilitySpaces: GuideLessonContent = {
   ],
 
   hu: [
-    p("A „Véletlen bolyongás és Brown-mozgás” című lecke szabadon használta a valószínűség, a várható érték és a függetlenség fogalmát. A következő folytonos idejű modellekben ezeknek a szavaknak pontos jelentés kell, mert információról, egész pályától függő eseményekről és az ismert adatokra vett feltételes átlagokról lesz szó. Ez a lecke felépíti a mértékelméleti keretet: az eseményteret, a σ-algebrákat, a valószínűségi mértékeket és a valószínűségi változókat. Végig egy szabályos dobókocka lesz a példa, az utolsó szakasz pedig előre bemutatja a feltételes várható értéket, amely a második következő lecke témája."),
+    p("A „Véletlen bolyongás és Brown-mozgás” című lecke szabadon használta a valószínűség, a várható érték és a függetlenség fogalmát. A következő folytonos idejű modellekben ezeknek a szavaknak pontos jelentés kell, mert információról, egész pályától függő eseményekről és az ismert adatokra vett feltételes átlagokról lesz szó. Ez a lecke felépíti a mértékelméleti keretet: az eseményteret, a σ-algebrákat, a valószínűségi mértékeket és a valószínűségi változókat. Végig egy szabályos dobókocka lesz a példa, az utolsó szakasz pedig előre bemutatja a feltételes várható értéket, amely két leckével később lesz a téma."),
 
     h("Eseménytér és események"),
     p("Egy véletlen kísérletet egy $\\Omega$ halmazzal, az **eseménytérrel** modellezünk, amelynek $\\omega \\in \\Omega$ elemei a lehetséges kimenetelek. Egy kockadobásnál $\\Omega = \\{1, 2, 3, 4, 5, 6\\}$. Az előző lecke $n$ dobásos pénzfeldobásos bolyongásánál $\\Omega = \\{H, T\\}^n$ (fej, írás), és egy $\\omega$ egy teljes dobássorozat. A Brown-mozgásnál egy $\\omega$ egy teljes folytonos pálya."),
@@ -122,7 +122,7 @@ export const probabilitySpaces: GuideLessonContent = {
     p("Nem rendelünk valószínűséget $\\Omega$ minden részhalmazához. Ehelyett rögzítünk részhalmazoknak egy $\\mathcal{F}$ rendszerét, azokat az eseményeket, amelyekre rákérdezhetünk, és megköveteljük, hogy zárt legyen a logikai műveletekre. Az $\\Omega$ részhalmazainak egy $\\mathcal{F}$ rendszere **σ-algebra**, ha"),
     eq("\\text{(i) } \\Omega \\in \\mathcal{F}, \\qquad \\text{(ii) } A \\in \\mathcal{F} \\Rightarrow A^c \\in \\mathcal{F}, \\qquad \\text{(iii) } A_1, A_2, \\ldots \\in \\mathcal{F} \\Rightarrow \\bigcup_{n=1}^{\\infty} A_n \\in \\mathcal{F}."),
     p("Két következmény azonnal adódik. (i)-ből és (ii)-ből $\\emptyset = \\Omega^c \\in \\mathcal{F}$. (ii)-ből, (iii)-ból és a $\\bigcap_n A_n = \\big(\\bigcup_n A_n^c\\big)^c$ De Morgan-azonosságból események megszámlálható metszete is esemény. A „σ” a (iii)-beli megszámlálható uniókra utal; ezekre végtelen sok időpontot érintő állításokhoz van szükség, például „a bolyongás valamikor 10 fölé megy”, ami a $\\bigcup_{n} \\{W_n > 10\\}$ esemény."),
-    p("A kockán három σ-algebra fog visszatérni:"),
+    p("A kockán három σ-algebra tér majd vissza:"),
     list(
       "a triviális $\\{\\emptyset, \\Omega\\}$ σ-algebra, amely semmit nem árul el a dobásról;",
       "a paritás-σ-algebra, $\\{\\emptyset, \\{1,3,5\\}, \\{2,4,6\\}, \\Omega\\}$, amely meg tudja különböztetni a páratlant a párostól, de semmi mást;",

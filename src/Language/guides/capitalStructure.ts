@@ -118,7 +118,7 @@ export const capitalStructure: GuideLessonContent = {
     h("A vállalat értéke adók nélkül"),
     p("Legyen $V_U$ a tőkeáttétel nélküli vállalat értéke, $V_L$ pedig ugyanannak a vállalatnak az értéke hitellel. A **Modigliani–Miller I. tétel** szerint adók nélkül"),
     eq("V_L = V_U."),
-    p("Az érvelés arbitrázsmentességi érv. Aki a tőkeáttételes vállalat teljes hitelét és teljes saját tőkéjét birtokolja, pontosan a vállalat működési pénzáramait kapja, amelyek hitellel és hitel nélkül is ugyanazok. Két, ugyanazokra a pénzáramokra szóló követelésnek ugyanannyinak kell lennie az árának. Az a részvényes, aki nagyobb tőkeáttételt szeretne, maga is felvehet hitelt, és vehet belőle több részvényt („házi tőkeáttétel”), így a vállalat nem teremthet értéket azzal, hogy helyette vesz fel hitelt."),
+    p("Az érvelés arbitrázsmentességi érv. Aki a tőkeáttételes vállalat teljes hitelét és teljes saját tőkéjét birtokolja, pontosan a vállalat működési pénzáramait kapja, amelyek hitellel és hitel nélkül is ugyanazok. Két, ugyanazokra a pénzáramokra szóló követelés árának meg kell egyeznie. Az a részvényes, aki nagyobb tőkeáttételt szeretne, maga is felvehet hitelt, és vehet belőle több részvényt („házi tőkeáttétel”), így a vállalat nem teremthet értéket azzal, hogy helyette vesz fel hitelt."),
     p("Jó kép erre egy pizza: attól, hogy több vagy kevesebb szeletre vágjuk, nem lesz több vagy kevesebb pizza."),
 
     h("A saját tőke költsége nő a tőkeáttétellel"),
@@ -179,7 +179,7 @@ export const capitalStructure: GuideLessonContent = {
         ],
         correct: 1,
       },
-      explain: "A képlet nem számol a pénzügyi nehézségek költségeivel. Nagy tőkeáttételnél ezek a költségek (drágább hitel, elvesztett vevők, csődköltségek) gyorsabban nőnek, mint az adópajzs, ezért a kompromisszumos elmélet szerint a legjobb eladósodottság mérsékelt.",
+      explain: "A képlet nem számol a pénzügyi nehézségek költségeivel. Nagy tőkeáttételnél ezek a költségek (drágább hitel, elvesztett vevők, csődköltségek) gyorsabban nőnek, mint az adópajzs, ezért az átváltási elmélet szerint a legjobb eladósodottság mérsékelt.",
     },
 
     h("Összefoglalás"),

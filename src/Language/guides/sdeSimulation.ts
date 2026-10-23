@@ -91,14 +91,14 @@ export const sdeSimulation: GuideLessonContent = {
     {
       kind: "check",
       id: "sde-simulation/euler-step",
-      prompt: "Egy Euler-lépés geometriai Brown-mozgásra: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0{,}25$, a húzás $Z = -0{,}5$. Mennyi $S_1$?",
+      prompt: "Egy Euler-lépés geometriai Brown-mozgásra: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 40\\%$, $\\Delta t = 0{,}25$, a sorsolt érték $Z = -0{,}5$. Mennyi $S_1$?",
       answer: { type: "number", value: 92, tolerance: 0.01 },
       explain: "$\\Delta W = \\sqrt{0{,}25} \\cdot (-0{,}5) = -0{,}25$, így $S_1 = 100\\,(1 + 0{,}08 \\cdot 0{,}25 + 0{,}4 \\cdot (-0{,}25)) = 100 \\cdot 0{,}92 = 92$.",
     },
     h("Erős és gyenge hiba"),
     p("Egy szimulációs sémát kétféleképpen ítélhetünk meg, attól függően, mire használjuk."),
     list(
-      "Az **erős hiba** $\\mathbb{E}\\big[\\,|X_T - \\hat X_T|\\,\\big]$ a szimulált $\\hat X$ pályát ugyanazon Brown-mozgás által hajtott valódi pályával veti össze. Akkor számít, ha maga a pálya számít, például ha mentén fedezünk.",
+      "Az **erős hiba** $\\mathbb{E}\\big[\\,|X_T - \\hat X_T|\\,\\big]$ a szimulált $\\hat X$ pályát ugyanazon Brown-mozgás által hajtott valódi pályával veti össze. Akkor számít, ha maga a pálya számít, például ha a pálya mentén fedezünk.",
       "A **gyenge hiba** $\\big|\\,\\mathbb{E}[f(X_T)] - \\mathbb{E}[f(\\hat X_T)]\\,\\big|$ csak átlagokat hasonlít össze. Ez számít a Monte Carlo-árazásnál, amelynek $X_T$ eloszlására van szüksége, nem az egyes pályákra.",
     ),
     note("Sima együtthatók esetén az Euler–Maruyama-séma erős rendje $\\tfrac12$, gyenge rendje 1: az erős hiba $\\sqrt{\\Delta t}$-vel, a gyenge hiba $\\Delta t$-vel arányosan csökken. Négyszer annyi lépés felezi az erős hibát, a gyenge hibát viszont negyedére csökkenti."),
@@ -122,12 +122,12 @@ export const sdeSimulation: GuideLessonContent = {
       explain: "Az erős rend $\\tfrac12$: a hiba $\\sqrt{\\Delta t}$ szerint skálázódik. Tizenhatszor több lépés $\\sqrt{16} = 4$-szeresére csökkenti. Az elsőrendű gyenge hiba nagyjából a tizenhatodára esne.",
     },
     h("Ugyanaz a pálya finomabb rácson"),
-    p("Az erős hiba csak úgy látható, ha a szimulációt az ugyanazzal a véletlennel hajtott pontos pályával vetjük össze. Az ábra egy Brown-pályát rajzol egy 256 lépéses finom rácson egy évre, $S_0 = 100$, $\\mu = 8\\%$ és $\\sigma = 40\\%$ mellett; a nagy volatilitás teszi láthatóvá a hibát. A pontos megoldás ebből a pályából adódik, az Euler-közelítés pedig ugyanezt a pályát használja egy durvább rácson: minden durva növekmény az általa lefedett finom növekmények összege."),
-    p("Válasszunk $n = 4$, $16$, $64$ vagy $256$ lépést, és figyeljük, ahogy az Euler-pálya rásimul a pontosra; az „Új pálya” másik Brown-pályát sorsol. Vigyük az egeret a grafikon fölé, vagy fókuszáljunk rá és használjuk a nyílbillentyűket, hogy egy rácsidőpontban összevessük a két értéket. Alatta az 500 pálya átlagaként mért erős hiba látható $T$-ben, $\\Delta t$ függvényében, log–log tengelyeken, egy $\\tfrac12$ meredekségű referenciavonal mellett. A hiba $n = 4$ esetén nagyjából $4{,}82$, majd $2{,}34$, $1{,}23$ és $n = 256$-nál $0{,}63$: minden négyszeres finomítással nagyjából feleződik, ahogy a $\\tfrac12$-es rend előre jelzi. Az első pályán $n = 16$ mellett a végső érték pontosan $177{,}23$, Euler-sémával $183{,}44$."),
+    p("Az erős hiba csak úgy látható, ha a szimulációt ugyanazzal a véletlennel hajtott pontos pályával vetjük össze. Az ábra egy Brown-pályát rajzol egy 256 lépéses finom rácson egy évre, $S_0 = 100$, $\\mu = 8\\%$ és $\\sigma = 40\\%$ mellett; a nagy volatilitás teszi láthatóvá a hibát. A pontos megoldás ebből a pályából adódik, az Euler-közelítés pedig ugyanezt a pályát használja egy durvább rácson: minden durva növekmény az általa lefedett finom növekmények összege."),
+    p("Válassz $n = 4$, $16$, $64$ vagy $256$ lépést, és figyeld, ahogy az Euler-pálya rásimul a pontosra; az „Új pálya” másik Brown-pályát sorsol. Vidd az egeret a grafikon fölé, vagy fókuszálj rá, és használd a nyílbillentyűket, hogy egy rácsidőpontban összevesd a két értéket. Alatta az 500 pálya átlagaként mért erős hiba látható $T$-ben, $\\Delta t$ függvényében, log–log tengelyeken, egy $\\tfrac12$ meredekségű referenciavonal mellett. A hiba $n = 4$ esetén nagyjából $4{,}82$, majd $2{,}34$, $1{,}23$ és $n = 256$-nál $0{,}63$: minden négyszeres finomítással nagyjából feleződik, ahogy a $\\tfrac12$-es rend előre jelzi. Az első pályán $n = 16$ mellett a végső érték pontosan $177{,}23$, Euler-sémával $183{,}44$."),
     figure("euler-convergence"),
 
     h("A logaritmus szimulálása"),
-    p("A geometriai Brown-mozgásnál van jobb megoldás annál, mint magát $S$-et diszkretizálni. „Az Itô-lemma” szerint $\\ln S_t$ dinamikája"),
+    p("A geometriai Brown-mozgásnál van jobb megoldás annál, mint magát $S$-t diszkretizálni. „Az Itô-lemma” szerint $\\ln S_t$ dinamikája"),
     eq("d(\\ln S_t) = \\big(\\mu - \\tfrac12\\sigma^2\\big)\\,dt + \\sigma\\,dW_t,"),
     p("amelynek együtthatói állandók. A $\\ln S$-re alkalmazott Euler-lépések ezért tetszőleges $\\Delta t$ mellett pontosak, és az árak automatikusan pozitívak maradnak. Az $S$-re alkalmazott Euler-séma akár negatív árat is adhat, ha $1 + \\mu\\,\\Delta t + \\sigma\\,\\Delta W$ nulla alá esik. Bevett fogás, hogy egy modellt a diszkretizálás előtt egyszerűbb együtthatójú változókra írunk át; ha ilyen átalakítás nincs, mint sok átlaghoz visszahúzó vagy sztochasztikus volatilitású modellnél, a kis lépésekre és a fenti hibarendekre támaszkodhatunk."),
 
@@ -138,7 +138,7 @@ export const sdeSimulation: GuideLessonContent = {
       "A durva és a finom rács csak ugyanazon a Brown-pályán hasonlítható össze: a durva növekmények a finomak összegei.",
       "Ha egy átalakítás állandó együtthatókat ad, ahogy $\\ln S$ a geometriai Brown-mozgásnál, azt a változót szimuláljuk: a lépések pontossá válnak.",
     ),
-    note("Egy későbbi lecke, az „Átlaghoz való visszahúzás: Ornstein–Uhlenbeck és Vasicek”, egy olyan folyamatot vizsgál, amelynek driftje egy hosszú távú szint felé húzza vissza, és pontosan ilyen lépésekkel szimulálja."),
-    lab("/gbm", "Szimuláljunk geometriai Brown-mozgás pályákat a GBM laborban"),
+    note("Egy későbbi lecke, az „Átlaghoz visszahúzó folyamatok: Ornstein–Uhlenbeck és Vasicek”, egy olyan folyamatot vizsgál, amelynek driftje egy hosszú távú szint felé húzza vissza, és pontosan ilyen lépésekkel szimulálja."),
+    lab("/gbm", "Szimulálj geometriai Brown-mozgás-pályákat a GBM laborban"),
   ],
 };

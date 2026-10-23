@@ -94,29 +94,29 @@ export const greeks: GuideLessonContent = {
     p("A „Delta és fedezés” lecke azt mérte, hogyan reagál az opció értéke a részvényárra, és megmutatta, hogy a delta-fedezés után a gamma által meghatározott maradék hiba marad. A részvényár azonban nem az egyetlen bemenet, amely mozog. Telik az idő, változik a volatilitás és a kamatláb. Ez a lecke minden bemenethez definiál egy érzékenységet, ezek a **görögök**, és megmutatja, hogy kettőt közülük, a gammát és a thétát, összeköt az a követelmény, hogy a fedezett pozíció a kockázatmentes kamatot hozza."),
 
     h("Az opció értéke mint a bemenetek függvénye"),
-    p("Jelölje $V(S, t, \\sigma, r)$ egy opció (egy $K$ kötési árú, $T$ lejárati időpontú vételi vagy eladási opció) értékét, ha a részvényár $S$, az aktuális időpont $t$, a volatilitás $\\sigma$ és a kockázatmentes kamatláb $r$. Az előző lecke, „A Black–Scholes-képlet”, zárt alakban adta meg $V$-t európai vételi és eladási opcióra. Ez a lecke azt vizsgálja, hogyan reagál ez az érték, ha az egyes bemenetek elmozdulnak; ezt mérik a parciális deriváltjai. A leckében szereplő számokat ezzel a képlettel számoltuk."),
+    p("Jelölje $V(S, t, \\sigma, r)$ egy opció (egy $K$ kötési árú, $T$ lejárati időpontú call vagy put) értékét, ha a részvényár $S$, az aktuális időpont $t$, a volatilitás $\\sigma$ és a kockázatmentes kamatláb $r$. Az előző lecke, „A Black–Scholes-képlet”, zárt alakban adta meg $V$-t európai callra és putra. Ez a lecke azt vizsgálja, hogyan reagál ez az érték, ha az egyes bemenetek elmozdulnak; ezt mérik a parciális deriváltjai. A leckében szereplő számokat ezzel a képlettel számoltuk."),
     p("Minden görög $V$ parciális deriváltja egy bemenet szerint, a többit rögzítve:"),
     eq("\\Delta = \\frac{\\partial V}{\\partial S}, \\quad \\Gamma = \\frac{\\partial^2 V}{\\partial S^2}, \\quad \\Theta = \\frac{\\partial V}{\\partial t}, \\quad \\mathcal{V} = \\frac{\\partial V}{\\partial \\sigma}, \\quad \\rho = \\frac{\\partial V}{\\partial r}."),
     p("A vega nem görög betű; a jele itt $\\mathcal{V}$. A théta a $t$ naptári idő előrehaladásával járó változás, vagyis miközben a lejáratig hátralévő $T - t$ idő csökken."),
 
     h("Delta és gamma"),
-    p("A delta a „Delta és fedezés” leckéből ismert: az $S \\mapsto V$ értékgörbe meredeksége, az a részvényszám, amely lokálisan replikálja az opciót. Mértékegység nélküli (részvény per opció); vételi opcióra $0 \\le \\Delta \\le 1$, eladásira $-1 \\le \\Delta \\le 0$."),
+    p("A delta a „Delta és fedezés” leckéből ismert: az $S \\mapsto V$ értékgörbe meredeksége, az a részvényszám, amely lokálisan replikálja az opciót. Mértékegység nélküli (részvény per opció); callra $0 \\le \\Delta \\le 1$, putra $-1 \\le \\Delta \\le 0$."),
     p("A gamma ugyanennek a görbének a görbülete, vagyis az, hogy milyen gyorsan változik a delta, ha $S$ elmozdul. Mértékegysége az áregység reciproka: $\\Gamma = 0{,}02$ azt jelenti, hogy $S$ minden egységnyi emelkedésére a delta kb. 0,02-dal nő. Vett callnál és putnál $\\Gamma > 0$. A put–call paritásból, $C - P = S - Ke^{-r(T-t)}$, látszik, hogy az azonos kötési árú call és put gammája megegyezik, hiszen a jobb oldal $S$-ben lineáris."),
     p("A gamma a kötési ár közelében a legnagyobb, és a lejárat közeledtével nő. Lejárat előtt az értékgörbe egyre jobban megközelíti az $(S - K)^+$ megtört kifizetést, amely $K$ egyik oldalán vízszintes, a másikon 1 meredekségű. A meredekség teljes változása ekkor egy szűk sávban történik $K$ körül, ezért ott a görbület nagy, $K$-tól távol pedig nullához tart."),
 
     h("Vega"),
     p("A vega azt méri, mennyit változik az érték, ha a volatilitás változik. Mivel $\\sigma$ egy 0,25-höz hasonló szám, $\\sigma$ 1-gyel való változása óriási; a vegát ezért általában százalékpontra vetítve adják meg: $\\mathcal{V}/100$ az értékváltozás, ha $\\sigma$ 25%-ról 26%-ra nő."),
-    p("Vételi és eladási opcióra egyaránt $\\mathcal{V} > 0$: az opció tulajdonosa **a volatilitás emelkedésén nyer**. Ennek oka a kifizetés alakja. Nagyobb volatilitás mellett $S_T$ lehetséges értékei mindkét irányban jobban szóródnak. Callnál a nagyobb felfelé mozgás korlátlanul növeli a kifizetést, a nagyobb lefelé mozgás viszont semmibe sem kerül, ha már $S_T < K$, mert a kifizetés alulról 0-nál korlátos. A konvex kifizetés átlagosan nyer a nagyobb szóródáson. A put–call paritás szerint a call és a put vegája megegyezik, mert $S - Ke^{-r(T-t)}$ nem függ $\\sigma$-tól."),
+    p("Callra és putra egyaránt $\\mathcal{V} > 0$: az opció tulajdonosa **a volatilitás emelkedésén nyer**. Ennek oka a kifizetés alakja. Nagyobb volatilitás mellett $S_T$ lehetséges értékei mindkét irányban jobban szóródnak. Callnál a nagyobb felfelé mozgás korlátlanul növeli a kifizetést, a nagyobb lefelé mozgás viszont semmibe sem kerül, ha már $S_T < K$, mert a kifizetés alulról 0-nál korlátos. A konvex kifizetés átlagosan nyer a nagyobb szóródáson. A put–call paritás szerint a call és a put vegája megegyezik, mert $S - Ke^{-r(T-t)}$ nem függ $\\sigma$-tól."),
 
     h("Théta és rhó"),
-    p("A théta az értékváltozás egységnyi naptári idő alatt, minden mást rögzítve. Évre vetítve adják meg; 365-tel osztva a napi változást kapjuk. Vett callnál $\\Theta < 0$: a lejárat közeledtével kevesebb idő marad arra, hogy a részvény a tulajdonos javára mozduljon, és az érték a kifizetés felé kopik. Ez az **időbeli értékvesztés**. Mélyen pénzen belüli put thétája pozitív is lehet, mert a várakozással a kötési ár megkapása közelebb kerül, és diszkontált értéke nő."),
+    p("A théta az értékváltozás egységnyi naptári idő alatt, minden mást rögzítve. Évre vetítve adják meg; 365-tel osztva a napi változást kapjuk. Vett callnál $\\Theta < 0$: a lejárat közeledtével kevesebb idő marad arra, hogy a részvény a tulajdonos javára mozduljon, és az érték a kifizetés felé kopik. Ez az **időbeli értékvesztés**. Mélyen pénzben lévő put thétája pozitív is lehet, mert a várakozással a kötési ár megkapása közelebb kerül, és diszkontált értéke nő."),
     p("A rhó az értékváltozás, ha $r$ változik; a vegához hasonlóan százalékpontra vetítve adják meg. Callnál $\\rho > 0$: a tulajdonos csak lejáratkor fizeti ki $K$-t, és magasabb kamat mellett ennek $Ke^{-r(T-t)}$ jelenértéke kisebb. Ugyanezért a put rhója negatív. Rövid lejáratú részvényopcióknál a rhó általában a legkevésbé fontos görög."),
     {
       kind: "check",
       id: "greeks/theta-sign",
-      prompt: "Egy at-the-money európai call van nálad. Ha semmi más nem változik, mi történik az értékével egy nap alatt?",
+      prompt: "Egy pénznél lévő (at-the-money) európai call van nálad. Ha semmi más nem változik, mi történik az értékével egy nap alatt?",
       answer: { type: "choice", options: ["Csökken: a théta negatív", "Nő: a théta pozitív", "Változatlan: a théta nulla", "A gamma előjelétől függ"], correct: 0 },
-      explain: "A hosszú call a lejárat közeledtével elveszíti időértékét, így $\\Theta < 0$. A pénznél a leggyorsabb az értékvesztés, mert ott van az érték a legmesszebb a kifizetés fölött.",
+      explain: "A long call a lejárat közeledtével elveszíti időértékét, így $\\Theta < 0$. A pénznél a leggyorsabb az értékvesztés, mert ott van az érték a legmesszebb a kifizetés fölött.",
     },
 
     h("Az opció értékének Taylor-sora"),
@@ -135,7 +135,7 @@ export const greeks: GuideLessonContent = {
     note("Delta-fedezett opcióra $\\Theta + \\tfrac{1}{2}\\sigma^2 S^2 \\Gamma + rS\\Delta - rV = 0$. A pozitív gammát negatív thétával fizetjük meg; a fedezés akkor nullszaldós, ha a részvény kb. $\\sigma S\\sqrt{dt}$-vel mozdul el."),
 
     h("Számpélda"),
-    p("Vegyünk egy vételi opciót, ahol $S = 100$, $K = 100$, $T - t = 0{,}5$ év, $r = 5\\%$ és $\\sigma = 25\\%$. A Black–Scholes-képlet szerint az érték $V \\approx 8{,}26$, továbbá"),
+    p("Vegyünk egy callt, ahol $S = 100$, $K = 100$, $T - t = 0{,}5$ év, $r = 5\\%$ és $\\sigma = 25\\%$. A Black–Scholes-képlet szerint az érték $V \\approx 8{,}26$, továbbá"),
     list(
       "$\\Delta \\approx 0{,}591$ és $\\Gamma \\approx 0{,}0220$;",
       "$\\mathcal{V} \\approx 27{,}47$, azaz $\\sigma$ minden százalékpontjára 0,275;",
@@ -153,7 +153,7 @@ export const greeks: GuideLessonContent = {
     },
     {
       kind: "worked",
-      title: "Egyszerre egy görög betű, a pontos újraárazással összevetve",
+      title: "Egyszerre csak egy görög, a pontos újraárazással összevetve",
       steps: [
         { text: "Ugyanez a call, értéke 8,26. Csak a volatilitás nő 25%-ról 26%-ra; a vega ezt jósolja:", tex: "\\mathcal{V}\\,d\\sigma = 27{,}47 \\cdot 0{,}01", result: { value: 0.2747, tolerance: 0.0005 } },
         { text: "$\\sigma = 26\\%$-on újraárazva szinte ugyanennyi a változás, mert a pénznél az ár $\\sigma$-ban közel lineáris:", tex: "V(26\\%) - V(25\\%)", result: { value: 0.2748, tolerance: 0.0005 } },

@@ -114,7 +114,7 @@ export const dcfValuation: GuideLessonContent = {
     {
       kind: "check",
       id: "dcf-valuation/growth-limit",
-      prompt: "Egy táblázatos DCF óriási vagy negatív maradványértéket ad. Az elemző az örökös növekedési ütemet, $g$-t, a WACC-vel egyenlőre vagy annál nagyobbra állította. Mit jelent ez?",
+      prompt: "Egy táblázatkezelőben épített DCF-modell óriási vagy negatív maradványértéket ad. Az elemző az örökös növekedési ütemet, $g$-t, a WACC-vel egyenlőre vagy annál nagyobbra állította. Mit jelent ez?",
       answer: {
         type: "choice",
         options: [
@@ -150,7 +150,7 @@ export const dcfValuation: GuideLessonContent = {
     note("A DCF-érték nagy része általában a maradványértékben van. A példában ez az összes $102{,}51/142{,}86 \\approx 71{,}8\\%$-a, így a $g$-re és a WACC-re vonatkozó hosszú távú feltevések többet számítanak a részletes előrejelzésnél."),
 
     h("Érzékenység a feltevésekre"),
-    p("Mivel $W - g$ a nevezőben áll, bármelyikük kis változása nagy hatással jár. Ha $g$ 2%-ról 4%-ra nő, az érték 142,86-ról $10/0{,}05 = 200$-ra emelkedik; ha a WACC 9%-ról 8%-ra csökken, $10/0{,}06 \\approx 166{,}67$-re. Az öt előrejelzett év jelenértéke egyik esetben is alig mozdul. A DCF-értékelést ezért mindig $g$- és WACC-értékek tartományával kell közölni, nem egyetlen számként."),
+    p("Mivel $W - g$ a nevezőben áll, bármelyikük kis változása nagy hatással jár. Ha $g$ 2%-ról 4%-ra nő, az érték 142,86-ról $10/0{,}05 = 200$-ra emelkedik; ha a WACC 9%-ról 8%-ra csökken, $10/0{,}06 \\approx 166{,}67$-re. Az öt előrejelzett év jelenértéke egyik esetben sem mozdul lényegesen. A DCF-értékelést ezért mindig $g$- és WACC-értékek tartományával kell közölni, nem egyetlen számként."),
     p("Az ábra ezt a felbontást mutatja. A $g$ függvényében ábrázolja az 1–5. év jelenértékét, a maradványérték jelenértékét és a kettő összegét egy $\\text{FCF}_1 = 10$ pénzáramú, ötéves előrejelzésű vállalatra. A csúszkák a WACC-t és $g$-t állítják; a kijelzők a választott $g$ mellett adják meg a teljes értéket, a maradványérték részarányát és az előrejelzési évek jelenértékét; $g$ legfeljebb 5%-ig, és legfeljebb egy százalékponttal a WACC alá emelhető. Az alapbeállítások (WACC 9%, $g = 2\\%$) a példát adják vissza: 142,86, ebből kb. 71,8% a maradványérték. Növeld $g$-t, és figyeld, hogy a maradványérték meredeken nő, miközben az előrejelzési rész szinte vízszintes marad; a WACC-t csökkentve mindkettő nő."),
     figure("dcf-terminal"),
 

@@ -123,7 +123,7 @@ export const feynmanKac: GuideLessonContent = {
     p("ahol $W$ Brown-mozgás, a $\\mu, \\sigma : \\mathbb{R} \\to \\mathbb{R}$ együtthatók pedig Lipschitz-folytonosak. Ekkor az egyenletnek minden kezdőpontból egyértelmű megoldása van, és $X$ Markov-folyamat: $X_t$ ismeretében $X$ jövője nem függ a korábbi pályától. Jelölje $\\mathbb{E}_{t,x}[\\,\\cdot\\,] = \\mathbb{E}[\\,\\cdot \\mid X_t = x]$."),
     p("$X$ **generátora** az az operátor, amely megadja $f(X)$ várható változási ütemét egy pontban. Kétszer folytonosan differenciálható, kompakt tartójú $f$-re"),
     eq("\\mathcal{L}f(x) = \\lim_{h \\downarrow 0} \\frac{\\mathbb{E}_{0,x}[f(X_h)] - f(x)}{h}."),
-    p("Az Itô-lemma kiszámítja. A $df(X_s)$ differenciált a $[0, h]$ intervallumon integrálva"),
+    p("Ezt az Itô-lemmával számolhatjuk ki. A $df(X_s)$ differenciált a $[0, h]$ intervallumon integrálva"),
     eq("f(X_h) = f(x) + \\int_0^h \\Big(\\mu f' + \\tfrac12 \\sigma^2 f''\\Big)(X_s)\\,ds + \\int_0^h \\sigma(X_s) f'(X_s)\\,dW_s."),
     p("A $\\sigma f'$ integrandus korlátos $f$ tartóján, így az Itô-integrál várható értéke nulla. Várható értéket véve, $h$-val osztva és $h \\to 0$ határátmenettel (a $ds$-integrandus folytonos)"),
     eq("\\mathcal{L}f(x) = \\mu(x)\\,f'(x) + \\tfrac12\\,\\sigma^2(x)\\,f''(x)."),
@@ -222,7 +222,7 @@ export const feynmanKac: GuideLessonContent = {
       "$\\mu = 0$, konstans $\\sigma$ és $r = 0$ mellett ez a hővezetési egyenlet, amelyet a kifizetés Gauss-simítása old meg. $\\mathbb{Q}$ alatt, GBM-mel a Black–Scholes-egyenlet.",
       "A Monte Carlo- és a véges differenciás árazás a tétel két oldaláról ugyanazt a számot számolja ki.",
     ),
-    note("A következő lecke, a „Monte Carlo-opcióárazás”, a várható értékes oldalt veszi: $\\mathbb{Q}$ alatt szimulál lejáratkori árakat, és az átlag standard hibáját vizsgálja."),
+    note("A következő lecke, a „Monte Carlo-opcióárazás”, a várható érték oldalát választja: $\\mathbb{Q}$ alatt szimulál lejáratkori árakat, és az átlag standard hibáját vizsgálja."),
     lab("/black-scholes", "Vizsgáld meg, hogyan függ a Black–Scholes-egyenlet megoldása S-től, σ-tól és T-től a Black–Scholes laborban"),
   ],
 };

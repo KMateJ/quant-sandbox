@@ -107,7 +107,7 @@ export const oneStepBinomial: GuideLessonContent = {
     p("Szavakkal: a kockázatmentes növekedési szorzó szigorúan a részvény két lehetséges szorzója közé esik."),
 
     h("Az opció kifizetése a két csúcsban"),
-    p("Vegyünk egy európai vételi opciót $K$ kötési árral és 1. időpontbeli lejárattal. Az 1. időpontban az értéke az adott állapotbeli kifizetés:"),
+    p("Vegyünk egy európai callt $K$ kötési árral és 1. időpontbeli lejárattal. Az 1. időpontban az értéke az adott állapotbeli kifizetés:"),
     eq("C_u = (uS_0 - K)^+, \\qquad C_d = (dS_0 - K)^+."),
     p("Ebben semmi sem jellemző kifejezetten a callra. Minden olyan $X$ kifizetést, amely csak az 1. időpontbeli részvényártól függ, két szám ír le, $X_u$ és $X_d$, és a lecke további része minden ilyen kifizetésre érvényes."),
 
@@ -149,7 +149,7 @@ export const oneStepBinomial: GuideLessonContent = {
       "Ár: $C_0 = \\tfrac{2}{3}\\cdot 100 - 58{,}82 \\approx 66{,}67 - 58{,}82 = 7{,}84$.",
     ),
     p("Ellenőrzés: felfelé állapotban a portfólió értéke $\\tfrac{2}{3}\\cdot 120 - 60 = 20$, lefelé $\\tfrac{2}{3}\\cdot 90 - 60 = 0$. A hitel visszafizetése mindkét állapotban $58{,}82 \\cdot 1{,}02 = 60$. A portfólió kifizetése tehát pontosan megegyezik a calléval."),
-    p("Ha a call 9-en kereskedne, eladnánk, 7,84-ért felépítenénk a portfóliót, és ma megtartanánk 1,16-ot. Az 1. időpontban a portfólió pontosan annyit fizet, amennyivel a call miatt tartozunk, bármelyik állapot következik be."),
+    p("Ha a call 9-en forogna, eladnánk, 7,84-ért felépítenénk a portfóliót, és ma megtartanánk 1,16-ot. Az 1. időpontban a portfólió pontosan annyit fizet, amennyivel a call miatt tartozunk, bármelyik állapot következik be."),
     {
       kind: "worked",
       title: "Egy call replikálása $u = 1{,}2$ és $d = 0{,}8$ mellett",

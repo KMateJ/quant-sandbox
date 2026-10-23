@@ -144,14 +144,14 @@ export const bondPricing: GuideLessonContent = {
     eq("P = \\frac{F}{(1+y)^T},"),
     p("így a hozama közvetlenül kifejezhető: $y = (F/P)^{1/T} - 1$. Egy 10 éves zérókuponos kötvény $y = 6\\%$ mellett $100/1{,}06^{10} \\approx 55{,}84$-be kerül. Pozitív hozamnál a zérókuponos kötvény mindig diszkonton forog, és minden más kötvény építőköve: a kuponos kötvény zérókuponos kötvények csomagja, minden kifizetési időpontra egy."),
 
-    h("Szelvényhozam"),
-    p("Gyakran idéznek egy egyszerűbb számot, a **szelvényhozamot** (current yield): az éves kupon osztva az árral, $cF/P$. Ez figyelmen kívül hagyja, hogy lejáratig az ár $F$-hez mozdul, és ebből nyereség vagy veszteség adódik. Diszkontos kötvénynél a YTM nagyobb a szelvényhozamnál, az pedig nagyobb a kuponrátánál; prémiumos kötvénynél fordított a sorrend. Névértéken mindhárom egyenlő."),
+    h("Folyó hozam"),
+    p("Gyakran egy egyszerűbb mutatót is közölnek, a **folyó hozamot** (current yield): az éves kupon osztva az árral, $cF/P$. Ez figyelmen kívül hagyja, hogy lejáratig az ár $F$-hez mozdul, és ebből nyereség vagy veszteség adódik. Diszkontos kötvénynél a YTM nagyobb a folyó hozamnál, az pedig nagyobb a kuponrátánál; prémiumos kötvénynél fordított a sorrend. Névértéken mindhárom egyenlő."),
 
     h("Számpélda"),
     p("Legyen $c = 5\\%$, $T = 10$, $y = 6\\%$. Az annuitásfaktor $(1 - 1{,}06^{-10})/0{,}06 \\approx 7{,}360$, így"),
     eq("P = 5 \\cdot 7{,}360 + \\frac{100}{1{,}06^{10}} \\approx 36{,}80 + 55{,}84 = 92{,}64."),
-    p("A kupon a hozam alatt van, ezért a kötvény diszkonton forog. Szelvényhozama $5/92{,}64 \\approx 5{,}40\\%$, az 5%-os kuponráta és a 6%-os YTM között. Ugyanilyen hozam mellett 7%-os kuponnal az ár kb. 107,36, prémiumos; $y = 5\\%$ mellett az 5%-os kötvény pontosan 100-at ér."),
-    p("Az ábra az árat mutatja 0% és 15% közötti hozamok függvényében, vízszintes vonallal a névértéknél (100) és függőlegessel a választott hozamnál. A kijelzők az árat, azt, hogy prémiummal, névértéken vagy diszkonttal forog-e, valamint a szelvényhozamot mutatják. Mozgasd $y$-t a kuponráta egyik oldaláról a másikra, és figyeld meg, hogy az ár pontosan ott metszi a 100-at. Növeld $T$-t, és a görbe meredekebb és görbültebb lesz; állítsd $c$-t 0-ra, és zérókuponos kötvényt kapsz."),
+    p("A kupon a hozam alatt van, ezért a kötvény diszkonton forog. Folyó hozama $5/92{,}64 \\approx 5{,}40\\%$, az 5%-os kuponráta és a 6%-os YTM között. Ugyanilyen hozam mellett 7%-os kuponnal az ár kb. 107,36, prémiumos; $y = 5\\%$ mellett az 5%-os kötvény pontosan 100-at ér."),
+    p("Az ábra az árat mutatja 0% és 15% közötti hozamok függvényében, vízszintes vonallal a névértéknél (100) és függőlegessel a választott hozamnál. A kijelzők az árat, azt, hogy prémiummal, névértéken vagy diszkonttal forog-e, valamint a folyó hozamot mutatják. Mozgasd $y$-t a kuponráta egyik oldaláról a másikra, és figyeld meg, hogy az ár pontosan ott metszi a 100-at. Növeld $T$-t, és a görbe meredekebb és görbültebb lesz; állítsd $c$-t 0-ra, és zérókuponos kötvényt kapsz."),
     figure("price-yield"),
 
     h("Névértékhez húzás"),

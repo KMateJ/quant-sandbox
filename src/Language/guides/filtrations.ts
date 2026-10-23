@@ -179,7 +179,7 @@ export const filtrations: GuideLessonContent = {
 
     {
       kind: "worked",
-      title: "Feltételezés két pénzfeldobás közül az elsőre",
+      title: "Kondicionálás két dobás közül az elsőre",
       steps: [
         { text: "Két szabályos dobás, $X$ = a fejek száma, $\\mathcal{F}_1 = \\sigma(\\xi_1)$. Ha az első dobás H (fej), egy fej már megvan, a második átlagosan $\\tfrac12$-et ad hozzá.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 1 + \\tfrac12 \\quad \\text{ha } \\xi_1 = H", result: { value: 1.5, tolerance: 0.001 } },
         { text: "Ha az első dobás T (írás), csak a második hozhat fejet.", tex: "\\mathbb{E}[X \\mid \\mathcal{F}_1] = 0 + \\tfrac12 \\quad \\text{ha } \\xi_1 = T", result: { value: 0.5, tolerance: 0.001 } },

@@ -35,5 +35,5 @@ export const brownianMotionHu = {
   bmExplainHalf: "50%, mert a pálya egyforma eséllyel megy fel vagy le.",
   bmExplainHalfFb: "Az esély attól függ, milyen messze van b a σ√T-hez képest: egy távoli korlátot ritkán, egy közelit szinte mindig elér a pálya.",
   bmExplainTime: "Annyi, amennyi ideig a pályák b fölött tartózkodnak.",
-  bmExplainTimeFb: "A b fölött töltött idő más mennyiség (az arkusz szinusz törvényt követi); az érintéshez egyetlen pillanat is elég.",
+  bmExplainTimeFb: "A b fölött töltött idő más mennyiség (az arkuszszinusz-törvényt követi); az érintéshez egyetlen pillanat is elég.",
 };

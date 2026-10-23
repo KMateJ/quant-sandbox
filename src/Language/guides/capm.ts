@@ -111,7 +111,7 @@ export const capm: GuideLessonContent = {
       "A befektetőket csak portfóliójuk várható hozama és volatilitása érdekli egy közös időszakra (az előző lecke várható hozam–variancia preferenciái).",
       "Minden befektető ugyanazt gondolja az összes eszköz várható hozamáról, volatilitásáról és korrelációiról (homogén várakozások).",
       "Bárki tetszőleges összeget helyezhet el és vehet fel hitelként ugyanazon az $r_f$ kockázatmentes kamaton.",
-      "Nincsenek adók és tranzakciós költségek, az eszközök tetszőlegesen oszthatók, a short eladás megengedett, és egyetlen befektető sem képes mozgatni az árakat.",
+      "Nincsenek adók és tranzakciós költségek, az eszközök tetszőlegesen oszthatók, a shortolás megengedett, és egyetlen befektető sem képes mozgatni az árakat.",
     ),
     p("Ezek egyike sem teljesül pontosan. A cél az, hogy lássuk, mi következne belőlük, és utána megítéljük, mennyire tér el ettől a valóság."),
 
@@ -129,9 +129,9 @@ export const capm: GuideLessonContent = {
     h("Az értékpapír-piaci egyenes levezetése"),
     p("Induljunk ki a piaci portfólióból, és tegyünk át kis $\\varepsilon$ összeget a kockázatmentes eszközből az $i$-edik eszközbe. A várható hozam $\\varepsilon(\\mathbb{E}[R_i] - r_f)$-fel változik. A $\\sigma_m^2$ variancia elsőrendben $2\\varepsilon\\operatorname{Cov}(R_i, R_m)$-mel változik, így a volatilitás változása"),
     eq("d\\sigma = \\varepsilon\\,\\frac{\\operatorname{Cov}(R_i, R_m)}{\\sigma_m}."),
-    p("Mivel M az érintési portfólió, egyetlen ilyen kis lépés sem javíthat a kockázat–hozam viszonyon: a többlethozam és a többletvolatilitás aránya minden eszközre meg kell egyeznie a CML meredekségével:"),
+    p("Mivel M az érintési portfólió, egyetlen ilyen kis lépés sem javíthat a kockázat–hozam viszonyon: a többlethozam és a többletvolatilitás arányának minden eszközre meg kell egyeznie a CML meredekségével:"),
     eq("\\frac{\\mathbb{E}[R_i] - r_f}{\\operatorname{Cov}(R_i, R_m)/\\sigma_m} = \\frac{\\mathbb{E}[R_m] - r_f}{\\sigma_m}."),
-    p("Ellenkező esetben a portfóliót az $i$-edik eszköz felé (vagy attól el) billentve M-nél nagyobb Sharpe-rátát lehetne elérni. $\\mathbb{E}[R_i]$-re rendezve kapjuk az **értékpapír-piaci egyenest** (security market line, SML):"),
+    p("Ellenkező esetben a portfóliót az $i$-edik eszköz felé (vagy attól el) billentve M-nél nagyobb Sharpe-mutatót lehetne elérni. $\\mathbb{E}[R_i]$-re rendezve kapjuk az **értékpapír-piaci egyenest** (security market line, SML):"),
     eq("\\mathbb{E}[R_i] = r_f + \\beta_i\\,\\big(\\mathbb{E}[R_m] - r_f\\big)."),
     note("CAPM: bármely eszköz várható többlethozama a bétájának és az $\\mathbb{E}[R_m] - r_f$ **piaci kockázati prémiumnak** a szorzata."),
 

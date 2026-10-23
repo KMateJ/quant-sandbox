@@ -2,7 +2,7 @@ export const blackScholesHu = {
   blackScholesTitlePrefix: "Black–Scholes",
   blackScholesOptionCall: "Call",
   blackScholesOptionPut: "Put",
-  blackScholesMetricPrice: "Price",
+  blackScholesMetricPrice: "Ár",
   blackScholesMetricPriceAccusative: "árak",
   blackScholesStrikeLabel: "K (strike)",
   blackScholesRateLabel: "r (kamat)",

@@ -1,10 +1,10 @@
 export const hedgingDeskHu = {
-  hdTitle: "Fedezési pult",
+  hdTitle: "Hedging desk",
   hdDesc:
-    "Vezess egy short opciós könyvet kereskedőként: lépkedj a szimulált pályán napról napra, kereskedj részvénnyel és opcióval, tartsd a nettó deltát a sávban, és teljesítsd a küldetést.",
+    "Vigyél egy short opciós könyvet kereskedőként: lépkedj a szimulált pályán napról napra, kereskedj részvénnyel és opcióval, tartsd a nettó deltát a sávban, és teljesítsd a küldetést.",
   hdSimClock: "SZIM D{{day}}/{{days}} · {{left}} KER. NAP HÁTRA",
-  hdScreensAria: "Pult képernyői",
-  hdScreenDesk: "Pult",
+  hdScreensAria: "A desk képernyői",
+  hdScreenDesk: "Desk",
   hdScreenMissions: "Küldetések",
   hdScreenDebrief: "Kiértékelés",
 
@@ -14,7 +14,7 @@ export const hedgingDeskHu = {
   hdKeyAutoHedge: "Δ automatikus nullázása",
   hdKeyNewPath: "Új pálya",
   hdKeyRestart: "Újraindítás",
-  hdKeysAria: "Pult műveletei",
+  hdKeysAria: "A desk műveletei",
   hdStatusLine: "Pálya #{{seed}} · a kötések a spreadet fizetik · sávsértés záráskor számít",
 
   hdQuoteLast: "Utolsó",

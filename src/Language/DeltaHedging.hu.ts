@@ -20,7 +20,7 @@ export const deltaHedgingHu = {
 
   deltaHedgingStockChartTitle: "Részvénypálya és kötési ár",
   deltaHedgingStockLabel: "Részvényár",
-  deltaHedgingDeltaChartTitle: "Tartott részvények vs. a tartandó delta",
+  deltaHedgingDeltaChartTitle: "Tartott részvények vs. a célzott delta",
   deltaHedgingDeltaTrueLabel: "Black–Scholes-delta (folytonos)",
   deltaHedgingDeltaHeldLabel: "Tartott részvények (minden újrasúlyozásnál igazítva)",
   deltaHedgingErrorChartTitle: "Fedezési hiba a pálya mentén",

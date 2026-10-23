@@ -1,11 +1,11 @@
 export const durationConvexityHu = {
-  durationConvexityTitle: "Duration és konvexitás",
+  durationConvexityTitle: "Duráció és konvexitás",
   durationConvexityDesc:
-    "Hogyan változik a kötvény ára Δy hozamsokkra, és mennyire pontosan jelzi előre ezt a duration (érintő) és a konvexitás (görbület).",
+    "Hogyan változik a kötvény ára Δy hozamsokkra, és mennyire pontosan jelzi előre ezt a duráció (érintő) és a konvexitás (görbület).",
 
   dcParamsTitle: "Kötvény paraméterei",
   dcFaceLabel: "Névérték",
-  dcCouponLabel: "Kamatláb",
+  dcCouponLabel: "Kuponráta",
   dcMaturityLabel: "Futamidő",
   dcYtmLabel: "Jelenlegi YTM",
   dcYearsSuffix: "év",
@@ -16,14 +16,14 @@ export const durationConvexityHu = {
 
   dcMeasuresLabel: "Kockázati mutatók",
   dcPrice: "Ár",
-  dcMacaulay: "Macaulay duration",
-  dcModified: "Módosított duration",
+  dcMacaulay: "Macaulay-duráció",
+  dcModified: "Módosított duráció",
   dcConvexity: "Konvexitás",
   dcDv01: "DV01",
   dcModifiedHelp:
-    "Elsőrendű (lineáris) érzékenység: a módosított duration a Δy-ra adott árváltozás meredeksége.",
+    "Elsőrendű (lineáris) érzékenység: a módosított duráció a Δy-ra adott árváltozás meredeksége.",
   dcConvexityHelp:
-    "Másodrendű (görbületi) korrekció: a konvexitás azt fogja meg, amit a lineáris duration kihagy.",
+    "Másodrendű (görbületi) korrekció: a konvexitás azt fogja meg, amit a lineáris duráció kihagy.",
   dcDv01Help: "Az ár változása 1 bázispontnyi hozamváltozásra.",
 
   dcShockTitle: "Hozamsokk",
@@ -35,21 +35,21 @@ export const durationConvexityHu = {
   dcChartXLabel: "Hozamváltozás Δy (bp)",
   dcChartYLabel: "Árváltozás (%)",
   dcExactLabel: "Pontos újraárazás",
-  dcDurationLabel: "Duration becslés",
-  dcDurConvexLabel: "Duration + konvexitás",
-  dcTangentNote: "Duration = helyi meredekség",
+  dcDurationLabel: "Durációbecslés",
+  dcDurConvexLabel: "Duráció + konvexitás",
+  dcTangentNote: "Duráció = helyi meredekség",
 
   dcFormulasLabel: "Képletek",
-  dcFormulaDuration: "Duration-közelítés",
-  dcFormulaDurConvex: "Duration + konvexitás",
+  dcFormulaDuration: "Duráció-közelítés",
+  dcFormulaDurConvex: "Duráció + konvexitás",
 
   dcResultTitle: "Kiválasztott sokk",
   dcResultShock: "Hozamsokk",
   dcResultExact: "Pontos újraárazás",
   dcResultPriceChange: "Árváltozás",
   dcResultNewPrice: "Új ár",
-  dcResultDuration: "Duration",
-  dcResultDurConvex: "Duration + konvexitás",
+  dcResultDuration: "Duráció",
+  dcResultDurConvex: "Duráció + konvexitás",
   dcResultEstimate: "Becsült változás",
   dcResultError: "Hiba",
   dcResultErrorBp: "Hiba (ár bp-ben)",
@@ -57,6 +57,6 @@ export const durationConvexityHu = {
   dcErrorTitle: "Közelítési hiba",
   dcErrorXLabel: "Hozamsokk Δy (bp)",
   dcErrorYLabel: "Hiba (%)",
-  dcDurationErrLabel: "Duration hiba",
-  dcDurConvexErrLabel: "Duration + konvexitás hiba",
+  dcDurationErrLabel: "Durációhiba",
+  dcDurConvexErrLabel: "Duráció + konvexitás hibája",
 };

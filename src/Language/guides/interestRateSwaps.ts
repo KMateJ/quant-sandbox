@@ -114,10 +114,10 @@ export const interestRateSwaps: GuideLessonContent = {
   ],
 
   hu: [
-    p("A kamatcsereügylet (swap) a legtöbbet kereskedett kamatderivatíva. Két fél ugyanarra az összegre számolt kamatfizetéseket cserél: az egyik fix kamatot fizet, a másik változót, amelyet minden időszak elején újra rögzítenek. A lecke megmutatja, hogy a swap valójában két kötvény különbsége, beárazza az „Azonnali kamatok, forward kamatok és a hozamgörbe” című lecke diszkontfaktoraival, és levezeti a par swapkamatot. Épít a „Kötvényárak és hozamok” kötvényárazására is."),
+    p("A kamatswap (kamatcsereügylet) a legtöbbet kereskedett kamatderivatíva. Két fél ugyanarra az összegre számolt kamatfizetéseket cserél: az egyik fix kamatot fizet, a másik változót, amelyet minden időszak elején újra rögzítenek. A lecke megmutatja, hogy a swap valójában két kötvény különbsége, beárazza az „Azonnali kamatok, forward kamatok és a hozamgörbe” című lecke diszkontfaktoraival, és levezeti a par swapkamatot. Épít a „Kötvényárak és hozamok” kötvényárazására is."),
 
-    h("Az egyszerű kamatcsereügylet"),
-    p("Az **egyszerű (plain-vanilla) kamatcsereügyletet** négy dolog határozza meg:"),
+    h("Az egyszerű kamatswap"),
+    p("Az **egyszerű (plain-vanilla) kamatswapot** négy dolog határozza meg:"),
     list(
       "a **névleges összeg** $N$, amelyre a kamatot számolják; ezt soha nem cserélik ki;",
       "a **fix kamatláb** $s$, amelyet ma rögzítenek az ügylet teljes futamidejére;",
@@ -129,27 +129,27 @@ export const interestRateSwaps: GuideLessonContent = {
     h("A swap mint két kötvény"),
     p("Adjunk hozzá mindkét lábhoz a $t_n$ lejáratkor egy képzeletbeli $N$ összegű tőkecserét. A két csere kiejti egymást, így a swap nem változik. Most viszont mindkét láb kötvény:"),
     list(
-      "a fix láb egy $N$ névértékű, időszakonként $s\\,\\tau_i$ kamatszelvényt fizető **fix kamatozású kötvény**;",
-      "a változó láb egy **változó kamatozású kötvény** (FRN), amelynek szelvénye mindig az adott időszak változó kamata.",
+      "a fix láb egy $N$ névértékű, időszakonként $s\\,\\tau_i$ kupont fizető **fix kamatozású kötvény**;",
+      "a változó láb egy **változó kamatozású kötvény** (FRN), amelynek kuponja mindig az adott időszak változó kamata.",
     ),
-    p("A fix kapó swap tehát hosszú pozíció a fix kamatozású kötvényben és rövid pozíció az FRN-ben, a fix fizető swap ennek fordítottja. Értéke két kötvényár különbsége:"),
+    p("A fix kapó swap tehát long pozíció a fix kamatozású kötvényben és short pozíció az FRN-ben, a fix fizető swap ennek fordítottja. Értéke két kötvényár különbsége:"),
     eq("V_{\\text{kapó}} = B_{\\text{fix}} - B_{\\text{vált}}, \\qquad V_{\\text{fizető}} = B_{\\text{vált}} - B_{\\text{fix}}."),
 
     h("A változó kamatozású kötvény a kamatfixálás napján"),
     p("Tegyük fel, hogy az $L_i$ változó kamat a $t_{i-1}$ és $t_i$ közötti hitelezés piaci kamata, ugyanaz, amelyből a diszkontfaktorok épülnek. Ekkor az FRN minden kamatfixálási napon pontosan a névértékét éri. Haladjunk visszafelé a végétől:"),
     steps(
       "Az utolsó, $t_{n-1}$ fixálási napon a kötvény $t_n$-kor $N(1 + L_n\\tau_n)$ összeget fog fizetni. Egy időszakot ugyanazzal az $L_n$ kamattal diszkontálva $N(1 + L_n\\tau_n)/(1 + L_n\\tau_n) = N$ adódik.",
-      "A $t_{n-2}$ napon a kötvény $t_{n-1}$-kor $N L_{n-1}\\tau_{n-1}$ szelvényt fizet, és utána $N$-et ér. Ez együtt $N(1 + L_{n-1}\\tau_{n-1})$, ami ismét $N$-re diszkontálódik.",
+      "A $t_{n-2}$ napon a kötvény $t_{n-1}$-kor $N L_{n-1}\\tau_{n-1}$ kupont fizet, és utána $N$-et ér. Ez együtt $N(1 + L_{n-1}\\tau_{n-1})$, ami ismét $N$-re diszkontálódik.",
       "Az érvelést mai napig visszafelé ismételve $B_{\\text{vált}} = N$ adódik $t_0 = 0$-kor.",
     ),
-    p("A szemléletes ok: a szelvény mindig az aktuális piaci kamatot fizeti, ezért a kötvény fixáláskor sosem tér el a névértéktől. Két fixálási nap között is csak kicsit mozog, mert a következő szelvény már rögzített."),
+    p("A szemléletes ok: a kupon mindig az aktuális piaci kamatot fizeti, ezért a kötvény fixáláskor sosem tér el a névértéktől. Két fixálási nap között is csak kicsit mozog, mert a következő kupon már rögzített."),
 
     h("A fix láb és a par swapkamat"),
     p("Jelölje $P(0,t)$ a diszkontfaktort, a $t$-kor fizetett 1 mai árát. A fix kamatozású kötvény ismert pénzáramokból áll, így"),
     eq("B_{\\text{fix}} = N s \\sum_{i=1}^{n} \\tau_i\\,P(0,t_i) + N\\,P(0,t_n)."),
     p("Az $A = \\sum_i \\tau_i P(0,t_i)$ összeg az **annuitásfaktor**: az évi 1 egység mai értéke a kifizetési napokon. Új swapot olyan fix kamattal kötnek, amely mellett mindkét félnek nulla az értéke, vagyis $B_{\\text{fix}} = B_{\\text{vált}} = N$. $N$-nel osztva és erre a kamatra rendezve kapjuk egy $n$ időszakos swap **par swapkamatát**, $S_n$-et:"),
     eq("S_n = \\frac{1 - P(0,t_n)}{\\sum_{i=1}^{n} \\tau_i\\,P(0,t_i)} = \\frac{1 - P(0,t_n)}{A}."),
-    note("A par swapkamat egy névértéken forgó kötvény szelvénye: $S_n = (1 - P(0,t_n))/A$, ahol $A = \\sum_i \\tau_i P(0,t_i)$ az annuitásfaktor."),
+    note("A par swapkamat egy névértéken forgó kötvény kuponja: $S_n = (1 - P(0,t_n))/A$, ahol $A = \\sum_i \\tau_i P(0,t_i)$ az annuitásfaktor."),
 
     {
       kind: "check",
@@ -171,7 +171,7 @@ export const interestRateSwaps: GuideLessonContent = {
     eq("V_{\\text{fizető}} = N\\big[(1 - P(0,t_n)) - s\\,A'\\big] = N\\,(S_n' - s)\\,A' \\approx 10\\,000\\,000 \\times 0{,}00499 \\times 2{,}7222 \\approx 135\\,900."),
     p("A fix fizető nyer, mert 4,62% fizetését rögzítette, miközben ugyanerre a swapra most 5,12% a piaci kamat. A második alakot érdemes megjegyezni: egy meglévő swap értéke a mostani és a szerződéses swapkamat különbsége, az annuitásfaktorral szorozva."),
     p("Ugyanez a képlet adja az ügylet érzékenységét. Egy bázispontos (0,01%-os) swapkamat-változás nagyjából $N A \\times 0{,}0001$-gyel változtatja az értéket. Ez a swap **DV01**-e, itt $10\\,000\\,000 \\times 2{,}7222 \\times 0{,}0001 \\approx 2722$. Ugyanazt a szerepet tölti be, mint a duráció a „Duráció és konvexitás” című leckében."),
-    p("Az ábra ennek a swapnak a pénzáramait egy időtengelyen mutatja. A fix fizető minden évben megkapja a változó kifizetést, egy $N f_i$ hosszú felfelé mutató nyilat (a várható értékét, a forward kamatból), és kifizeti az $N s$ fix összeget, egy lefelé mutató nyilat. Minden nyíl teli része a jelenértéke, a halvány maradék a diszkont. Vigye az egeret egy kifizetésre, fókuszálja vagy koppintson rá, és látja az összegét, a $P(0,t_i)$ diszkontfaktort és a szorzást, amely a jelenértékét adja. A mai görbén a két láb ugyanannyit ér, így a swap értéke 0. Ezután állítsa a görbét +50 bázispontra: csak a változó nyilak nőnek, mert a fix kamatot 4,62%-on rögzítették, és a fix fizető számára az érték nagyjából 135 800 lesz, a fent kiszámolt szám. A 135 900-tól való kis eltérés a swapkamatok kerekítéséből adódik."),
+    p("Az ábra ennek a swapnak a pénzáramait egy időtengelyen mutatja. A fix fizető minden évben megkapja a változó kifizetést, egy $N f_i$ hosszú felfelé mutató nyilat (a várható értékét, a forward kamatból), és kifizeti az $N s$ fix összeget, egy lefelé mutató nyilat. Minden nyíl teli része a jelenértéke, a halvány maradék a diszkont. Vidd az egeret egy kifizetésre, fókuszáld vagy koppints rá, és látod az összegét, a $P(0,t_i)$ diszkontfaktort és a szorzást, amely a jelenértékét adja. A mai görbén a két láb ugyanannyit ér, így a swap értéke 0. Ezután állítsd a görbét +50 bázispontra: csak a változó nyilak nőnek, mert a fix kamatot 4,62%-on rögzítették, és a fix fizető számára az érték nagyjából 135 800 lesz, a fent kiszámolt szám. A 135 900-tól való kis eltérés a swapkamatok kerekítéséből adódik."),
     figure("swap-timeline"),
 
     p("Most essen a görbe: a teljes zérókupon-görbe fél százalékponttal lejjebb kerül, a diszkontfaktorok pedig $0{,}9635$, $0{,}9248$ és $0{,}8856$ lesznek."),
@@ -211,13 +211,13 @@ export const interestRateSwaps: GuideLessonContent = {
     ),
 
     h("Par swapkamatok és a zérókupon-görbe"),
-    p("Az ábra az $r(t) = \\text{szint} + \\text{meredekség}\\,(1 - e^{-t/3})$ sima zérókupon-görbét használja éves kamatozással, így $P(0,t) = (1 + r(t))^{-t}$, ugyanazzal a konvencióval, mint az éves fix kifizetések. A **szint** a rövid vég kamata ($r(0) = \\text{level}$), a **meredekség** pedig azt adja meg, mennyivel van fölötte a hosszú vég: $t$ növekedésével $r(t)$ a szint + meredekség értékhez közelít. Minden $n$ lejáratra 1 és 10 év között megrajzolja az $r(n)$ zérókamatot és az $S_n$ par swapkamatot. A kijelzők az ötéves par swapkamatot, az ötéves annuitásfaktort, egy ötéves swap 1 000 000 névleges összegre vett DV01-ét és a tízéves par swapkamatot mutatják. Alapbeállításnál (4%-os szint, +1 százalékpontos meredekség) az ötéves swapkamat nagyjából 4,79%, szemben a 4,81%-os ötéves zérókamattal, az annuitásfaktor 4,3695, a DV01 körülbelül 437, a tízéves swapkamat pedig 4,94%, szemben a 4,96%-os zérókamattal. Állítsuk a meredekséget nullára: lapos görbénél a par swapkamat minden lejáraton egyenlő a zérókamattal. Emelkedő görbénél a swapkamat kicsivel az azonos lejáratú zérókamat alatt van, mert a korai, alacsonyabb forward kamatokat nagyobb súllyal veszi; a fenti példában $S_3 \\approx 4{,}62\\%$, míg a hároméves zérókamat 4,63%. Negatív meredekségnél a swapkamat kicsivel fölötte van."),
+    p("Az ábra az $r(t) = \\text{szint} + \\text{meredekség}\\,(1 - e^{-t/3})$ sima zérókupon-görbét használja éves kamatozással, így $P(0,t) = (1 + r(t))^{-t}$, ugyanazzal a konvencióval, mint az éves fix kifizetések. A **szint** a rövid vég kamata ($r(0) = \\text{szint}$), a **meredekség** pedig azt adja meg, mennyivel van fölötte a hosszú vég: $t$ növekedésével $r(t)$ a szint + meredekség értékhez közelít. Minden $n$ lejáratra 1 és 10 év között megrajzolja az $r(n)$ zérókamatot és az $S_n$ par swapkamatot. A kijelzők az ötéves par swapkamatot, az ötéves annuitásfaktort, egy ötéves swap 1 000 000 névleges összegre vett DV01-ét és a tízéves par swapkamatot mutatják. Alapbeállításnál (4%-os szint, +1 százalékpontos meredekség) az ötéves swapkamat nagyjából 4,79%, szemben a 4,81%-os ötéves zérókamattal, az annuitásfaktor 4,3695, a DV01 körülbelül 437, a tízéves swapkamat pedig 4,94%, szemben a 4,96%-os zérókamattal. Állítsuk a meredekséget nullára: lapos görbénél a par swapkamat minden lejáraton egyenlő a zérókamattal. Emelkedő görbénél a swapkamat kicsivel az azonos lejáratú zérókamat alatt van, mert a korai, alacsonyabb forward kamatokat nagyobb súllyal veszi; a fenti példában $S_3 \\approx 4{,}62\\%$, míg a hároméves zérókamat 4,63%. Negatív meredekségnél a swapkamat kicsivel fölötte van."),
     figure("swap-rate"),
 
     h("Összefoglalás"),
     list(
       "A swap $N s\\tau_i$ fix fizetéseket cserél $N L_i\\tau_i$ változó fizetésekre egy soha ki nem cserélt névleges összegen.",
-      "A fix kapó swap hosszú pozíció egy fix kamatozású kötvényben és rövid egy változó kamatozásúban; ez utóbbi minden fixálási napon névértéket ér.",
+      "A fix kapó swap long pozíció egy fix kamatozású kötvényben és short egy változó kamatozásúban; ez utóbbi minden fixálási napon névértéket ér.",
       "A par swapkamat $S_n = (1 - P(0,t_n))/A$, ahol $A = \\sum_i \\tau_i P(0,t_i)$ az annuitásfaktor.",
       "Egy meglévő, $s$-et fizető fix fizető swap értéke $N(S_n' - s)A'$, DV01-e nagyjából $N A \\times 0{,}0001$.",
     ),

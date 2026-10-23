@@ -34,7 +34,7 @@ export const binomialHu = {
     binomialExplanationTitle: "Intuíció",
     binomialExplanationSubtitle: "Mit mutat ez a modell?",
     binomialExplanationP1:
-      "Ebben a binomiális modellben minden időlépésben a részvényár kétféleképpen változhat: vagy megszorzódik u-val, vagy d-vel.",
+      "Ebben a binomiális modellben a részvényár minden időlépésben kétféleképpen változhat: vagy u-val, vagy d-vel szorzódik.",
     binomialExplanationP2:
       "A modellben minden periódus 1 év. A kockázatsemleges valószínűség: q = (1 + r - d) / (u - d).",
     binomialExplanationP3:
@@ -51,8 +51,8 @@ export const binomialHu = {
     binomialOptionPut: "Put",
     binomialS0Label: "S₀ (kezdeti ár)",
     binomialKLabel: "K (strike)",
-    binomialULabel: "u (up factor)",
-    binomialDLabel: "d (down factor)",
+    binomialULabel: "u (felfelé szorzó)",
+    binomialDLabel: "d (lefelé szorzó)",
     binomialRLabel: "r (éves kamat)",
     binomialStepsLabel: "Lépések száma",
     binomialStepsUnit: "db",
@@ -66,8 +66,8 @@ export const binomialHu = {
     binomialPrice: "Opció ára",
     binomialReplicatingPortfolio: "Gyökérbeli replikáló portfólió",
     binomialStockPosition: "Részvény",
-    binomialCashPosition: "Cash",
-    binomialDiscountFactor: "Diszkont faktor",
+    binomialCashPosition: "Készpénz",
+    binomialDiscountFactor: "Diszkontfaktor",
 
     binomialValidationInvalidParameters:
       "A modell paraméterei nem adnak értelmes numerikus eredményt.",

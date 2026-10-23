@@ -4,8 +4,8 @@ export const npvIrrHu: typeof npvIrrEn = {
   // Header & general
   npvTitle: "NPV / IRR",
   npvDesc:
-    "Interaktív beruházás-elemző labor: nettó jelenérték, IRR, forgatókönyvek, érzékenység, Monte Carlo és reálopciók.",
-  npvControlsTitle: "Projekt paraméterek",
+    "Interaktív beruházáselemző labor: nettó jelenérték, IRR, forgatókönyvek, érzékenység, Monte Carlo és reálopciók.",
+  npvControlsTitle: "Projektparaméterek",
   npvExampleProject: "Példaprojekt…",
   npvReset: "Alaphelyzet",
   npvExport: "Exportálás",
@@ -26,18 +26,18 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvYearsLabel: "Évek száma",
   npvRateLabel: "Diszkontráta",
   npvGrowthLabel: "Növekedési ráta",
-  npvPatternLabel: "Pénzáram mintázat",
+  npvPatternLabel: "Pénzáram-mintázat",
   npvPatternConstant: "Állandó",
   npvPatternGrowing: "Növekvő",
   npvPatternCustom: "Egyedi",
-  npvCustomHint: "Az egyes évek pénzáramát a Pénzáram-elemzés fülön szerkesztheti.",
+  npvCustomHint: "Az egyes évek pénzáramát a Pénzáram-elemzés fülön szerkesztheted.",
   npvDetailLabel: "Részletesség",
   npvBasic: "Alap",
   npvAdvanced: "Haladó",
   npvInflationLabel: "Inflációs korrekció",
   npvTaxLabel: "Adókulcs",
   npvTerminalLabel: "Maradványérték",
-  npvTimingLabel: "Pénzáram ütemezés",
+  npvTimingLabel: "Pénzáram-ütemezés",
   npvTimingEnd: "Év vége",
   npvTimingBegin: "Év eleje",
   npvInfoPattern: "Hogyan alakulnak az éves bevételek: állandó, növekedési rátával, vagy kézzel megadva.",
@@ -58,15 +58,15 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvTagPiGood: "1,0 felett",
   npvTagPiBad: "1,0 alatt",
   npvInfoNpv: "Az összes pénzáram jelenértéke; a pozitív érték azt jelenti, hogy a projekt értéket teremt.",
-  npvInfoIrr: "Az a diszkontráta, amelynél az NPV nulla; hasonlítsa a tőkeköltséghez.",
+  npvInfoIrr: "Az a diszkontráta, amelynél az NPV nulla; hasonlítsd a tőkeköltséghez.",
   npvInfoPi: "A bevételek jelenértéke a kezdő beruházás egységére vetítve; 1,0 felett kedvező.",
   npvInfoPayback: "Az az év, amikor a diszkontált kumulált pénzáram először pozitívvá válik.",
 
   // Overview chart
-  npvChartTitle: "NPV profil",
+  npvChartTitle: "NPV-profil",
   npvToggleIrr: "IRR megjelenítése",
   npvTogglePi: "PI > 1 tartomány",
-  npvDragHint: "Húzza a jelölőt vagy a diagramot a diszkontráta módosításához.",
+  npvDragHint: "Húzd a jelölőt vagy a diagramot a diszkontráta módosításához.",
 
   // Interpretation
   npvInterpretTitle: "Értelmezés",
@@ -81,11 +81,11 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvInsightBroad: "Az NPV a diszkontráták széles tartományában pozitív marad (egészen {irr}-ig).",
   npvInsightNarrow: "Az NPV érzékeny a diszkontrátára, és {irr} közelében metszi a nullát.",
   npvInsightMultipleIrr:
-    "A pénzáramok egynél többször váltanak előjelet, így több IRR is létezhet — az NPV profilt olvassa, ne egyetlen IRR-t.",
+    "A pénzáramok egynél többször váltanak előjelet, így több IRR is létezhet — az NPV-profilt olvasd, ne egyetlen IRR-t.",
   npvInsightDriver: "Az NPV ebben a beállításban a(z) {driver} változóra a legérzékenyebb.",
 
   // Cashflow tab
-  npvScheduleTitle: "Pénzáram ütemezés",
+  npvScheduleTitle: "Pénzáram-ütemezés",
   npvColYear: "Év",
   npvColCashflow: "Pénzáram",
   npvColDiscount: "Diszkontfaktor",
@@ -94,7 +94,7 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvAddYear: "+ Év",
   npvRemoveYear: "− Év",
   npvExportCsv: "CSV export",
-  npvCashflowChart: "Pénzáram vizualizáció",
+  npvCashflowChart: "Pénzáram-vizualizáció",
   npvModeNominal: "Nominális",
   npvModePv: "Jelenérték",
   npvModeDrag: "Húzás",
@@ -116,10 +116,10 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvToggleCumulative: "Kumulált",
   npvCashflowLegend:
     "Piros = kezdő beruházás, zöld = bevételek; a vonal a kumulált jelenértéket követi.",
-  npvScenarioSummary: "Forgatókönyv összegzés",
+  npvScenarioSummary: "Forgatókönyv-összegzés",
   npvColScenario: "Forgatókönyv",
   npvNpvAtRate: "NPV a rátán",
-  npvNpvComparison: "NPV összehasonlítás",
+  npvNpvComparison: "NPV-összehasonlítás",
 
   // Scenarios tab
   npvScenariosTitle: "Forgatókönyvek",
@@ -128,16 +128,16 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvDelete: "Törlés",
   npvAddScenario: "Forgatókönyv hozzáadása",
   npvEditing: "Szerkesztés alatt",
-  npvScenarioOverlay: "NPV profilok",
+  npvScenarioOverlay: "NPV-profilok",
   npvOverlayHint: "A szaggatott vonalak a többi forgatókönyv; a folytonos a szerkesztett.",
   npvScenarioKpis: "Forgatókönyvek összehasonlítása",
   npvScenarioNew: "Forgatókönyv",
   npvScenarioCopy: "másolat",
 
   // Sensitivity tab
-  npvTornadoTitle: "Tornádó — NPV hajtóerők",
+  npvTornadoTitle: "Tornádó — az NPV mozgatói",
   npvSensControls: "Érzékenységi vezérlők",
-  npvHeatmapAxes: "Hőtérkép tengelyek",
+  npvHeatmapAxes: "Hőtérkép-tengelyek",
   npvSwingRange: "Kilengés",
   npvTornadoHint:
     "Minden sáv azt mutatja, mennyit mozdul az NPV, ha egy változó a választott tartományban leng; hatás szerint rendezve.",
@@ -145,11 +145,11 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvAxisX: "X",
   npvAxisY: "Y",
   npvHeatmapHint:
-    "A zöld pozitív NPV, a piros negatív; a keretezett cella az alapeset. Kattintson egy cellára az alkalmazáshoz.",
+    "A zöld pozitív NPV, a piros negatív; a keretezett cella az alapeset. Kattints egy cellára az alkalmazáshoz.",
   npvVarAnnual: "Éves pénzáram",
   npvVarRate: "Diszkontráta",
   npvVarOutlay: "Kezdő beruházás",
-  npvVarYears: "Projekt időtartam",
+  npvVarYears: "Projektidőtartam",
   npvVarGrowth: "Növekedési ráta",
 
   // Monte Carlo tab
@@ -158,20 +158,20 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvDistNormal: "Normális",
   npvDistUniform: "Egyenletes",
   npvDistTriangular: "Háromszög",
-  npvCashflowVol: "Pénzáram volatilitás",
+  npvCashflowVol: "Pénzáram-volatilitás",
   npvGrowthUncertainty: "Növekedési bizonytalanság",
-  npvRateUncertainty: "Diszkontráta bizonytalanság",
+  npvRateUncertainty: "Diszkontráta-bizonytalanság",
   npvIterations: "Iterációk",
-  npvSeed: "Véletlen mag",
+  npvSeed: "Véletlenmag",
   npvRunSimulation: "Szimuláció indítása",
   npvRunning: "Fut…",
   npvMcDisclaimer:
-    "A Monte Carlo eredmények feltételezéseken alapuló szemléltetések, nem garantált előrejelzések.",
-  npvMcHistogram: "NPV eloszlás",
+    "A Monte Carlo-eredmények feltételezéseken alapuló szemléltetések, nem garantált előrejelzések.",
+  npvMcHistogram: "NPV-eloszlás",
   npvMcHistHint:
     "Minden sáv a szimulált kimeneteket számolja; a zöld sávok NPV > 0, a szaggatott vonal az átlag.",
   npvMcEmpty:
-    "Állítsa be a bizonytalansági feltételezéseket és indítsa el a szimulációt az NPV eloszlás megtekintéséhez.",
+    "Állítsd be a bizonytalansági feltételezéseket, és indítsd el a szimulációt az NPV-eloszlás megtekintéséhez.",
   npvProbPositive: "P(NPV > 0)",
   npvMeanNpv: "Átlagos NPV",
   npvMedianNpv: "Medián NPV",
@@ -180,7 +180,7 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvConfidence90: "a kimenetek 90%-a",
   npvIterationsUnit: "futás",
   npvInfoProbPositive: "A pozitív NPV-t adó szimulált futások aránya.",
-  npvInfoStdDev: "A szimulált NPV kimenetek szóródása az átlag körül.",
+  npvInfoStdDev: "A szimulált NPV-kimenetek szóródása az átlag körül.",
 
   // Real options tab
   npvOptionControls: "Bővítési opció",
@@ -194,9 +194,9 @@ export const npvIrrHu: typeof npvIrrEn = {
     "A vezetői rugalmasság — a bővítés joga, de nem kötelezettsége — akkor is értéket adhat, amikor az előzetes elkötelezettség nem.",
   npvOptionValue: "Opció értéke",
   npvFlexibleValue: "Érték rugalmassággal",
-  npvExpansionNpv: "Bővítés NPV",
+  npvExpansionNpv: "A bővítés NPV-je",
   npvIfExercised: "ha lehívják",
-  npvFlexComparison: "Rugalmasság összehasonlítás",
+  npvFlexComparison: "Rugalmasság-összehasonlítás",
   npvFlexHint:
     "A rugalmasság nélküli figyelmen kívül hagyja a bővítést; a most-elkötelezem mindenképp vállalja; az opció csak kedvező esetben ragadja meg az előnyt.",
   npvNoFlex: "Rugalmasság nélkül",
@@ -210,17 +210,17 @@ export const npvIrrHu: typeof npvIrrEn = {
   npvLearnNpv:
     "Az NPV minden pénzáramot a jelenre diszkontál, majd levonja a beruházást. A pozitív NPV azt jelenti, hogy a projekt többet hoz, mint a tőkeköltség.",
   npvLearnIrr:
-    "Az IRR az a diszkontráta, amelynél az NPV nulla. Fogadja el, ha az IRR meghaladja a tőkeköltséget, de figyeljen a többszörös IRR-t adó, nem konvencionális pénzáramokra.",
+    "Az IRR az a diszkontráta, amelynél az NPV nulla. Fogadd el, ha az IRR meghaladja a tőkeköltséget, de figyelj a többszörös IRR-t adó, nem konvencionális pénzáramokra.",
   npvLearnPi:
     "A jövedelmezőségi index a bevételek jelenértéke osztva a beruházással. A befektetett egységre jutó értékteremtés szerint rangsorol.",
   npvLearnPayback:
     "A diszkontált megtérülés az az időpont, amikor a kumulált diszkontált pénzáram pozitívvá válik — likviditási szemlélet, nem értékmérő.",
   npvLearnSensitivityTitle: "Érzékenység",
   npvLearnSensitivity:
-    "A tornádó és hőtérkép nézetek megmutatják, mely feltételezések mozgatják leginkább az NPV-t, a lényeges bemenetekre fókuszálva.",
+    "A tornádó- és hőtérképnézetek megmutatják, mely feltételezések mozgatják leginkább az NPV-t, a lényeges bemenetekre fókuszálva.",
   npvLearnMonteCarloTitle: "Monte Carlo",
   npvLearnMonteCarlo:
-    "A Monte Carlo több ezerszer mintavételezi a bizonytalan bemeneteket, hogy megmutassa a lehetséges NPV-k eloszlását és a pozitív kimenet esélyét.",
+    "A Monte Carlo-szimuláció több ezerszer mintavételezi a bizonytalan bemeneteket, hogy megmutassa a lehetséges NPV-k eloszlását és a pozitív kimenet esélyét.",
   npvLearnRealOptionsTitle: "Reálopciók",
   npvLearnRealOptions:
     "A reálopciók a vezetői rugalmasságot értékelik — például a bővítési opciót —, amelyet a hagyományos NPV figyelmen kívül hagy a rögzített terv feltételezésével.",

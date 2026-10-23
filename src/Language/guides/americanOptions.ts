@@ -97,7 +97,7 @@ export const americanOptions: GuideLessonContent = {
   ],
 
   hu: [
-    p("Az eddig árazott opciókat csak lejáratkor lehetett lehívni. Sok kereskedett opció, köztük az egyedi részvényekre szóló opciók többsége, a lejáratig bármikor lehívható. Ez a lecke a „Többlépéses fák és visszafelé indukció” lecke fájával árazza ezt a többletjogot, megmutatja, miért értéktelen osztalékot nem fizető részvényre szóló vételi opciónál, és miért értékes eladási opciónál, végül azt, hogyan változik a „Put–call paritás”."),
+    p("Az eddig árazott opciókat csak lejáratkor lehetett lehívni. Sok kereskedett opció, köztük az egyedi részvényekre szóló opciók többsége, a lejáratig bármikor lehívható. Ez a lecke a „Többlépéses fák és visszafelé indukció” lecke fájával árazza ezt a többletjogot, megmutatja, miért értéktelen osztalékot nem fizető részvényre szóló callnál, és miért értékes putnál, végül azt, hogyan változik a „Put–call paritás”."),
 
     h("Európai és amerikai lehívás"),
     p("Az **európai** opció csak a $T$ lejáratkor hívható le. Az **amerikai** opció bármely $t \\le T$ időpontban lehívható. Egy call lehívása a $t$ időpontban $S_t - K$-t fizet, egy puté $K - S_t$-t. Ez az összeg az opció **belső értéke** a $t$ időpontban: callnál $(S_t - K)^+$, putnál $(K - S_t)^+$."),
@@ -114,9 +114,9 @@ export const americanOptions: GuideLessonContent = {
     {
       kind: "check",
       id: "american-options/node-value",
-      prompt: "A fa egy csúcsában $S = 80$, az amerikai put kötési ára $K = 100$, a továbbtartási érték $18{,}5$. Mennyit ér a csúcs?",
+      prompt: "A fa egy csomópontjában $S = 80$, az amerikai put kötési ára $K = 100$, a továbbtartási érték $18{,}5$. Mennyit ér az opció ebben a csomópontban?",
       answer: { type: "number", value: 20, tolerance: 0.01 },
-      explain: "A csúcs a belső érték, $100 - 80 = 20$, és a $18{,}5$-es továbbtartási érték közül a nagyobbat veszi fel, tehát 20-at, és a putot ott lehívják.",
+      explain: "A csomópont értéke a belső érték, $100 - 80 = 20$, és a $18{,}5$-es továbbtartási érték közül a nagyobb, tehát 20, és a putot ott lehívják.",
     },
     h("Kidolgozott példa"),
     p("Vegyük a „Többlépéses fák és visszafelé indukció” lecke kétlépéses fáját: $S_0 = 100$, $T = 1$, $\\sigma = 20\\%$, $r = 5\\%$, $n = 2$, így $u \\approx 1{,}1519$, $d \\approx 0{,}8681$, $q \\approx 0{,}5539$, az egylépéses diszkontfaktor pedig $e^{-0{,}025} \\approx 0{,}9753$. Árazzunk egy $K = 100$ kötési árú putot."),
@@ -128,7 +128,7 @@ export const americanOptions: GuideLessonContent = {
       "Gyökér, európai: ugyanez a számítás $13{,}19$ helyett $10{,}72$-vel $\\approx 4{,}66$-ot ad.",
     ),
     p("A korai lehívás joga ebben a durva fában $5{,}74 - 4{,}66 = 1{,}07$-et ér. Ez teljes egészében az alsó csomópontból származik, ahol az árfolyam annyira esett, hogy a $K - S$ azonnali felvétele jobb a várakozásnál."),
-    p("Az alábbi ábra ugyanezt a fát rajzolja meg csomópontról csomópontra. Minden csomópont az $S$ árfolyamot és a put $P$ értékét mutatja; kiemelve azok a csomópontok látszanak, ahol a lehívás most jobb a várakozásnál. Válasszunk 2 lépést, és kattintsunk az egy lépés utáni alsó csomópontra: a panel kiírja a továbbtartási értéket, $0{,}9753\\,(0{,}5539\\cdot 0 + 0{,}4461\\cdot 24{,}64) \\approx 10{,}72$, a $13{,}19$-es belső értéket és a kettő maximumát. Állítsuk a szabályt európaira: ez a csomópont visszaesik a továbbtartási értékére, így a gyökér értéke $5{,}74$-ről $4{,}66$-ra csökken. Több lépésnél a fa alján egyre több csomópontban éri meg lehívni, és a prémium kijelzője mutatja, mennyit ér a jog az adott fán (például 3 lépésnél $0{,}33$, 4 lépésnél $0{,}79$); a durva fák értéke ugrál, mielőtt beállna, ahogy a „Többlépéses fák és visszafelé indukció” leckében is láttuk."),
+    p("Az alábbi ábra ugyanezt a fát rajzolja meg csomópontról csomópontra. Minden csomópont az $S$ árfolyamot és a put $P$ értékét mutatja; kiemelve azok a csomópontok látszanak, ahol a lehívás most jobb a várakozásnál. Válassz 2 lépést, és kattints az egy lépés utáni alsó csomópontra: a panel kiírja a továbbtartási értéket, $0{,}9753\\,(0{,}5539\\cdot 0 + 0{,}4461\\cdot 24{,}64) \\approx 10{,}72$, a $13{,}19$-es belső értéket és a kettő maximumát. Állítsd a szabályt európaira: ez a csomópont visszaesik a továbbtartási értékére, így a gyökér értéke $5{,}74$-ről $4{,}66$-ra csökken. Több lépésnél a fa alján egyre több csomópontban éri meg lehívni, és a prémium kijelzője mutatja, mennyit ér a jog az adott fán (például 3 lépésnél $0{,}33$, 4 lépésnél $0{,}79$); a durva fák értéke ugrál, mielőtt beállna, ahogy a „Többlépéses fák és visszafelé indukció” leckében is láttuk."),
     figure("american-tree"),
 
     p("Ismételjük meg a számítást ugyanazon a fán magasabb, $K = 105$-ös kötési árral."),
@@ -136,12 +136,12 @@ export const americanOptions: GuideLessonContent = {
       kind: "worked",
       title: "Amerikai és európai put K = 105 mellett a kétlépéses fán",
       steps: [
-        { text: "A put kifizetése a legalsó végső csúcsban, ahol $S = 100d^2$.", tex: "K - 100d^2", result: { value: 29.64, tolerance: 0.01 } },
-        { text: "A felső csúcs egy lépés után: a továbbtartási érték (a belső érték 0, mert $S > K$).", tex: "e^{-r\\Delta t}\\big[q \\cdot 0 + (1-q)(K - 100)\\big]", result: { value: 2.18, tolerance: 0.01 } },
-        { text: "Az alsó csúcs: a továbbtartási érték.", tex: "e^{-r\\Delta t}\\big[q\\,(K - 100) + (1-q)(K - 100d^2)\\big]", result: { value: 15.6, tolerance: 0.01 } },
-        { text: "Az alsó csúcs belső értéke, amely felülmúlja a továbbtartási értéket, így ott lehívják a putot.", tex: "K - 100d", result: { value: 18.19, tolerance: 0.01 } },
+        { text: "A put kifizetése a legalsó lejárati csomópontban, ahol $S = 100d^2$.", tex: "K - 100d^2", result: { value: 29.64, tolerance: 0.01 } },
+        { text: "A felső csomópont egy lépés után: a továbbtartási érték (a belső érték 0, mert $S > K$).", tex: "e^{-r\\Delta t}\\big[q \\cdot 0 + (1-q)(K - 100)\\big]", result: { value: 2.18, tolerance: 0.01 } },
+        { text: "Az alsó csomópont: a továbbtartási érték.", tex: "e^{-r\\Delta t}\\big[q\\,(K - 100) + (1-q)(K - 100d^2)\\big]", result: { value: 15.6, tolerance: 0.01 } },
+        { text: "Az alsó csomópont belső értéke, amely felülmúlja a továbbtartási értéket, így ott lehívják a putot.", tex: "K - 100d", result: { value: 18.19, tolerance: 0.01 } },
         { text: "Az amerikai put a gyökérben (a belső érték, 5, kisebb, ezért a tulajdonos vár).", tex: "e^{-r\\Delta t}\\big[q\\,V_u + (1-q)\\,V_d\\big]", result: { value: 9.09, tolerance: 0.01 } },
-        { text: "Az európai put a gyökérben, az alsó csúcs továbbtartási értékével számolva.", tex: "e^{-r\\Delta t}\\big[q\\,C_u + (1-q)\\,C_d\\big]", result: { value: 7.96, tolerance: 0.01 } },
+        { text: "Az európai put a gyökérben, az alsó csomópont továbbtartási értékével számolva.", tex: "e^{-r\\Delta t}\\big[q\\,C_u + (1-q)\\,C_d\\big]", result: { value: 7.96, tolerance: 0.01 } },
       ],
     },
 

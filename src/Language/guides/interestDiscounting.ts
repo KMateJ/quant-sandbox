@@ -95,7 +95,7 @@ export const interestDiscounting: GuideLessonContent = {
     p("Növeljük a kamatperiódusok $m$ számát minden határon túl. A fenti kifejezés egy exponenciálishoz tart:"),
     eq("\\lim_{m\\to\\infty}\\left(1 + \\frac{r}{m}\\right)^{mT} = e^{rT}, \\qquad B_T = B_0\\,e^{rT}."),
     p("Az opcióárazásban (Black–Scholes, sok kis lépésből álló binomiális fa) a folytonos kamatozás a szokásos konvenció, mert az exponenciálisokat könnyű szorozni és deriválni: $T_1$ ideig, majd $T_2$ ideig növekedni ugyanaz, mint $T_1 + T_2$ ideig, hiszen $e^{rT_1}e^{rT_2} = e^{r(T_1+T_2)}$."),
-    p("Az ábra ugyanarra a kamatlábra hasonlítja össze a három konvenciót. Alacsony kamatnál és rövid távon szinte egybeesnek; a különbség $r$ és $T$ növekedésével nyílik ki."),
+    p("Az ábra ugyanazon kamatláb mellett hasonlítja össze a három konvenciót. Alacsony kamatnál és rövid távon szinte egybeesnek; a különbség $r$ és $T$ növekedésével nyílik ki."),
     figure("compounding"),
     {
       kind: "check",

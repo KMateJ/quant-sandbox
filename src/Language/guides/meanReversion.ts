@@ -101,7 +101,7 @@ export const meanReversion: GuideLessonContent = {
   ],
 
   hu: [
-    p("A „Véletlen bolyongás és Brown-mozgás” lecke Brown-mozgása és a rá épülő részvényár-modell korlátlanul elkóborolhat: a varianciájuk az időtávval nő, és semmi sem húzza vissza őket. A kamatlábak, a volatilitás és a hitelfelárak másképp viselkednek. Ingadoznak, de évek alatt jellemzően visszatérnek egy szokásos szintre. Ez a lecke felépíti az ilyen folyamatok standard modelljét, „Az Itô-lemma” eszközeivel pontosan megoldja, majd a Vasicek-modellben a rövid kamatlábra alkalmazza."),
+    p("A „Véletlen bolyongás és Brown-mozgás” lecke Brown-mozgása és a rá épülő részvényár-modell korlátlanul elvándorolhat: a varianciájuk az időtávval nő, és semmi sem húzza vissza őket. A kamatlábak, a volatilitás és a hitelfelárak másképp viselkednek. Ingadoznak, de évek alatt jellemzően visszatérnek egy szokásos szintre. Ez a lecke felépíti az ilyen folyamatok standard modelljét, „Az Itô-lemma” eszközeivel pontosan megoldja, majd a Vasicek-modellben a rövid kamatlábra alkalmazza."),
 
     h("Az Ornstein–Uhlenbeck-folyamat"),
     p("Legyen $X_t$ a vizsgált mennyiség, például egy kamatláb. Az **Ornstein–Uhlenbeck-folyamat** az alábbi Itô-folyamat:"),
@@ -141,7 +141,7 @@ export const meanReversion: GuideLessonContent = {
     h("Várható érték, variancia és stacionárius eloszlás"),
     p("Egy determinisztikus függvény $dW$ szerinti integrálja nulla várható értékű normális változó, és az **Itô-izometria** szerint a varianciája a súly négyzetének integrálja: $\\operatorname{Var}\\big(\\int_0^t g(s)\\,dW_s\\big) = \\int_0^t g(s)^2\\,ds$. A $g(s) = \\sigma e^{-\\kappa(t-s)}$ választással"),
     eq("\\mathbb{E}[X_t] = \\theta + (X_0 - \\theta)\\,e^{-\\kappa t}, \\qquad \\operatorname{Var}(X_t) = \\frac{\\sigma^2}{2\\kappa}\\big(1 - e^{-2\\kappa t}\\big)."),
-    p("$X_t$ tehát minden $t$-re normális eloszlású. Ha $t \\to \\infty$, a várható érték $\\theta$-hoz tart, a variancia pedig megáll. A Brown-mozgás $\\sigma^2 t$ varianciája ezzel szemben a végtelenségig nő."),
+    p("$X_t$ tehát minden $t$-re normális eloszlású. Ha $t \\to \\infty$, a várható érték $\\theta$-hoz tart, a variancia pedig korlátos marad. A Brown-mozgás $\\sigma^2 t$ varianciája ezzel szemben a végtelenségig nő."),
     note("Az Ornstein–Uhlenbeck-folyamat stacionárius eloszlása: $X_\\infty \\sim N\\big(\\theta,\\ \\sigma^2/(2\\kappa)\\big)$. Gyorsabb visszahúzás (nagyobb $\\kappa$) szűkebb hosszú távú szóródást jelent $\\theta$ körül."),
 
     {
@@ -173,7 +173,7 @@ export const meanReversion: GuideLessonContent = {
     p("A **rövid kamatláb** $r_t$ egy pillanatnyi időtartamra szóló hitel folytonos kamatlába. A **Vasicek-modell** feltevése, hogy a $\\mathbb{Q}$ kockázatsemleges mérték alatt Ornstein–Uhlenbeck-folyamatot követ: $dr_t = \\kappa(\\theta - r_t)\\,dt + \\sigma\\,dW_t$. Egy **zérókupon-kötvény** a $T$ időpontban 1-et fizet, ára pedig a rövid kamat véletlen pályája menti diszkontfaktor várható értéke, $P(0,T) = \\mathbb{E}^{\\mathbb{Q}}\\big[e^{-\\int_0^T r_s\\,ds}\\big]$. Mivel egy normális folyamat integrálja is normális, ez a várható érték zárt alakban felírható:"),
     eq("P(0,T) = A(T)\\,e^{-B(T)\\,r_0}, \\qquad B(T) = \\frac{1 - e^{-\\kappa T}}{\\kappa},"),
     eq("\\ln A(T) = \\left(\\theta - \\frac{\\sigma^2}{2\\kappa^2}\\right)\\big(B(T) - T\\big) - \\frac{\\sigma^2 B(T)^2}{4\\kappa}."),
-    p("$B(T)$ azt méri, mennyit számít a mai rövid kamat: rövid lejáratra közel van $T$-hez, hosszú lejáratra $1/\\kappa$-nál megáll, mert $r_0$ hatása elhalványul. A folytonos zérókupon-hozam $y(T) = -\\ln P(0,T)/T$."),
+    p("$B(T)$ azt méri, mennyit számít a mai rövid kamat: rövid lejáratra közel van $T$-hez, hosszú lejáratra $1/\\kappa$-hoz tart, mert $r_0$ hatása elhalványul. A folytonos zérókupon-hozam $y(T) = -\\ln P(0,T)/T$."),
     p("A fenti példában $r_0 = 8\\%$ és $T = 5$ mellett: $B(5) = (1 - e^{-2{,}5})/0{,}5 \\approx 1{,}836$, $A(5) \\approx 0{,}8815$, így $P(0,5) \\approx 0{,}8815\\,e^{-1{,}836 \\cdot 0{,}08} \\approx 0{,}7611$, az 5 éves hozam pedig $-\\ln(0{,}7611)/5 \\approx 5{,}46\\%$. A hozam $r_0$ és $\\theta$ közé esik, mert a piac a kamat 4% felé való visszatérésére számít."),
     p("$T$ növelésével a hozam $\\theta - \\sigma^2/(2\\kappa^2)$-hez tart, itt $3{,}98\\%$-hoz. Ha $r_0$ ez alatt van, a modell emelkedő görbét ad, ha fölötte, akkor fordított (csökkenő) görbét, közvetlenül fölötte pedig enyhén púpos, előbb kissé emelkedő, majd csökkenő görbét. Az „Azonnali kamatok, forward kamatok és a hozamgörbe” lecke ezeket az alakokat a piacon megfigyelhető formában mutatja be; a Vasicek-modell csak ezt a néhány alakot tudja előállítani, ezért a gyakorlatban a görbét gyakran közvetlenül, rugalmasabb függvénnyel illesztik. Ilyen piaci görbéket a Hozamgörbe labor mutat."),
     p("A modell fő hátránya, hogy a normális eloszlású rövid kamat pozitív valószínűséggel negatívvá válhat. A Cox–Ingersoll–Ross- (CIR-) modell ezt úgy kerüli el, hogy a volatilitást $\\sqrt{r_t}$-vel arányosnak veszi."),

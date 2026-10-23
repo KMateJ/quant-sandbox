@@ -80,7 +80,7 @@ export const instruments: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ez a lecke a három alapvető származtatott terméket mutatja be: a határidős ügyletet, a vételi és az eladási opciót. Mindegyiket azzal írjuk le, mit fizet lejáratkor, mert minden későbbi árazási érvelés ebből indul. A kockázatmentes kamatlábat és a diszkontfaktort a „Kamat, kamatozás és diszkontálás” leckéből használjuk."),
+    p("Ez a lecke a három alapvető származtatott terméket mutatja be: a határidős ügyletet, a call és a put opciót. Mindegyiket azzal írjuk le, mit fizet lejáratkor, mert minden későbbi árazási érvelés ebből indul. A kockázatmentes kamatlábat és a diszkontfaktort a „Kamat, kamatozás és diszkontálás” leckéből használjuk."),
 
     h("Alaptermék és származtatott termék"),
     p("Az **alaptermék** olyan eszköz, amellyel önmagában is kereskednek, például egy részvény. Mai árát $S_0$, egy későbbi $T$ időpontbeli (években mért) árát $S_T$ jelöli. Ma $S_0$ ismert, $S_T$ viszont nem."),
@@ -88,20 +88,20 @@ export const instruments: GuideLessonContent = {
     eq("X = f(S_T)."),
     p("Az $f$ függvényt a szerződés rögzíti; a lecke három terméke csak ebben különbözik. Végig feltesszük, hogy a részvény nem fizet osztalékot, nincsenek tranzakciós költségek, és az elszámolás pénzben történik: a felek az $X$ kifizetést cserélik ki, nem részvényeket."),
 
-    h("Hosszú és rövid pozíció"),
-    p("Minden szerződésnek két oldala van. Aki az $X$ kifizetést kapja, az **hosszú** (long) pozícióban van; aki fizeti, az **rövid** (short) pozícióban. Amit lejáratkor az egyik fél nyer, azt a másik elveszíti, így a rövid pozíció kifizetése $-X$. Ezért elég a hosszú oldalt leírni."),
+    h("Long és short pozíció"),
+    p("Minden szerződésnek két oldala van. Aki az $X$ kifizetést kapja, az **hosszú** (long) pozícióban van; aki fizeti, az **rövid** (short) pozícióban. Amit lejáratkor az egyik fél nyer, azt a másik elveszíti, így a short pozíció kifizetése $-X$. Ezért elég a long oldalt leírni."),
 
     h("A határidős ügylet"),
-    p("A **határidős ügylet** (forward) olyan ma kötött megállapodás, hogy $T$-ben a ma rögzített $K$ áron megvesszük az alapterméket; $K$ neve **szállítási ár**. Mindkét fél köteles teljesíteni. A vevő (hosszú fél) $K$-t fizet, és $S_T$ értékű eszközt kap, így a kifizetése"),
+    p("A **határidős ügylet** (forward) olyan ma kötött megállapodás, hogy $T$-ben a ma rögzített $K$ áron megvesszük az alapterméket; $K$ neve **szállítási ár**. Mindkét fél köteles teljesíteni. A vevő (long fél) $K$-t fizet, és $S_T$ értékű eszközt kap, így a kifizetése"),
     eq("X_{\\text{fwd}} = S_T - K."),
-    p("A kifizetés $S_T$-ben egy 1 meredekségű egyenes: pozitív, ha a részvény $K$ fölött zár, és negatív, ha alatta. Mivel a hosszú fél veszíthet is, a szokásos határidős ügyletbe senki sem fizet a belépésért: $K$-t úgy választják, hogy a szerződés ma semmibe se kerüljön. Hogy ez melyik $K$, azt az „Arbitrázs és a határidős ár” lecke tárgyalja."),
+    p("A kifizetés $S_T$-ben egy 1 meredekségű egyenes: pozitív, ha a részvény $K$ fölött zár, és negatív, ha alatta. Mivel a long fél veszíthet is, a szokásos határidős ügyletbe senki sem fizet a belépésért: $K$-t úgy választják, hogy a szerződés ma semmibe se kerüljön. Hogy ez melyik $K$, azt az „Arbitrázs és a határidős ár” lecke tárgyalja."),
 
-    h("A vételi opció"),
+    h("A call opció"),
     p("Az **opció** jogot ad a tulajdonosának, nem kötelezettséget. A $K$ **kötési árú** és $T$ lejáratú **vételi opció** (call) feljogosít arra, hogy $T$-ben $K$-ért megvegyük az alapterméket. A tulajdonos csak akkor él a jogával (hívja le az opciót), ha megéri: ha $S_T > K$, akkor $K$-ért vesz valamit, ami $S_T$-t ér; ha $S_T \\le K$, hagyja lejárni. A call kifizetése tehát"),
     eq("X_{\\text{call}} = \\max(S_T - K,\\,0) = (S_T - K)^+."),
     p("Az $x^+ = \\max(x, 0)$ jelölést a továbbiakban végig használjuk. A határidős ügylethez képest a call levágja a kifizetés negatív részét: a tulajdonos megtartja a felfelé mozgás hasznát, lejáratkor pedig sosem fizet."),
 
-    h("Az eladási opció"),
+    h("A put opció"),
     p("Az **eladási opció** (put) arra jogosít fel, hogy $T$-ben $K$ kötési áron eladjuk az alapterméket. A tulajdonos akkor hívja le, ha a részvény a kötési ár alatt zár, hiszen ekkor $K$-ért adhat el valamit, ami csak $S_T$-t ér:"),
     eq("X_{\\text{put}} = \\max(K - S_T,\\,0) = (K - S_T)^+."),
     p("A put olyan, mint egy biztosítás a részvényre: ha az árfolyam $K$ alá esik, a put kifizeti a különbözetet. A kifizetés akkor a legnagyobb, $K$, ha a részvény értéktelenné válik, és nulla minden $S_T \\ge K$ esetén."),
@@ -118,16 +118,16 @@ export const instruments: GuideLessonContent = {
     },
 
     h("Kifizetés és nyereség"),
-    p("Mivel az opció kifizetése sosem negatív, a jognak értéke van: a vevő a szerződéskötéskor **opciós díjat** (prémiumot) fizet az eladónak. A call mai árát $C_0$, a putét $P_0$ jelöli. A kifizetés ezt a költséget nem tartalmazza; a hosszú pozíció **nyeresége** levonja:"),
+    p("Mivel az opció kifizetése sosem negatív, a jognak értéke van: a vevő a szerződéskötéskor **opciós díjat** (prémiumot) fizet az eladónak. A call mai árát $C_0$, a putét $P_0$ jelöli. A kifizetés ezt a költséget nem tartalmazza; a long pozíció **nyeresége** levonja:"),
     eq("\\text{nyereség}_{\\text{call}} = (S_T - K)^+ - C_0\\,e^{rT}."),
     p("A díjat a 0 időpontban fizetjük, a kifizetés $T$-ben érkezik, ezért a díjat $e^{rT}$-vel felkamatoljuk, hogy azonos időpontbeli összegeket hasonlítsunk össze. Rövid lejáratnál és alacsony kamatnál ez a szorzó közel 1, ezért az alábbi példák egyszerűen levonják a díjat."),
     p("Példa: egy $K = 100$ kötési árú call 6-ba kerül. Ha $S_T = 115$, a kifizetés 15, a nyereség $15 - 6 = 9$. Ha $S_T = 103$, a kifizetés 3, a nyereség $-3$: az opciót lehívták, de nem hozta vissza az árát. Ha $S_T = 95$, a kifizetés 0, a veszteség a teljes 6-os díj. A fedezeti pont $K + C_0 = 106$."),
     p("Egy $K = 100$ kötési árú, 4-es díjú put kifizetése $S_T = 90$ mellett 10, a nyereség 6. A fedezeti pont $K - P_0 = 96$."),
-    p("A rövid oldal nyeresége a kapott díj mínusz a kifizetés. A call eladója legfeljebb a díjat keresheti meg, vesztesége viszont korlátlan lehet; a put eladója legfeljebb $K - P_0$-t veszíthet."),
-    p("A határidős ügyletnek nincs díja, így ott a kifizetés és a nyereség megegyezik. $K = 100$ és $S_T = 112$ mellett a hosszú fél 12-t nyer, a rövid fél 12-t veszít."),
+    p("A short oldal nyeresége a kapott díj mínusz a kifizetés. A call eladója legfeljebb a díjat keresheti meg, vesztesége viszont korlátlan lehet; a put eladója legfeljebb $K - P_0$-t veszíthet."),
+    p("A határidős ügyletnek nincs díja, így ott a kifizetés és a nyereség megegyezik. $K = 100$ és $S_T = 112$ mellett a long fél 12-t nyer, a short fél 12-t veszít."),
     {
       kind: "worked",
-      title: "Egy hosszú call nyeresége különböző záróárak mellett",
+      title: "Egy long call nyeresége különböző záróárak mellett",
       steps: [
         { text: "Egy $K = 100$ kötési árú call ára 4,2. $S_T = 90$ mellett értéktelenül jár le, a veszteség a díj.", tex: "(90 - 100)^+ - 4{,}2", result: { value: -4.2, tolerance: 0.01 } },
         { text: "$S_T = 100$ mellett a kifizetés még mindig nulla.", tex: "(100 - 100)^+ - 4{,}2", result: { value: -4.2, tolerance: 0.01 } },
@@ -140,14 +140,14 @@ export const instruments: GuideLessonContent = {
       kind: "check",
       id: "instruments/unlimited-loss",
       prompt: "Az alábbi pozíciók közül melyiknek korlátlan a lehetséges vesztesége lejáratkor?",
-      answer: { type: "choice", options: ["Hosszú call", "Hosszú put", "Rövid call", "Rövid put"], correct: 2 },
-      explain: "A rövid call $(S_T - K)^+$-t fizet, ami $S_T$ emelkedésével korlát nélkül nő. A rövid put legfeljebb $K - P_0$-t veszít, a hosszú opciók legfeljebb a díjukat.",
+      answer: { type: "choice", options: ["Long call", "Long put", "Short call", "Short put"], correct: 2 },
+      explain: "A short call $(S_T - K)^+$-t fizet, ami $S_T$ emelkedésével korlát nélkül nő. A short put legfeljebb $K - P_0$-t veszít, a long opciók legfeljebb a díjukat.",
     },
 
     h("Összefoglalás"),
     list(
       "A származtatott termék a $T$ lejáratkor $X = f(S_T)$ összeget fizet; az $f$ függvényt a szerződés rögzíti.",
-      "A hosszú fél kapja, a rövid fél fizeti $X$-et; a két kifizetés összege nulla.",
+      "A long fél kapja, a short fél fizeti $X$-et; a két kifizetés összege nulla.",
       "Határidős ügylet: kötelezettség, kifizetése $S_T - K$, a belépés ingyenes.",
       "Call: vételi jog, kifizetése $(S_T - K)^+$. Put: eladási jog, kifizetése $(K - S_T)^+$. Az opcióért díjat kell fizetni.",
       "A nyereség a kifizetés mínusz a belépés $T$-re felkamatolt költsége.",

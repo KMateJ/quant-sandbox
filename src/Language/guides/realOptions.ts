@@ -109,7 +109,7 @@ export const realOptions: GuideLessonContent = {
     p("A statikus NPV-szabály a projekt pénzáramainak $V$ jelenértékét veti össze az $I$ beruházással, és akkor fogadja el a projektet, ha $V - I > 0$. A döntést **most vagy soha** jellegűnek tekinti: vagy ma beruházunk a jelenlegi terv szerint, vagy végleg elvetjük a projektet. A legtöbb valódi projekt nem ilyen. Egy engedély vagy telek birtokában a vállalat általában **elhalaszthatja** a beruházást, **bővítheti** a kapacitást, ha a kereslet erősnek bizonyul, **felhagyhat** a projekttel és eladhatja az eszközöket, ha rosszul alakul, vagy **válthat** az alapanyagok vagy a termékek között. Mindegyik jog kötelezettség nélkül, ezért mindegyiknek opciós kifizetésszerkezete van. A reáleszközökre szóló ilyen opciókat **reálopcióknak** nevezzük."),
 
     h("Projekt mint opció"),
-    p("Vegyük a projektbe való beruházás jogát. A jog gyakorlása azt jelenti, hogy kifizetjük $I$-t, és egy $V$ értékű projektet kapunk, a kifizetés tehát $(V - I)^+$, egy vételi opció kifizetése. Az elemek így feleltethetők meg egymásnak:"),
+    p("Vegyük a projektbe való beruházás jogát. A jog gyakorlása azt jelenti, hogy kifizetjük $I$-t, és egy $V$ értékű projektet kapunk, a kifizetés tehát $(V - I)^+$, egy call kifizetése. Az elemek így feleltethetők meg egymásnak:"),
     list(
       "Alaptermék: a projekt pénzáramainak $V$ jelenértéke, vagyis az, amit egy DCF-értékelés kiszámol.",
       "Kötési ár: az $I$ beruházási költség.",
@@ -126,7 +126,7 @@ export const realOptions: GuideLessonContent = {
     {
       kind: "check",
       id: "real-options/no-early-investment",
-      prompt: "Egy vállalat hároméves engedéllyel rendelkezik egy üzem megépítésére. A várakozás nem jár elmaradó pénzáramlással ($\\delta = 0$), és ma $V > I$. Mikor érdemes beruháznia?",
+      prompt: "Egy vállalat hároméves engedéllyel rendelkezik egy üzem megépítésére. A várakozás nem jár elmaradó pénzárammal ($\\delta = 0$), és ma $V > I$. Mikor érdemes beruháznia?",
       answer: {
         type: "choice",
         options: [
@@ -137,7 +137,7 @@ export const realOptions: GuideLessonContent = {
         ],
         correct: 1,
       },
-      explain: "$\\delta = 0$ mellett a halasztási opció olyan, mint egy osztalékot nem fizető részvényre szóló amerikai vételi opció. A jog megtartása legalább $V_t - Ie^{-r(T-t)}$-t ér, többet, mint a mostani beruházás $V_t - I$ értéke, így $T$ előtt sosem optimális beruházni.",
+      explain: "$\\delta = 0$ mellett a halasztási opció olyan, mint egy osztalékot nem fizető részvényre szóló amerikai call. A jog megtartása legalább $V_t - Ie^{-r(T-t)}$-t ér, többet, mint a mostani beruházás $V_t - I$ értéke, így $T$ előtt sosem optimális beruházni.",
     },
 
     h("Értékelés binomiális fán"),
@@ -172,8 +172,8 @@ export const realOptions: GuideLessonContent = {
       kind: "worked",
       title: "A fa bemenetei és a kiterjesztett NPV",
       steps: [
-        { text: "Az emelkedési tényező egyéves lépésekre, $\\sigma = 30\\%$ mellett.", tex: "u = e^{0{,}3}", result: { value: 1.3499, tolerance: 0.0001 } },
-        { text: "A csökkenési tényező, ennek reciproka.", tex: "d = 1/u", result: { value: 0.7408, tolerance: 0.0001 } },
+        { text: "A felfelé szorzó egyéves lépésekre, $\\sigma = 30\\%$ mellett.", tex: "u = e^{0{,}3}", result: { value: 1.3499, tolerance: 0.0001 } },
+        { text: "A lefelé szorzó, ennek reciproka.", tex: "d = 1/u", result: { value: 0.7408, tolerance: 0.0001 } },
         { text: "A kockázatsemleges valószínűség; $V$ növekedését a $\\delta = 4\\%$-os elmaradó hozam csökkenti.", tex: "q = \\frac{e^{0{,}05 - 0{,}04} - d}{u - d}", result: { value: 0.4421, tolerance: 0.0002 } },
         { text: "A 3. évtől visszafelé haladva, minden csúcsban a beruházás és a várakozás közül a nagyobbat megtartva, megkapjuk a gyökér értékét.", tex: "F_0 = \\max\\big(V_0 - I,\\; e^{-r}[q\\,F_{\\text{fel}} + (1-q)\\,F_{\\text{le}}]\\big)", result: { value: 19.28, tolerance: 0.01 } },
       ],
@@ -183,10 +183,10 @@ export const realOptions: GuideLessonContent = {
     figure("real-option-tree"),
 
     h("Bővítési opció"),
-    p("Tegyük fel, hogy egy további $I_e$ kifizetésével a vállalat $x$ hányaddal növelheti a projektet, így $V$-ből $(1 + x)V$ lesz. Egy olyan időpontban, amikor az opció használható, a projekt az opcióval együtt $\\max\\big(V,\\,(1+x)V - I_e\\big) = V + (xV - I_e)^+$-t ér. A bővítés joga tehát egy $xV$-re szóló, $I_e$ kötési árú call, amely ugyanazon a fán értékelhető úgy, hogy a döntési csomópontokban hozzáadjuk ezt a tagot. Pontosan azokban az állapotokban fizet, ahol a kereslet erősnek bizonyult."),
+    p("Tegyük fel, hogy egy további $I_e$ kifizetésével a vállalat $x$ hányaddal növelheti a projektet, így $V$-ből $(1 + x)V$ lesz. Egy olyan időpontban, amikor az opció lehívható, a projekt az opcióval együtt $\\max\\big(V,\\,(1+x)V - I_e\\big) = V + (xV - I_e)^+$-t ér. A bővítés joga tehát egy $xV$-re szóló, $I_e$ kötési árú call, amely ugyanazon a fán értékelhető úgy, hogy a döntési csomópontokban hozzáadjuk ezt a tagot. Pontosan azokban az állapotokban fizet, ahol a kereslet erősnek bizonyult."),
 
     h("Felhagyási opció"),
-    p("Ha a vállalat leállíthatja a projektet, és $A$ **likvidációs értékért** eladhatja az eszközeit, akkor minden döntési időpontban a projekt értéke $\\max(V, A) = V + (A - V)^+$. A felhagyás joga tehát egy $V$-re szóló, $A$ kötési árú **eladási opció**. A lefelé mutató kockázatot korlátozza: rossz állapotokban a vállalat $A$-val távozik ahelyett, hogy egy kevesebbet érő projektet tartana meg. A fán minden csomópont a továbbvitel értékének és $A$-nak a nagyobbikát veszi."),
+    p("Ha a vállalat leállíthatja a projektet, és $A$ **likvidációs értékért** eladhatja az eszközeit, akkor minden döntési időpontban a projekt értéke $\\max(V, A) = V + (A - V)^+$. A felhagyás joga tehát egy $V$-re szóló, $A$ kötési árú **put**. A lefelé irányuló kockázatot korlátozza: rossz állapotokban a vállalat $A$-val távozik ahelyett, hogy egy kevesebbet érő projektet tartana meg. A fán minden csomópont a továbbvitel értékének és $A$-nak a nagyobbikát veszi."),
 
     h("Az analógia korlátai"),
     p("Az opcióárazás a replikáláson alapul: az opció kifizetése lemásolható az alaptermékkel kereskedve, és ez rögzíti az árat. A projekt $V$ értékével viszont nem kereskednek, így ilyen portfólió általában nem létezik. A fenti kockázatsemleges értékelés ezért közelítés, amely akkor indokolt, ha van olyan kereskedett eszköz (nyersanyag, azonos ágazatban működő tőzsdei cég), amely szorosan együtt mozog $V$-vel. A bemenetek is nehezebben becsülhetők, mint egy részvényopciónál: $\\sigma$-t és $\\delta$-t előrejelzésekből kell kikövetkeztetni, és a versenytársak $T$ előtt elvihetik a lehetőséget."),

@@ -1,7 +1,7 @@
 export const immunizationHu = {
   navImmunization: "Immunizációs labor",
   immunizationTitle: "Immunizációs labor",
-  immunizationDesc: "Fedezz egy kötelezettséget: illeszd a jelenértéket és a durationt, majd tartsd illesztve a portfóliót, ahogy a hozamok mozognak.",
+  immunizationDesc: "Fedezz egy kötelezettséget: illeszd a jelenértéket és a durációt, majd tartsd illesztve a portfóliót, ahogy a hozamok mozognak.",
   imScenario: "Fedezz egy {{amount}} összegű kötelezettséget, amely {{years}} év múlva esedékes. Évente hozamsokk éri a piacot és telik az idő; átsúlyozhatsz, hogy fedezett maradj, de minden ügylet pénzbe kerül.",
   imPortfolio: "Portfólió",
   imWeights: "A portfólió összetétele",
@@ -16,7 +16,7 @@ export const immunizationHu = {
   imCostNone: "Az összetétel nem változik: nincs ügylet, nincs költség.",
   imGauges: "Eszközök és kötelezettség",
   imPv: "Jelenérték",
-  imDuration: "Duration (év)",
+  imDuration: "Duráció (év)",
   imConvexity: "Konvexitás",
   imAssets: "Eszközök",
   imLiability: "Kötelezettség",

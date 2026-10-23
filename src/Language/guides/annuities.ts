@@ -85,7 +85,7 @@ export const annuities: GuideLessonContent = {
   ],
 
   hu: [
-    p("Sok pénzügyi szerződés rendszeres időközönként ugyanakkora összeget fizet: egy nyugdíj, egy lízing, egy kötvény kamatszelvényei, egy jelzáloghitel részletei. Kifizetésenként is értékelhetők, de ez lassú, és elfedi a szerkezetet. Ez a lecke zárt képleteket vezet le az ilyen pénzáramokra a „Kamat, kamatozás és diszkontálás” című lecke diszkontálására építve, majd alkalmazza őket egy hitel törlesztésére."),
+    p("Sok pénzügyi szerződés rendszeres időközönként ugyanakkora összeget fizet: egy nyugdíj, egy lízing, egy kötvény kuponjai, egy jelzáloghitel részletei. Kifizetésenként is értékelhetők, de ez lassú, és elfedi a szerkezetet. Ez a lecke zárt képleteket vezet le az ilyen pénzáramokra a „Kamat, kamatozás és diszkontálás” című lecke diszkontálására építve, majd alkalmazza őket egy hitel törlesztésére."),
     p("A lecke végig évi egy kifizetéssel és évente tőkésített $r$ kamatlábbal számol, és ha mást nem mondunk, az első kifizetés egy év múlva esedékes."),
 
     h("Utólagos annuitás"),
@@ -151,7 +151,7 @@ export const annuities: GuideLessonContent = {
     },
 
     h("A részletek összetételének változása"),
-    p("A részlet ugyanakkora marad, de az összetétele eltolódik. Kezdetben nagy a tartozás, ezért a részlet nagyobbik része kamat; ahogy a tartozás csökken, a kamatrész zsugorodik, a tőkerész nő. A tartozás a szerkesztés miatt pontosan az utolsó részlettel válik nullává."),
+    p("A részlet ugyanakkora marad, de az összetétele eltolódik. Kezdetben nagy a tartozás, ezért a részlet nagyobbik része kamat; ahogy a tartozás csökken, a kamatrész zsugorodik, a tőkerész nő. A tartozás a képlet felépítéséből adódóan pontosan az utolsó részlettel válik nullává."),
     p("Az ábra a teljes törlesztési tervet mutatja. Minden oszlop egy év részlete, kamatra (alul) és tőkére (felül) bontva; a szaggatott vonal a jobb oldali tengelyen az egyes évek végén fennmaradó tartozás. Kattints egy évre, vagy lépj rá a Tab billentyűvel és nyomj Entert, és az ábra alatt megjelenik a törlesztési terv adott sora kiszámolva. Kezdd az 1. évvel az alapbeállításnál (10 év, 6%), majd állítsd a futamidőt 30 évre: a részlet nagyjából 14 530-ra csökken, de az első részlet 82,6%-a már kamat, és az összes kamat több lesz, mint maga a hitel."),
     figure("amortization-schedule"),
 
@@ -160,7 +160,7 @@ export const annuities: GuideLessonContent = {
       "Egy $n$ éves, évi $C$ nagyságú annuitás ma $C\\,(1 - (1+r)^{-n})/r$-t ér; az előleges annuitás ennek $(1+r)$-szeresét.",
       "Az örökjáradék értéke $C/r$, a növekvő örökjáradéké $C/(r - g)$, amíg $g < r$.",
       "Az egyenlő törlesztőrészlet a hitelösszeg osztva az annuitásfaktorral.",
-      "Minden részlet a nyitó tartozás kamata plusz tőketörlesztés; a korai részletek nagyrészt kamatok, és hosszabb futamidőnél az arány még inkább a kamat felé tolódik.",
+      "Minden részlet a nyitó tartozás kamata plusz tőketörlesztés; a kezdeti részletek nagyrészt kamatból állnak, és hosszabb futamidőnél az arány még inkább a kamat felé tolódik.",
     ),
     note("A következő lecke, a „Nettó jelenérték és belső megtérülési ráta”, olyan projekteket értékel, amelyek pénzáramai nem egyenletesek: mindegyiket külön diszkontálja ugyanezekkel az eszközökkel."),
     lab("/tvm", "Próbáld ki a rendszeres befizetéseket és a kamatos kamatot a Pénz időértéke laborban"),

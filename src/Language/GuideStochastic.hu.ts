@@ -9,7 +9,7 @@ export const guideStochasticHu = {
   gfQvSd: "Σ(ΔW)² szórása",
   gfTotalVariation: "Σ|ΔW| átlaga",
   gfMcTitle: "Monte Carlo-becslés konvergenciája",
-  gfMcAria: "A call ár futó Monte Carlo-becslése 95%-os sávval és a Black–Scholes-árral",
+  gfMcAria: "A call árának futó Monte Carlo-becslése 95%-os sávval és a Black–Scholes-árral",
   gfNewSample: "Új minta",
   gfBand95: "±1,96 · SE",
   gfMcEstimate: "Monte Carlo-becslés",

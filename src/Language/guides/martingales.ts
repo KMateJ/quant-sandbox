@@ -168,11 +168,11 @@ export const martingales: GuideLessonContent = {
     note("A martingál igazságos játék: mindazok ismeretében, amit eddig megfigyeltünk, a következő lépés várható változása nulla. A toronyszabály miatt ugyanez igaz tetszőleges számú lépésre, $\\mathbb{E}[X_m \\mid \\mathcal{F}_n] = X_n$, ha $m \\ge n$, és speciálisan $\\mathbb{E}[X_n] = \\mathbb{E}[X_0]$."),
 
     h("Példák a Brown-mozgásból"),
-    p("Használjuk a természetes filtrációt, vagyis a pálya történetét. Minden példa egy sor a fenti szabályokkal."),
+    p("Használjuk a természetes filtrációt, vagyis a pálya történetét. Minden példa egy-egy sornyi számolás a fenti szabályokkal."),
     list(
       "A szimmetrikus véletlen bolyongás martingál: $\\mathbb{E}[W_{n+1} \\mid \\mathcal{F}_n] = W_n + \\mathbb{E}[X_{n+1} \\mid \\mathcal{F}_n] = W_n + \\mathbb{E}[X_{n+1}] = W_n$, az ismert tényező kiemelésével, majd a függetlenséggel.",
       "A Brown-mozgás folytonos idejű martingál: $s < t$ esetén $W_t = W_s + (W_t - W_s)$, a növekmény független $\\mathcal{F}_s$-től és nulla várható értékű, így $\\mathbb{E}[W_t \\mid \\mathcal{F}_s] = W_s$.",
-      "$W_t^2$ nem martingál. A $W_t^2 = W_s^2 + 2W_s(W_t - W_s) + (W_t - W_s)^2$ felbontásból tagonként előrejelezve $\\mathbb{E}[W_t^2 \\mid \\mathcal{F}_s] = W_s^2 + 0 + (t - s)$: felfelé sodródik, tehát szubmartingál.",
+      "$W_t^2$ nem martingál. A $W_t^2 = W_s^2 + 2W_s(W_t - W_s) + (W_t - W_s)^2$ felbontásból tagonként előrejelezve $\\mathbb{E}[W_t^2 \\mid \\mathcal{F}_s] = W_s^2 + 0 + (t - s)$: pozitív driftje van, tehát szubmartingál.",
       "$W_t^2 - t$ martingál: a $t$ levonása éppen a felfelé irányuló tendenciát tünteti el.",
     ),
     p("Példa: tegyük fel, hogy $W_1 = 1$. A $W_4$ előrejelzése továbbra is 1, de a $W_4^2$ előrejelzése $1 + 3 = 4$, nem pedig 1. A pálya szóródása nő, a közepe viszont nem mozdul."),
@@ -181,7 +181,7 @@ export const martingales: GuideLessonContent = {
       id: "martingales/which-martingale",
       prompt: "Az alábbi folyamatok közül melyik martingál?",
       answer: { type: "choice", options: ["$W_t^2$", "$W_t^2 - t$", "$W_t + t$", "$e^{W_t}$"], correct: 1 },
-      explain: "$\\mathbb{E}[W_t^2 \\mid \\mathcal{F}_s] = W_s^2 + (t - s)$, így $t$ levonása eltünteti a driftet. $W_t^2$ és $W_t + t$ felfelé sodródik, és $e^{W_t}$ is szubmartingál: martingállá csak az $e^{-t/2}$ szorzóval válik.",
+      explain: "$\\mathbb{E}[W_t^2 \\mid \\mathcal{F}_s] = W_s^2 + (t - s)$, így $t$ levonása eltünteti a driftet. $W_t^2$ és $W_t + t$ driftje pozitív, és $e^{W_t}$ is szubmartingál: martingállá csak az $e^{-t/2}$ szorzóval válik.",
     },
 
     h("Fogadási stratégiák"),
@@ -191,7 +191,7 @@ export const martingales: GuideLessonContent = {
     p("A híres **duplázó stratégia** 1-es téttel indul, és minden vesztés után megduplázza a tétet, így az első nyerés visszahozza az összes korábbi veszteséget, és még 1-et. Korlátozzuk legfeljebb 5 körre. Ha az első öt kör bármelyikében nyerünk, a nettó nyereség 1. Mind az öt kör elvesztésének valószínűsége $(\\tfrac12)^5 = \\tfrac1{32}$, és ekkor a veszteség $1 + 2 + 4 + 8 + 16 = 31$. A várható nyereség"),
     eq("\\tfrac{31}{32} \\cdot 1 + \\tfrac{1}{32} \\cdot (-31) = 0."),
     p("A stratégia $96{,}9\\%$ valószínűséggel nyer egy keveset, és $3{,}1\\%$ valószínűséggel veszít sokat. Körkorlát nélkül korlátlan hitelre volna szükség: 10 egymást követő vesztés után a következő tét 512, az addigi veszteség pedig 1023."),
-    p("Az ábrán ezt a játékot magunk játszhatjuk, 100-as kezdő vagyonnal. Válasszunk stratégiát: állandó 1-es tét, duplázás vesztés után (legfeljebb 64-es tétig, utána újra 1), vagy a pillanatnyi vagyon 5%-a; egyik tét sem lehet nagyobb, mint ami a vagyonunk. Az „Egy dobás” egy kört játszik le, a „100 kör” százat, a vagyont lépcsős grafikonon rajzolva. Az „1000 játékos szimulálása” ezer játékost játszat le 100–100 kört a választott stratégiával, és hisztogramot rajzol a végső vagyonukról, az átlagot megjelölve; az „Újrakezdés” új dobásokkal indít. Hasonlítsuk össze a három stratégiát. Az átlagos végső vagyon minden esetben 100 közelében marad (a kijelző a 95%-os mintavételi sávval együtt mutatja), de állandó tétnél a játékosok nagyjából 46%-a végez nyereségben, és senki sem esik 60 körüli szint alá; duplázásnál nagyjából kétharmaduk végez nyereségben, néhányan viszont mindent elveszítenek; a vagyon 5%-ának feltételével pedig csak nagyjából 38%-uk végez nyereségben, miközben néhányan a kezdő vagyonuk többszörösével zárnak."),
+    p("Az ábrán ezt a játékot magunk játszhatjuk, 100-as kezdő vagyonnal. Válasszunk stratégiát: állandó 1-es tét, duplázás vesztés után (legfeljebb 64-es tétig, utána újra 1), vagy a pillanatnyi vagyon 5%-a; egyik tét sem haladhatja meg a pillanatnyi vagyonunkat. Az „Egy dobás” egy kört játszik le, a „100 kör” százat, a vagyont lépcsős grafikonon rajzolva. Az „1000 játékos szimulálása” ezer játékost játszat le 100–100 kört a választott stratégiával, és hisztogramot rajzol a végső vagyonukról, az átlagot megjelölve; az „Újrakezdés” új dobásokkal indít. Hasonlítsuk össze a három stratégiát. Az átlagos végső vagyon minden esetben 100 közelében marad (a kijelző a 95%-os mintavételi sávval együtt mutatja), de állandó tétnél a játékosok nagyjából 46%-a végez nyereségben, és senki sem esik 60 körüli szint alá; duplázásnál nagyjából kétharmaduk végez nyereségben, néhányan viszont mindent elveszítenek; a vagyon 5%-át megtéve pedig csak nagyjából 38%-uk végez nyereségben, miközben néhányan a kezdő vagyonuk többszörösével zárnak."),
     figure("martingale-betting"),
     p("Ugyanez a számítás hosszabb korláttal megmutatja, hogy több kör csak egy ritkább, de nagyobb veszteségbe tolja át a kockázatot."),
     {
@@ -251,6 +251,6 @@ export const martingales: GuideLessonContent = {
       "Doob maximálegyenlőtlensége az egész pályát korlátozza: $\\mathbb{P}(\\max_{k \\le n}|X_k| \\ge \\lambda) \\le \\mathbb{E}|X_n|/\\lambda$.",
     ),
     note("A következő lecke, „A Brown-mozgás tulajdonságai”, részletesen vizsgálja a $W_t$ pályáit, az itt talált $W_t$ és $W_t^2 - t$ martingálok segítségével."),
-    lab("/brownian-motion", "Szimuláljunk Brown-pályákat, és figyeljük a szóródásuk növekedését a Brown-mozgás laborban"),
+    lab("/brownian-motion", "Szimulálj Brown-pályákat, és figyeld a szóródásuk növekedését a Brown-mozgás laborban"),
   ],
 };

@@ -131,7 +131,7 @@ export const riskAversion: GuideLessonContent = {
     eq("U(y) = r_f + y\\,(\\mu_P - r_f) - \\tfrac{1}{2} A\\,\\sigma_P^2\\, y^2."),
     p("Ez $y$-ban lefelé nyíló parabola. Az $(\\mu_P - r_f) - A\\sigma_P^2\\, y$ deriváltat nullával egyenlővé téve"),
     eq("y^{*} = \\frac{\\mu_P - r_f}{A\\,\\sigma_P^2}, \\qquad U^{*} = r_f + \\frac{\\text{SR}_P^2}{2A},"),
-    p("ahol $\\text{SR}_P = (\\mu_P - r_f)/\\sigma_P$ a Sharpe-ráta. Geometriailag $y^*$ az a pont, ahol egy közömbösségi görbe éppen érinti a tőkeallokációs egyenest: a magasabb görbék elkerülik az egyenest, az alacsonyabbak két pontban metszik, és mindkét pont rosszabb."),
+    p("ahol $\\text{SR}_P = (\\mu_P - r_f)/\\sigma_P$ a Sharpe-mutató. Geometriailag $y^*$ az a pont, ahol egy közömbösségi görbe éppen érinti a tőkeallokációs egyenest: a magasabb görbék elkerülik az egyenest, az alacsonyabbak két pontban metszik, és mindkét pont rosszabb."),
     note("A kockázatos portfólió optimális súlya $y^{*} = (\\mu_P - r_f)/(A\\sigma_P^2)$: arányos a többlethozamával, és fordítottan arányos a varianciájával és a befektető kockázatkerülésével."),
 
     {
@@ -164,12 +164,12 @@ export const riskAversion: GuideLessonContent = {
         { text: "Az optimális súly a kockázatos portfólióban.", tex: "y^{*} = \\frac{\\mu_P - r_f}{A\\,\\sigma_P^2}", result: { value: 0.4267, tolerance: 0.0005 } },
         { text: "A teljes portfólió várható hozama.", tex: "\\mu = r_f + y^{*}(\\mu_P - r_f)", result: { value: 5.413, tolerance: 0.005, unit: "%" } },
         { text: "A volatilitása.", tex: "\\sigma = y^{*}\\sigma_P", result: { value: 10.67, tolerance: 0.01, unit: "%" } },
-        { text: "A hasznossága a $\\text{SR}_P = 0{,}32$ Sharpe-rátán keresztül.", tex: "U^{*} = r_f + \\frac{\\text{SR}_P^2}{2A}", result: { value: 3.707, tolerance: 0.005, unit: "%" } },
+        { text: "A hasznossága a $\\text{SR}_P = 0{,}32$ Sharpe-mutatón keresztül.", tex: "U^{*} = r_f + \\frac{\\text{SR}_P^2}{2A}", result: { value: 3.707, tolerance: 0.005, unit: "%" } },
       ],
     },
 
     h("Hitelfelvétel"),
-    p("Az optimális súly akkor nagyobb egynél, ha $A < (\\mu_P - r_f)/\\sigma_P^2$, itt ha $A < 2$. $A = 1{,}6$ mellett a befektető $y^* = 0{,}08/(1{,}6 \\times 0{,}04) = 1{,}25$-öt szeretne: a saját tőkéje negyedét kölcsönveszi $r_f$ kamatra, és 125%-ot fektet P-be, 13%-os várható hozammal és 25%-os szórással. A gyakorlatban a befektetők drágábban vesznek fel hitelt, mint amennyiért kölcsönadnak, ezért az egyenes P után lefelé törik, és az optimális hitelfelvétel kisebb."),
+    p("Az optimális súly akkor nagyobb egynél, ha $A < (\\mu_P - r_f)/\\sigma_P^2$, itt ha $A < 2$. $A = 1{,}6$ mellett a befektető $y^* = 0{,}08/(1{,}6 \\times 0{,}04) = 1{,}25$-öt szeretne: a saját tőkéje negyedének megfelelő összeget vesz fel hitelre $r_f$ kamatra, és 125%-ot fektet P-be, 13%-os várható hozammal és 25%-os szórással. A gyakorlatban a befektetők drágábban vesznek fel hitelt, mint amennyiért kölcsönadnak, ezért az egyenes P után lefelé törik, és az optimális hitelfelvétel kisebb."),
     p("Az ábra a példa tőkeallokációs egyenesét mutatja. Húzd a pontot az egyenes mentén $y$ kiválasztásához; a ponton átmenő görbe az a közömbösségi görbe, amelyen éppen vagy, a szaggatott görbe pedig az optimumhoz tartozik. Indulj P-ből, ahol a két görbe messze van egymástól, és húzd a kockázatmentes vég felé: a hasznosság nő, amíg a pont rá nem ugrik az optimumra $y = 0{,}5$-nél, utána ismét csökken. Válts $A$-t, és figyeld meg, hogy az optimum elmozdul, az egyenes viszont a helyén marad."),
     figure("utility-indifference"),
 
@@ -182,7 +182,7 @@ export const riskAversion: GuideLessonContent = {
       "Egy portfólió hasznossága a biztos egyenértéke: az a biztos hozam, amelyet a befektető ugyanannyira vonzónak tart.",
       "A $\\mu = U + \\tfrac{1}{2}A\\sigma^2$ közömbösségi görbék parabolák, nagyobb $A$ mellett meredekebbek.",
       "A legjobb teljes portfólió $y^* = (\\mu_P - r_f)/(A\\sigma_P^2)$ súlyt tart P-ben; $y^* > 1$ hitelfelvételt jelent.",
-      "Mindenki ugyanazt a kockázatos portfóliót tartja; csak az ez és a kockázatmentes eszköz közötti arány különbözik.",
+      "Mindenki ugyanazt a kockázatos portfóliót tartja; csak ennek és a kockázatmentes eszköznek az aránya különbözik.",
     ),
     note("A következő lecke, a „CAPM, béta és az értékpapír-piaci egyenes”, azt vizsgálja, mi történik az árakkal, ha minden befektető ugyanazt a kockázatos portfóliót tartja."),
     lab("/risk-return", "Keverj egy kockázatos eszközt a kockázatmentes kamattal, és mozogj a tőkeallokációs egyenesen a Kockázat és hozam laborban"),

@@ -8,7 +8,7 @@ export const hedgingDeskDemoHu = {
   hdDemoPause: "Szünet",
   hdDemoNext: "Tovább",
   hdDemoBack: "Vissza",
-  hdDemoTakeOver: "Átveszem a pultot",
+  hdDemoTakeOver: "Átveszem a desket",
   hdDemoExit: "Kilépés a bemutatóból",
   hdDemoMissions: "Küldetések",
   hdDemoTakeOverHint: "A könyv marad, ahogy van; a funkcióbillentyűk a tieid.",

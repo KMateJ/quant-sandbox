@@ -10,7 +10,7 @@ export const gbmHu = {
   gbmPathsLabel: "Pályák száma",
   gbmSeedLabel: "Mag (seed)",
   gbmMetricsLabel: "Mutatók",
-  gbmTerminalMean: "Záró minta-átlag",
+  gbmTerminalMean: "Záró mintaátlag",
   gbmTheoreticalMean: "Elméleti átlag",
   gbmTerminalSd: "Záró szórás",
   gbmTerminalSdHelp:
@@ -18,7 +18,7 @@ export const gbmHu = {
   gbmChartTitle: "Mintapályák és várható érték",
   gbmMeanLabel: "Elméleti átlag",
   gbmCentreTitle: "Átlag, medián és módusz",
-  gbmCentreHint: "S_T log-normális sűrűsége. Húzd a σ csúszkát a görbe alatt: az átlag helyben marad, a medián és a módusz balra csúszik. A háromszögek a 400 szimulált pálya mintaátlagát és mintamediánját jelölik.",
+  gbmCentreHint: "S_T lognormális sűrűsége. Húzd a σ csúszkát a görbe alatt: az átlag helyben marad, a medián és a módusz balra csúszik. A háromszögek a 400 szimulált pálya mintaátlagát és mintamediánját jelölik.",
   gbmCentreAria: "S_T sűrűsége az átlag, a medián és a módusz jelölőivel, alatta húzható σ csúszkával",
   gbmCentreMean: "Átlag",
   gbmCentreMedian: "Medián",
@@ -33,7 +33,7 @@ export const gbmHu = {
   gbmExplainDrag: "Volatilitási veszteség: a medián μ − ½σ² ütemben nő, nem μ ütemben.",
   gbmExplainDragFb: "ln S_T középpontja (μ − ½σ²)T, így a medián S₀·e^((μ−½σ²)T); a ritka nagy nyerő pályák húzzák fel az átlagot.",
   gbmExplainEqual: "Geometriai Brown-mozgásnál a medián megegyezik az átlaggal.",
-  gbmExplainEqualFb: "Ez szimmetrikus eloszlásra igaz. S_T log-normális, jobbra ferde: hosszú jobb farka az átlagot a medián fölé tolja.",
+  gbmExplainEqualFb: "Ez szimmetrikus eloszlásra igaz. S_T lognormális, jobbra ferde: hosszú jobb farka az átlagot a medián fölé tolja.",
   gbmExplainNoise: "A volatilitás csak zajt ad, a tipikus kimenetelt nem változtatja.",
   gbmExplainNoiseFb: "Húzd a σ-t: a medián balra mozdul. A hozamok ingadozása a geometriai átlagot csökkenti, ezért a tipikus pálya lassabban nő.",
 };

@@ -1,5 +1,5 @@
 export const monteCarloHu = {
-  monteCarloTitle: "Monte Carlo árazás",
+  monteCarloTitle: "Monte Carlo-árazás",
   monteCarloDesc:
     "Európai call opció árazása szimulációval; a futó becslés konvergál a Black–Scholes analitikus árhoz.",
   monteCarloControlsTitle: "Paraméterek",
@@ -15,7 +15,7 @@ export const monteCarloHu = {
   monteCarloAnalytic: "Black–Scholes ár",
   monteCarloStdError: "Standard hiba",
   monteCarloStdErrorHelp:
-    "A becslés szórása; a Monte Carlo hiba 1/√N szerint csökken a szimulációk számával.",
+    "A becslés szórása; a Monte Carlo-hiba 1/√N szerint csökken a szimulációk számával.",
   monteCarloChartTitle: "Konvergencia a Black–Scholes árhoz",
   monteCarloEstimateLabel: "MC becslés",
   monteCarloAnalyticLabel: "Black–Scholes",

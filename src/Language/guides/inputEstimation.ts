@@ -63,7 +63,7 @@ export const inputEstimation: GuideLessonContent = {
     lab("/efficient-frontier", "Estimate a frontier from a sample in the Efficient Frontier lab"),
   ],
   hu: [
-    p("A „Hatékony front és tőkepiaci egyenes” és a „Portfóliókorlátok és a rövidre eladás nélküli hatékony front” minden optimalizálója adottnak veszi a várható hozamokat, a volatilitásokat és a korrelációkat. A gyakorlatban ezeket néhány évnyi adatból becsüljük, és a becslések zajosak. Ez a lecke megméri, mennyire, megmutatja, hogyan nagyítja fel az optimalizáló a zajt, és bevezeti a zsugorítást mint gyógymódot. A „Hozamok és volatilitás” leckére épít."),
+    p("A „Hatékony front és tőkepiaci egyenes” és a „Portfóliókorlátok és a shortolás nélküli hatékony front” minden optimalizálója adottnak veszi a várható hozamokat, a volatilitásokat és a korrelációkat. A gyakorlatban ezeket néhány évnyi adatból becsüljük, és a becslések zajosak. Ez a lecke megméri, mennyire, megmutatja, hogyan nagyítja fel az optimalizáló a zajt, és bevezeti a zsugorítást mint gyógymódot. A „Hozamok és volatilitás” leckére épít."),
 
     h("Mintamomentumok"),
     p("$n$ megfigyelt hozamból, $r_1, \\dots, r_n$, a szokásos becslések a minta átlaga és a minta varianciája:"),
@@ -83,7 +83,7 @@ export const inputEstimation: GuideLessonContent = {
     },
 
     h("A hibák maximalizálása"),
-    p("Az optimalizáló a becsléseket igaznak veszi, és a legnagyobb súlyt oda teszi, ahol a becsült hozam a kockázathoz képest a legmagasabb. Az az eszköz, amelyik a mintában szerencsés volt, vonzónak látszik, és az optimalizáló sokat vesz belőle; a szerencsétlent rövidre adja. A portfólió tehát a hibákra épül, ezért nevezik hibamaximalizálónak."),
+    p("Az optimalizáló a becsléseket igaznak veszi, és a legnagyobb súlyt oda teszi, ahol a becsült hozam a kockázathoz képest a legmagasabb. Az az eszköz, amelyik a mintában szerencsés volt, vonzónak látszik, és az optimalizáló sokat vesz belőle; a szerencsétlent shortolja. A portfólió tehát a hibákra épül, ezért nevezik hibamaximalizálónak."),
     p("Az ábra két eszközt mutat 4% és 10% igazi várható hozammal, 10% és 20% volatilitással, korreláció nélkül és 2%-os kockázatmentes kamattal. Az igazi érintési portfólió 50-50%-ot tart. A halvány görbék 20 véletlen, 60 hónapos (5 éves) mintából becsült frontok: szélesen szórnak az igazi körül. Az 1. eszközben a becsült érintési súly középső fele 47% és 97% között van, az igazi 50% ellenében, és a becslésekből épített portfóliók átlagosan 0,160 Sharpe-mutatót veszítenek az igazi optimum 0,447-éhez képest. Vidd a mintát 600 hónapra, és a veszteség 0,020-ra esik."),
     figure("estimation-noise"),
 
@@ -94,13 +94,13 @@ export const inputEstimation: GuideLessonContent = {
     {
       kind: "check",
       id: "input-estimation/hardest-input",
-      prompt: "Melyik inputot a legnehezebb pontosan megbecsülni egy átlag–variancia optimalizálásban a múltbeli adatokból?",
+      prompt: "Melyik bemenetet a legnehezebb pontosan megbecsülni egy átlag–variancia optimalizálásban a múltbeli adatokból?",
       answer: { type: "choice", options: ["A várható hozamokat", "A volatilitásokat", "A korrelációkat", "Az eszközök számát"], correct: 0 },
       explain: "Az átlag standard hibája $\\sigma/\\sqrt n$, és csak a minta hosszával csökken, így magához az átlaghoz képest nagy. A varianciák és a korrelációk sokkal pontosabban becsülhetők, és a gyakoribb mintavétel javít rajtuk.",
     },
 
     h("A kovarianciák könnyebbek"),
-    p("A volatilitásbecslés relatív hibája $\\mathrm{SE}(\\hat\\sigma)/\\sigma = 1/\\sqrt{2n}$: 240 havi megfigyelésnél ez körülbelül 4,6%, szemben egy átlaggal, amely a saját méreténél is bizonytalanabb. A kovarianciáknál a nehézség más, a számuk: $N$ eszköznek $N(N+1)/2$ varianciája és kovarianciája van, így néhány évnyi minta nem köti le őket több száz részvényre. A faktorszerkezet kikötése, ahogy a „Faktormodellek és szisztematikus kockázat” leckében, a legtöbbjüket néhány paraméterrel helyettesíti, ami a zsugorítás egy másik formája."),
+    p("A volatilitásbecslés relatív hibája $\\mathrm{SE}(\\hat\\sigma)/\\sigma = 1/\\sqrt{2n}$: 240 havi megfigyelésnél ez körülbelül 4,6%, szemben egy átlaggal, amelynek bizonytalansága a saját nagyságrendjét is elérheti. A kovarianciáknál a nehézség más, a számuk: $N$ eszköznek $N(N+1)/2$ varianciája és kovarianciája van, így néhány évnyi minta több száz részvénynél nem határozza meg őket megbízhatóan. A faktorszerkezet kikötése, ahogy a „Faktormodellek és szisztematikus kockázat” leckében, a legtöbbjüket néhány paraméterrel helyettesíti, ami a zsugorítás egy másik formája."),
     {
       kind: "worked",
       title: "Milyen hosszú minta kell az átlaghoz",
@@ -119,7 +119,7 @@ export const inputEstimation: GuideLessonContent = {
       "Az átlagok közös cél felé zsugorítása kis torzítást visz be, és sok varianciát elvesz.",
       "A kovarianciák jobban becsülhetők az átlagoknál; náluk a számuk a gond, amit faktorszerkezettel kezelünk.",
     ),
-    note("A sztochasztikus modulban később a Monte Carlo leckék ugyanezt a standard hiba-gondolatot használják a szimulált átlagokra."),
+    note("A sztochasztikus modulban később a Monte Carlo-leckék a standard hiba ugyanezen gondolatát használják a szimulált átlagokra."),
     lab("/efficient-frontier", "Becsülj frontot mintából a Hatékony front laborban"),
   ],
 };

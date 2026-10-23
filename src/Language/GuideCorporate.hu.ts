@@ -1,6 +1,6 @@
 export const guideCorporateHu = {
   guideNpvIrrTitle: "Nettó jelenérték és belső megtérülési ráta",
-  guideNpvIrrDesc: "Projekt-pénzáramok, NPV, az NPV-profil, IRR, jövedelmezőségi index, és ahol az IRR félrevezet.",
+  guideNpvIrrDesc: "Projektpénzáramok, NPV, az NPV-profil, IRR, jövedelmezőségi index, és ahol az IRR félrevezet.",
   guideWaccTitle: "Súlyozott átlagos tőkeköltség",
   guideWaccDesc: "A saját tőke költsége, az adózás utáni hitelköltség, a kamatadópajzs és a piaci értékű súlyok.",
   guideCapitalStructureTitle: "Tőkeszerkezet és a Modigliani–Miller-tételek",

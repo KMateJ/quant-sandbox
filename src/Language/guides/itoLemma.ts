@@ -137,14 +137,14 @@ export const itoLemma: GuideLessonContent = {
     p("A jobb oldal együtthatói állandók, így a $[0, T]$ intervallumon közvetlenül összegezhető:"),
     eq("\\ln S_T = \\ln S_0 + \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) T + \\sigma W_T."),
     p("Ez a „Geometriai Brown-mozgás” leckében idézett megoldás, és a $-\\tfrac12\\sigma^2$ korrekció pontosan az Itô-féle extra tag. A naiv analízis $\\mu$ log-driftet jósolt volna."),
-    p("Példa: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. A logár évente $0{,}08 - \\tfrac12 \\cdot 0{,}2^2 = 0{,}06$ ütemben sodródik, nem $0{,}08$-cal. $T = 10$ év alatt a logár középpontja $\\ln 100 + 0{,}6$, ami $100\\,e^{0{,}6} \\approx 182{,}21$ medián árnak felel meg. A naiv $\\ln 100 + 0{,}8$ egyenes $100\\,e^{0{,}8} \\approx 222{,}55$-re mutatna, ami a **várható** ár, nem pedig az, ahol egy tipikus pálya végződik."),
+    p("Példa: $S_0 = 100$, $\\mu = 8\\%$, $\\sigma = 20\\%$. A logár éves driftje $0{,}08 - \\tfrac12 \\cdot 0{,}2^2 = 0{,}06$, nem $0{,}08$. $T = 10$ év alatt a logár középpontja $\\ln 100 + 0{,}6$, ami $100\\,e^{0{,}6} \\approx 182{,}21$ medián árnak felel meg. A naiv $\\ln 100 + 0{,}8$ egyenes $100\\,e^{0{,}8} \\approx 222{,}55$-re mutatna, ami a **várható** ár, nem pedig az, ahol egy tipikus pálya végződik."),
 
     {
       kind: "worked",
       title: "A részvényár mediánja és várható értéke az Itô-lemmából",
       steps: [
         { text: "Legyen $S_0 = 100$, $\\mu = 10\\%$, $\\sigma = 30\\%$ és $T = 5$. A logár éves driftje.", tex: "\\mu - \\tfrac12\\sigma^2", result: { value: 0.055, tolerance: 0.0005 } },
-        { text: "A medián ár öt év múlva: a logár középpontja, exponenciálisra emelve.", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T}", result: { value: 131.65, tolerance: 0.05 } },
+        { text: "A medián ár öt év múlva: a logár középpontjának exponenciálisa.", tex: "S_0\\,e^{(\\mu - \\frac12\\sigma^2)T}", result: { value: 131.65, tolerance: 0.05 } },
         { text: "A várható ár öt év múlva.", tex: "S_0\\,e^{\\mu T}", result: { value: 164.87, tolerance: 0.05 } },
         { text: "A várható érték és a medián hányadosa: az Itô-korrekció mérete a teljes időtávon.", tex: "e^{\\frac12\\sigma^2 T}", result: { value: 1.2523, tolerance: 0.0005 } },
       ],
@@ -152,7 +152,7 @@ export const itoLemma: GuideLessonContent = {
     {
       kind: "check",
       id: "ito-lemma/log-drift",
-      prompt: "Egy részvény geometriai Brown-mozgást követ $\\mu = 12\\%$ és $\\sigma = 40\\%$ paraméterekkel. Évente mekkora ütemben sodródik a logára? A választ százalékban add meg.",
+      prompt: "Egy részvény geometriai Brown-mozgást követ $\\mu = 12\\%$ és $\\sigma = 40\\%$ paraméterekkel. Mekkora a logár éves driftje? A választ százalékban add meg.",
       answer: { type: "number", value: 4, tolerance: 0.05, unit: "%" },
       explain: "Az Itô-lemma $\\ln S$-re a $\\mu - \\tfrac12\\sigma^2 = 0{,}12 - 0{,}08 = 0{,}04$ driftet adja. A hagyományos láncszabály 12%-ot mondana.",
     },
@@ -161,7 +161,7 @@ export const itoLemma: GuideLessonContent = {
 
     h("Összefoglalás"),
     list(
-      "Egy Itô-folyamat $dX = a\\,dt + b\\,dW$ szerint mozog: egy drift lépés plusz egy kb. $b\\sqrt{dt}$ méretű véletlen lépés.",
+      "Egy Itô-folyamat $dX = a\\,dt + b\\,dW$ szerint mozog: egy driftlépés plusz egy kb. $b\\sqrt{dt}$ méretű véletlen lépés.",
       "A Brown-növekmények négyzete az eltelt időt adja összegként: $(dW)^2 = dt$, míg $dt\\,dW$ és $(dt)^2$ eltűnik.",
       "Itô-lemma: $df = (f_t + a f_x + \\tfrac12 b^2 f_{xx})\\,dt + b f_x\\,dW$. A $\\tfrac12 b^2 f_{xx}$ tag a szokásos analízishez képest új.",
       "GBM esetén $\\ln S$-re alkalmazva $d\\ln S = (\\mu - \\tfrac12\\sigma^2)\\,dt + \\sigma\\,dW$ adódik.",

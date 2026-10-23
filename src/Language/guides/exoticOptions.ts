@@ -94,22 +94,22 @@ export const exoticOptions: GuideLessonContent = {
   ],
 
   hu: [
-    p("Ebben a sávban eddig minden opció kizárólag a végső $S_T$ ár függvényét fizette. Ez a lecke olyan opciókat vizsgál, amelyek kifizetése vagy nem szokványos, vagy a teljes árfolyamúttól függ: a digitális, a korlátos és az ázsiai opciókat. A „Kockázatsemleges valószínűségek” árazási szabályára, „A Black–Scholes-képlet” eredményére és a „Monte Carlo-opcióárazás” szimulációs módszerére épít, és megmutatja, hol nem működik már a „Statikus replikáció: Breeden–Litzenberger és Carr–Madan” lecke statikus replikációja."),
+    p("Ezen a pályán eddig minden opció kizárólag a végső $S_T$ ár függvényét fizette. Ez a lecke olyan opciókat vizsgál, amelyek kifizetése vagy nem szokványos, vagy a teljes árfolyamúttól függ: a digitális, a barrier és az ázsiai opciókat. A „Kockázatsemleges valószínűségek” árazási szabályára, „A Black–Scholes-képlet” eredményére és a „Monte Carlo-opcióárazás” szimulációs módszerére épít, és megmutatja, hol nem működik már a „Statikus replikáció: Breeden–Litzenberger és Carr–Madan” lecke statikus replikációja."),
 
     h("Egzotikus opciók"),
-    p("**Egzotikusnak** nevezünk egy opciót, ha nem egyszerű európai vagy amerikai vételi vagy eladási opció. A szokványos szerződéstől kétféleképpen lehet eltérni. A kifizetés lehet $S_T$ más függvénye, például egy rögzített pénzösszeg. Vagy a kifizetés lehet **útfüggő**: a $T$ előtti árfolyamoktól is függ, például az út maximumától vagy átlagától."),
+    p("**Egzotikusnak** nevezünk egy opciót, ha nem egyszerű európai vagy amerikai call vagy put. A szokványos szerződéstől kétféleképpen lehet eltérni. A kifizetés lehet $S_T$ más függvénye, például egy rögzített pénzösszeg. Vagy a kifizetés lehet **útfüggő**: a $T$ előtti árfolyamoktól is függ, például az út maximumától vagy átlagától."),
     p("A különbség a fedezésnél számít. Egy $f(S_T)$ európai kifizetés statikusan felépíthető kötvényekből, határidős ügyletből és egyszerű opciókból, ahogy a Carr–Madan-felbontás megmutatta. Útfüggő kifizetésre ez általában nem igaz: két út, amely ugyanabban az $S_T$-ben ér véget, eltérő összeget fizethet, így $S_T$ függvényét fizető eszközökből álló portfólió nem képes követni. Az árazási szabály viszont nem változik: az ár továbbra is az $X$ kifizetés diszkontált $\\mathbb{Q}$ szerinti várható értéke:"),
     eq("V_0 = e^{-rT}\\,\\mathbb{E}^{\\mathbb{Q}}[X]."),
 
     h("Digitális opciók"),
-    p("A **digitális** (készpénz-vagy-semmi) vételi opció $T$-ben 1-et fizet, ha $S_T > K$, egyébként semmit. Kifizetése az $\\mathbf{1}\\{S_T > K\\}$ indikátor: lépcső, nem rámpa. A várható kifizetés annak kockázatsemleges valószínűsége, hogy az ár a kötési ár fölött zár; „A Black–Scholes-képlet” ezt $N(d_2)$-ként azonosította. Diszkontálva"),
+    p("A **digitális** (cash-or-nothing) call $T$-ben 1-et fizet, ha $S_T > K$, egyébként semmit. Kifizetése az $\\mathbf{1}\\{S_T > K\\}$ indikátor: lépcső, nem rámpa. A várható kifizetés annak kockázatsemleges valószínűsége, hogy az ár a kötési ár fölött zár; „A Black–Scholes-képlet” ezt $N(d_2)$-ként azonosította. Diszkontálva"),
     eq("D_0 = e^{-rT}\\,\\mathbb{Q}(S_T > K) = e^{-rT} N(d_2), \\qquad d_2 = \\frac{\\ln(S_0/K) + (r - \\tfrac12\\sigma^2)T}{\\sigma\\sqrt{T}}."),
     p("$S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ és $T = 1$ mellett $d_2 = 0{,}03/0{,}2 = 0{,}15$, $N(d_2) \\approx 0{,}5596$ és $D_0 \\approx 0{,}5323$. A digitális opció még európai kifizetés: a „Pozíciók kombinálása” lecke szűk call-spreadjének határesete, ahol $1/h$ darab $K$ kötési árú callt veszünk és $1/h$ darab $K + h$ kötési árú callt eladunk, $h \\to 0$ mellett."),
-    p("A deltája mutatja, miért nehéz fedezni. $D_0$-t $S_0$ szerint deriválva $\\Delta = e^{-rT}\\varphi(d_2)/(S_0\\sigma\\sqrt{T})$, ahol $\\varphi$ a standard normális sűrűségfüggvény. Az $1/\\sqrt{T}$ tényező miatt a pénzen lévő opció deltája a lejárat közeledtével felrobban: egy évvel a lejárat előtt kb. $0{,}019$, egy hónappal előtte $0{,}069$, egy nappal előtte $0{,}381$. A lejárat közelében a fedezőpozíciónak szinte semmiből nagy pozícióba kell átlendülnie, ahogy az ár átlépi $K$-t."),
+    p("A deltája mutatja, miért nehéz fedezni. $D_0$-t $S_0$ szerint deriválva $\\Delta = e^{-rT}\\varphi(d_2)/(S_0\\sigma\\sqrt{T})$, ahol $\\varphi$ a standard normális sűrűségfüggvény. Az $1/\\sqrt{T}$ tényező miatt a pénznél lévő opció deltája a lejárat közeledtével felrobban: egy évvel a lejárat előtt kb. $0{,}019$, egy hónappal előtte $0{,}069$, egy nappal előtte $0{,}381$. A lejárat közelében a fedezőpozíciónak szinte semmiből nagy pozícióba kell átlendülnie, ahogy az ár átlépi $K$-t."),
     {
       kind: "check",
       id: "exotic-options/digital-price",
-      prompt: "Egy készpénz-vagy-semmi call 1-et fizet, ha $S_T > K$. $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ és $T = 1$ mellett mennyit ér ma?",
+      prompt: "Egy cash-or-nothing call 1-et fizet, ha $S_T > K$. $S_0 = K = 100$, $r = 5\\%$, $\\sigma = 20\\%$ és $T = 1$ mellett mennyit ér ma?",
       answer: { type: "number", value: 0.5323, tolerance: 0.002 },
       explain: "$d_2 = 0{,}15$ és $N(0{,}15) \\approx 0{,}5596$, így $D_0 = e^{-0{,}05} \\cdot 0{,}5596 \\approx 0{,}5323$.",
     },
@@ -123,8 +123,8 @@ export const exoticOptions: GuideLessonContent = {
       ],
     },
 
-    h("Korlátos opciók"),
-    p("A **korlátos opció** olyan egyszerű opció, amely kikapcsol vagy bekapcsol, ha az árfolyam eléri a $B$ szintet. A **kiütéses** (knock-out) opció megszűnik és semmit sem fizet, ha az árfolyam $T$ előtt eléri a korlátot; a **beütéses** (knock-in) opció csak akkor lép életbe, ha eléri. A leggyakoribb példa a $B > K$ korlátú **felső kiütéses vételi opció** (up-and-out call). Jelölje $M_T$ az út maximumát $T$-ig; ekkor a kifizetés"),
+    h("Barrier opciók"),
+    p("A **barrier opció** olyan egyszerű opció, amely kikapcsol vagy bekapcsol, ha az árfolyam eléri a $B$ szintet. A **kiütéses** (knock-out) opció megszűnik és semmit sem fizet, ha az árfolyam $T$ előtt eléri a korlátot; a **beütéses** (knock-in) opció csak akkor lép életbe, ha eléri. A leggyakoribb példa a $B > K$ korlátú **felső kiütéses call** (up-and-out call). Jelölje $M_T$ az út maximumát $T$-ig; ekkor a kifizetés"),
     eq("X = (S_T - K)^+\\,\\mathbf{1}\\{M_T < B\\}."),
     p("Ez a kifizetés sosem nagyobb az egyszerű callénál, ezért a felső kiütéses call olcsóbb. Éppen azokat az utakat veszíti el, amelyek a call tulajdonosának a legtöbbet érnék: a nagyot emelkedőket. Ha $B$ a $K$ felé csökken, az értéke nullához tart, hiszen egy $K \\ge B$ fölött záró útnak érintenie kellett $B$-t. Ha $B$ nő, a korlátot egyre ritkábban érik el, és az ár az egyszerű call árához közelít."),
     p("A volatilitás két irányba hat. Nagyobb $\\sigma$ mellett valószínűbbek a nagy végső kifizetések, ez emeli az egyszerű call árát, de valószínűbb az is, hogy az út eléri $B$-t. Ha a korlát közel van az azonnali árfolyamhoz, a második hatás erősebb, és a felső kiütéses call $\\sigma$ növelésével olcsóbbá válhat."),
@@ -133,13 +133,13 @@ export const exoticOptions: GuideLessonContent = {
       id: "exotic-options/up-and-out-cheaper",
       prompt: "Hasonlíts össze egy felső kiütéses callt ($B > K$ korláttal) az azonos $K$ kötési árú és $T$ lejáratú egyszerű callal.",
       answer: { type: "choice", options: ["A felső kiütéses call kevesebbet ér", "A felső kiütéses call többet ér", "Ugyanannyit érnek", "Attól függ, eléri-e az ár $B$-t"], correct: 0 },
-      explain: "Minden pályán a korlátos kifizetés legfeljebb akkora, mint az egyszerű, és a $B$-t elérő pályákon nulla, miközben az egyszerű call fizethet. Ezért olcsóbb, éppen a felső bekapcsolódó call értékével.",
+      explain: "Minden úton a barrier opció kifizetése legfeljebb akkora, mint az egyszerűé, és a $B$-t elérő utakon nulla, miközben az egyszerű call fizethet. Ezért olcsóbb, éppen a felső beütéses call értékével.",
     },
 
     h("Be–ki paritás"),
     p("Tartsunk egy felső beütéses és egy felső kiütéses callt ugyanazzal a $K$, $B$ és $T$ paraméterrel. Minden úton pontosan az egyik él, és az élő $(S_T - K)^+$-t fizet. Együtt tehát minden úton az egyszerű call kifizetését adják, így az egy ár törvénye szerint"),
     eq("C_0^{\\text{in}} + C_0^{\\text{out}} = C_0."),
-    p("A két korlátos opció közül az egyiket beárazva a másik ára is adott."),
+    p("A két barrier opció közül az egyiket beárazva a másik ára is adott."),
 
     h("Diszkrét és folytonos megfigyelés"),
     p("A szerződésnek rögzítenie kell, hogyan ellenőrzik a korlátot. A tankönyvi képletek **folytonos megfigyelést** feltételeznek: az árfolyamot minden pillanatban figyelik. A valódi szerződések gyakran **diszkrét megfigyelést** használnak, például minden napi záróárnál. Egy út két megfigyelési időpont között átlépheti $B$-t, majd észrevétlenül visszatérhet, ezért a diszkréten megfigyelt kiütéses opciót ritkábban ütik ki, és többet ér folytonosan megfigyelt változatánál. Az alábbi ábra az év során 100 időpontban figyel."),
@@ -169,14 +169,14 @@ export const exoticOptions: GuideLessonContent = {
       "Az 1-et fizető digitális call: $0{,}530$, szemben a zárt $e^{-rT}N(d_2) \\approx 0{,}532$ értékkel.",
     ),
     p("A korlát az egyszerű call értékének csaknem kétharmadát elviszi, mert 20%-os volatilitás mellett egy év alatt egy 30%-os emelkedés nem ritka."),
-    p("Az ábra ezekkel a beállításokkal dolgozik: $S_0 = 100$, $K = 100$, $r = 5\\%$, $T = 1$, 20 000 $\\mathbb{Q}$ alatt szimulált út, 100 megfigyelési időponttal. A csúszkák a $\\sigma$ volatilitást (10%-tól 50%-ig) és a $B$ korlátszintet (105-től 250-ig) állítják, az „Új minta” gomb új utakat sorsol. A grafikon a felső kiütéses call árát mutatja $B$ függvényében 105 és 250 között, az egyszerű call Black–Scholes-árával mint vízszintes vonallal és egy függőleges vonallal a választott $B$-nél. A kijelzők a Monte Carlo-val becsült egyszerű callt, az ázsiai callt, a $B$ korlátú felső kiütéses callt és az 1-et fizető digitális callt mutatják. Told le $B$-t $K$ felé, és figyeld, ahogy a korlátos opció ára nullára esik. Aztán emeld $\\sigma$-t: az egyszerű call drágul, a $B = 130$ korlátú felső kiütéses call viszont olcsóbb lesz, 20%-nál kb. $3{,}69$-ről 30%-nál kb. $1{,}88$-ra."),
+    p("Az ábra ezekkel a beállításokkal dolgozik: $S_0 = 100$, $K = 100$, $r = 5\\%$, $T = 1$, 20 000 $\\mathbb{Q}$ alatt szimulált út, 100 megfigyelési időponttal. A csúszkák a $\\sigma$ volatilitást (10%-tól 50%-ig) és a $B$ korlátszintet (105-től 250-ig) állítják, az „Új minta” gomb új utakat sorsol. A grafikon a felső kiütéses call árát mutatja $B$ függvényében 105 és 250 között, az egyszerű call Black–Scholes-árával mint vízszintes vonallal és egy függőleges vonallal a választott $B$-nél. A kijelzők a Monte Carlo-val becsült egyszerű callt, az ázsiai callt, a $B$ korlátú felső kiütéses callt és az 1-et fizető digitális callt mutatják. Told le $B$-t $K$ felé, és figyeld, ahogy a barrier opció ára nullára esik. Aztán emeld $\\sigma$-t: az egyszerű call drágul, a $B = 130$ korlátú felső kiütéses call viszont olcsóbb lesz, 20%-nál kb. $3{,}69$-ről 30%-nál kb. $1{,}88$-ra."),
     figure("exotic-prices"),
     note("Az útfüggő opciókra ritkán van zárt képlet, de ugyanazzal a szabállyal árazhatók, mint bármely más követelés: szimulálj utakat $\\mathbb{Q}$ alatt, értékeld ki a kifizetést minden úton, átlagold és diszkontáld."),
 
     h("Összefoglalás"),
     list(
       "Egzotikus az az opció, amelynek kifizetése nem szokványos vagy az úttól függ; útfüggő kifizetés általában nem replikálható statikusan egyszerű opciókkal.",
-      "A digitális call 1-et fizet, ha $S_T > K$; ára $e^{-rT}N(d_2)$, deltája a lejárat előtt a pénzen kiugrik.",
+      "A digitális call 1-et fizet, ha $S_T > K$; ára $e^{-rT}N(d_2)$, deltája a lejárat előtt a pénznél kiugrik.",
       "A felső kiütéses call olcsóbb az egyszerűnél, értéke nullához tart, ahogy $B$ közelít $K$-hoz, és teljesül $C_0^{\\text{in}} + C_0^{\\text{out}} = C_0$; diszkrét megfigyelésnél ritkábban ütik ki.",
       "Az átlagolás csökkenti a volatilitást, ezért a számtani átlagú ázsiai call olcsóbb az egyszerűnél, és nincs rá zárt képlet.",
       "A Monte Carlo-módszer ugyanazokból a megfigyelési időpontokban szimulált utakból mindegyiket beárazza.",

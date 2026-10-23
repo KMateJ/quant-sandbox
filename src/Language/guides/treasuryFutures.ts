@@ -141,17 +141,17 @@ export const treasuryFutures: GuideLessonContent = {
     p("Ha minden kötvény hozama pontosan 6% lenne, minden ár $100 \\cdot CF$ lenne, minden $P/CF$ arány 100, és minden kötvény egyformán olcsó. A konverziós faktorok csak a névleges hozamon pontosak."),
     p("Bármely más hozamon a $P/CF$ arány a kötvény árát mutatja a 6%-os hozamhoz tartozó árához képest. A „Duráció és konvexitás” leckéből tudjuk, hogy ez a relatív változás a durációtól függ. 6%-os hozamon A, B és C Macaulay-durációja körülbelül 8,59, 10,66 és 13,16 év."),
     list(
-      "Ha a hozamok 6% fölé emelkednek, minden ár esik, és relatíve a hosszú durációjú C esik a legjobban. Neki lesz a legkisebb $P/CF$ aránya, így ő lesz a CTD.",
-      "Ha a hozamok 6% alá csökkennek, minden ár emelkedik, és a rövid durációjú A emelkedik a legkevésbé. Most neki a legkisebb a $P/CF$ aránya, így ő lesz a CTD.",
+      "Ha a hozamok 6% fölé emelkednek, minden ár esik, és relatíve a hosszú durációjú C esik a legtöbbet. Ennek lesz a legkisebb $P/CF$ aránya, így ez lesz a CTD.",
+      "Ha a hozamok 6% alá csökkennek, minden ár emelkedik, és a rövid durációjú A emelkedik a legkevésbé. Most ennek a legkisebb a $P/CF$ aránya, így ez lesz a CTD.",
     ),
     p("Számpélda 4%-os egységes hozamon: az árak $P_A = 91{,}89$, $P_B = 111{,}12$ és $P_C = 146{,}87$. Az arányok $91{,}89/0{,}7792 = 117{,}93$, $111{,}12/0{,}9029 = 123{,}07$ és $146{,}87/1{,}1278 = 130{,}22$. Tehát $F = 117{,}93$, és A a CTD. A nettó költségek: A-ra 0, B-re $111{,}12 - 117{,}93 \\times 0{,}9029 = 4{,}64$, C-re 13,86."),
     p("8%-on megfordul a sorrend. Számoljuk végig lépésről lépésre:"),
     {
       kind: "worked",
-      title: "A legolcsóbban szállítható kötvény 8%-os lapos hozamnál",
+      title: "A legolcsóbban szállítható kötvény 8%-os egységes hozamnál",
       steps: [
-        { text: "Az A kötvény (3%-os szelvény, 10 év) ára 8%-on.", tex: "P_A = \\sum_{t=1}^{10} \\frac{3}{1{,}08^t} + \\frac{100}{1{,}08^{10}}", result: { value: 66.45, tolerance: 0.02 } },
-        { text: "A C kötvény (7%-os szelvény, 25 év) ára 8%-on.", tex: "P_C = \\sum_{t=1}^{25} \\frac{7}{1{,}08^t} + \\frac{100}{1{,}08^{25}}", result: { value: 89.33, tolerance: 0.02 } },
+        { text: "Az A kötvény (3%-os kupon, 10 év) ára 8%-on.", tex: "P_A = \\sum_{t=1}^{10} \\frac{3}{1{,}08^t} + \\frac{100}{1{,}08^{10}}", result: { value: 66.45, tolerance: 0.02 } },
+        { text: "A C kötvény (7%-os kupon, 25 év) ára 8%-on.", tex: "P_C = \\sum_{t=1}^{25} \\frac{7}{1{,}08^t} + \\frac{100}{1{,}08^{25}}", result: { value: 89.33, tolerance: 0.02 } },
         { text: "Az A arányszáma. B-re ugyanezek a lépések 82,32-t adnak.", tex: "P_A / CF_A", result: { value: 85.28, tolerance: 0.05 } },
         { text: "A C arányszáma. Ez a legkisebb a három közül, így C a CTD, és az arányszáma a határidős ár.", tex: "F = P_C / CF_C", result: { value: 79.2, tolerance: 0.05 } },
         { text: "Az A nettó szállítási költsége (B-é 2,81, C-é 0).", tex: "P_A - F \\cdot CF_A", result: { value: 4.74, tolerance: 0.05 } },
