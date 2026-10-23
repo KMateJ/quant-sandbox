@@ -1,13 +1,14 @@
 import { useI18n } from "../../i18n";
+import { useMemo } from "react";
 import { buildFan, HERO_FAN } from "./home.fan.math";
 
-const FAN = buildFan(HERO_FAN);
 const GRID = [0.25, 0.5, 0.75].map((f) => HERO_FAN.yTop + f * (HERO_FAN.yBottom - HERO_FAN.yTop));
 const HIST_X = 612;
 
 /// Hero figure: seeded GBM paths with the terminal distribution; the draw-in animation is CSS only.
-export default function HomeFanFigure() {
+export default function HomeFanFigure({ seed }: { seed: number }) {
   const { t } = useI18n();
+  const FAN = useMemo(() => buildFan(HERO_FAN, seed), [seed]);
   const { x0, x1, yTop, yBottom } = HERO_FAN;
 
   return (

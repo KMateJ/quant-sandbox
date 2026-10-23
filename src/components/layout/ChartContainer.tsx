@@ -7,6 +7,7 @@ type ChartContainerProps = {
   /// Fixed pixel height; omit to let the chart fill available space.
   height?: number;
   className?: string;
+  id?: string;
 };
 
 /// Dominant, edge-to-edge frame for a data visualisation.
@@ -16,10 +17,11 @@ export default function ChartContainer({
   children,
   height,
   className = "",
+  id,
 }: ChartContainerProps) {
   const classes = ["chart-container", className].filter(Boolean).join(" ");
   return (
-    <figure className={classes}>
+    <figure className={classes} id={id}>
       {(title || actions) && (
         <figcaption className="chart-container-head">
           {title ? <span className="chart-container-title">{title}</span> : <span />}

@@ -1,0 +1,54 @@
+// Guide tab of the desk help drawer (scoped to .hdesk).
+.hdesk {
+  .hdesk-guide-sub {
+    margin: var(--space-3, 12px) 0 var(--space-1, 4px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted, inherit);
+  }
+
+  .hdesk-guide {
+    details.hdesk-help-section > summary {
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker { display: none; }
+      &::before { content: "+ "; font-family: var(--font-mono, monospace); }
+    }
+
+    details[open].hdesk-help-section > summary::before { content: "\2212  "; }
+
+    ol,
+    ul { margin: 0 0 var(--space-2, 8px); padding-left: 1.25rem; }
+    li { margin-bottom: var(--space-1, 4px); }
+  }
+
+  .hdesk-guide-panels,
+  .hdesk-guide-objectives {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .hdesk-guide-panels li {
+    display: flex;
+    gap: var(--space-2, 8px);
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-2, 8px);
+
+    .hdesk-help-p { margin: 0; flex: 1; }
+    .hdesk-btn { flex: none; }
+  }
+
+  .hdesk-guide-objectives li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2, 8px);
+
+    &[data-status="pass"] strong { color: var(--hd-up, inherit); }
+    &[data-status="fail"] strong,
+    &[data-status="atRisk"] strong { color: var(--hd-down, inherit); }
+  }
+}

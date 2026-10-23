@@ -29,6 +29,7 @@ export const seoHu = {
     seoDescHeston: "Szimuláld a Heston-modellt: visszahúzó sztochasztikus variancia, vol-of-vol és korreláció, mintapályákkal és Monte Carlo opcióárazással.",
     seoTitleDeltaHedging: "Deltafedezés szimulátor opciókhoz",
     seoDescDeltaHedging: "Szimuláld egy call opció diszkrét deltafedezését: a replikáló portfólió szimulált árfolyampályán követi az opció értékét, a visszamaradó fedezési hibával.",
+    seoDescHedgingDesk: "Kereskedj egy short call könyvvel napról napra: végy és adj el részvényt és opciót, tartsd a deltát a sávban, és teljesítsd a fedezési küldetéseket.",
     seoTitleBondPricing: "Kötvényárazó kalkulátor és ár–hozam görbe",
     seoDescBondPricing: "Értékelj kötvényt a pénzáramlásaiból: diszkontálás jelenértékre, ár, duráció, konvexitás és húzható ár–hozam görbe.",
     seoTitleYieldCurve: "Hozamgörbe-bootstrapping, spot és forward kamatlábak",

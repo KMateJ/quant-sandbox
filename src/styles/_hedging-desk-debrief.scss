@@ -1,0 +1,233 @@
+/* Hedging desk — Debrief screen (plan 06). Scoped under `.hdesk`; tokens come from `_hedging-desk.scss`. */
+
+.hdesk-debrief {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.hdesk-debrief-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+
+  > * { background: var(--surface); min-width: 0; }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .hdesk-debrief-chart { grid-column: 1 / -1; }
+  }
+}
+
+// #region Verdict banner
+.hdesk-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 14px 16px;
+  background: var(--surface-soft);
+
+  &.is-pass .hdesk-verdict-word { color: var(--positive); }
+  &.is-fail .hdesk-verdict-word { color: var(--negative); }
+}
+
+.hdesk-verdict-word {
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hdesk-verdict-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0;
+
+  dd {
+    margin: 2px 0 0;
+    font-size: 16px;
+    text-align: left;
+  }
+}
+// #endregion
+
+// #region Pending state
+.hdesk-debrief-note {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.hdesk-debrief-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hdesk-debrief-btn {
+  min-height: 36px;
+  padding: 0 14px;
+  background: var(--surface-muted);
+  color: var(--text);
+  border: 1px solid var(--hdesk-key-border);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible { background: var(--surface-soft); }
+
+  &--primary {
+    background: var(--primary);
+    color: var(--hdesk-on-accent);
+    border-color: var(--primary);
+
+    &:hover,
+    &:focus-visible { background: var(--primary); filter: brightness(1.1); }
+  }
+}
+// #endregion
+
+// #region Objectives
+.hdesk-debrief-objectives {
+  margin: 0;
+  padding-left: 20px;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+
+    > .hdesk-label { grid-column: 1; }
+    > strong { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  }
+}
+// #endregion
+
+// #region Attribution bars
+.hdesk-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.9fr) minmax(80px, 1.4fr) minmax(72px, auto);
+    align-items: center;
+    gap: 10px;
+  }
+
+  li.is-net {
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    font-weight: 600;
+  }
+}
+
+.hdesk-attr-track {
+  position: relative;
+  height: 12px;
+  background: var(--surface-muted);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 50%;
+    width: 1px;
+    background: var(--chart-reference);
+  }
+}
+
+.hdesk-attr-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  &.is-up { background: var(--positive); }
+  &.is-down { background: var(--negative); }
+}
+// #endregion
+
+// #region History chart bars
+.hdesk-daily-bars rect {
+  opacity: 0.55;
+
+  &.is-up { fill: var(--positive); }
+  &.is-down { fill: var(--negative); }
+}
+// #endregion
+
+// #region Theta vs gamma
+.hdesk-why {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+
+.hdesk-why-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--surface);
+
+  strong {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+  }
+}
+// #endregion
+
+// #region Policy table
+.hdesk-debrief-tablewrap { overflow-x: auto; }
+
+.hdesk-debrief-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+
+    &.hdesk-num { text-align: right; }
+  }
+
+  tbody th {
+    font-weight: 400;
+    text-align: left;
+  }
+
+  tr.is-own {
+    background: color-mix(in srgb, var(--primary) 16%, transparent);
+
+    th { color: var(--primary); font-weight: 600; }
+  }
+}
+// #endregion

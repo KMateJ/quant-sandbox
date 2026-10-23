@@ -26,3 +26,25 @@ export type FanArt = {
   bins: { y: number; h: number; w: number }[];
   y0: number;
 };
+
+export interface HomeFeature {
+  id: "graph" | "desk" | "heston" | "frontier";
+  path: string;
+  image: string;
+}
+export type CallCurvesParams = {
+  k: number;
+  r: number;
+  sigma: number;
+  taus: number[];
+  sLo: number;
+  sHi: number;
+  vHi: number;
+  x0: number;
+  x1: number;
+  yTop: number;
+  yBottom: number;
+  steps: number;
+};
+export type CallCurvesArt = { curves: string[]; payoff: string; xK: number };
+export type HeroPick = { variant: "fan" | "calls"; seed: number };

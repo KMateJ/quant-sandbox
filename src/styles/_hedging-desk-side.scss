@@ -1,0 +1,405 @@
+/* =========================================================
+   Hedging desk — side columns (mission, risk, blotter, ticket, chain)
+   Scoped under `.hdesk`; selected states use a background tint, never a left bar.
+========================================================= */
+
+.hdesk {
+  --hdesk-tint: rgba(251, 139, 30, 0.16);
+  --hdesk-band-tint: rgba(79, 179, 255, 0.18);
+
+  // #region Shared rows + buttons
+  .hdesk-kv {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    dt {
+      color: var(--muted);
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  .hdesk-btn {
+    min-height: 28px;
+    padding: 0 10px;
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 12px;
+    border: 1px solid var(--hdesk-key-border);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--hdesk-tint);
+      color: var(--primary);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+  // #endregion
+
+  // #region Mission
+  .hdesk-mission-title {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .hdesk-mission-brief {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .hdesk-clock {
+    position: relative;
+    height: 6px;
+    background: var(--surface-soft);
+  }
+
+  .hdesk-clock-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--primary);
+  }
+
+  .hdesk-objectives {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hdesk-objective {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hdesk-objective-status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  .hdesk-objective-value {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .hdesk-objective--atRisk .hdesk-objective-status { color: var(--primary); }
+  .hdesk-objective--pass .hdesk-objective-status { color: var(--positive); }
+  .hdesk-objective--fail .hdesk-objective-status { color: var(--negative); }
+  // #endregion
+
+  // #region Risk
+  .hdesk-netdelta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+  }
+
+  .hdesk-netdelta-value {
+    font-size: 22px;
+
+    small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+  }
+
+  .hdesk-bandtag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .hdesk-meter {
+    position: relative;
+    height: 14px;
+    margin-bottom: 14px;
+    background: var(--surface-soft);
+  }
+
+  .hdesk-meter-band {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: var(--hdesk-band-tint);
+  }
+
+  .hdesk-meter-zero {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--chart-reference);
+  }
+
+  .hdesk-meter-mark {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    width: 3px;
+    margin-left: -1px;
+    background: var(--positive);
+
+    &--out {
+      background: var(--negative);
+    }
+  }
+
+  .hdesk-meter-scale {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+  }
+
+  .hdesk-greekgrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    background: var(--border);
+
+    > div {
+      padding: 5px 6px;
+      background: var(--surface);
+    }
+
+    dd {
+      margin: 0;
+      font-size: 13px;
+      text-align: left;
+    }
+  }
+  // #endregion
+
+  // #region Blotter
+  .hdesk-blotter {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hdesk-blotter-row {
+    display: grid;
+    grid-template-columns: 34px 40px minmax(0, 1fr);
+    gap: 6px;
+    padding: 3px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+
+  .hdesk-blotter-kind {
+    color: var(--muted);
+  }
+
+  .hdesk-blotter-row--breach .hdesk-blotter-kind,
+  .hdesk-blotter-row--rejected .hdesk-blotter-kind { color: var(--negative); }
+  .hdesk-blotter-row--fill .hdesk-blotter-kind { color: var(--positive); }
+  .hdesk-blotter-row--gap .hdesk-blotter-kind,
+  .hdesk-blotter-row--ivShift .hdesk-blotter-kind,
+  .hdesk-blotter-row--assignment .hdesk-blotter-kind,
+  .hdesk-blotter-row--expiry .hdesk-blotter-kind { color: var(--primary); }
+
+  .hdesk-blotter-text {
+    overflow-wrap: anywhere;
+  }
+  // #endregion
+
+  // #region Order ticket
+  .hdesk-ticket-inst {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--primary);
+  }
+
+  .hdesk-sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+
+  .hdesk-side {
+    min-height: 44px;
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--hdesk-key-border);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &--buy[aria-pressed="true"] {
+      background: var(--positive);
+      color: var(--hdesk-on-accent);
+    }
+
+    &--sell[aria-pressed="true"] {
+      background: var(--negative);
+      color: var(--hdesk-on-accent);
+    }
+  }
+
+  .hdesk-qty {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    input {
+      min-height: 32px;
+      padding: 0 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      border: 1px solid var(--hdesk-key-border);
+      border-radius: var(--radius-xs);
+    }
+  }
+
+  .hdesk-presets {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .hdesk-submit {
+    min-height: 44px;
+    padding: 0 10px;
+    color: var(--hdesk-on-accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &--buy { background: var(--positive); }
+    &--sell { background: var(--negative); }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  .hdesk-expired {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background: var(--hdesk-tint);
+
+    p {
+      margin: 0;
+    }
+  }
+  // #endregion
+
+  // #region Option chain
+  .hdesk-chain-head,
+  .hdesk-chain-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hdesk-chain-head {
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  .hdesk-chain-strike {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hdesk-chain-row--atm .hdesk-chain-strike {
+    color: var(--primary);
+    background: var(--surface-soft);
+  }
+
+  .hdesk-chain-side {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    min-height: 28px;
+    padding: 0 6px;
+    align-items: center;
+    background: transparent;
+    color: var(--text);
+    font-size: 11px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--hdesk-tint);
+    }
+
+    &:disabled {
+      cursor: default;
+      color: var(--muted);
+    }
+  }
+
+  .hdesk-chain-delta {
+    color: var(--muted);
+  }
+  // #endregion
+
+  // #region Touch sizes
+  @media (max-width: 767px), (pointer: coarse) {
+    .hdesk-btn,
+    .hdesk-chain-side {
+      min-height: 44px;
+    }
+  }
+  // #endregion
+}

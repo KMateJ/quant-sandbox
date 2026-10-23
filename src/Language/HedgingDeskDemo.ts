@@ -1,0 +1,16 @@
+export const hedgingDeskDemoEn = {
+  hdDemoWatch: "Watch the playthrough",
+  hdDemoWatchFirst: "New here? Watch a two-minute playthrough",
+  hdDemoBadge: "DEMO",
+  hdDemoBarAria: "Playthrough controls",
+  hdDemoStepOf: "Step {{n}} of {{total}}",
+  hdDemoPlay: "Play",
+  hdDemoPause: "Pause",
+  hdDemoNext: "Next",
+  hdDemoBack: "Back",
+  hdDemoTakeOver: "Take the desk",
+  hdDemoExit: "Exit demo",
+  hdDemoMissions: "Missions",
+  hdDemoTakeOverHint: "The book stays as it is; the function keys are yours.",
+  hdDemoKeysHint: "← → step · space play/pause · Esc exit",
+};

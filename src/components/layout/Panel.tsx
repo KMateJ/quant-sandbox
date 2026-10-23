@@ -10,6 +10,7 @@ type PanelProps = {
   /// Remove inner padding for edge-to-edge content such as charts.
   flush?: boolean;
   className?: string;
+  id?: string;
 };
 
 /// Reusable workspace panel: optional header (title + actions), body, optional footer.
@@ -21,13 +22,14 @@ export default function Panel({
   dominant = false,
   flush = false,
   className = "",
+  id,
 }: PanelProps) {
   const classes = ["panel", dominant ? "dominant" : "", className]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <section className={classes}>
+    <section className={classes} id={id}>
       {(title || actions) && (
         <header className="panel-head">
           {title ? <h2 className="panel-title">{title}</h2> : <span />}

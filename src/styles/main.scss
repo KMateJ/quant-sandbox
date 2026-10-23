@@ -6,6 +6,7 @@
 @use "shell";
 @use "primitives";
 @use "home";
+@use "home-features";
 @use "playback";
 @use "lab-primitives";
 @use "tvm";
@@ -29,5 +30,14 @@
 @use "stochastic-models";
 @use "surface3d";
 @use "delta-hedging";
+@use "hedging-desk";
+@use "hedging-desk-side";
+@use "hedging-desk-charts";
+@use "hedging-desk-debrief";
+@use "hedging-desk-missions";
+@use "hedging-desk-demo";
+@use "hedging-desk-help";
+@use "hedging-desk-help-next";
+@use "hedging-desk-help-whatif";
 @use "search";
 @use "settings";

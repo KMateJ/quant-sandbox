@@ -50,6 +50,18 @@ import { playbackEn } from "./Playback";
 import { labControlsEn } from "./LabControls";
 import { bondInputsEn } from "./BondInputs";
 import { labPrimitivesEn } from "./LabPrimitives";
+import { hedgingDeskEn } from "./HedgingDesk";
+import { hedgingDeskMissionsEn } from "./HedgingDeskMissions";
+import { hedgingDeskSideEn } from "./HedgingDeskSide";
+import { hedgingDeskDebriefEn } from "./HedgingDeskDebrief";
+import { hedgingDeskChartsEn } from "./HedgingDeskCharts";
+import { hedgingDeskMissionScreenEn } from "./HedgingDeskMissionScreen";
+import { hedgingDeskDemoEn } from "./HedgingDeskDemo";
+import { hedgingDeskDemoStepsEn } from "./HedgingDeskDemoSteps";
+import { hedgingDeskHelpEn } from "./HedgingDeskHelp";
+import { hedgingDeskHelpAdviceEn } from "./HedgingDeskHelpAdvice";
+import { hedgingDeskHelpGuideEn } from "./HedgingDeskHelpGuide";
+import { hedgingDeskHelpWhatIfEn } from "./HedgingDeskHelpWhatIf";
 
 /// Every English UI string; the source of truth for `TranslationKey`.
 export const en = {
@@ -105,6 +117,18 @@ export const en = {
   ...themeEn,
   ...notFoundEn,
   ...seoEn,
+  ...hedgingDeskEn,
+  ...hedgingDeskMissionsEn,
+  ...hedgingDeskSideEn,
+  ...hedgingDeskDebriefEn,
+  ...hedgingDeskChartsEn,
+  ...hedgingDeskMissionScreenEn,
+  ...hedgingDeskDemoEn,
+  ...hedgingDeskDemoStepsEn,
+  ...hedgingDeskHelpEn,
+  ...hedgingDeskHelpAdviceEn,
+  ...hedgingDeskHelpGuideEn,
+  ...hedgingDeskHelpWhatIfEn,
   navGuide: "Guide",
 };
 

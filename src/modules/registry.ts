@@ -181,7 +181,11 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleDeltaHedging", descKey: "seoDescDeltaHedging" },
     about: moduleAbout("DeltaHedging"),
     relatedGuides: ["delta-hedging", "multi-step-trees"],
-    Component: lazy(() => import("../features/delta-hedging/DeltaHedgingView")),
+    subNav: [
+      { id: "lab", labelKey: "navDeltaHedgingLab", to: "/delta-hedging" },
+      { id: "desk", labelKey: "navHedgingDesk", descKey: "seoDescHedgingDesk", seoTitle: "Delta Hedging Trading Simulator", to: "/delta-hedging/desk" },
+    ],
+    Component: lazy(() => import("../features/delta-hedging/DeltaHedgingPages")),
   },
   {
     id: "bond-pricing",

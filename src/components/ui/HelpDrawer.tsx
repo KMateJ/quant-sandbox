@@ -12,6 +12,9 @@ type HelpDrawerProps = {
   id?: string;
   bodyRef?: RefObject<HTMLDivElement | null>;
   returnFocusRef?: RefObject<HTMLElement | null>;
+  /// Portal target; defaults to `document.body`.
+  container?: Element | null;
+  className?: string;
 };
 
 /// Slide-in drawer for long-form contextual help (progressive disclosure, level 3).
@@ -25,6 +28,8 @@ export default function HelpDrawer({
   id,
   bodyRef,
   returnFocusRef,
+  container,
+  className,
 }: HelpDrawerProps) {
   const panel = useRef<HTMLElement>(null);
   const modal = useMediaQuery("(max-width: 900px)");
@@ -80,7 +85,7 @@ export default function HelpDrawer({
   if (!open) return null;
 
   return createPortal(
-    <div className={`help-drawer${modal ? " help-drawer--modal" : ""}`}>
+    <div className={`help-drawer${modal ? " help-drawer--modal" : ""}${className ? ` ${className}` : ""}`}>
       {modal && <button
         type="button"
         className="help-drawer-backdrop"
@@ -116,6 +121,6 @@ export default function HelpDrawer({
         <div ref={bodyRef} className="help-drawer-body">{children}</div>
       </aside>
     </div>,
-    document.body
+    container ?? document.body
   );
 }

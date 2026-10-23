@@ -1,0 +1,89 @@
+// Desk help drawer. Mirrors HELP_ANCHORS in features/hedging-desk/help/help.config.ts.
+$hd-help-anchors: quotes, mission, risk, blotter, price, delta, pnl, matrix, profile, positions, ticket, chain, keys;
+
+// #region Drawer
+.hdesk-help.help-drawer { z-index: 1010; }
+
+.hdesk-help .help-drawer-panel {
+  width: min(100vw, 460px);
+  font-family: inherit;
+}
+
+.hdesk-help-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hdesk-help-tab {
+  padding: 8px 12px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+
+  &[aria-selected="true"] {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+}
+
+.hdesk-help-hint {
+  margin: 16px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+// #endregion
+
+// #region Show me
+@each $a in $hd-help-anchors {
+  .hdesk[data-help-anchor="#{$a}"] #hd-#{$a} {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+
+  .hdesk[data-help-anchor="#{$a}"] #hd-#{$a} > .panel-head {
+    background: color-mix(in srgb, var(--primary) 18%, var(--surface-soft));
+  }
+}
+// #endregion
+
+// #region Shared content classes (plans 06-08)
+.hdesk-help-section { display: block; margin-bottom: 12px; }
+
+.hdesk-help-h {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.hdesk-help-p { margin: 0 0 6px; font-size: 12px; line-height: 1.5; }
+
+.hdesk-help-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+.hdesk-help-kv {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  margin: 0 0 8px;
+  font-size: 12px;
+
+  dt { color: var(--text-muted); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+}
+
+.hdesk-help-tone--urgent { background: color-mix(in srgb, var(--negative) 14%, transparent); }
+.hdesk-help-tone--suggest { background: color-mix(in srgb, var(--primary) 14%, transparent); }
+.hdesk-help-tone--info { background: color-mix(in srgb, var(--surface-soft) 70%, transparent); }
+.hdesk-help-tone--done { background: color-mix(in srgb, var(--positive) 14%, transparent); }
+// #endregion

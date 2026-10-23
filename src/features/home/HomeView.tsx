@@ -1,6 +1,7 @@
 import { useI18n } from "../../i18n";
 import HomeHero from "./HomeHero";
 import HomeStats from "./HomeStats";
+import HomeFeatures from "./HomeFeatures";
 import HomeLabs from "./HomeLabs";
 import HomeTracks from "./HomeTracks";
 import HomeRoadmap from "./HomeRoadmap";
@@ -12,6 +13,7 @@ export function HomeView() {
     <div className="view-main home-view">
       <HomeHero />
       <HomeStats />
+      <HomeFeatures />
       <HomeLabs />
       <HomeTracks />
       <HomeRoadmap />

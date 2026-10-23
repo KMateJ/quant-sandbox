@@ -1,0 +1,93 @@
+// Hedging desk centre column: charts, scenario matrix, positions (plan 04).
+
+.hdesk {
+  .hdesk-chart {
+    position: relative;
+    width: 100%;
+
+    &--price { height: clamp(240px, 34vh, 340px); }
+    &--shares { height: 100px; border-top: 1px solid var(--border); }
+    &--half { height: 180px; }
+  }
+
+  .hdesk-band {
+    fill: var(--positive);
+    fill-opacity: 0.1;
+  }
+
+  .hdesk-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .hdesk-matrix,
+  .hdesk-positions {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 4px 8px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    tbody th,
+    tfoot th {
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+
+  .hdesk-matrix {
+    &__cell {
+      color: var(--text);
+
+      &--up { background: color-mix(in srgb, var(--positive) calc(var(--hdesk-tint) * 100%), transparent); }
+      &--down { background: color-mix(in srgb, var(--negative) calc(var(--hdesk-tint) * 100%), transparent); }
+    }
+  }
+
+  .hdesk-matrix__note {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.6875rem;
+  }
+
+  // Side-by-side chart pairs only once the centre column is wide enough for readable ticks.
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .hdesk-pair { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .hdesk-positions__total {
+    th,
+    td {
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 0;
+    }
+  }
+}
+
+.hdesk .hdesk-key {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  color: var(--muted);
+  font-size: 0.6875rem;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+}

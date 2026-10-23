@@ -50,6 +50,18 @@ import { playbackHu } from "./Playback.hu";
 import { labControlsHu } from "./LabControls.hu";
 import { bondInputsHu } from "./BondInputs.hu";
 import { labPrimitivesHu } from "./LabPrimitives.hu";
+import { hedgingDeskHu } from "./HedgingDesk.hu";
+import { hedgingDeskMissionsHu } from "./HedgingDeskMissions.hu";
+import { hedgingDeskSideHu } from "./HedgingDeskSide.hu";
+import { hedgingDeskDebriefHu } from "./HedgingDeskDebrief.hu";
+import { hedgingDeskChartsHu } from "./HedgingDeskCharts.hu";
+import { hedgingDeskMissionScreenHu } from "./HedgingDeskMissionScreen.hu";
+import { hedgingDeskDemoHu } from "./HedgingDeskDemo.hu";
+import { hedgingDeskDemoStepsHu } from "./HedgingDeskDemoSteps.hu";
+import { hedgingDeskHelpHu } from "./HedgingDeskHelp.hu";
+import { hedgingDeskHelpAdviceHu } from "./HedgingDeskHelpAdvice.hu";
+import { hedgingDeskHelpGuideHu } from "./HedgingDeskHelpGuide.hu";
+import { hedgingDeskHelpWhatIfHu } from "./HedgingDeskHelpWhatIf.hu";
 import type { TranslationKey } from "./index.en";
 
 /// Every Hungarian UI string, loaded lazily (`loadLanguage` in languageLoader.ts) and checked to have exactly the English keys.
@@ -106,6 +118,18 @@ export const hu = {
   ...themeHu,
   ...notFoundHu,
   ...seoHu,
+  ...hedgingDeskHu,
+  ...hedgingDeskMissionsHu,
+  ...hedgingDeskSideHu,
+  ...hedgingDeskDebriefHu,
+  ...hedgingDeskChartsHu,
+  ...hedgingDeskMissionScreenHu,
+  ...hedgingDeskDemoHu,
+  ...hedgingDeskDemoStepsHu,
+  ...hedgingDeskHelpHu,
+  ...hedgingDeskHelpAdviceHu,
+  ...hedgingDeskHelpGuideHu,
+  ...hedgingDeskHelpWhatIfHu,
   navGuide: "Útmutató",
 } satisfies Record<TranslationKey, string>;
 

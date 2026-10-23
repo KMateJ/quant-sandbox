@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "../../i18n";
 import { START_LESSON } from "./home.data";
-import HomeFanFigure from "./HomeFanFigure";
+import HomeHeroFigure from "./HomeHeroFigure";
 
 /// Landing hero: headline, lede, two calls to action and the fan figure.
 export default function HomeHero() {
@@ -20,7 +20,7 @@ export default function HomeHero() {
           <a href="#labs" className="home-btn">{t("homeCtaLabs")}</a>
         </div>
       </div>
-      <HomeFanFigure />
+      <HomeHeroFigure />
     </section>
   );
 }

@@ -1,0 +1,25 @@
+// Next move tab: item spacing and action row. Tones and text come from _hedging-desk-help.scss.
+.hdesk-advice-list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.hdesk-advice {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+
+.hdesk-advice-title {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.hdesk-advice .hdesk-help-actions { margin-top: 2px; }
+
+.hdesk-advice-count {
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+}

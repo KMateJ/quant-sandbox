@@ -10,8 +10,8 @@ export const HERO_FAN: FanParams = {
 const fmt = (n: number) => n.toFixed(1);
 
 /// Simulate `p.paths` GBM paths and lay them out as SVG path strings (deterministic per seed).
-export function buildFan(p: FanParams): FanArt {
-  const rng = makeRng(p.seed);
+export function buildFan(p: FanParams, seed = p.seed): FanArt {
+  const rng = makeRng(seed);
   const dt = 1 / p.steps;
   const drift = (p.mu - (p.sigma * p.sigma) / 2) * dt;
   const vol = p.sigma * Math.sqrt(dt);

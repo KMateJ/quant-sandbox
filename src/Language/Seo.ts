@@ -29,6 +29,7 @@ export const seoEn = {
     seoDescHeston: "Simulate the Heston model: mean-reverting stochastic variance, vol-of-vol and correlation, with sample paths and Monte Carlo option pricing.",
     seoTitleDeltaHedging: "Delta Hedging Simulator for Options",
     seoDescDeltaHedging: "Simulate discrete delta hedging of a call option: a replicating portfolio tracks the option value, rebalanced along a simulated stock path, with the residual hedge error.",
+    seoDescHedgingDesk: "Trade a short call book day by day: buy and sell stock and options, keep delta inside a band and pass hedging missions on simulated paths.",
     seoTitleBondPricing: "Bond Pricing Calculator & Price–Yield Curve",
     seoDescBondPricing: "Value a bond from its cash flows: discounting to present value, price, duration, convexity and a draggable price–yield curve.",
     seoTitleYieldCurve: "Yield Curve Bootstrapping, Spot & Forward Rates",
