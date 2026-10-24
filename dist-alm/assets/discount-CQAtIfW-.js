@@ -1,0 +1,1 @@
+function e(e,t,n,r=`continuous`){return r===`continuous`?e*Math.exp(t*n):e*(1+t)**+n}export{e as t};

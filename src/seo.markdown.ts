@@ -99,8 +99,10 @@ export function llmsTxt(t: Translate, pages: SeoPage[], mdPaths: Set<string>): s
   const tools = CATEGORY_ORDER.flatMap((category) =>
     section(`${t("seoLlmsLabs")} — ${t(CATEGORY_LABEL_KEYS[category])}`, modules.filter((m) => m.category === category && mdPaths.has(m.path)).map((m) => m.path))
   );
+  const deskPaths = [...modules.flatMap((m) => (m.subNav ?? []).filter((s) => s.id === "desk").map((s) => s.to)), ...modules.filter((m) => !m.category && m.path !== "/").map((m) => m.path)];
+  const desks = section(t("seoLlmsDesks"), deskPaths);
   const optional = section("Optional", pages.map((p) => p.path).filter((p) => p !== "/"));
-  return `${[`# ${SITE_NAME}`, `> ${t("seoLlmsSummary")}`, t("seoLlmsIntro"), ...lessons, ...tools, ...optional].join("\n\n")}\n`;
+  return `${[`# ${SITE_NAME}`, `> ${t("seoLlmsSummary")}`, t("seoLlmsIntro"), ...lessons, ...tools, ...desks, ...optional].join("\n\n")}\n`;
 }
 
 /// Every lesson's Markdown in track order, for agents that want the whole curriculum in one file.

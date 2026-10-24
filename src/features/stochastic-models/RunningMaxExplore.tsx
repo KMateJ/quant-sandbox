@@ -27,7 +27,7 @@ export default function RunningMaxExplore() {
   const [path, setPath] = useState(0);
   const shownPath = path % cloud.pathCount;
   const { step, time } = cursor;
-  const round = usePredictReveal({ truth: expectedMax(1), tolerance: 0.05 });
+  const round = usePredictReveal({ challengeId: "running-max", truth: expectedMax(1), tolerance: 0.05 });
   const show = (v: number) => masked(round.revealed, v.toFixed(3));
 
   const points = useMemo(() => pathPoints(cloud, shownPath), [cloud, shownPath]);

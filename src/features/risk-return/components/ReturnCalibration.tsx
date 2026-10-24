@@ -18,6 +18,7 @@ export default function ReturnCalibration({ portReturn, portVol, resetKey }: Pro
   const { t } = useI18n();
   const [min, max] = returnGuessDomain(portReturn, portVol);
   const guess = useRangeGuess({
+    challengeId: "return-range",
     truth: () => drawAnnualReturn(portReturn, portVol),
     initial: [snap(portReturn - 0.05), snap(portReturn + 0.05)],
     bounds: [min, max],

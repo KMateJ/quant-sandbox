@@ -1,9 +1,9 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { en, type TranslationKey } from "./Language/index.en";
+import { en, type BaseKey } from "./Language/index.en";
 import type { StoredLanguage } from "./languageStorage";
 
-const lazyTables: Record<Exclude<StoredLanguage, "en">, () => Promise<Record<TranslationKey, string>>> = {
+const lazyTables: Record<Exclude<StoredLanguage, "en">, () => Promise<Record<BaseKey, string>>> = {
   hu: () => import("./Language/index.hu").then((m) => m.hu),
 };
 const loading = new Map<StoredLanguage, Promise<void>>();
@@ -19,6 +19,34 @@ export function loadLanguage(lang: StoredLanguage): Promise<void> {
     loading.set(lang, pending);
   }
   return pending;
+}
+
+const deskTables: Record<StoredLanguage, () => Promise<Record<string, string>>> = {
+  en: () => import("./Language/desks.en").then((m) => m.desksEn),
+  hu: () => import("./Language/desks.hu").then((m) => m.desksHu),
+};
+const deskLoading = new Map<StoredLanguage, Promise<void>>();
+
+/// Loads the desk-game copy for `lang` (and English as its fallback) once; kept out of the initial bundle.
+export function loadDeskCopy(lang: StoredLanguage): Promise<void> {
+  const langs: StoredLanguage[] = lang === "en" ? ["en"] : ["en", lang];
+  return Promise.all(
+    langs.map((l) => {
+      let pending = deskLoading.get(l);
+      if (!pending) {
+        pending = deskTables[l]().then((table) => {
+          i18n.addResourceBundle(l, "translation", table, true, true);
+        });
+        deskLoading.set(l, pending);
+      }
+      return pending;
+    }),
+  ).then(() => undefined);
+}
+
+/// Wraps a lazy route import so the desk copy for the current language arrives with the component.
+export function withDeskCopy<T>(importer: () => Promise<T>): () => Promise<T> {
+  return () => Promise.all([importer(), loadDeskCopy((i18n.language || "en") as StoredLanguage)]).then(([m]) => m);
 }
 
 if (!i18n.isInitialized) {

@@ -23,10 +23,10 @@ export default function CashFlowPanel({ bond, delivery, marketYield }: {
         yLabel={t("tfCashflow")} xFormat={(value) => value.toFixed(1)} yFormat={(value) => value.toFixed(1)} yNumTicks={4} />
     </div>}
     <div className="tf-table-scroll"><table className="tf-table tf-cashflows">
-      <thead><tr><th>{t("tfTime")}</th><th>{t("tfCoupon")}</th><th>{t("tfPrincipal")}</th><th>{t("tfCashflow")}</th><th>{t("tfPresentValue")}</th></tr></thead>
+      <thead><tr><th>{t("tfTime")}</th><th>{t("tfCoupon")}</th><th>{t("tfPrincipal")}</th><th className="tf-col-derived">{t("tfCashflow")}</th><th>{t("tfPresentValue")}</th></tr></thead>
       <tbody>{flows.map((flow) => <tr key={flow.time}>
         <td>{flow.time.toFixed(2)}</td><td>{flow.coupon.toFixed(2)}</td><td>{flow.principal.toFixed(2)}</td>
-        <td>{(flow.coupon + flow.principal).toFixed(2)}</td><td>{flow.presentValue.toFixed(2)}</td>
+        <td className="tf-col-derived">{(flow.coupon + flow.principal).toFixed(2)}</td><td>{flow.presentValue.toFixed(2)}</td>
       </tr>)}</tbody>
     </table></div>
     <p className="tf-note">{t("tfDeliveryFlows")}</p>

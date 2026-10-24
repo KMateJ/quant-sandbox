@@ -17,7 +17,7 @@ import { useHittingExperiment } from "./useHittingExperiment";
 export default function HittingExplore() {
   const { t } = useI18n();
   const e = useHittingExperiment();
-  const round = usePredictReveal({ truth: e.stats.discrete, tolerance: 0.03 });
+  const round = usePredictReveal({ challengeId: "hitting", truth: e.stats.discrete, tolerance: 0.03 });
 
   const overlays = useMemo(
     () => [

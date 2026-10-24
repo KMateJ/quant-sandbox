@@ -56,3 +56,28 @@ export function tangencyWeights(
   if (denom === 0) throw new Error("tangencyWeights: degenerate inputs");
   return invExcess.map((x) => x / denom);
 }
+
+/// Equal-risk-contribution weights (sum 1) by cyclical coordinate descent from inverse-vol weights: each xᵢ solves
+/// Σᵢᵢxᵢ² + xᵢΣⱼ≠ᵢΣᵢⱼxⱼ = 1/n, whose positive root always exists, so negative correlations cannot break it.
+export function riskParityWeights(covMatrix: Matrix, iterations = 200): Vector {
+  const n = covMatrix.length;
+  const x: Vector = covMatrix.map((row, i) => 1 / Math.sqrt(row[i]));
+  for (let k = 0; k < iterations; k++) {
+    for (let i = 0; i < n; i++) {
+      const a = covMatrix[i][i];
+      const c = covMatrix[i].reduce((acc, s, j) => (j === i ? acc : acc + s * x[j]), 0);
+      x[i] = (-c + Math.sqrt(c * c + (4 * a) / n)) / (2 * a);
+    }
+  }
+  const total = x.reduce((a, b) => a + b, 0);
+  return x.map((v) => v / total);
+}
+
+/// Scales risky `weights` so annualised volatility √(wᵀΣw·periodsPerYear) hits `targetVol`; the total is capped at 1, the rest is cash.
+export function scaleToVol(weights: Vector, covMatrix: Matrix, targetVol: number, periodsPerYear = 12): Vector {
+  const vol = Math.sqrt(portfolioVariance(weights, covMatrix) * periodsPerYear);
+  if (vol <= 0) return weights.slice();
+  const scaled = weights.map((w) => (w * targetVol) / vol);
+  const total = scaled.reduce((a, b) => a + b, 0);
+  return total > 1 ? scaled.map((w) => w / total) : scaled;
+}

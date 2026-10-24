@@ -45,3 +45,23 @@ export function interpolateSpotRate(
 ): number {
   return linearInterp(times, spots, t);
 }
+
+/// Discount curve from node maturities and discount factors, interpolating log-DF linearly in time
+/// (piecewise-flat forwards). Before the first node it uses the first node's zero rate; beyond the last,
+/// the last segment's forward rate continues.
+export function logLinearDf(times: number[], dfs: number[]): (t: number) => number {
+  const logs = dfs.map(Math.log);
+  return (t: number) => {
+    if (t <= 0) return 1;
+    const n = times.length;
+    if (t <= times[0]) return Math.exp((logs[0] * t) / times[0]);
+    if (t >= times[n - 1]) {
+      const slope = n > 1 ? (logs[n - 1] - logs[n - 2]) / (times[n - 1] - times[n - 2]) : logs[0] / times[0];
+      return Math.exp(logs[n - 1] + slope * (t - times[n - 1]));
+    }
+    let i = 1;
+    while (times[i] < t) i++;
+    const w = (t - times[i - 1]) / (times[i] - times[i - 1]);
+    return Math.exp(logs[i - 1] + w * (logs[i] - logs[i - 1]));
+  };
+}

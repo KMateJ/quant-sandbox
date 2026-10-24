@@ -53,7 +53,6 @@ export const hedgingDeskHelpWhatIfHu = {
   hdWiSigma: "{{n}}σ ({{move}})",
   hdWiVolUp: "Ha az implikált vol 2 ponttal ugrik",
   hdWiObjectives: "A célok állása az ügylet után",
-  hdWiDetails: "Részletek",
   hdWiStep: "{{n}}. lépés / {{total}}",
   hdWiMultiLeg: "Két lépés: töltsd be az elsőt, küldd el, aztán jöjj vissza a másodikért.",
 };

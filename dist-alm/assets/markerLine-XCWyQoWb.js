@@ -1,0 +1,1 @@
+var e=e=>({axis:`x`,value:e,color:`var(--text)`,dash:`none`,width:1.25});export{e as t};

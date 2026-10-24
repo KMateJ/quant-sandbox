@@ -1,10 +1,7 @@
 export const hedgingDeskDebriefEn = {
-  hdDebriefPassed: "Mission passed",
-  hdDebriefFailed: "Mission failed",
   hdDebriefFinalPnl: "Final P&L",
   hdDebriefRealizedVol: "Realized vol",
   hdDebriefImpliedVol: "Implied vol",
-  hdDebriefObjectivesTitle: "Objectives",
   hdDebriefAttributionTitle: "P&L attribution",
   hdDebriefPremium: "Premium at mid",
   hdDebriefOptionSettlement: "Option settlement",
@@ -14,7 +11,6 @@ export const hedgingDeskDebriefEn = {
   hdDebriefNet: "Net P&L",
   hdDebriefHistoryTitle: "P&L over the run",
   hdDebriefCumulative: "Cumulative P&L",
-  hdDebriefDaily: "Daily change",
   hdDebriefDay: "Day {{day}}",
   hdDebriefWhyTitle: "Why the hedge made or lost money",
   hdDebriefThetaCollected: "Theta collected",
@@ -38,7 +34,4 @@ export const hedgingDeskDebriefEn = {
   hdDebriefPendingTitle: "The debrief opens at expiry",
   hdDebriefPendingNote: "Day {{day}} of {{days}}. Run the remaining days or go back to the desk.",
   hdDebriefRunToExpiry: "Run to expiry",
-  hdDebriefBackToDesk: "Back to desk",
-  hdDebriefNewPath: "Try a new path",
-  hdDebriefMissions: "Missions",
 };

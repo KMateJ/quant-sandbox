@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import type { TranslationKey } from "../../i18n";
+import { useFunctionKeys, type GameKey } from "../../components/game/gameHooks";
+import { useI18n, type TranslationKey } from "../../i18n";
 import type { HedgingDeskModel } from "./useHedgingDesk";
 
 /// One terminal-style function key: its keyboard key, label and action.
@@ -23,23 +23,15 @@ export const FUNCTION_KEYS: FunctionKey[] = [
 /// True when the key can run now (desk keys are off after expiry).
 export const keyEnabled = (key: FunctionKey, desk: HedgingDeskModel) => key.always || !desk.state.settled;
 
-/// Binds F2–F9 to the desk actions while mounted, also while the ticket's quantity field has focus.
-/// Keys with a modifier (e.g. Ctrl+F5) keep their browser meaning.
-export function useFunctionKeys(desk: HedgingDeskModel) {
-  const latest = useRef(desk);
-  useEffect(() => {
-    latest.current = desk;
-  });
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (latest.current.demo) return;
-      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
-      const key = FUNCTION_KEYS.find((k) => k.code === e.key);
-      if (!key) return;
-      e.preventDefault();
-      if (keyEnabled(key, latest.current)) key.run(latest.current);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+/// The desk's keys for the kit's function-key bar, bound to F2–F9 while the desk screen shows and no demo runs.
+export function useDeskKeys(desk: HedgingDeskModel): GameKey[] {
+  const { t } = useI18n();
+  const keys = FUNCTION_KEYS.map((k) => ({
+    code: k.code,
+    label: t(k.label),
+    run: () => k.run(desk),
+    enabled: Boolean(keyEnabled(k, desk)),
+  }));
+  useFunctionKeys(keys, desk.url.screen === "desk" && !desk.demo);
+  return keys;
 }

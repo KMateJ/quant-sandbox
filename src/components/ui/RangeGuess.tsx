@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { useI18n } from "../../i18n";
+import ChallengeRecord from "./ChallengeRecord";
 import { MIN_VERDICT_ROUNDS, trackFraction } from "./rangeGuess.logic";
 import type { RangeGuessState } from "./useRangeGuess";
 
@@ -93,6 +94,7 @@ export default function RangeGuess({ state, prompt, format, min, max, step, unit
             </ol>
           </div>
         )}
+        {state.challengeId && <ChallengeRecord id={state.challengeId} />}
       </div>
     </section>
   );

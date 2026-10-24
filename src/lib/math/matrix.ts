@@ -139,3 +139,22 @@ export function symmetricEig(m: Matrix, maxSweeps = 100): { values: Vector; vect
   }
   return { values: a.map((row, i) => row[i]), vectors: v };
 }
+
+/// Lower-triangular Cholesky factor L with L·Lᵀ = a, or null if `a` is not positive definite.
+export function cholesky(a: Matrix): Matrix | null {
+  const n = a.length;
+  const L = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j <= i; j++) {
+      let sum = a[i][j];
+      for (let k = 0; k < j; k++) sum -= L[i][k] * L[j][k];
+      if (i === j) {
+        if (sum <= 1e-12) return null;
+        L[i][j] = Math.sqrt(sum);
+      } else {
+        L[i][j] = sum / L[j][j];
+      }
+    }
+  }
+  return L;
+}

@@ -1,6 +1,6 @@
 import Panel from "../../../../components/layout/Panel";
 import { useI18n } from "../../../../i18n";
-import { signed, signedMoney, toneClass } from "../../deskFormat";
+import { signed, signedMoney, toneClass } from "../../../../components/game/gameFormat";
 import type { DebriefModel } from "../../useDebrief";
 import type { HedgingDeskModel } from "../../useHedgingDesk";
 
@@ -15,12 +15,12 @@ export default function ThetaGammaPanel({ desk, debrief }: { desk: HedgingDeskMo
     { label: t("hdDebriefVolGap"), value: gap === null ? "—" : t("hdDebriefVolPts", { value: signed(gap, 2) }), tone: "", note: t("hdDebriefVolGapNote") },
   ];
   return (
-    <Panel title={t("hdDebriefWhyTitle")} className="hdesk-panel">
+    <Panel title={t("hdDebriefWhyTitle")} className="gdesk-panel">
       <div className="hdesk-why">
         {cards.map((c) => (
           <div key={c.label} className="hdesk-why-card">
-            <span className="hdesk-label">{c.label}</span>
-            <strong className={`hdesk-num ${c.tone}`}>{c.value}</strong>
+            <span className="gdesk-label">{c.label}</span>
+            <strong className={`gdesk-num ${c.tone}`}>{c.value}</strong>
             <p>{c.note}</p>
           </div>
         ))}

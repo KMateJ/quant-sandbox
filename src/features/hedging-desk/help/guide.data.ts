@@ -1,8 +1,3 @@
-/// Same literal union as the help shell's panel anchors (kept local so the guide stays independent).
-export type GuideAnchor =
-  | "quotes" | "mission" | "risk" | "blotter" | "price" | "delta" | "pnl"
-  | "matrix" | "profile" | "positions" | "ticket" | "chain" | "keys";
-
 /// Playbook sizes per mission: steps, then traps. Copy keys are `hdGuide<Mission>Step<n>` / `hdGuide<Mission>Trap<n>`.
 export const GUIDE_PLAYBOOKS: Record<string, { steps: number; traps: number }> = {
   M1: { steps: 5, traps: 3 },
@@ -12,10 +7,10 @@ export const GUIDE_PLAYBOOKS: Record<string, { steps: number; traps: number }> =
   M5: { steps: 4, traps: 3 },
 };
 
-/// Panel entries in screen order; copy key `hdGuidePanel<Anchor>`.
-export const GUIDE_PANELS: readonly GuideAnchor[] = [
+/// Panel entries in screen order, also the DOM ids `hd-<anchor>`; copy key `hdGuidePanel<Anchor>`.
+export const GUIDE_PANELS = [
   "quotes", "mission", "risk", "blotter", "price", "delta", "pnl", "matrix", "profile", "positions", "ticket", "chain", "keys",
-];
+] as const;
 
 /// Keys listed in the guide; copy key `hdGuideKey<Code>`.
 export const GUIDE_KEYS = ["F1", "F2", "F3", "F4", "F5", "F8", "F9"] as const;

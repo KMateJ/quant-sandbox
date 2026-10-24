@@ -1,3 +1,4 @@
+import type { desksEn } from "./desks.en";
 import { homeEn } from "./Home";
 import { binomialEn } from "./Binomial";
 import { payoffEn } from "./Payoff";
@@ -33,6 +34,7 @@ import { deltaHedgingEn } from "./DeltaHedging";
 import { intuitionEn } from "./Intuition";
 import { legacyIntuitionEn } from "./LegacyIntuition";
 import { treasuryFuturesEn } from "./TreasuryFutures";
+import { interestRateSwapEn } from "./InterestRateSwap";
 import { immunizationEn } from "./Immunization";
 import { guideEn } from "./Guide";
 import { guidePortfolioEn } from "./GuidePortfolio";
@@ -50,18 +52,7 @@ import { playbackEn } from "./Playback";
 import { labControlsEn } from "./LabControls";
 import { bondInputsEn } from "./BondInputs";
 import { labPrimitivesEn } from "./LabPrimitives";
-import { hedgingDeskEn } from "./HedgingDesk";
-import { hedgingDeskMissionsEn } from "./HedgingDeskMissions";
-import { hedgingDeskSideEn } from "./HedgingDeskSide";
-import { hedgingDeskDebriefEn } from "./HedgingDeskDebrief";
-import { hedgingDeskChartsEn } from "./HedgingDeskCharts";
-import { hedgingDeskMissionScreenEn } from "./HedgingDeskMissionScreen";
-import { hedgingDeskDemoEn } from "./HedgingDeskDemo";
-import { hedgingDeskDemoStepsEn } from "./HedgingDeskDemoSteps";
-import { hedgingDeskHelpEn } from "./HedgingDeskHelp";
-import { hedgingDeskHelpAdviceEn } from "./HedgingDeskHelpAdvice";
-import { hedgingDeskHelpGuideEn } from "./HedgingDeskHelpGuide";
-import { hedgingDeskHelpWhatIfEn } from "./HedgingDeskHelpWhatIf";
+import { challengesEn } from "./Challenges";
 
 /// Every English UI string; the source of truth for `TranslationKey`.
 export const en = {
@@ -87,6 +78,7 @@ export const en = {
   ...yieldCurveEn,
   ...durationConvexityEn,
   ...treasuryFuturesEn,
+  ...interestRateSwapEn,
   ...immunizationEn,
   ...guideEn,
   ...guidePortfolioEn,
@@ -117,19 +109,12 @@ export const en = {
   ...themeEn,
   ...notFoundEn,
   ...seoEn,
-  ...hedgingDeskEn,
-  ...hedgingDeskMissionsEn,
-  ...hedgingDeskSideEn,
-  ...hedgingDeskDebriefEn,
-  ...hedgingDeskChartsEn,
-  ...hedgingDeskMissionScreenEn,
-  ...hedgingDeskDemoEn,
-  ...hedgingDeskDemoStepsEn,
-  ...hedgingDeskHelpEn,
-  ...hedgingDeskHelpAdviceEn,
-  ...hedgingDeskHelpGuideEn,
-  ...hedgingDeskHelpWhatIfEn,
+  ...challengesEn,
   navGuide: "Guide",
 };
 
-export type TranslationKey = keyof typeof en;
+/// Keys of the tables loaded up front.
+export type BaseKey = keyof typeof en;
+/// Keys of the desk tables, loaded with the desk routes.
+export type DeskKey = keyof typeof desksEn;
+export type TranslationKey = BaseKey | DeskKey;

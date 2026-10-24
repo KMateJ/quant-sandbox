@@ -1,398 +1,262 @@
 /* =========================================================
-   Hedging desk — scoped terminal theme
-   Always dark inside `.hdesk`, whatever the site theme: black ground, amber accent, mono type.
-   Up/down are blue/red (they differ in lightness, not only hue). Square edges, no pills.
+   Hedging desk: rules for the panels the game kit has no twin for (greek grid, order ticket,
+   option chain, positions, debrief extras). Frame, tokens and shared panels live in `_game-kit.scss`.
+   Selected states use a background tint, never a left bar.
 ========================================================= */
 
 .hdesk {
-  --bg: #000;
-  --surface: #0a0a0a;
-  --surface-soft: #141414;
-  --surface-muted: #111;
-  --text: #e6e6e6;
-  --muted: #9a9a9a;
-  --border: #262626;
-  --primary: #fb8b1e;
-  --positive: #4fb3ff;
-  --negative: #ff5f57;
-  --chart-1: #f2f2f2;
-  --chart-2: #4fb3ff;
-  --chart-3: #fb8b1e;
-  --chart-4: #ff5f57;
-  --chart-reference: #7a7a7a;
-  --hdesk-key-border: #333;
-  --hdesk-on-accent: #000;
-
-  color-scheme: dark;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.35;
-  border: 1px solid var(--border);
-
-  button,
-  input,
-  select {
-    font-family: inherit;
-  }
-}
-
-// #region Command bar + quote strip
-.hdesk-cmd {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-height: 28px;
-  padding: 0 12px;
-  background: var(--primary);
-  color: var(--hdesk-on-accent);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
-.hdesk-cmd-title {
-  margin: 0;
-  font: inherit;
-  color: inherit;
-}
-
-.hdesk-cmd-clock {
-  margin-left: auto;
-  font-variant-numeric: tabular-nums;
-}
-
-.hdesk-quotes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
-  margin: 0;
-  padding: 6px 12px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.hdesk-quote {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-
-  dd {
-    margin: 0;
-    font-size: 13px;
-    text-align: left;
-  }
-}
-
-.hdesk-quote--pnl {
-  margin-left: auto;
-  text-align: right;
-
-  dd {
-    text-align: right;
-  }
-}
-// #endregion
-
-// #region Screen tabs
-.hdesk-tabsrow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 12px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.hdesk-tabs.tabs {
-  gap: 0;
-  border-bottom: none;
-
-  .tab {
-    padding: 7px 14px;
-    font-family: inherit;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: none;
-    border-radius: 0;
-
-    &.active {
-      color: var(--hdesk-on-accent);
-      background: var(--primary);
-    }
-
-    @media (max-width: 767px) {
-      min-height: 44px;
-    }
-  }
-}
-
-.hdesk-intro {
-  margin: 0;
-  font-size: 11px;
-  color: var(--muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-// #endregion
-
-// #region Panel grid
-.hdesk-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "left" "centre" "right";
-  gap: 1px;
-  background: var(--border);
-}
-
-.hdesk-col {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-  background: var(--border);
-}
-
-.hdesk-col--left { grid-area: left; }
-.hdesk-col--centre { grid-area: centre; }
-.hdesk-col--right { grid-area: right; }
-
-.hdesk-pair {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1px;
-  background: var(--border);
-}
-
-@media (min-width: 560px) {
-  .hdesk-pair {
+  // #region Risk
+  .hdesk-greekgrid {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
+    gap: 1px;
+    margin: 0;
+    background: var(--border);
 
-@media (min-width: 768px) {
-  .hdesk-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
-    grid-template-areas: "centre right" "left left";
-  }
+    > div {
+      padding: 5px 6px;
+      background: var(--surface);
+    }
 
-  .hdesk-col--left {
-    flex-direction: row;
-
-    > * {
-      flex: 1 1 0;
-      min-width: 0;
+    dd {
+      margin: 0;
+      font-size: 13px;
+      text-align: left;
     }
   }
-}
+  // #endregion
 
-@media (min-width: 1280px) {
-  .hdesk-grid {
-    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(300px, 340px);
-    grid-template-areas: "left centre right";
-  }
-
-  .hdesk-col--left {
-    flex-direction: column;
-
-    > * {
-      flex: initial;
-    }
-  }
-}
-// #endregion
-
-// #region Panels
-.hdesk .panel {
-  background: var(--surface);
-  border: none;
-  border-radius: 0;
-}
-
-.hdesk .panel-head {
-  min-height: 26px;
-  padding: 0 10px;
-  gap: 8px;
-  background: var(--surface-soft);
-  border-bottom: 1px solid var(--border);
-}
-
-.hdesk .panel-title {
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-}
-
-.hdesk .panel-actions {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.hdesk .panel-body {
-  flex: 1;
-  gap: 10px;
-  padding: 10px;
-  font-size: 12px;
-
-  &.flush {
-    padding: 0;
-    gap: 0;
-  }
-}
-
-.hdesk-panel .panel-body {
-  min-height: 72px;
-}
-// #endregion
-
-// #region Function keys + status line
-.hdesk-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 5;
-  border-top: 1px solid var(--border);
-}
-
-.hdesk-keys {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-}
-
-@media (min-width: 768px) {
-  .hdesk-keys {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
-.hdesk-fkey {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-  min-width: 0;
-  min-height: 44px;
-  padding: 0 10px;
-  background: var(--surface-muted);
-  color: var(--text);
-  font-size: 12px;
-  line-height: 1.2;
-  text-align: left;
-  border: 1px solid var(--hdesk-key-border);
-  border-radius: 0;
-  cursor: pointer;
-
-  &:hover:not(:disabled),
-  &:focus-visible {
-    background: var(--surface-soft);
-  }
-
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-}
-
-.hdesk-fkey-code {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--primary);
-}
-
-.hdesk-status {
-  margin: 0;
-  padding: 6px 12px;
-  font-size: 11px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-}
-// #endregion
-
-// #region Shared helpers for the panel plans
-.hdesk-up { color: var(--positive); }
-.hdesk-down { color: var(--negative); }
-
-.hdesk-num {
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
-.hdesk-label {
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-// #endregion
-
-.hdesk-fkey-label {
-  white-space: normal;
-  overflow-wrap: anywhere;
-  line-height: 1.2;
-}
-
-// #region Fullscreen
-.hdesk-cmd-btn {
-  min-height: 22px;
-  padding: 0 8px;
-  background: transparent;
-  color: var(--hdesk-on-accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1px solid var(--hdesk-on-accent);
-  border-radius: var(--radius-xs);
-  cursor: pointer;
-
-  &:hover,
-  &[aria-pressed="true"] {
-    background: var(--hdesk-on-accent);
+  // #region Order ticket
+  .hdesk-ticket-inst {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 14px;
     color: var(--primary);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--hdesk-on-accent);
-    outline-offset: 2px;
+  .hdesk-sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
   }
-}
 
-.hdesk--expanded {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  overflow-y: auto;
-  border: none;
-}
-
-html.page-expanded {
-  overflow: hidden;
-}
-
-.hdesk:fullscreen {
-  overflow-y: auto;
-  border: none;
-}
-// #endregion
-
-@media (max-width: 767px), (pointer: coarse) {
-  .hdesk-cmd-btn {
+  .hdesk-side {
     min-height: 44px;
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--gdesk-key-border);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &--buy[aria-pressed="true"] {
+      background: var(--positive);
+      color: var(--gdesk-on-accent);
+    }
+
+    &--sell[aria-pressed="true"] {
+      background: var(--negative);
+      color: var(--gdesk-on-accent);
+    }
   }
+
+  .hdesk-qty {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    input {
+      min-height: 32px;
+      padding: 0 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      border: 1px solid var(--gdesk-key-border);
+      border-radius: var(--radius-xs);
+    }
+  }
+
+  .hdesk-presets {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .hdesk-submit {
+    min-height: 44px;
+    padding: 0 10px;
+    color: var(--gdesk-on-accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &--buy { background: var(--positive); }
+    &--sell { background: var(--negative); }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  .hdesk-expired {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background: var(--gdesk-tint);
+
+    p {
+      margin: 0;
+    }
+  }
+  // #endregion
+
+  // #region Option chain
+  .hdesk-chain-head,
+  .hdesk-chain-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hdesk-chain-head {
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  .hdesk-chain-strike {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hdesk-chain-row--atm .hdesk-chain-strike {
+    color: var(--primary);
+    background: var(--surface-soft);
+  }
+
+  .hdesk-chain-side {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    min-height: 28px;
+    padding: 0 6px;
+    align-items: center;
+    background: transparent;
+    color: var(--text);
+    font-size: 11px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--gdesk-tint);
+    }
+
+    &:disabled {
+      cursor: default;
+      color: var(--muted);
+    }
+  }
+
+  .hdesk-chain-delta {
+    color: var(--muted);
+  }
+
+  @media (max-width: 767px), (pointer: coarse) {
+    .hdesk-chain-side {
+      min-height: 44px;
+    }
+  }
+  // #endregion
+
+  // #region Positions
+  .hdesk-positions {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 4px 8px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    tbody th,
+    tfoot th {
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+
+  .hdesk-positions__total {
+    th,
+    td {
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 0;
+    }
+  }
+  // #endregion
+
+  // #region Debrief extras
+  .hdesk-daily-bars rect {
+    opacity: 0.55;
+
+    &.is-up { fill: var(--positive); }
+    &.is-down { fill: var(--negative); }
+  }
+
+  .hdesk-why {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .hdesk-why-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    background: var(--surface);
+
+    strong {
+      font-size: 16px;
+      text-align: left;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+  }
+  // #endregion
 }
+
+// The submit button sits inside the ticket panel; lift the whole ticket while the demo points at it.
+.gdesk--demo:has(#hd-submit.gdesk-demo-focus) #hd-ticket { opacity: 1; }

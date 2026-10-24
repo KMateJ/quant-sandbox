@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useI18n } from "../../../../i18n";
-import { num } from "../../deskFormat";
+import { num } from "../../../../components/game/gameFormat";
 import type { SetupRow } from "../../missionSetup";
 
 /// Turns a structured setup row into its label and value text.

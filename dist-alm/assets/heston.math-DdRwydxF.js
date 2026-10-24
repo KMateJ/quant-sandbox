@@ -1,0 +1,1 @@
+import{t as e}from"./blackScholes.math-CT5a5STb.js";function t(t,n,r,i,a,o=1e-5,s=100){let c=1e-4,l=3;for(let u=0;u<s;u++){let s=.5*(c+l),u=e(n,r,i,a,s);if(Math.abs(u-t)<o)return s;u<t?c=s:l=s}return .5*(c+l)}function n(e,t,n){return 2*e*t-n*n}export{t as n,n as t};

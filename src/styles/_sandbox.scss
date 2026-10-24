@@ -1,0 +1,54 @@
+// Sandbox hub page: desks and lab challenges inside the `.gdesk` terminal frame.
+
+.sbx-intro {
+  margin: 0;
+  padding: 8px 12px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.sbx-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+
+  > * { min-width: 0; }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+  }
+}
+
+.gdesk .sbx-table {
+  th,
+  td {
+    text-align: left;
+    white-space: normal;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary);
+
+    @media (max-width: 767px), (pointer: coarse) {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
+  a:hover { text-decoration: underline; }
+}
+
+.sbx-area th {
+  padding-top: 10px;
+  color: var(--primary);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--surface-soft);
+}
+
+.sbx-muted { color: var(--muted); }
+

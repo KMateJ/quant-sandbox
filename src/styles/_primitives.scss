@@ -1,3 +1,5 @@
+@use "breakpoints" as *;
+
 // #region Page header
 .page-header {
   display: flex;
@@ -210,6 +212,27 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--space-2);
+}
+
+// Phones: actions that do not fit beside the title drop below it as one row; a wide segmented control scrolls.
+@include phone {
+  .chart-container-head {
+    flex-wrap: wrap;
+    row-gap: var(--space-1);
+    padding-block: var(--space-2);
+  }
+
+  .chart-container-actions {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .chart-container-actions .segmented {
+    flex: none;
+  }
 }
 
 .chart-container-title {

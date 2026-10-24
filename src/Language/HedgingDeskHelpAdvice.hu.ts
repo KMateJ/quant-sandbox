@@ -1,9 +1,4 @@
 export const hedgingDeskHelpAdviceHu = {
-  hdAdvHeadUrgent: "Tedd meg most",
-  hdAdvHeadSuggest: "Érdemes",
-  hdAdvHeadInfo: "Jó tudni",
-  hdAdvHeadDone: "Befejezve",
-  hdAdvEmpty: "Semmi sürgős. Lépj egy napot az F2-vel, és figyeld a kockázati panelt.",
   hdAdvActKey: "Nyomd meg: {{code}}",
   hdAdvActDebrief: "Értékelés megnyitása",
   hdAdvExpiredTitle: "A futás véget ért.",

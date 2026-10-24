@@ -20,3 +20,5 @@ export { default as RangeGuess } from "./RangeGuess";
 export { useRangeGuess } from "./useRangeGuess";
 export type { RangeGuessState } from "./useRangeGuess";
 export type { RangeRound, CalibrationVerdict } from "./rangeGuess.logic";
+export { default as ChallengeRecord } from "./ChallengeRecord";
+export { useChallengeStats } from "./useChallengeStats";

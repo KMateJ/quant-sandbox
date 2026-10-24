@@ -1,7 +1,6 @@
 /// Hedging desk side columns: mission, risk, blotter, order ticket and option chain.
 export const hedgingDeskSideEn = {
   hdSideClock: "D{{day}} / {{days}}",
-  hdSideClockAria: "Day {{day}} of {{days}}",
 
   hdSideNetDelta: "Net Δ",
   hdSideShares: "sh",
@@ -19,7 +18,6 @@ export const hedgingDeskSideEn = {
   hdSideBreaches: "Band breaches",
   hdSideBreakeven: "Breakeven move / day",
 
-  hdSideBlotterAria: "Desk events, newest first",
   hdSideKindFill: "FILL",
   hdSideKindBreach: "BRCH",
   hdSideKindExpiry: "EXP",

@@ -5,8 +5,8 @@ export default function HomeRoadmap() {
   const { t } = useI18n();
 
   const groups = [
-    { title: t("devRecent"), items: [t("devItemNewLessons"), t("devItemGuideChecks"), t("devItemGuidesUi"), t("devItemStudioLinks"), t("devItemFixedIncomeLabs")] },
-    { title: t("devUpcoming"), items: [t("devItemSwapLab"), t("devItemCallableLab"), t("devItemLabUpgrades"), t("devItemStudioChapters")] },
+    { title: t("devRecent"), items: [t("devItemSwapLab"), t("devItemDesks"), t("devItemSandbox"), t("devItemChallenges"), t("devItemGuideChecks"), t("devItemGuidesUi")] },
+    { title: t("devUpcoming"), items: [t("devItemCallableLab"), t("devItemLabUpgrades"), t("devItemDeskSandbox"), t("devItemStudioChapters")] },
     { title: t("devFuture"), items: [t("devItemCredit"), t("devItemPDE"), t("devItemMacro"), t("devItemMicro"), t("devItemAnalysis"), t("devItemLinearAlgebra"), t("devItemProbability")] },
   ];
 

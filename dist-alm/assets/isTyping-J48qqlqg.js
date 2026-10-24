@@ -1,0 +1,1 @@
+var e=e=>e instanceof HTMLElement&&!!e.closest(`input, textarea, select, [contenteditable='true']`);export{e as t};

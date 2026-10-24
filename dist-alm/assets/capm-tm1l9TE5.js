@@ -1,0 +1,1 @@
+function e(e,t,n){if(n<=0)throw Error(`sharpeRatio: volatility must be positive`);return(e-t)/n}function t(e,t,n){return e+t*(n-e)}function n(e,n,r,i){return e-t(n,r,i)}export{n,e as r,t};

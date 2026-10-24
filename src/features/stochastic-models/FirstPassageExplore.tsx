@@ -34,7 +34,7 @@ export default function FirstPassageExplore() {
   const sim = usePathGeometry(FIRST_PASSAGE_URL_SCHEMA);
   const { cloud } = sim;
   const barrier = sim.url.a;
-  const round = usePredictReveal({ truth: maxTailProbability(barrier, 1), tolerance: 0.03 });
+  const round = usePredictReveal({ challengeId: "first-passage", truth: maxTailProbability(barrier, 1), tolerance: 0.03 });
 
   const stopped = useMemo(() => stoppedCloud(cloud, barrier), [cloud, barrier]);
   const overlays = useMemo(() => [level("barrier", barrier, SERIES_ROLE.candidate)], [barrier]);

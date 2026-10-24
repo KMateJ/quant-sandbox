@@ -1,10 +1,7 @@
 export const hedgingDeskDebriefHu = {
-  hdDebriefPassed: "Küldetés teljesítve",
-  hdDebriefFailed: "Küldetés sikertelen",
   hdDebriefFinalPnl: "Végső P&L",
   hdDebriefRealizedVol: "Realizált vol.",
   hdDebriefImpliedVol: "Implikált vol.",
-  hdDebriefObjectivesTitle: "Célok",
   hdDebriefAttributionTitle: "P&L felbontása",
   hdDebriefPremium: "Prémium középáron",
   hdDebriefOptionSettlement: "Opciók elszámolása",
@@ -14,7 +11,6 @@ export const hedgingDeskDebriefHu = {
   hdDebriefNet: "Nettó P&L",
   hdDebriefHistoryTitle: "P&L a futás során",
   hdDebriefCumulative: "Kumulált P&L",
-  hdDebriefDaily: "Napi változás",
   hdDebriefDay: "{{day}}. nap",
   hdDebriefWhyTitle: "Miért nyert vagy veszített a fedezés",
   hdDebriefThetaCollected: "Beszedett théta",
@@ -38,7 +34,4 @@ export const hedgingDeskDebriefHu = {
   hdDebriefPendingTitle: "Az értékelés lejáratkor nyílik meg",
   hdDebriefPendingNote: "{{day}}. nap / {{days}}. Futtasd le a hátralévő napokat, vagy térj vissza a deskhez.",
   hdDebriefRunToExpiry: "Futtatás lejáratig",
-  hdDebriefBackToDesk: "Vissza a deskhez",
-  hdDebriefNewPath: "Új pálya",
-  hdDebriefMissions: "Küldetések",
 };

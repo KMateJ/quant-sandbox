@@ -29,12 +29,22 @@ export type DeliveryEconomics = DeliverableBond & {
   dirtyCostDifference: number;
 };
 
+/// Input error with a stable `code` (the view maps it to `tfErr_<code>`); `message` stays English for developers.
+export class TfInputError extends RangeError {
+  readonly code: string;
+  constructor(code: string, message: string) {
+    super(message);
+    this.name = "TfInputError";
+    this.code = code;
+  }
+}
+
 /// Convert a Treasury quote such as 93'08 into decimal points.
 export function parseTreasuryQuote(quote: string): number {
   const match = quote.trim().match(/^(\d+)(?:['-](\d{1,2}))?$/);
-  if (!match) throw new RangeError(`Invalid Treasury futures quote: ${quote}`);
+  if (!match) throw new TfInputError("quoteFormat", `Invalid Treasury futures quote: ${quote}`);
   const thirtySeconds = Number(match[2] ?? 0);
-  if (thirtySeconds > 31) throw new RangeError("Treasury quote fractions must be 0–31/32.");
+  if (thirtySeconds > 31) throw new TfInputError("quoteFraction", "Treasury quote fractions must be 0–31/32.");
   return Number(match[1]) + thirtySeconds / 32;
 }
 
@@ -42,7 +52,7 @@ export function parseTreasuryQuote(quote: string): number {
 export function buildCashFlows(
   bond: Pick<DeliverableBond, "couponRate" | "maturity" | "frequency" | "principalPayments">,
 ): Omit<CashFlow, "presentValue">[] {
-  if (!(bond.frequency > 0) || !(bond.maturity > 0)) throw new RangeError("Frequency and maturity must be positive.");
+  if (!(bond.frequency > 0) || !(bond.maturity > 0)) throw new TfInputError("frequencyMaturity", "Frequency and maturity must be positive.");
   const periods = Math.ceil(bond.maturity * bond.frequency - 1e-9);
   const couponDates = Array.from({ length: periods }, (_, i) => bond.maturity - (periods - i - 1) / bond.frequency);
   const principal = [...bond.principalPayments].sort((a, b) => a.time - b.time);
@@ -57,14 +67,14 @@ export function buildCashFlows(
     previousTime = time;
     const paid = principal.filter((p) => Math.abs(p.time - time) < 1e-7)
       .reduce((sum, p) => sum + p.amount, 0);
-    if (paid < -1e-9 || paid > outstanding + 1e-7) throw new RangeError("Principal repayments must be non-negative and cannot exceed outstanding principal.");
+    if (paid < -1e-9 || paid > outstanding + 1e-7) throw new TfInputError("principalAmount", "Principal repayments must be non-negative and cannot exceed outstanding principal.");
     const couponDate = couponDates.some((couponTime) => Math.abs(couponTime - time) < 1e-7);
     flows.push({ time, coupon: couponDate ? accruedCoupon : 0, principal: paid });
     if (couponDate) accruedCoupon = 0;
     outstanding -= paid;
   }
-  if (Math.abs(outstanding) > 1e-6) throw new RangeError("Principal schedule must repay 100 by maturity.");
-  if (principal.some((p) => p.time > bond.maturity || p.time <= 0)) throw new RangeError("Principal repayment dates must be after valuation and no later than maturity.");
+  if (Math.abs(outstanding) > 1e-6) throw new TfInputError("principalTotal", "Principal schedule must repay 100 by maturity.");
+  if (principal.some((p) => p.time > bond.maturity || p.time <= 0)) throw new TfInputError("principalDates", "Principal repayment dates must be after valuation and no later than maturity.");
   return flows;
 }
 
@@ -74,7 +84,7 @@ export function cashFlowsAfterDelivery(
   delivery: number,
   yieldRate: number,
 ): CashFlow[] {
-  if (yieldRate <= -bond.frequency) throw new RangeError("Yield must leave a positive per-period discount base.");
+  if (yieldRate <= -bond.frequency) throw new TfInputError("yieldBase", "Yield must leave a positive per-period discount base.");
   return buildCashFlows(bond)
     .filter((flow) => flow.time > delivery + 1e-8)
     .map((flow) => {
@@ -92,9 +102,9 @@ export function eurexConversionFactor(
   deliveryDate: string,
   notionalYield = 0.06,
 ): number {
-  if (notionalYield <= -1) throw new RangeError("Notional yield must be greater than -100%.");
+  if (notionalYield <= -1) throw new TfInputError("notionalYield", "Notional yield must be greater than -100%.");
   const yearsRaw = (Date.parse(`${maturityDate}T00:00:00Z`) - Date.parse(`${deliveryDate}T00:00:00Z`)) / (365.25 * 86400000);
-  if (!(yearsRaw > 0)) throw new RangeError("Maturity must follow delivery.");
+  if (!(yearsRaw > 0)) throw new TfInputError("maturityAfterDelivery", "Maturity must follow delivery.");
   const years = Math.floor(yearsRaw * 4 + 1e-9) / 4;
   const n = Math.floor(years + 1e-9);
   const frac = years - n;
@@ -114,11 +124,11 @@ export function accruedInterestOnDates(
   deliveryDate: string,
   outstanding = 100,
 ): number {
-  if (!(frequency > 0) || 12 % frequency !== 0) throw new RangeError("Coupon frequency must divide twelve.");
+  if (!(frequency > 0) || 12 % frequency !== 0) throw new TfInputError("frequencyDivides", "Coupon frequency must divide twelve.");
   const maturity = new Date(`${maturityDate}T00:00:00Z`);
   const delivery = new Date(`${deliveryDate}T00:00:00Z`);
   if (!Number.isFinite(maturity.getTime()) || !Number.isFinite(delivery.getTime()) || maturity <= delivery) {
-    throw new RangeError("Maturity date must follow a valid delivery date.");
+    throw new TfInputError("maturityDate", "Maturity date must follow a valid delivery date.");
   }
   const months = 12 / frequency;
   const lastCoupon = new Date(maturity);
@@ -138,7 +148,7 @@ export function generalizedConversionFactor(
   accruedOverride?: number,
 ): number {
   const flows = cashFlowsAfterDelivery(bond, delivery, notionalCoupon);
-  if (flows.length === 0) throw new RangeError("Delivery must occur before the bond's final cash flow.");
+  if (flows.length === 0) throw new TfInputError("deliveryBeforeFinal", "Delivery must occur before the bond's final cash flow.");
   const dirty = flows.reduce((sum, flow) => sum + flow.presentValue, 0);
   const accrued = accruedOverride ?? accruedInterest(bond, delivery);
   return Math.round(((dirty - accrued) / 100) * 1e4) / 1e4;
@@ -149,7 +159,7 @@ export function accruedInterest(
   bond: Pick<DeliverableBond, "couponRate" | "frequency" | "maturity" | "principalPayments">,
   elapsed: number,
 ): number {
-  if (elapsed < 0 || elapsed >= bond.maturity) throw new RangeError("Accrual date must fall before bond maturity.");
+  if (elapsed < 0 || elapsed >= bond.maturity) throw new TfInputError("accrualDate", "Accrual date must fall before bond maturity.");
   const period = 1 / bond.frequency;
   const lastCoupon = bond.maturity - Math.ceil((bond.maturity - elapsed - 1e-8) * bond.frequency) / bond.frequency;
   const sinceCoupon = elapsed - lastCoupon;
@@ -163,7 +173,7 @@ export function accruedInterest(
 
 /// Compare clean net basis and the corresponding dirty settlement cash flows.
 export function deliveryEconomics(bonds: DeliverableBond[], futuresPrice: number): DeliveryEconomics[] {
-  if (!Number.isFinite(futuresPrice)) throw new RangeError("Futures price must be finite.");
+  if (!Number.isFinite(futuresPrice)) throw new TfInputError("futuresFinite", "Futures price must be finite.");
   return bonds.map((bond) => {
     const adjustedFuturesPrice = futuresPrice * bond.conversionFactor;
     const invoiceClean = adjustedFuturesPrice;

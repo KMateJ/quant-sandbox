@@ -1,15 +1,5 @@
 export const hedgingDeskHelpHu = {
-  hdHelpButton: "Súgó",
-  hdHelpTitle: "Desk súgó",
-  hdHelpClose: "Súgó bezárása",
   hdHelpContext: "{{mission}} · {{day}}. nap / {{days}}",
-  hdHelpTabNext: "Következő lépés",
-  hdHelpTabWhatIf: "Mi lenne, ha…",
-  hdHelpTabGuide: "Útmutató",
-  hdHelpTabsAria: "Súgó szakaszai",
-  hdHelpKeysHint: "Az F1 vagy a ? megnyitja és bezárja a súgót",
-  hdHelpShowMe: "Mutasd meg",
-  hdHelpUseTicket: "Betöltés a megbízásba",
   hdHelpOpenWhatIf: "Próbáld ki a Mi lenne, ha résznél",
   hdHelpOpenGuide: "Bővebben az Útmutatóban",
 };

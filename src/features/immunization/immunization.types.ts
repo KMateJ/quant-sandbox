@@ -23,7 +23,11 @@ export type GameConfig = {
   costBp: number;
   maxParallelBp: number;
   maxTwistBp: number;
+  /// Further payments of `amount` at game year `year`, part of the liability from round `from` on.
+  extraLiabilities?: ExtraLiability[];
 };
+
+export type ExtraLiability = { amount: number; year: number; from: number };
 
 export type GameState = {
   seed: number;

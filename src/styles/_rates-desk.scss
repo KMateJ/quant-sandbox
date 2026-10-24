@@ -1,0 +1,120 @@
+/* Rates desk (`.ratd`) on top of the `.gdesk` kit: ticket controls, key-rate bars, curve markers, CTD row. */
+
+.gdesk.ratd {
+  .ratd-seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+
+    .gdesk-btn {
+      flex: 1 1 auto;
+    }
+  }
+
+  .ratd-qty {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    input {
+      width: 96px;
+      min-height: 28px;
+      padding: 0 6px;
+      background: var(--surface-muted);
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      border: 1px solid var(--gdesk-key-border);
+      border-radius: var(--radius-xs);
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--negative);
+    }
+  }
+
+  .ratd-warn {
+    margin: 0 0 8px;
+    color: var(--negative);
+  }
+
+  .ratd-submit {
+    width: 100%;
+    margin: 8px 0;
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    border-color: var(--primary);
+
+    &:hover:not(:disabled) {
+      background: var(--primary);
+      opacity: 0.9;
+    }
+  }
+
+  .ratd-krd-title {
+    margin: 10px 0 4px;
+  }
+
+  .ratd-krd {
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ratd-krd-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 84px;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+
+    .gdesk-num {
+      text-align: right;
+    }
+  }
+
+  .ratd-krd-track {
+    position: relative;
+    height: 8px;
+    background: var(--surface-soft);
+  }
+
+  .ratd-krd-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    background: var(--positive);
+
+    &--neg {
+      right: 50%;
+      left: auto;
+      background: var(--negative);
+    }
+  }
+
+  .ratd-mark-bond {
+    fill: var(--chart-1);
+  }
+
+  .ratd-mark-ctd {
+    fill: var(--primary);
+  }
+
+  .ratd-ctd-row {
+    background: var(--gdesk-tint);
+  }
+
+  .ratd-ctd-tag {
+    color: var(--primary);
+  }
+
+  @media (max-width: 767px), (pointer: coarse) {
+    .ratd-qty input {
+      min-height: 44px;
+    }
+  }
+}

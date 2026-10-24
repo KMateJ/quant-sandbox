@@ -48,6 +48,9 @@ export const MODULE_VIZ: Record<string, ModuleViz> = {
       { d: "M6 50 L114 20", w: 1.6, o: 1 },
     ],
   },
+  "interest-rate-swap": {
+    lines: [{ d: "M6 32 H114", w: 1, o: 0.35 }, { d: "M14 32 V20 M34 32 V18 M54 32 V16 M74 32 V14 M94 32 V12", w: 1, o: 0.5 }, { d: "M14 32 V44 M34 32 V44 M54 32 V44 M74 32 V44 M94 32 V44", w: 1.6, o: 1 }],
+  },
   immunization: {
     lines: [{ d: "M6 22 C40 46 80 46 114 22", w: 1, o: 0.4 }, { d: "M6 42 C40 18 80 18 114 42", w: 1.6, o: 1 }],
     dots: [{ x: 60, y: 32, key: true }],

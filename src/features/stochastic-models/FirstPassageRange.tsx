@@ -12,6 +12,7 @@ export default function FirstPassageRange({ barrier }: { barrier: number }) {
   const { t } = useI18n();
   const [min, max] = FP_LOG_TIME_DOMAIN;
   const guess = useRangeGuess({
+    challengeId: "first-passage-range",
     truth: () => log10(drawFirstPassageTime(barrier, nextNormal(Math.random))),
     initial: [log10(0.1), log10(1)],
     bounds: FP_LOG_TIME_DOMAIN,

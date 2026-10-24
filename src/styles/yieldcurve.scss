@@ -140,9 +140,11 @@
   padding: 5px 6px;
   min-height: 38px;
   border-bottom: 1px solid var(--border);
-  border-left: 2px solid transparent;
 
-  &.is-selected { border-left-color: var(--primary); background: var(--surface-soft); }
+  &.is-selected {
+    background: var(--surface-soft);
+    button { color: var(--primary); }
+  }
   button {
     min-height: 28px;
     height: 28px;

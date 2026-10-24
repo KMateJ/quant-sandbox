@@ -1,6 +1,7 @@
+import type { EventRow } from "../../components/game/GamePanels";
 import type { TranslationKey } from "../../i18n";
 import type { DeskEvent, MissionDef, OrderTag } from "./engine/desk.types";
-import { num, signed } from "./deskFormat";
+import { num, signed } from "../../components/game/gameFormat";
 import type { Translate } from "./missionCopy";
 import { instrumentLabel } from "./sidePanels.math";
 
@@ -51,4 +52,19 @@ export function eventText(t: Translate, event: DeskEvent, mission: MissionDef): 
       return t("hdSideEvAssignment", { inst: instrumentLabel(event.id), shares: signed(event.shares) });
     default: return assertNever(event);
   }
+}
+
+const ROW_TONE: Record<DeskEvent["kind"], EventRow["tone"]> = {
+  fill: "up", breach: "down", rejected: "down", gap: "accent", ivShift: "accent", assignment: "accent", expiry: "accent", start: "",
+};
+const BLOTTER_ROWS = 14;
+
+/// The newest events as kit log rows: day, kind tag, tone and text.
+export function blotterRows(t: Translate, events: DeskEvent[], mission: MissionDef): EventRow[] {
+  return events.slice(0, BLOTTER_ROWS).map((e) => ({
+    t: t("hdDayShort", { day: String(e.day).padStart(2, "0") }),
+    kind: eventTag(t, e),
+    tone: ROW_TONE[e.kind],
+    text: eventText(t, e, mission),
+  }));
 }

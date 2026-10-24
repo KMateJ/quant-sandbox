@@ -1,4 +1,7 @@
 import { normCdf } from "../../lib/stats/distributions";
+import { KEY_RATES, zeroAt, priceOnCurve, curveDuration, keyWeight, keyRateDurations, bulletCashflows, barbellCashflows } from "../../lib/finance/curveRisk";
+import type { CashFlow, ZeroPoint } from "../../lib/finance/curveRisk";
+import { cholesky } from "../../lib/math/matrix";
 import { makeRng, nextNormal } from "../../lib/math/random";
 import { factorContribution, scenarioDelta } from "../yield-curve/yieldCurve.math";
 import type { FactorScenario } from "../yield-curve/yieldCurve.types";
@@ -116,24 +119,7 @@ export function correlatedPaths(rho: number, steps: number, T: number, seed: num
   return out;
 }
 
-/// Cholesky factor of a correlation matrix (lower triangular), or null if it is not positive definite.
-export function cholesky(corr: number[][]): number[][] | null {
-  const n = corr.length;
-  const L = Array.from({ length: n }, () => new Array<number>(n).fill(0));
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j <= i; j++) {
-      let sum = corr[i][j];
-      for (let k = 0; k < j; k++) sum -= L[i][k] * L[j][k];
-      if (i === j) {
-        if (sum <= 1e-12) return null;
-        L[i][j] = Math.sqrt(sum);
-      } else {
-        L[i][j] = sum / L[j][j];
-      }
-    }
-  }
-  return L;
-}
+export { cholesky };
 
 /// Sample correlation of the increments of two paths.
 export function incrementCorrelation(paths: { w1: number; w2: number }[]): number {
@@ -157,83 +143,18 @@ export function incrementCorrelation(paths: { w1: number; w2: number }[]): numbe
 // #region Curve risk and key-rate durations
 
 export type CurveShock = FactorScenario;
-export type ZeroPoint = { t: number; z: number };
-export type CashFlow = { t: number; cf: number };
+export type { CashFlow, ZeroPoint };
+export { KEY_RATES, zeroAt, priceOnCurve, curveDuration, keyWeight, keyRateDurations, bulletCashflows, barbellCashflows };
 
 /// Upward-sloping annually compounded zero curve used by the lesson and its figure.
 export const CURVE_ZEROS: ZeroPoint[] = [
   { t: 1, z: 0.03 }, { t: 2, z: 0.034 }, { t: 5, z: 0.039 }, { t: 10, z: 0.043 }, { t: 30, z: 0.046 },
 ];
-/// Key maturities (years) of the key-rate durations.
-export const KEY_RATES = [2, 5, 10, 30];
-
-/// Zero rate at `t` by linear interpolation of the knots, flat beyond the ends.
-export function zeroAt(zeros: ZeroPoint[], t: number): number {
-  if (t <= zeros[0].t) return zeros[0].z;
-  for (let i = 1; i < zeros.length; i++) {
-    if (t <= zeros[i].t) {
-      const w = (t - zeros[i - 1].t) / (zeros[i].t - zeros[i - 1].t);
-      return zeros[i - 1].z + w * (zeros[i].z - zeros[i - 1].z);
-    }
-  }
-  return zeros[zeros.length - 1].z;
-}
 
 /// Zero curve after a shock of `bp` basis points, with the yield-curve lab's shapes (signed `bp`).
 export function shockCurve(zeros: ZeroPoint[], shock: CurveShock, bp: number): ZeroPoint[] {
   const delta = scenarioDelta(shock, bp);
   return zeros.map((k) => ({ t: k.t, z: k.z + factorContribution(k.t, delta) }));
-}
-
-/// Present value of cash flows discounted off the zero curve (annual compounding).
-export function priceOnCurve(cashflows: CashFlow[], zeros: ZeroPoint[]): number {
-  return cashflows.reduce((s, c) => s + c.cf / Math.pow(1 + zeroAt(zeros, c.t), c.t), 0);
-}
-
-/// Duration against a parallel move of the zero curve: Σ t·PV_t/(1+z_t) / P.
-export function curveDuration(cashflows: CashFlow[], zeros: ZeroPoint[]): number {
-  const total = priceOnCurve(cashflows, zeros);
-  const weighted = cashflows.reduce((s, c) => {
-    const z = zeroAt(zeros, c.t);
-    return s + (c.t * c.cf) / Math.pow(1 + z, c.t) / (1 + z);
-  }, 0);
-  return weighted / total;
-}
-
-/// Weight of key rate `k` at maturity `t`: 1 at the key, falling linearly to 0 at the neighbouring keys, flat past the ends.
-export function keyWeight(keys: number[], k: number, t: number): number {
-  const lo = k > 0 ? keys[k - 1] : undefined;
-  const hi = k < keys.length - 1 ? keys[k + 1] : undefined;
-  if (t <= keys[k]) return lo === undefined ? 1 : Math.max(0, (t - lo) / (keys[k] - lo));
-  return hi === undefined ? 1 : Math.max(0, (hi - t) / (hi - keys[k]));
-}
-
-/// Key-rate durations −(ΔP/P)/Δy for a 1 bp move of each key rate, spread over the cash flows by `keyWeight`.
-/// The weights sum to 1 at every maturity, so the key-rate durations add up to `curveDuration`.
-export function keyRateDurations(cashflows: CashFlow[], zeros: ZeroPoint[], keys: number[]): number[] {
-  const h = 1e-4;
-  const total = priceOnCurve(cashflows, zeros);
-  return keys.map((_, k) => {
-    const bumped = (sign: number) =>
-      cashflows.reduce((s, c) => s + c.cf / Math.pow(1 + zeroAt(zeros, c.t) + sign * h * keyWeight(keys, k, c.t), c.t), 0);
-    return -(bumped(1) - bumped(-1)) / (2 * h * total);
-  });
-}
-
-/// Annual-coupon bullet bond: face 100, coupon rate `coupon`, `years` payments.
-export function bulletCashflows(coupon: number, years: number): CashFlow[] {
-  return Array.from({ length: years }, (_, i) => ({ t: i + 1, cf: 100 * coupon + (i + 1 === years ? 100 : 0) }));
-}
-
-/// Two zero-coupon positions (at `short` and `long` years) with the same price and curve duration as `target`.
-export function barbellCashflows(target: CashFlow[], zeros: ZeroPoint[], short: number, long: number): CashFlow[] {
-  const price = priceOnCurve(target, zeros);
-  const dur = (t: number) => t / (1 + zeroAt(zeros, t));
-  const wShort = (dur(long) - curveDuration(target, zeros)) / (dur(long) - dur(short));
-  return [
-    { t: short, cf: wShort * price * Math.pow(1 + zeroAt(zeros, short), short) },
-    { t: long, cf: (1 - wShort) * price * Math.pow(1 + zeroAt(zeros, long), long) },
-  ];
 }
 
 /// Relative price change of `cashflows` when the curve is shocked by `bp` basis points.

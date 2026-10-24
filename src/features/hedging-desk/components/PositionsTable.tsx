@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import Panel from "../../../components/layout/Panel";
 import { useI18n } from "../../../i18n";
-import { money, num, signed, toneClass } from "../deskFormat";
+import { money, num, signed, toneClass } from "../../../components/game/gameFormat";
 import { isStock } from "../engine/instruments.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
 
@@ -27,8 +27,8 @@ export default function PositionsTable({ desk }: { desk: HedgingDeskModel }) {
   const total = rows.reduce((s, r) => s + r.value, 0);
 
   return (
-    <Panel id="hd-positions" title={t("hdPositionsTitle")} className="hdesk-panel">
-      <div className="hdesk-scroll">
+    <Panel id="hd-positions" title={t("hdPositionsTitle")} className="gdesk-panel">
+      <div className="gdesk-scroll">
         <table className="hdesk-positions">
           <thead>
             <tr>{COLS.map((c) => <th key={c} scope="col">{t(c)}</th>)}</tr>

@@ -1,13 +1,4 @@
 export const hedgingDeskHelpGuideEn = {
-  hdGuideThisMission: "This mission: {{id}}",
-  hdGuidePanels: "What each panel shows",
-  hdGuideKeys: "Keys",
-  hdGuideMistakes: "Common mistakes",
-  hdGuideTerms: "Words on the screen",
-  hdGuideOtherMissions: "Other missions",
-  hdGuideHowToWin: "How to pass",
-  hdGuideTraps: "Watch out for",
-  hdGuideShowMe: "Show me",
   hdGuideOtherTitle: "{{id}}: {{title}}",
 
   hdGuideM1Step1: "Your client bought 10 calls from you, so you are short delta: about −549 sh. Buy about 549 shares on day 0 (F4).",

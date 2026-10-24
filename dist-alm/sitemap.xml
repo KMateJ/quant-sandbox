@@ -1,0 +1,1571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://quantsandbox.dev/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/payoff</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/payoff" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/payoff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/payoff" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/binomial</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/binomial" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/binomial" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/binomial" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/black-scholes</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/black-scholes" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/black-scholes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/black-scholes" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/heston</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/heston" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/heston" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/heston" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/delta-hedging</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/delta-hedging" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/delta-hedging/desk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/delta-hedging/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/delta-hedging/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/delta-hedging/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/bond-pricing</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/bond-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/yield-curve</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/yield-curve" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/yield-curve/desk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/yield-curve/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/yield-curve/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/yield-curve/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/duration-convexity</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/duration-convexity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/treasury-futures</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/treasury-futures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/immunization</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/immunization" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/immunization" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/immunization" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/immunization/desk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/immunization/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/immunization/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/immunization/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/risk-return</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/risk-return" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/risk-return" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/risk-return" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/capm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/capm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/capm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/capm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/portfolio-lab</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/portfolio-lab" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/portfolio-lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/portfolio-lab" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/portfolio-lab/desk</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/portfolio-lab/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/portfolio-lab/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/portfolio-lab/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/efficient-frontier</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/efficient-frontier" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/npv-irr</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/npv-irr" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/valuation</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/valuation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/valuation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/valuation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/tvm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/tvm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/tvm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/tvm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/tvm/desk</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/tvm/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/tvm/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/tvm/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/wacc</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/wacc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/wacc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/wacc" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/capital-structure</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/capital-structure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/random-walk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/random-walk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/random-walk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/random-walk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/rescaled-walk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/rescaled-walk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/rescaled-walk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/rescaled-walk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/why-sqrt-t</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/why-sqrt-t" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/why-sqrt-t" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/why-sqrt-t" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/clt</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/clt" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/clt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/clt" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/wiener-process</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/wiener-process" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/wiener-process" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/wiener-process" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/increments</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/increments" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/increments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/increments" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/covariance</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/covariance" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/covariance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/covariance" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/running-max</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/running-max" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/running-max" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/running-max" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/reflection</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/reflection" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/reflection" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/reflection" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/first-passage</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/first-passage" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/first-passage" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/first-passage" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/stochastic-models/hitting</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/hitting" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/hitting" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/hitting" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/brownian-motion</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/brownian-motion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/brownian-motion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/brownian-motion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/gbm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/gbm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/gbm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/gbm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/ito-process</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/ito-process" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/ito-process" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/ito-process" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/monte-carlo</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/monte-carlo" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/monte-carlo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/monte-carlo" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/instruments</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/instruments" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/instruments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/instruments" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/strategies</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/strategies" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/strategies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/strategies" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/no-arbitrage</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/no-arbitrage" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/no-arbitrage" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/no-arbitrage" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/put-call-parity</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/put-call-parity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/put-call-parity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/put-call-parity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/one-step-binomial</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/one-step-binomial" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/one-step-binomial" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/one-step-binomial" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/risk-neutral</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/risk-neutral" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/risk-neutral" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/risk-neutral" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/multi-step-trees</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/multi-step-trees" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/multi-step-trees" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/multi-step-trees" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/american-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/american-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/american-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/american-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/delta-hedging</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/delta-hedging" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/gbm</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/gbm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/gbm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/gbm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/toward-black-scholes</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/toward-black-scholes" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/toward-black-scholes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/toward-black-scholes" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/greeks</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/greeks" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/greeks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/greeks" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/options-on-other-underlyings" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/implied-volatility</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/implied-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/implied-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/implied-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/stochastic-volatility</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/stochastic-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/stochastic-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/stochastic-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/static-replication</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/static-replication" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/static-replication" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/static-replication" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/derivatives/exotic-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/exotic-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/exotic-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/exotic-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/returns-volatility</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/returns-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/returns-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/returns-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/diversification</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/diversification" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/diversification" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/diversification" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/efficient-frontier</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/efficient-frontier" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/risk-aversion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/risk-aversion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/risk-aversion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/risk-aversion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/capm</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/capm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/capm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/capm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/performance-measures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/performance-measures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/performance-measures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/performance-measures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/factor-models</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/factor-models" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/factor-models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/factor-models" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/risk-measures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/risk-measures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/risk-measures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/risk-measures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/portfolio-constraints</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/portfolio-constraints" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/portfolio-constraints" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/portfolio-constraints" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/portfolio/input-estimation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/input-estimation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/input-estimation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/input-estimation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/bond-pricing</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/bond-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/duration-convexity</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/duration-convexity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/immunization</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/immunization" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/immunization" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/immunization" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/yield-curve</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/yield-curve" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/curve-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/curve-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/curve-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/curve-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/treasury-futures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/treasury-futures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/interest-rate-swaps" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/callable-bonds</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/callable-bonds" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/callable-bonds" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/callable-bonds" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/credit-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/credit-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/credit-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/credit-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/fixed-income/real-rates-inflation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/real-rates-inflation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/real-rates-inflation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/real-rates-inflation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/interest-discounting</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/interest-discounting" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/interest-discounting" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/interest-discounting" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/annuities</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/annuities" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/annuities" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/annuities" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/npv-irr</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/npv-irr" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/capital-budgeting-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/capital-budgeting-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/capital-budgeting-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/capital-budgeting-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/wacc</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/wacc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/wacc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/wacc" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/capital-structure</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/capital-structure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/dividend-policy</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/dividend-policy" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/dividend-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/dividend-policy" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/dcf-valuation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/dcf-valuation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/dcf-valuation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/dcf-valuation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/valuation-multiples</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/valuation-multiples" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/valuation-multiples" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/valuation-multiples" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/corporate/real-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/real-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/real-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/real-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/random-walks</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/random-walks" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/random-walks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/random-walks" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/law-of-large-numbers-clt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/probability-spaces</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/probability-spaces" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/probability-spaces" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/probability-spaces" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/filtrations</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/filtrations" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/filtrations" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/filtrations" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/martingales</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/martingales" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/martingales" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/martingales" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/brownian-properties</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/brownian-properties" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/brownian-properties" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/brownian-properties" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/reflection-principle</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/reflection-principle" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/reflection-principle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/reflection-principle" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/brownian-bridge</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/brownian-bridge" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/brownian-bridge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/brownian-bridge" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/ito-integral</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/ito-integral" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/ito-integral" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/ito-integral" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/ito-lemma</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/ito-lemma" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/ito-lemma" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/ito-lemma" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/feynman-kac</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/feynman-kac" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/feynman-kac" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/feynman-kac" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/change-of-measure</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/change-of-measure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/change-of-measure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/change-of-measure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/monte-carlo-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/sde-simulation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/sde-simulation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/sde-simulation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/sde-simulation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/correlated-brownian-motions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/mean-reversion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/mean-reversion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/mean-reversion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/mean-reversion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/stochastic/jump-diffusion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/jump-diffusion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/jump-diffusion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/jump-diffusion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/guide/graph</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/graph" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/graph" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/graph" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/sandbox</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/sandbox" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/sandbox" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/sandbox" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/payoff</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/payoff" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/payoff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/payoff" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/binomial</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/binomial" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/binomial" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/binomial" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/black-scholes</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/black-scholes" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/black-scholes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/black-scholes" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/heston</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/heston" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/heston" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/heston" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/delta-hedging</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/delta-hedging" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/delta-hedging/desk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/delta-hedging/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/delta-hedging/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/delta-hedging/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/bond-pricing</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/bond-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/yield-curve</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/yield-curve" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/yield-curve/desk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/yield-curve/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/yield-curve/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/yield-curve/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/duration-convexity</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/duration-convexity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/treasury-futures</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/treasury-futures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/immunization</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/immunization" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/immunization" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/immunization" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/immunization/desk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/immunization/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/immunization/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/immunization/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/risk-return</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/risk-return" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/risk-return" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/risk-return" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/capm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/capm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/capm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/capm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/portfolio-lab</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/portfolio-lab" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/portfolio-lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/portfolio-lab" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/portfolio-lab/desk</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/portfolio-lab/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/portfolio-lab/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/portfolio-lab/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/efficient-frontier</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/efficient-frontier" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/npv-irr</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/npv-irr" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/valuation</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/valuation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/valuation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/valuation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/tvm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/tvm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/tvm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/tvm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/tvm/desk</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/tvm/desk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/tvm/desk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/tvm/desk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/wacc</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/wacc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/wacc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/wacc" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/capital-structure</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/capital-structure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/random-walk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/random-walk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/random-walk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/random-walk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/rescaled-walk</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/rescaled-walk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/rescaled-walk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/rescaled-walk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/why-sqrt-t</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/why-sqrt-t" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/why-sqrt-t" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/why-sqrt-t" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/clt</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/clt" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/clt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/clt" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/wiener-process</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/wiener-process" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/wiener-process" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/wiener-process" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/increments</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/increments" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/increments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/increments" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/covariance</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/covariance" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/covariance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/covariance" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/running-max</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/running-max" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/running-max" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/running-max" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/reflection</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/reflection" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/reflection" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/reflection" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/first-passage</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/first-passage" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/first-passage" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/first-passage" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/stochastic-models/hitting</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/stochastic-models/hitting" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/stochastic-models/hitting" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/stochastic-models/hitting" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/brownian-motion</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/brownian-motion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/brownian-motion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/brownian-motion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/gbm</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/gbm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/gbm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/gbm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/ito-process</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/ito-process" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/ito-process" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/ito-process" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/monte-carlo</loc>
+    <lastmod>2026-10-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/monte-carlo" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/monte-carlo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/monte-carlo" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/instruments</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/instruments" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/instruments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/instruments" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/strategies</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/strategies" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/strategies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/strategies" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/no-arbitrage</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/no-arbitrage" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/no-arbitrage" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/no-arbitrage" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/put-call-parity</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/put-call-parity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/put-call-parity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/put-call-parity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/one-step-binomial</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/one-step-binomial" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/one-step-binomial" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/one-step-binomial" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/risk-neutral</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/risk-neutral" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/risk-neutral" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/risk-neutral" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/multi-step-trees</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/multi-step-trees" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/multi-step-trees" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/multi-step-trees" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/american-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/american-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/american-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/american-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/delta-hedging</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/delta-hedging" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/delta-hedging" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/gbm</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/gbm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/gbm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/gbm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/toward-black-scholes</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/toward-black-scholes" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/toward-black-scholes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/toward-black-scholes" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/greeks</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/greeks" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/greeks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/greeks" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/options-on-other-underlyings</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/options-on-other-underlyings" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/implied-volatility</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/implied-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/implied-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/implied-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/stochastic-volatility</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/stochastic-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/stochastic-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/stochastic-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/static-replication</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/static-replication" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/static-replication" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/static-replication" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/derivatives/exotic-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/derivatives/exotic-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/derivatives/exotic-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/derivatives/exotic-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/returns-volatility</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/returns-volatility" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/returns-volatility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/returns-volatility" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/diversification</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/diversification" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/diversification" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/diversification" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/efficient-frontier</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/efficient-frontier" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/efficient-frontier" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/risk-aversion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/risk-aversion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/risk-aversion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/risk-aversion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/capm</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/capm" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/capm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/capm" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/performance-measures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/performance-measures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/performance-measures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/performance-measures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/factor-models</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/factor-models" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/factor-models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/factor-models" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/risk-measures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/risk-measures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/risk-measures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/risk-measures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/portfolio-constraints</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/portfolio-constraints" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/portfolio-constraints" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/portfolio-constraints" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/portfolio/input-estimation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/portfolio/input-estimation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/portfolio/input-estimation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/portfolio/input-estimation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/bond-pricing</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/bond-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/bond-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/duration-convexity</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/duration-convexity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/duration-convexity" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/immunization</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/immunization" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/immunization" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/immunization" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/yield-curve</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/yield-curve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/yield-curve" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/curve-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/curve-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/curve-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/curve-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/treasury-futures</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/treasury-futures" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/treasury-futures" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/interest-rate-swaps</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/interest-rate-swaps" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/callable-bonds</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/callable-bonds" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/callable-bonds" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/callable-bonds" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/credit-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/credit-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/credit-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/credit-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/fixed-income/real-rates-inflation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/fixed-income/real-rates-inflation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/fixed-income/real-rates-inflation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/fixed-income/real-rates-inflation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/interest-discounting</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/interest-discounting" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/interest-discounting" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/interest-discounting" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/annuities</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/annuities" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/annuities" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/annuities" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/npv-irr</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/npv-irr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/npv-irr" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/capital-budgeting-risk</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/capital-budgeting-risk" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/capital-budgeting-risk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/capital-budgeting-risk" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/wacc</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/wacc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/wacc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/wacc" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/capital-structure</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/capital-structure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/capital-structure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/dividend-policy</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/dividend-policy" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/dividend-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/dividend-policy" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/dcf-valuation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/dcf-valuation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/dcf-valuation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/dcf-valuation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/valuation-multiples</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/valuation-multiples" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/valuation-multiples" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/valuation-multiples" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/corporate/real-options</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/corporate/real-options" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/corporate/real-options" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/corporate/real-options" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/random-walks</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/random-walks" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/random-walks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/random-walks" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/law-of-large-numbers-clt</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/law-of-large-numbers-clt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/probability-spaces</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/probability-spaces" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/probability-spaces" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/probability-spaces" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/filtrations</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/filtrations" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/filtrations" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/filtrations" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/martingales</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/martingales" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/martingales" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/martingales" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/brownian-properties</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/brownian-properties" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/brownian-properties" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/brownian-properties" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/reflection-principle</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/reflection-principle" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/reflection-principle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/reflection-principle" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/brownian-bridge</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/brownian-bridge" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/brownian-bridge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/brownian-bridge" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/ito-integral</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/ito-integral" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/ito-integral" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/ito-integral" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/ito-lemma</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/ito-lemma" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/ito-lemma" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/ito-lemma" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/feynman-kac</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/feynman-kac" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/feynman-kac" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/feynman-kac" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/change-of-measure</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/change-of-measure" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/change-of-measure" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/change-of-measure" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/monte-carlo-pricing</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/monte-carlo-pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/sde-simulation</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/sde-simulation" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/sde-simulation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/sde-simulation" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/correlated-brownian-motions</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/correlated-brownian-motions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/mean-reversion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/mean-reversion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/mean-reversion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/mean-reversion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/stochastic/jump-diffusion</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/stochastic/jump-diffusion" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/stochastic/jump-diffusion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/stochastic/jump-diffusion" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/guide/graph</loc>
+    <lastmod>2026-10-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/guide/graph" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/guide/graph" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/guide/graph" />
+  </url>
+  <url>
+    <loc>https://quantsandbox.dev/hu/sandbox</loc>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://quantsandbox.dev/sandbox" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://quantsandbox.dev/hu/sandbox" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://quantsandbox.dev/sandbox" />
+  </url>
+</urlset>

@@ -16,7 +16,7 @@ export default function BetaTab({ lab, isMobile }: Props) {
   const { t } = useI18n();
   const [line, setLine] = useState<SketchPoint[]>([]);
   const sample = `${lab.seed}|${lab.dispersion}|${lab.beta}|${lab.marketReturn}|${lab.riskFree}`;
-  const pr = usePredictReveal({ truth: lab.regression.slope, tolerance: BETA_TOLERANCE, resetKey: sample });
+  const pr = usePredictReveal({ challengeId: "capm-beta-draw", truth: lab.regression.slope, tolerance: BETA_TOLERANCE, resetKey: sample });
 
   // A new round (a new sample, or "Try again" after a reveal) clears the drawn line.
   const [prev, setPrev] = useState({ sample, revealed: pr.revealed });

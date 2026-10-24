@@ -11,7 +11,7 @@ const fmt = (v: number) => `×${v.toFixed(2)}`;
 /// "Multiply the steps by k — how much wider does the walk get?" committed before the √k answer is shown.
 export default function SqrtPrediction({ k, setK }: Props) {
   const { t } = useI18n();
-  const state = usePredictReveal({ truth: spreadFactor(k), tolerance: 0.1 });
+  const state = usePredictReveal({ challengeId: "sqrt-scaling", truth: spreadFactor(k), tolerance: 0.1 });
   const vars = { k, factor: fmt(spreadFactor(k)) };
 
   return (

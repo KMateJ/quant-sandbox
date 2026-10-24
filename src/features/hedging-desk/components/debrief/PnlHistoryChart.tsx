@@ -3,7 +3,7 @@ import ChartContainer from "../../../../components/layout/ChartContainer";
 import { LineChart, SERIES_PALETTE } from "../../../../components/charts";
 import type { PlotFrame } from "../../../../components/charts";
 import { useI18n } from "../../../../i18n";
-import { money, signedMoney } from "../../deskFormat";
+import { money, signedMoney } from "../../../../components/game/gameFormat";
 import type { DebriefModel } from "../../useDebrief";
 import type { HedgingDeskModel } from "../../useHedgingDesk";
 
@@ -42,7 +42,7 @@ export default function PnlHistoryChart({ desk, debrief }: { desk: HedgingDeskMo
   };
 
   return (
-    <ChartContainer id="hd-debrief-history" title={t("hdDebriefHistoryTitle")} height={260} className="hdesk-panel hdesk-debrief-chart">
+    <ChartContainer id="hd-debrief-history" title={t("hdDebriefHistoryTitle")} height={260} className="gdesk-panel gdesk-debrief-chart">
       <LineChart
         data={data}
         xKey="day"

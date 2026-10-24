@@ -3,13 +3,22 @@ import { useI18n } from "../../i18n";
 
 /// One candidate reason; wrong ones name a common misconception and say why it fails.
 export type ExplainOption = { text: string; feedback: string; correct?: boolean };
-export type PredictExplainSpec = { question: string; options: ExplainOption[] };
+export type PredictExplainSpec = {
+  question: string;
+  options: ExplainOption[];
+  /// Called once, with whether the first pick of this round was right (later re-picks are not scored).
+  onFirstPick?: (correct: boolean) => void;
+};
 
 /// The "explain" step of predict–observe–explain: after the reveal, the reader picks why the answer is what it is.
-export default function PredictExplain({ question, options }: PredictExplainSpec) {
+export default function PredictExplain({ question, options, onFirstPick }: PredictExplainSpec) {
   const { t } = useI18n();
   const [picked, setPicked] = useState<number | null>(null);
   const choice = picked === null ? null : options[picked];
+  const pick = (i: number) => {
+    if (picked === null) onFirstPick?.(Boolean(options[i].correct));
+    setPicked(i);
+  };
 
   return (
     <fieldset className="lp-explain">
@@ -18,7 +27,7 @@ export default function PredictExplain({ question, options }: PredictExplainSpec
       <div className="lp-explain-options">
         {options.map((o, i) => (
           <label key={i} className={picked === i ? (o.correct ? "lp-explain-option is-right" : "lp-explain-option is-wrong") : "lp-explain-option"}>
-            <input type="radio" name={question} checked={picked === i} onChange={() => setPicked(i)} />
+            <input type="radio" name={question} checked={picked === i} onChange={() => pick(i)} />
             <span>{o.text}</span>
           </label>
         ))}

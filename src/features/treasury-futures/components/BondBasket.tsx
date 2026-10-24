@@ -1,36 +1,38 @@
 import NumberInput from "../../../components/NumberInput";
-import SliderField from "../../../components/SliderField";
-import type { DeliverableBond } from "../treasuryFutures.math";
-import type { ScenarioId } from "../scenarios";
+import { sliderFill } from "../../../components/sliderFill";
 import { useI18n } from "../../../i18n";
+import { amortizedPayments } from "../basket.math";
+import type { DeliverableBond } from "../treasuryFutures.math";
+import type { TreasuryFuturesModel } from "../useTreasuryFutures";
 
-export default function BondBasket({ bonds, scenario, futures, onFutures, onBond, onAdd, onRemove, notionalCoupon, delivery, deliveryDate, marketYield, onSetting }: {
-  bonds: DeliverableBond[];
-  scenario: ScenarioId;
-  futures: number;
-  onFutures: (value: number) => void;
-  notionalCoupon: number;
-  delivery: number;
-  deliveryDate?: string;
-  marketYield: number;
-  onSetting: (patch: { notionalCoupon?: number; delivery?: number; deliveryDate?: string; marketYield?: number }) => void;
-  onBond: (index: number, patch: Partial<DeliverableBond>) => void;
-  onAdd: () => void;
-  onRemove: (index: number) => void;
-}) {
+const F_MIN = 50;
+const F_MAX = 200;
+
+/// Futures price as one labelled number field with a range slider over the same 50–200 span.
+function FuturesControl({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const { t } = useI18n();
+  return <div className="tf-futures">
+    <NumberInput label={t("tfFuturesPrice")} value={value} onChange={onChange} min={F_MIN} max={F_MAX} step={0.01} sectionId="net-basis" />
+    <input type="range" className="slider-input" min={F_MIN} max={F_MAX} step={0.25} value={value} aria-label={t("tfFuturesPrice")}
+      style={sliderFill(value, F_MIN, F_MAX)} onChange={(e) => onChange(Number(e.target.value))} />
+  </div>;
+}
+
+/// Scenario settings and one fieldset per deliverable bond, with add/remove.
+export default function BondBasket({ lab }: { lab: TreasuryFuturesModel }) {
+  const { t } = useI18n();
+  const { data, updateBond: onBond, updateSetting: onSetting } = lab;
+  const scenario = data.id;
+  const schedule = (i: number, bond: DeliverableBond, count: number) => onBond(i, { principalPayments: amortizedPayments(bond.maturity, count) });
   return <div className="tf-controls">
-    {scenario !== "bund" && <>
-      <NumberInput label={t("tfFuturesPrice")} value={futures} onChange={onFutures} min={0} max={500} step={0.01} sectionId="net-basis" />
-      <SliderField label={t("tfFuturesPrice")} min={50} max={200} step={0.25} value={futures} onChange={onFutures} formatValue={(v) => v.toFixed(2)} sectionId="net-basis" />
-    </>}
-    <NumberInput label={t("tfNotionalCoupon")} value={notionalCoupon} onChange={(v) => onSetting({ notionalCoupon: v })} min={0} max={0.2} step={0.25} percent sectionId="conversion-factor" />
+    {scenario !== "bund" && <FuturesControl value={data.futures} onChange={lab.setFutures} />}
+    <NumberInput label={t("tfNotionalCoupon")} value={data.notionalCoupon} onChange={(v) => onSetting({ notionalCoupon: v })} min={0} max={0.2} step={0.25} percent sectionId="conversion-factor" />
     {scenario === "bund" ? <label className="tf-frequency">{t("tfDeliveryDate")}
-      <input type="date" value={deliveryDate ?? ""} onChange={(e) => onSetting({ deliveryDate: e.target.value })} />
-    </label> : <NumberInput label={t("tfDelivery")} value={delivery} onChange={(v) => onSetting({ delivery: v })} min={0} max={40} step={0.25} />}
-    {scenario === "amortizing" && <NumberInput label={t("tfMarketYield")} value={marketYield} onChange={(v) => onSetting({ marketYield: v })} min={-0.05} max={0.3} step={0.25} percent />}
-    {bonds.map((bond, i) => <fieldset className="tf-bond" key={`${bond.id}-${i}`}>
-      <legend>Bond {bond.id}</legend>
+      <input type="date" value={data.deliveryDate ?? ""} onChange={(e) => onSetting({ deliveryDate: e.target.value })} />
+    </label> : <NumberInput label={t("tfDelivery")} value={data.delivery} onChange={(v) => onSetting({ delivery: v })} min={0} max={40} step={0.25} />}
+    {scenario === "amortizing" && <NumberInput label={t("tfMarketYield")} value={data.marketYield} onChange={(v) => onSetting({ marketYield: v })} min={-0.05} max={0.3} step={0.25} percent />}
+    {data.bonds.map((bond, i) => <fieldset className="tf-bond" key={bond.id}>
+      <legend>{t("tfBondId", { id: bond.id })}</legend>
       <div className="tf-input-grid">
         {scenario !== "bund" && <NumberInput label={t("tfCleanPrice")} value={bond.cleanPrice} onChange={(v) => onBond(i, { cleanPrice: v, priceSource: "given" })} min={0} max={300} step={0.01} sectionId="net-basis" />}
         <NumberInput label={t("tfFactor")} value={bond.conversionFactor} onChange={(v) => onBond(i, { conversionFactor: v })} min={0.01} max={3} step={0.0001} sectionId="conversion-factor" />
@@ -44,27 +46,17 @@ export default function BondBasket({ bonds, scenario, futures, onFutures, onBond
             </select>
           </label>
           {scenario === "amortizing" && <label className="tf-frequency">{t("tfStructure")}
-            <select value={bond.principalPayments.length === 1 ? "bullet" : "amortizing"} onChange={(e) => {
-              const count = e.target.value === "bullet" ? 1 : 4;
-              const years = Math.min(2, bond.maturity);
-              onBond(i, { principalPayments: Array.from({ length: count }, (_, j) => ({
-                time: bond.maturity - years + (j + 1) * years / count, amount: 100 / count,
-              })) });
-            }}>
+            <select value={bond.principalPayments.length === 1 ? "bullet" : "amortizing"}
+              onChange={(e) => schedule(i, bond, e.target.value === "bullet" ? 1 : 4)}>
               <option value="bullet">{t("tfBullet")}</option><option value="amortizing">{t("tfAmortizing")}</option>
             </select>
           </label>}
-          {scenario === "amortizing" && bond.principalPayments.length > 1 && <NumberInput label={t("tfInstallments")} value={bond.principalPayments.length} onChange={(count) => {
-            const n = Math.max(2, Math.round(count));
-            const years = Math.min(2, bond.maturity);
-            onBond(i, { principalPayments: Array.from({ length: n }, (_, j) => ({
-              time: bond.maturity - years + (j + 1) * years / n, amount: 100 / n,
-            })) });
-          }} min={2} max={12} step={1} />}
+          {scenario === "amortizing" && bond.principalPayments.length > 1 && <NumberInput label={t("tfInstallments")} value={bond.principalPayments.length}
+            onChange={(count) => schedule(i, bond, Math.max(2, Math.round(count)))} min={2} max={12} step={1} />}
         </>}
       </div>
-      {bonds.length > 1 && <button type="button" className="tf-remove" onClick={() => onRemove(i)}>{t("tfRemove")}</button>}
+      {data.bonds.length > 1 && <button type="button" className="tf-remove" onClick={() => lab.removeBond(i)}>{t("tfRemove")}</button>}
     </fieldset>)}
-    <button type="button" className="tf-add" onClick={onAdd}>{t("tfAddBond")}</button>
+    <button type="button" className="tf-add" onClick={lab.addBond}>{t("tfAddBond")}</button>
   </div>;
 }

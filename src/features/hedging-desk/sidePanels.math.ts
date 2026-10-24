@@ -59,11 +59,6 @@ export function breakevenMove(gamma: number, thetaPerDay: number): number | null
   return Math.sqrt((2 * thetaPerDay * CALENDAR_DAYS) / TRADING_DAYS / -gamma);
 }
 
-/// Position of `delta` on a meter spanning ±`range`, as a percentage clamped to 0..100.
-export function meterPosition(delta: number, range = 400): number {
-  return Math.min(100, Math.max(0, ((delta + range) / (2 * range)) * 100));
-}
-
 /// The strike closest to `S` (first one on a tie).
 export function nearestStrike(strikes: number[], S: number): number {
   return strikes.reduce((best, k) => (Math.abs(k - S) < Math.abs(best - S) ? k : best), strikes[0]);

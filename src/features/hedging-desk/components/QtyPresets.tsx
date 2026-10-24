@@ -12,7 +12,7 @@ export default function QtyPresets({ stock, qty, onPick }: { stock: boolean; qty
         <button
           key={n}
           type="button"
-          className="hdesk-btn"
+          className="gdesk-btn"
           aria-pressed={qty === String(n)}
           onClick={() => onPick(String(n))}
         >

@@ -1,0 +1,1 @@
+var e=.01,t=.05,n=[.05,1];export{e as n,n as r,t};

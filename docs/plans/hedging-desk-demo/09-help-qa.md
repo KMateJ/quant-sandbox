@@ -1,6 +1,6 @@
 # 09 — Help QA: widths, fullscreen, languages, keyboard, demo interplay, owner review list
 
-Status: todo · Depends on: 05, 06, 07, 08 · Suggested model: Sonnet · Est. size: S
+Status: in progress (claimed 2026-10-24, session help-qa) · Depends on: 05, 06, 07, 08 · Suggested model: Sonnet · Est. size: S
 
 ## Why
 Plans 05–08 may run in parallel sessions. This plan checks the integrated help the way a learner meets

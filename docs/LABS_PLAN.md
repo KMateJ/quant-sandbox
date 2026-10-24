@@ -577,3 +577,19 @@ Settled from what each session last accepted (Log 16:2x–16:3x):
 - 00:00 fixed-income-labs 02: width-aware ticks (ChartAxes, thinTicks), opt-in label collision placer, FI breakpoint mixins, sidebar beta dot; FI audit: 0 svg-text collisions/clips at all widths; open: topnav overflow 700-768, HU bond tab strip, yield-curve left-border (plan 03).
 - 13:05 derivatives-polish (owner session): delta-hedging lab rebuilt (daily grid, rebalance frequency, delta held vs continuous, hedge-error path, 200-path frequency study, URL state); plans 02/05 skip the folder.
 - 12:36 derivatives-polish 01: audit ignores clipped/fixed content, scrolls to top, asserts theme; ThemeProvider reads storage before writing
+- 00:07 game-desks 01: pure game kit in src/lib/game (objective statuses, progress stores, challenge scores, demo fold, advice ranking, seeds) and cholesky moved to src/lib/math/matrix.ts; test:game-kit added.
+- 00:09 game-desks 10: portfolio desk engine, missions P1–P5, riskParityWeights/scaleToVol, test:portfolio-desk
+- 00:09 game-desks 04: ALM desk engine + 5 missions (src/features/alm-desk/engine), extra-liability extension in immunization.math
+- 00:15 game-desks 07: pure rates desk engine (NS factor path, futures off the curve with CTD, DV01/key-rate hedges, missions R1–R5) and curve-risk helpers moved to src/lib/finance/curveRisk.ts; test:rates-desk added.
+- 00:16 game-desks 13: retirement desk engine + 5 missions (src/features/retirement-desk/engine)
+- 00:16 game-desks 17: lab challenge rounds saved and shown (16 sites), test:challenges
+- 00:37 game-desks 08: rates desk screen at /yield-curve/desk (router, registry subNav, URL/progress/hooks, kit view with curve, yield moves, P&L, positions, futures ticket, CTD monitor, scenarios, risk and events), stubs for 09, RatesDesk copy (EN/HU) and test:rates-desk screen tests.
+- 00:37 game-desks 05: ALM desk screen at /immunization/desk (kit frame, panels, ticket, keys, stubs for 06)
+- 00:39 game-desks 11: portfolio desk screen at /portfolio-lab/desk (kit frame, panels, keys, stubs for 12)
+- 00:52 game-desks 12: portfolio desk missions screen, debrief, help tabs and demo
+- 00:54 game-desks 06: ALM desk missions screen, debrief, help (next move / what if / guide) and demo
+- 00:59 game-desks 09: rates desk missions screen, debrief (attribution, policy table, progress), help tabs (advice, what-if incl. roll, guide) and six-step demo with take-over; RatesDeskMissions/RatesDeskHelp copy EN/HU; help tests.
+- 01:02 game-desks 03: Hedging Desk moved onto the game kit (frame, help, demo, missions, debrief, progress store with legacy import); src 4,526 -> 3,487 lines, SCSS 1,613 -> 262; tests green
+- 01:10 game-desks 15: retirement desk missions screen, debrief (wealth bridge, rule table), help tabs (advice, what-if, guide) and six-step T1 demo with take-over; RetirementDeskMissions/RetirementDeskHelp copy EN/HU; help tests.
+- 01:40 game-desks 18: final QA of the game-desks pack (static, tests, build/SEO, smoke, layout, per-desk play-through, hedging migration, challenges); fixed the hedging Sandbox link and the Sandbox table overflow; follow-ups and owner review list in plan 18 Findings.
+- 01:45 fixed-income-labs 08: interest-rate-swap lab (lib/finance/swap.ts, leg ladder, lock + MTM waterfall, key-rate DV01, predict); guide swap test unchanged

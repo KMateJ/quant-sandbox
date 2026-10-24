@@ -2,11 +2,6 @@ import { advanceDays, startBook } from "./book.math";
 import type { DayRecord, Market, MissionDef } from "./desk.types";
 import { markToMarket } from "./risk.math";
 
-export type MatrixTone = "up" | "down" | "flat";
-export type MatrixCell = { value: number; alpha: number; tone: MatrixTone };
-
-const ALPHA_MIN = 0.08;
-const ALPHA_MAX = 0.48;
 
 /// Realized spot path from day 0 to `day` inclusive.
 export function priceSeries(market: Market, day: number): { day: number; S: number }[] {
@@ -41,15 +36,4 @@ export function unhedgedPnl(mission: MissionDef, market: Market, day: number): {
     out.push({ day: d, pnl: markToMarket(state, market) });
   }
   return out;
-}
-
-/// Tint per scenario cell: tone by sign, alpha scaled by |value| / `max` within [0.08, 0.48].
-export function matrixCells(grid: number[][], max: number): MatrixCell[][] {
-  return grid.map((row) =>
-    row.map((value) => {
-      if (Math.abs(value) < 0.005 || max <= 0) return { value, alpha: 0, tone: "flat" as const };
-      const alpha = ALPHA_MIN + (ALPHA_MAX - ALPHA_MIN) * Math.min(Math.abs(value) / max, 1);
-      return { value, alpha, tone: value > 0 ? ("up" as const) : ("down" as const) };
-    }),
-  );
 }

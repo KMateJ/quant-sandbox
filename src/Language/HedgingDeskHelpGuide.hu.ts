@@ -1,13 +1,4 @@
 export const hedgingDeskHelpGuideHu = {
-  hdGuideThisMission: "Ez a küldetés: {{id}}",
-  hdGuidePanels: "Mit mutatnak a panelek",
-  hdGuideKeys: "Billentyűk",
-  hdGuideMistakes: "Gyakori hibák",
-  hdGuideTerms: "Kifejezések a képernyőn",
-  hdGuideOtherMissions: "Többi küldetés",
-  hdGuideHowToWin: "Így teljesítheted",
-  hdGuideTraps: "Vigyázz erre",
-  hdGuideShowMe: "Mutasd",
   hdGuideOtherTitle: "{{id}}: {{title}}",
 
   hdGuideM1Step1: "Az ügyfeled 10 callt vett tőled, így negatív a deltád: kb. -549 db. Vegyél kb. 549 részvényt a 0. napon (F4).",

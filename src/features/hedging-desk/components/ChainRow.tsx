@@ -1,5 +1,5 @@
 import { useI18n } from "../../../i18n";
-import { num } from "../deskFormat";
+import { num } from "../../../components/game/gameFormat";
 import type { OptionType } from "../engine/desk.types";
 import { optionId } from "../engine/instruments.math";
 import { instrumentLabel } from "../sidePanels.math";
@@ -29,16 +29,16 @@ export default function ChainRow({ desk, strike, atm, readOnly }: Props) {
         disabled={readOnly}
         onClick={() => desk.setTicketId(id)}
       >
-        <span className="hdesk-num">{num(q.bid, 2)}</span>
-        <span className="hdesk-num">{num(q.ask, 2)}</span>
-        <span className="hdesk-num hdesk-chain-delta">{num(q.delta, 2)}</span>
+        <span className="gdesk-num">{num(q.bid, 2)}</span>
+        <span className="gdesk-num">{num(q.ask, 2)}</span>
+        <span className="gdesk-num hdesk-chain-delta">{num(q.delta, 2)}</span>
       </button>
     );
   };
   return (
     <div className={`hdesk-chain-row ${atm ? "hdesk-chain-row--atm" : ""}`}>
       {side("C")}
-      <span className="hdesk-chain-strike hdesk-num">{num(strike, 1)}</span>
+      <span className="hdesk-chain-strike gdesk-num">{num(strike, 1)}</span>
       {side("P")}
     </div>
   );

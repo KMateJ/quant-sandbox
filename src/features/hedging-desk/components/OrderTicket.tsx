@@ -15,14 +15,14 @@ export default function OrderTicket({ desk }: { desk: HedgingDeskModel }) {
   const qty = parseQty(ticket.qty);
   const sideKey = ticket.side === "buy" ? "hdSideBuyCaps" : "hdSideSellCaps";
   return (
-    <Panel id="hd-ticket" title={t("hdOrderTicketTitle")} className="hdesk-panel">
+    <Panel id="hd-ticket" title={t("hdOrderTicketTitle")} className="gdesk-panel">
       <div className="hdesk-ticket-inst">
         <strong>{instrumentLabel(ticket.id)}</strong>
-        <button type="button" className="hdesk-btn" disabled={stock} onClick={() => desk.setTicketId(STOCK_ID)}>
+        <button type="button" className="gdesk-btn" disabled={stock} onClick={() => desk.setTicketId(STOCK_ID)}>
           {t("hdSideUnderlying")}
         </button>
       </div>
-      <p className="hdesk-label">{t(mission.instruments === "stock" ? "hdSideStockOnly" : "hdSidePickHint")}</p>
+      <p className="gdesk-label">{t(mission.instruments === "stock" ? "hdSideStockOnly" : "hdSidePickHint")}</p>
       <div className="hdesk-sides" role="group" aria-label={t("hdSideSideAria")}>
         {(["buy", "sell"] as const).map((side) => (
           <button
@@ -37,7 +37,7 @@ export default function OrderTicket({ desk }: { desk: HedgingDeskModel }) {
         ))}
       </div>
       <label className="hdesk-qty">
-        <span className="hdesk-label">
+        <span className="gdesk-label">
           {t("hdSideQty")} ({t(stock ? "hdSideQtyShares" : "hdSideQtyContracts")})
         </span>
         <input
@@ -52,12 +52,12 @@ export default function OrderTicket({ desk }: { desk: HedgingDeskModel }) {
       <QtyPresets stock={stock} qty={ticket.qty} onPick={desk.setQty} />
       <TicketPreview desk={desk} qty={qty} />
       {mission.maxTrades !== undefined && (
-        <p className="hdesk-label">{t("hdSideTradesLeft", { n: Math.max(0, mission.maxTrades - desk.trades) })}</p>
+        <p className="gdesk-label">{t("hdSideTradesLeft", { n: Math.max(0, mission.maxTrades - desk.trades) })}</p>
       )}
       {state.settled ? (
         <div className="hdesk-expired">
           <p>{t("hdSideExpired")}</p>
-          <button type="button" className="hdesk-btn" onClick={() => desk.setScreen("debrief")}>
+          <button type="button" className="gdesk-btn" onClick={() => desk.setScreen("debrief")}>
             {t("hdSideToDebrief")}
           </button>
         </div>

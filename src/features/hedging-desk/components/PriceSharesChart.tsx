@@ -2,13 +2,13 @@ import { useMemo } from "react";
 import Panel from "../../../components/layout/Panel";
 import { LineChart, SERIES_PALETTE, SERIES_ROLE, type ChartSeries } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
-import { num } from "../deskFormat";
+import { num } from "../../../components/game/gameFormat";
 import { parseInstrument } from "../engine/instruments.math";
 import { priceSeries, sharesSteps } from "../engine/series.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
 import { compactTick, dayAxis } from "./deskChart";
 import FillMarkers from "./FillMarkers";
-import SeriesKey from "./SeriesKey";
+import { SeriesKey } from "../../../components/game";
 
 const MIN_PAD = 0.05;
 
@@ -45,8 +45,8 @@ export default function PriceSharesChart({ desk }: { desk: HedgingDeskModel }) {
   const today = { axis: "x" as const, value: day, color: SERIES_PALETTE[2] };
 
   return (
-    <Panel id="hd-price" title={t("hdPriceSharesTitle")} actions={<SeriesKey series={sharesSeries} />} className="hdesk-panel" flush>
-      <div className="hdesk-chart hdesk-chart--price">
+    <Panel id="hd-price" title={t("hdPriceSharesTitle")} actions={<SeriesKey series={sharesSeries} />} className="gdesk-panel" flush>
+      <div className="gdesk-chart gdesk-chart--main">
         <LineChart
           data={prices}
           xKey="day"
@@ -63,7 +63,7 @@ export default function PriceSharesChart({ desk }: { desk: HedgingDeskModel }) {
           layer={(frame) => <FillMarkers frame={frame} fills={state.fills} spot={market.spot} />}
         />
       </div>
-      <div className="hdesk-chart hdesk-chart--shares">
+      <div className="gdesk-chart gdesk-chart--strip">
         <LineChart
           data={shares}
           xKey="day"

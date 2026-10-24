@@ -10,7 +10,7 @@ const fmt = (v: number) => v.toFixed(3);
 export default function CltPrediction({ onReveal }: { onReveal: () => void }) {
   const { t } = useI18n();
   const truth = sumSkewness("exponential", CLT_PREDICT_N);
-  const state = usePredictReveal({ truth, tolerance: 0.05 });
+  const state = usePredictReveal({ challengeId: "clt-spread", truth, tolerance: 0.05 });
   const vars = { n: CLT_PREDICT_N, gamma: STEP_MOMENTS.exponential.skewness, skew: fmt(truth) };
 
   return (

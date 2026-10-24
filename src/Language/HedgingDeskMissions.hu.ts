@@ -24,10 +24,6 @@ export const hedgingDeskMissionsHu = {
   hdObjFlatStock: "Ne maradjon részvény elszámolás után",
   hdObjFlatStockValue: "{{value}} db a könyvben",
 
-  hdStatusOnTrack: "Jó úton",
-  hdStatusAtRisk: "Veszélyben",
-  hdStatusPass: "Teljesítve",
-  hdStatusFail: "Elbukva",
 
   hdMissionM2Title: "Fedezés szűkös kereten",
   hdMissionM2Tagline: "Ugyanaz a short call, 15 $ kötésenként, 10 kötés.",

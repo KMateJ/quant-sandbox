@@ -1,6 +1,7 @@
 import type { TranslationKey } from "../../i18n";
-import type { ObjectiveDef, ObjectiveResult, ObjectiveStatus } from "./engine/desk.types";
-import { money, num, signed, signedMoney } from "./deskFormat";
+import type { ObjectiveView } from "../../components/game/GamePanels";
+import type { ObjectiveDef, ObjectiveResult } from "./engine/desk.types";
+import { money, num, signed, signedMoney } from "../../components/game/gameFormat";
 
 /// Translator shape shared by the desk's copy helpers (matches `useI18n().t`).
 export type Translate = (key: TranslationKey, vars?: Record<string, string | number>) => string;
@@ -49,12 +50,6 @@ export function objectiveValueText(t: Translate, result: ObjectiveResult): strin
   }
 }
 
-const STATUS_KEYS: Record<ObjectiveStatus, TranslationKey> = {
-  onTrack: "hdStatusOnTrack",
-  atRisk: "hdStatusAtRisk",
-  pass: "hdStatusPass",
-  fail: "hdStatusFail",
-};
-
-/// i18n key of an objective status word.
-export const statusKey = (status: ObjectiveStatus): TranslationKey => STATUS_KEYS[status];
+/// Kit rows for the mission's evaluated objectives: label, measured value and status word source.
+export const objectiveViews = (t: Translate, results: ObjectiveResult[], band: number): ObjectiveView[] =>
+  results.map((o) => ({ label: objectiveText(t, o.def, band), value: objectiveValueText(t, o), status: o.status }));

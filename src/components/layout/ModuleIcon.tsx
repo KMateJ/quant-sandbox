@@ -119,6 +119,11 @@ const ICONS: Record<string, ReactNode> = {
       <path d="M18 12l2-4 2 4a2 2 0 0 1-4 0z" />
     </>
   ),
+  "interest-rate-swap": (
+    <>
+      <path d="M4 8h13l-3-3M20 16H7l3 3" />
+    </>
+  ),
   "capital-structure": (
     <>
       <rect x="5" y="4" width="14" height="7" rx="1.5" />

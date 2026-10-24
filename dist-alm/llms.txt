@@ -1,0 +1,219 @@
+# Quant Sandbox
+
+> Free interactive labs, trading desk games and step-by-step lessons for quantitative finance: derivatives pricing, portfolio theory, fixed income, corporate finance and stochastic calculus.
+
+Math is written in LaTeX between `$…$`. Every page below links to its Markdown version when one exists; the HTML page is interactive.
+
+## Lessons — Derivatives pricing
+
+- [Forwards, Calls and Puts: Option Payoffs Explained](https://quantsandbox.dev/guide/derivatives/instruments.md): What a derivative is; payoffs of forwards, calls and puts at maturity; long and short positions. Free interactive lesson with worked examples.
+- [Option Strategies: Spreads, Straddles and Butterflies](https://quantsandbox.dev/guide/derivatives/strategies.md): Payoffs add up: spreads, straddles, strangles, butterflies and the synthetic forward. Free interactive lesson with worked examples.
+- [No-Arbitrage Pricing and the Forward Price Formula](https://quantsandbox.dev/guide/derivatives/no-arbitrage.md): The law of one price, the cash-and-carry trade and the fair forward price. Free interactive lesson with worked examples.
+- [Put–Call Parity Explained with Examples](https://quantsandbox.dev/guide/derivatives/put-call-parity.md): Two portfolios with the same payoff give a model-free link between call and put prices. Free interactive lesson with worked examples.
+- [One-Step Binomial Option Pricing Model](https://quantsandbox.dev/guide/derivatives/one-step-binomial.md): The stock moves up or down; replicating a call with stock and a bond. Free interactive lesson with worked examples.
+- [Risk-Neutral Probability in Option Pricing](https://quantsandbox.dev/guide/derivatives/risk-neutral.md): The replication price as a discounted expectation with weights q; the roles of P and Q. Free interactive lesson with worked examples.
+- [Binomial Trees and Backward Induction (CRR Model)](https://quantsandbox.dev/guide/derivatives/multi-step-trees.md): Recombining trees, the CRR parametrisation, pricing node by node and convergence to Black–Scholes. Free interactive lesson with worked examples.
+- [American Options and Early Exercise in Binomial Trees](https://quantsandbox.dev/guide/derivatives/american-options.md): Early exercise in a tree, why calls without dividends are never exercised early, the early-exercise premium of a put and the exercise boundary.
+- [Delta Hedging Explained: Delta, Gamma and Rebalancing](https://quantsandbox.dev/guide/derivatives/delta-hedging.md): Delta as a sensitivity and as a hedge ratio; gamma and the error from discrete rebalancing. Free interactive lesson with worked examples.
+- [Geometric Brownian Motion: The Stock Price Model](https://quantsandbox.dev/guide/derivatives/gbm.md): The standard model for stock prices: the log-normal distribution, its mean and its median. Free interactive lesson with worked examples.
+- [Black–Scholes Formula Explained: d1, d2 and N(d2)](https://quantsandbox.dev/guide/derivatives/toward-black-scholes.md): How the formula is obtained, what d₁ and d₂ mean, and what the model leaves out. Free interactive lesson with worked examples.
+- [Option Greeks Explained: Gamma, Vega, Theta and Rho](https://quantsandbox.dev/guide/derivatives/greeks.md): How an option's value responds to the stock, volatility, time and rates; gamma and theta as two sides of hedging. Free interactive lesson with worked examples.
+- [Black-76 and Garman–Kohlhagen Option Pricing](https://quantsandbox.dev/guide/derivatives/options-on-other-underlyings.md): Black–Scholes with a continuous yield, the forward price as the common thread, Black-76 for futures and Garman–Kohlhagen for currencies.
+- [Implied Volatility and the Volatility Smile](https://quantsandbox.dev/guide/derivatives/implied-volatility.md): Inverting Black–Scholes for σ, vega, and what the smile and the term structure say about the model. Free interactive lesson with worked examples.
+- [Heston Model: Stochastic Volatility and the Smile](https://quantsandbox.dev/guide/derivatives/stochastic-volatility.md): The Heston variance process, mean reversion, vol-of-vol, the Feller condition, and how correlation and vol-of-vol shape the smile.
+- [Breeden–Litzenberger and Static Option Replication](https://quantsandbox.dev/guide/derivatives/static-replication.md): The risk-neutral density from call prices, and building any payoff from bonds, forwards and options. Free interactive lesson with worked examples.
+- [Exotic Options: Barrier, Asian and Digital Options](https://quantsandbox.dev/guide/derivatives/exotic-options.md): Path-dependent payoffs, the effect of a knock-out barrier and of averaging, and why Monte Carlo is the natural tool.
+
+## Lessons — Portfolio & risk
+
+- [Log Returns, Volatility and the Square-Root-of-Time Rule](https://quantsandbox.dev/guide/portfolio/returns-volatility.md): Simple and log returns, standard deviation, annualising and the square-root-of-time rule. Free interactive lesson with worked examples.
+- [Diversification and Correlation in a Two-Asset Portfolio](https://quantsandbox.dev/guide/portfolio/diversification.md): Two-asset portfolios, the role of covariance, and why correlation drives risk down. Free interactive lesson with worked examples.
+- [Efficient Frontier, Capital Market Line and Sharpe Ratio](https://quantsandbox.dev/guide/portfolio/efficient-frontier.md): Mean–variance optimisation, the minimum-variance portfolio, a risk-free asset and the tangency portfolio. Free interactive lesson with worked examples.
+- [Risk Aversion, Utility and the Optimal Portfolio](https://quantsandbox.dev/guide/portfolio/risk-aversion.md): Mean–variance utility, indifference curves, the risk-aversion coefficient and the best point on the capital allocation line.
+- [CAPM, Beta and the Security Market Line Explained](https://quantsandbox.dev/guide/portfolio/capm.md): Systematic versus idiosyncratic risk, beta as market sensitivity, expected return and alpha. Free interactive lesson with worked examples.
+- [Sharpe, Treynor, Jensen's Alpha and Information Ratio](https://quantsandbox.dev/guide/portfolio/performance-measures.md): Risk-adjusted performance, which risk each measure charges for, and why the rankings can disagree. Free interactive lesson with worked examples.
+- [Factor Models: Single-Index Model and Systematic Risk](https://quantsandbox.dev/guide/portfolio/factor-models.md): The single-index model, splitting systematic from specific variance, and multi-factor models. Free interactive lesson with worked examples.
+- [Value at Risk (VaR) and Expected Shortfall Explained](https://quantsandbox.dev/guide/portfolio/risk-measures.md): Loss quantiles, the tail beyond them, normal versus fat-tailed returns, and the square-root-of-time rule. Free interactive lesson with worked examples.
+- [Portfolio Constraints: No-Short-Sales Frontier](https://quantsandbox.dev/guide/portfolio/portfolio-constraints.md): Why real portfolios cannot follow the unconstrained frontier: short-sale bans, position limits, and what they cost in Sharpe ratio.
+- [Estimation Error in Portfolio Optimization](https://quantsandbox.dev/guide/portfolio/input-estimation.md): Sample moments, their standard errors, why the frontier is unstable, and shrinkage as a remedy. Free interactive lesson with worked examples.
+
+## Lessons — Fixed income
+
+- [Bond Pricing and Yield to Maturity Explained](https://quantsandbox.dev/guide/fixed-income/bond-pricing.md): A bond as a stream of cash flows, yield to maturity, par, premium and discount. Free interactive lesson with worked examples.
+- [Bond Duration and Convexity Explained](https://quantsandbox.dev/guide/fixed-income/duration-convexity.md): Macaulay and modified duration, first- and second-order approximations of interest-rate risk. Free interactive lesson with worked examples.
+- [Bond Immunization and Duration Matching Explained](https://quantsandbox.dev/guide/fixed-income/immunization.md): Protecting a liability against rate moves by matching present value and duration, and why convexity and rebalancing matter.
+- [Spot Rates, Forward Rates and Yield Curve Bootstrapping](https://quantsandbox.dev/guide/fixed-income/yield-curve.md): Zero-coupon rates, bootstrapping from par yields, implied forward rates and the shape of the curve. Free interactive lesson with worked examples.
+- [Key-Rate Duration and Yield Curve Risk Explained](https://quantsandbox.dev/guide/fixed-income/curve-risk.md): Parallel shifts, steepeners and butterflies; key-rate durations as the sensitivities of a bond to each part of the curve.
+- [Treasury Bond Futures: Conversion Factors and CTD](https://quantsandbox.dev/guide/fixed-income/treasury-futures.md): Deliverable baskets, conversion factors, invoice price, net delivery cost and why the cheapest-to-deliver bond switches with the yield.
+- [Interest Rate Swaps: Valuation and the Par Swap Rate](https://quantsandbox.dev/guide/fixed-income/interest-rate-swaps.md): Fixed and floating legs, the swap as two bonds, the par swap rate from discount factors, valuing an existing swap and DV01.
+- [Callable Bonds, Yield to Call and Negative Convexity](https://quantsandbox.dev/guide/fixed-income/callable-bonds.md): The issuer's call option, price compression near the call price, yield to call and negative convexity. Free interactive lesson with worked examples.
+- [Credit Risk: Default Probability, Credit Spreads and CDS](https://quantsandbox.dev/guide/fixed-income/credit-risk.md): Hazard rates, survival probabilities, recovery, pricing defaultable bonds and the CDS spread. Free interactive lesson with worked examples.
+- [Real Rates, Fisher Equation, Inflation-Linked Bonds](https://quantsandbox.dev/guide/fixed-income/real-rates-inflation.md): The Fisher relation, nominal against real discounting, the breakeven inflation rate and how an inflation-linked bond is priced.
+
+## Lessons — Corporate finance
+
+- [Compound Interest and Discounting Explained](https://quantsandbox.dev/guide/corporate/interest-discounting.md): Simple, compound and continuous compounding; present value and the discount factor. Free interactive lesson with worked examples.
+- [Annuities, Perpetuities and Loan Amortization](https://quantsandbox.dev/guide/corporate/annuities.md): Present value of level payments, growing perpetuities, loan payments and the amortization schedule. Free interactive lesson with worked examples.
+- [NPV and IRR Explained: Capital Budgeting Basics](https://quantsandbox.dev/guide/corporate/npv-irr.md): Project cash flows, NPV, the NPV profile, IRR, the profitability index and where the IRR misleads. Free interactive lesson with worked examples.
+- [Project Risk: Sensitivity, Scenarios, Monte Carlo NPV](https://quantsandbox.dev/guide/corporate/capital-budgeting-risk.md): Which inputs move the NPV most, break-even values, scenario analysis and the distribution of NPV from simulation. Free interactive lesson with worked examples.
+- [WACC Explained: Weighted Average Cost of Capital](https://quantsandbox.dev/guide/corporate/wacc.md): Cost of equity, after-tax cost of debt, the interest tax shield and market-value weights. Free interactive lesson with worked examples.
+- [Modigliani–Miller Theorem and Capital Structure](https://quantsandbox.dev/guide/corporate/capital-structure.md): MM Propositions I and II without taxes, the tax shield, levered cost of equity and WACC with taxes. Free interactive lesson with worked examples.
+- [Dividend Discount Model and Dividend Policy](https://quantsandbox.dev/guide/corporate/dividend-policy.md): The Gordon growth model, growth from retained earnings, Modigliani–Miller dividend irrelevance and when payout does matter.
+- [DCF Valuation: Free Cash Flow and Terminal Value](https://quantsandbox.dev/guide/corporate/dcf-valuation.md): Free cash flow, enterprise value, the Gordon growth terminal value and equity value. Free interactive lesson with worked examples.
+- [Valuation Multiples: P/E, EV/EBITDA, Peers](https://quantsandbox.dev/guide/corporate/valuation-multiples.md): P/E, EV/EBITDA and other multiples, choosing peers, and how multiples relate to DCF value. Free interactive lesson with worked examples.
+- [Real Options Valuation: Delay, Expand and Abandon](https://quantsandbox.dev/guide/corporate/real-options.md): Options to delay, expand and abandon a project, valued on a binomial tree, and the expanded NPV. Free interactive lesson with worked examples.
+
+## Lessons — Stochastic models
+
+- [Random Walks and Brownian Motion Explained](https://quantsandbox.dev/guide/stochastic/random-walks.md): The coin-flip walk, variance that grows linearly in time, and its limit: Brownian motion. Free interactive lesson with worked examples.
+- [Law of Large Numbers and Central Limit Theorem](https://quantsandbox.dev/guide/stochastic/law-of-large-numbers-clt.md): Why averages settle down, how fast, and why the normal distribution appears: the two theorems behind Monte Carlo and the Brownian limit.
+- [Probability Spaces, Sigma-Algebras, Random Variables](https://quantsandbox.dev/guide/stochastic/probability-spaces.md): Sample space, σ-algebra, probability measure, measurable maps and the σ-algebra generated by a variable. Free interactive lesson with worked examples.
+- [Filtrations, Adapted Processes and Stopping Times](https://quantsandbox.dev/guide/stochastic/filtrations.md): Information that grows over time, adapted and predictable processes, and when a random time is a stopping time. Free interactive lesson with worked examples.
+- [Conditional Expectation and Martingales Explained](https://quantsandbox.dev/guide/stochastic/martingales.md): Conditional expectation given the past, fair games, why no betting strategy beats a martingale, and discounted prices under Q.
+- [Brownian Motion Properties: Scaling and Time Inversion](https://quantsandbox.dev/guide/stochastic/brownian-properties.md): Definition, the Gaussian characterisation, scaling, time inversion, the Markov property, quadratic variation and rough paths.
+- [Reflection Principle: Maximum of Brownian Motion](https://quantsandbox.dev/guide/stochastic/reflection-principle.md): The strong Markov property, the law of the running maximum and the density of the first passage time. Free interactive lesson with worked examples.
+- [Brownian Bridge: Definition, Mean and Variance](https://quantsandbox.dev/guide/stochastic/brownian-bridge.md): Brownian motion with a fixed endpoint: construction, covariance, independence and applications. Free interactive lesson with worked examples.
+- [The Itô Integral and the Itô Isometry Explained](https://quantsandbox.dev/guide/stochastic/ito-integral.md): Simple integrands, the Itô isometry, the martingale property and the derivation of ∫W dW = (W² − t)/2. Free interactive lesson with worked examples.
+- [Itô's Lemma Explained: Quadratic Variation and Drift](https://quantsandbox.dev/guide/stochastic/ito-lemma.md): Quadratic variation, the chain rule for Brownian motion, and the −½σ² drift of the log price. Free interactive lesson with worked examples.
+- [Feynman–Kac Formula: From SDEs to PDEs](https://quantsandbox.dev/guide/stochastic/feynman-kac.md): The generator of a diffusion, the backward equation, and how an expectation becomes the solution of a PDE. Free interactive lesson with worked examples.
+- [Girsanov's Theorem and Change of Measure Explained](https://quantsandbox.dev/guide/stochastic/change-of-measure.md): Reweighting probabilities with a density, equivalent measures, Girsanov's theorem and the market price of risk. Free interactive lesson with worked examples.
+- [Monte Carlo Option Pricing and Standard Error](https://quantsandbox.dev/guide/stochastic/monte-carlo-pricing.md): Estimating option prices by simulation: standard error, confidence intervals and convergence to Black–Scholes. Free interactive lesson with worked examples.
+- [Euler–Maruyama Scheme: Simulating SDEs Step by Step](https://quantsandbox.dev/guide/stochastic/sde-simulation.md): Discretising a stochastic differential equation, strong and weak error, step size, and checking against the exact GBM solution.
+- [Correlated Brownian Motions and Cholesky Decomposition](https://quantsandbox.dev/guide/stochastic/correlated-brownian-motions.md): Building correlated Brownian motions with a Cholesky factor, the two-dimensional Itô rule, and where correlation enters Heston and basket pricing.
+- [Ornstein–Uhlenbeck Process and the Vasicek Model](https://quantsandbox.dev/guide/stochastic/mean-reversion.md): A process pulled toward a long-run level, its exact solution and stationary distribution, and the short rate in the Vasicek model.
+- [Merton Jump-Diffusion Model and Poisson Jumps](https://quantsandbox.dev/guide/stochastic/jump-diffusion.md): The Poisson process, compound jumps, the Merton model, and how jumps create fat tails and a smile. Free interactive lesson with worked examples.
+
+## Labs — Derivatives
+
+- [Option Payoff Diagram & Strategy Builder](https://quantsandbox.dev/payoff.md): Build option strategies and see payoff and profit diagrams instantly: calls, puts, covered calls, spreads, straddles, strangles, butterflies and synthetic forwards.
+- [Binomial Option Pricing Tree Calculator](https://quantsandbox.dev/binomial.md): Price options on an interactive binomial tree: risk-neutral probabilities, backward induction and the replicating portfolio at every node.
+- [Black–Scholes Calculator & Option Greeks Visualizer](https://quantsandbox.dev/black-scholes.md): Price European calls and puts with the Black–Scholes formula and visualize delta, gamma, vega and theta across stock prices and maturities, in 2D and 3D.
+- [Heston Stochastic Volatility Model Simulator](https://quantsandbox.dev/heston.md): Simulate the Heston model: mean-reverting stochastic variance, vol-of-vol and correlation, with sample paths and Monte Carlo option pricing.
+- [Delta Hedging Simulator for Options](https://quantsandbox.dev/delta-hedging.md): Simulate discrete delta hedging of a call option: a replicating portfolio tracks the option value, rebalanced along a simulated stock path, with the residual hedge error.
+
+## Labs — Portfolio & Risk
+
+- [Capital Allocation Line & Sharpe Ratio Visualizer](https://quantsandbox.dev/risk-return.md): Combine a risky asset with the risk-free rate: expected return, volatility, the Sharpe ratio and leverage along the capital allocation line.
+- [CAPM Calculator & Security Market Line](https://quantsandbox.dev/capm.md): Interactive Capital Asset Pricing Model: beta, the market risk premium, the security market line and Jensen's alpha for individual assets.
+- [Two-Asset Portfolio: Diversification & Correlation](https://quantsandbox.dev/portfolio-lab.md): See how correlation drives diversification: expected return, volatility and the minimum-variance portfolio of two assets on an interactive frontier.
+- [Efficient Frontier & Markowitz Portfolio Optimization](https://quantsandbox.dev/efficient-frontier.md): Markowitz mean–variance optimization: the efficient frontier, minimum-variance and maximum-Sharpe (tangency) portfolios, target return or volatility, and the cost of constraints.
+
+## Labs — Fixed Income
+
+- [Bond Pricing Calculator & Price–Yield Curve](https://quantsandbox.dev/bond-pricing.md): Value a bond from its cash flows: discounting to present value, price, duration, convexity and a draggable price–yield curve.
+- [Yield Curve Bootstrapping, Spot & Forward Rates](https://quantsandbox.dev/yield-curve.md): Shape a par yield curve by level, slope and curvature, bootstrap the spot curve and read off forward rates interactively.
+- [Bond Duration & Convexity Approximation](https://quantsandbox.dev/duration-convexity.md): Compare a bond's exact price–yield curve with its duration and duration-plus-convexity approximations, and see where each one breaks down.
+- [Treasury Futures: Conversion Factors & Cheapest-to-Deliver](https://quantsandbox.dev/treasury-futures.md): Explore Treasury bond futures: conversion factors, invoice prices, deliverable cash flows and cheapest-to-deliver switching as yields move.
+- [Bond Immunization: Match Duration to a Liability](https://quantsandbox.dev/immunization.md): Play a bond immunization game: match present value and duration to a liability, rebalance through rate shocks and see why the surplus moved.
+
+## Labs — Corporate Finance
+
+- [NPV & IRR Calculator with NPV Profile](https://quantsandbox.dev/npv-irr.md): Capital budgeting made visual: net present value, internal rate of return, profitability index and the NPV profile across discount rates.
+- [DCF Valuation Model: Free Cash Flow & Terminal Value](https://quantsandbox.dev/valuation.md): Build a discounted cash flow valuation: free cash flow projection, terminal value, discounting at WACC and enterprise value.
+- [Time Value of Money & Compound Interest Calculator](https://quantsandbox.dev/tvm.md): Compound growth of a principal and regular contributions over time, splitting the final balance into interest earned and money paid in.
+- [WACC Calculator: Weighted Average Cost of Capital](https://quantsandbox.dev/wacc.md): Compute the weighted average cost of capital: cost of equity, after-tax cost of debt, the tax shield and how leverage changes WACC.
+- [Modigliani–Miller Capital Structure Visualizer](https://quantsandbox.dev/capital-structure.md): Modigliani–Miller with and without taxes: levered cost of equity, WACC and the interest tax shield as leverage changes.
+
+## Labs — Stochastic Models
+
+- [Stochastic Calculus Course: Random Walks to Brownian Motion](https://quantsandbox.dev/stochastic-models.md): Interactive stochastic calculus lessons: random walks, the central limit theorem, the Wiener process, the reflection principle and first passage times, learned by experiment.
+- [Brownian Motion Simulator with Drift & Volatility](https://quantsandbox.dev/brownian-motion.md): Simulate arithmetic Brownian motion: drift, volatility and reproducible seeded sample paths, with the mean and spread over time.
+- [Geometric Brownian Motion (GBM) Simulator](https://quantsandbox.dev/gbm.md): Simulate geometric Brownian motion, the stock price model behind Black–Scholes: drift, volatility, sample paths and the theoretical expected value.
+- [Itô's Lemma Visualized: the −½σ² Drift Correction](https://quantsandbox.dev/ito-process.md): See Itô's lemma at work on log prices: why the log of geometric Brownian motion drifts at μ − ½σ² instead of μ.
+- [Monte Carlo Option Pricing Simulator](https://quantsandbox.dev/monte-carlo.md): Price a European option by Monte Carlo: simulate terminal stock prices and watch the estimate and its confidence interval converge to Black–Scholes.
+
+## Trading desk games
+
+- [Delta Hedging Trading Simulator](https://quantsandbox.dev/delta-hedging/desk): Trade a short call book day by day: buy and sell stock and options, keep delta inside a band and pass hedging missions on simulated paths.
+- [Rates Desk: Hedge a Bond Book with Futures](https://quantsandbox.dev/yield-curve/desk): Hedge a government bond book with note futures day by day: manage DV01 and key-rate risk, track the cheapest-to-deliver bond and roll contracts.
+- [ALM Desk: Pension Immunization Game](https://quantsandbox.dev/immunization/desk): Pension ALM desk game: fund a liability with 2y, 5y and 12y bonds, match duration as the curve shifts and twists, and pass five missions.
+- [Portfolio Manager Desk: Volatility Target Game](https://quantsandbox.dev/portfolio-lab/desk): Run a five-asset fund at a 10% volatility target for 36 months: rebalance, use risk parity, survive a correlation spike and beat the 60/40.
+- [Retirement Desk: Withdrawal and Sequence Risk Game](https://quantsandbox.dev/tvm/desk): Run a 1,000,000 pension pot for thirty years: set each withdrawal and equity share, watch the success odds and survive a bad first decade.
+- [Quant Sandbox Games: Trading Desks and Lab Challenges](https://quantsandbox.dev/sandbox): Every trading-desk game and lab challenge in one list, with your completed missions, hit rates and best streaks saved in this browser.
+
+## Optional
+
+- [Symmetric Random Walk](https://quantsandbox.dev/stochastic-models/random-walk): Sums of independent ±1 steps; variance growth and the endpoint distribution.
+- [Rescaled Random Walk](https://quantsandbox.dev/stochastic-models/rescaled-walk): Rescaling the walk by √n and the Brownian limit (Donsker's principle).
+- [Standard deviation](https://quantsandbox.dev/stochastic-models/why-sqrt-t): How fast does a random walk spread out? The empirical std converges to √t.
+- [Central Limit Theorem](https://quantsandbox.dev/stochastic-models/clt): How sums of independent variables lead to the normal distribution.
+- [Defining the Wiener process](https://quantsandbox.dev/stochastic-models/wiener-process): The four defining properties, and why paths are continuous yet nowhere differentiable.
+- [Increment explorer](https://quantsandbox.dev/stochastic-models/increments): Pick a window [s, t]: the increment is N(0, t − s) wherever the window sits.
+- [Joint distributions and covariance](https://quantsandbox.dev/stochastic-models/covariance): W(s) and W(t) are jointly Gaussian with Cov = min(s, t); increments are independent.
+- [Running maximum and minimum](https://quantsandbox.dev/stochastic-models/running-max): Interactive simulation of the running maximum and minimum of Brownian motion, and why M(t) has the same law as |W(t)|.
+- [Reflection principle](https://quantsandbox.dev/stochastic-models/reflection): The reflection principle for Brownian motion, animated and checked by Monte Carlo: P(M(T) ≥ a) = 2·P(W(T) ≥ a).
+- [First passage times](https://quantsandbox.dev/stochastic-models/first-passage): First passage times of Brownian motion: the Lévy density, its heavy tail and infinite mean, in an interactive simulation.
+- [Hitting probabilities](https://quantsandbox.dev/stochastic-models/hitting): Barrier-hitting probabilities with drift and discrete monitoring, plus the BGK correction — the basis of barrier option pricing.
+- [Option Pricing Course: From Payoffs to Black–Scholes and Heston](https://quantsandbox.dev/guide/derivatives): Free step-by-step option pricing lessons: payoffs, no-arbitrage, binomial trees, the Greeks, Black–Scholes, implied volatility, Heston and exotics.
+- [Portfolio Theory Course: Diversification, Efficient Frontier & CAPM](https://quantsandbox.dev/guide/portfolio): Free step-by-step lessons on returns, diversification, the efficient frontier, risk aversion, CAPM, performance measures, factor models and VaR.
+- [Fixed Income Course: Bond Pricing, Yield Curves & Duration](https://quantsandbox.dev/guide/fixed-income): Free step-by-step lessons on bond prices and yields, duration, immunization, the yield curve, Treasury futures, swaps, callable bonds and credit risk.
+- [Corporate Finance Course: NPV, IRR, WACC & DCF Valuation](https://quantsandbox.dev/guide/corporate): Free step-by-step lessons on compounding and discounting, NPV and IRR, the cost of capital, capital structure, DCF valuation, multiples and real options.
+- [Stochastic Calculus for Finance: Brownian Motion, Itô & Monte Carlo](https://quantsandbox.dev/guide/stochastic): Free step-by-step lessons on random walks and Brownian motion, filtrations and martingales, Itô calculus, Girsanov, Feynman–Kac, Monte Carlo and mean reversion.
+- [Knowledge graph of the quant finance guides](https://quantsandbox.dev/guide/graph): Interactive map of every guide lesson and lab: which lessons build on which, by track, with links to each lesson.
+
+## Magyar
+
+- [Kamat, kamatozás és diszkontálás](https://quantsandbox.dev/hu/guide/corporate/interest-discounting.md): Egyszerű, kamatos és folytonos kamatozás; jelenérték és diszkontfaktor.
+- [Annuitások, örökjáradékok és hiteltörlesztés](https://quantsandbox.dev/hu/guide/corporate/annuities.md): Egyenletes kifizetések jelenértéke, növekvő örökjáradék, hiteltörlesztő részlet és a törlesztési terv.
+- [Nettó jelenérték és belső megtérülési ráta](https://quantsandbox.dev/hu/guide/corporate/npv-irr.md): Projektpénzáramok, NPV, az NPV-profil, IRR, jövedelmezőségi index, és ahol az IRR félrevezet.
+- [Projektkockázat: érzékenység, forgatókönyvek és Monte Carlo NPV](https://quantsandbox.dev/hu/guide/corporate/capital-budgeting-risk.md): Mely inputok mozgatják leginkább az NPV-t, fedezeti értékek, forgatókönyv-elemzés és az NPV szimulált eloszlása.
+- [Súlyozott átlagos tőkeköltség](https://quantsandbox.dev/hu/guide/corporate/wacc.md): A saját tőke költsége, az adózás utáni hitelköltség, a kamatadópajzs és a piaci értékű súlyok.
+- [Tőkeszerkezet és a Modigliani–Miller-tételek](https://quantsandbox.dev/hu/guide/corporate/capital-structure.md): Az MM I. és II. tétele adók nélkül, a kamatadópajzs, a tőkeáttételes saját tőke költsége és a WACC adóval.
+- [Osztalék, kifizetési politika és az osztalékdiszkont-modell](https://quantsandbox.dev/hu/guide/corporate/dividend-policy.md): A Gordon-féle növekedési modell, növekedés a visszatartott nyereségből, a Modigliani–Miller-féle osztalékirrelevancia, és mikor számít mégis a kifizetés.
+- [Diszkontált pénzáram alapú értékelés](https://quantsandbox.dev/hu/guide/corporate/dcf-valuation.md): Szabad pénzáram, vállalatérték, Gordon-féle maradványérték és a saját tőke értéke.
+- [Relatív értékelés szorzókkal](https://quantsandbox.dev/hu/guide/corporate/valuation-multiples.md): P/E, EV/EBITDA és más szorzók, a társcégek kiválasztása, és hogyan kapcsolódnak a szorzók a DCF-értékhez.
+- [Reálopciók: a rugalmasság értéke](https://quantsandbox.dev/hu/guide/corporate/real-options.md): A várakozás, bővítés és kilépés lehetősége mint opció, értékelése binomiális fán, és a bővített NPV.
+- [Hozamok és volatilitás](https://quantsandbox.dev/hu/guide/portfolio/returns-volatility.md): Egyszerű és logaritmikus hozam, szórás, évesítés és a négyzetgyök-szabály.
+- [Diverzifikáció és korreláció](https://quantsandbox.dev/hu/guide/portfolio/diversification.md): Két eszköz portfóliója, a kovariancia szerepe, és miért csökken a kockázat a korrelációval.
+- [Hatékony front és tőkepiaci egyenes](https://quantsandbox.dev/hu/guide/portfolio/efficient-frontier.md): Átlag–variancia optimalizálás, minimális varianciájú portfólió, kockázatmentes eszköz és az érintőportfólió.
+- [Kockázatkerülés és az optimális teljes portfólió](https://quantsandbox.dev/hu/guide/portfolio/risk-aversion.md): Várható érték–variancia hasznosság, közömbösségi görbék, a kockázatkerülési együttható és a tőkeallokációs egyenes legjobb pontja.
+- [CAPM, béta és az értékpapír-piaci egyenes](https://quantsandbox.dev/hu/guide/portfolio/capm.md): Szisztematikus és egyedi kockázat, a béta mint piaci érzékenység, várható hozam és alfa.
+- [Teljesítménymutatók: Sharpe, Treynor, Jensen és információs ráta](https://quantsandbox.dev/hu/guide/portfolio/performance-measures.md): Kockázattal korrigált teljesítmény, melyik mutató melyik kockázatot veszi figyelembe, és miért térhetnek el a rangsorok.
+- [Faktormodellek és szisztematikus kockázat](https://quantsandbox.dev/hu/guide/portfolio/factor-models.md): Az egyindexes modell, a szisztematikus és egyedi variancia szétválasztása, és a többfaktoros modellek.
+- [Kockáztatott érték (VaR) és várható veszteség (ES)](https://quantsandbox.dev/hu/guide/portfolio/risk-measures.md): Veszteségkvantilisek, az azokon túli farokrész, normális és vastag farkú hozamok, és a négyzetgyökös időszabály.
+- [Portfóliókorlátok és a shortolás nélküli hatékony front](https://quantsandbox.dev/hu/guide/portfolio/portfolio-constraints.md): Miért nem követheti egy valódi portfólió a korlátozatlan frontot: shortolási tilalom, pozíciólimitek, és mennyit vesznek el a Sharpe-mutatóból.
+- [A várható hozam és a kovariancia becslése](https://quantsandbox.dev/hu/guide/portfolio/input-estimation.md): Mintamomentumok, standard hibáik, miért instabil a hatékony front, és a zsugorítás (shrinkage) mint ellenszer.
+- [Véletlen bolyongás és Brown-mozgás](https://quantsandbox.dev/hu/guide/stochastic/random-walks.md): Pénzfeldobásos bolyongás, a variancia lineáris növekedése és a határeset: a Brown-mozgás.
+- [A nagy számok törvénye és a centrális határeloszlás-tétel](https://quantsandbox.dev/hu/guide/stochastic/law-of-large-numbers-clt.md): Miért állnak be az átlagok, milyen gyorsan, és miért bukkan fel a normális eloszlás: a Monte Carlo és a Brown-határátmenet mögötti két tétel.
+- [Valószínűségi mezők, σ-algebrák és valószínűségi változók](https://quantsandbox.dev/hu/guide/stochastic/probability-spaces.md): Eseménytér, σ-algebra, valószínűségi mérték, mérhető függvény és a változó által generált σ-algebra.
+- [Filtrációk, adaptált folyamatok és megállási idők](https://quantsandbox.dev/hu/guide/stochastic/filtrations.md): Az idővel bővülő információ, adaptált és előrejelezhető folyamatok, és mikor megállási idő egy véletlen időpont.
+- [Feltételes várható érték és martingálok](https://quantsandbox.dev/hu/guide/stochastic/martingales.md): Feltételes várható érték a múlt ismeretében, igazságos játékok, miért nem győzhető le egy martingál fogadási stratégiával, és a diszkontált árak Q alatt.
+- [A Brown-mozgás tulajdonságai](https://quantsandbox.dev/hu/guide/stochastic/brownian-properties.md): Definíció, Gauss-folyamat jellemzés, skálázás, időinverzió, Markov-tulajdonság, kvadratikus variáció és a pályák szabálytalansága.
+- [A tükrözési elv és az első elérési idők](https://quantsandbox.dev/hu/guide/stochastic/reflection-principle.md): Az erős Markov-tulajdonság, a futó maximum eloszlása és az első elérési idő sűrűsége.
+- [A Brown-híd](https://quantsandbox.dev/hu/guide/stochastic/brownian-bridge.md): Brown-mozgás rögzített végponttal: konstrukció, kovariancia, függetlenség és alkalmazások.
+- [Az Itô-integrál](https://quantsandbox.dev/hu/guide/stochastic/ito-integral.md): Egyszerű integrandusok, Itô-izometria, martingál-tulajdonság és a ∫W dW = (W² − t)/2 levezetése.
+- [Az Itô-lemma](https://quantsandbox.dev/hu/guide/stochastic/ito-lemma.md): Kvadratikus variáció, láncszabály Brown-mozgásra és a logaritmikus ár −½σ² driftje.
+- [Kolmogorov-egyenletek és a Feynman–Kac-formula](https://quantsandbox.dev/hu/guide/stochastic/feynman-kac.md): A diffúzió generátora, a visszafelé egyenlet, és hogyan lesz egy várható érték egy PDE megoldása.
+- [Mértékcsere és a Girsanov-tétel](https://quantsandbox.dev/hu/guide/stochastic/change-of-measure.md): Valószínűségek átsúlyozása sűrűséggel, ekvivalens mértékek, a Girsanov-tétel és a kockázat piaci ára.
+- [Monte Carlo-opcióárazás](https://quantsandbox.dev/hu/guide/stochastic/monte-carlo-pricing.md): Opcióárak becslése szimulációval: standard hiba, konfidenciaintervallum és konvergencia a Black–Scholes-árhoz.
+- [SDE-k szimulációja: az Euler–Maruyama-séma](https://quantsandbox.dev/hu/guide/stochastic/sde-simulation.md): Sztochasztikus differenciálegyenlet diszkretizálása, erős és gyenge hiba, lépésköz, és összevetés a geometriai Brown-mozgás pontos megoldásával.
+- [Korrelált Brown-mozgások és többeszközös modellek](https://quantsandbox.dev/hu/guide/stochastic/correlated-brownian-motions.md): Korrelált Brown-mozgások Cholesky-faktorral, a kétdimenziós Itô-szabály, és hol lép be a korreláció a Heston-modellbe és a kosáropciók árazásába.
+- [Átlaghoz visszahúzó folyamatok: Ornstein–Uhlenbeck és Vasicek](https://quantsandbox.dev/hu/guide/stochastic/mean-reversion.md): Hosszú távú szinthez húzott folyamat, egzakt megoldása és stacionárius eloszlása, valamint a rövid kamat a Vasicek-modellben.
+- [Ugrások és a Merton-féle ugró diffúzió](https://quantsandbox.dev/hu/guide/stochastic/jump-diffusion.md): Poisson-folyamat, összetett ugrások, a Merton-modell, és hogyan okoznak az ugrások vastag farkat és mosolyt.
+- [Határidős ügyletek, call és put opciók](https://quantsandbox.dev/hu/guide/derivatives/instruments.md): Mi a derivatíva; forward, call és put kifizetése lejáratkor; long és short pozíció.
+- [Pozíciók kombinálása](https://quantsandbox.dev/hu/guide/derivatives/strategies.md): A kifizetések összeadódnak: spreadek, straddle, strangle, butterfly és szintetikus forward.
+- [Arbitrázs és a határidős ár](https://quantsandbox.dev/hu/guide/derivatives/no-arbitrage.md): Az egy ár törvénye, a cash-and-carry stratégia és a fair határidős ár.
+- [Put–call paritás](https://quantsandbox.dev/hu/guide/derivatives/put-call-parity.md): Két portfólió azonos kifizetéssel: modellfüggetlen kapcsolat a call és a put ára között.
+- [Az egylépéses binomiális modell](https://quantsandbox.dev/hu/guide/derivatives/one-step-binomial.md): A részvény fel- vagy lemegy; a call replikálása részvényből és kötvényből.
+- [Kockázatsemleges valószínűségek](https://quantsandbox.dev/hu/guide/derivatives/risk-neutral.md): A replikációs ár mint diszkontált várható érték a q súlyokkal; a P és a Q mérték szerepe.
+- [Többlépéses fák és visszafelé indukció](https://quantsandbox.dev/hu/guide/derivatives/multi-step-trees.md): Rekombináló fa, CRR-paraméterezés, csomópontonkénti árazás és konvergencia a Black–Scholes-árhoz.
+- [Amerikai opciók és korai lehívás](https://quantsandbox.dev/hu/guide/derivatives/american-options.md): Korai lehívás a fában, miért nem éri meg korán lehívni az osztalékot nem fizető részvényre szóló callt, a put korai lehívási prémiuma és a lehívási határ.
+- [Delta és fedezés](https://quantsandbox.dev/hu/guide/derivatives/delta-hedging.md): A delta mint érzékenység és mint fedezeti arány; gamma és az újrasúlyozás hibája.
+- [Geometriai Brown-mozgás](https://quantsandbox.dev/hu/guide/derivatives/gbm.md): A részvényár standard modellje: lognormális eloszlás, várható érték és medián.
+- [A Black–Scholes-képlet](https://quantsandbox.dev/hu/guide/derivatives/toward-black-scholes.md): A képlet levezetésének logikája, d₁ és d₂ jelentése, és mit hagy figyelmen kívül a modell.
+- [A görögök: gamma, vega, théta és rhó](https://quantsandbox.dev/hu/guide/derivatives/greeks.md): Hogyan reagál az opció értéke a részvényárra, a volatilitásra, az időre és a kamatra; a gamma és a théta mint a fedezés két oldala.
+- [Opciók osztalékos részvényre, indexre, devizára és határidős ügyletre](https://quantsandbox.dev/hu/guide/derivatives/options-on-other-underlyings.md): Black–Scholes folytonos hozammal, a forward ár mint közös szál, Black-76 határidős ügyletekre és Garman–Kohlhagen devizára.
+- [Implikált volatilitás és a volatilitás-mosoly](https://quantsandbox.dev/hu/guide/derivatives/implied-volatility.md): A Black–Scholes-képlet megfordítása σ-ra, a vega, és amit a mosoly és a lejárati szerkezet elárul a modellről.
+- [Sztochasztikus volatilitás és a Heston-modell](https://quantsandbox.dev/hu/guide/derivatives/stochastic-volatility.md): A Heston-féle varianciafolyamat, az átlaghoz való visszatérés, a vol-of-vol, a Feller-feltétel, és hogyan alakítja a korreláció és a vol-of-vol a mosolyt.
+- [Statikus replikáció: Breeden–Litzenberger és Carr–Madan](https://quantsandbox.dev/hu/guide/derivatives/static-replication.md): Kockázatsemleges sűrűség a call árakból, és tetszőleges kifizetés felépítése kötvényből, forwardból és opciókból.
+- [Egzotikus opciók: korlátos, ázsiai és digitális opciók](https://quantsandbox.dev/hu/guide/derivatives/exotic-options.md): Útfüggő kifizetések, a kiütési korlát és az átlagár hatása, és miért természetes itt a Monte Carlo-árazás.
+- [Kötvényárak és hozamok](https://quantsandbox.dev/hu/guide/fixed-income/bond-pricing.md): Kötvény mint pénzáramlások sora, lejáratig számított hozam, par, prémium és diszkont.
+- [Duráció és konvexitás](https://quantsandbox.dev/hu/guide/fixed-income/duration-convexity.md): Macaulay- és módosított duráció, a kamatérzékenység lineáris és másodrendű közelítése.
+- [Immunizáció és durációillesztés](https://quantsandbox.dev/hu/guide/fixed-income/immunization.md): Kötelezettség védelme kamatmozgások ellen jelenérték és duráció illesztésével, és miért számít a konvexitás és az újrasúlyozás.
+- [Azonnali kamatok, forward kamatok és a hozamgörbe](https://quantsandbox.dev/hu/guide/fixed-income/yield-curve.md): Zérókupon-kamatok, bootstrapping a par hozamokból, implicit forward kamatok és a görbe alakja.
+- [Nem párhuzamos hozamgörbe-mozgások és kulcskamat-durációk](https://quantsandbox.dev/hu/guide/fixed-income/curve-risk.md): Párhuzamos eltolás, meredekedés és pillangó; a kulcskamat-durációk mint a kötvény érzékenysége a görbe egyes szakaszaira.
+- [Kötvényfutures és a legolcsóbban szállítható kötvény](https://quantsandbox.dev/hu/guide/fixed-income/treasury-futures.md): Szállítható kosár, konverziós faktor, számlázási ár, nettó szállítási költség, és miért vált a legolcsóbban szállítható kötvény a hozammal.
+- [Kamatswapok](https://quantsandbox.dev/hu/guide/fixed-income/interest-rate-swaps.md): Fix és változó láb, a swap mint két kötvény, a par swapráta a diszkontfaktorokból, egy meglévő swap értéke és a DV01.
+- [Visszahívható kötvények és negatív konvexitás](https://quantsandbox.dev/hu/guide/fixed-income/callable-bonds.md): A kibocsátó visszahívási opciója, az ár összenyomódása a visszahívási ár közelében, a visszahívásig számított hozam és a negatív konvexitás.
+- [Hitelkockázat: csődvalószínűség és hitelfelár](https://quantsandbox.dev/hu/guide/fixed-income/credit-risk.md): Csődintenzitás, túlélési valószínűség, megtérülési ráta, kockázatos kötvények árazása és a CDS-felár.
+- [Reálkamat, infláció és inflációkövető kötvények](https://quantsandbox.dev/hu/guide/fixed-income/real-rates-inflation.md): A Fisher-összefüggés, nominális és reál diszkontálás, a kiegyenlítő (breakeven) infláció és az inflációkövető kötvény árazása.

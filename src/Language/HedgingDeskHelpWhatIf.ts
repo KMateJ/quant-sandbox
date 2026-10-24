@@ -53,7 +53,6 @@ export const hedgingDeskHelpWhatIfEn = {
   hdWiSigma: "{{n}}σ ({{move}})",
   hdWiVolUp: "If implied vol jumps 2 pts",
   hdWiObjectives: "Objectives after this trade",
-  hdWiDetails: "Details",
   hdWiStep: "Leg {{n}} of {{total}}",
   hdWiMultiLeg: "Two legs: load the first, submit, then come back for the second.",
 };

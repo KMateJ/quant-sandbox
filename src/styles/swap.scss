@@ -1,0 +1,236 @@
+@use "breakpoints" as *;
+
+// Interest rate swap lab (/interest-rate-swap).
+.interest-rate-swap {
+  .irs-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  // #region Setup
+  .irs-setup {
+    display: grid;
+    gap: 12px;
+  }
+
+  .irs-field {
+    display: grid;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 12px;
+
+    input[type="number"],
+    select {
+      width: 100%;
+      min-height: 34px;
+      padding: 5px 8px;
+      color: var(--text);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      accent-color: var(--primary);
+
+      @include below-tablet { min-height: 44px; }
+    }
+  }
+
+  .irs-rates,
+  .irs-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 12px 0 0;
+
+    div {
+      padding: 8px 10px;
+      background: var(--surface-soft);
+      border-radius: var(--radius-xs);
+    }
+
+    dt {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    dd {
+      margin: 2px 0 0;
+      font-size: 15px;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+
+      &.is-up { color: var(--positive); }
+      &.is-down { color: var(--negative); }
+    }
+  }
+
+  .irs-metrics {
+    margin: 0 0 12px;
+
+    @include below-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .irs-lock {
+    width: 100%;
+    min-height: 38px;
+    margin-top: 8px;
+    color: var(--text);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    font-weight: 600;
+    cursor: pointer;
+
+    &[aria-pressed="true"] {
+      color: var(--bg);
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .irs-hint {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .irs-error {
+    margin: 8px 0 0;
+    color: var(--negative);
+    font-size: 12px;
+  }
+  // #endregion
+
+  // #region Ladder
+  .irs-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 12px;
+
+    em { font-style: normal; }
+  }
+
+  .irs-key {
+    display: inline-block;
+    width: 12px;
+    height: 10px;
+    margin-right: -6px;
+
+    &--floating { background: var(--chart-1); }
+    &--fixed { background: var(--chart-3); }
+    &--net {
+      height: 2px;
+      background: var(--text);
+    }
+  }
+
+  .irs-ladder-col {
+    cursor: default;
+    outline: none;
+
+    .irs-ladder-hit { fill: transparent; }
+
+    &.is-selected .irs-ladder-hit,
+    &:focus-visible .irs-ladder-hit {
+      fill: color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+  }
+
+  .irs-table-wrap {
+    max-height: 260px;
+    margin-top: 10px;
+    overflow: auto;
+  }
+
+  .irs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 4px 8px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      color: var(--muted);
+      font-weight: 500;
+      background: var(--surface);
+    }
+
+    tbody th { text-align: left; font-weight: 500; }
+
+    tbody tr.is-selected,
+    tbody tr:focus-visible {
+      outline: none;
+      background: color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+  }
+  // #endregion
+
+  .irs-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    min-width: 0;
+
+    @include below-desktop { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  // #region Curve editor
+  .irs-curve { height: 260px; }
+
+  .irs-quote {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    select,
+    input {
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--text);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+    }
+
+    input { width: 88px; }
+
+    @include below-tablet {
+      select,
+      input { min-height: 44px; }
+    }
+  }
+  // #endregion
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { recordChallenge } from "../../lib/game/challengeScores";
 
 export type PredictAttempt = { guess: number; error: number; hit: boolean };
 
@@ -16,13 +17,20 @@ export type PredictRevealState = {
   history: PredictAttempt[];
   truth: number;
   tolerance: number;
+  challengeId?: string;
 };
 
-type Options = { truth: number; tolerance: number; resetKey?: unknown };
+type Options = {
+  truth: number;
+  tolerance: number;
+  resetKey?: unknown;
+  /// Kit challenge id; each reveal is saved as one round.
+  challengeId?: string;
+};
 
 /// Predict-then-reveal round: the reader commits a guess, reveals the true value, sees the error, and retries.
 /// A new `truth` or `resetKey` (e.g. the inputs changed) starts a fresh round but keeps the history.
-export function usePredictReveal({ truth, tolerance, resetKey }: Options): PredictRevealState {
+export function usePredictReveal({ truth, tolerance, resetKey, challengeId }: Options): PredictRevealState {
   const [guess, setGuess] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [history, setHistory] = useState<PredictAttempt[]>([]);
@@ -42,13 +50,15 @@ export function usePredictReveal({ truth, tolerance, resetKey }: Options): Predi
   const reveal = () => {
     if (guess === null || revealed) return;
     const e = guess - truth;
+    const roundHit = Math.abs(e) <= tolerance;
     setRevealed(true);
-    setHistory((h) => [...h, { guess, error: e, hit: Math.abs(e) <= tolerance }]);
+    setHistory((h) => [...h, { guess, error: e, hit: roundHit }]);
+    if (challengeId) recordChallenge(challengeId, roundHit, Date.now());
   };
   const retry = () => {
     setGuess(null);
     setRevealed(false);
   };
 
-  return { guess, setGuess: (v) => !revealed && setGuess(v), revealed, reveal, retry, error, hit, attempts: history.length, history, truth, tolerance };
+  return { guess, setGuess: (v) => !revealed && setGuess(v), revealed, reveal, retry, error, hit, attempts: history.length, history, truth, tolerance, challengeId };
 }

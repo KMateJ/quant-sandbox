@@ -13,7 +13,7 @@ type Props = {
 /// "What share of paths touch the barrier?" with a reflection-principle explanation step.
 export default function BarrierPredict({ truth, explain, barrier, horizon }: Props) {
   const { t } = useI18n();
-  const state = usePredictReveal({ truth: truth * 100, tolerance: 5, resetKey: `${barrier}|${horizon}` });
+  const state = usePredictReveal({ challengeId: "barrier-hit", truth: truth * 100, tolerance: 5, resetKey: `${barrier}|${horizon}` });
   const options = [
     { text: t("bmExplainSame"), feedback: t("bmExplainSameFb") },
     { text: t("bmExplainRight"), feedback: t("bmExplainRightFb"), correct: true },

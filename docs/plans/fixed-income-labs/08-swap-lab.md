@@ -1,6 +1,6 @@
 # 08 — New lab: interest rate swap
 
-Status: todo · Depends on: 01, 02 (run after 07: same shared files) · Suggested model: Sonnet · Est. size: L
+Status: done (2026-10-24) · Depends on: 01, 02 (run after 07: same shared files) · Suggested model: Sonnet · Est. size: L
 
 ## Why
 Swaps are the most traded rates instrument and today exist only as a guide figure. A lab where you drag
@@ -84,7 +84,27 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 --pat
   behaviour in this plan.
 
 ## Findings (fill in during execution)
-- …
+- Math: `src/lib/finance/swap.ts` (`SwapSpec`, `Curve`, `SwapPayment`, `paymentTimes`, `swapLegs`, `parSwapRate`,
+  `swapMtm`, `keyRateDv01`, `parallelDv01`, `mtmAttribution`); `logLinearDf` added to `src/lib/finance/yieldcurve.ts`.
+  The guide's `swapTimeline` now calls `swapLegs` (its `SwapPayment` is re-exported); guide test 3/3 unchanged.
+- Feature `src/features/interest-rate-swap/`: `swap.math.ts` (curve from par nodes, ladder rows, yearly aggregation,
+  ±bp shock outcome), `swap.url.ts` (terms, curve via the yield-curve URL fields, locked rate `k` + lock curve `lk`
+  so a shared link keeps its MTM), `useSwap.ts`, `SwapView.tsx`, components `SwapSetup`, `CurveEditor` (reuses
+  yield-curve `MaturityChart`, plus a node select + number input as the keyboard path), `LegLadder`/`LegLadderInner`
+  (visx), `LadderTable` (linked highlight both ways, focusable rows and columns), `MtmPanel` (waterfall of MTM since
+  lock by node), `KeyRateBars` (WaterfallChart with all-total bars), `SwapPredict` (+50 bp; hit within 25% of the
+  full revaluation; shows DV01 × 50 alongside). Largest .tsx 64 lines.
+- Phone width: more than 20 payments are aggregated by year (`MAX_BARS_NARROW`).
+- Wiring: registry entry after treasury-futures, `InterestRateSwap(.hu).ts` (prefix `irs`), Seo keys, About +
+  4 FAQs, home mini visual + `homeLabDesc_interestRateSwap`, ModuleIcon glyph, `src/styles/swap.scss`.
+  `scripts/home.test.mjs` lab count raised 24 → 25 (plan 09 will raise it again).
+- Verification: tsc clean; eslint clean on touched files; `test:swap-lab` 7/7; guide swap test 3/3; `test:home` 6/6;
+  build pre-renders `/interest-rate-swap` + `/hu/…`; `test:seo` 25/25. cdp-smoke clean on `/interest-rate-swap`,
+  `/hu/interest-rate-swap`, `?tenor=10&freq=4`, `/guide` (one run showed React #418 on the EN page; two re-runs
+  clean — other sessions were rebuilding `dist/`). layout-audit (port 4183, DevTools 9416) clean at 360 and 1280 in
+  both themes; only the site-wide brand tap-target warning. Full six-width audit not run (release deadline).
+- HU strings for owner review: all of `src/Language/InterestRateSwap.hu.ts`, the HU About/FAQ, Seo title/description
+  and `homeLabDesc_interestRateSwap`.
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`

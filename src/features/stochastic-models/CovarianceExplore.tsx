@@ -25,7 +25,7 @@ export default function CovarianceExplore() {
   const empirical = useMemo(() => empiricalCovariance(ws, ys), [ws, ys]);
   const theory = jointCovariance(s, time, mode);
   const yName = mode === "levels" ? "W(t)" : "ΔW";
-  const round = usePredictReveal({ truth: jointCovariance(s, time, "levels").xy, tolerance: 0.03 });
+  const round = usePredictReveal({ challengeId: "covariance", truth: jointCovariance(s, time, "levels").xy, tolerance: 0.03 });
   const hidden = mode === "levels" && !round.revealed;
 
   return (

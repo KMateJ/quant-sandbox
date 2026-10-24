@@ -33,6 +33,7 @@ import { deltaHedgingHu } from "./DeltaHedging.hu";
 import { intuitionHu } from "./Intuition.hu";
 import { legacyIntuitionHu } from "./LegacyIntuition.hu";
 import { treasuryFuturesHu } from "./TreasuryFutures.hu";
+import { interestRateSwapHu } from "./InterestRateSwap.hu";
 import { immunizationHu } from "./Immunization.hu";
 import { guideHu } from "./Guide.hu";
 import { guidePortfolioHu } from "./GuidePortfolio.hu";
@@ -50,19 +51,8 @@ import { playbackHu } from "./Playback.hu";
 import { labControlsHu } from "./LabControls.hu";
 import { bondInputsHu } from "./BondInputs.hu";
 import { labPrimitivesHu } from "./LabPrimitives.hu";
-import { hedgingDeskHu } from "./HedgingDesk.hu";
-import { hedgingDeskMissionsHu } from "./HedgingDeskMissions.hu";
-import { hedgingDeskSideHu } from "./HedgingDeskSide.hu";
-import { hedgingDeskDebriefHu } from "./HedgingDeskDebrief.hu";
-import { hedgingDeskChartsHu } from "./HedgingDeskCharts.hu";
-import { hedgingDeskMissionScreenHu } from "./HedgingDeskMissionScreen.hu";
-import { hedgingDeskDemoHu } from "./HedgingDeskDemo.hu";
-import { hedgingDeskDemoStepsHu } from "./HedgingDeskDemoSteps.hu";
-import { hedgingDeskHelpHu } from "./HedgingDeskHelp.hu";
-import { hedgingDeskHelpAdviceHu } from "./HedgingDeskHelpAdvice.hu";
-import { hedgingDeskHelpGuideHu } from "./HedgingDeskHelpGuide.hu";
-import { hedgingDeskHelpWhatIfHu } from "./HedgingDeskHelpWhatIf.hu";
-import type { TranslationKey } from "./index.en";
+import type { BaseKey } from "./index.en";
+import { challengesHu } from "./Challenges.hu";
 
 /// Every Hungarian UI string, loaded lazily (`loadLanguage` in languageLoader.ts) and checked to have exactly the English keys.
 export const hu = {
@@ -88,6 +78,7 @@ export const hu = {
   ...yieldCurveHu,
   ...durationConvexityHu,
   ...treasuryFuturesHu,
+  ...interestRateSwapHu,
   ...immunizationHu,
   ...guideHu,
   ...guidePortfolioHu,
@@ -118,21 +109,10 @@ export const hu = {
   ...themeHu,
   ...notFoundHu,
   ...seoHu,
-  ...hedgingDeskHu,
-  ...hedgingDeskMissionsHu,
-  ...hedgingDeskSideHu,
-  ...hedgingDeskDebriefHu,
-  ...hedgingDeskChartsHu,
-  ...hedgingDeskMissionScreenHu,
-  ...hedgingDeskDemoHu,
-  ...hedgingDeskDemoStepsHu,
-  ...hedgingDeskHelpHu,
-  ...hedgingDeskHelpAdviceHu,
-  ...hedgingDeskHelpGuideHu,
-  ...hedgingDeskHelpWhatIfHu,
+  ...challengesHu,
   navGuide: "Útmutató",
-} satisfies Record<TranslationKey, string>;
+} satisfies Record<BaseKey, string>;
 
 type NoExtraKeys<T extends never> = T;
 /// Fails to compile when a Hungarian table has a key English lacks.
-export type HuOnlyKeys = NoExtraKeys<Exclude<keyof typeof hu, TranslationKey>>;
+export type HuOnlyKeys = NoExtraKeys<Exclude<keyof typeof hu, BaseKey>>;

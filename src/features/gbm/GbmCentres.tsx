@@ -24,7 +24,7 @@ export default function GbmCentres({ s0, drift, vol, horizon, setVol, cloud, pat
   const c = gbmCentres(s0, drift, vol, horizon);
   const law = useMemo(() => gbmTerminalLaw(s0, drift, vol, horizon), [s0, drift, vol, horizon]);
   const sample = useMemo(() => sampleCentres(terminalValues(cloud, pathCount, stepCount), c.mean), [cloud, pathCount, stepCount, c.mean]);
-  const pr = usePredictReveal({ truth: c.median, tolerance: 0.03 * s0, resetKey: `${s0}|${drift}|${vol}|${horizon}` });
+  const pr = usePredictReveal({ challengeId: "gbm-median", truth: c.median, tolerance: 0.03 * s0, resetKey: `${s0}|${drift}|${vol}|${horizon}` });
   // The median and mode stay hidden until the reader has committed a first guess.
   const shown = pr.revealed || pr.attempts > 0;
   const num = (v: number) => v.toFixed(2);

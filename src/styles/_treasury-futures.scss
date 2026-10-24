@@ -42,6 +42,7 @@
   .tf-metric span { color: var(--muted); font-size: 11px; }
   .tf-metric strong { overflow: hidden; color: var(--text); font-size: 18px; text-overflow: ellipsis; }
   .tf-metric.accent strong { color: #34d399; }
+  .tf-futures { display: grid; gap: 4px; }
   .tf-factor-strip { display: flex; gap: 1px; overflow-x: auto; background: var(--border); border: 1px solid var(--border); }
   .tf-factor-item { display: grid; flex: 1 0 125px; gap: 4px; padding: 8px 10px; background: var(--surface); font-size: 11px; }
   .tf-factor-item strong { color: var(--text); }
@@ -52,7 +53,15 @@
   .tf-scenario input[type="date"] { min-height: 34px; padding: 5px 8px; color: var(--text); background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-xs); }
   .tf-explanation, .tf-note { margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
   .tf-error { color: #fb923c; font-size: 12px; }
-  .tf-table-scroll { overflow-x: auto; }
+  // Scroll shadows: the edge shade shows only while more of the table lies that way (local covers hide it at the ends).
+  .tf-table-scroll {
+    overflow-x: auto;
+    background:
+      linear-gradient(to right, var(--surface) 30%, transparent) left center / 32px 100% no-repeat local,
+      linear-gradient(to left, var(--surface) 30%, transparent) right center / 32px 100% no-repeat local,
+      linear-gradient(to right, color-mix(in srgb, var(--text) 16%, transparent), transparent) left center / 12px 100% no-repeat scroll,
+      linear-gradient(to left, color-mix(in srgb, var(--text) 16%, transparent), transparent) right center / 12px 100% no-repeat scroll;
+  }
   .tf-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
   .tf-table th, .tf-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
   .tf-table th:first-child, .tf-table td:first-child { text-align: left; }
@@ -69,6 +78,9 @@
     .tf-metric { padding: 9px; }
     .tf-metric strong { font-size: 15px; }
     .tf-chart-wrap { height: 290px; }
+    // Cash flow = coupon + principal, so phones drop the derived column.
+    .tf-col-derived { display: none; }
+    .tf-cashflows { min-width: 400px; }
   }
 }
 

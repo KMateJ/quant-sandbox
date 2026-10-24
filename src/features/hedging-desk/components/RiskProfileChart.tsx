@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Panel from "../../../components/layout/Panel";
 import { LineChart, SERIES_PALETTE, SERIES_ROLE, type ChartSeries } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
-import { num, signedMoney } from "../deskFormat";
+import { num, signedMoney } from "../../../components/game/gameFormat";
 import { riskProfile } from "../engine/risk.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
 import { compactTick } from "./deskChart";
@@ -18,8 +18,8 @@ export default function RiskProfileChart({ desk }: { desk: HedgingDeskModel }) {
   ];
 
   return (
-    <Panel id="hd-profile" title={t("hdRiskProfileTitle")} className="hdesk-panel" flush>
-      <div className="hdesk-chart hdesk-chart--half">
+    <Panel id="hd-profile" title={t("hdRiskProfileTitle")} className="gdesk-panel" flush>
+      <div className="gdesk-chart gdesk-chart--half">
         <LineChart
           data={data}
           xKey="spot"

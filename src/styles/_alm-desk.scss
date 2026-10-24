@@ -1,0 +1,93 @@
+// ALM desk (/immunization/desk): layout bits beyond the shared `.gdesk` kit.
+
+.almd {
+  .almd-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 4px 8px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    tbody th {
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+
+  .almd-table__liability {
+    background: var(--gdesk-tint);
+
+    th,
+    td {
+      color: var(--primary);
+    }
+  }
+
+  // #region Rebalance ticket
+  .almd-ticket {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .almd-ticket-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      min-height: 32px;
+      width: 100%;
+      padding: 0 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      text-align: right;
+      border: 1px solid var(--gdesk-key-border);
+      border-radius: var(--radius-xs);
+    }
+  }
+
+  .almd-ticket-cash {
+    padding: 0 8px;
+    text-align: right;
+  }
+
+  .almd-ticket-note {
+    margin: 0;
+    padding: 8px;
+    background: var(--gdesk-tint);
+  }
+
+  .almd-submit {
+    min-height: 44px;
+    padding: 0 10px;
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+  // #endregion
+}

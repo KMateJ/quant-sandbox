@@ -1,0 +1,94 @@
+// Retirement desk (/tvm/desk): layout bits beyond the shared `.gdesk` kit.
+
+.retr {
+  .retr-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--border);
+  }
+
+  .retr-strip-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 2px;
+    background-color: var(--surface);
+    font-size: 11px;
+  }
+
+  .retr-empty {
+    margin: 0;
+    padding: 10px;
+  }
+
+  // #region Decision ticket
+  .retr-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    input[type="text"] {
+      min-height: 32px;
+      padding: 0 8px;
+      background: var(--surface-muted);
+      color: var(--text);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      border: 1px solid var(--gdesk-key-border);
+      border-radius: 0;
+
+      &[aria-invalid="true"] { border-color: var(--negative); }
+    }
+
+    input[type="range"] {
+      accent-color: var(--primary);
+
+      @media (max-width: 767px), (pointer: coarse) { min-height: 44px; }
+    }
+  }
+
+  .retr-presets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+
+    .gdesk-btn {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+  }
+
+  .retr-ticket-error {
+    margin: 0;
+    color: var(--negative);
+  }
+
+  .retr-submit {
+    min-height: 40px;
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 2px;
+    }
+  }
+  // #endregion
+}

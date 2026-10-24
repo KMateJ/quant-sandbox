@@ -1,8 +1,9 @@
 import { useI18n } from "../../../../i18n";
-import { num, signed, signedMoney } from "../../deskFormat";
+import { num, signed, signedMoney } from "../../../../components/game/gameFormat";
 import { whatIfBodyKey, whatIfVars } from "../../help/whatIfCopy";
 import type { WhatIfResult } from "../../help/whatIf.types";
-import { objectiveText, statusKey } from "../../missionCopy";
+import { STATUS_KEY } from "../../../../components/game/gameCopy";
+import { objectiveText } from "../../missionCopy";
 import type { HedgingDeskModel } from "../../useHedgingDesk";
 import WhatIfShocks from "./WhatIfShocks";
 
@@ -17,9 +18,9 @@ export default function WhatIfDetail({ result: r, desk }: { result: WhatIfResult
     [t("hdWiThetaAfter"), signedMoney(b.theta), signedMoney(a.theta)],
   ];
   return (
-    <div className="hdesk-wi-detail">
-      <p className="hdesk-help-p">{t(whatIfBodyKey(r.id), whatIfVars(r))}</p>
-      <table className="hdesk-wi-greeks">
+    <>
+      <p className="gdesk-help-p">{t(whatIfBodyKey(r.id), whatIfVars(r))}</p>
+      <table className="gdesk-wi-table">
         <thead>
           <tr><th /><td>{t("hdWiNow")}</td><td>→</td></tr>
         </thead>
@@ -30,17 +31,17 @@ export default function WhatIfDetail({ result: r, desk }: { result: WhatIfResult
         </tbody>
       </table>
       {r.premium !== 0 && (
-        <dl className="hdesk-help-kv"><dt>{t("hdWiPremium")}</dt><dd>{signedMoney(r.premium)}</dd></dl>
+        <dl className="gdesk-help-kv"><dt>{t("hdWiPremium")}</dt><dd>{signedMoney(r.premium)}</dd></dl>
       )}
       <WhatIfShocks result={r} />
-      <section className="hdesk-help-section">
-        <h4 className="hdesk-help-h">{t("hdWiObjectives")}</h4>
-        <ul className="hdesk-wi-objectives">
+      <section className="gdesk-help-section">
+        <h4 className="gdesk-help-h">{t("hdWiObjectives")}</h4>
+        <ul className="gdesk-wi-objectives">
           {r.objectives.map((o) => (
-            <li key={o.def.kind}>{objectiveText(t, o.def, desk.mission.band)}: {t(statusKey(o.status))}</li>
+            <li key={o.def.kind}>{objectiveText(t, o.def, desk.mission.band)}: {t(STATUS_KEY[o.status])}</li>
           ))}
         </ul>
       </section>
-    </div>
+    </>
   );
 }

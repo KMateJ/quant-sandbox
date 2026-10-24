@@ -1,5 +1,5 @@
 import { useI18n } from "../../i18n";
-import { LAB_CATEGORIES, LAB_COUNT, LESSON_COUNT } from "./home.data";
+import { DESK_COUNT, LAB_CATEGORIES, LAB_COUNT, LESSON_COUNT } from "./home.data";
 import HomeContinue from "./HomeContinue";
 
 /// Ruled row of headline counts (computed from the registries) plus the Continue cell.
@@ -7,6 +7,7 @@ export default function HomeStats() {
   const { t } = useI18n();
   const stats = [
     { value: LAB_COUNT, label: t("homeStatLabs") },
+    { value: DESK_COUNT, label: t("homeStatDesks") },
     { value: LESSON_COUNT, label: t("homeStatLessons") },
     { value: LAB_CATEGORIES.length, label: t("homeStatAreas") },
     { value: 2, label: t("homeStatLanguages") },

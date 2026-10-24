@@ -19,6 +19,7 @@ export default function VolCalibration({ m }: Props) {
   const truth = portfolioPoint(weights, m.assets.map((a) => a.mu), covFromCorr(sigmas, m.corr)).vol;
   const [min, max] = volGuessDomain(sigmas);
   const guess = useRangeGuess({
+    challengeId: "vol-range",
     truth,
     initial: [0.1, 0.2],
     bounds: [min, max],

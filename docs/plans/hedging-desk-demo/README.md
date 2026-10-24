@@ -31,7 +31,7 @@ state" before editing.
 | View | `src/features/hedging-desk/HedgingDeskView.tsx` (58 lines) | Renders `<DeskSession key={`${m}-${seed}-${run}`} …>`; desk screen = `DeskScreen` + `FunctionKeys`; the header `actions` slot holds `FullscreenButton` (expand + full screen) |
 | Function keys | `src/features/hedging-desk/useFunctionKeys.ts` (44 lines), `components/FunctionKeys.tsx` (29) | `FUNCTION_KEYS` F2/F3/F4/F5/F8/F9 bound on `window` keydown; `keyEnabled(key, desk)` |
 | Debrief | `src/features/hedging-desk/useDebrief.ts` (40 lines) | Replays four policies with `replayPolicy(mission, market, url.seed, every)`; **calls `recordResult(mission.id, passed, pnl)` into `localStorage` once the book settles** |
-| Progress | `src/features/hedging-desk/deskProgress.ts` | key `qs.hedgingDesk.progress.v1`, `{ [missionId]: { completed, bestPnl } }`, `isUnlocked`, `recordResult` |
+| Progress | `src/features/hedging-desk/deskProgress.ts` | kit store `HEDGING_PROGRESS` (key `qs.game.hedging.progress.v1`, `{ [missionId]: { completed, best } }`; old `qs.hedgingDesk.progress.v1` imported once), `recordResult`; `isUnlocked` was removed |
 | Panels | `components/*.tsx`, `components/debrief/*.tsx`, `components/missions/*.tsx` | Every panel is `<Panel … className="hdesk-panel">`; **no ids, no data attributes**. `Panel` (`src/components/layout/Panel.tsx`, 41 lines) has `title, actions, footer, children, dominant, flush, className` |
 | Playback helpers | `src/components/playback/useTicker.ts` | `useTicker(running, ms, tick, onStop)` (setInterval; stops when `tick` returns false), `prefersReducedMotion()` |
 | Typing guard | `src/components/layout/isTyping.ts` | `isTyping(target)` true inside inputs |

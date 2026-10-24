@@ -1,15 +1,5 @@
 export const hedgingDeskHelpEn = {
-  hdHelpButton: "Help",
-  hdHelpTitle: "Desk help",
-  hdHelpClose: "Close help",
   hdHelpContext: "{{mission}} · day {{day}} of {{days}}",
-  hdHelpTabNext: "Next move",
-  hdHelpTabWhatIf: "What if…",
-  hdHelpTabGuide: "Guide",
-  hdHelpTabsAria: "Help sections",
-  hdHelpKeysHint: "F1 or ? opens and closes help",
-  hdHelpShowMe: "Show me",
-  hdHelpUseTicket: "Put in ticket",
   hdHelpOpenWhatIf: "Try it in What if",
   hdHelpOpenGuide: "Read more in Guide",
 };

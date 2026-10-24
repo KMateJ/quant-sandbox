@@ -18,7 +18,8 @@ Maintenance follows a rather informal *"I work on it when I feel like it"* model
 
 | | |
 |---|---|
-| **24** interactive labs | across derivatives, portfolio & risk, fixed income, corporate finance and stochastic models |
+| **25** interactive labs | across derivatives, portfolio & risk, fixed income, corporate finance and stochastic models |
+| **5** trading desk games | missions, live help, a playthrough and a debrief on simulated markets |
 | **64** guide lessons | in five tracks, read in order, each with a figure, a worked example and self-check questions |
 | **2** languages | English and Hungarian, every page and every lesson |
 | **0** cookies | settings and reading progress stay in your browser; lab inputs live in the URL so a link shares your exact setup |
@@ -28,6 +29,7 @@ Maintenance follows a rather informal *"I work on it when I feel like it"* model
 ## Contents
 
 - [The labs](#the-labs)
+- [The desks](#the-desks)
 - [The guides](#the-guides)
 - [Stochastic Learning Studio](#stochastic-learning-studio)
 - [How it is built](#how-it-is-built)
@@ -79,6 +81,7 @@ Each lab is a dense workspace: controls on the left, a dominant chart on the rig
 | [Yield Curve](https://quantsandbox.dev/yield-curve) | Bootstrap zeros, forwards and discount factors from par quotes; sketch a curve; apply named shocks. |
 | [Duration & Convexity](https://quantsandbox.dev/duration-convexity) | First- and second-order rate risk side by side; predict the price change before revealing it. |
 | [Treasury Futures Lab](https://quantsandbox.dev/treasury-futures) | Conversion factors, basis and the cheapest-to-deliver as yields move. |
+| [Interest Rate Swap](https://quantsandbox.dev/interest-rate-swap) | Par swap rate from the curve, the fixed and floating legs, and the swap value after the curve moves. |
 | [Immunization Lab](https://quantsandbox.dev/immunization) | Match duration so that rate moves cancel out, then shock the curve and rebalance. |
 
 ### Corporate finance
@@ -100,6 +103,22 @@ Each lab is a dense workspace: controls on the left, a dominant chart on the rig
 | [Geometric Brownian Motion](https://quantsandbox.dev/gbm) | Log-normal price paths and their expected value. |
 | [Itô Process](https://quantsandbox.dev/ito-process) | Why log prices drift at μ − ½σ². |
 | [Monte Carlo](https://quantsandbox.dev/monte-carlo) | Price by simulation and watch the estimate converge. |
+
+---
+
+## The desks
+
+Five of the labs have a **trading desk** next to them: a terminal-style game where you run a book through a simulated market, one step at a time, against a mission. Each desk has five missions with live objectives, a help drawer (*Next move*, *What if*, *Guide*), a scripted playthrough you can take over at any step, and a debrief that splits your result into its sources and replays simple rules on the same market path.
+
+| Desk | Lives under | What you run |
+|---|---|---|
+| [Hedging desk](https://quantsandbox.dev/delta-hedging/desk) | Delta Hedging | A short option book, day by day: stock and option orders, delta and gamma limits, P&L attribution. |
+| [ALM desk](https://quantsandbox.dev/immunization/desk) | Immunization Lab | A pension liability funded with 2y, 5y and 12y bonds; keep duration (and in one mission convexity) matched while the curve shifts and twists. |
+| [Rates desk](https://quantsandbox.dev/yield-curve/desk) | Yield Curve | A bond book hedged with Treasury futures through level, slope and curvature moves; conversion factors and the cheapest-to-deliver. |
+| [Portfolio desk](https://quantsandbox.dev/portfolio-lab/desk) | Portfolio Lab | A multi-asset fund, month by month, against a volatility target and a benchmark, through changing correlations. |
+| [Retirement desk](https://quantsandbox.dev/tvm/desk) | Time Value of Money | A 1,000,000 pension pot over thirty years: choose each year's withdrawal and equity share, with Monte Carlo success odds. |
+
+The same path replays for the same seed, so a run can be compared with the rules in the debrief or shared by link. The **[Sandbox](https://quantsandbox.dev/sandbox)** page lists every desk and every lab prediction round, with completed missions, hit rates and best streaks saved in your browser.
 
 ---
 
@@ -191,8 +210,9 @@ Adding a module takes one registry entry and one `features/<name>/` folder; rout
 | Styling | SCSS with CSS custom properties: light and dark themes, palettes, track colours |
 | i18n | `i18next` with typed string tables; every route exists under `/` and `/hu` |
 | Heavy compute | Web workers (Heston pricing) |
+| Desk games | One shared kit: pure game logic in `src/lib/game/` (objectives, progress, demo folding, advice ranking) and the amber terminal frame in `src/components/game/`; each desk adds only its engine, panels and copy |
 | Maths | Pure `*.math.ts` modules and `src/lib/` (finance, statistics, numerics), no React imports |
-| Tests | Node's built-in test runner over the maths, the lesson content and the UI contracts (58 test files in `scripts/`); a headless-Chrome smoke script over the DevTools protocol |
+| Tests | Node's built-in test runner over the maths, the lesson content and the UI contracts (89 test files in `scripts/`); a headless-Chrome smoke script over the DevTools protocol |
 | Build output | Every route pre-rendered to static HTML in both languages, with a Markdown copy of each page for readers and crawlers |
 
 Three rules hold the codebase together and are enforced in review: no duplicated logic or data, strict separation of maths / types / view / styling / strings, and no `.tsx` file over about 150 lines. They are spelled out in [`CLAUDE.md`](CLAUDE.md).
@@ -204,8 +224,8 @@ src/
   modules/registry.ts   single source of truth for modules (routes, nav, home, SEO)
   features/<name>/      one folder per lab: view, *.math.ts, *.types.ts, components/
   features/guide/       lesson registry, knowledge graph, checks, figures, lesson pages
-  components/           layout, UI primitives, charts, playback
-  lib/                  shared numerics, statistics, finance, URL state
+  components/           layout, UI primitives, charts, playback; components/game/ is the desk frame
+  lib/                  shared numerics, statistics, finance, URL state; lib/game/ is the desk-game kit
   Language/             i18n string tables (en / hu); Language/guides/ holds the lesson text
   styles/               SCSS (tokens, layout, per-feature partials)
 scripts/                tests, audits, the smoke tester, IndexNow
@@ -249,7 +269,7 @@ The plans live next to the code:
 - [`docs/LABS_PLAN.md`](docs/LABS_PLAN.md) — the interactivity catalogue and the per-lab upgrade ideas.
 - [`docs/plans/`](docs/plans) — self-contained plan packs for larger initiatives, written so that separate sessions can execute them in parallel.
 
-Next up: an interest rate swap lab, a callable bond lab, interactive upgrades to the derivatives labs (payoff sketching, step-through backward induction, a hedging game) and the remaining studio chapters. Further out: credit risk and real options labs, numerical methods for PDEs, and tracks outside finance (analysis, linear algebra, probability, macro- and microeconomics).
+Next up: a callable bond lab, interactive upgrades to the derivatives labs (payoff sketching, step-through backward induction), a free-play mode for the desks and the remaining studio chapters. Further out: credit risk and real options labs, numerical methods for PDEs, and tracks outside finance (analysis, linear algebra, probability, macro- and microeconomics).
 
 If you would like a topic covered, open an issue or get in touch.
 

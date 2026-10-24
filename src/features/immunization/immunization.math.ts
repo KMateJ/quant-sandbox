@@ -21,8 +21,16 @@ export const assetsValue = (s: GameState) => s.cash + s.positions.reduce((sum, p
 /// Years left until the liability is due.
 export const yearsLeft = (s: GameState, c: GameConfig) => c.years - s.round;
 
+/// Liability payments still owed: the main one at `years`, plus extra ones announced and not yet paid.
+export function liabilityFlows(s: GameState, c: GameConfig): { amount: number; n: number }[] {
+  const extra = (c.extraLiabilities ?? []).filter((e) => s.round >= e.from && s.round < e.year);
+  return [{ amount: c.liability, n: yearsLeft(s, c) }, ...extra.map((e) => ({ amount: e.amount, n: e.year - s.round }))];
+}
+
+const flowPv = (curve: Curve, f: { amount: number; n: number }) => f.amount / (1 + yieldAt(curve, f.n)) ** f.n;
+
 /// PV of the liability on the state's curve.
-export const liabilityPv = (s: GameState, c: GameConfig) => c.liability / (1 + yieldAt(s.curve, yearsLeft(s, c))) ** yearsLeft(s, c);
+export const liabilityPv = (s: GameState, c: GameConfig) => liabilityFlows(s, c).reduce((sum, f) => sum + flowPv(s.curve, f), 0);
 
 /// Assets minus the PV of the liability.
 export const surplusOf = (s: GameState, c: GameConfig) => assetsValue(s) - liabilityPv(s, c);
@@ -51,14 +59,21 @@ export function exposure(s: GameState): { dMod: number; convexity: number } {
 
 /// Modified duration of the liability.
 export function liabilityDuration(s: GameState, c: GameConfig): number {
-  const n = yearsLeft(s, c);
-  return n / (1 + yieldAt(s.curve, n));
+  return pvWeighted(s, c, (n, y) => n / (1 + y));
 }
 
 /// Convexity of the liability.
 export function liabilityConvexity(s: GameState, c: GameConfig): number {
-  const n = yearsLeft(s, c);
-  return (n * (n + 1)) / (1 + yieldAt(s.curve, n)) ** 2;
+  return pvWeighted(s, c, (n, y) => (n * (n + 1)) / (1 + y) ** 2);
+}
+
+/// PV-weighted average of a per-payment measure over the liability's payments.
+function pvWeighted(s: GameState, c: GameConfig, measure: (n: number, y: number) => number): number {
+  const flows = liabilityFlows(s, c);
+  if (flows.length === 1) return measure(flows[0].n, yieldAt(s.curve, flows[0].n));
+  const pvs = flows.map((f) => flowPv(s.curve, f));
+  const total = pvs.reduce((a, b) => a + b, 0);
+  return flows.reduce((sum, f, i) => sum + (pvs[i] / total) * measure(f.n, yieldAt(s.curve, f.n)), 0);
 }
 
 /// Weights that match the liability's PV and duration now: the new-issue bonds and cash (duration 0) bracketing it.
@@ -98,8 +113,9 @@ export function drawShock(seed: number, round: number, config: GameConfig = DEFA
   return { parallelBp: draw(config.maxParallelBp), twistBp: draw(config.maxTwistBp) };
 }
 
-/// Time moves on one year with the curve unchanged: coupons and redemptions go to cash, cash earns the 1-year yield.
-function age(s: GameState): GameState {
+/// Time moves on one year with the curve unchanged: coupons and redemptions go to cash, cash earns the 1-year yield,
+/// and extra liabilities falling due are paid from cash.
+function age(s: GameState, config?: GameConfig): GameState {
   let cash = s.cash * (1 + yieldAt(s.curve, 1));
   const positions: Position[] = [];
   for (const p of s.positions) {
@@ -107,13 +123,15 @@ function age(s: GameState): GameState {
     if (p.maturity > 1) positions.push({ ...p, maturity: p.maturity - 1 });
     else cash += p.face;
   }
-  return { ...s, round: s.round + 1, cash, positions };
+  const round = s.round + 1;
+  for (const e of config?.extraLiabilities ?? []) if (e.year === round && s.round >= e.from) cash -= e.amount;
+  return { ...s, round, cash, positions };
 }
 
 /// Splits the surplus change of one round (from before the last rebalance to after the shock) into carry (a year at
 /// the old curve), rate (first order in the yield moves), convexity (the rest of the curve move) and trading cost.
 export function surplusAttribution(prev: GameState, next: GameState, config: GameConfig): Attribution {
-  const aged = age(prev);
+  const aged = age(prev, config);
   const carry = surplusOf(aged, config) - surplusOf(prev, config);
   let rate = 0;
   for (const p of aged.positions) {
@@ -121,23 +139,28 @@ export function surplusAttribution(prev: GameState, next: GameState, config: Gam
     const dy = yieldAt(next.curve, p.maturity) - y;
     rate -= ((positionValue(p, aged.curve) * macaulay(p.coupon, p.maturity, y)) / (1 + y)) * dy;
   }
-  const n = yearsLeft(aged, config);
-  if (n > 0) {
-    const y = yieldAt(aged.curve, n);
-    rate += ((liabilityPv(aged, config) * n) / (1 + y)) * (yieldAt(next.curve, n) - y);
+  for (const f of liabilityFlows(aged, config)) {
+    if (f.n <= 0) continue;
+    const y = yieldAt(aged.curve, f.n);
+    rate += ((flowPv(aged.curve, f) * f.n) / (1 + y)) * (yieldAt(next.curve, f.n) - y);
   }
   const cost = -prev.pendingCost;
   const total = surplusOf(next, config) - (surplusOf(prev, config) + prev.pendingCost);
   return { carry, rate, convexity: total - cost - carry - rate, cost };
 }
 
+/// `curve` after a yearly shock (level kept in 0.5–12%, slope within ±5%).
+export function shiftCurve(curve: Curve, shock: Shock): Curve {
+  const level = Math.min(0.12, Math.max(0.005, curve.level + shock.parallelBp / 10000));
+  const slope = Math.max(-0.05, Math.min(0.05, curve.slope + shock.twistBp / 10000));
+  return { level, slope };
+}
+
 /// Plays one round: a year passes and `shock` moves the curve; the result is appended to the history.
 export function advance(s: GameState, shock: Shock, config: GameConfig = DEFAULT_CONFIG): GameState {
   if (s.round >= config.years) return s;
-  const aged = age(s);
-  const level = Math.min(0.12, Math.max(0.005, s.curve.level + shock.parallelBp / 10000));
-  const slope = Math.max(-0.05, Math.min(0.05, s.curve.slope + shock.twistBp / 10000));
-  const next: GameState = { ...aged, curve: { level, slope }, pendingCost: 0 };
+  const aged = age(s, config);
+  const next: GameState = { ...aged, curve: shiftCurve(s.curve, shock), pendingCost: 0 };
   const result: RoundResult = {
     round: next.round,
     shock,

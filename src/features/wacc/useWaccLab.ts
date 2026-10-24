@@ -32,7 +32,7 @@ export function useWaccLab() {
     [costOfEquity, costOfDebt, taxRate]
   );
   // A new round whenever the question changes (other inputs or mode), not when D/V moves.
-  const predict = usePredictReveal({ truth: minimum, tolerance: 0.05, resetKey: `${mode}:${costOfEquity}:${costOfDebt}:${taxRate}` });
+  const predict = usePredictReveal({ challengeId: "wacc-min", truth: minimum, tolerance: 0.05, resetKey: `${mode}:${costOfEquity}:${costOfDebt}:${taxRate}` });
 
   const waccValue = realistic ? realisticWaccAt(costOfEquity, costOfDebt, taxRate, debtRatio) : waccAt(costOfEquity, costOfDebt, taxRate, debtRatio);
   const kd = realistic ? realisticCostOfDebt(costOfDebt, debtRatio) : costOfDebt;

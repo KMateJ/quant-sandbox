@@ -1,9 +1,11 @@
+import { BandMeter } from "../../../components/game";
 import Panel from "../../../components/layout/Panel";
 import { useI18n } from "../../../i18n";
-import { money, num, signed, signedMoney } from "../deskFormat";
+import { money, num, signed, signedMoney } from "../../../components/game/gameFormat";
 import { breakevenMove } from "../sidePanels.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
-import DeltaMeter from "./DeltaMeter";
+
+const METER_RANGE = 400;
 
 /// Net delta against the band, the book's Greeks, and cash / costs / breaches.
 export default function RiskPanel({ desk }: { desk: HedgingDeskModel }) {
@@ -29,33 +31,41 @@ export default function RiskPanel({ desk }: { desk: HedgingDeskModel }) {
     { label: t("hdSideBreakeven"), value: breakeven === null ? "—" : `$${num(breakeven, 2)}` },
   ];
   return (
-    <Panel id="hd-risk" title={t("hdRiskPanelTitle")} className="hdesk-panel">
-      <div className="hdesk-netdelta">
-        <span className="hdesk-label">{t("hdSideNetDelta")}</span>
-        <span className="hdesk-netdelta-value hdesk-num">
+    <Panel id="hd-risk" title={t("hdRiskPanelTitle")} className="gdesk-panel">
+      <div className="gdesk-netdelta">
+        <span className="gdesk-label">{t("hdSideNetDelta")}</span>
+        <span className="gdesk-netdelta-value gdesk-num">
           {signed(greeks.delta)} <small>{t("hdSideShares")}</small>
         </span>
-        <span className={`hdesk-bandtag ${inBand ? "hdesk-up" : "hdesk-down"}`}>
+        <span className={`gdesk-bandtag ${inBand ? "gdesk-up" : "gdesk-down"}`}>
           {t(inBand ? "hdSideInBand" : "hdSideOutOfBand")}
         </span>
-        <span className="hdesk-label hdesk-num">
+        <span className="gdesk-label gdesk-num">
           {t("hdSideDollarDelta")} {signedMoney(greeks.dollarDelta)}
         </span>
       </div>
-      <DeltaMeter delta={greeks.delta} band={mission.band} />
+      <BandMeter
+        value={greeks.delta}
+        min={-METER_RANGE}
+        max={METER_RANGE}
+        lo={-mission.band}
+        hi={mission.band}
+        scale={[signed(-METER_RANGE), "0", signed(METER_RANGE)]}
+        label={t("hdSideMeterAria", { delta: signed(greeks.delta), band: mission.band })}
+      />
       <dl className="hdesk-greekgrid">
         {cells.map((c) => (
           <div key={c.label}>
-            <dt className="hdesk-label">{c.label}</dt>
-            <dd className="hdesk-num">{c.value}</dd>
+            <dt className="gdesk-label">{c.label}</dt>
+            <dd className="gdesk-num">{c.value}</dd>
           </div>
         ))}
       </dl>
-      <dl className="hdesk-kv">
+      <dl className="gdesk-kv">
         {rows.map((r) => (
           <div key={r.label}>
             <dt>{r.label}</dt>
-            <dd className="hdesk-num">{r.value}</dd>
+            <dd className="gdesk-num">{r.value}</dd>
           </div>
         ))}
       </dl>

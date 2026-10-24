@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useI18n } from "../../i18n";
+import ChallengeRecord from "./ChallengeRecord";
 import PredictExplain, { type PredictExplainSpec } from "./PredictExplain";
 import type { PredictRevealState } from "./usePredictReveal";
 
@@ -66,6 +67,7 @@ export default function PredictReveal({ state, prompt, format, input = "number",
           <p>{t(hit ? "lpHit" : "lpMiss", { tol: format(state.tolerance) })}</p>
         </div>
       )}
+      {state.challengeId && <ChallengeRecord id={state.challengeId} />}
       {revealed && explain && <PredictExplain key={history.length} {...explain} />}
     </section>
   );

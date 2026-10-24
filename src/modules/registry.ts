@@ -7,6 +7,7 @@ import { STUDIO_PATH, lessonNavItems } from "../features/stochastic-models/stoch
 import { moduleAbout, type ModuleAbout } from "./moduleAbout";
 import { guideNavItems, guideRedirects, guideTrackById, guideTrackPath } from "../features/guide/guide.meta";
 import type { GuideTrackId } from "../features/guide/guide.types";
+import { withDeskCopy } from "../languageLoader";
 import { GUIDE_SEO_DESC_SUFFIX, guideSeoTitles } from "../features/guide/guide.seo";
 
 /// Top-level navigation categories for the Quant Sandbox module tree.
@@ -210,7 +211,11 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleYieldCurve", descKey: "seoDescYieldCurve" },
     about: moduleAbout("YieldCurve", 4),
     relatedGuides: ["yield-curve", "bond-pricing"],
-    Component: lazy(() => import("../features/yield-curve/YieldCurveView")),
+    subNav: [
+      { id: "lab", labelKey: "navYieldCurveLab", to: "/yield-curve" },
+      { id: "desk", labelKey: "navRatesDesk", descKey: "seoDescRatesDesk", seoTitle: "Rates Desk: Hedge a Bond Book with Futures", to: "/yield-curve/desk" },
+    ],
+    Component: lazy(() => import("../features/yield-curve/YieldCurvePages")),
   },
   {
     id: "duration-convexity",
@@ -237,6 +242,17 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/treasury-futures/TreasuryFuturesView")),
   },
   {
+    id: "interest-rate-swap",
+    path: "/interest-rate-swap",
+    navKey: "navInterestRateSwap",
+    category: "fixed-income",
+    status: "beta",
+    seo: { titleKey: "seoTitleInterestRateSwap", descKey: "seoDescInterestRateSwap" },
+    about: moduleAbout("InterestRateSwap", 4),
+    relatedGuides: ["interest-rate-swaps", "yield-curve"],
+    Component: lazy(() => import("../features/interest-rate-swap/SwapView")),
+  },
+  {
     id: "immunization",
     path: "/immunization",
     navKey: "navImmunization",
@@ -245,7 +261,11 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleImmunization", descKey: "seoDescImmunization" },
     about: moduleAbout("Immunization", 4),
     relatedGuides: ["immunization", "duration-convexity"],
-    Component: lazy(() => import("../features/immunization/ImmunizationView")),
+    subNav: [
+      { id: "lab", labelKey: "navImmunizationLab", to: "/immunization" },
+      { id: "desk", labelKey: "navAlmDesk", descKey: "seoDescAlmDesk", seoTitle: "ALM Desk: Pension Immunization Game", to: "/immunization/desk" },
+    ],
+    Component: lazy(() => import("../features/immunization/ImmunizationPages")),
   },
   {
     id: "risk-return",
@@ -278,7 +298,11 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitlePortfolioLab", descKey: "seoDescPortfolioLab" },
     about: moduleAbout("PortfolioLab", 4),
     relatedGuides: ["diversification", "efficient-frontier"],
-    Component: lazy(() => import("../features/portfolio-lab/PortfolioLabView")),
+    subNav: [
+      { id: "lab", labelKey: "navPortfolioLabLab", to: "/portfolio-lab" },
+      { id: "desk", labelKey: "navPortfolioDesk", descKey: "seoDescPortfolioDesk", seoTitle: "Portfolio Manager Desk: Volatility Target Game", to: "/portfolio-lab/desk" },
+    ],
+    Component: lazy(() => import("../features/portfolio-lab/PortfolioLabPages")),
   },
   {
     id: "efficient-frontier",
@@ -325,7 +349,11 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleTvm", descKey: "seoDescTvm" },
     about: moduleAbout("Tvm", 4),
     relatedGuides: ["interest-discounting", "npv-irr"],
-    Component: lazy(() => import("../features/tvm/TvmView")),
+    subNav: [
+      { id: "lab", labelKey: "navTvmLab", to: "/tvm" },
+      { id: "desk", labelKey: "navRetirementDesk", descKey: "seoDescRetirementDesk", seoTitle: "Retirement Desk: Withdrawal and Sequence Risk Game", to: "/tvm/desk" },
+    ],
+    Component: lazy(() => import("../features/tvm/TvmPages")),
   },
   {
     id: "wacc",
@@ -420,6 +448,14 @@ export const modules: ModuleDef[] = [
     status: "live",
     seo: { titleKey: "seoTitleGuideGraph", descKey: "seoDescGuideGraph" },
     Component: lazy(() => import("../features/guide/components/graph/GuideGraphPage")),
+  },
+  {
+    id: "sandbox",
+    path: "/sandbox",
+    navKey: "navSandbox",
+    status: "beta",
+    seo: { titleKey: "seoTitleSandbox", descKey: "seoDescSandbox" },
+    Component: lazy(withDeskCopy(() => import("../features/sandbox/SandboxView"))),
   },
 ];
 

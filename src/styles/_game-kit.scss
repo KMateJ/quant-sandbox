@@ -1,0 +1,1350 @@
+/* Game kit: amber terminal frame shared by every desk (`.gdesk`). Ported from the hedging desk partials.
+   Always dark; one accent (amber); up/down blue/red with a sign or word; square edges, no pills. */
+
+.gdesk {
+  --bg: #000;
+  --surface: #0a0a0a;
+  --surface-soft: #141414;
+  --surface-muted: #111;
+  --text: #e6e6e6;
+  --muted: #9a9a9a;
+  --border: #262626;
+  --primary: #fb8b1e;
+  --positive: #4fb3ff;
+  --negative: #ff5f57;
+  --chart-1: #f2f2f2;
+  --chart-2: #4fb3ff;
+  --chart-3: #fb8b1e;
+  --chart-4: #ff5f57;
+  --chart-reference: #7a7a7a;
+  --gdesk-key-border: #333;
+  --gdesk-on-accent: #000;
+
+  color-scheme: dark;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.35;
+  border: 1px solid var(--border);
+
+  button,
+  input,
+  select {
+    font-family: inherit;
+  }
+}
+
+// #region Command bar + quote strip
+.gdesk-cmd {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 28px;
+  padding: 0 12px;
+  background: var(--primary);
+  color: var(--gdesk-on-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.gdesk-cmd-title {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.gdesk-cmd-clock {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.gdesk-quotes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  padding: 6px 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  dd {
+    margin: 0;
+    font-size: 13px;
+    text-align: left;
+  }
+}
+
+.gdesk-quote--pnl {
+  margin-left: auto;
+  text-align: right;
+
+  dd {
+    text-align: right;
+  }
+}
+// #endregion
+
+// #region Screen tabs
+.gdesk-tabsrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk-tabs.tabs {
+  gap: 0;
+  border-bottom: none;
+
+  .tab {
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: none;
+    border-radius: 0;
+
+    &.active {
+      color: var(--gdesk-on-accent);
+      background: var(--primary);
+    }
+
+    @media (max-width: 767px) {
+      min-height: 44px;
+    }
+  }
+}
+
+.gdesk-intro {
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// #endregion
+
+// #region Panel grid
+.gdesk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "left" "centre" "right";
+  gap: 1px;
+  background: var(--border);
+}
+
+.gdesk-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  background: var(--border);
+}
+
+.gdesk-col--left { grid-area: left; }
+.gdesk-col--centre { grid-area: centre; }
+.gdesk-col--right { grid-area: right; }
+
+.gdesk-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+
+@media (min-width: 560px) {
+  .gdesk-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .gdesk-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+    grid-template-areas: "centre right" "left left";
+  }
+
+  .gdesk-col--left {
+    flex-direction: row;
+
+    > * {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .gdesk-grid {
+    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(300px, 340px);
+    grid-template-areas: "left centre right";
+  }
+
+  .gdesk-col--left {
+    flex-direction: column;
+
+    > * {
+      flex: initial;
+    }
+  }
+}
+// #endregion
+
+// #region Panels
+.gdesk .panel {
+  background: var(--surface);
+  border: none;
+  border-radius: 0;
+}
+
+.gdesk .panel-head {
+  min-height: 26px;
+  padding: 0 10px;
+  gap: 8px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk .panel-title {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.gdesk .panel-actions {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.gdesk .panel-body {
+  flex: 1;
+  gap: 10px;
+  padding: 10px;
+  font-size: 12px;
+
+  &.flush {
+    padding: 0;
+    gap: 0;
+  }
+}
+
+.gdesk-panel .panel-body {
+  min-height: 72px;
+}
+// #endregion
+
+// #region Function keys + status line
+.gdesk-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.gdesk-keys {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+
+.gdesk-fkey {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 10px;
+  background: var(--surface-muted);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: left;
+  border: 1px solid var(--gdesk-key-border);
+  border-radius: 0;
+  cursor: pointer;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    background: var(--surface-soft);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.gdesk-fkey-code {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+}
+
+.gdesk-status {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+// #endregion
+
+// #region Shared helpers for the panel plans
+.gdesk-up { color: var(--positive); }
+.gdesk-down { color: var(--negative); }
+
+.gdesk-num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.gdesk-label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+// #endregion
+
+.gdesk-fkey-label {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
+}
+
+// #region Fullscreen
+.gdesk-cmd-btn {
+  min-height: 22px;
+  padding: 0 8px;
+  background: transparent;
+  color: var(--gdesk-on-accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--gdesk-on-accent);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+
+  &:hover,
+  &[aria-pressed="true"] {
+    background: var(--gdesk-on-accent);
+    color: var(--primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gdesk-on-accent);
+    outline-offset: 2px;
+  }
+}
+
+.gdesk--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  border: none;
+}
+
+html.page-expanded {
+  overflow: hidden;
+}
+
+.gdesk:fullscreen {
+  overflow-y: auto;
+  border: none;
+}
+// #endregion
+
+@media (max-width: 767px), (pointer: coarse) {
+  .gdesk-cmd-btn {
+    min-height: 44px;
+  }
+}
+
+.gdesk {
+  --gdesk-tint: rgba(251, 139, 30, 0.16);
+  --gdesk-band-tint: rgba(79, 179, 255, 0.18);
+
+  // #region Shared rows + buttons
+  .gdesk-kv {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    dt {
+      color: var(--muted);
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  .gdesk-btn {
+    min-height: 28px;
+    padding: 0 10px;
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 12px;
+    border: 1px solid var(--gdesk-key-border);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--surface-soft);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--gdesk-tint);
+      color: var(--primary);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+  // #endregion
+
+  // #region Mission
+  .gdesk-mission-title {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .gdesk-mission-brief {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .gdesk-clock {
+    position: relative;
+    height: 6px;
+    background: var(--surface-soft);
+  }
+
+  .gdesk-clock-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--primary);
+  }
+
+  .gdesk-objectives {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gdesk-objective {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gdesk-objective-status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  .gdesk-objective-value {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .gdesk-objective--atRisk .gdesk-objective-status { color: var(--primary); }
+  .gdesk-objective--pass .gdesk-objective-status { color: var(--positive); }
+  .gdesk-objective--fail .gdesk-objective-status { color: var(--negative); }
+  // #endregion
+
+  // #region Risk
+  .gdesk-netdelta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+  }
+
+  .gdesk-netdelta-value {
+    font-size: 22px;
+
+    small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+  }
+
+  .gdesk-bandtag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .gdesk-meter {
+    position: relative;
+    height: 14px;
+    margin-bottom: 14px;
+    background: var(--surface-soft);
+  }
+
+  .gdesk-meter-band {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: var(--gdesk-band-tint);
+  }
+
+  .gdesk-meter-zero {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--chart-reference);
+  }
+
+  .gdesk-meter-mark {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    width: 3px;
+    margin-left: -1px;
+    background: var(--positive);
+
+    &--out {
+      background: var(--negative);
+    }
+  }
+
+  .gdesk-meter-scale {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+  }
+
+  // #endregion
+
+  // #region Blotter
+  .gdesk-blotter {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gdesk-blotter-row {
+    display: grid;
+    grid-template-columns: 34px 40px minmax(0, 1fr);
+    gap: 6px;
+    padding: 3px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+
+  .gdesk-blotter-kind {
+    color: var(--muted);
+  }
+
+  .gdesk-blotter-row--down .gdesk-blotter-kind { color: var(--negative); }
+  .gdesk-blotter-row--up .gdesk-blotter-kind { color: var(--positive); }
+  .gdesk-blotter-row--accent .gdesk-blotter-kind { color: var(--primary); }
+
+  .gdesk-blotter-text {
+    overflow-wrap: anywhere;
+  }
+  // #endregion
+
+  // #region Touch sizes
+  @media (max-width: 767px), (pointer: coarse) {
+    .gdesk-btn {
+      min-height: 44px;
+    }
+  }
+  // #endregion
+}
+
+.gdesk {
+  .gdesk-chart {
+    position: relative;
+    width: 100%;
+
+    &--main { height: clamp(240px, 34vh, 340px); }
+    &--strip { height: 100px; border-top: 1px solid var(--border); }
+    &--half { height: 180px; }
+  }
+
+  .gdesk-band {
+    fill: var(--positive);
+    fill-opacity: 0.1;
+  }
+
+  .gdesk-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .gdesk-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 4px 8px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    tbody th,
+    tfoot th {
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+
+  .gdesk-matrix {
+    &__cell {
+      color: var(--text);
+
+      &--up { background: color-mix(in srgb, var(--positive) calc(var(--gdesk-tint) * 100%), transparent); }
+      &--down { background: color-mix(in srgb, var(--negative) calc(var(--gdesk-tint) * 100%), transparent); }
+    }
+  }
+
+  .gdesk-matrix__note {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.6875rem;
+  }
+
+  // Side-by-side chart pairs only once the centre column is wide enough for readable ticks.
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .gdesk-pair { grid-template-columns: minmax(0, 1fr); }
+  }
+}
+.gdesk .gdesk-key {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  color: var(--muted);
+  font-size: 0.6875rem;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.gdesk-debrief {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.gdesk-debrief-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+
+  > * { background: var(--surface); min-width: 0; }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .gdesk-debrief-chart { grid-column: 1 / -1; }
+  }
+}
+
+// #region Verdict banner
+.gdesk-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 14px 16px;
+  background: var(--surface-soft);
+
+  &.is-pass .gdesk-verdict-word { color: var(--positive); }
+  &.is-fail .gdesk-verdict-word { color: var(--negative); }
+}
+
+.gdesk-verdict-word {
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gdesk-verdict-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0;
+
+  dd {
+    margin: 2px 0 0;
+    font-size: 16px;
+    text-align: left;
+  }
+}
+// #endregion
+
+// #region Pending state
+.gdesk-debrief-note {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.gdesk-debrief-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gdesk-debrief-btn {
+  min-height: 36px;
+  padding: 0 14px;
+  background: var(--surface-muted);
+  color: var(--text);
+  border: 1px solid var(--gdesk-key-border);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible { background: var(--surface-soft); }
+
+  &--primary {
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    border-color: var(--primary);
+
+    &:hover,
+    &:focus-visible { background: var(--primary); filter: brightness(1.1); }
+  }
+}
+// #endregion
+
+// #region Objectives
+.gdesk-debrief-objectives {
+  margin: 0;
+  padding-left: 20px;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+
+    > .gdesk-label { grid-column: 1; }
+    > strong { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  }
+}
+// #endregion
+
+// #region Attribution bars
+.gdesk-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.9fr) minmax(80px, 1.4fr) minmax(72px, auto);
+    align-items: center;
+    gap: 10px;
+  }
+
+  li.is-net {
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    font-weight: 600;
+  }
+}
+
+.gdesk-attr-track {
+  position: relative;
+  height: 12px;
+  background: var(--surface-muted);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 50%;
+    width: 1px;
+    background: var(--chart-reference);
+  }
+}
+
+.gdesk-attr-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  &.is-up { background: var(--positive); }
+  &.is-down { background: var(--negative); }
+}
+// #endregion
+
+// #region Policy table
+.gdesk-debrief-tablewrap { overflow-x: auto; }
+
+.gdesk-debrief-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+
+    &.gdesk-num { text-align: right; }
+  }
+
+  tbody th {
+    font-weight: 400;
+    text-align: left;
+  }
+
+  tr.is-own {
+    background: color-mix(in srgb, var(--primary) 16%, transparent);
+
+    th { color: var(--primary); font-weight: 600; }
+  }
+}
+// #endregion
+
+.gdesk-missions {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.gdesk-missions-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--border);
+
+  > * { background: var(--surface); min-width: 0; }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+}
+
+// #region Mission list
+.gdesk-mlist-head,
+.gdesk-mlist-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 56px minmax(90px, auto);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+}
+
+.gdesk-mlist-head {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk-mlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li + li { border-top: 1px solid var(--border); }
+}
+
+.gdesk-mlist-row {
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible { background: var(--surface-soft); }
+
+  &.is-selected { background: color-mix(in srgb, var(--primary) 16%, transparent); }
+}
+
+.gdesk-mlist-id {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.gdesk-mlist-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  span { color: var(--muted); font-size: 11px; }
+}
+
+.gdesk-mlist-tags { letter-spacing: 0.1em; }
+
+.gdesk-mlist-status {
+  font-size: 11px;
+  text-align: right;
+  color: var(--muted);
+}
+
+@media (max-width: 559px) {
+  .gdesk-mlist-head { display: none; }
+
+  .gdesk-mlist-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+
+    .gdesk-mlist-tags,
+    .gdesk-mlist-status { grid-column: 2; text-align: left; }
+  }
+}
+// #endregion
+
+// #region Briefing
+.gdesk-brief {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h3 { margin: 8px 0 0; font-weight: 400; }
+}
+
+.gdesk-brief-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.gdesk-brief-text { margin: 0; }
+
+.gdesk-brief-setup {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--border);
+
+  > div {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.8fr) minmax(0, 1.4fr);
+    gap: 10px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  dt { color: var(--muted); }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+}
+
+.gdesk-brief-objectives {
+  margin: 0;
+  padding-left: 20px;
+
+  li { padding: 2px 0; }
+}
+
+.gdesk-brief-start {
+  align-self: flex-start;
+  min-height: 36px;
+  margin-top: 8px;
+  padding: 0 16px;
+  background: var(--primary);
+  color: var(--gdesk-on-accent);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible { filter: brightness(1.1); }
+}
+// #endregion
+
+// #region Desk rules
+.gdesk-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+
+.gdesk-rule {
+  padding: 10px 12px;
+  background: var(--surface);
+
+  strong { color: var(--primary); font-weight: 600; }
+
+  p { margin: 4px 0 0; color: var(--muted); }
+}
+// #endregion
+
+// #region Bar
+// In flow, not sticky: a sticky dock covered the panels it narrates.
+.gdesk-demo-bar {
+  position: static;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.gdesk-demo-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+.gdesk-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 8px 12px;
+}
+
+.gdesk-demo-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gdesk-demo-key {
+  min-width: 72px;
+  max-width: 100%;
+
+  &[aria-pressed="true"] {
+    background: var(--surface-soft);
+    border-color: var(--primary);
+  }
+}
+
+.gdesk-demo-take .gdesk-fkey-label { color: var(--primary); }
+// #endregion
+
+// #region Caption
+.gdesk-demo-caption { padding: 8px 12px; }
+
+.gdesk-demo-title {
+  margin: 2px 0 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gdesk-demo-body {
+  max-width: 72ch;
+  margin: 2px 0 0;
+  line-height: 1.45;
+}
+// #endregion
+
+// #region Highlight
+.gdesk--demo .gdesk-panel,
+.gdesk--demo .gdesk-quotes,
+.gdesk--demo .gdesk-tabsrow {
+  opacity: 0.55;
+  transition: opacity var(--transition-base);
+}
+
+// Pointed (help "Show me") and demo-focus targets get the class from the kit hooks, not an anchor list.
+.gdesk .gdesk-pointed,
+.gdesk--demo .gdesk-demo-focus {
+  opacity: 1;
+  outline: 1px solid var(--primary);
+  outline-offset: -1px;
+
+  > .panel-head { background: color-mix(in srgb, var(--primary) 18%, var(--surface-soft)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gdesk--demo .gdesk-panel,
+  .gdesk--demo .gdesk-quotes,
+  .gdesk--demo .gdesk-tabsrow { transition: none; }
+}
+// #endregion
+
+.gdesk-cmd-badge {
+  margin-left: 12px;
+  padding: 0 6px;
+  background: var(--gdesk-on-accent);
+  color: var(--primary);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+// #region Drawer
+.gdesk-help.help-drawer { z-index: 1010; }
+
+.gdesk-help .help-drawer-panel {
+  width: min(100vw, 460px);
+  font-family: inherit;
+}
+
+.gdesk-help-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk-help-tab {
+  padding: 8px 12px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+
+  &[aria-selected="true"] {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  &:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+}
+
+.gdesk-help-hint {
+  margin: 16px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+// #endregion
+
+// #region Shared content classes (plans 06-08)
+.gdesk-help-section { display: block; margin-bottom: 12px; }
+
+.gdesk-help-h {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.gdesk-help-p { margin: 0 0 6px; font-size: 12px; line-height: 1.5; }
+
+.gdesk-help-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+.gdesk-help-kv {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  margin: 0 0 8px;
+  font-size: 12px;
+
+  dt { color: var(--muted); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+}
+
+.gdesk-help-tone--urgent { background: color-mix(in srgb, var(--negative) 14%, transparent); }
+.gdesk-help-tone--suggest { background: color-mix(in srgb, var(--primary) 14%, transparent); }
+.gdesk-help-tone--info { background: color-mix(in srgb, var(--surface-soft) 70%, transparent); }
+.gdesk-help-tone--done { background: color-mix(in srgb, var(--positive) 14%, transparent); }
+// #endregion
+
+// Next move tab: item spacing and action row. Tones and text come from _hedging-desk-help.scss.
+.gdesk-advice-list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.gdesk-advice {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+
+.gdesk-advice-title {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.gdesk-advice .gdesk-help-actions { margin-top: 2px; }
+
+.gdesk-advice-count {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.gdesk-wi-card {
+  padding: 8px 0 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.gdesk-wi-title { margin: 0 0 4px; font-size: 12px; font-weight: 600; }
+.gdesk-wi-block { color: var(--muted); }
+
+.gdesk-wi-verdicts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+
+  li { padding: 2px 6px; }
+}
+
+.gdesk-wi-detail { margin-top: 8px; }
+
+.gdesk-wi-table,
+.gdesk-wi-shocks {
+  width: 100%;
+  margin: 0 0 8px;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+
+  th { text-align: left; font-weight: 400; color: var(--muted); }
+  td { text-align: right; }
+  th, td { padding: 2px 0; }
+}
+
+.gdesk-wi-objectives { margin: 0; padding-left: 16px; font-size: 12px; }
+// Guide tab of the desk help drawer (scoped to .gdesk).
+.gdesk {
+  .gdesk-guide-sub {
+    margin: var(--space-3, 12px) 0 var(--space-1, 4px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .gdesk-guide {
+    details.gdesk-help-section > summary {
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker { display: none; }
+      &::before { content: "+ "; font-family: var(--font-mono, monospace); }
+    }
+
+    details[open].gdesk-help-section > summary::before { content: "\2212  "; }
+
+    ol,
+    ul { margin: 0 0 var(--space-2, 8px); padding-left: 1.25rem; }
+    li { margin-bottom: var(--space-1, 4px); }
+  }
+
+  .gdesk-guide-panels,
+  .gdesk-guide-objectives {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .gdesk-guide-panels li {
+    display: flex;
+    gap: var(--space-2, 8px);
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-2, 8px);
+
+    .gdesk-help-p { margin: 0; flex: 1; }
+    .gdesk-btn { flex: none; }
+  }
+
+  .gdesk-guide-objectives li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2, 8px);
+
+    &[data-status="pass"] strong { color: var(--positive); }
+    &[data-status="fail"] strong,
+    &[data-status="atRisk"] strong { color: var(--negative); }
+  }
+}

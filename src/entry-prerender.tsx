@@ -3,7 +3,7 @@ import { StaticRouter } from "react-router-dom";
 import App from "./App";
 import i18n from "i18next";
 import AppProviders from "./AppProviders";
-import { loadLanguage } from "./languageLoader";
+import { loadDeskCopy, loadLanguage } from "./languageLoader";
 import { languageFromPath, languagePrefix } from "./languageRoutes";
 
 /// Renders one route to HTML at build time, waiting for lazy routes to resolve, so the
@@ -12,7 +12,8 @@ import { languageFromPath, languagePrefix } from "./languageRoutes";
 /// The language comes from the URL; i18next is shared, so render pages one at a time.
 export async function renderPage(url: string): Promise<string> {
   const language = languageFromPath(url);
-  await loadLanguage(language);
+  // Lazy routes resolve once per build, so the per-route desk-copy load would only fire for the first language.
+  await Promise.all([loadLanguage(language), loadDeskCopy(language)]);
   await i18n.changeLanguage(language);
   const errors: unknown[] = [];
   const { prelude } = await prerender(

@@ -1,0 +1,1 @@
+var e=[0,1,2];function t(t,n,r,i){return{question:t(`${n}Q`,i),options:e.map(e=>({text:t(`${n}A${e}`,i),feedback:t(`${n}F${e}`,i),correct:e===r}))}}function n(e,t){return{...e,reveal:()=>{e.guess===null||e.revealed||(e.reveal(),t())}}}var r=(e,t)=>e?t:`?`;export{r as n,n as r,t};

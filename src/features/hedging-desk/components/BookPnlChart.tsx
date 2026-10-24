@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Panel from "../../../components/layout/Panel";
 import { LineChart, SERIES_PALETTE, SERIES_ROLE, type ChartSeries } from "../../../components/charts";
 import { useI18n } from "../../../i18n";
-import { signedMoney } from "../deskFormat";
+import { signedMoney } from "../../../components/game/gameFormat";
 import { unhedgedPnl } from "../engine/series.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
 import { compactTick, dayAxis } from "./deskChart";
@@ -23,8 +23,8 @@ export default function BookPnlChart({ desk }: { desk: HedgingDeskModel }) {
   ];
 
   return (
-    <Panel id="hd-pnl" title={t("hdBookPnlTitle")} className="hdesk-panel" flush>
-      <div className="hdesk-chart hdesk-chart--half">
+    <Panel id="hd-pnl" title={t("hdBookPnlTitle")} className="gdesk-panel" flush>
+      <div className="gdesk-chart gdesk-chart--half">
         <LineChart
           data={data}
           xKey="day"

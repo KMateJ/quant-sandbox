@@ -8,7 +8,7 @@ const years = (v: number) => v.toFixed(2);
 export default function TvmDoubling({ rate }: { rate: number }) {
   const { t } = useI18n();
   const truth = doublingTime(rate);
-  const state = usePredictReveal({ truth, tolerance: 0.5 });
+  const state = usePredictReveal({ challengeId: "doubling-time", truth, tolerance: 0.5 });
 
   if (!Number.isFinite(truth)) return <p className="tvm-double-note">{t("tvmDoubleNoRate")}</p>;
   const rule = ruleOf72(rate);

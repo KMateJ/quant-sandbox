@@ -55,11 +55,7 @@ test("breakeven move is defined only for short gamma, long theta books", () => {
   assert.ok(Math.abs(0.5 * 200 * be * be - (50 * 365) / 252) < 1e-9);
 });
 
-test("meter position and nearest strike", () => {
-  assert.equal(side.meterPosition(0), 50);
-  assert.equal(side.meterPosition(-400), 0);
-  assert.equal(side.meterPosition(1000), 100);
-  assert.equal(side.meterPosition(100), 62.5);
+test("nearest strike", () => {
   const strikes = M1.market.strikes;
   assert.equal(side.nearestStrike(strikes, 100.2), 100);
   assert.equal(side.nearestStrike(strikes, 96.4), 97.5);

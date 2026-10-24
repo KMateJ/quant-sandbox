@@ -1,4 +1,4 @@
-import { money, num, pct, signed, signedMoney } from "../deskFormat";
+import { money, num, pct, signed, signedMoney } from "../../../components/game/gameFormat";
 import type { Advice, AdviceId } from "./advice.types";
 
 type Formatter = (x: number) => string;

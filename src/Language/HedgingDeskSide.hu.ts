@@ -1,6 +1,5 @@
 export const hedgingDeskSideHu = {
   hdSideClock: "D{{day}} / {{days}}",
-  hdSideClockAria: "{{day}}. nap a {{days}}-ból",
 
   hdSideNetDelta: "Nettó Δ",
   hdSideShares: "db",
@@ -18,7 +17,6 @@ export const hedgingDeskSideHu = {
   hdSideBreaches: "Sávsértések",
   hdSideBreakeven: "Nullszaldós napi mozgás",
 
-  hdSideBlotterAria: "A desk eseményei, legújabb elöl",
   hdSideKindFill: "KÖTÉS",
   hdSideKindBreach: "SÉRT",
   hdSideKindExpiry: "LEJ",

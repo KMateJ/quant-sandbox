@@ -103,3 +103,37 @@ test("generalized conversion factors reject delivery on or after maturity", () =
   const bond = { couponRate: 0.05, maturity: 2, frequency: 1, principalPayments: [{ time: 2, amount: 100 }] };
   assert.throws(() => math.generalizedConversionFactor(bond, 2), RangeError);
 });
+
+const { importSrc } = await import("./lib/load-ts.mjs");
+const basket = await importSrc("features/treasury-futures/basket.math.ts");
+const tfMath = await importSrc("features/treasury-futures/treasuryFutures.math.ts");
+const tfScenarios = await importSrc("features/treasury-futures/scenarios.ts");
+
+test("bond ids stay unique after a removal and roll over past Z", () => {
+  const ids = (list) => list.map((b) => ({ id: b }));
+  assert.equal(basket.nextBondId(ids(["A", "B", "C"])), "D");
+  assert.equal(basket.nextBondId(ids(["B", "C"])), "A");
+  let bonds = tfScenarios.loadScenario("fractional-quote").bonds;
+  bonds = bonds.filter((b) => b.id !== "A");
+  bonds = [...bonds, basket.newBond(bonds)];
+  bonds = [...bonds, basket.newBond(bonds)];
+  assert.equal(new Set(bonds.map((b) => b.id)).size, bonds.length);
+  const full = ids(Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)));
+  assert.equal(basket.nextBondId(full), "A2");
+});
+
+test("patchBond on the bund scenario matches the previous inline recalculation", () => {
+  const data = tfScenarios.loadScenario("bund");
+  const next = basket.patchBond(data, 0, { couponRate: 0.01 });
+  const bond = next.bonds[0];
+  assert.equal(bond.accruedInterest, tfMath.accruedInterestOnDates(0.01, 1, "2036-02-15", data.deliveryDate));
+  assert.equal(bond.conversionFactor, tfMath.eurexConversionFactor(0.01, "2036-02-15", data.deliveryDate, data.notionalCoupon));
+  assert.deepEqual(next.bonds[1], data.bonds[1]);
+  const amort = tfScenarios.loadScenario("amortizing");
+  const moved = basket.patchBond(amort, 0, { maturity: 6 }).bonds[0];
+  assert.deepEqual(moved.principalPayments, [{ time: 5, amount: 50 }, { time: 6, amount: 50 }]);
+});
+
+test("maths errors carry a code for the localised message", () => {
+  assert.throws(() => tfMath.parseTreasuryQuote("x"), (e) => e instanceof RangeError && e.code === "quoteFormat");
+});

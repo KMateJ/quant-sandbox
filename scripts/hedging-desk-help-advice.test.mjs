@@ -10,8 +10,8 @@ const { formatAdviceVars } = await importSrc(D + "help/adviceVars.ts");
 const { reduceDesk, startBook } = await importSrc(D + "engine/book.math.ts");
 const { buildMarket } = await importSrc(D + "engine/market.math.ts");
 const { missionById } = await importSrc(D + "engine/missions.data.ts");
-const { en } = await importSrc("Language/index.en.ts");
-const { hu } = await importSrc("Language/index.hu.ts");
+const en = { ...(await importSrc("Language/index.en.ts")).en, ...(await importSrc("Language/desks.en.ts")).desksEn };
+const hu = { ...(await importSrc("Language/index.hu.ts")).hu, ...(await importSrc("Language/desks.hu.ts")).desksHu };
 
 const SEED = 7;
 const setup = (id) => {

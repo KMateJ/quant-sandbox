@@ -1,0 +1,1 @@
+import{i as e}from"./urlState-Bb8S2GA9.js";function t(t){return{face:e(t.face,1,1e5,2),couponRate:e(t.couponRate,0,.3,4),ytm:e(t.ytm,.001,.3,4),years:e(t.years,1,30,0),freq:e(t.freq,1,4,0)}}export{t};

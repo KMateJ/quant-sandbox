@@ -22,7 +22,7 @@ export default function OverviewTab({ lab, advanced, setAdvanced }: OverviewTabP
   const { irr, irrSecondary } = lab.metrics;
   // Prediction needs one IRR inside the chart's range; a new IRR (other cash flows) starts a new round.
   const predictable = Number.isFinite(irr) && irrSecondary == null && irr >= 0 && irr <= RATE_MAX;
-  const pr = usePredictReveal({ truth: irr, tolerance: 0.005 });
+  const pr = usePredictReveal({ challengeId: "irr-guess", truth: irr, tolerance: 0.005 });
   const hideIrr = predicting && !pr.revealed;
 
   const toggle = (active: boolean, onClick: () => void, label: string) => (

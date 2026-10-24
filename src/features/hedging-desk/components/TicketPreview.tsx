@@ -1,5 +1,5 @@
 import { useI18n } from "../../../i18n";
-import { money, num, signed } from "../deskFormat";
+import { money, num, signed } from "../../../components/game/gameFormat";
 import { ticketPreview } from "../sidePanels.math";
 import type { HedgingDeskModel } from "../useHedgingDesk";
 
@@ -17,16 +17,16 @@ export default function TicketPreview({ desk, qty }: { desk: HedgingDeskModel; q
     { key: "hdSideGammaImpact", value: signed(p.gammaImpact, 1) },
   ] as const;
   return (
-    <dl className="hdesk-kv">
+    <dl className="gdesk-kv">
       {rows.map((r) => (
         <div key={r.key}>
           <dt>{t(r.key)}</dt>
-          <dd className="hdesk-num">{r.value}</dd>
+          <dd className="gdesk-num">{r.value}</dd>
         </div>
       ))}
       <div>
         <dt>{t("hdSideNetAfter")}</dt>
-        <dd className={`hdesk-num ${p.inBand ? "hdesk-up" : "hdesk-down"}`}>
+        <dd className={`gdesk-num ${p.inBand ? "gdesk-up" : "gdesk-down"}`}>
           {signed(p.netAfter)} {t("hdSideShares")} · {t(p.inBand ? "hdSideInBand" : "hdSideOutOfBand")}
         </dd>
       </div>

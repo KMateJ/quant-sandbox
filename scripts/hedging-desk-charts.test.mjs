@@ -45,11 +45,3 @@ test("unhedgedPnl starts at the opening book's mark and spans to day", () => {
   assert.ok(Math.abs(u[0].pnl - markToMarket(book.startBook(M1, 7, market), market)) < 1e-9);
   assert.equal(series.unhedgedPnl(M1, market, 63).length, 64);
 });
-
-test("matrixCells alpha stays within bounds and centre is flat", () => {
-  const cells = series.matrixCells([[-500, 0, 50, 2000]], 1000);
-  for (const c of cells[0]) assert.ok(c.alpha === 0 || (c.alpha >= 0.08 && c.alpha <= 0.48));
-  assert.equal(cells[0][1].tone, "flat");
-  assert.equal(cells[0][0].tone, "down");
-  assert.equal(cells[0][3].alpha, 0.48);
-});

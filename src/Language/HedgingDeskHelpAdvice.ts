@@ -1,9 +1,4 @@
 export const hedgingDeskHelpAdviceEn = {
-  hdAdvHeadUrgent: "Do this now",
-  hdAdvHeadSuggest: "Worth doing",
-  hdAdvHeadInfo: "Good to know",
-  hdAdvHeadDone: "Finished",
-  hdAdvEmpty: "Nothing pressing. Step a day with F2 and watch the risk panel.",
   hdAdvActKey: "Press {{code}}",
   hdAdvActDebrief: "Open the debrief",
   hdAdvExpiredTitle: "The run is over.",

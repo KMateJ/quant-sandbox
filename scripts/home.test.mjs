@@ -44,7 +44,7 @@ async function registryEntries() {
 
 test("every lab has a mini visual, no stale ones exist, one featured lab per area", async () => {
   const labs = await registryEntries();
-  assert.equal(labs.length, 24);
+  assert.equal(labs.length, 25);
   assert.deepEqual(labs.map((l) => l.id).sort(), Object.keys(MODULE_VIZ).sort());
   for (const category of LAB_CATEGORIES) {
     const featured = labs.filter((l) => l.category === category && l.featured);

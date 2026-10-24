@@ -3,10 +3,6 @@ export const hedgingDeskEn = {
   hdDesc:
     "Run a short option book like a trader: step through the simulated path day by day, trade stock and options, keep net delta inside the band and pass the mission.",
   hdSimClock: "SIM D{{day}}/{{days}} · {{left}} TD LEFT",
-  hdScreensAria: "Desk screens",
-  hdScreenDesk: "Desk",
-  hdScreenMissions: "Missions",
-  hdScreenDebrief: "Debrief",
 
   hdKeyNextDay: "Next day",
   hdKeyPlus5: "+5 days",
@@ -14,7 +10,6 @@ export const hedgingDeskEn = {
   hdKeyAutoHedge: "Auto-hedge Δ to 0",
   hdKeyNewPath: "New path",
   hdKeyRestart: "Restart",
-  hdKeysAria: "Desk actions",
   hdStatusLine: "Path #{{seed}} · fills cross the spread · breaches counted at the close",
 
   hdQuoteLast: "Last",
@@ -41,11 +36,5 @@ export const hedgingDeskEn = {
   hdScenarioMatrixTitle: "Scenario P&L",
   hdRiskProfileTitle: "Risk profile",
   hdPositionsTitle: "Positions",
-  hdMissionsScreenTitle: "Missions",
-  hdDebriefScreenTitle: "Debrief",
 
-  hdFullscreenEnter: "Full screen",
-  hdFullscreenExit: "Exit full screen",
-  hdExpandEnter: "Expand",
-  hdExpandExit: "Collapse",
 };

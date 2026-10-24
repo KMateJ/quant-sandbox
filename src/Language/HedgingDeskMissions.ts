@@ -26,10 +26,6 @@ export const hedgingDeskMissionsEn = {
   hdObjFlatStock: "No stock left after settlement",
   hdObjFlatStockValue: "{{value}} sh held",
 
-  hdStatusOnTrack: "On track",
-  hdStatusAtRisk: "At risk",
-  hdStatusPass: "Pass",
-  hdStatusFail: "Fail",
 
   hdMissionM2Title: "Rebalance on a budget",
   hdMissionM2Tagline: "Same short call, $15 a ticket, 10 trades.",

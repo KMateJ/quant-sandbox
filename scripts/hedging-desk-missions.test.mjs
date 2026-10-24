@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { importSrc } from "./lib/load-ts.mjs";
 
-const { mergeResult, readProgress } = await importSrc("features/hedging-desk/deskProgress.ts");
+const { mergeResult, readProgress, legacyToProgress } = await importSrc("features/hedging-desk/deskProgress.ts");
 
 test("best P&L is the smallest |P&L| among passes", () => {
   let p = mergeResult({}, "M1", false, 10);
@@ -11,7 +11,12 @@ test("best P&L is the smallest |P&L| among passes", () => {
   p = mergeResult(p, "M1", true, 120);
   p = mergeResult(p, "M1", true, -250);
   p = mergeResult(p, "M1", false, 1);
-  assert.deepEqual(p, { M1: { completed: true, bestPnl: 120 } });
+  assert.deepEqual(p, { M1: { completed: true, best: 120 } });
+});
+
+test("old progress records map onto the kit shape, incomplete ones are dropped", () => {
+  const old = { M1: { completed: true, bestPnl: -42 }, M2: { completed: false, bestPnl: 0 } };
+  assert.deepEqual(legacyToProgress(old), { M1: { completed: true, best: -42 } });
 });
 
 test("missing storage reads as empty progress", () => {

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { recordChallenge } from "../../lib/game/challengeScores";
 import { calibrationVerdict, hitRate, meanScore, scoreRound, type CalibrationVerdict, type RangeRound } from "./rangeGuess.logic";
 
 export type RangeGuessState = {
@@ -22,6 +23,7 @@ export type RangeGuessState = {
   meanScore: number;
   verdict: CalibrationVerdict;
   nominal: number;
+  challengeId?: string;
 };
 
 type Options = {
@@ -35,11 +37,13 @@ type Options = {
   bounds?: readonly [number, number];
   /// A changed key (compared with Object.is, so pass a primitive) while revealed starts a new round.
   resetKey?: unknown;
+  /// Kit challenge id; each reveal is saved as one round.
+  challengeId?: string;
 };
 
 /// Calibration round: the reader sets an interval meant to hold the truth with probability `nominal`, reveals,
 /// and across rounds sees the hit rate and interval score. History lives for the session (component state).
-export function useRangeGuess({ truth, nominal = 0.9, initial = [0, 1], bounds, resetKey }: Options): RangeGuessState {
+export function useRangeGuess({ truth, nominal = 0.9, initial = [0, 1], bounds, resetKey, challengeId }: Options): RangeGuessState {
   const [range, setRangeState] = useState<[number, number]>([initial[0], initial[1]]);
   const [outcome, setOutcome] = useState<number | null>(null);
   const [history, setHistory] = useState<RangeRound[]>([]);
@@ -62,8 +66,10 @@ export function useRangeGuess({ truth, nominal = 0.9, initial = [0, 1], bounds, 
     if (revealed) return;
     const value = typeof truth === "function" ? truth() : truth;
     if (!Number.isFinite(value)) return;
+    const round = scoreRound(lo, hi, value, nominal);
     setOutcome(value);
-    setHistory((h) => [...h, scoreRound(lo, hi, value, nominal)]);
+    setHistory((h) => [...h, round]);
+    if (challengeId) recordChallenge(challengeId, round.hit, Date.now());
   };
 
   return {
@@ -82,5 +88,6 @@ export function useRangeGuess({ truth, nominal = 0.9, initial = [0, 1], bounds, 
     meanScore: meanScore(history),
     verdict: calibrationVerdict(hits, history.length, nominal),
     nominal,
+    challengeId,
   };
 }

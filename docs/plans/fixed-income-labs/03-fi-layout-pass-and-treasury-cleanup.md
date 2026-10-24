@@ -1,6 +1,6 @@
 # 03 — FI layout pass + treasury cleanup
 
-Status: todo · Depends on: 01, 02 · Suggested model: Sonnet · Est. size: M
+Status: done (2026-10-24) · Depends on: 01, 02 · Suggested model: Sonnet · Est. size: M
 
 ## Why
 After the shared fixes, each FI lab still has its own defects, and the treasury lab breaks project rules
@@ -95,9 +95,23 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 \
 - i18n: string tables must be registered in `src/i18n.tsx`; existing TreasuryFutures tables already are.
 
 ## Findings (fill in during execution)
-- Audit to-do list and resolution: …
-- HU strings drafted (for owner review): …
-- Deviations: …
+- Audit to-do list and resolution: full `--group fixed-income` run gave `failing=4`, all `/hu/bond-pricing` at
+  360/390 (chart-header segmented tabs 407 px wide). Fixed in `_primitives.scss`: on phones the chart header wraps,
+  actions stay one row and scroll if too wide (also fixes the duration header three-line wrap). Re-audit of
+  `/hu/bond-pricing` + `/hu/treasury-futures`: `failing=0`. Tap-target notes (18 px info icons, segmented tabs)
+  are reported but not failing. Full-group re-run skipped for time (release pending).
+- Treasury: logic in `basket.math.ts` (`patchBond`, `patchSettings`, `nextBondId`, `newBond`, `amortizedPayments`)
+  and `useTreasuryFutures.ts`; view 144 → 44 lines; `TfMetrics`, `ResultsTable` split out; ids unique (A–Z, A2…);
+  maths errors are `TfInputError` with `code` → `tfErr_<code>` / `tfErrInvalid`; notes → `tfNote_<id>`;
+  `Bond X` → `tfBondId`; one futures control (NumberInput 50–200 + companion range); cash-flow table scroll shadows,
+  derived "Cash flow" column hidden on phones. Yield-curve selected row: background + primary label, no left border.
+- Verification (temp worktree; shared tree red from the in-progress swap lab): tsc + build green; eslint clean;
+  `test:treasury-futures` 13/13 (3 new), `test:yield-curve` 13/13, `test:labs` 59/59; smoke clean on
+  `/treasury-futures`, `/hu/treasury-futures`, `/yield-curve`, `/duration-convexity`; scenario switch → 5 rows;
+  remove A then add twice → unique legends; HU notes shown.
+- HU strings drafted (for owner review): `tfNote_bund`, `tfNote_five-bonds`, `tfNote_fractional-quote`,
+  `tfNote_amortizing`, 14 `tfErr_*` + `tfErrInvalid`, `tfBondId` "{{id}} kötvény".
+- Deviations: `SCENARIO_LABELS` (English, unused for display) replaced by `SCENARIO_IDS`; `Scenario.note` removed.
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`
