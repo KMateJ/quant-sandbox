@@ -7,6 +7,8 @@ import { guideStochasticTheoryHu } from "./GuideStochasticTheory.hu";
 import { guideWave2Hu } from "./GuideWave2.hu";
 import { guideWave3Hu } from "./GuideWave3.hu";
 import { guideWave4Hu } from "./GuideWave4.hu";
+import { guideMicrostructureHu } from "./GuideMicrostructure.hu";
+import { guideFactorRiskHu } from "./GuideFactorRisk.hu";
 
 /// The Hungarian tables holding the guide lesson titles. The knowledge graph needs them to find citations in
 /// Hungarian lesson text; importing these instead of `index.hu` keeps the rest of the Hungarian table out of the
@@ -22,4 +24,6 @@ export const guideTitleTablesHu = {
   ...guideWave2Hu,
   ...guideWave3Hu,
   ...guideWave4Hu,
+  ...guideMicrostructureHu,
+  ...guideFactorRiskHu,
 };

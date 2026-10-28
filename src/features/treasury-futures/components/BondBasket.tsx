@@ -25,7 +25,7 @@ export default function BondBasket({ lab }: { lab: TreasuryFuturesModel }) {
   const scenario = data.id;
   const schedule = (i: number, bond: DeliverableBond, count: number) => onBond(i, { principalPayments: amortizedPayments(bond.maturity, count) });
   return <div className="tf-controls">
-    {scenario !== "bund" && <FuturesControl value={data.futures} onChange={lab.setFutures} />}
+    {scenario !== "bund" && <FuturesControl value={lab.futures} onChange={lab.setFutures} />}
     <NumberInput label={t("tfNotionalCoupon")} value={data.notionalCoupon} onChange={(v) => onSetting({ notionalCoupon: v })} min={0} max={0.2} step={0.25} percent sectionId="conversion-factor" />
     {scenario === "bund" ? <label className="tf-frequency">{t("tfDeliveryDate")}
       <input type="date" value={data.deliveryDate ?? ""} onChange={(e) => onSetting({ deliveryDate: e.target.value })} />

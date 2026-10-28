@@ -25,7 +25,7 @@ export default function BmTransformationsFigure() {
   const model = useMemo(() => transformedRows(kind, param, PATHS, seed), [kind, param, seed]);
 
   return (
-    <GuideFigure title={t("gsTransformTitle")} labId="stochastic-models">
+    <GuideFigure title={t("gsTransformTitle")} labId="brownian-motion">
       <div className="gf-toolbar">
         <SegmentedControl<Transformation> ariaLabel={t("gsTransformLabel")} value={kind} onChange={setKind} options={KINDS.map((v) => ({ value: v, label: t(KIND_KEY[v]) }))} />
         <button type="button" className="preset-btn" onClick={() => setSeed((v) => v + 1)}>{t("gfNewPaths")}</button>

@@ -30,17 +30,25 @@ export default function GuideGraphPage() {
   const [query, setQuery] = useState("");
   const [chosenView, setView] = useState<GraphView | null>(null);
   const [active, setActive] = useState<string | null>(null);
+  // The panel keeps the last hovered node: reverting on pointer-leave reflowed the page under the cursor.
+  const [lastHover, setLastHover] = useState<string | null>(null);
+  const onActive = (id: string | null) => {
+    setActive(id);
+    if (id) setLastHover(id);
+  };
   // The selected lesson lives in the URL (?focus=<lesson id>) so a path can be linked to and shared.
   const [params, setParams] = useSearchParams();
   const focus = params.get("focus");
   const selected = focus ? `lesson:${focus}` : null;
-  const select = (id: string | null) =>
+  const select = (id: string | null) => {
+    setLastHover(null);
     setParams((prev) => {
       const next = new URLSearchParams(prev);
       if (id && id !== selected && id.startsWith("lesson:")) next.set("focus", id.slice("lesson:".length));
       else next.delete("focus");
       return next;
     }, { replace: true });
+  };
   const path = useLearningPath(selected);
 
   useEffect(() => {
@@ -106,7 +114,7 @@ export default function GuideGraphPage() {
                 label={label}
                 isRead={(n) => n.kind === "lesson" && isRead(n.lessonId)}
                 active={active}
-                onActive={setActive}
+                onActive={onActive}
                 matches={matches}
                 ariaLabel={t("ggAria")}
                 path={path?.highlight ?? null}
@@ -118,7 +126,7 @@ export default function GuideGraphPage() {
             </div>
             <div className="gg-side">
               <GraphDetails
-                node={active ? byId.get(active) ?? null : path ? path.target : null}
+                node={byId.get(active ?? lastHover ?? "") ?? (path ? path.target : null)}
                 label={label}
                 isRead={(n) => n.kind === "lesson" && isRead(n.lessonId)}
                 onSelect={select}

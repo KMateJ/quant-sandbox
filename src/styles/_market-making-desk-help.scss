@@ -1,0 +1,60 @@
+// Market making desk: what-if list and the debrief's informed-flow reveal (inside the `.gdesk` kit).
+
+.mmd .mmd-whatif {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mmd .mmd-reveal-line {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mmd .mmd-reveal-bars {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  align-items: end;
+  height: 140px;
+  margin: 8px 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    align-items: end;
+    height: 100%;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .mmd-reveal-bar {
+    display: block;
+    width: 100%;
+    min-height: 1px;
+    background: var(--muted);
+  }
+
+  .is-up .mmd-reveal-bar {
+    background: var(--positive);
+  }
+
+  .is-down .mmd-reveal-bar {
+    background: var(--negative);
+  }
+
+  .mmd-reveal-n,
+  .mmd-reveal-x {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .mmd-reveal-n {
+    color: var(--text);
+  }
+}

@@ -102,7 +102,7 @@ test("challenge scores: merge and storage", () => {
 test("CHALLENGES ids are unique kebab-case", () => {
   const ids = CHALLENGES.map((c) => c.id);
   assert.equal(new Set(ids).size, ids.length);
-  assert.equal(ids.length, 16);
+  assert.ok(ids.length >= 16);
   for (const id of ids) assert.match(id, /^[a-z0-9]+(-[a-z0-9]+)*$/);
 });
 

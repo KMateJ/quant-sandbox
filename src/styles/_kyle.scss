@@ -1,0 +1,137 @@
+// Kyle Model lab (market-making pack, plan 08)
+@use "breakpoints" as *;
+
+.kyl-workspace .module-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.kyl-path-chart {
+  height: 280px;
+}
+
+.kyl-profit-chart {
+  height: 220px;
+}
+
+.kyl-scatter {
+  height: 320px;
+}
+
+.kyl-caption {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.kyl-formula {
+  margin: 4px 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+
+.kyl-result {
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+
+// #region Value card and readouts
+.kyl-card-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+
+  @include phone {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.kyl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--surface-muted);
+}
+
+.kyl-card-label {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kyl-card-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.kyl-card-sub {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.kyl-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+// #endregion
+
+.kyl-orders {
+  margin-top: 8px;
+}
+
+.kyl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+// #region Maker view flow bars
+.kyl-flow-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kyl-flow-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+}
+
+.kyl-flow-n {
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.kyl-flow-track {
+  position: relative;
+  height: 12px;
+  background: var(--surface-muted);
+  border-radius: var(--radius-xs);
+}
+
+.kyl-flow-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--primary);
+}
+
+.kyl-flow-value {
+  font-family: var(--font-mono);
+  text-align: right;
+}
+// #endregion

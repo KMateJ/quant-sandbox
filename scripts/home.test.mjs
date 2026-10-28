@@ -26,7 +26,7 @@ const { MODULE_VIZ, GUIDE_FILLER_VIZ, areaPath } = await import(await load(new U
 const { buildFan, HERO_FAN } = await import(await load(new URL("home.fan.math.ts", dir)));
 const { orderTiles, needsGuideFiller, categoryNumber, trackProgress, labDescKey } = await import(await load(new URL("home.model.ts", dir)));
 
-const LAB_CATEGORIES = ["derivatives", "portfolio", "fixed-income", "corporate", "stochastic"];
+const LAB_CATEGORIES = ["derivatives", "portfolio", "fixed-income", "corporate", "stochastic", "microstructure"];
 
 /// registry.ts imports React, so read module id / category / homeFeatured from its text.
 async function registryEntries() {
@@ -44,7 +44,7 @@ async function registryEntries() {
 
 test("every lab has a mini visual, no stale ones exist, one featured lab per area", async () => {
   const labs = await registryEntries();
-  assert.equal(labs.length, 25);
+  assert.equal(labs.length, 34);
   assert.deepEqual(labs.map((l) => l.id).sort(), Object.keys(MODULE_VIZ).sort());
   for (const category of LAB_CATEGORIES) {
     const featured = labs.filter((l) => l.category === category && l.featured);

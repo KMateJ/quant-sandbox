@@ -33,6 +33,10 @@
   color: var(--text);
   text-decoration: none;
   white-space: nowrap;
+
+  @media (pointer: coarse) {
+    padding-block: 10px;
+  }
 }
 
 .cat-tabs {
@@ -625,8 +629,15 @@ $side-open: 0.26s;
 }
 // #endregion
 
-// Category links and the controls no longer fit one row below tablet width: the menu takes over.
-@include below-tablet {
+@include below-wide {
+  .cat-tabs {
+    gap: var(--space-4);
+    margin-left: var(--space-6);
+  }
+}
+
+// Category links and the controls no longer fit one row below desktop width (HU labels are longest): the menu takes over.
+@include below-desktop {
   .cat-tabs {
     display: none;
   }

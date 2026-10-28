@@ -18,7 +18,7 @@ export default function FiltrationTreeFigure() {
   const times = COIN_PATHS.map((p) => randomTime(kind, p));
 
   return (
-    <GuideFigure title={t("gsFiltrationTitle")} labId="stochastic-models">
+    <GuideFigure title={t("gsFiltrationTitle")} labId="random-walk">
       <div className="gf-toolbar">
         <SegmentedControl<RandomTime>
           ariaLabel={t("gsRandomTime")}

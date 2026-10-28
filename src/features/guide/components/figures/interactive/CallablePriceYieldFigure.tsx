@@ -18,7 +18,7 @@ export default function CallablePriceYieldFigure() {
   const quote = useMemo(() => callableQuote(y, protection), [y, protection]);
 
   return (
-    <GuideFigure title={t("ixCbTitle")} labId="bond-pricing">
+    <GuideFigure title={t("ixCbTitle")} labId="callable-bond">
       <div className="gf-toolbar">
         <SegmentedControl<Protection>
           ariaLabel={t("ixCbProtection")}

@@ -41,6 +41,8 @@ export type GuideFigureId =
   | "jump-density"
   | "credit-spread"
   | "factor-variance"
+  | "ff-loadings"
+  | "contagion-cascade"
   | "cashflow-builder"
   | "american-tree"
   | "mc-histogram"
@@ -74,7 +76,18 @@ export type GuideFigureId =
   | "npv-distribution"
   | "payout-ddm"
   | "clt-convergence"
-  | "correlated-paths";
+  | "correlated-paths"
+  | "round-trip"
+  | "book-walk"
+  | "queue-fill"
+  | "toxic-income"
+  | "gm-learning"
+  | "roll-bounce"
+  | "kyle-schedule"
+  | "execution-frontier"
+  | "inventory-skew"
+  | "as-quotes"
+  | "pnl-attribution";
 
 /// One block of lesson text. Inline text supports `$tex$`, `**bold**` and `*italic*`.
 export type GuideBlock =

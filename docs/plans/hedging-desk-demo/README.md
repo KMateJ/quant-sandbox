@@ -123,7 +123,7 @@ Help extension (05–09):
 | [06](06-next-move.md) | Next move: `deskAdvice` engine (21 rules), tab, copy, tests | – (UI verified with 05) | M | Sonnet | done (2026-10-23) |
 | [07](07-what-if.md) | What if: scenario engine (stock, options, gamma/vega-neutral, sell options, close out, ticket), tab | – (UI verified with 05) | L | Sonnet | done (2026-10-23) |
 | [08](08-guide-tab.md) | Guide: mission playbooks M1–M5, panel guide, keys, mistakes, glossary | – (UI verified with 05) | M | Sonnet | done (2026-10-23) |
-| [09](09-help-qa.md) | Help QA: widths, fullscreen, languages, keyboard, demo interplay, owner list | 05–08 | S | Sonnet | todo |
+| [09](09-help-qa.md) | Help QA: widths, fullscreen, languages, keyboard, demo interplay, owner list | 05–08 | S | Sonnet | done (2026-10-28) |
 
 **Start in parallel right away:** 01 and 02 (disjoint files; 02 imports only `DEMO_SEED` /
 `DEMO_MISSION` from `demo/demo.config.ts`, which it may create itself if 01 has not yet, see its Steps).

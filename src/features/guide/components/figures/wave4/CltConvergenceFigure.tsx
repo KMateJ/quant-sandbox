@@ -22,7 +22,7 @@ export default function CltConvergenceFigure() {
   const bins = useMemo(() => binValues(result.z, DOMAIN, 40).bins, [result]);
 
   return (
-    <GuideFigure title={t("gfW4CltConvergenceTitle")} labId="stochastic-models">
+    <GuideFigure title={t("gfW4CltConvergenceTitle")} labId="random-walk">
       <div className="gf-toolbar">
         <SegmentedControl<SourceDist>
           ariaLabel={t("gfW4FieldSource")}

@@ -1,0 +1,77 @@
+// Owner: factor-and-systemic-risk plan 04 (shell); plan 06 adds the network explorer styles here.
+
+// #region Network explorer (plan 06): square corners, hairlines, no left bars.
+.workspace.cols-single.syr-workspace {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  align-items: start;
+  > .panel.dominant { grid-column: auto; }
+  > .panel:last-child { position: sticky; top: calc(var(--topnav-height) + var(--space-4)); }
+}
+@media (max-width: 1100px) {
+  .workspace.cols-single.syr-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    > .panel:last-child { position: static; }
+  }
+}
+.syr-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.syr-controls, .syr-legend { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
+.syr-control-row, .syr-edit-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.syr-edit-bar { margin-bottom: var(--space-3); }
+.syr-control-label { font-size: var(--text-sm); color: var(--muted); }
+.syr-toggles { display: flex; flex-wrap: wrap; gap: 0 var(--space-3); }
+.syr-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 30px; padding: 2px 4px; font: inherit; font-size: var(--text-sm); color: var(--muted);
+  background: transparent; border: 0; border-radius: var(--radius-xs); cursor: pointer; opacity: 0.5;
+  > span:last-child { text-decoration: line-through; }
+  &:hover { background: var(--surface-soft); }
+  &.is-active { color: var(--text); opacity: 1; > span:last-child { text-decoration: none; } }
+}
+.syr-swatch { width: 10px; height: 10px; border: 1px solid var(--border); display: inline-block; flex: none; }
+.syr-line { flex: none; }
+.syr-ramp, .syr-edited { margin: 0; font-size: var(--text-sm); color: var(--muted); }
+.syr-search {
+  display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); font-size: var(--text-sm);
+  input { padding: 4px 8px; font: inherit; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-xs); min-width: 0; }
+}
+.syr-form {
+  display: grid; gap: var(--space-2); padding: var(--space-3); margin-bottom: var(--space-3);
+  border: 1px solid var(--border); background: var(--surface-soft);
+  p { margin: 0; }
+}
+.syr-form-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.syr-graph { border: 1px solid var(--border); }
+.syr-matrix { min-width: 0; }
+.syr-link { padding: 0; font: inherit; color: var(--primary); background: none; border: 0; text-decoration: underline; cursor: pointer; }
+.syr-entity-kind { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--text-sm); }
+.syr-important { color: var(--text); }
+.syr-stat-cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); margin-bottom: var(--space-3); }
+.syr-sheet { display: grid; gap: var(--space-3); margin-bottom: var(--space-3); }
+.syr-stack-title { margin: 0 0 4px; font-size: var(--text-sm); span { color: var(--muted); } }
+.syr-bar { display: flex; height: 18px; border: 1px solid var(--border); }
+.syr-bar-seg { min-width: 1px; }
+.syr-bar-legend {
+  display: flex; flex-wrap: wrap; gap: 2px var(--space-3); margin: 6px 0 0; padding: 0; list-style: none;
+  font-size: var(--text-sm); color: var(--muted);
+  li { display: inline-flex; align-items: center; gap: 4px; }
+}
+.syr-num { font-variant-numeric: tabular-nums; }
+.syr-fail { display: inline-block; margin-top: var(--space-3); text-decoration: none; }
+.syr-reveal { margin-top: var(--space-3); }
+.syr-rank {
+  display: grid; gap: 4px; margin: 0 0 var(--space-2); padding: 0; list-style: none;
+  li { display: grid; grid-template-columns: minmax(110px, 160px) 1fr 56px minmax(0, auto); gap: var(--space-2); align-items: center; font-size: var(--text-sm); }
+}
+.syr-rank-bar { height: 10px; background: var(--surface-soft); span { display: block; height: 100%; background: var(--primary); } }
+.syr-rank-tags em { margin-right: 6px; font-style: normal; color: var(--muted); }
+@media (max-width: 640px) {
+  .syr-stat-cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .syr-rank li { grid-template-columns: 1fr 1fr 48px; }
+  .syr-rank li .syr-rank-tags { grid-column: 1 / -1; }
+}
+// #endregion

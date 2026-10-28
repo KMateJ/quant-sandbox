@@ -12,12 +12,16 @@ const fill = (kind: "total" | "delta", value: number) =>
   kind === "total" ? "var(--primary)" : value >= 0 ? "var(--positive)" : "var(--negative)";
 
 export default function WaterfallChartInner({ steps, ariaLabel, valueFormat = (v) => v.toFixed(2), selected, onSelect, width, height }: Props) {
-  const margin = { ...chartMargin(width < 480), bottom: LABEL_ROOM };
-  const w = Math.max(0, width - margin.left - margin.right);
-  const h = Math.max(0, height - margin.top - margin.bottom);
+  const base = { ...chartMargin(width < 480), bottom: LABEL_ROOM };
+  const h = Math.max(0, height - base.top - base.bottom);
   const bars = waterfallBars(steps);
-  const x = scaleBand({ domain: bars.map((b) => b.key), range: [0, w], padding: 0.28 });
   const y = scaleLinear({ domain: waterfallDomain(bars), range: [h, 0], nice: true });
+  const numTicks = tickCount(h, 28, 2, 5);
+  // Widen the left margin so the longest tick label (11px, ~6.5px per glyph) is never clipped.
+  const longest = Math.max(0, ...y.ticks(numTicks).map((v) => valueFormat(v).length));
+  const margin = { ...base, left: Math.max(base.left, Math.ceil(longest * 6.5) + 12) };
+  const w = Math.max(0, width - margin.left - margin.right);
+  const x = scaleBand({ domain: bars.map((b) => b.key), range: [0, w], padding: 0.28 });
   const bw = x.bandwidth();
   const maxChars = Math.max(4, Math.floor((bw + x.step() * 0.28) / 6));
 
@@ -61,7 +65,7 @@ export default function WaterfallChartInner({ steps, ariaLabel, valueFormat = (v
         })}
         <AxisLeft
           scale={y}
-          numTicks={tickCount(h, 28, 2, 5)}
+          numTicks={numTicks}
           stroke={CHART_COLORS.axis}
           tickStroke={CHART_COLORS.axis}
           tickFormat={(v) => valueFormat(Number(v))}

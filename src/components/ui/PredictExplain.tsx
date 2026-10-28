@@ -27,7 +27,7 @@ export default function PredictExplain({ question, options, onFirstPick }: Predi
       <div className="lp-explain-options">
         {options.map((o, i) => (
           <label key={i} className={picked === i ? (o.correct ? "lp-explain-option is-right" : "lp-explain-option is-wrong") : "lp-explain-option"}>
-            <input type="radio" name={question} checked={picked === i} onChange={() => pick(i)} />
+            <input type="radio" data-layout-allow="radio inside a full-width label: the label row is the tap target" name={question} checked={picked === i} onChange={() => pick(i)} />
             <span>{o.text}</span>
           </label>
         ))}

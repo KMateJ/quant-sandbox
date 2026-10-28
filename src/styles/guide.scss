@@ -1311,3 +1311,99 @@
   margin: var(--space-5) 0 0;
 }
 // #endregion
+
+// #region gf-ms-glosten-milgrom
+.gf-ms-glosten-milgrom-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.gf-ms-glosten-milgrom-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+
+  &--buy {
+    color: var(--positive);
+    background: color-mix(in srgb, var(--positive) 10%, var(--surface));
+  }
+
+  &--sell {
+    color: var(--negative);
+    background: color-mix(in srgb, var(--negative) 10%, var(--surface));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  @media (max-width: 640px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+// #endregion
+
+// #region gf-ms-limit-order-book
+.gf-ms-limit-order-book-touch {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.gf-ms-limit-order-book-ladder {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 4px 10px;
+    text-align: right;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  th {
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .is-taken {
+    background: color-mix(in srgb, var(--primary) 16%, transparent);
+    color: var(--text);
+  }
+}
+// #endregion
+
+// #region gf-ms-market-making-pnl
+.gf-ms-market-making-pnl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+// #endregion
+
+// #region gf-ms-price-impact
+.gf-ms-price-impact-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+// #endregion

@@ -51,9 +51,9 @@ export default function RangeGuess({ state, prompt, format, min, max, step, unit
         {revealed && outcome !== null && (
           <div className={state.hit ? "rg-outcome is-hit" : "rg-outcome is-miss"} style={at("--rg-at", f(outcome))} aria-hidden="true" />
         )}
-        <input type="range" className="rg-thumb" min={min} max={max} step={step} value={lo} disabled={revealed}
+        <input type="range" className="rg-thumb" data-layout-allow="dual-thumb range: both inputs share one track" min={min} max={max} step={step} value={lo} disabled={revealed}
           aria-label={t("rgLower")} aria-valuetext={fmt(lo)} onChange={(e) => state.setRange(Math.min(Number(e.target.value), hi), hi)} />
-        <input type="range" className="rg-thumb" min={min} max={max} step={step} value={hi} disabled={revealed}
+        <input type="range" className="rg-thumb" data-layout-allow="dual-thumb range: both inputs share one track" min={min} max={max} step={step} value={hi} disabled={revealed}
           aria-label={t("rgUpper")} aria-valuetext={fmt(hi)} onChange={(e) => state.setRange(lo, Math.max(Number(e.target.value), lo))} />
       </div>
       <div className="rg-scale" aria-hidden="true"><span>{fmt(min)}</span><span>{fmt(max)}</span></div>

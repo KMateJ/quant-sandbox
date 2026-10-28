@@ -47,7 +47,8 @@
   .tf-factor-item { display: grid; flex: 1 0 125px; gap: 4px; padding: 8px 10px; background: var(--surface); font-size: 11px; }
   .tf-factor-item strong { color: var(--text); }
   .tf-factor-item span { color: var(--muted); font-variant-numeric: tabular-nums; }
-  .tf-chart-wrap { width: 100%; height: 330px; }
+  .tf-chart-wrap { width: 100%; }
+  .tf-chart-wrap > :first-child { height: 330px; }
   .tf-cashflow-chart { width: 100%; height: 230px; margin: 2px 0 10px; }
   .tf-chart-wrap path, .tf-cashflow-chart circle { transition: all 180ms ease; }
   .tf-scenario input[type="date"] { min-height: 34px; padding: 5px 8px; color: var(--text); background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-xs); }
@@ -77,7 +78,7 @@
     .tf-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .tf-metric { padding: 9px; }
     .tf-metric strong { font-size: 15px; }
-    .tf-chart-wrap { height: 290px; }
+    .tf-chart-wrap > :first-child { height: 290px; }
     // Cash flow = coupon + principal, so phones drop the derived column.
     .tf-col-derived { display: none; }
     .tf-cashflows { min-width: 400px; }
@@ -89,3 +90,12 @@
   font-size: var(--text-sm);
   color: var(--muted);
 }
+
+// CTD yield-shift explorer
+.tf-switch-chart { width: 100%; height: 300px; margin-top: var(--space-3); }
+.tf-switch-list { margin: var(--space-2) 0 0; padding-left: 18px; color: var(--muted); font-size: var(--text-sm); }
+.tf-switch-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-2);
+  .tf-drag-hint { margin: 0; flex: 1 1 260px; }
+}
+@media (max-width: 640px) { .tf-switch-chart { height: 260px; } }

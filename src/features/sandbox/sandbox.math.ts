@@ -1,7 +1,7 @@
 import type { ChallengeArea, ChallengeDef } from "../../lib/game/challenges.data";
 import type { ChallengeStats } from "../../lib/game/game.types";
 
-export const AREA_ORDER: readonly ChallengeArea[] = ["stochastic", "portfolio", "rates", "corporate"];
+export const AREA_ORDER: readonly ChallengeArea[] = ["stochastic", "portfolio", "rates", "corporate", "microstructure"];
 
 /// Stored progress of any shape we wrote: `{ completed }` per mission id.
 type StoredProgress = Readonly<Record<string, { completed?: boolean }>>;

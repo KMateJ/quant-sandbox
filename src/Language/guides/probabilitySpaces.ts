@@ -108,7 +108,7 @@ export const probabilitySpaces: GuideLessonContent = {
       "Conditional expectation on a partition is the block average; it is a coarser variable with $\\operatorname{Var}(\\mathbb{E}[X \\mid \\mathcal{G}]) \\le \\operatorname{Var}(X)$.",
     ),
     note("The next lesson, \"Filtrations, adapted processes and stopping times\", lets the σ-algebra grow with time to model information that accumulates as prices are observed."),
-    lab("/stochastic-models", "Explore random walks and Brownian motion in the Stochastic Models studio"),
+    lab("/random-walk", "Explore random walks in the Random Walk lab"),
   ],
 
   hu: [
@@ -217,6 +217,6 @@ export const probabilitySpaces: GuideLessonContent = {
       "Partíción a feltételes várható érték a blokkátlag; ez durvább változó, és $\\operatorname{Var}(\\mathbb{E}[X \\mid \\mathcal{G}]) \\le \\operatorname{Var}(X)$.",
     ),
     note("A következő lecke, a „Filtrációk, adaptált folyamatok és megállási idők”, az időben bővülő σ-algebrával modellezi az árfolyamok megfigyelésével gyűlő információt."),
-    lab("/stochastic-models", "Fedezd fel a véletlen bolyongást és a Brown-mozgást a Sztochasztikus modellek stúdióban"),
+    lab("/random-walk", "Fedezd fel a véletlen bolyongást a Véletlen bolyongás laborban"),
   ],
 };

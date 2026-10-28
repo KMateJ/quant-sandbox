@@ -137,3 +137,45 @@ test("patchBond on the bund scenario matches the previous inline recalculation",
 test("maths errors carry a code for the localised message", () => {
   assert.throws(() => tfMath.parseTreasuryQuote("x"), (e) => e instanceof RangeError && e.code === "quoteFormat");
 });
+
+// #region CTD switch (plan fixed-income-labs/05)
+const sw = await importSrc("features/treasury-futures/ctdSwitch.math.ts");
+
+const flatBond = (id, maturity, yieldRate = 0.06) => {
+  const base = { id, couponRate: 0.06, maturity, frequency: 2, principalPayments: [{ time: maturity, amount: 100 }], accruedInterest: 0, priceSource: "given" };
+  const cleanPrice = tfMath.cashFlowsAfterDelivery(base, 0, yieldRate).reduce((sum, flow) => sum + flow.presentValue, 0);
+  return { ...base, cleanPrice, conversionFactor: tfMath.generalizedConversionFactor(base, 0, 0.06) };
+};
+
+test("impliedYield inverts the cash-flow pricer, including amortizing schedules", () => {
+  assert.ok(Math.abs(sw.impliedYield(flatBond("L", 4, 0.073), 0) - 0.073) < 1e-9);
+  const amortizing = tfScenarios.loadScenario("amortizing");
+  for (const item of amortizing.bonds) assert.ok(Math.abs(sw.impliedYield(item, amortizing.delivery) - amortizing.marketYield) < 1e-8);
+});
+
+test("CTD switches near 0 bp between a low and a high duration bond priced off a flat 6%", () => {
+  const curve = sw.ctdSwitchCurve([flatBond("L", 2), flatBond("H", 10)], 0);
+  assert.equal(curve.length, 81);
+  assert.equal(curve.find((p) => p.shiftBp === 200).ctd, "H");
+  assert.equal(curve.find((p) => p.shiftBp === -200).ctd, "L");
+  const points = sw.ctdSwitchPoints(curve);
+  assert.equal(points.length, 1);
+  assert.deepEqual([points[0].from, points[0].to], ["L", "H"]);
+  assert.ok(Math.abs(points[0].shiftBp) < 5);
+  for (const p of curve) assert.ok(Math.abs(p.basis[p.ctd]) < 1e-9 && Object.values(p.basis).every((b) => b > -1e-9));
+});
+
+test("ctdTraits flags the highest-duration bond and ignores attributes the basket shares", () => {
+  const bonds = [flatBond("L", 2), flatBond("H", 10)];
+  assert.equal(sw.ctdTraits(bonds, 0, "H").highestDuration, true);
+  assert.equal(sw.ctdTraits(bonds, 0, "L").highestDuration, false);
+  assert.equal(sw.ctdTraits(bonds, 0, "H").highestCoupon, false);
+});
+
+test("every non-bund scenario yields a CTD switch curve", () => {
+  for (const id of ["five-bonds", "fractional-quote", "amortizing"]) {
+    const s = tfScenarios.loadScenario(id);
+    assert.equal(sw.ctdSwitchCurve(s.bonds, s.delivery).length, 81, id);
+  }
+});
+// #endregion

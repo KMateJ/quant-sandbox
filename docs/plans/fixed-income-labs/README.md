@@ -83,12 +83,12 @@ Measured (2026-10-19, headless Chrome on `vite` dev, probe script, widths 360/76
 | [01](01-layout-audit-harness.md) | Layout audit harness | – | M | Sonnet | done (2026-10-19) |
 | [02](02-responsive-foundations.md) | Responsive foundations (breakpoints, ticks, labels, sidebar) | 01 | M | Sonnet | done (2026-10-19) |
 | [03](03-fi-layout-pass-and-treasury-cleanup.md) | Per-lab layout pass + treasury cleanup | 01, 02 | M | Sonnet | done (2026-10-24) |
-| [04](04-duration-predict-and-compare.md) | Duration: predict the shock, compare two bonds | 01, 03 | M | Sonnet | todo |
-| [05](05-treasury-ctd-switch.md) | Treasury: yield-shift CTD switch + predict CTD | 01, 03 | M | Sonnet | todo |
+| [04](04-duration-predict-and-compare.md) | Duration: predict the shock, compare two bonds | 01, 03 | M | Sonnet | done (2026-10-28) |
+| [05](05-treasury-ctd-switch.md) | Treasury: yield-shift CTD switch + predict CTD | 01, 03 | M | Sonnet | done (2026-10-28) |
 | [06](06-yield-curve-shocks-and-bootstrap.md) | Yield curve: animated shocks, bootstrap stepper, URL tab | 01, 02 | M | Sonnet | done (2026-10-19; layout-audit not yet run, see Findings) |
 | [07](07-immunization-rounds-lab.md) | New lab: immunisation rounds game | 01, 02 | L | Sonnet | done (2026-10-19) |
 | [08](08-swap-lab.md) | New lab: interest rate swap | 01, 02 | L | Sonnet | done (2026-10-24) |
-| [09](09-callable-bond-lab.md) | New lab: callable bond | 01, 02 | M | Sonnet | todo |
+| [09](09-callable-bond-lab.md) | New lab: callable bond | 01, 02 | M | Sonnet | done (2026-10-28) |
 | [10](10-final-qa.md) | Final cross-width / theme / language QA | all | S | Sonnet | todo |
 
 Order: 01 → 02 → 03, then 04, 05, 06 in any order (different feature folders), then 07, 08, 09.

@@ -17,7 +17,7 @@ for (const file of readdirSync(langDir).filter((f) => /^Guide.*\.ts$/.test(f) &&
 }
 
 const text = (path) => readFileSync(new URL(path, import.meta.url), "utf8").replace(/\r/g, "");
-const registry = text("../src/modules/registry.ts") + text("../src/features/stochastic-models/stochasticModels.curriculum.ts");
+const registry = text("../src/modules/registry.ts") + text("../src/features/random-walk/lessons.ts") + text("../src/features/brownian-motion/lessons/lessons.ts");
 const figuresIndex = text("../src/features/guide/components/figures/index.ts");
 const contentTypes = text("../src/features/guide/guide.content.types.ts");
 const guidesPlan = text("../docs/GUIDES_PLAN.md");
@@ -32,8 +32,9 @@ const NOT_IN_GUIDES_PLAN = [];
 const LAB_WITHOUT_LESSON = [];
 // Permanent.
 const NO_FIGURE = ["wacc"];
-// Registered by plan 07 with placeholder text; plans 08–12 empty this list, one lesson each, when the real lesson lands.
-const PLACEHOLDER = [];
+// Registered with placeholder text by docs/plans/market-making-guides plan 01; plans 02–12 each delete their own line when the real lesson lands.
+const PLACEHOLDER = [
+];
 const ROOT_LESSONS = ["interest-discounting"]; // may cite nothing and be short
 const EN_WORDS = { min: 600, max: 2300 };
 
@@ -65,6 +66,12 @@ const modulePath = (chunk) => {
 const modules = [...registry.slice(registry.indexOf("export const modules")).split("\n  {")]
   .map((chunk) => ({ id: chunk.match(/^\s{4}id: "([^"]+)"/m)?.[1], path: modulePath(chunk), related: chunk.match(/relatedGuides: \[([^\]]*)\]/)?.[1] }))
   .filter((m) => m.id && m.path);
+/// `<base>/<id>` for every lab lesson table (`export const X_PATH = "…"` plus `{ id: "…" }` rows).
+const lessonPaths = ["random-walk/lessons.ts", "brownian-motion/lessons/lessons.ts"].flatMap((file) => {
+  const src = text(`../src/features/${file}`);
+  const base = src.match(/_PATH = "([^"]+)"/)[1];
+  return [...src.matchAll(/\{ id: "([^"]+)"/g)].map((m) => `${base}/${m[1]}`);
+});
 
 test("EN and HU have the same block kinds in the same order", () => {
   expectNone("block kinds differ", (id) => kinds(guideContent[id].en).join() !== kinds(guideContent[id].hu).join());
@@ -117,15 +124,15 @@ test("EN word count stays inside the range", () => {
 
 test("lab links point at registered modules and every lab has a lesson", () => {
   const moduleIds = modules.map((m) => m.id);
-  const paths = modules.map((m) => m.path);
+  const paths = [...modules.map((m) => m.path), ...lessonPaths];
   expectNone("unknown module in labs", (id) => guideLessons.find((l) => l.id === id).labs.some((m) => !moduleIds.includes(m)));
   const badPath = (id) =>
     ["en", "hu"].some((lang) =>
-      guideContent[id][lang].some((b) => b.kind === "lab" && !paths.includes(b.to.split("?")[0]) && !b.to.startsWith("/stochastic-models/")),
+      guideContent[id][lang].some((b) => b.kind === "lab" && !paths.includes(b.to.split("?")[0])),
     );
   expectNone("lab link to an unknown path", badPath);
   const practised = new Set(guideLessons.flatMap((l) => l.labs));
-  const orphan = moduleIds.filter((m) => m !== "home" && !m.startsWith("guide-") && !practised.has(m) && !LAB_WITHOUT_LESSON.includes(m));
+  const orphan = moduleIds.filter((m) => m !== "home" && m !== "sandbox" && !m.startsWith("guide-") && !practised.has(m) && !LAB_WITHOUT_LESSON.includes(m));
   assert.deepEqual(orphan, [], `labs no lesson practises: ${orphan.join(", ")}`);
   const staleLabs = LAB_WITHOUT_LESSON.filter((m) => practised.has(m));
   assert.deepEqual(staleLabs, [], `LAB_WITHOUT_LESSON allowlist is stale, remove: ${staleLabs.join(", ")}`);
@@ -182,12 +189,3 @@ test("docs/GUIDES_PLAN.md lists every lesson with its real title and figure", ()
   }, NOT_IN_GUIDES_PLAN);
 });
 
-test("Stochastic Studio chapters link only to real lessons and cover the whole stochastic track", () => {
-  const curriculum = text("../src/features/stochastic-models/stochasticModels.curriculum.ts");
-  const linked = [...curriculum.matchAll(/guides: \[([^\]]*)\]/g)].flatMap((m) => [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]));
-  const unknown = linked.filter((id) => !ids.includes(id));
-  assert.deepEqual(unknown, [], `Studio guides that are not lessons: ${unknown.join(", ")}`);
-  const stochastic = guideLessons.filter((l) => l.track === "stochastic").map((l) => l.id);
-  const unlinked = stochastic.filter((id) => !linked.includes(id));
-  assert.deepEqual(unlinked, [], `stochastic lessons no Studio chapter links to: ${unlinked.join(", ")}`);
-});

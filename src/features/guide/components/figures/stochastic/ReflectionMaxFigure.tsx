@@ -21,7 +21,7 @@ export default function ReflectionMaxFigure() {
   const path = useMemo(() => reflectedPath(a, seed), [a, seed]);
 
   return (
-    <GuideFigure title={t("gsReflectionTitle")} labId="stochastic-models">
+    <GuideFigure title={t("gsReflectionTitle")} labId="brownian-motion">
       <div className="gf-sliders">
         <SliderField label={t("gsLevelA")} min={0.2} max={2.5} step={0.05} value={a} onChange={setA} formatValue={(v) => v.toFixed(2)} />
       </div>

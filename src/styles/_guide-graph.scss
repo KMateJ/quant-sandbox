@@ -368,6 +368,8 @@
 .gg-details {
   position: sticky;
   top: calc(var(--topnav-height) + var(--space-3));
+  max-height: calc(100vh - var(--topnav-height) - 2 * var(--space-3));
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -461,7 +463,7 @@
 }
 
 // Links in the side panels read as text until hovered, like the rest of the rail.
-.gg-details a,
+.gg-details a:not(.gg-details-open),
 .gg-path a,
 .gg-list a {
   color: var(--text);

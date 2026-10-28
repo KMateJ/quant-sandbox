@@ -1,0 +1,184 @@
+// Owner: factor-and-systemic-risk plan 07 (shock simulation page).
+.syr-shock-sub {
+  margin: 14px 0 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.syr-shock-fail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  p { margin: 0; font-size: 0.9rem; }
+}
+
+.syr-shock-channel {
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  &-name { font-weight: 600; font-size: 0.9rem; }
+  p { margin: 2px 0 6px; font-size: 0.82rem; color: var(--muted); }
+}
+
+.syr-shock-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.syr-shock-shares {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  li {
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) minmax(60px, 1.4fr) 3ch;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+}
+.syr-shock-share-bar {
+  display: block;
+  height: 10px;
+  background: var(--surface-2, transparent);
+  border: 1px solid var(--border);
+  > span { display: block; height: 100%; }
+}
+.syr-shock-share-pct { text-align: right; font-variant-numeric: tabular-nums; }
+
+.syr-timeline {
+  margin-top: 20px;
+  &-track {
+    position: relative;
+    height: 14px;
+    margin: 0 8px 8px;
+    border-bottom: 1px solid var(--border-hover);
+  }
+  &-tick, &-cursor {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  &-tick { width: 1px; height: 8px; background: var(--muted); }
+  &-tick.is-after {
+    width: 7px; height: 12px; padding: 0; border: 0; cursor: pointer;
+    background: var(--warning, var(--chart-3));
+    &:hover, &:focus-visible { outline: 1px solid var(--text); outline-offset: 1px; }
+  }
+  &-cursor { width: 2px; height: 14px; background: var(--primary); }
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  &-empty { margin: 0; font-size: 0.85rem; color: var(--muted); }
+}
+
+.workspace.cols-thirds.syr-shock-main {
+  align-items: start;
+  @media (min-width: 901px) {
+    grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
+    .syr-shock-side { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1281px) {
+    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(260px, 320px);
+    .syr-shock-side { grid-column: auto; }
+  }
+}
+.syr-shock-center, .syr-shock-side {
+  display: grid;
+  gap: var(--space-4, 16px);
+  min-width: 0;
+  align-content: start;
+}
+.syr-shock-charts {
+  display: grid;
+  gap: var(--space-4, 16px);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+.workspace.cols-sidebar.syr-rescue-main {
+  @media (min-width: 901px) {
+    grid-template-columns: minmax(0, 1.8fr) minmax(300px, 1fr);
+  }
+}
+
+.syr-budget {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+  > span:not(.syr-budget-text) {
+    width: 22px;
+    height: 14px;
+    border: 1px solid var(--primary);
+    &.is-spent { background: var(--primary); opacity: 0.35; }
+  }
+}
+.syr-budget-text { margin-left: 6px; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+
+.syr-chunks {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.88rem; }
+}
+
+.syr-shock-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+
+.syr-rescue-table tr:last-child td { font-weight: 600; }
+.syr-verdict {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  &.is-hit { color: var(--success, var(--primary)); }
+  &.is-miss { color: var(--muted); }
+}
+
+.syr-frag-chart { height: 280px; margin-top: 10px; }
+
+.syr-shock-about p { margin: 0 0 10px; font-size: 0.9rem; line-height: 1.55; }
+
+.syr-shock-main > .panel.dominant,
+.syr-rescue-main > .panel.dominant { grid-column: auto; }
+
+.syr-shock-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.syr-shock-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  dt { color: var(--muted); }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+}
+
+.syr-shock-holdings {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  th, td { padding: 5px 4px; border-top: 1px solid var(--border); text-align: left; vertical-align: top; }
+  thead th { border-top: 0; color: var(--muted); font-weight: 600; }
+  tbody th { font-weight: 500; }
+  td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  thead th:not(:first-child) { text-align: right; }
+  small { display: block; color: var(--muted); font-size: 0.75rem; }
+}
+
+.syr-shock-hit { margin: 8px 0 0; font-size: 0.85rem; }

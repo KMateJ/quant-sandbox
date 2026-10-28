@@ -23,7 +23,10 @@ import { portfolioDeskHelpHu } from "./PortfolioDeskHelp.hu";
 import { retirementDeskHu } from "./RetirementDesk.hu";
 import { retirementDeskMissionsHu } from "./RetirementDeskMissions.hu";
 import { retirementDeskHelpHu } from "./RetirementDeskHelp.hu";
+import { marketMakingDeskHu } from "./MarketMakingDesk.hu";
 import type { DeskKey } from "./index.en";
+import { marketMakingDeskMissionsHu } from "./MarketMakingDeskMissions.hu";
+import { marketMakingDeskHelpHu } from "./MarketMakingDeskHelp.hu";
 
 /// Copy of the desk games and the Sandbox; loaded with those routes only (see languageLoader.withDeskCopy).
 export const desksHu = {
@@ -52,6 +55,9 @@ export const desksHu = {
   ...retirementDeskHu,
   ...retirementDeskMissionsHu,
   ...retirementDeskHelpHu,
+  ...marketMakingDeskHu,
+  ...marketMakingDeskMissionsHu,
+  ...marketMakingDeskHelpHu,
 } satisfies Record<DeskKey, string>;
 
 type NoExtraKeys<T extends never> = T;

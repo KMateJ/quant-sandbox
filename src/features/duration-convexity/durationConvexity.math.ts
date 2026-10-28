@@ -78,3 +78,43 @@ export function shockResult(p: BondParams, m: BondMeasures, dyBp: number): Shock
     durConvexErrBp: Math.abs(durConvexErrPct) * 100,
   };
 }
+
+// #region Predict rounds and the equal-duration twin
+
+/// Zero-coupon maturity (years) whose modified duration at `ytm` with `freq` equals `dMod`.
+export function zeroWithDuration(dMod: number, ytm: number, freq: number): number {
+  return dMod * (1 + ytm / freq);
+}
+
+/// Exact price change (%) of a zero-coupon bond of `years` (any real, i.e. a fractional period count) for a shock in bp.
+export function zeroPriceChangePct(years: number, ytm: number, freq: number, dyBp: number): number {
+  const n = years * freq;
+  const ratio = (1 + ytm / freq) / (1 + Math.max(ytm + dyBp / BP, 1e-6) / freq);
+  return (Math.pow(ratio, n) - 1) * 100;
+}
+
+/// Convexity (years²) of the same zero-coupon bond.
+export function zeroConvexity(years: number, ytm: number, freq: number): number {
+  const n = years * freq;
+  return (n * (n + 1)) / (freq * freq * Math.pow(1 + ytm / freq, 2));
+}
+
+/// Exact and approximate relative price changes (%) for a shock; the same numbers `shockResult` reports.
+export function shockOutcomes(p: BondParams, shockBp: number): { exact: number; duration: number; durConvex: number } {
+  const r = shockResult(p, bondMeasures(p), shockBp);
+  return { exact: r.exactPct, duration: r.durationPct, durConvex: r.durConvexPct };
+}
+
+/// Seeded shock draw in bp: a multiple of 25 with |shock| in [50, 250], either sign.
+export function drawShock(seed: number): number {
+  let s = Math.imul(seed | 0, 0x9e3779b1) >>> 0;
+  const next = () => {
+    s = (s + 0x6d2b79f5) >>> 0;
+    let x = Math.imul(s ^ (s >>> 15), 1 | s);
+    x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+  };
+  const size = 50 + 25 * Math.floor(next() * 9);
+  return next() < 0.5 ? -size : size;
+}
+// #endregion

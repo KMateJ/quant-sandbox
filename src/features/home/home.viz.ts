@@ -51,6 +51,10 @@ export const MODULE_VIZ: Record<string, ModuleViz> = {
   "interest-rate-swap": {
     lines: [{ d: "M6 32 H114", w: 1, o: 0.35 }, { d: "M14 32 V20 M34 32 V18 M54 32 V16 M74 32 V14 M94 32 V12", w: 1, o: 0.5 }, { d: "M14 32 V44 M34 32 V44 M54 32 V44 M74 32 V44 M94 32 V44", w: 1.6, o: 1 }],
   },
+  "callable-bond": {
+    lines: [{ d: "M6 8 C34 36 70 50 114 56", w: 1, o: 0.4 }, { d: "M6 24 C30 26 44 30 62 38 C80 46 96 52 114 56", w: 1.6, o: 1, area: true }],
+    dots: [{ x: 44, y: 29, key: true }],
+  },
   immunization: {
     lines: [{ d: "M6 22 C40 46 80 46 114 22", w: 1, o: 0.4 }, { d: "M6 42 C40 18 80 18 114 42", w: 1.6, o: 1 }],
     dots: [{ x: 60, y: 32, key: true }],
@@ -66,10 +70,22 @@ export const MODULE_VIZ: Record<string, ModuleViz> = {
     lines: [{ d: "M6 54 L114 10", w: 1.6, o: 1 }],
     dots: [{ x: 24, y: 44 }, { x: 44, y: 40 }, { x: 62, y: 26 }, { x: 82, y: 26, key: true }, { x: 98, y: 14 }],
   },
+  "fama-french": {
+    lines: [
+      { d: "M6 52 C30 50 56 44 80 36 S104 28 114 24", w: 1, o: 0.35 },
+      { d: "M6 52 C30 48 56 38 80 26 S104 14 114 8", w: 1, o: 0.55 },
+      { d: "M6 52 C30 50 56 46 80 42 S104 38 114 36", w: 1.8, o: 1, area: true },
+    ],
+    dots: [{ x: 114, y: 8, key: true }],
+  },
   "portfolio-lab": { lines: [{ d: "M74 6 C30 18 30 46 74 58", w: 1.6, o: 1 }], dots: [{ x: 74, y: 6 }, { x: 74, y: 58 }, { x: 41, y: 32, key: true }] },
   "efficient-frontier": {
     lines: [{ d: "M6 46 L114 4", w: 1, o: 0.4 }, { d: "M84 6 C40 16 30 38 62 58", w: 1.8, o: 1 }],
     dots: [{ x: 52, y: 22, key: true }],
+  },
+  "systemic-risk": {
+    lines: [{ d: "M24 46 L52 18 L88 40 L104 14 M52 18 L24 14 M88 40 L52 56 L24 46", w: 1.2, o: 0.5 }, { d: "M52 18 L88 40", w: 1.8, o: 1 }],
+    dots: [{ x: 24, y: 46 }, { x: 24, y: 14 }, { x: 52, y: 56 }, { x: 88, y: 40 }, { x: 104, y: 14 }, { x: 52, y: 18, key: true }],
   },
   "npv-irr": {
     lines: [{ d: "M6 34 H114", w: 1, o: 0.3 }, { d: "M6 10 C40 24 70 38 114 54", w: 1.6, o: 1 }],
@@ -86,7 +102,7 @@ export const MODULE_VIZ: Record<string, ModuleViz> = {
   "capital-structure": {
     lines: [{ d: "M6 50 C50 46 80 34 114 30", w: 1, o: 0.4 }, { d: "M6 50 L114 16", w: 1.6, o: 1 }],
   },
-  "stochastic-models": {
+  "random-walk": {
     lines: [
       { d: "M6 34 L18 38 L30 30 L42 36 L54 40 L66 34 L78 42 L90 38 L102 46 L114 42", w: 1, o: 0.35 },
       { d: "M6 34 L18 30 L30 24 L42 28 L54 16 L66 20 L78 12 L90 16 L102 8 L114 10", w: 1, o: 0.35 },
@@ -107,6 +123,12 @@ export const MODULE_VIZ: Record<string, ModuleViz> = {
       { d: "M6 50 L18 44 L30 46 L42 38 L54 40 L66 32 L78 30 L90 24 L102 22 L114 16", w: 1.5, o: 1 },
     ],
   },
+  "order-book": { lines: [{ d: "M6 10 V24 H22 V32 H40 V40 H58", w: 1.6, o: 1 }, { d: "M62 40 H80 V34 H96 V22 H114 V8", w: 1.6, o: 0.5 }], dots: [{ x: 60, y: 40, key: true }] },
+  "market-making": { lines: [{ d: "M6 22 H114", w: 1.6, o: 0.5 }, { d: "M6 42 H114", w: 1.6, o: 1 }, { d: "M6 34 C30 30 50 36 70 31 C90 27 100 33 114 32", w: 1, o: 0.3 }], dots: [{ x: 40, y: 22 }, { x: 78, y: 42, key: true }] },
+  "avellaneda-stoikov": { lines: [{ d: "M6 32 H114", w: 1, o: 0.3 }, { d: "M6 14 L114 34", w: 1.6, o: 0.5 }, { d: "M6 30 L114 54", w: 1.6, o: 1 }], dots: [{ x: 60, y: 42, key: true }] },
+  "glosten-milgrom": { lines: [{ d: "M6 8 C40 18 80 24 114 26", w: 1.6, o: 0.5 }, { d: "M6 56 C40 44 80 34 114 30", w: 1.6, o: 1 }], dots: [{ x: 114, y: 28, key: true }] },
+  "kyle": { lines: [{ d: "M6 54 H22 V46 H38 V40 H54 V32 H70 V26 H86 V20 H102 V14 H114", w: 1.6, o: 1 }, { d: "M6 12 H114", w: 1, o: 0.3 }], dots: [{ x: 114, y: 14, key: true }] },
+  "spread-estimation": { lines: [{ d: "M6 20 H114", w: 1, o: 0.3 }, { d: "M6 44 H114", w: 1, o: 0.3 }, { d: "M6 44 L18 20 L30 44 L42 20 L54 20 L66 44 L78 20 L90 44 L102 44 L114 20", w: 1.6, o: 1 }], dots: [{ x: 66, y: 44, key: true }] },
   "monte-carlo": {
     lines: [
       { d: "M6 32 H114", w: 1, o: 0.35 },

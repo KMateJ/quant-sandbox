@@ -8,7 +8,7 @@ async function loadModule(path) {
   return import(`data:text/javascript;base64,${Buffer.from(output[0].code).toString("base64")}`);
 }
 
-const clt = await loadModule("features/stochastic-models/clt.math.ts");
+const clt = await loadModule("features/random-walk/clt.math.ts");
 const near = (a, b, tol, msg) => assert.ok(Math.abs(a - b) < tol, `${msg ?? ""} ${a} vs ${b}`);
 
 test("every step law is standardised (mean 0, variance 1)", () => {

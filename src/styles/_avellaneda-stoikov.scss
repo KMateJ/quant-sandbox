@@ -1,0 +1,241 @@
+// Avellaneda–Stoikov lab (market-making pack, plan 06)
+@use "breakpoints" as *;
+
+.page-header-actions:has(.avs-actions) {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.avs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.avs-workspace .module-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.avs-caption {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.avs-warn { color: var(--negative); }
+
+.avs-tone--long { color: var(--positive); }
+.avs-tone--short { color: var(--negative); }
+.avs-tone--flat { color: var(--text); }
+
+// #region Skew explorer
+.avs-skew {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 20px;
+  margin-top: 12px;
+  align-items: start;
+
+  @include below-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.avs-skew-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.avs-track-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.avs-track {
+  position: relative;
+  height: 44px;
+  margin: 6px 14px 18px;
+  touch-action: none;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 21px;
+    height: 2px;
+    background: var(--border);
+  }
+}
+
+.avs-track-tick {
+  position: absolute;
+  top: 14px;
+  width: 1px;
+  height: 16px;
+  background: var(--muted);
+
+  &.is-zero { background: var(--text); }
+
+  em {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-style: normal;
+    font-size: var(--text-xs);
+    color: var(--muted);
+  }
+}
+
+.avs-puck {
+  position: absolute;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  background: var(--surface);
+  border: 2px solid var(--text);
+  border-radius: var(--radius-xs);
+  cursor: grab;
+
+  &--long { border-color: var(--positive); background: color-mix(in srgb, var(--positive) 20%, var(--surface)); }
+  &--short { border-color: var(--negative); background: color-mix(in srgb, var(--negative) 20%, var(--surface)); }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.avs-clock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.avs-clock-scrub {
+  display: flex;
+  flex: 1 1 220px;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--text-sm);
+  color: var(--muted);
+
+  input { width: 100%; }
+}
+
+.avs-formula {
+  padding: 10px 12px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  font-size: var(--text-sm);
+
+  p { margin: 2px 0; }
+}
+
+.avs-formula-live {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+
+.avs-column {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+
+  &.is-picking { cursor: crosshair; }
+}
+
+.avs-col-axis { stroke: var(--border); }
+
+.avs-col-row {
+  line { stroke-width: 2; }
+  text { font-size: 11px; fill: var(--muted); }
+  .avs-col-value { font-family: var(--font-mono); fill: var(--text); }
+
+  &.is-mid line { stroke: var(--text); stroke-dasharray: 4 3; }
+  &.is-bid line { stroke: var(--positive); }
+  &.is-ask line { stroke: var(--negative); }
+  &.is-res line { stroke: var(--primary); stroke-width: 3; }
+  &.is-guess line { stroke: var(--chart-candidate); stroke-dasharray: 2 2; }
+}
+
+.avs-col-arrow { stroke: var(--primary); stroke-width: 1.5; }
+.avs-col-arrowhead { fill: var(--primary); }
+// #endregion
+
+// #region Policy and tournament
+.avs-policy { margin-top: 12px; }
+
+.avs-policy-chart { height: 320px; }
+
+.avs-policy-actions,
+.avs-tour-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.avs-tour {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.avs-hists {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+
+  @include below-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.avs-hist {
+  margin: 0;
+
+  figcaption {
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+}
+
+.avs-frontier-chart { height: 300px; }
+.avs-sample-price { height: 220px; }
+.avs-sample-q { height: 110px; }
+// #endregion
+
+.avs-challenge {
+  padding: 12px 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+
+  p { margin: 0 0 6px; }
+}
+
+.avs-challenge-result {
+  &.is-hit strong { color: var(--positive); }
+  &.is-miss strong { color: var(--negative); }
+}

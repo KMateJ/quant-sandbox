@@ -107,7 +107,7 @@ export const reflectionPrinciple: GuideLessonContent = {
       "$\\mathbb{P}(M_t \\ge a, W_t \\le x) = 1 - \\Phi((2a - x)/\\sqrt{t})$ for $x \\le a$; this joint law prices barrier options.",
       "On a discrete time grid the simulated maximum is biased low because crossings between grid points are missed.",
     ),
-    lab("/stochastic-models/reflection", "Reflect simulated paths at a level in the Stochastic Models studio"),
+    lab("/brownian-motion/reflection", "Reflect simulated paths at a level in the Brownian Motion lab"),
   ],
 
   hu: [
@@ -215,6 +215,6 @@ export const reflectionPrinciple: GuideLessonContent = {
       "$x \\le a$ esetén $\\mathbb{P}(M_t \\ge a, W_t \\le x) = 1 - \\Phi((2a - x)/\\sqrt{t})$; ezzel az együttes eloszlással árazhatók a barrier opciók.",
       "Diszkrét időrácson a szimulált maximum lefelé torzít, mert a rácspontok közötti átlépések kimaradnak.",
     ),
-    lab("/stochastic-models/reflection", "Tükrözz szimulált pályákat egy szinten a Sztochasztikus modellek stúdióban"),
+    lab("/brownian-motion/reflection", "Tükrözz szimulált pályákat egy szinten a Brown-mozgás laborban"),
   ],
 };

@@ -16,6 +16,6 @@ export type DemoStepBase<S extends string, X> = { id: string; screen: S; anchor:
 export type MissionProgress = { completed: boolean; best: number | null };
 /// Progress for every mission played, by id.
 export type ProgressMap = Readonly<Record<string, MissionProgress>>;
-export type ChallengeKind = "guess" | "range" | "pick" | "draw" | "place";
+export type ChallengeKind = "guess" | "range" | "pick" | "draw" | "place" | "score";
 /// Saved record of one lab challenge round.
 export type ChallengeStats = { played: number; hits: number; streak: number; bestStreak: number; lastAt: number };

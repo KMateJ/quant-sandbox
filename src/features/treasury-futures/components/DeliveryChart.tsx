@@ -2,8 +2,8 @@ import ScatterChart from "../../../components/charts/ScatterChart";
 import type { ScatterSeries } from "../../../components/charts";
 import { switchingPoints, type DeliverableBond } from "../treasuryFutures.math";
 import { useI18n } from "../../../i18n";
+import { bondColor } from "./bondColors";
 
-const COLORS = ["#38bdf8", "#a78bfa", "#34d399", "#fb923c", "#f472b6", "#facc15", "#60a5fa"];
 
 /// Net basis of each deliverable against the futures price. Drag the markers (or click the plot) to move F
 /// and watch the cheapest-to-deliver highlight jump at the switching points; the axis holds still while dragging.
@@ -19,7 +19,7 @@ export default function DeliveryChart({ bonds, futures, selected, onFutures }: {
   const lo = Math.max(1, futures - Math.max(12, futures * 0.16));
   const hi = futures + Math.max(12, futures * 0.16);
   const series: ScatterSeries[] = bonds.map((bond, index) => ({
-    key: bond.id, label: bondLabel(bond.id), color: COLORS[index % COLORS.length],
+    key: bond.id, label: bondLabel(bond.id), color: bondColor(index),
     line: true, strokeWidth: bond.id === selected ? 3 : 1.8,
     points: Array.from({ length: 41 }, (_, i) => {
       const x = lo + (hi - lo) * i / 40;

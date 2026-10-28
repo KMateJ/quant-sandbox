@@ -1,0 +1,205 @@
+// Owner: factor-and-systemic-risk plan 04. Generic NetworkGraph chart; tokens only, square corners, no left bars.
+.net-frame {
+  position: relative;
+  min-height: 160px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.net-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.net-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &.is-connect {
+    cursor: crosshair;
+  }
+}
+
+.net-zoom {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.net-zoom-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: var(--text);
+    background: var(--surface-muted);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+}
+
+.net-node {
+  cursor: pointer;
+  outline: none;
+
+  .net-disc {
+    fill: var(--net-fill, var(--chart-1));
+    stroke: var(--surface);
+    stroke-width: 1.5;
+  }
+
+  .net-ring {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 3;
+  }
+
+  &.is-critical .net-ring {
+    stroke-dasharray: none;
+    stroke-width: 3;
+  }
+
+  &.is-failed .net-disc {
+    fill: var(--surface);
+    stroke: var(--net-fill, var(--chart-1));
+    stroke-width: 2;
+  }
+
+  .net-cross {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 2;
+  }
+
+  .net-select {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+  }
+
+  &:focus-visible .net-select,
+  &:focus-visible .net-disc {
+    stroke: var(--primary);
+    stroke-width: 3;
+  }
+
+  &.is-dim {
+    opacity: 0.3;
+  }
+}
+
+.net-label,
+.net-badge {
+  fill: var(--text);
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.net-badge {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--muted);
+}
+
+.net-edge {
+  &.is-dim {
+    opacity: 0.2;
+  }
+
+  &.is-active path:first-child {
+    stroke-dasharray: 6 4;
+    animation: net-flow 0.9s linear 3;
+  }
+}
+
+.net-edge-hit {
+  stroke: transparent;
+  cursor: pointer;
+}
+
+.net-rubber {
+  stroke: var(--primary);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+}
+
+.net-legend {
+  position: absolute;
+  left: var(--space-2);
+  bottom: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-1) var(--space-2);
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+}
+
+.net-hint {
+  position: absolute;
+  left: var(--space-2);
+  top: var(--space-2);
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+
+  &:empty {
+    display: none;
+  }
+}
+
+@keyframes net-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .net-edge.is-active path:first-child {
+    animation: none;
+  }
+}

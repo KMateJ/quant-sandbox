@@ -46,3 +46,31 @@ export type McLabResult = {
   pathCount: number;
   pathSteps: number;
 };
+
+/// The variance-reduction page adds the combination of both techniques.
+export type McVrMethod = McEstimator | "both";
+
+export type McVrRacePoint = { n: number; analytic: number } & Record<McVrMethod, number> &
+  Record<`${McVrMethod}Lo` | `${McVrMethod}Hi`, number>;
+
+export type McVrResult = {
+  analytic: number;
+  race: McVrRacePoint[];
+  summary: Record<McVrMethod, McEstimatorSummary>;
+};
+
+/// Feynman-Kac page: price u(t, x) of a call with strike K expiring at T, started at time t from spot x.
+export type FkParams = { x: number; t: number; strike: number; maturity: number; rate: number; vol: number; sims: number; seed: number };
+
+export type FkCurvePoint = { x: number; closed: number; mc: number; payoff: number };
+
+export type FkResult = {
+  closed: number;
+  estimate: number;
+  standardError: number;
+  /// Discounted payoff of every draw started at x.
+  payoffs: Float64Array;
+  /// Share of the draws that end in the money.
+  payingShare: number;
+  curve: FkCurvePoint[];
+};

@@ -40,6 +40,8 @@ import { exoticOptions } from "./exoticOptions";
 import { jumpDiffusion } from "./jumpDiffusion";
 import { creditRisk } from "./creditRisk";
 import { factorModels } from "./factorModels";
+import { famaFrenchFactors } from "./famaFrenchFactors";
+import { systemicContagion } from "./systemicContagion";
 import { annuities } from "./annuities";
 import { optionsOnOtherUnderlyings } from "./optionsOnOtherUnderlyings";
 import { portfolioConstraints } from "./portfolioConstraints";
@@ -50,6 +52,17 @@ import { capitalBudgetingRisk } from "./capitalBudgetingRisk";
 import { dividendPolicy } from "./dividendPolicy";
 import { lawOfLargeNumbersClt } from "./lawOfLargeNumbersClt";
 import { correlatedBrownianMotions } from "./correlatedBrownianMotions";
+import { marketMakers } from "./marketMakers";
+import { limitOrderBook } from "./limitOrderBook";
+import { queuePosition } from "./queuePosition";
+import { adverseSelection } from "./adverseSelection";
+import { glostenMilgrom } from "./glostenMilgrom";
+import { spreadMeasurement } from "./spreadMeasurement";
+import { kyleModel } from "./kyleModel";
+import { priceImpact } from "./priceImpact";
+import { inventoryRisk } from "./inventoryRisk";
+import { avellanedaStoikov } from "./avellanedaStoikov";
+import { marketMakingPnl } from "./marketMakingPnl";
 import { valuationMultiples } from "./valuationMultiples";
 import { riskAversion } from "./riskAversion";
 import { performanceMeasures } from "./performanceMeasures";
@@ -107,6 +120,8 @@ export const guideContent: Record<GuideId, GuideLessonContent> = {
   "jump-diffusion": jumpDiffusion,
   "credit-risk": creditRisk,
   "factor-models": factorModels,
+  "fama-french-factors": famaFrenchFactors,
+  "systemic-contagion": systemicContagion,
   annuities,
   "valuation-multiples": valuationMultiples,
   "risk-aversion": riskAversion,
@@ -131,4 +146,15 @@ export const guideContent: Record<GuideId, GuideLessonContent> = {
   "dividend-policy": dividendPolicy,
   "law-of-large-numbers-clt": lawOfLargeNumbersClt,
   "correlated-brownian-motions": correlatedBrownianMotions,
+  "market-makers": marketMakers,
+  "limit-order-book": limitOrderBook,
+  "queue-position": queuePosition,
+  "adverse-selection": adverseSelection,
+  "glosten-milgrom": glostenMilgrom,
+  "spread-measurement": spreadMeasurement,
+  "kyle-model": kyleModel,
+  "price-impact": priceImpact,
+  "inventory-risk": inventoryRisk,
+  "avellaneda-stoikov": avellanedaStoikov,
+  "market-making-pnl": marketMakingPnl,
 };

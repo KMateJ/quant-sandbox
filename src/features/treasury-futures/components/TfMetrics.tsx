@@ -8,11 +8,11 @@ function Metric({ label, value, accent = false }: { label: string; value: string
 /// Futures price, CTD, its net basis and the gap to the runner-up, then the conversion factor strip.
 export default function TfMetrics({ lab }: { lab: TreasuryFuturesModel }) {
   const { t } = useI18n();
-  const { data, ctd, ranked, bund } = lab;
+  const { ctd, ranked, bund } = lab;
   return (
     <>
       {!bund && <div className="tf-metrics">
-        <Metric label={t("tfFuturesPrice")} value={data.futures.toFixed(2)} />
+        <Metric label={t("tfFuturesPrice")} value={lab.futures.toFixed(2)} />
         <Metric label={t("tfCtd")} value={ctd ? t("tfBondId", { id: ctd.id }) : "—"} accent />
         <Metric label={t("tfBasis")} value={ctd?.netBasis.toFixed(4) ?? "—"} />
         <Metric label={t("tfSpread")} value={ranked.length > 1 ? (ranked[1].netBasis - ranked[0].netBasis).toFixed(4) : t("tfNoSecond")} />

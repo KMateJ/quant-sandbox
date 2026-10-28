@@ -1,7 +1,7 @@
 import type { TranslationKey } from "../../i18n";
 
 /// One track per large module area.
-export type GuideTrackId = "derivatives" | "portfolio" | "fixed-income" | "corporate" | "stochastic";
+export type GuideTrackId = "derivatives" | "portfolio" | "fixed-income" | "corporate" | "stochastic" | "microstructure";
 
 export type GuideId =
   | "interest-discounting"
@@ -44,6 +44,8 @@ export type GuideId =
   | "jump-diffusion"
   | "credit-risk"
   | "factor-models"
+  | "fama-french-factors"
+  | "systemic-contagion"
   | "annuities"
   | "valuation-multiples"
   | "risk-aversion"
@@ -67,7 +69,18 @@ export type GuideId =
   | "capital-budgeting-risk"
   | "dividend-policy"
   | "law-of-large-numbers-clt"
-  | "correlated-brownian-motions";
+  | "correlated-brownian-motions"
+  | "market-makers"
+  | "limit-order-book"
+  | "queue-position"
+  | "adverse-selection"
+  | "glosten-milgrom"
+  | "spread-measurement"
+  | "kyle-model"
+  | "price-impact"
+  | "inventory-risk"
+  | "avellaneda-stoikov"
+  | "market-making-pnl";
 
 /// A single ordered lesson inside a track.
 export type GuideLessonMeta = {

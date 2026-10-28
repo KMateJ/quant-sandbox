@@ -762,6 +762,16 @@
   background: transparent;
   border: none;
   cursor: help;
+  position: relative;
+
+  // Invisible 34px hit area on touch screens; the icon keeps its size.
+  @media (pointer: coarse) {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+    }
+  }
 
   svg {
     width: 15px;
@@ -1571,3 +1581,33 @@ rect.opt-brush:focus-visible {
   height: 3px;
   background: var(--accent);
 }
+
+// #region Phone tap targets
+// At phone width every control gets a >=32px box; small icons grow their box with
+// padding and cancel it with negative margin, so the layout does not move.
+@include phone {
+  button, select, input:not([type="radio"], [type="checkbox"], [type="range"], [type="hidden"]) {
+    min-height: 32px;
+  }
+
+  .brand, .info-tooltip-trigger {
+    box-sizing: content-box;
+    padding-block: 7px;
+    margin-block: -7px;
+  }
+
+  .info-tooltip-trigger {
+    padding-inline: 7px;
+    margin-inline: -7px;
+  }
+
+  .slider-input {
+    height: 32px;
+    margin: -9px 0;
+    border-radius: 0;
+    background:
+      linear-gradient(var(--primary), var(--primary)) left center / var(--fill, 0%) 6px no-repeat,
+      linear-gradient(var(--surface-muted), var(--surface-muted)) center / 100% 6px no-repeat;
+  }
+}
+// #endregion

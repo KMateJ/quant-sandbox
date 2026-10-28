@@ -2,20 +2,22 @@ import { useMemo } from "react";
 import { LineChart, type ChartSeries, type PlotFrame } from "../../components/charts";
 import { useI18n } from "../../i18n";
 import { ESTIMATOR_COLOR, ESTIMATOR_LABEL } from "./monteCarlo.estimators";
-import type { McEstimator, McRacePoint } from "./monteCarlo.types";
+import type { McVrMethod } from "./monteCarlo.types";
 
-type Props = { race: McRacePoint[]; shown: McEstimator[]; sims: number; isMobile: boolean };
+type Race<K extends McVrMethod> = { n: number; analytic: number } & Record<K | `${K}Lo` | `${K}Hi`, number>;
+type Props<K extends McVrMethod> = { race: Race<K>[]; shown: K[]; sims: number; isMobile: boolean };
 
 /// Running estimates with their ±1.96·SE bands, converging to the Black–Scholes price.
-export default function McConvergenceChart({ race, shown, sims, isMobile }: Props) {
+export default function McConvergenceChart<K extends McVrMethod>({ race, shown, sims, isMobile }: Props<K>) {
   const { t } = useI18n();
   const num = (v: number) => v.toFixed(3);
   // Every estimate stays in view (lines aren't clipped), but bands only count from 5% of the run on:
   // the first few draws have huge bands that would flatten everything; earlier band parts are clamped.
   const yDomain = useMemo((): [number, number] => {
     const late = race.filter((p) => p.n >= sims * 0.05);
-    const vals = late.flatMap((p) => shown.flatMap((k) => [p[`${k}Lo`], p[`${k}Hi`]]))
-      .concat(race.flatMap((p) => shown.map((k) => p[k])), race[0]?.analytic ?? 0);
+    const vals: number[] = [race[0]?.analytic ?? 0];
+    for (const p of race) for (const k of shown) vals.push(p[k]);
+    for (const p of late) for (const k of shown) vals.push(p[`${k}Lo`], p[`${k}Hi`]);
     const lo = Math.min(...vals);
     const hi = Math.max(...vals);
     const pad = (hi - lo) * 0.15 || 0.5;

@@ -3,7 +3,10 @@ import type { TranslationKey } from "../i18n";
 import type { IntuitionDocument } from "../components/intuition";
 import { binomialIntuition, blackScholesIntuition, bondIntuition, deltaHedgingIntuition, durationIntuition, frontierIntuition, hestonIntuition, payoffIntuition, treasuryFuturesIntuition, yieldCurveIntuition } from "./intuition";
 import { stochasticModelsIntuition } from "./stochasticModelsIntuition";
-import { STUDIO_PATH, lessonNavItems } from "../features/stochastic-models/stochasticModels.curriculum";
+import { lessonSubNav } from "../components/lesson/labLessons";
+import { RANDOM_WALK_PATH, randomWalkLessons } from "../features/random-walk/lessons";
+import { BROWNIAN_PATH, brownianLessons } from "../features/brownian-motion/lessons/lessons";
+import { stochasticRedirects } from "./stochasticRedirects";
 import { moduleAbout, type ModuleAbout } from "./moduleAbout";
 import { guideNavItems, guideRedirects, guideTrackById, guideTrackPath } from "../features/guide/guide.meta";
 import type { GuideTrackId } from "../features/guide/guide.types";
@@ -17,6 +20,7 @@ export type ModuleCategory =
   | "fixed-income"
   | "corporate"
   | "stochastic"
+  | "microstructure"
   | "guides";
 
 export type ModuleStatus = "live" | "beta" | "planned";
@@ -63,6 +67,7 @@ export const CATEGORY_ORDER: ModuleCategory[] = [
   "fixed-income",
   "corporate",
   "stochastic",
+  "microstructure",
   "guides",
 ];
 
@@ -72,6 +77,7 @@ export const CATEGORY_LABEL_KEYS: Record<ModuleCategory, TranslationKey> = {
   "fixed-income": "catFixedIncome",
   corporate: "catCorporate",
   stochastic: "catStochastic",
+  microstructure: "catMicrostructure",
   guides: "navGuide",
 };
 
@@ -81,6 +87,7 @@ export const CATEGORY_DESC_KEYS: Record<ModuleCategory, TranslationKey> = {
   "fixed-income": "catFixedIncomeDesc",
   corporate: "catCorporateDesc",
   stochastic: "catStochasticDesc",
+  microstructure: "catMicrostructureDesc",
   guides: "catGuidesDesc",
 };
 
@@ -91,6 +98,7 @@ export const CATEGORY_ACCENT: Record<ModuleCategory, string> = {
   "fixed-income": "#f59e0b",
   corporate: "#ec4899",
   stochastic: "#a855f7",
+  microstructure: "#2bb3a3",
   guides: "#06b6d4",
 };
 
@@ -253,6 +261,18 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/interest-rate-swap/SwapView")),
   },
   {
+    id: "callable-bond",
+    intuition: bondIntuition,
+    path: "/callable-bond",
+    navKey: "navCallableBond",
+    category: "fixed-income",
+    status: "beta",
+    seo: { titleKey: "seoTitleCallableBond", descKey: "seoDescCallableBond" },
+    about: moduleAbout("CallableBond", 4),
+    relatedGuides: ["callable-bonds", "duration-convexity"],
+    Component: lazy(() => import("../features/callable-bond/CallableView")),
+  },
+  {
     id: "immunization",
     path: "/immunization",
     navKey: "navImmunization",
@@ -290,6 +310,17 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/capm/CapmView")),
   },
   {
+    id: "fama-french",
+    path: "/fama-french",
+    navKey: "navFamaFrench",
+    category: "portfolio",
+    status: "beta",
+    seo: { titleKey: "seoTitleFamaFrench", descKey: "seoDescFamaFrench" },
+    about: moduleAbout("FamaFrench", 4),
+    relatedGuides: ["factor-models", "capm"],
+    Component: lazy(() => import("../features/fama-french/FamaFrenchView")),
+  },
+  {
     id: "portfolio-lab",
     path: "/portfolio-lab",
     navKey: "navPortfolioLab",
@@ -316,6 +347,22 @@ export const modules: ModuleDef[] = [
     about: moduleAbout("EfficientFrontier", 4),
     relatedGuides: ["efficient-frontier", "diversification", "capm"],
     Component: lazy(() => import("../features/efficient-frontier/PortfolioOptimizationView")),
+  },
+  {
+    id: "systemic-risk",
+    path: "/systemic-risk",
+    navKey: "navSystemicRisk",
+    category: "portfolio",
+    status: "beta",
+    seo: { titleKey: "seoTitleSystemicRisk", descKey: "seoDescSystemicRisk" },
+    about: moduleAbout("SystemicRisk", 4),
+    relatedGuides: ["credit-risk", "risk-measures"],
+    subNav: [
+      { id: "network", labelKey: "navSystemicNetwork", to: "/systemic-risk" },
+      { id: "shocks", labelKey: "navSystemicShocks", descKey: "seoDescSystemicShocks", seoTitle: "Contagion Simulator: Defaults, Fire Sales and Runs", to: "/systemic-risk/shocks" },
+      { id: "episodes", labelKey: "navSystemicEpisodes", descKey: "seoDescSystemicEpisodes", seoTitle: "Systemic Risk Episodes: 2008, LTCM, March 2020, SVB", to: "/systemic-risk/episodes" },
+    ],
+    Component: lazy(() => import("../features/systemic-risk/SystemicRiskPages")),
   },
   {
     id: "npv-irr",
@@ -378,28 +425,31 @@ export const modules: ModuleDef[] = [
     Component: lazy(() => import("../features/capital-structure/CapitalStructureView")),
   },
   {
-    id: "stochastic-models",
-    homeFeatured: true,
-    path: STUDIO_PATH,
-    navKey: "navStochasticStudio",
+    id: "random-walk",
+    path: RANDOM_WALK_PATH,
+    navKey: "navRandomWalk",
     category: "stochastic",
     status: "beta",
     intuition: stochasticModelsIntuition,
-    subNav: lessonNavItems(),
-    seo: { titleKey: "seoTitleStochasticModels", descKey: "seoDescStochasticModels" },
-    about: moduleAbout("StochasticModels", 4),
-    Component: lazy(() => import("../features/stochastic-models/StochasticModelsView")),
+    subNav: lessonSubNav(RANDOM_WALK_PATH, "navRandomWalkLab", randomWalkLessons),
+    seo: { titleKey: "seoTitleRandomWalk", descKey: "seoDescRandomWalk" },
+    about: moduleAbout("RandomWalk", 4),
+    relatedGuides: ["random-walks", "law-of-large-numbers-clt"],
+    Component: lazy(() => import("../features/random-walk/RandomWalkPages")),
   },
   {
     id: "brownian-motion",
-    path: "/brownian-motion",
+    homeFeatured: true,
+    path: BROWNIAN_PATH,
     navKey: "navBrownianMotion",
     category: "stochastic",
     status: "beta",
+    intuition: stochasticModelsIntuition,
+    subNav: lessonSubNav(BROWNIAN_PATH, "navBrownianLab", brownianLessons),
     seo: { titleKey: "seoTitleBrownianMotion", descKey: "seoDescBrownianMotion" },
     about: moduleAbout("BrownianMotion", 4),
     relatedGuides: ["random-walks", "ito-lemma"],
-    Component: lazy(() => import("../features/brownian-motion/BrownianMotionView")),
+    Component: lazy(() => import("../features/brownian-motion/BrownianMotionPages")),
   },
   {
     id: "gbm",
@@ -410,7 +460,15 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleGbm", descKey: "seoDescGbm" },
     about: moduleAbout("Gbm", 4),
     relatedGuides: ["gbm", "returns-volatility"],
-    Component: lazy(() => import("../features/gbm/GbmView")),
+    subNav: [
+      { id: "lab", labelKey: "navGbmLab", to: "/gbm" },
+      { id: "definition", labelKey: "navGbmDefinition", descKey: "seoDescGbmDefinition", seoTitle: "Geometric vs Arithmetic Brownian Motion: Definition", to: "/gbm/definition" },
+      { id: "euler-maruyama", labelKey: "navGbmEuler", descKey: "seoDescGbmEuler", seoTitle: "Euler–Maruyama vs Exact GBM: Strong and Weak Error", to: "/gbm/euler-maruyama" },
+      { id: "mean-reversion", labelKey: "navGbmMeanReversion", descKey: "seoDescGbmMeanReversion", seoTitle: "Mean Reversion: Ornstein–Uhlenbeck (Vasicek) Simulator", to: "/gbm/mean-reversion" },
+      { id: "jumps", labelKey: "navGbmJumps", descKey: "seoDescGbmJumps", seoTitle: "Merton Jump-Diffusion Simulator", to: "/gbm/jumps" },
+      { id: "correlated", labelKey: "navGbmCorrelated", descKey: "seoDescGbmCorrelated", seoTitle: "Correlated Brownian Motions (Cholesky)", to: "/gbm/correlated" },
+    ],
+    Component: lazy(() => import("../features/gbm/GbmPages")),
   },
   {
     id: "ito-process",
@@ -421,7 +479,14 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleItoProcess", descKey: "seoDescItoProcess" },
     about: moduleAbout("ItoProcess", 4),
     relatedGuides: ["ito-lemma", "random-walks"],
-    Component: lazy(() => import("../features/ito-process/ItoProcessView")),
+    subNav: [
+      { id: "lab", labelKey: "navItoLab", to: "/ito-process" },
+      { id: "ito-integral", labelKey: "navItoIntegral", descKey: "seoDescItoIntegral", seoTitle: "Itô Integral: Left, Midpoint and Right Riemann Sums", to: "/ito-process/ito-integral" },
+      { id: "itos-lemma", labelKey: "navItosLemma", descKey: "seoDescItosLemma", seoTitle: "Itô's Lemma on a Brownian Path", to: "/ito-process/itos-lemma" },
+      { id: "martingales", labelKey: "navMartingales", descKey: "seoDescMartingales", seoTitle: "Martingales and Betting Strategies on a Fair Coin", to: "/ito-process/martingales" },
+      { id: "girsanov", labelKey: "navGirsanov", descKey: "seoDescGirsanov", seoTitle: "Girsanov Theorem: Change of Drift by Reweighting", to: "/ito-process/girsanov" },
+    ],
+    Component: lazy(() => import("../features/ito-process/ItoProcessPages")),
   },
   {
     id: "monte-carlo",
@@ -432,13 +497,90 @@ export const modules: ModuleDef[] = [
     seo: { titleKey: "seoTitleMonteCarlo", descKey: "seoDescMonteCarlo" },
     about: moduleAbout("MonteCarlo", 4),
     relatedGuides: ["monte-carlo-pricing", "gbm"],
-    Component: lazy(() => import("../features/monte-carlo/MonteCarloView")),
+    subNav: [
+      { id: "lab", labelKey: "navMonteCarloLab", to: "/monte-carlo" },
+      { id: "variance-reduction", labelKey: "navMonteCarloVr", descKey: "seoDescMonteCarloVr", seoTitle: "Monte Carlo Variance Reduction", to: "/monte-carlo/variance-reduction" },
+      { id: "feynman-kac", labelKey: "navMonteCarloFk", descKey: "seoDescMonteCarloFk", seoTitle: "Feynman-Kac: PDE and Monte Carlo", to: "/monte-carlo/feynman-kac" },
+    ],
+    Component: lazy(() => import("../features/monte-carlo/MonteCarloPages")),
+  },
+  {
+    id: "order-book",
+    path: "/order-book",
+    navKey: "navOrderBook",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleOrderBook", descKey: "seoDescOrderBook" },
+    about: moduleAbout("OrderBook", 4),
+    relatedGuides: ["limit-order-book", "queue-position", "price-impact"],
+    Component: lazy(() => import("../features/order-book/OrderBookView")),
+  },
+  {
+    id: "market-making",
+    path: "/market-making",
+    navKey: "navMarketMaking",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleMarketMaking", descKey: "seoDescMarketMaking" },
+    about: moduleAbout("MarketMaking", 4),
+    relatedGuides: ["market-makers", "adverse-selection", "market-making-pnl"],
+    homeFeatured: true,
+    subNav: [
+      { id: "lab", labelKey: "navMarketMakingLab", to: "/market-making" },
+      { id: "desk", labelKey: "navMarketMakingDesk", descKey: "seoDescMarketMakingDesk", seoTitle: "Market Making Desk: Quote, Hedge, Survive Toxic Flow", to: "/market-making/desk" },
+    ],
+    Component: lazy(() => import("../features/market-making/MarketMakingPages")),
+  },
+  {
+    id: "avellaneda-stoikov",
+    path: "/avellaneda-stoikov",
+    navKey: "navAvellanedaStoikov",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleAvellanedaStoikov", descKey: "seoDescAvellanedaStoikov" },
+    about: moduleAbout("AvellanedaStoikov", 4),
+    relatedGuides: ["inventory-risk", "avellaneda-stoikov"],
+    Component: lazy(() => import("../features/avellaneda-stoikov/AvellanedaStoikovView")),
+  },
+  {
+    id: "glosten-milgrom",
+    path: "/glosten-milgrom",
+    navKey: "navGlostenMilgrom",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleGlostenMilgrom", descKey: "seoDescGlostenMilgrom" },
+    about: moduleAbout("GlostenMilgrom", 4),
+    relatedGuides: ["glosten-milgrom", "adverse-selection"],
+    Component: lazy(() => import("../features/glosten-milgrom/GlostenMilgromView")),
+  },
+  {
+    id: "kyle",
+    path: "/kyle",
+    navKey: "navKyle",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleKyle", descKey: "seoDescKyle" },
+    about: moduleAbout("Kyle", 4),
+    relatedGuides: ["kyle-model", "price-impact"],
+    Component: lazy(() => import("../features/kyle/KyleView")),
+  },
+  {
+    id: "spread-estimation",
+    path: "/spread-estimation",
+    navKey: "navSpreadEstimation",
+    category: "microstructure",
+    status: "beta",
+    seo: { titleKey: "seoTitleSpreadEstimation", descKey: "seoDescSpreadEstimation" },
+    about: moduleAbout("SpreadEstimation", 4),
+    relatedGuides: ["spread-measurement", "glosten-milgrom"],
+    Component: lazy(() => import("../features/spread-estimation/SpreadEstimationView")),
   },
   guideModule("derivatives", { titleKey: "seoTitleGuideDerivatives", descKey: "seoDescGuideDerivatives" }),
   guideModule("portfolio", { titleKey: "seoTitleGuidePortfolio", descKey: "seoDescGuidePortfolio" }),
   guideModule("fixed-income", { titleKey: "seoTitleGuideFixedIncome", descKey: "seoDescGuideFixedIncome" }),
   guideModule("corporate", { titleKey: "seoTitleGuideCorporate", descKey: "seoDescGuideCorporate" }),
   guideModule("stochastic", { titleKey: "seoTitleGuideStochastic", descKey: "seoDescGuideStochastic" }),
+  guideModule("microstructure", { titleKey: "seoTitleGuideMicrostructure", descKey: "seoDescGuideMicrostructure" }),
   {
     id: "guide-graph",
     path: "/guide/graph",
@@ -460,7 +602,7 @@ export const modules: ModuleDef[] = [
 ];
 
 /// Old URLs that now live elsewhere.
-export const redirects = guideRedirects();
+export const redirects = [...guideRedirects(), ...stochasticRedirects()];
 
 /// A module by its registry id.
 export function moduleById(id: string): ModuleDef | undefined {

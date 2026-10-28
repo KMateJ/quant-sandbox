@@ -48,6 +48,8 @@ import ExoticPricesFigure from "./ExoticPricesFigure";
 import JumpDensityFigure from "./JumpDensityFigure";
 import CreditSpreadFigure from "./CreditSpreadFigure";
 import FactorVarianceFigure from "./FactorVarianceFigure";
+import FfLoadingsFigure from "./factor-risk/FfLoadingsFigure";
+import ContagionCascadeFigure from "./factor-risk/ContagionCascadeFigure";
 import EulerConvergenceFigure from "./interactive/EulerConvergenceFigure";
 import MartingaleBettingFigure from "./interactive/MartingaleBettingFigure";
 import CallablePriceYieldFigure from "./interactive/CallablePriceYieldFigure";
@@ -73,6 +75,17 @@ import ReflectionMaxFigure from "./stochastic/ReflectionMaxFigure";
 import BrownianBridgeFigure from "./stochastic/BrownianBridgeFigure";
 import ItoSumsFigure from "./stochastic/ItoSumsFigure";
 import FeynmanKacFigure from "./stochastic/FeynmanKacFigure";
+import RoundTripFigure from "./microstructure/RoundTripFigure";
+import BookWalkFigure from "./microstructure/BookWalkFigure";
+import QueueFillFigure from "./microstructure/QueueFillFigure";
+import ToxicIncomeFigure from "./microstructure/ToxicIncomeFigure";
+import GmLearningFigure from "./microstructure/GmLearningFigure";
+import RollBounceFigure from "./microstructure/RollBounceFigure";
+import KyleScheduleFigure from "./microstructure/KyleScheduleFigure";
+import ExecutionFrontierFigure from "./microstructure/ExecutionFrontierFigure";
+import InventorySkewFigure from "./microstructure/InventorySkewFigure";
+import AsQuotesFigure from "./microstructure/AsQuotesFigure";
+import PnlAttributionFigure from "./microstructure/PnlAttributionFigure";
 
 /// Interactive figure component per id, as referenced by lesson content.
 export const guideFigures: Record<GuideFigureId, ComponentType> = {
@@ -115,6 +128,8 @@ export const guideFigures: Record<GuideFigureId, ComponentType> = {
   "jump-density": JumpDensityFigure,
   "credit-spread": CreditSpreadFigure,
   "factor-variance": FactorVarianceFigure,
+  "ff-loadings": FfLoadingsFigure,
+  "contagion-cascade": ContagionCascadeFigure,
   "cashflow-builder": CashflowBuilderFigure,
   "american-tree": AmericanTreeFigure,
   "mc-histogram": McHistogramFigure,
@@ -149,4 +164,15 @@ export const guideFigures: Record<GuideFigureId, ComponentType> = {
   "payout-ddm": PayoutDdmFigure,
   "clt-convergence": CltConvergenceFigure,
   "correlated-paths": CorrelatedPathsFigure,
+  "round-trip": RoundTripFigure,
+  "book-walk": BookWalkFigure,
+  "queue-fill": QueueFillFigure,
+  "toxic-income": ToxicIncomeFigure,
+  "gm-learning": GmLearningFigure,
+  "roll-bounce": RollBounceFigure,
+  "kyle-schedule": KyleScheduleFigure,
+  "execution-frontier": ExecutionFrontierFigure,
+  "inventory-skew": InventorySkewFigure,
+  "as-quotes": AsQuotesFigure,
+  "pnl-attribution": PnlAttributionFigure,
 };

@@ -23,6 +23,9 @@ import { portfolioDeskHelpEn } from "./PortfolioDeskHelp";
 import { retirementDeskEn } from "./RetirementDesk";
 import { retirementDeskMissionsEn } from "./RetirementDeskMissions";
 import { retirementDeskHelpEn } from "./RetirementDeskHelp";
+import { marketMakingDeskEn } from "./MarketMakingDesk";
+import { marketMakingDeskMissionsEn } from "./MarketMakingDeskMissions";
+import { marketMakingDeskHelpEn } from "./MarketMakingDeskHelp";
 
 /// Copy of the desk games and the Sandbox; loaded with those routes only (see languageLoader.withDeskCopy).
 export const desksEn = {
@@ -51,4 +54,7 @@ export const desksEn = {
   ...retirementDeskEn,
   ...retirementDeskMissionsEn,
   ...retirementDeskHelpEn,
+  ...marketMakingDeskEn,
+  ...marketMakingDeskMissionsEn,
+  ...marketMakingDeskHelpEn,
 };

@@ -33,3 +33,22 @@ export function normals(n: number, rng: Rng): number[] {
 export function nextGaussian(mean: number, sd: number, rng: Rng): number {
   return mean + sd * nextNormal(rng);
 }
+
+/// An exponential variate with the given `rate` (mean 1/rate) by inversion.
+export function nextExponential(rng: Rng, rate: number): number {
+  return -Math.log(1 - rng()) / rate;
+}
+
+/// A Poisson count with the given `mean`: Knuth's product method below 30, a rounded normal approximation above.
+export function nextPoisson(rng: Rng, mean: number): number {
+  if (mean <= 0) return 0;
+  if (mean >= 30) return Math.max(0, Math.round(mean + Math.sqrt(mean) * nextNormal(rng)));
+  const limit = Math.exp(-mean);
+  let k = 0;
+  let p = rng();
+  while (p > limit) {
+    k++;
+    p *= rng();
+  }
+  return k;
+}

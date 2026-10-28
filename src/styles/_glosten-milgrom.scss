@@ -1,0 +1,267 @@
+// Glosten–Milgrom lab (market-making pack, plan 07)
+@use "breakpoints" as *;
+
+.glm-workspace .module-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.glm-sim-switch {
+  align-self: flex-start;
+}
+
+.glm-quote-chart {
+  height: 340px;
+}
+
+.glm-small-chart {
+  height: 180px;
+}
+
+.glm-caption {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.glm-formula {
+  margin: 4px 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+
+// #region Trade tiles
+.glm-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+.glm-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+
+  &--buy {
+    color: var(--positive);
+    background: color-mix(in srgb, var(--positive) 10%, var(--surface));
+  }
+
+  &--sell {
+    color: var(--negative);
+    background: color-mix(in srgb, var(--negative) 10%, var(--surface));
+  }
+
+  &.is-ahead {
+    opacity: 0.45;
+  }
+
+  &.is-cursor {
+    outline: 1px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  @include phone {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.glm-strip--static .glm-tile {
+  cursor: default;
+}
+// #endregion
+
+.glm-steplog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.glm-log-line {
+  margin: 0;
+
+  .glm-steplog & {
+    margin-top: 20px;
+  }
+
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.glm-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.glm-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+
+  @include below-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+// #region Belief bars
+.glm-belief-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.glm-belief-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 52px;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+}
+
+.glm-belief-track {
+  height: 14px;
+  background: var(--surface-muted);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.glm-belief-fill {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+
+.glm-belief-value {
+  font-family: var(--font-mono);
+  text-align: right;
+}
+// #endregion
+
+// #region You-quote ruler
+.glm-youquote {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+
+  @include phone {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.glm-youquote-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.glm-ruler {
+  position: relative;
+  height: 320px;
+  margin: 12px 0 12px 44px;
+  width: 2px;
+  background: var(--border);
+  touch-action: none;
+}
+
+.glm-ruler-tick {
+  position: absolute;
+  left: -44px;
+  transform: translateY(50%);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.glm-ruler-band {
+  position: absolute;
+  left: -6px;
+  width: 14px;
+  background: var(--surface-muted);
+}
+
+.glm-ruler-ghost {
+  position: absolute;
+  left: -14px;
+  width: 30px;
+  border-top: 1px dashed var(--primary);
+}
+
+.glm-handle {
+  position: absolute;
+  left: -8px;
+  width: 18px;
+  height: 18px;
+  transform: translateY(50%);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  cursor: ns-resize;
+
+  @include phone {
+    left: -11px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &--ask {
+    color: var(--negative);
+  }
+
+  &--bid {
+    color: var(--positive);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  &[aria-disabled="true"] {
+    cursor: default;
+    opacity: 0.6;
+  }
+}
+
+.glm-handle-label {
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.glm-commit {
+  align-self: flex-start;
+}
+
+.glm-result {
+  margin: 0;
+  font-weight: 600;
+}
+// #endregion

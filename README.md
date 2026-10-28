@@ -18,9 +18,9 @@ Maintenance follows a rather informal *"I work on it when I feel like it"* model
 
 | | |
 |---|---|
-| **25** interactive labs | across derivatives, portfolio & risk, fixed income, corporate finance and stochastic models |
-| **5** trading desk games | missions, live help, a playthrough and a debrief on simulated markets |
-| **64** guide lessons | in five tracks, read in order, each with a figure, a worked example and self-check questions |
+| **34** interactive labs | across derivatives, portfolio & risk, fixed income, corporate finance, stochastic models and market microstructure |
+| **6** trading desk games | missions, live help, a playthrough and a debrief on simulated markets |
+| **75** guide lessons | in six tracks, read in order, each with a figure, a worked example and self-check questions |
 | **2** languages | English and Hungarian, every page and every lesson |
 | **0** cookies | settings and reading progress stay in your browser; lab inputs live in the URL so a link shares your exact setup |
 
@@ -31,7 +31,7 @@ Maintenance follows a rather informal *"I work on it when I feel like it"* model
 - [The labs](#the-labs)
 - [The desks](#the-desks)
 - [The guides](#the-guides)
-- [Stochastic Learning Studio](#stochastic-learning-studio)
+- [Stochastic lessons inside the labs](#stochastic-lessons-inside-the-labs)
 - [How it is built](#how-it-is-built)
 - [Running the project](#running-the-project)
 - [Contributing and roadmap](#contributing-and-roadmap)
@@ -68,8 +68,10 @@ Each lab is a dense workspace: controls on the left, a dominant chart on the rig
 |---|---|
 | [Risk & Return](https://quantsandbox.dev/risk-return) | Mean, volatility, correlation and Sharpe from returns; the capital allocation line. |
 | [CAPM](https://quantsandbox.dev/capm) | Beta, the security market line and alpha; estimate β by eye against the regression. |
+| [Fama–French](https://quantsandbox.dev/fama-french) | Size, value and momentum exposures estimated from real factor data. |
 | [Portfolio Lab](https://quantsandbox.dev/portfolio-lab) | Diversification with two to many assets, weights, correlations and risk decomposition. |
 | [Portfolio Optimization](https://quantsandbox.dev/efficient-frontier) | A Markowitz optimiser: objective, constraints, the frontier, the tangency portfolio and the cost of constraints. |
+| [Systemic Risk](https://quantsandbox.dev/systemic-risk) | Edit a bank network and watch a shock spread; shock simulations and historical episodes on their own pages. |
 
 [![Portfolio Optimization: constrained and unconstrained frontier with the composition along it](docs/images/lab-frontier.png)](https://quantsandbox.dev/efficient-frontier)
 
@@ -82,6 +84,7 @@ Each lab is a dense workspace: controls on the left, a dominant chart on the rig
 | [Duration & Convexity](https://quantsandbox.dev/duration-convexity) | First- and second-order rate risk side by side; predict the price change before revealing it. |
 | [Treasury Futures Lab](https://quantsandbox.dev/treasury-futures) | Conversion factors, basis and the cheapest-to-deliver as yields move. |
 | [Interest Rate Swap](https://quantsandbox.dev/interest-rate-swap) | Par swap rate from the curve, the fixed and floating legs, and the swap value after the curve moves. |
+| [Callable Bond](https://quantsandbox.dev/callable-bond) | The call caps the price: negative convexity and when the issuer calls. |
 | [Immunization Lab](https://quantsandbox.dev/immunization) | Match duration so that rate moves cancel out, then shock the curve and rebalance. |
 
 ### Corporate finance
@@ -98,17 +101,30 @@ Each lab is a dense workspace: controls on the left, a dominant chart on the rig
 
 | Lab | What you do |
 |---|---|
-| [Stochastic Learning Studio](https://quantsandbox.dev/stochastic-models) | A chaptered path from random walks to Brownian motion, by experiment (see below). |
-| [Brownian Motion](https://quantsandbox.dev/brownian-motion) | Drift, volatility and seeded sample paths. |
+| [Random Walk](https://quantsandbox.dev/random-walk) | Coin-flip walks, √t scaling and the central limit theorem. |
+| [Brownian Motion](https://quantsandbox.dev/brownian-motion) | Path clouds, √t bands, barriers and first passage. |
 | [Geometric Brownian Motion](https://quantsandbox.dev/gbm) | Log-normal price paths and their expected value. |
 | [Itô Process](https://quantsandbox.dev/ito-process) | Why log prices drift at μ − ½σ². |
 | [Monte Carlo](https://quantsandbox.dev/monte-carlo) | Price by simulation and watch the estimate converge. |
+
+### Market microstructure
+
+Every microstructure lab has a **Simulate · Predict · Challenge** switch: play with the model, commit a guess before the answer is revealed, or play a scored round that is saved on the Sandbox page. Your result is always shown next to the model's on the same seed.
+
+| Lab | What you do |
+|---|---|
+| [Order Book](https://quantsandbox.dev/order-book) | Click the ladder to send market orders that walk the book, measure slippage, and follow your own limit order through the queue. |
+| [Market Making](https://quantsandbox.dev/market-making) | Drag a bid and an ask while customers arrive; build the spread-vs-income curve from your own rounds, then compare it with theory and replay which fills were informed. |
+| [Avellaneda–Stoikov](https://quantsandbox.dev/avellaneda-stoikov) | Drag an inventory puck and watch the reservation price skew; draw your own quoting rule and race it against AS and a symmetric maker over 500 days (in a web worker). |
+| [Glosten–Milgrom](https://quantsandbox.dev/glosten-milgrom) | Watch a Bayesian market maker learn from each buy and sell, then set the quotes yourself against a hidden mix of informed and noise traders. |
+| [Kyle Model](https://quantsandbox.dev/kyle) | Trade as the insider who knows the value, hide in the noise, and estimate Kyle's λ from the order flow. |
+| [Spread Estimation](https://quantsandbox.dev/spread-estimation) | Classify a tape into buys and sells, compare Roll's estimate with the effective spread, and see why informed trading biases Roll down. |
 
 ---
 
 ## The desks
 
-Five of the labs have a **trading desk** next to them: a terminal-style game where you run a book through a simulated market, one step at a time, against a mission. Each desk has five missions with live objectives, a help drawer (*Next move*, *What if*, *Guide*), a scripted playthrough you can take over at any step, and a debrief that splits your result into its sources and replays simple rules on the same market path.
+Six of the labs have a **trading desk** next to them: a terminal-style game where you run a book through a simulated market, one step at a time, against a mission. Each desk has five missions with live objectives, a help drawer (*Next move*, *What if*, *Guide*), a scripted playthrough you can take over at any step, and a debrief that splits your result into its sources and replays simple rules on the same market path.
 
 | Desk | Lives under | What you run |
 |---|---|---|
@@ -117,6 +133,7 @@ Five of the labs have a **trading desk** next to them: a terminal-style game whe
 | [Rates desk](https://quantsandbox.dev/yield-curve/desk) | Yield Curve | A bond book hedged with Treasury futures through level, slope and curvature moves; conversion factors and the cheapest-to-deliver. |
 | [Portfolio desk](https://quantsandbox.dev/portfolio-lab/desk) | Portfolio Lab | A multi-asset fund, month by month, against a volatility target and a benchmark, through changing correlations. |
 | [Retirement desk](https://quantsandbox.dev/tvm/desk) | Time Value of Money | A 1,000,000 pension pot over thirty years: choose each year's withdrawal and equity share, with Monte Carlo success odds. |
+| [Market making desk](https://quantsandbox.dev/market-making/desk) | Market Making | Quote in a live limit order book: fight for queue priority, hedge inventory, survive toxic flow and a news jump, and beat a robot maker. |
 
 The same path replays for the same seed, so a run can be compared with the rules in the debrief or shared by link. The **[Sandbox](https://quantsandbox.dev/sandbox)** page lists every desk and every lab prediction round, with completed missions, hit rates and best streaks saved in your browser.
 
@@ -124,7 +141,7 @@ The same path replays for the same seed, so a run can be compared with the rules
 
 ## The guides
 
-The guides are a curriculum, not a glossary: **64 lessons in five tracks**, meant to be read in order. Each lesson only uses what came before it and cites earlier lessons by title, which is what turns into the links and the knowledge graph.
+The guides are a curriculum, not a glossary: **75 lessons in six tracks**, meant to be read in order. Each lesson only uses what came before it and cites earlier lessons by title, which is what turns into the links and the knowledge graph.
 
 [![A guide lesson: KaTeX maths, a connections panel with prerequisites and follow-ups, and the labs for the lesson](docs/images/guide-lesson.png)](https://quantsandbox.dev/guide/stochastic/reflection-principle)
 
@@ -143,9 +160,10 @@ Every lesson has the same shape:
 | [Fixed income](https://quantsandbox.dev/guide/fixed-income) | 10 | Bond prices, duration and immunization, the yield curve and key-rate durations, bond futures, swaps, callable bonds, credit risk, real rates and inflation. |
 | [Corporate finance](https://quantsandbox.dev/guide/corporate) | 10 | Time value of money, annuities, NPV and IRR, project risk, WACC, capital structure, dividend policy, DCF valuation, multiples and real options. |
 | [Stochastic models](https://quantsandbox.dev/guide/stochastic) | 17 | Probability spaces, filtrations and martingales; Brownian motion and its properties; Itô calculus, Girsanov, Feynman–Kac, Monte Carlo, correlated motions, mean reversion and jumps. |
+| [Market microstructure](https://quantsandbox.dev/guide/microstructure) | 11 | Market makers and the limit order book, queue position, adverse selection, Glosten–Milgrom, spread measurement, Kyle's lambda, price impact and execution, inventory risk, Avellaneda–Stoikov quoting and P&L attribution. |
 
 <details>
-<summary><strong>All 64 lessons, in reading order</strong></summary>
+<summary><strong>All 75 lessons, in reading order</strong></summary>
 
 **Derivatives pricing** — Forwards, calls and puts · Combining positions · Arbitrage and the forward price · Put–call parity · The one-step binomial model · Risk-neutral probabilities · Multi-step trees and backward induction · American options and early exercise · Delta and hedging · Geometric Brownian motion · The Black–Scholes formula · The Greeks: gamma, vega, theta and rho · Options on dividend-paying stocks, indices, currencies and futures · Implied volatility and the volatility smile · Stochastic volatility and the Heston model · Static replication: Breeden–Litzenberger and Carr–Madan · Exotic options: barriers, Asians and digitals
 
@@ -157,21 +175,21 @@ Every lesson has the same shape:
 
 **Stochastic models** — Random walks and Brownian motion · The law of large numbers and the central limit theorem · Probability spaces, σ-algebras and random variables · Filtrations, adapted processes and stopping times · Conditional expectation and martingales · Properties of Brownian motion · The reflection principle and first passage times · The Brownian bridge · The Itô integral · Itô's lemma · Kolmogorov equations and the Feynman–Kac formula · Change of measure and Girsanov's theorem · Monte Carlo option pricing · Simulating SDEs: the Euler–Maruyama scheme · Correlated Brownian motions and multi-asset models · Mean reversion: Ornstein–Uhlenbeck and Vasicek · Jumps and the Merton jump-diffusion model
 
+**Market microstructure** — Market makers and liquidity · The limit order book · Queue position and fill probability · Adverse selection and informed trading · The Glosten–Milgrom model · Measuring and decomposing the bid–ask spread · Informed trading and Kyle's lambda · Price impact and optimal execution · Inventory risk and quote skewing · Optimal quoting: the Avellaneda–Stoikov model · Market making profit and loss attribution
+
 </details>
 
 ### Knowledge graph
 
 The citations between lessons form a graph. Pick any lesson to see everything it builds on, in the order to read it, and which labs practise it. The graph is also what keeps the curriculum honest: a test fails if a lesson cites something that comes later.
 
-[![Knowledge graph of the 64 lessons, coloured by track](docs/images/guide-graph.png)](https://quantsandbox.dev/guide/graph)
+[![Knowledge graph of the 75 lessons, coloured by track](docs/images/guide-graph.png)](https://quantsandbox.dev/guide/graph)
 
 ---
 
-## Stochastic Learning Studio
+## Stochastic lessons inside the labs
 
-The studio is a seven-chapter interactive path from the symmetric random walk to applications, with one experiment per lesson: rescale a walk and watch Donsker's limit appear, measure how the standard deviation grows with √t, reflect a path at a barrier, estimate hitting probabilities. Each chapter links to the guide lessons that carry its theory, and chapters already realised as a standalone lab link to it.
-
-[![Stochastic Learning Studio: chapters, lessons and the theory links into the guides](docs/images/studio.png)](https://quantsandbox.dev/stochastic-models)
+The stochastic labs carry their lessons as pages of their own, each with one experiment: the [Random Walk](https://quantsandbox.dev/random-walk) lab rescales a walk until Donsker's limit appears and measures √t growth; [Brownian Motion](https://quantsandbox.dev/brownian-motion) covers increments, covariance, quadratic variation, the Brownian bridge, the running maximum, reflection and first passage; [GBM](https://quantsandbox.dev/gbm) adds Euler–Maruyama, mean reversion, jumps and correlated assets; [Itô Process](https://quantsandbox.dev/ito-process) the Itô integral, Itô's lemma, martingales and Girsanov; [Monte Carlo](https://quantsandbox.dev/monte-carlo) variance reduction and Feynman–Kac. Each page links to the guide lessons that carry its theory.
 
 ---
 
@@ -209,10 +227,10 @@ Adding a module takes one registry entry and one `features/<name>/` folder; rout
 | Maths rendering | KaTeX |
 | Styling | SCSS with CSS custom properties: light and dark themes, palettes, track colours |
 | i18n | `i18next` with typed string tables; every route exists under `/` and `/hu` |
-| Heavy compute | Web workers (Heston pricing) |
+| Heavy compute | Web workers (Heston pricing, Monte Carlo, the Avellaneda–Stoikov tournament) |
 | Desk games | One shared kit: pure game logic in `src/lib/game/` (objectives, progress, demo folding, advice ranking) and the amber terminal frame in `src/components/game/`; each desk adds only its engine, panels and copy |
 | Maths | Pure `*.math.ts` modules and `src/lib/` (finance, statistics, numerics), no React imports |
-| Tests | Node's built-in test runner over the maths, the lesson content and the UI contracts (89 test files in `scripts/`); a headless-Chrome smoke script over the DevTools protocol |
+| Tests | Node's built-in test runner over the maths, the lesson content and the UI contracts (133 test files in `scripts/`); a headless-Chrome smoke script over the DevTools protocol |
 | Build output | Every route pre-rendered to static HTML in both languages, with a Markdown copy of each page for readers and crawlers |
 
 Three rules hold the codebase together and are enforced in review: no duplicated logic or data, strict separation of maths / types / view / styling / strings, and no `.tsx` file over about 150 lines. They are spelled out in [`CLAUDE.md`](CLAUDE.md).
@@ -251,6 +269,8 @@ npm run preview      # serve dist/ on :4173
 |---|---|
 | `npm run lint` | ESLint over the repository |
 | `npm run test:labs` | Lab maths (`scripts/lab-*.test.mjs`); more `test:*` scripts per lab in `package.json` |
+| `npm run test:microstructure` | Market microstructure: the shared order book core, every lab's maths and the area wiring |
+| `npm run test:micro-desk` | Market making desk engine and missions |
 | `npm run test:guide-audit` | Lesson standard: figures, checks, worked examples, EN/HU parity, docs tables |
 | `npm run test:guide-graph` | Citation graph and reading order |
 | `npm run test:guide-checks` | Self-check blocks are well formed in both languages |
@@ -269,7 +289,7 @@ The plans live next to the code:
 - [`docs/LABS_PLAN.md`](docs/LABS_PLAN.md) — the interactivity catalogue and the per-lab upgrade ideas.
 - [`docs/plans/`](docs/plans) — self-contained plan packs for larger initiatives, written so that separate sessions can execute them in parallel.
 
-Next up: a callable bond lab, interactive upgrades to the derivatives labs (payoff sketching, step-through backward induction), a free-play mode for the desks and the remaining studio chapters. Further out: credit risk and real options labs, numerical methods for PDEs, and tracks outside finance (analysis, linear algebra, probability, macro- and microeconomics).
+Next up: interactive upgrades to the derivatives labs (payoff sketching, step-through backward induction) and a free-play mode for the desks. Further out: credit risk and real options labs, numerical methods for PDEs, and tracks outside finance (analysis, linear algebra, probability, macro- and microeconomics).
 
 If you would like a topic covered, open an issue or get in touch.
 

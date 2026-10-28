@@ -1,0 +1,115 @@
+// Fama–French build-the-factors and cross-section tabs: styles owned by plan 03.
+
+.ffm-sort,
+.ffm-cross {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ffm-sort-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-2) 0;
+}
+
+.ffm-sort-grid,
+.ffm-cross-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+
+  @media (max-width: 900px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.ffm-cross-grid {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+
+  @media (max-width: 900px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.ffm-region {
+  fill: var(--primary);
+  fill-opacity: 0.04;
+  stroke: var(--border);
+  stroke-width: 1;
+
+  &.is-hover {
+    fill-opacity: 0.14;
+  }
+}
+
+.ffm-region-label {
+  fill: var(--muted);
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.ffm-cell-hover {
+  font-weight: 600;
+}
+
+.ffm-tick {
+  line {
+    stroke: var(--border);
+    stroke-opacity: 0.5;
+  }
+
+  text {
+    fill: var(--muted);
+    font-size: 10px;
+  }
+}
+
+.ffm-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.ffm-diagonal {
+  stroke: var(--text);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+}
+
+.ffm-cross-pt {
+  cursor: pointer;
+  outline: none;
+  transition: transform 400ms ease;
+
+  circle {
+    fill: var(--chart-1);
+    fill-opacity: 0.75;
+    stroke: var(--bg);
+    stroke-width: 1;
+  }
+
+  &:hover circle,
+  &:focus-visible circle {
+    stroke: var(--text);
+    stroke-width: 2;
+  }
+
+  &.is-selected circle {
+    stroke: var(--primary);
+    stroke-width: 3;
+    fill-opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.ffm-cross-label {
+  fill: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  pointer-events: none;
+}

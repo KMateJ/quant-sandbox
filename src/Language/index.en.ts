@@ -11,6 +11,9 @@ import { seoEn } from "./Seo";
 import { hestonEn } from "./Heston";
 import { riskReturnEn } from "./RiskReturn";
 import { capmEn } from "./Capm";
+import { famaFrenchEn } from "./FamaFrench";
+import { famaFrenchFundEn } from "./FamaFrenchFund";
+import { famaFrenchSortEn } from "./FamaFrenchSort";
 import { portfolioLabEn } from "./PortfolioLab";
 import { bondPricingEn } from "./BondPricing";
 import { efficientFrontierEn } from "./EfficientFrontier";
@@ -22,7 +25,9 @@ import { capitalStructureEn } from "./CapitalStructure";
 import { yieldCurveEn } from "./YieldCurve";
 import { durationConvexityEn } from "./DurationConvexity";
 import { brownianMotionEn } from "./BrownianMotion";
+import { randomWalkEn } from "./RandomWalk";
 import { gbmEn } from "./Gbm";
+import { sdePagesEn } from "./SdePages";
 import { itoProcessEn } from "./ItoProcess";
 import { monteCarloEn } from "./MonteCarlo";
 import { stochasticModelsEn } from "./StochasticModels";
@@ -35,6 +40,7 @@ import { intuitionEn } from "./Intuition";
 import { legacyIntuitionEn } from "./LegacyIntuition";
 import { treasuryFuturesEn } from "./TreasuryFutures";
 import { interestRateSwapEn } from "./InterestRateSwap";
+import { callableBondEn } from "./CallableBond";
 import { immunizationEn } from "./Immunization";
 import { guideEn } from "./Guide";
 import { guidePortfolioEn } from "./GuidePortfolio";
@@ -53,6 +59,18 @@ import { labControlsEn } from "./LabControls";
 import { bondInputsEn } from "./BondInputs";
 import { labPrimitivesEn } from "./LabPrimitives";
 import { challengesEn } from "./Challenges";
+import { orderBookEn } from "./OrderBook";
+import { marketMakingEn } from "./MarketMaking";
+import { avellanedaStoikovEn } from "./AvellanedaStoikov";
+import { glostenMilgromEn } from "./GlostenMilgrom";
+import { kyleEn } from "./Kyle";
+import { spreadEstimationEn } from "./SpreadEstimation";
+import { networkChartEn } from "./NetworkChart";
+import { systemicRiskEn } from "./SystemicRisk";
+import { systemicRiskShocksEn } from "./SystemicRiskShocks";
+import { systemicRiskEpisodesEn } from "./SystemicRiskEpisodes";
+import { guideMicrostructureEn } from "./GuideMicrostructure";
+import { guideFactorRiskEn } from "./GuideFactorRisk";
 
 /// Every English UI string; the source of truth for `TranslationKey`.
 export const en = {
@@ -67,6 +85,9 @@ export const en = {
   ...hestonEn,
   ...riskReturnEn,
   ...capmEn,
+  ...famaFrenchEn,
+  ...famaFrenchFundEn,
+  ...famaFrenchSortEn,
   ...portfolioLabEn,
   ...efficientFrontierEn,
   ...npvIrrEn,
@@ -79,6 +100,7 @@ export const en = {
   ...durationConvexityEn,
   ...treasuryFuturesEn,
   ...interestRateSwapEn,
+  ...callableBondEn,
   ...immunizationEn,
   ...guideEn,
   ...guidePortfolioEn,
@@ -97,7 +119,9 @@ export const en = {
   ...bondInputsEn,
   ...labPrimitivesEn,
   ...brownianMotionEn,
+  ...randomWalkEn,
   ...gbmEn,
+  ...sdePagesEn,
   ...itoProcessEn,
   ...monteCarloEn,
   ...stochasticModelsEn,
@@ -110,6 +134,18 @@ export const en = {
   ...notFoundEn,
   ...seoEn,
   ...challengesEn,
+  ...orderBookEn,
+  ...marketMakingEn,
+  ...avellanedaStoikovEn,
+  ...glostenMilgromEn,
+  ...kyleEn,
+  ...spreadEstimationEn,
+  ...networkChartEn,
+  ...systemicRiskEn,
+  ...systemicRiskShocksEn,
+  ...systemicRiskEpisodesEn,
+  ...guideMicrostructureEn,
+  ...guideFactorRiskEn,
   navGuide: "Guide",
 };
 

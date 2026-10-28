@@ -1,0 +1,44 @@
+// Random Walk lab: Galton histogram, path panel, legend.
+.rw-side,
+.rw-main {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  align-content: start;
+}
+
+.rw-paths {
+  height: 300px;
+
+  @media (max-width: 640px) { height: 240px; }
+}
+
+.rw-caption {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.rw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4, 16px);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  li { display: inline-flex; align-items: center; gap: 6px; }
+}
+
+.rw-key {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  box-sizing: border-box;
+}
+
+.rw-key-bar { background: var(--primary); opacity: 0.85; }
+.rw-key-dot { width: 8px; height: 8px; border: 1.5px solid var(--text); border-radius: 50%; background: var(--bg); }
+.rw-key-line { height: 0; border-top: 2px solid var(--text); }

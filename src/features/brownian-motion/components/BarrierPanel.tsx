@@ -40,7 +40,7 @@ export default function BarrierPanel({ values, pathCount, steps, horizon, drift,
   const times = useMemo(() => firstPassageTimes(values, pathCount, stepCount, dt, barrier), [values, pathCount, stepCount, dt, barrier]);
   const summary = useMemo(() => hitSummary(times), [times]);
   const theory = driftless ? hitProbability(barrier, vol, horizon) : NaN;
-  const bins = useMemo(() => binValues(summary.hit, [0, horizon], 40).bins, [summary.hit, horizon]);
+  const bins = useMemo(() => binValues(summary.hit, [0, horizon], Math.min(40, Math.max(8, Math.round(1.5 * Math.sqrt(summary.hit.length))))).bins, [summary.hit, horizon]);
   const density = useMemo(() => (driftless ? densityCurve(firstPassageLaw(barrier, vol), [0, horizon]) : undefined), [driftless, barrier, vol, horizon]);
 
   // Paths that touch b, drawn from their first hitting time on (the whole cloud stays grey behind them).
@@ -69,7 +69,7 @@ export default function BarrierPanel({ values, pathCount, steps, horizon, drift,
         </div>
         <Histogram bins={bins} density={density} height={isMobile ? 200 : 300} xFormat={num}
           yFormat={(v) => String(Number(v.toPrecision(2)))} ariaLabel={t("bmBarrierHistAria")}
-          markers={Number.isFinite(summary.median) ? [{ value: summary.median, label: t("bmHitMedian"), color: "var(--primary)" }] : []} />
+          markers={Number.isFinite(summary.median) ? [{ value: summary.median, color: "var(--primary)", dash: "4 3" }] : []} />
       </div>
       <dl className="lp-ensemble-readout">
         <div><dt>{t("bmBarrierLabel")}</dt><dd>{num(barrier)}</dd></div>

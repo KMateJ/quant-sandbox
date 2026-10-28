@@ -1,6 +1,6 @@
 # 05 — Treasury: yield-shift CTD switch + predict the CTD
 
-Status: todo · Depends on: 01, 03 · Suggested model: Sonnet · Est. size: M
+Status: done (2026-10-28) · Depends on: 01, 03 · Suggested model: Sonnet · Est. size: M
 
 ## Why
 The core intuition of bond futures is that the cheapest-to-deliver **switches** when yields move (high
@@ -77,7 +77,14 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 --pat
   to 0 when the user drags F. Choose the latter (simpler mental model) and note it in Findings.
 
 ## Findings (fill in during execution)
-- …
+- Current state had moved: logic lives in `useTreasuryFutures.ts`/`basket.math.ts`; new files are `ctdSwitch.math.ts` (impliedYield, ctdSwitchCurve, ctdSwitchPoints, ctdTraits, formatBp), `useCtdSwitch.ts`, `components/{CtdSwitchPanel,CtdPredict,CtdExplorer,CtdSwitchLayer,bondColors}`. Pricing reuses `cashFlowsAfterDelivery` (via `cleanPriceAtYield`), accrued held fixed.
+- Instead of a `ctdOverride`, the hook swaps in a repriced basket and derived F when dy != 0, so `results`/`ctd`/`ranked` (metrics, table, factor strip) follow dy automatically; `lab.futures` is the displayed F and `lab.chartCtd` keeps the DeliveryChart highlight on the unshifted basket. Dragging F (or changing scenario) resets dy to 0 (as the plan chose). Note: at dy=0 the user's own F is shown, at dy!=0 the derived F (min price/CF).
+- Predict round asks for +150 bp; chart is hidden until reveal (retry hides it again). Predict state is the numeric `usePredictReveal` with the bond index as discrete truth; own result markup because `PredictReveal` formats numbers. Explain options are data-driven (`ctdTraits`): each is marked right only if the CTD is the strict extreme of the basket, plus a "none of these" option.
+- Switch labels use `placeLabels` in the chart layer; tick labels are unit-free (`+50`) to avoid collisions; full "Bond C -> Bond A at +63 bp" text is in a list below the chart.
+- None of the shipped scenarios has a CTD switch within +-200 bp (verified); switches appear after editing the basket (e.g. five-bonds + Bond F with CF 0.65 -> D -> F at +57 bp). Math unit tests cover the switch.
+- Fixed a pre-existing overlap: `.tf-chart-wrap` had a fixed height so the drag hint overlapped the explanation in non-bund scenarios (audit with scenario switch); now only its first child is sized.
+- Audit (scenario switched + predict revealed) green at 360/768/1280, light and dark, EN and HU. 1024 px shows pre-existing top-nav overflow (`topnav-controls`), unrelated. cdp-smoke clean apart from the `_vercel` 404. Build printed no prerender errors in my run.
+- New HU strings for review: all `tfSwitch*`, `tfPredict*`, `tfExplain*` in `TreasuryFutures.hu.ts`.
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`

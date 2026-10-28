@@ -1,0 +1,206 @@
+// Market making desk (/market-making/desk): layout bits beyond the shared `.gdesk` kit.
+
+.mmd {
+  .mmd-speed {
+    display: inline-flex;
+    gap: 2px;
+
+    .gdesk-cmd-btn[aria-pressed="true"] {
+      background: var(--gdesk-tint);
+      color: var(--primary);
+    }
+  }
+
+  // #region Ticket
+  .mmd-offsets {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .mmd-offset {
+    display: grid;
+    gap: 4px;
+  }
+
+  .mmd-stepper {
+    display: inline-grid;
+    grid-template-columns: 32px 56px 32px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mmd-preview {
+    font-size: 11px;
+  }
+
+  .mmd-field,
+  .mmd-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+
+    input[type="number"] {
+      width: 80px;
+      min-height: 28px;
+      padding: 0 6px;
+      background: var(--surface-muted);
+      color: var(--text);
+      font: inherit;
+      text-align: right;
+      border: 1px solid var(--gdesk-key-border);
+      border-radius: var(--radius-xs);
+    }
+  }
+
+  .mmd-check {
+    justify-content: flex-start;
+    font-size: 11px;
+
+    input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      margin: 0;
+      flex: none;
+      accent-color: var(--primary);
+    }
+  }
+
+  .mmd-ticket-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    > button {
+      flex: 1 1 auto;
+    }
+  }
+
+  .mmd-submit {
+    min-height: 36px;
+    padding: 0 10px;
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    font: inherit;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+  }
+  @media (max-width: 767px), (pointer: coarse) {
+    .mmd-field input[type="number"],
+    .mmd-submit {
+      min-height: 44px;
+    }
+  }
+  // #endregion
+
+  // #region Ladder and tape
+  .mmd-ladder,
+  .mmd-tape {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+      padding: 2px 8px;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+  }
+
+  .mmd-ladder {
+    table-layout: fixed;
+
+    th[scope="row"] {
+      width: 30%;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    td {
+      position: relative;
+    }
+
+    .mmd-ladder-bid {
+      text-align: right;
+    }
+
+    .mmd-ladder-ask {
+      text-align: left;
+    }
+
+    tr.is-best-bid th[scope="row"] {
+      color: var(--positive);
+      background: var(--surface-muted);
+    }
+
+    tr.is-best-ask th[scope="row"] {
+      color: var(--negative);
+      background: var(--surface-muted);
+    }
+
+    .gdesk-num {
+      position: relative;
+    }
+  }
+
+  .mmd-depth {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    opacity: 0.22;
+
+    &--bid {
+      right: 0;
+      background: var(--positive);
+    }
+
+    &--ask {
+      left: 0;
+      background: var(--negative);
+    }
+  }
+
+  .mmd-you {
+    position: relative;
+    display: inline-block;
+    margin: 0 6px;
+    padding: 0 4px;
+    background: var(--primary);
+    color: var(--gdesk-on-accent);
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: var(--radius-xs);
+  }
+
+  .mmd-tape {
+    td:nth-child(n + 3) {
+      text-align: right;
+    }
+
+    tr.is-you td {
+      background: var(--surface-muted);
+    }
+  }
+
+  .mmd-tape-empty {
+    padding: 8px 10px;
+  }
+  // #endregion
+}

@@ -25,17 +25,19 @@ export const guideLessons: GuideLessonMeta[] = [
   { id: "capm", track: "portfolio", titleKey: "guideCapmTitle", descKey: "guideCapmDesc", labs: ["capm"] },
   { id: "performance-measures", track: "portfolio", titleKey: "guidePerformanceTitle", descKey: "guidePerformanceDesc", labs: ["capm", "risk-return"] },
   { id: "factor-models", track: "portfolio", titleKey: "guideFactorModelsTitle", descKey: "guideFactorModelsDesc", labs: ["capm", "portfolio-lab"] },
+  { id: "fama-french-factors", track: "portfolio", titleKey: "guideFfFactorsTitle", descKey: "guideFfFactorsDesc", labs: ["fama-french"] },
   { id: "risk-measures", track: "portfolio", titleKey: "guideRiskMeasuresTitle", descKey: "guideRiskMeasuresDesc", labs: ["risk-return",  "portfolio-lab"] },
+  { id: "systemic-contagion", track: "portfolio", titleKey: "guideSysContagionTitle", descKey: "guideSysContagionDesc", labs: ["systemic-risk"] },
   { id: "portfolio-constraints", track: "portfolio", titleKey: "guideConstraintsTitle", descKey: "guideConstraintsDesc", labs: ["efficient-frontier", "portfolio-lab"] },
   { id: "input-estimation", track: "portfolio", titleKey: "guideEstimationTitle", descKey: "guideEstimationDesc", labs: ["efficient-frontier", "risk-return"] },
   { id: "random-walks", track: "stochastic", titleKey: "guideRandomWalksTitle", descKey: "guideRandomWalksDesc", labs: ["brownian-motion", "monte-carlo"] },
-  { id: "law-of-large-numbers-clt", track: "stochastic", titleKey: "guideLlnCltTitle", descKey: "guideLlnCltDesc", labs: ["stochastic-models", "monte-carlo"] },
-  { id: "probability-spaces", track: "stochastic", titleKey: "guideProbSpacesTitle", descKey: "guideProbSpacesDesc", labs: ["stochastic-models"] },
-  { id: "filtrations", track: "stochastic", titleKey: "guideFiltrationsTitle", descKey: "guideFiltrationsDesc", labs: ["stochastic-models"] },
+  { id: "law-of-large-numbers-clt", track: "stochastic", titleKey: "guideLlnCltTitle", descKey: "guideLlnCltDesc", labs: ["random-walk", "monte-carlo"] },
+  { id: "probability-spaces", track: "stochastic", titleKey: "guideProbSpacesTitle", descKey: "guideProbSpacesDesc", labs: ["random-walk"] },
+  { id: "filtrations", track: "stochastic", titleKey: "guideFiltrationsTitle", descKey: "guideFiltrationsDesc", labs: ["brownian-motion"] },
   { id: "martingales", track: "stochastic", titleKey: "guideMartingalesTitle", descKey: "guideMartingalesDesc", labs: ["brownian-motion"] },
-  { id: "brownian-properties", track: "stochastic", titleKey: "guideBmPropsTitle", descKey: "guideBmPropsDesc", labs: ["stochastic-models", "brownian-motion"] },
-  { id: "reflection-principle", track: "stochastic", titleKey: "guideReflectionTitle", descKey: "guideReflectionDesc", labs: ["stochastic-models"] },
-  { id: "brownian-bridge", track: "stochastic", titleKey: "guideBridgeTitle", descKey: "guideBridgeDesc", labs: ["brownian-motion", "stochastic-models"] },
+  { id: "brownian-properties", track: "stochastic", titleKey: "guideBmPropsTitle", descKey: "guideBmPropsDesc", labs: ["brownian-motion"] },
+  { id: "reflection-principle", track: "stochastic", titleKey: "guideReflectionTitle", descKey: "guideReflectionDesc", labs: ["brownian-motion"] },
+  { id: "brownian-bridge", track: "stochastic", titleKey: "guideBridgeTitle", descKey: "guideBridgeDesc", labs: ["brownian-motion"] },
   { id: "ito-integral", track: "stochastic", titleKey: "guideItoIntegralTitle", descKey: "guideItoIntegralDesc", labs: ["ito-process", "brownian-motion"] },
   { id: "ito-lemma", track: "stochastic", titleKey: "guideItoTitle", descKey: "guideItoDesc", labs: ["ito-process", "brownian-motion"] },
   { id: "feynman-kac", track: "stochastic", titleKey: "guideFeynmanKacTitle", descKey: "guideFeynmanKacDesc", labs: ["black-scholes", "monte-carlo"] },
@@ -68,10 +70,21 @@ export const guideLessons: GuideLessonMeta[] = [
   { id: "yield-curve", track: "fixed-income", titleKey: "guideYieldCurveTitle", descKey: "guideYieldCurveDesc", labs: ["yield-curve", "treasury-futures"] },
   { id: "curve-risk", track: "fixed-income", titleKey: "guideCurveRiskTitle", descKey: "guideCurveRiskDesc", labs: ["yield-curve", "duration-convexity"] },
   { id: "treasury-futures", track: "fixed-income", titleKey: "guideTreasuryFuturesTitle", descKey: "guideTreasuryFuturesDesc", labs: ["treasury-futures"] },
-  { id: "interest-rate-swaps", track: "fixed-income", titleKey: "guideSwapsTitle", descKey: "guideSwapsDesc", labs: ["yield-curve"] },
-  { id: "callable-bonds", track: "fixed-income", titleKey: "guideCallableTitle", descKey: "guideCallableDesc", labs: ["bond-pricing", "binomial"] },
+  { id: "interest-rate-swaps", track: "fixed-income", titleKey: "guideSwapsTitle", descKey: "guideSwapsDesc", labs: ["yield-curve", "interest-rate-swap"] },
+  { id: "callable-bonds", track: "fixed-income", titleKey: "guideCallableTitle", descKey: "guideCallableDesc", labs: ["callable-bond", "bond-pricing", "binomial"] },
   { id: "credit-risk", track: "fixed-income", titleKey: "guideCreditRiskTitle", descKey: "guideCreditRiskDesc", labs: ["bond-pricing", "yield-curve"] },
   { id: "real-rates-inflation", track: "fixed-income", titleKey: "guideRealRatesTitle", descKey: "guideRealRatesDesc", labs: ["bond-pricing", "tvm"] },
+  { id: "market-makers", track: "microstructure", titleKey: "guideMsMarketMakersTitle", descKey: "guideMsMarketMakersDesc", labs: ["market-making"] },
+  { id: "limit-order-book", track: "microstructure", titleKey: "guideMsLimitOrderBookTitle", descKey: "guideMsLimitOrderBookDesc", labs: ["order-book"] },
+  { id: "queue-position", track: "microstructure", titleKey: "guideMsQueuePositionTitle", descKey: "guideMsQueuePositionDesc", labs: ["order-book"] },
+  { id: "adverse-selection", track: "microstructure", titleKey: "guideMsAdverseSelectionTitle", descKey: "guideMsAdverseSelectionDesc", labs: ["market-making"] },
+  { id: "glosten-milgrom", track: "microstructure", titleKey: "guideMsGlostenMilgromTitle", descKey: "guideMsGlostenMilgromDesc", labs: ["glosten-milgrom"] },
+  { id: "spread-measurement", track: "microstructure", titleKey: "guideMsSpreadMeasurementTitle", descKey: "guideMsSpreadMeasurementDesc", labs: ["spread-estimation"] },
+  { id: "kyle-model", track: "microstructure", titleKey: "guideMsKyleModelTitle", descKey: "guideMsKyleModelDesc", labs: ["kyle"] },
+  { id: "price-impact", track: "microstructure", titleKey: "guideMsPriceImpactTitle", descKey: "guideMsPriceImpactDesc", labs: ["order-book"] },
+  { id: "inventory-risk", track: "microstructure", titleKey: "guideMsInventoryRiskTitle", descKey: "guideMsInventoryRiskDesc", labs: ["market-making"] },
+  { id: "avellaneda-stoikov", track: "microstructure", titleKey: "guideMsAvellanedaStoikovTitle", descKey: "guideMsAvellanedaStoikovDesc", labs: ["avellaneda-stoikov"] },
+  { id: "market-making-pnl", track: "microstructure", titleKey: "guideMsMarketMakingPnlTitle", descKey: "guideMsMarketMakingPnlDesc", labs: ["market-making"] },
 ];
 
 const track = (id: GuideTrackId, titleKey: TranslationKey, descKey: TranslationKey): GuideTrackMeta => ({
@@ -88,10 +101,16 @@ export const guideTracks: GuideTrackMeta[] = [
   track("fixed-income", "guideTrackFixedIncomeTitle", "guideTrackFixedIncomeDesc"),
   track("corporate", "guideTrackCorporateTitle", "guideTrackCorporateDesc"),
   track("stochastic", "guideTrackStochasticTitle", "guideTrackStochasticDesc"),
+  track("microstructure", "guideTrackMicrostructureTitle", "guideTrackMicrostructureDesc"),
 ];
 
 export function guideTrackById(id: GuideTrackId): GuideTrackMeta {
   return guideTracks.find((t) => t.id === id)!;
+}
+
+/// Guide track of a module category, if that category has one yet.
+export function findGuideTrack(id: string): GuideTrackMeta | undefined {
+  return guideTracks.find((t) => t.id === id);
 }
 
 /// Page of a lesson, nested under its track.

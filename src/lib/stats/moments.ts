@@ -96,3 +96,21 @@ export function correlationMatrix(series: number[][]): number[][] {
   }
   return out;
 }
+
+/// Excess kurtosis (fourth standardised moment minus 3) of a sample; 0 for a normal law, NaN with fewer than two values or zero spread.
+export function excessKurtosis(xs: ArrayLike<number>): number {
+  const n = xs.length;
+  if (n < 2) return NaN;
+  let m = 0;
+  for (let i = 0; i < n; i++) m += xs[i];
+  m /= n;
+  let s2 = 0;
+  let s4 = 0;
+  for (let i = 0; i < n; i++) {
+    const d = xs[i] - m;
+    s2 += d * d;
+    s4 += d ** 4;
+  }
+  s2 /= n;
+  return s2 === 0 ? NaN : s4 / n / (s2 * s2) - 3;
+}

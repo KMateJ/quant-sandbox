@@ -5,6 +5,7 @@ import { SCENARIO_IDS, type ScenarioId } from "./scenarios";
 import { useTreasuryFutures } from "./useTreasuryFutures";
 import BondBasket from "./components/BondBasket";
 import DeliveryChart from "./components/DeliveryChart";
+import CtdSwitchPanel from "./components/CtdSwitchPanel";
 import CashFlowPanel from "./components/CashFlowPanel";
 import TfMetrics from "./components/TfMetrics";
 import ResultsTable from "./components/ResultsTable";
@@ -30,10 +31,11 @@ export default function TreasuryFuturesView() {
         <TfMetrics lab={lab} />
         <ChartContainer title={<span>{bund ? t("tfConversionExplorer") : t("tfSwitching")}
           <IntuitionTrigger sectionId={bund ? "conversion-factor" : "net-basis"} /></span>}>
-          {!bund && ctd && <DeliveryChart bonds={data.bonds} futures={data.futures} selected={ctd.id} onFutures={lab.setFutures} />}
+          {!bund && ctd && <DeliveryChart bonds={data.bonds} futures={data.futures} selected={lab.chartCtd?.id ?? ctd.id} onFutures={lab.setFutures} />}
           {!bund && ctd && <p className="tf-explanation"><strong>{t("tfBondId", { id: ctd.id })} · {ctd.netBasis.toFixed(4)}.</strong> {t("tfWhyCtd")}</p>}
           {bund && <p className="tf-explanation">{t("tfNoMarketPrices")}</p>}
         </ChartContainer>
+        {!bund && <CtdSwitchPanel lab={lab} />}
         <ResultsTable lab={lab} />
         {bund ? results.map((bond) => <CashFlowPanel key={bond.id} bond={bond} delivery={data.delivery} marketYield={data.marketYield} />)
           : data.id === "amortizing" && ctd && <CashFlowPanel bond={ctd} delivery={data.delivery} marketYield={data.marketYield} />}

@@ -23,6 +23,8 @@ export const guideSeoTitles: Partial<Record<GuideId, string>> = {
   "performance-measures": "Sharpe, Treynor, Jensen's Alpha and Information Ratio",
   "risk-measures": "Value at Risk (VaR) and Expected Shortfall Explained",
   "factor-models": "Factor Models: Single-Index Model and Systematic Risk",
+  "fama-french-factors": "Fama–French Factor Models: Size, Value, Momentum",
+  "systemic-contagion": "Systemic Risk and Contagion in Financial Networks",
 
   "random-walks": "Random Walks and Brownian Motion Explained",
   "probability-spaces": "Probability Spaces, Sigma-Algebras, Random Variables",
@@ -74,4 +76,16 @@ export const guideSeoTitles: Partial<Record<GuideId, string>> = {
   "interest-rate-swaps": "Interest Rate Swaps: Valuation and the Par Swap Rate",
   "callable-bonds": "Callable Bonds, Yield to Call and Negative Convexity",
   "credit-risk": "Credit Risk: Default Probability, Credit Spreads and CDS",
+
+  "market-makers": "Market Makers Explained: Bid, Ask and Spread",
+  "limit-order-book": "Limit Order Book: Price–Time Priority and Slippage",
+  "queue-position": "Queue Position and Limit Order Fill Probability",
+  "adverse-selection": "Adverse Selection: Markouts and Toxic Flow",
+  "glosten-milgrom": "Glosten–Milgrom Model: Spreads from Informed Trading",
+  "spread-measurement": "Roll Estimator and Bid–Ask Spread Decomposition",
+  "kyle-model": "Kyle Model and Kyle's Lambda: Insider Price Impact",
+  "price-impact": "Almgren–Chriss Optimal Execution and Price Impact",
+  "inventory-risk": "Market Maker Inventory Risk and Quote Skewing",
+  "avellaneda-stoikov": "Avellaneda–Stoikov: Reservation Price, Optimal Spread",
+  "market-making-pnl": "Market Making P&L Attribution and Markouts",
 };

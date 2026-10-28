@@ -278,3 +278,53 @@
     font-size: 1.6rem;
   }
 }
+
+// #region Predict mode and twin bond
+.dc-predict {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.dc-predict-main {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.dc-predict-prompt {
+  margin: 0;
+  font-weight: 600;
+}
+
+.dc-predict-tally {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+// Reserved before the reveal so showing the explain step does not move the page.
+.dc-predict-explain {
+  min-height: 15rem;
+}
+
+.dc-error-veil {
+  margin: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.dc-twin-diff {
+  font-weight: 650;
+  color: var(--primary);
+}
+
+@include below-tablet {
+  .dc-predict {
+    grid-template-columns: 1fr;
+  }
+}
+// #endregion

@@ -2,7 +2,11 @@ import { useI18n } from "../../../i18n";
 import { IntuitionTrigger } from "../../../components/intuition";
 import type { DcModel } from "../useDurationConvexity";
 
-type Props = { model: DcModel };
+type Props = {
+  model: DcModel;
+  /// Predict mode before the reveal: same rows, no numbers, so nothing leaks and the layout holds.
+  masked?: boolean;
+};
 
 function ResultRow({ label, value, sectionId, muted = false }: {
   label: string; value: string; sectionId: string; muted?: boolean;
@@ -16,11 +20,11 @@ function ResultRow({ label, value, sectionId, muted = false }: {
 }
 
 /// Compare exact repricing with both approximations at the selected shock.
-export default function ShockResult({ model }: Props) {
+export default function ShockResult({ model, masked = false }: Props) {
   const { t } = useI18n();
   const r = model.result;
-  const signPct = (v: number) => `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
-  const bp = (v: number) => `${v.toFixed(0)} bp`;
+  const signPct = (v: number) => (masked ? "—" : `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`);
+  const bp = (v: number) => (masked ? "—" : `${v.toFixed(0)} bp`);
   const shockSign = r.dyBp > 0 ? "+" : "";
 
   return (
@@ -38,7 +42,7 @@ export default function ShockResult({ model }: Props) {
           {t("dcResultExact")}
         </div>
         <ResultRow label={t("dcResultPriceChange")} value={signPct(r.exactPct)} sectionId="exact-repricing" />
-        <ResultRow label={t("dcResultNewPrice")} value={r.newPrice.toFixed(2)} sectionId="exact-repricing" />
+        <ResultRow label={t("dcResultNewPrice")} value={masked ? "—" : r.newPrice.toFixed(2)} sectionId="exact-repricing" />
       </div>
 
       <div className="dc-compare-group">

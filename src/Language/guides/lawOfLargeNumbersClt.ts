@@ -67,7 +67,7 @@ export const lawOfLargeNumbersClt: GuideLessonContent = {
       "Berry–Esseen bounds the error by a constant times $1/\\sqrt{n}$; skewed sources converge more slowly.",
     ),
     note("The next lesson, \"Probability spaces, σ-algebras and random variables\", makes precise what \"with probability one\" and \"random variable\" mean."),
-    lab("/stochastic-models/clt", "Watch the central limit theorem emerge in the Stochastic Studio"),
+    lab("/random-walk/clt", "Watch the central limit theorem emerge in the Random Walk lab"),
   ],
 
   hu: [
@@ -135,6 +135,6 @@ export const lawOfLargeNumbersClt: GuideLessonContent = {
       "A Berry–Esseen-tétel a hibát egy konstans szorosával korlátozza $1/\\sqrt{n}$ sebességgel; a ferde források lassabban konvergálnak.",
     ),
     note("A következő lecke, a „Valószínűségi mezők, σ-algebrák és valószínűségi változók”, pontosan definiálja, mit jelent a „valószínűséggel 1” és a „valószínűségi változó”."),
-    lab("/stochastic-models/clt", "Figyeld a centrális határeloszlás-tételt a Sztochasztikus Stúdióban"),
+    lab("/random-walk/clt", "Figyeld a centrális határeloszlás-tételt a Véletlen bolyongás laborban"),
   ],
 };

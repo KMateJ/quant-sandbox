@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import type { TranslationKey } from "../../i18n";
 import { newBond, patchBond, patchSettings, type SettingsPatch } from "./basket.math";
+import { useCtdSwitch } from "./useCtdSwitch";
 import { loadScenario, type Scenario, type ScenarioId } from "./scenarios";
 import { cheapestBond, deliveryEconomics, TfInputError, type DeliverableBond } from "./treasuryFutures.math";
 
@@ -14,8 +15,12 @@ export function errorKey(cause: unknown): TranslationKey {
 export function useTreasuryFutures() {
   const [data, setData] = useState<Scenario>(() => loadScenario("bund"));
   const [error, setError] = useState<TranslationKey | null>(null);
-  const results = useMemo(() => deliveryEconomics(data.bonds, data.futures), [data.bonds, data.futures]);
   const bund = data.id === "bund";
+  const sw = useCtdSwitch(data, !bund);
+  // Results, CTD and ranking follow the yield-shift explorer; the delivery chart keeps the unshifted basket.
+  const futures = sw.shifted?.futures ?? data.futures;
+  const results = useMemo(() => deliveryEconomics(sw.shifted?.bonds ?? data.bonds, futures), [sw.shifted, data.bonds, futures]);
+  const baseCtd = useMemo(() => (sw.shifted ? cheapestBond(deliveryEconomics(data.bonds, data.futures)) : undefined), [sw.shifted, data.bonds, data.futures]);
   const ctd = bund ? undefined : cheapestBond(results);
   const ranked = useMemo(() => [...results].sort((a, b) => a.netBasis - b.netBasis), [results]);
 
@@ -30,16 +35,23 @@ export function useTreasuryFutures() {
 
   return {
     data,
+    futures,
+    sw,
     error,
     results,
     ctd,
+    chartCtd: baseCtd ?? ctd,
     ranked,
     bund,
     selectScenario: (id: ScenarioId) => {
       setData(loadScenario(id));
+      sw.setShiftBp(0);
       setError(null);
     },
-    setFutures: (futures: number) => setData((d) => ({ ...d, futures })),
+    setFutures: (value: number) => {
+      sw.setShiftBp(0);
+      setData((d) => ({ ...d, futures: value }));
+    },
     updateBond: (index: number, patch: Partial<DeliverableBond>) => apply(() => patchBond(data, index, patch)),
     updateSetting: (patch: SettingsPatch) => apply(() => patchSettings(data, patch)),
     addBond: () => setData((d) => ({ ...d, bonds: [...d.bonds, newBond(d.bonds)] })),

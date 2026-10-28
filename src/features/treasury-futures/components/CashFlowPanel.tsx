@@ -17,7 +17,7 @@ export default function CashFlowPanel({ bond, delivery, marketYield }: {
     { key: "principal", label: t("tfPrincipal"), color: "#fb923c", points: flows.map((f) => ({ x: f.time, y: f.principal })) },
     { key: "present-value", label: t("tfPresentValue"), color: "#34d399", points: flows.map((f) => ({ x: f.time, y: f.presentValue })) },
   ];
-  return <Panel title={<>{t("tfCashflows")} <IntuitionTrigger sectionId="conversion-factor" /></>}>
+  return <Panel title={<>{t("tfCashflows")} · {t("tfBondId", { id: bond.id })} <IntuitionTrigger sectionId="conversion-factor" /></>}>
     {flows.length > 0 && <div className="tf-cashflow-chart">
       <ScatterChart series={series} xDomain={[delivery, bond.maturity]} xLabel={t("tfTime")}
         yLabel={t("tfCashflow")} xFormat={(value) => value.toFixed(1)} yFormat={(value) => value.toFixed(1)} yNumTicks={4} />

@@ -5,6 +5,7 @@ import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
 import { binDensity } from "../../lib/stats";
 import { CHART_COLORS, chartMargin } from "./chart.theme";
+import { estimateTextWidth } from "./labels.logic";
 import { edgeAnchor, tickCount } from "./ticks.logic";
 import type { BinRange, HistogramProps } from "./histogram.types";
 
@@ -14,18 +15,21 @@ const TINT_FILL = { accent: "var(--primary)", muted: "var(--border-hover)" } as 
 const tick = { fill: CHART_COLORS.axis, fontSize: 11 };
 const ordered = (a: number, b: number): BinRange => (a <= b ? [a, b] : [b, a]);
 
-export default function HistogramInner({ bins, normalize = "count", density, tint, markers = [], selection, onSelectionChange, flash, xFormat, yFormat, ariaLabel, color = "var(--primary)", width, height }: Props) {
-  const margin = chartMargin(width < 480);
-  const w = Math.max(0, width - margin.left - margin.right);
-  const h = Math.max(0, height - margin.top - margin.bottom);
+export default function HistogramInner({ bins, normalize = "count", density, dots, tint, markers = [], selection, onSelectionChange, flash, xFormat, yFormat, ariaLabel, color = "var(--primary)", width, height }: Props) {
+  const base = chartMargin(width < 480);
+  const h = Math.max(0, height - base.top - base.bottom);
   const [anchor, setAnchor] = useState<number | null>(null);
-  const asDensity = normalize === "density" || Boolean(density);
+  const asDensity = normalize === "density" || Boolean(density) || Boolean(dots);
   const heights = asDensity ? binDensity(bins) : bins.map((b) => b.count);
   const lo = bins[0]?.x0 ?? 0;
   const hi = bins[bins.length - 1]?.x1 ?? 1;
-  const peak = Math.max(asDensity ? 1e-9 : 1, ...heights, ...(density ?? []).map((p) => p.y));
-  const x = scaleLinear({ domain: [lo, hi], range: [0, w] });
+  const peak = Math.max(asDensity ? 1e-9 : 1, ...heights, ...(density ?? []).map((p) => p.y), ...(dots ?? []).map((p) => p.y));
   const y = scaleLinear({ domain: [0, peak * 1.1], range: [h, 0], nice: true });
+  // Widen the left margin when long tick labels (e.g. 0.005) would not fit.
+  const labelPx = Math.max(...y.ticks(4).map((v) => estimateTextWidth(yFormat ? yFormat(v) : String(v), 11)));
+  const margin = { ...base, left: Math.max(base.left, Math.ceil(labelPx) + 10) };
+  const w = Math.max(0, width - margin.left - margin.right);
+  const x = scaleLinear({ domain: [lo, hi], range: [0, w] });
   const selectable = Boolean(onSelectionChange);
 
   const indexAt = (event: PointerEvent<SVGRectElement>) => {
@@ -76,6 +80,7 @@ export default function HistogramInner({ bins, normalize = "count", density, tin
           </rect>
         )}
         {density && <LinePath data={density} x={(p) => x(p.x)} y={(p) => y(p.y)} stroke="var(--text)" strokeWidth={1.75} />}
+        {dots?.map((d) => <circle key={d.x} cx={x(d.x)} cy={y(d.y)} r={2.5} fill="var(--bg)" stroke="var(--text)" strokeWidth={1.25} />)}
         {markers.map((m) => (
           <g key={`${m.value}-${m.label ?? ""}`}>
             <line x1={x(m.value)} x2={x(m.value)} y1={0} y2={h} stroke={m.color ?? "var(--text)"} strokeWidth={1.5} strokeDasharray={m.dash} />

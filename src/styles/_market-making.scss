@@ -1,0 +1,283 @@
+// Market making lab (market-making pack, plan 05)
+@use "breakpoints" as *;
+
+.mkm-workspace .module-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.mkm-caption {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.mkm-formula {
+  margin: 4px 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+
+// #region Rail
+.mkm-rail svg {
+  display: block;
+  width: 100%;
+  min-height: 260px;
+  max-height: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  touch-action: none;
+  user-select: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.mkm-fair {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.mkm-quote {
+  fill: none;
+  stroke-width: 2;
+
+  &--bid { stroke: var(--positive); }
+  &--ask { stroke: var(--negative); }
+}
+
+.mkm-band {
+  fill: var(--primary);
+  opacity: 0.06;
+}
+
+.mkm-handle {
+  line { stroke-width: 2; }
+  rect:not(.mkm-hit) { pointer-events: none; }
+  text {
+    font-size: 11px;
+    fill: var(--muted);
+  }
+
+  &--bid {
+    line { stroke: var(--positive); }
+    rect:not(.mkm-hit) { fill: var(--positive); }
+  }
+
+  &--ask {
+    line { stroke: var(--negative); }
+    rect:not(.mkm-hit) { fill: var(--negative); }
+  }
+}
+
+.mkm-hit {
+  fill: transparent;
+  cursor: ns-resize;
+}
+
+.mkm-customer {
+  fill: none;
+  stroke-width: 1.2;
+  opacity: 0.55;
+
+  &--buy { stroke: var(--negative); }
+  &--sell { stroke: var(--positive); }
+
+  &.is-filled {
+    opacity: 1;
+    &.mkm-customer--buy { fill: var(--negative); }
+    &.mkm-customer--sell { fill: var(--positive); }
+  }
+}
+
+.mkm-fill-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  fill: var(--text);
+  text-anchor: middle;
+}
+
+.mkm-pulled {
+  font-size: 13px;
+  fill: var(--muted);
+  text-anchor: middle;
+}
+
+.mkm-keys {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+}
+// #endregion
+
+// #region HUD
+.mkm-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mkm-hud-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mkm-hud-stats,
+.mkm-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+
+  @include below-tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mkm-gauge-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.mkm-tone--long { color: var(--positive); }
+.mkm-tone--short { color: var(--negative); }
+.mkm-tone--flat { color: var(--text); }
+
+.mkm-gauge-track {
+  position: relative;
+  height: 12px;
+  margin-top: 4px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+
+  &.is-over { border-color: var(--negative); }
+}
+
+.mkm-gauge-tick {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: var(--muted);
+
+  &--zero { background: var(--text); }
+}
+
+.mkm-gauge-fill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+
+  &--long { background: var(--positive); }
+  &--short { background: var(--negative); }
+}
+
+.mkm-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  font-size: var(--text-sm);
+
+  div { display: flex; gap: 6px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; font-family: var(--font-mono); }
+}
+// #endregion
+
+// #region Summary, replay, rounds
+.mkm-verdict {
+  margin: 10px 0;
+  font-size: var(--text-sm);
+}
+
+.mkm-replay {
+  margin: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.mkm-replay-axis { stroke: var(--border); }
+
+.mkm-replay-fill {
+  line { stroke-width: 2; }
+
+  &--gain {
+    line { stroke: var(--positive); }
+    circle, path { fill: var(--positive); }
+  }
+
+  &--loss {
+    line { stroke: var(--negative); }
+    circle, path { fill: var(--negative); }
+  }
+}
+
+.mkm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+
+  span { display: inline-flex; align-items: center; gap: 4px; }
+}
+
+.mkm-legend-shape { fill: var(--muted); }
+
+.mkm-rounds-chart { height: 300px; }
+
+.mkm-toggle {
+  input { width: 24px; height: 24px; margin: 0; }
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+}
+
+.mkm-bots { margin-top: 12px; }
+
+.mkm-bots-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 12px;
+
+  > :first-child { flex: 1 1 200px; }
+}
+// #endregion
+
+// #region Challenge
+.mkm-challenge {
+  padding: 12px 14px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+}
+
+.mkm-challenge-brief { margin: 0 0 6px; }
+
+.mkm-challenge-result {
+  margin: 6px 0;
+  &.is-hit strong { color: var(--positive); }
+  &.is-miss strong { color: var(--negative); }
+}
+// #endregion

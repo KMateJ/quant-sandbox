@@ -70,7 +70,7 @@ export default function FactorsView({ model }: Props) {
           <p className="yc-factor-note">{t("ycCurvatureNote")}</p>
 
           <label className="yc-check">
-            <input type="checkbox" checked={showContribution} onChange={(e) => setShowContribution(e.target.checked)} />
+            <input type="checkbox" data-layout-allow="checkbox inside its label: the label is the tap target" checked={showContribution} onChange={(e) => setShowContribution(e.target.checked)} />
             {t("ycShowContribution")}
           </label>
 

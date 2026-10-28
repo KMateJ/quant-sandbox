@@ -1,0 +1,420 @@
+// Order Book lab (market-making pack, plans 03–04)
+
+.page-header-actions:has(.obk-actions) {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.obk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (min-width: 901px) {
+  .workspace.cols-thirds.obk-workspace {
+    grid-template-columns: minmax(220px, 1fr) minmax(0, 2.2fr) minmax(240px, 1.2fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .obk-workspace .obk-ladder-panel {
+    order: -1;
+  }
+}
+
+.obk-charts {
+  margin-top: var(--space-4);
+}
+
+.obk-chart {
+  width: 100%;
+  height: clamp(220px, 30vh, 300px);
+}
+
+.obk-hint,
+.obk-warn {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.obk-warn {
+  color: var(--warning-text);
+}
+
+// #region ladder
+.obk-ladder {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    table-layout: fixed;
+  }
+
+  th {
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+.obk-row {
+  cursor: pointer;
+
+  &.is-take .obk-cell--price,
+  &.is-take .obk-cell--bid,
+  &.is-take .obk-cell--ask {
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  &.is-hit .obk-cell--price {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  &.is-changed .obk-size {
+    background: var(--surface-muted);
+  }
+
+  &.is-best-bid .obk-cell--bid,
+  &.is-best-ask .obk-cell--ask {
+    font-weight: 700;
+  }
+}
+
+.obk-cell {
+  position: relative;
+  height: 26px;
+  padding: 0 var(--space-2);
+  border-bottom: 1px solid var(--rule);
+
+  &--bid {
+    text-align: right;
+  }
+
+  &--price {
+    width: 34%;
+    text-align: center;
+    color: var(--text);
+  }
+
+  &--ask {
+    text-align: left;
+  }
+}
+
+.obk-size {
+  position: relative;
+  z-index: 1;
+}
+
+.obk-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  opacity: 0.22;
+  transition: width 160ms ease;
+
+  &--bid {
+    right: 0;
+    background: var(--positive);
+  }
+
+  &--ask {
+    left: 0;
+    background: var(--negative);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .obk-bar {
+    transition: none;
+  }
+}
+
+.obk-take {
+  display: block;
+  font-size: 10px;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.obk-spread-row td {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-align: center;
+  background: var(--surface-muted);
+}
+
+.obk-ladder .obk-hint {
+  margin-top: var(--space-2);
+}
+// #endregion
+
+// #region ticket, readouts, log
+.obk-ticket,
+.obk-predict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.obk-sim {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.obk-clock {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.obk-readouts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.obk-fills {
+  margin-top: var(--space-3);
+}
+
+.obk-fills-head {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.obk-fill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 2px var(--space-2);
+    text-align: right;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  th {
+    font-family: var(--font-sans);
+    color: var(--muted);
+    font-weight: 600;
+  }
+}
+
+.obk-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  &--fills {
+    max-height: 168px;
+  }
+}
+
+.obk-fill-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+}
+
+.obk-log {
+  max-height: 200px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  li {
+    padding: 2px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .obk-log-market {
+    color: var(--text);
+  }
+}
+// #endregion
+
+// #region predict
+.obk-predict-q {
+  margin: 0;
+  font-weight: 600;
+}
+
+.obk-ruler {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+
+  input {
+    width: 100%;
+    accent-color: var(--primary);
+  }
+}
+
+.obk-ruler-ends {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  b {
+    color: var(--primary);
+  }
+}
+// #endregion
+
+// #region queue, fills, execution (plan 04)
+.obk-row.is-mine .obk-cell--price {
+  color: var(--primary);
+}
+
+.obk-bar--mine {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  z-index: 0;
+  background: color-mix(in srgb, var(--primary) 45%, transparent);
+  outline: 1px solid var(--primary);
+}
+
+.obk-queue,
+.obk-myfills,
+.obk-exec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.obk-queue-head {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.obk-queue-strip {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  height: 28px;
+}
+
+.obk-queue-front,
+.obk-queue-back {
+  align-self: center;
+  padding: 0 var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.obk-block {
+  min-width: 3px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+
+  &.is-mine {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+    border-color: var(--primary);
+  }
+}
+
+.obk-queue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.obk-odds-line {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.obk-odds-chart {
+  width: 100%;
+  height: 150px;
+}
+
+.obk-progress {
+  height: 10px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--primary);
+  }
+}
+
+.obk-exec-stats {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  dt {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+}
+
+.obk-fill-table tr.is-you td {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.obk-verdict {
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+
+  &.is-hit {
+    color: var(--success-text);
+    background: var(--success-bg);
+  }
+
+  &.is-miss {
+    color: var(--warning-text);
+    background: var(--warning-bg);
+  }
+}
+// #endregion

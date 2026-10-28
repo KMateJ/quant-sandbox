@@ -107,7 +107,7 @@ export const brownianProperties: GuideLessonContent = {
       "Quadratic variation $[W]_t = t$, total variation infinite.",
       "Markov property at fixed times, strong Markov property at stopping times.",
     ),
-    lab("/stochastic-models/covariance", "Estimate the covariance of Brownian motion from simulated paths in the Stochastic Models studio"),
+    lab("/brownian-motion/covariance", "Estimate the covariance of Brownian motion from simulated paths in the Brownian Motion lab"),
   ],
 
   hu: [
@@ -215,6 +215,6 @@ export const brownianProperties: GuideLessonContent = {
       "A kvadratikus variáció $[W]_t = t$, a teljes változás végtelen.",
       "Markov-tulajdonság rögzített időpontokban, erős Markov-tulajdonság megállási időkben.",
     ),
-    lab("/stochastic-models/covariance", "Becsüld meg a Brown-mozgás kovarianciáját szimulált pályákból a Sztochasztikus modellek stúdióban"),
+    lab("/brownian-motion/covariance", "Becsüld meg a Brown-mozgás kovarianciáját szimulált pályákból a Brown-mozgás laborban"),
   ],
 };

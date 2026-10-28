@@ -1,0 +1,70 @@
+// GBM lab SDE sub-pages: a stack of charts beside the controls panel.
+.sde-stack {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.sde-chart {
+  position: relative;
+  height: clamp(260px, 34vh, 360px);
+  min-width: 0;
+
+  &--tall {
+    height: clamp(300px, 42vh, 440px);
+  }
+}
+
+// #region GBM definition page (ABM vs GBM side by side)
+.gdef-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  min-width: 0;
+
+  @media (max-width: 760px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.gdef-half {
+  min-width: 0;
+  margin: 0;
+}
+
+.gdef-tag {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+
+  &.is-abm { color: var(--chart-3); }
+  &.is-gbm { color: var(--chart-1); }
+}
+
+.gdef-caption {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.gdef-table-wrap { overflow-x: auto; }
+
+.gdef-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+
+  th, td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th { font-weight: 650; }
+  thead .is-abm { color: var(--chart-3); }
+  thead .is-gbm { color: var(--chart-1); }
+  tbody th { width: 22%; color: var(--muted); font-weight: 500; }
+  td { width: 39%; color: var(--text); }
+}
+// #endregion

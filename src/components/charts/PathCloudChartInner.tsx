@@ -8,6 +8,7 @@ import { useTheme } from "../../theme";
 import { CHART_COLORS, SERIES_ROLE, chartMargin } from "./chart.theme";
 import { cloudLineWidth, cloudOpacity, drawPathCloud, resolveCssColor, valueExtent } from "./pathCloud.draw";
 import type { PathCloudProps, PlotFrame } from "./chart.types";
+import { edgeAnchor, tickCount } from "./ticks.logic";
 
 type Props = PathCloudProps & { width: number; height: number };
 
@@ -91,10 +92,10 @@ export default function PathCloudChartInner({
           <AxisBottom
             top={innerH}
             scale={xScale}
-            numTicks={isMobile ? 5 : 8}
+            numTicks={tickCount(innerW, 56, 2, isMobile ? 5 : 8)}
             stroke={CHART_COLORS.axis}
             tickStroke={CHART_COLORS.axis}
-            tickLabelProps={() => ({ ...tickProps, textAnchor: "middle" })}
+            tickLabelProps={(v) => ({ ...tickProps, textAnchor: edgeAnchor(xScale(Number(v)) ?? 0, innerW) })}
           />
           <AxisLeft
             scale={yScale}

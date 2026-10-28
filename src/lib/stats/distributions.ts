@@ -77,3 +77,8 @@ export function normInv(p: number): number {
   x = x - u / (1 + (x * u) / 2);
   return x;
 }
+
+/// Normal N(mean, sd²) as a {pdf, cdf} pair, for density overlays on histograms.
+export function normalLaw(mean: number, sd: number) {
+  return { pdf: (x: number) => normPdf((x - mean) / sd) / sd, cdf: (x: number) => normCdf((x - mean) / sd) };
+}

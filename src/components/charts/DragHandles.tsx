@@ -1,5 +1,6 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import type { PlotFrame } from "./chart.types";
+import { estimateTextWidth } from "./labels.logic";
 import { constrain, keyMove, type DragHandle, type HandleValue } from "./dragHandle.logic";
 
 type Props = {
@@ -71,6 +72,8 @@ export default function DragHandles({ frame, handles, onChange, onCommit }: Prop
         const value = h.axis === "y" ? h.y : h.x;
         const active = dragging === h.id;
         const valueText = h.axis === "xy" ? `${fmt(h, h.x)}, ${fmt(h, h.y)}` : fmt(h, value);
+        // A vertical line near the right edge puts its label on the left of the knob so it stays inside the plot.
+        const flip = h.axis === "x" && cx + 10 + estimateTextWidth(active ? valueText : h.label ?? "", 12) > frame.width;
         return (
           <g
             key={h.id}
@@ -96,7 +99,7 @@ export default function DragHandles({ frame, handles, onChange, onCommit }: Prop
             <circle className="drag-handle-knob" cx={h.axis === "y" ? frame.width - 8 - lane * 18 : cx} cy={h.axis === "x" ? 8 + lane * 18 : cy} r={active ? 8 : 6.5} />
             {(h.label || active) && (
               // A "y" handle's knob sits at the right edge, so its label goes to the left of the knob to stay inside the plot.
-              <text className="drag-handle-label" x={h.axis === "y" ? frame.width - 8 - lane * 18 - 10 : cx + 10} y={(h.axis === "x" ? 8 + lane * 18 : cy) + 4} textAnchor={h.axis === "y" ? "end" : undefined}>
+              <text className="drag-handle-label" x={h.axis === "y" ? frame.width - 8 - lane * 18 - 10 : flip ? cx - 10 : cx + 10} y={(h.axis === "x" ? 8 + lane * 18 : cy) + 4} textAnchor={h.axis === "y" || flip ? "end" : undefined}>
                 {active ? valueText : h.label}
               </text>
             )}

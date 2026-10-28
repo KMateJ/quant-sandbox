@@ -1,6 +1,6 @@
 # 04 — Duration: predict the shock, compare two bonds
 
-Status: todo · Depends on: 01, 03 · Suggested model: Sonnet · Est. size: M
+Status: done (2026-10-28) · Depends on: 01, 03 · Suggested model: Sonnet · Est. size: M
 
 ## Why
 The duration lab shows the answer immediately. Learners retain more when they commit to a guess first
@@ -85,8 +85,16 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 \
 - URL schema defaults are omitted from the query string; `mode` default `explore`.
 - Don't reuse the seed across rounds: `seed = round` derived, so a shared link reproduces round 1.
 
-## Findings (fill in during execution)
-- …
+## Findings
+- Done: `PredictPanel`, `TwinBondPanel`, `useDurationPredict`, math (`zeroWithDuration`, `zeroPriceChangePct`, `zeroConvexity`, `shockOutcomes`, `drawShock`), `scripts/duration-lab.test.mjs` (`npm run test:duration-lab`, 6 pass), URL `mode` / `twin`.
+- Twin is a zero-coupon with a fractional period count (closed-form price/convexity), so its modified duration equals A's exactly; `bondPrice` rounds periods to a whole grid and could only match within ~0.25 y. For the default bond the coupon bond A has the higher convexity (the readout names the more convex one; A zero-coupon gives a "twin identical" note).
+- Predict mode raises `maxBp` to 250 (explore stays 200). Round shock = `drawShock(round)`, round 1 = -150 bp for a shared link. Not-yet-revealed state: chart shows only the guess marker; result panel and twin readout show "—" (same rows, so no layout jump); error chart replaced by a same-height veil. cdp-smoke: no signed `x.xx%` in `main` text before reveal.
+- Layout shift on reveal measured 0 px (4 px after picking an explanation; limit 8). Explain slot reserves min-height 15rem.
+- Layout audit (preview, 6 widths x light/dark, EN+HU, predict/twin/both, plus after-reveal at 360/768/1280): green except 1024 px dark, where the global top nav overflows (scrollWidth 1038 > 1024). This also fails on plain `/duration-convexity` and `/bond-pricing`: not from this plan. Tap-target warnings only (pre-existing tabs/tooltips).
+- Duration-only is always too low in price terms (convexity > 0), so the explain question is fixed "too low".
+- Twin legend entry shortened to "Twin B" after a screenshot showed a four-entry legend wrapping onto the x-axis label at 1280; not re-screenshotted after the rename.
+- `npm run lint` has pre-existing errors in other files; my files are clean. Build printed no SEO failures.
+- HU drafts for review: dcModePredict "Tippelés", dcPredictPrompt "A hozam {{bp}} bp-t mozdul. Hány százalékkal változik a kötvény ára?", dcPredictGuess "A tipped ΔP/P (%)", dcPredictNext "Következő sokk", dcExplainQuestion "Miért volt túl alacsony a csak durációs becslés?", dcTwinTitle "Libikóka: ikerkötvény", dcTwinAdd "Ikerkötvény hozzáadása", dcTwinLabel "Iker B", dcTwinNote "Azonos duráció, nagyobb konvexitás: többet nyer, kevesebbet veszít. A(z) {{who}} kötvény konvexitása nagyobb.", plus the other new dcPredict*/dcExplain*/dcTwin* keys.
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`

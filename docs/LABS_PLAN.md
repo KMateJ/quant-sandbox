@@ -593,3 +593,25 @@ Settled from what each session last accepted (Log 16:2x–16:3x):
 - 01:10 game-desks 15: retirement desk missions screen, debrief (wealth bridge, rule table), help tabs (advice, what-if, guide) and six-step T1 demo with take-over; RetirementDeskMissions/RetirementDeskHelp copy EN/HU; help tests.
 - 01:40 game-desks 18: final QA of the game-desks pack (static, tests, build/SEO, smoke, layout, per-desk play-through, hedging migration, challenges); fixed the hedging Sandbox link and the Sandbox table overflow; follow-ups and owner review list in plan 18 Findings.
 - 01:45 fixed-income-labs 08: interest-rate-swap lab (lib/finance/swap.ts, leg ladder, lock + MTM waterfall, key-rate DV01, predict); guide swap test unchanged
+- 12:00 fixed-income-labs 09: callable-bond lab (lib/finance/callable.ts, price-yield chart with call value + negative convexity band, call timeline, YTW, predict); guide callable test unchanged
+- 21:27 market-making 02: pure market core in src/lib/market (book, flow, maker ledger, quotes) + micro-core tests
+- 21:32 market-making 10: Market Making Desk engine (reducer, objectives, 4 robots, MM1–MM5 calibrated) + micro-desk-engine tests
+- 21:40 market-making 01: microstructure category, six stub labs with About/SEO copy, challenge area + score kind, test scripts
+- 21:57 market-making 07: Glosten–Milgrom lab (watch, you-quote game, predict, challenge)
+- 22:04 factor-systemic 01: Fama–French foundation (Ken French snapshot + fetch script, lib/stats/ols.ts, famaFrench maths/types, /fama-french shell with period brush and four stub tabs, ff-foundation tests)
+- 22:16 factor-systemic 05: systemic engine (src/features/systemic-risk/engine: types, presets, edits codec, DebtRank/centrality, four-channel simulator, rescue policies, fragility sweep) + systemic-engine tests
+- 22:27 market-making 11: /market-making/desk route + kit-framed real-time desk screen, Sandbox entry, stubs for plan 12
+- 22:32 market-making 05: market making lab (quote rail, rounds vs theory, bots, replay, predict + challenge)
+- 22:35 market-making 08: Kyle lab (insider plan/live, maker view, λ estimate, challenge)
+- 22:38 factor-systemic 04: systemic-risk shell (forceLayout and useGraphViewport promoted to src/lib/graph and charts/network with re-export shims, generic NetworkGraph chart, /systemic-risk + shocks + episodes stubs, copy EN/HU draft, home tile, test:systemic-risk)
+- 22:49 market-making 06: Avellaneda–Stoikov lab (skew puck, drawn policy, 500-day worker tournament, predict + challenge)
+- 22:50 market-making 12: desk missions, debrief (attribution, informed reveal, robots table), three help tabs and six-step MM1 demo with take-over
+- 23:10 factor-systemic 02: Fama–French mystery-fund tab (drag loadings, replica, OLS reveal, loadings challenge) and alpha-hunt tab (factor tiles, return waterfall, alpha ladder, where-did-the-alpha-go challenge)
+- 23:55 factor-systemic 03: Fama-French sort and 25-portfolio cross-section tabs, ffm-corner challenge
+- 12:00 fixed-income-labs 04: duration predict mode (click-to-guess, explain, tally) and equal-duration twin bond
+- 13:00 fixed-income-labs 05: treasury yield-shift CTD switch explorer (draggable dy, switch markers) and predict-the-CTD round
+- 23:59 factor-systemic 06: systemic-risk network explorer (editable exposures in the URL, matrix view, entity balance sheet, structure switch, most-systemic predict)
+- 23:59 factor-systemic 07: systemic-risk shock simulation page (click-to-fail, price bars, channel switches, day playback with event timeline, pinned charts), rescue game and worker-driven robust-yet-fragile sweep
+- 23:59 factor-systemic 08: systemic-risk historical episodes page (GFC, LTCM, March 2020, SVB: dated timeline, stylised network playback, what-if rescue switches with compare chart, syr-without predict)
+- 23:46 market-making 13: final QA (pack pages green; follow-ups listed)
+- 23:48 factor-systemic 09: final QA done; 3 small fixes, follow-ups in plan 09 Findings.

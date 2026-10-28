@@ -1,0 +1,144 @@
+// Spread Estimation lab (market-making pack, plan 09)
+
+.spe-tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.spe-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.spe-lead,
+.spe-note {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.spe-chart {
+  width: 100%;
+  height: clamp(260px, 42vh, 420px);
+
+  &--short {
+    height: clamp(200px, 28vh, 280px);
+  }
+}
+
+.spe-subhead {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.spe-classify {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.spe-progress {
+  min-width: 8em;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.spe-buy {
+  color: var(--positive);
+}
+
+.spe-sell {
+  color: var(--negative);
+}
+
+.spe-hint {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.spe-score,
+.spe-formulas {
+  display: grid;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  dt {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+}
+
+.spe-score {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  flex: 1;
+}
+
+.spe-formulas {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.spe-readout-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.spe-split {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.spe-split-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.spe-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.spe-verdict {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-xs);
+
+  &.is-hit {
+    color: var(--success-text);
+    background: var(--success-bg);
+  }
+
+  &.is-miss {
+    color: var(--warning-text);
+    background: var(--warning-bg);
+  }
+}

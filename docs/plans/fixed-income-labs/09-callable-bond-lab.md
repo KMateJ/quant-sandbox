@@ -1,6 +1,6 @@
 # 09 — New lab: callable bond
 
-Status: todo · Depends on: 01, 02 (run after 08: same shared files) · Suggested model: Sonnet · Est. size: M
+Status: done (2026-10-28) · Depends on: 01, 02 (run after 08: same shared files) · Suggested model: Sonnet · Est. size: M
 
 ## Why
 Negative convexity is the counter-example that makes convexity click: the issuer's call caps the price.
@@ -73,7 +73,14 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 --pat
 - Shaded regions must use tokens with alpha (`color-mix` with CSS vars), readable in dark mode.
 
 ## Findings (fill in during execution)
-- …
+- Math promoted to `src/lib/finance/callable.ts` (spec-based, periodic compounding so `freq` works); the guide file now only wraps it with its constants (annual, 10y, 6%); guide test unchanged and green. Added `callDates`, `expectedRedemption`, `negativeConvexityRanges`, `bulletPrice`.
+- Model limit: the call is one European option at the FIRST call date (lognormal yield, vol 20%), not a lattice/OAS. Later call dates only feed the timeline and yield to worst. Follow-up: a lattice (Bermudan) callable would make the timeline and price consistent.
+- Plan said "cEff < 0 at low yields": with this model convexity is positive below about 2.3% (price converges to price-to-call) and negative from about 2.3% to 7.5% for a 6% bond; the test and chart reflect that.
+- Call decision rule: call at date t when the straight bond with the remaining life, priced at the current yield, is worth more than the call price. Yield to worst is the minimum over maturity and every call date; NaN (shown as a dash) when no yield in [-5%, 60%] reproduces the price.
+- Wiring: registry entry reuses `bondIntuition` (BondInputs/NumberInput need an IntuitionProvider or the SEO prerender throws); `BondInputs` got a `showFace` prop; `DragHandles` flips an x-handle label to the left of the knob near the right plot edge (fixed svg-text-clipped at y=15%). Guide `callable-bonds` lists the lab; its figure links to it. Home roadmap item moved from upcoming to recent; `scripts/home.test.mjs` lab count 33 -> 34.
+- Audit (vite preview, port 4208, 4 paths x 6 widths x 2 themes): no defects from this page after fixes, apart from the pre-existing global top-nav overflow at 1024 px (scrollWidth 1038, also on /bond-pricing and /interest-rate-swap) and tap-target warnings.
+- `vite build` prints SEO prerender failures on other pages (gbm, ito-process, guide pages: "useI18n must be used inside LanguageProvider") from parallel work; /callable-bond and /hu/callable-bond prerender fine. `test:guide-audit` fails on fama-french / systemic-risk lacking a lesson (not mine).
+- HU strings to review: all of `src/Language/CallableBond.hu.ts`, the aboutCallableBond* and seo*CallableBond / homeLabDesc_callableBond entries in the HU tables. Dates render as "3y" in both languages.
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`

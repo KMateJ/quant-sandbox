@@ -1,6 +1,6 @@
 # 09 — Help QA: widths, fullscreen, languages, keyboard, demo interplay, owner review list
 
-Status: in progress (claimed 2026-10-24, session help-qa) · Depends on: 05, 06, 07, 08 · Suggested model: Sonnet · Est. size: S
+Status: done (2026-10-28, session help-qa-2) · Depends on: 05, 06, 07, 08 · Suggested model: Sonnet · Est. size: S
 
 ## Why
 Plans 05–08 may run in parallel sessions. This plan checks the integrated help the way a learner meets
@@ -86,9 +86,44 @@ The commands in steps 2, 3 and 5. Stop the preview server and confirm port 4173 
 - Do not report the known site-wide 22 px brand-link tap target as a help defect.
 
 ## Findings (fill in during execution)
-- Results: …
-- Fixes made: …
-- Proposals: …
+- Results (2026-10-28, session help-qa-2; private build `vite build --outDir node_modules/.p-hd09`, preview
+  on port **4199**, CDP ports 9471/9472 because the default 9339/9340 are shared with other sessions and
+  their navigations leaked into this run; server, outDir and ports cleaned up afterwards):
+  - Step 2: `test:hedging-desk` 78/78, `test:labs` 59/59, `test:url-state` 4/4. `tsc -b`: 1 error, outside
+    the desk (`fama-french/components/fund/FundPicker.tsx`, another session). Lint: 12 errors + 1 warning,
+    none in hedging-desk. Build with prerender OK (302 pages). `test:seo`, `test:seo-schema` and
+    `test:language-routes` not run: they read the hard-coded shared `dist/`, which other sessions own.
+  - Step 3 smoke: all 8 paths clean (M1–M5, HU, demo, `/npv-irr` page loads; its learn drawer was not opened).
+    ALL: tabs non-empty in EN/HU/M5 (EN 553/1549/7867 chars, HU 644/1819/8748), progress
+    (`qs.game.hedging.progress.v1`) null, fills unchanged (2). DEMO: openedInDemo false, openedAfterExit
+    true. FS: expanded true, visible true, onTop true.
+    Selectors adapted to the game-kit move: `.hdesk-cmd-btn` → `button.gdesk-cmd-btn` with text "Expand",
+    `.hdesk--expanded` → `.gdesk--expanded`, progress key → `qs.game.hedging.progress.v1`;
+    `.hdesk-cmd-clock` no longer exists (the day is in `.gdesk-status`), so the clock check was dropped.
+  - Layout audit: 32/32 pages "failing" for every tab, **but the baseline with help closed fails the same
+    way** (overlap 24–79 per page): page content overlaps the sticky `.gdesk-footer` (function keys +
+    status line, `_game-kit.scss` L260) in the audit's full-page screenshot. `/market-making/desk` shows
+    the same (2–10). No horizontal overflow and no help-specific failure; only the known 22 px brand
+    tap target at 360 px. Not a help defect.
+- Step 4 manual: browser full screen — not done; reduced motion + "Show me" — not done; real keyboard
+  (Tab/arrows/Escape) — not done (headless session). For the owner.
+- Step 5: largest `.tsx` is `DeskSession.tsx` 96 lines. No hex in `.tsx`. The help SCSS partials no longer
+  exist as `_hedging-desk-help*.scss` (help styles moved into `_game-kit.scss`); `_game-kit.scss` has no
+  `border-left`. No future reads (`gapDay`, `spot[…+1]`, `replayPolicy`) in `help/*.ts`. EN/HU parity:
+  Help 3/3, Advice 44/44, Guide 98/98, WhatIf 49/49, no missing keys.
+- Step 6 (seed 7, day 0): advice M1 `outsideBand, firstHedge, thetaVsGamma`; M3 adds `gammaDeadline`;
+  M5 as M1. What if M1: stock buy 549 ($5, fixesDelta); options buy 10 C100 ($50, closesBook); OTM buy 12
+  C102.5 ($60, flipsGamma); gamma-neutral = close out = buy 10 C100 ($50); sell 12 P100 ($60,
+  addsShortGamma). M3: 1083 shares ($11) / 20 C100 ($100). M5: 538 shares / OTM 17 C102.5 ($85).
+  Matches README §1 measurements and the UI tab texts.
+- Fixes made: none (no clear defect in help files).
+- Proposals:
+  - Game-desks pack: the layout audit flags every desk because of the sticky `.gdesk-footer`; either
+    teach `layout-audit.mjs` to skip sticky/fixed elements in the overlap check or audit at viewport height.
+  - Give `cdp-smoke.mjs` / `layout-audit.mjs` a random default DevTools port (parallel sessions collide).
+  - Point the SEO tests at an overridable dist dir (env var) so private builds can run them.
+  - The empty ticket card shows verdict `missesBand` (same as do nothing); consider `emptyTicket` only.
+  - Update this plan's "Current state" selectors to the game-kit names (`gdesk-*`).
 - Owner review list:
   - English copy and HU drafts in the four `HedgingDeskHelp*` tables (plans 05–08 Findings list them).
   - Whether "buy the calls back" should stay a passing M1 strategy (plan 07 shows it as "closes the book").

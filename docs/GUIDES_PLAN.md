@@ -62,9 +62,11 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 | 5 | capm | CAPM, beta and the security market line | my-app-1b | done | security-market-line |
 | 6 | performance-measures | Performance measures: Sharpe, Treynor, Jensen and information ratio | my-app-6c | done | performance-ranking |
 | 7 | factor-models | Factor models and systematic risk | my-app-46 | done | factor-variance |
-| 8 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
-| 9 | portfolio-constraints | Portfolio constraints and the no-short-sales frontier | guides-audit | done | constrained-frontier |
-| 10 | input-estimation | Estimating expected returns and covariances | guides-audit | done | estimation-noise |
+| 8 | fama-french-factors | The Fama–French factor models | opus-spe | done | ff-loadings |
+| 9 | risk-measures | Value at Risk and expected shortfall | my-app-46 | done | var-es |
+| 10 | systemic-contagion | Systemic risk and contagion | opus-spe | done | contagion-cascade |
+| 11 | portfolio-constraints | Portfolio constraints and the no-short-sales frontier | guides-audit | done | constrained-frontier |
+| 12 | input-estimation | Estimating expected returns and covariances | guides-audit | done | estimation-noise |
 
 ### Fixed income
 
@@ -120,6 +122,22 @@ Each track is read top to bottom. Figure ids are `GuideFigureId`s.
 
 Figures for all lessons are built by **my-app-1b**, except those of my-app-46's lessons, which my-app-46 builds itself
 (agreed 15:2x).
+
+### Market microstructure
+
+| # | id | Title (EN) | Owner | Status | Figure |
+|---|---|---|---|---|---|
+| 1 | market-makers | Market makers and liquidity | market-making-guides | done | round-trip |
+| 2 | limit-order-book | The limit order book | market-making-guides | done | book-walk |
+| 3 | queue-position | Queue position and fill probability | market-making-guides | done | queue-fill |
+| 4 | adverse-selection | Adverse selection and informed trading | market-making-guides | done | toxic-income |
+| 5 | glosten-milgrom | The Glosten–Milgrom model | market-making-guides | done | gm-learning |
+| 6 | spread-measurement | Measuring and decomposing the bid–ask spread | market-making-guides | done | roll-bounce |
+| 7 | kyle-model | Informed trading and Kyle's lambda | market-making-guides | done | kyle-schedule |
+| 8 | price-impact | Price impact and optimal execution | market-making-guides | done | execution-frontier |
+| 9 | inventory-risk | Inventory risk and quote skewing | market-making-guides | done | inventory-skew |
+| 10 | avellaneda-stoikov | Optimal quoting: the Avellaneda–Stoikov model | market-making-guides | done | as-quotes |
+| 11 | market-making-pnl | Market making profit and loss attribution | market-making-guides | done | pnl-attribution |
 
 ## Files per owner (new files only)
 
@@ -841,3 +859,20 @@ previews. Last run ({now}): 6 forward citations in total.
 - 2026-10-20 (guides-audit plan 11): done. capital-budgeting-risk and dividend-policy written (EN + HU, 2 checks + 1 worked each); figures npv-distribution and payout-ddm on new pure maths `guide.wave4.corporate.math.ts` (own file to avoid colliding with plan 09 in guide.wave4.math.ts); tests appended to guide-wave4.test.mjs; figure strings added to GuideWave4(.hu).ts; both ids removed from the audit PLACEHOLDER list (now empty).
 - 2026-10-20 (guides-audit plan 13): final QA. 64 lessons / 64 `done` rows; audit allowlists empty except `NO_FIGURE`/`ROOT_LESSONS`; all guide tests, tsc, build pass; 140 guide pages smoke-clean in EN + HU. Fixed: 10 EN SEO titles shortened in `guide.seo.ts` (70-char rule), 6 long HU lesson titles added to the SEO KNOWN baseline, 7 curriculum rows set to `done`.
 - 2026-10-20 (guides-audit plan 13): final QA done. 64 lessons, all allowlists empty (except NO_FIGURE wacc, ROOT_LESSONS), all test:guide* pass, build 212 pages, smoke 140/140 pages clean in EN and HU. HU strings from all plans are drafts awaiting owner review.
+- 2026-10-28 (market-making-guides 01): track registered; shared guide files frozen for plans 02–12 except their own region, PLACEHOLDER line and table row.
+- 2026-10-28 (factor-systemic 01 request): please add `"fama-french"` to lesson `factor-models` `labs` in `src/features/guide/guide.meta.ts` (currently `["capm", "portfolio-lab"]`) once the guide-files freeze lifts; plan 01 did not edit that file.
+- 2026-10-28 (factor-systemic 04): guide.graph.layout.ts and components/graph/useGraphViewport.ts are now one-line re-export shims of src/lib/graph/forceLayout.ts and src/components/charts/network/useGraphViewport.ts; guide graph behaviour unchanged (test:guide-graph green).
+- 2026-10-28 (market-making-guides 02): market-makers lesson + round-trip figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 03): limit-order-book lesson + book-walk figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 04): queue-position lesson + queue-fill figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 05): adverse-selection lesson + toxic-income figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 06): glosten-milgrom lesson + gm-learning figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 11): avellaneda-stoikov lesson + as-quotes figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 07): spread-measurement lesson + roll-bounce figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 12): market-making-pnl lesson + pnl-attribution figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 08): kyle-model lesson + kyle-schedule figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 10): inventory-risk lesson + inventory-skew figure done; PLACEHOLDER line removed.
+- 2026-10-28 (market-making-guides 09): price-impact lesson + execution-frontier figure done; PLACEHOLDER line removed.
+- 2026-10-28 opus-spe (owner request): registered two Portfolio lessons — `fama-french-factors` (after factor-models, labs ["fama-french"], figure ff-loadings) and `systemic-contagion` (after risk-measures, labs ["systemic-risk"], figure contagion-cascade); shared-file edits made directly at the owner's instruction (additive only); strings in new GuideFactorRisk.ts/.hu.ts. This also answers the factor-systemic 01 request in spirit (fama-french now has its own lesson).
+- 2026-10-28 opus-spe: systemic-contagion lesson + contagion-cascade figure done (guide.systemic.math.ts, 8-bank sequential default); PLACEHOLDER line removed.
+- 2026-10-28 opus-spe: fama-french-factors lesson + ff-loadings figure done (guide.famaFrench.math.ts, seeded factors, CAPM/FF3/FF5 fit of a tilted zero-alpha fund); PLACEHOLDER line removed.

@@ -19,7 +19,7 @@ export default function SigmaPartitionFigure() {
   const r = conditionOnDie(info, variable);
 
   return (
-    <GuideFigure title={t("gsSigmaTitle")} labId="stochastic-models">
+    <GuideFigure title={t("gsSigmaTitle")} labId="random-walk">
       <div className="gf-toolbar">
         <SegmentedControl<InfoId> ariaLabel={t("gsInfoLabel")} value={info} onChange={setInfo} options={INFOS.map((v) => ({ value: v, label: t(INFO_KEY[v]) }))} />
         <SegmentedControl<DieVariable> ariaLabel={t("gsVariableLabel")} value={variable} onChange={setVariable} options={VARS.map((v) => ({ value: v, label: VAR_LABEL[v] }))} />

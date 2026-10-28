@@ -10,6 +10,9 @@ import { seoHu } from "./Seo.hu";
 import { hestonHu } from "./Heston.hu";
 import { riskReturnHu } from "./RiskReturn.hu";
 import { capmHu } from "./Capm.hu";
+import { famaFrenchHu } from "./FamaFrench.hu";
+import { famaFrenchFundHu } from "./FamaFrenchFund.hu";
+import { famaFrenchSortHu } from "./FamaFrenchSort.hu";
 import { portfolioLabHu } from "./PortfolioLab.hu";
 import { bondPricingHu } from "./BondPricing.hu";
 import { efficientFrontierHu } from "./EfficientFrontier.hu";
@@ -21,7 +24,9 @@ import { capitalStructureHu } from "./CapitalStructure.hu";
 import { yieldCurveHu } from "./YieldCurve.hu";
 import { durationConvexityHu } from "./DurationConvexity.hu";
 import { brownianMotionHu } from "./BrownianMotion.hu";
+import { randomWalkHu } from "./RandomWalk.hu";
 import { gbmHu } from "./Gbm.hu";
+import { sdePagesHu } from "./SdePages.hu";
 import { itoProcessHu } from "./ItoProcess.hu";
 import { monteCarloHu } from "./MonteCarlo.hu";
 import { stochasticModelsHu } from "./StochasticModels.hu";
@@ -34,6 +39,7 @@ import { intuitionHu } from "./Intuition.hu";
 import { legacyIntuitionHu } from "./LegacyIntuition.hu";
 import { treasuryFuturesHu } from "./TreasuryFutures.hu";
 import { interestRateSwapHu } from "./InterestRateSwap.hu";
+import { callableBondHu } from "./CallableBond.hu";
 import { immunizationHu } from "./Immunization.hu";
 import { guideHu } from "./Guide.hu";
 import { guidePortfolioHu } from "./GuidePortfolio.hu";
@@ -53,6 +59,18 @@ import { bondInputsHu } from "./BondInputs.hu";
 import { labPrimitivesHu } from "./LabPrimitives.hu";
 import type { BaseKey } from "./index.en";
 import { challengesHu } from "./Challenges.hu";
+import { orderBookHu } from "./OrderBook.hu";
+import { marketMakingHu } from "./MarketMaking.hu";
+import { avellanedaStoikovHu } from "./AvellanedaStoikov.hu";
+import { glostenMilgromHu } from "./GlostenMilgrom.hu";
+import { kyleHu } from "./Kyle.hu";
+import { spreadEstimationHu } from "./SpreadEstimation.hu";
+import { networkChartHu } from "./NetworkChart.hu";
+import { systemicRiskHu } from "./SystemicRisk.hu";
+import { systemicRiskShocksHu } from "./SystemicRiskShocks.hu";
+import { systemicRiskEpisodesHu } from "./SystemicRiskEpisodes.hu";
+import { guideMicrostructureHu } from "./GuideMicrostructure.hu";
+import { guideFactorRiskHu } from "./GuideFactorRisk.hu";
 
 /// Every Hungarian UI string, loaded lazily (`loadLanguage` in languageLoader.ts) and checked to have exactly the English keys.
 export const hu = {
@@ -67,6 +85,9 @@ export const hu = {
   ...hestonHu,
   ...riskReturnHu,
   ...capmHu,
+  ...famaFrenchHu,
+  ...famaFrenchFundHu,
+  ...famaFrenchSortHu,
   ...portfolioLabHu,
   ...efficientFrontierHu,
   ...npvIrrHu,
@@ -79,6 +100,7 @@ export const hu = {
   ...durationConvexityHu,
   ...treasuryFuturesHu,
   ...interestRateSwapHu,
+  ...callableBondHu,
   ...immunizationHu,
   ...guideHu,
   ...guidePortfolioHu,
@@ -97,7 +119,9 @@ export const hu = {
   ...bondInputsHu,
   ...labPrimitivesHu,
   ...brownianMotionHu,
+  ...randomWalkHu,
   ...gbmHu,
+  ...sdePagesHu,
   ...itoProcessHu,
   ...monteCarloHu,
   ...stochasticModelsHu,
@@ -110,6 +134,18 @@ export const hu = {
   ...notFoundHu,
   ...seoHu,
   ...challengesHu,
+  ...orderBookHu,
+  ...marketMakingHu,
+  ...avellanedaStoikovHu,
+  ...glostenMilgromHu,
+  ...kyleHu,
+  ...spreadEstimationHu,
+  ...networkChartHu,
+  ...systemicRiskHu,
+  ...systemicRiskShocksHu,
+  ...systemicRiskEpisodesHu,
+  ...guideMicrostructureHu,
+  ...guideFactorRiskHu,
   navGuide: "Útmutató",
 } satisfies Record<BaseKey, string>;
 

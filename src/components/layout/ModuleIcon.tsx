@@ -51,6 +51,12 @@ const ICONS: Record<string, ReactNode> = {
       <circle cx="13" cy="11" r="1.7" />
     </>
   ),
+  "fama-french": (
+    <>
+      <path d="M5 20V13M12 20V5M19 20V9" />
+      <path d="M3 20h18" opacity=".4" />
+    </>
+  ),
   "portfolio-lab": (
     <>
       <circle cx="12" cy="12" r="8" />
@@ -62,6 +68,14 @@ const ICONS: Record<string, ReactNode> = {
       <path d="M8 4c-4 3-4 13 0 16" />
       <circle cx="8" cy="4" r="1.3" />
       <circle cx="8" cy="20" r="1.3" />
+    </>
+  ),
+  "systemic-risk": (
+    <>
+      <circle cx="6" cy="17" r="2" />
+      <circle cx="18" cy="17" r="2" />
+      <circle cx="12" cy="6" r="2" />
+      <path d="M7.2 15.4 10.8 7.8M16.8 15.4 13.2 7.8M8.2 17h7.6" />
     </>
   ),
   "npv-irr": (
@@ -88,6 +102,36 @@ const ICONS: Record<string, ReactNode> = {
     <>
       <path d="M3 16 21 8" opacity=".35" />
       <path d="M3 15l2-3 2 2 2-4 2 3 2-5 2 2 2-3 2 1" />
+    </>
+  ),
+  "order-book": (
+    <>
+      <path d="M4 5h7M6 9h5M8 13h3" /><path d="M13 11h3M13 15h5M13 19h7" opacity=".5" />
+    </>
+  ),
+  "market-making": (
+    <>
+      <path d="M3 8h18" opacity=".5" /><path d="M3 16h18" /><path d="M8 5v6M16 13v6" />
+    </>
+  ),
+  "avellaneda-stoikov": (
+    <>
+      <path d="M3 12h18" opacity=".35" /><path d="M3 5l18 6" opacity=".5" /><path d="M3 11l18 8" />
+    </>
+  ),
+  "glosten-milgrom": (
+    <>
+      <path d="M3 4c6 3 12 6 18 7" opacity=".5" /><path d="M3 20c6-3 12-6 18-7" />
+    </>
+  ),
+  "kyle": (
+    <>
+      <path d="M3 20h4v-3h4v-4h4v-4h4V5h2" /><path d="M3 4h18" opacity=".35" />
+    </>
+  ),
+  "spread-estimation": (
+    <>
+      <path d="M3 8h18M3 16h18" opacity=".35" /><path d="M3 16l3-8 3 8 3-8 3 8 3-8 3 8" />
     </>
   ),
   "monte-carlo": (
@@ -122,6 +166,13 @@ const ICONS: Record<string, ReactNode> = {
   "interest-rate-swap": (
     <>
       <path d="M4 8h13l-3-3M20 16H7l3 3" />
+    </>
+  ),
+  "callable-bond": (
+    <>
+      <path d="M4 6c3 8 7 11 16 12" />
+      <path d="M4 10c3 5 7 7 16 8" strokeDasharray="2 2" />
+      <path d="M4 4v16h16" />
     </>
   ),
   "capital-structure": (

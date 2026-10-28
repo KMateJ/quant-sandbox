@@ -1,6 +1,6 @@
 # 10 — Final cross-width, theme and language QA
 
-Status: todo · Depends on: 01–09 · Suggested model: Sonnet · Est. size: S
+Status: in progress (claimed 2026-10-28, session fi-qa) · Depends on: 01–09 · Suggested model: Sonnet · Est. size: S
 
 ## Why
 Each plan audited its own pages. This pass checks the whole Fixed Income category together, after all

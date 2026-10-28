@@ -13,6 +13,8 @@ export type HistogramProps = {
   normalize?: "count" | "density";
   /// Overlay curve in density units (implies normalize = "density").
   density?: { x: number; y: number }[];
+  /// Exact values drawn as points in density units (e.g. a pmf next to an approximating `density` curve).
+  dots?: { x: number; y: number }[];
   tint?: (bin: Bin, index: number) => HistogramTint;
   markers?: HistogramMarker[];
   /// Brushed bins; click a bin or drag across bins to set; Esc, or clicking a lone selected bin again, clears.

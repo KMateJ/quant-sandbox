@@ -1,0 +1,171 @@
+@use "breakpoints" as *;
+
+// Callable bond lab (/callable-bond).
+.callable-bond {
+  .cb-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .cb-call-grid { margin-top: 12px; }
+
+  .cb-hint {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  // #region Price-yield chart
+  .cb-chart {
+    height: 340px;
+    min-width: 0;
+
+    @include phone { height: 280px; }
+  }
+
+  .cb-neg { fill: color-mix(in srgb, var(--negative) 12%, transparent); }
+  .cb-gap { fill: color-mix(in srgb, var(--chart-1) 22%, transparent); stroke: none; }
+
+  .cb-point {
+    fill: var(--chart-1);
+    stroke: var(--surface);
+    stroke-width: 2;
+  }
+
+  .cb-label {
+    fill: var(--muted);
+    font-size: 11px;
+
+    &--neg { fill: var(--negative); }
+  }
+
+  .cb-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    margin: 12px 0 0;
+
+    div {
+      padding: 8px 10px;
+      background: var(--surface-soft);
+      border-radius: var(--radius-xs);
+      min-width: 0;
+    }
+
+    dt {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    dd {
+      margin: 2px 0 0;
+      font-size: 15px;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+
+    .is-accent dd { color: var(--primary); }
+    .is-negative dd { color: var(--negative); }
+  }
+  // #endregion
+
+  // #region Call timeline
+  .cb-timeline { padding: 4px 0 0; }
+
+  .cb-track {
+    position: relative;
+    height: 40px;
+    background: var(--surface-soft);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+  }
+
+  .cb-protected {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 11px;
+    white-space: nowrap;
+    background: color-mix(in srgb, var(--muted) 20%, transparent);
+  }
+
+  .cb-date {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    box-sizing: border-box;
+    border: 1px solid var(--positive);
+    background: color-mix(in srgb, var(--positive) 8%, transparent);
+    border-radius: 1px;
+
+    &.is-call {
+      border-color: var(--negative);
+      background: color-mix(in srgb, var(--negative) 55%, transparent);
+    }
+
+    &.is-first {
+      top: 0;
+      bottom: 0;
+      border-width: 2px;
+      border-color: var(--text);
+    }
+  }
+
+  .cb-axis {
+    position: relative;
+    height: 18px;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+
+    span {
+      position: absolute;
+      transform: translateX(-50%);
+
+      &:first-child { transform: none; }
+      &:last-child { transform: translateX(-100%); }
+    }
+  }
+
+  .cb-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin: 8px 0 0;
+    padding: 0;
+    color: var(--muted);
+    font-size: 12px;
+    list-style: none;
+
+    li { display: flex; align-items: center; gap: 6px; }
+  }
+
+  .cb-key {
+    display: inline-block;
+    width: 14px;
+    height: 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--positive);
+
+    &--call { background: color-mix(in srgb, var(--negative) 55%, transparent); border-color: var(--negative); }
+    &--keep { background: color-mix(in srgb, var(--positive) 8%, transparent); }
+    &--protected { border-color: var(--muted); background: color-mix(in srgb, var(--muted) 20%, transparent); }
+  }
+
+  .cb-summary {
+    margin: 8px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  // #endregion
+}

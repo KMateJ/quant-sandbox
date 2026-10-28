@@ -1,0 +1,41 @@
+// Brownian motion lab: path cloud with docked histogram, legend and metrics.
+.bro-main {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.bro-cloud {
+  height: 440px;
+
+  @media (max-width: 900px) { height: 360px; }
+  @media (max-width: 640px) { height: 300px; }
+}
+
+.bro-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4, 16px);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+  color: var(--muted);
+
+  li { display: inline-flex; align-items: center; gap: 6px; }
+}
+
+.bro-key {
+  display: inline-block;
+  width: 18px;
+  height: 0;
+  border-top: 2px solid var(--text);
+}
+
+.bro-key-hero { border-color: var(--primary); border-top-width: 3px; }
+.bro-key-mean { border-top-style: dashed; }
+.bro-key-band { border-color: var(--chart-reference); }
+.bro-key-density { border-color: var(--text); }
+
+.bro-metrics { display: grid; gap: var(--space-1); }
+.bro-theory { color: var(--muted); font-weight: 400; }

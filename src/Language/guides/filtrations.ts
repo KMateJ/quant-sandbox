@@ -97,7 +97,7 @@ export const filtrations: GuideLessonContent = {
       "A stopping time satisfies $\\{\\tau \\le t\\} \\in \\mathcal{F}_t$. First hitting times are stopping times; last exit times are not.",
       "For Brownian motion, $\\mathcal{F}^W_t$ is independent of future increments, and first passage times are stopping times.",
     ),
-    lab("/stochastic-models/random-walk", "Step through a coin-flip walk in the Stochastic Models studio"),
+    lab("/random-walk", "Step through a coin-flip walk in the Random Walk lab"),
   ],
 
   hu: [
@@ -195,6 +195,6 @@ export const filtrations: GuideLessonContent = {
       "A megállási időre $\\{\\tau \\le t\\} \\in \\mathcal{F}_t$. Az első elérési idők megállási idők, az utolsó kilépési idők nem.",
       "Brown-mozgásnál $\\mathcal{F}^W_t$ független a jövőbeli növekményektől, és az első elérési idők megállási idők.",
     ),
-    lab("/stochastic-models/random-walk", "Léptess végig egy pénzfeldobásos bolyongást a Sztochasztikus modellek stúdióban"),
+    lab("/random-walk", "Léptess végig egy pénzfeldobásos bolyongást a Véletlen bolyongás laborban"),
   ],
 };

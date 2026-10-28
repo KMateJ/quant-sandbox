@@ -6,6 +6,7 @@ export const DESK_IDS: Readonly<Record<string, string>> = {
   "yield-curve": "rates",
   "portfolio-lab": "portfolio",
   tvm: "retirement",
+  "market-making": "mm",
 };
 
 /// Missions per desk (pack decision: five each).
