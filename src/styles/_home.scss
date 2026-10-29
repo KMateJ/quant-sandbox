@@ -221,7 +221,9 @@
 // #region Labs
 .home-filters {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  min-width: 0;
 }
 
 .home-filter {
@@ -277,6 +279,13 @@
 .home-bento {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+
+.home-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   border-top: 1px solid var(--rule);
   border-left: 1px solid var(--rule);
 }

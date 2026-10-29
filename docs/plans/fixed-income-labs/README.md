@@ -89,7 +89,7 @@ Measured (2026-10-19, headless Chrome on `vite` dev, probe script, widths 360/76
 | [07](07-immunization-rounds-lab.md) | New lab: immunisation rounds game | 01, 02 | L | Sonnet | done (2026-10-19) |
 | [08](08-swap-lab.md) | New lab: interest rate swap | 01, 02 | L | Sonnet | done (2026-10-24) |
 | [09](09-callable-bond-lab.md) | New lab: callable bond | 01, 02 | M | Sonnet | done (2026-10-28) |
-| [10](10-final-qa.md) | Final cross-width / theme / language QA | all | S | Sonnet | todo |
+| [10](10-final-qa.md) | Final cross-width / theme / language QA | all | S | Sonnet | done (2026-10-29) |
 
 Order: 01 → 02 → 03, then 04, 05, 06 in any order (different feature folders), then 07, 08, 09.
 **07, 08, 09 all edit `src/modules/registry.ts`, `src/i18n.tsx` and `src/styles/main.scss`: run them one

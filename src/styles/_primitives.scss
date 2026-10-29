@@ -1583,31 +1583,22 @@ rect.opt-brush:focus-visible {
 }
 
 // #region Phone tap targets
-// At phone width every control gets a >=32px box; small icons grow their box with
-// padding and cancel it with negative margin, so the layout does not move.
+// Floor for touch controls at phone width; !important beats per-feature compact sizes.
+// Info-tooltip icons and range inputs are exempt via data-layout-allow (their hit area
+// comes from the coarse-pointer ::after and the 22px thumb).
 @include phone {
   button, select, input:not([type="radio"], [type="checkbox"], [type="range"], [type="hidden"]) {
-    min-height: 32px;
+    min-height: 32px !important;
   }
 
-  .brand, .info-tooltip-trigger {
+  .brand, .home-link {
     box-sizing: content-box;
     padding-block: 7px;
     margin-block: -7px;
   }
 
-  .info-tooltip-trigger {
-    padding-inline: 7px;
-    margin-inline: -7px;
-  }
-
-  .slider-input {
-    height: 32px;
-    margin: -9px 0;
-    border-radius: 0;
-    background:
-      linear-gradient(var(--primary), var(--primary)) left center / var(--fill, 0%) 6px no-repeat,
-      linear-gradient(var(--surface-muted), var(--surface-muted)) center / 100% 6px no-repeat;
+  .home-filter {
+    min-width: 32px;
   }
 }
 // #endregion

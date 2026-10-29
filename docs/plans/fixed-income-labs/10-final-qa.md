@@ -1,6 +1,6 @@
 # 10 — Final cross-width, theme and language QA
 
-Status: in progress (claimed 2026-10-28, session fi-qa) · Depends on: 01–09 · Suggested model: Sonnet · Est. size: S
+Status: done (2026-10-29, session fi-qa) · Depends on: 01–09 · Suggested model: Sonnet · Est. size: S
 
 ## Why
 Each plan audited its own pages. This pass checks the whole Fixed Income category together, after all
@@ -39,8 +39,10 @@ MSYS_NO_PATHCONV=1 node scripts/cdp-smoke.mjs --base http://localhost:4173 --pat
 ```
 
 ## Findings (fill in during execution)
-- Definition-of-done evidence: …
-- Remaining allowlist entries with reasons: …
+- Definition-of-done evidence: strict audit `--group fixed-income`, widths 360–1920, both themes and languages: 224/224 pages pass (was 84 failing, all phone tap targets). Home `/`, `/hu/`: 32/32 pass. cdp-smoke on the 7 listed paths: no problems apart from the local `/_vercel/insights` 404. tsc, all FI lab tests, chart-layout and guide-interactive pass. FI `.tsx` files are all at most 150 lines, and no FI `*.math.ts` imports React. Screenshots checked: callable 360 light, swap 1280 dark.
+- Fix: `_primitives.scss` region "Phone tap targets" sets a 32px min-height on controls at phone width, gives `.brand` and `.home-link` a 32px box with padding cancelled by negative margin, and gives `.home-filter` a 32px min-width.
+- Outside FI and not fixed here: `npm run lint` has 12 errors in non-FI files (AppShell, heston, diffusion, payoff-lab, i18n, theme). In `test:seo`, the gbm/ito description lengths fail (stochastic pack), and the initial-JS budget fails at 1.09 MB against 1.0 MB.
+- Remaining allowlist entries with reasons: info-tooltip trigger (the coarse-pointer `::after` gives a 34px hit area); range inputs in SliderField, NumberStepper, SliderDock, YieldShockControl, BondBasket and NodeTable (the 22px coarse-pointer thumb is the target); radios in PredictExplain and CallablePredict and the FactorsView checkbox (the whole label is the target); RangeGuess dual thumbs (both inputs share one track; this entry was already there).
 
 ## Prompt to hand off
 > You are working in the Quant Sandbox repo. Read `CLAUDE.md`, `docs/plans/fixed-income-labs/README.md`

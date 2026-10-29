@@ -220,6 +220,8 @@ export const homeEn = {
     homeCategoryGuide: "{{track}} · {{n}} lessons",
     homeGuideTileName: "{{track}} guide",
     homeGuideTileDesc: "{{n}} lessons, each paired with its lab.",
+    homeNewEyebrow: "Just released",
+    homeNewTitle: "New in the sandbox",
     homeFeaturesEyebrow: "Featured",
     homeFeaturesTitle: "Tools built to be used",
     homeFeatureOpen: "Open",

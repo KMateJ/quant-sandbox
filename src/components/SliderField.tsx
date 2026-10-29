@@ -46,6 +46,7 @@ export default function SliderField({
         <input
           id={id}
           className="slider-input"
+          data-layout-allow="range input: the 22px coarse-pointer thumb is the tap target"
           type="range"
           min={min}
           max={max}

@@ -13,7 +13,7 @@ function FuturesControl({ value, onChange }: { value: number; onChange: (v: numb
   const { t } = useI18n();
   return <div className="tf-futures">
     <NumberInput label={t("tfFuturesPrice")} value={value} onChange={onChange} min={F_MIN} max={F_MAX} step={0.01} sectionId="net-basis" />
-    <input type="range" className="slider-input" min={F_MIN} max={F_MAX} step={0.25} value={value} aria-label={t("tfFuturesPrice")}
+    <input type="range" className="slider-input" data-layout-allow="range input: the 22px coarse-pointer thumb is the tap target" min={F_MIN} max={F_MAX} step={0.25} value={value} aria-label={t("tfFuturesPrice")}
       style={sliderFill(value, F_MIN, F_MAX)} onChange={(e) => onChange(Number(e.target.value))} />
   </div>;
 }

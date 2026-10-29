@@ -63,6 +63,7 @@ export default function YieldShockControl({ model }: Props) {
       <div className="dc-shock-track">
         <input
           className="slider-input"
+          data-layout-allow="range input: the 22px coarse-pointer thumb is the tap target"
           type="range"
           min={-maxBp}
           max={maxBp}

@@ -59,6 +59,8 @@ export interface ModuleDef {
   subNav?: ModuleSubNavItem[];
   /// Shown as the large tile of its area on the home page.
   homeFeatured?: boolean;
+  /// Release date (YYYY-MM-DD); the newest modules head the home page.
+  added?: string;
 }
 
 export const CATEGORY_ORDER: ModuleCategory[] = [
@@ -251,6 +253,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "interest-rate-swap",
+    added: "2026-10-24",
     path: "/interest-rate-swap",
     navKey: "navInterestRateSwap",
     category: "fixed-income",
@@ -262,6 +265,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "callable-bond",
+    added: "2026-10-29",
     intuition: bondIntuition,
     path: "/callable-bond",
     navKey: "navCallableBond",
@@ -274,6 +278,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "immunization",
+    added: "2026-10-20",
     path: "/immunization",
     navKey: "navImmunization",
     category: "fixed-income",
@@ -311,6 +316,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "fama-french",
+    added: "2026-10-29",
     path: "/fama-french",
     navKey: "navFamaFrench",
     category: "portfolio",
@@ -350,6 +356,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "systemic-risk",
+    added: "2026-10-29",
     path: "/systemic-risk",
     navKey: "navSystemicRisk",
     category: "portfolio",
@@ -426,6 +433,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "random-walk",
+    added: "2026-10-29",
     path: RANDOM_WALK_PATH,
     navKey: "navRandomWalk",
     category: "stochastic",
@@ -517,6 +525,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "market-making",
+    added: "2026-10-29",
     path: "/market-making",
     navKey: "navMarketMaking",
     category: "microstructure",
@@ -593,6 +602,7 @@ export const modules: ModuleDef[] = [
   },
   {
     id: "sandbox",
+    added: "2026-10-24",
     path: "/sandbox",
     navKey: "navSandbox",
     status: "beta",

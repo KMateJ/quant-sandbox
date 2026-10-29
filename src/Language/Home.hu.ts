@@ -219,6 +219,8 @@ export const homeHu = {
     homeCategoryGuide: "{{track}} · {{n}} lecke",
     homeGuideTileName: "{{track}} útmutató",
     homeGuideTileDesc: "{{n}} lecke, mindegyik a saját laborjával párosítva.",
+    homeNewEyebrow: "Friss",
+    homeNewTitle: "Újdonságok",
     homeFeaturesEyebrow: "Kiemelt",
     homeFeaturesTitle: "Használatra készült eszközök",
     homeFeatureOpen: "Megnyitás",

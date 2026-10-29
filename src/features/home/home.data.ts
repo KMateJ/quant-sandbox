@@ -15,3 +15,9 @@ const firstLesson = trackLessons(guideTrackById("derivatives"))[0];
 
 /// Where a first-time reader begins: the first lesson of the derivatives track.
 export const START_LESSON = { path: guidePath(firstLesson.id), titleKey: firstLesson.titleKey };
+
+/// The most recently released modules, newest first (ties keep registry order).
+export const NEW_MODULES = modules
+  .filter((m) => m.added)
+  .sort((a, b) => b.added!.localeCompare(a.added!))
+  .slice(0, 6);

@@ -57,6 +57,7 @@ export default function SliderDock({ sliders, chartSelector }: SliderDockProps) 
         <div className="slider-dock-row">
           <input
             className="slider-input"
+            data-layout-allow="range input: the 22px coarse-pointer thumb is the tap target"
             type="range"
             min={active.min}
             max={active.max}

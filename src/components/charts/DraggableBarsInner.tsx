@@ -38,9 +38,9 @@ export default function DraggableBarsInner({ values, onChange, min, max, step = 
   const [frozen, setFrozen] = useState<[number, number] | null>(null);
   const live = domain ?? paddedDomain(min, max);
   const [lo, hi] = frozen ?? live;
-  // Room for the widest tick label (≈ 7 px per character at 12 px), so long values aren't clipped on phones.
+  // Room for the widest tick label (≈ 7.5 px per character at 12 px), so long values aren't clipped on phones.
   const fmtTick = (v: number) => (yFormat ? yFormat(v) : String(v));
-  const labelW = Math.max(fmtTick(lo).length, fmtTick(hi).length) * 7 + 12;
+  const labelW = Math.max(fmtTick(lo).length, fmtTick(hi).length) * 7.5 + 14;
   const base = chartMargin(width < 480);
   const margin = { ...base, left: Math.max(base.left, labelW) };
   const innerW = Math.max(0, width - margin.left - margin.right);

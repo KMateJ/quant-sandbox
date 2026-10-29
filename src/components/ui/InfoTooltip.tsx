@@ -78,6 +78,7 @@ export default function InfoTooltip({
         ref={trigger}
         type="button"
         className="info-tooltip-trigger"
+        data-layout-allow="icon trigger: coarse-pointer ::after gives a 34px hit area"
         aria-label={label}
         aria-describedby={open ? id : undefined}
         onFocus={show}

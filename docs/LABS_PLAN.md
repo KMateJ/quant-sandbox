@@ -183,7 +183,7 @@ Effort: S ≤ half a day, M ≈ a day, L more. Prio 1 = first. ★ = my-app-1b's
 | efficient-frontier | Drag target-return / target-vol lines; pin frontier to compare constraint sets | T1, T7 | P1, P3 | M | 2 | my-app-46 | done |
 | bond-pricing | Pull-to-par playback; drag cash-flow bars on the timeline; drag par point to set the coupon | T4, T1 | P4, P1 | M | 1 | | idea |
 | yield-curve | ★ Sketch a curve → bootstrapped prices and forwards; scenario shocks (parallel, steepener, flattener, butterfly) | T2, T12 | P11 | M | 1 | | idea |
-| yield-curve | Brush the forward interval on the zero chart; bootstrap autoplay | T6, T4 | IntervalSelector, P4 | S | 2 | my-app-46 | building |
+| yield-curve | Brush the forward interval on the zero chart; bootstrap autoplay | T6, T4 | IntervalSelector, P4 | S | 2 | fi-labs | done (2026-10-29) |
 | duration-convexity | ★ Predict the price change for +100 bp, reveal duration-only vs actual | T3 | P5 | S | 1 | | idea |
 | duration-convexity | Click / drag Δy on the chart; error-tolerance band; compare bond B (same D, other C) | T1, T7 | P1, P3, P7 | M | 2 | | idea |
 | treasury-futures | Drag the yield / F and watch the CTD highlight jump; editable basket; predict the CTD | T1, T10, T3 | P1, P5 | S/M | 1 | | idea |
@@ -615,3 +615,4 @@ Settled from what each session last accepted (Log 16:2x–16:3x):
 - 23:59 factor-systemic 08: systemic-risk historical episodes page (GFC, LTCM, March 2020, SVB: dated timeline, stylised network playback, what-if rescue switches with compare chart, syr-without predict)
 - 23:46 market-making 13: final QA (pack pages green; follow-ups listed)
 - 23:48 factor-systemic 09: final QA done; 3 small fixes, follow-ups in plan 09 Findings.
+- 2026-10-29 fi-labs 10: fixed-income final QA done; strict layout audit 224/224 pages pass (8 widths, both themes, EN/HU), home 32/32; phone tap-target floor added in _primitives.scss.
